@@ -1,0 +1,3 @@
+<aura:event type="Component">
+    <aura:attribute name="SearchEvent" type="Object"/>    
+</aura:event>

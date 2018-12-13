@@ -1,0 +1,86 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="TradeName" type="String" default=""/>
+    <aura:attribute name="Phone" type="String" default=""/>
+    <aura:attribute name="Domain" type="String" default=""/>
+    <aura:attribute name="Street" type="String" default=""/>
+    <aura:attribute name="City" type="String" default=""/>
+    <aura:attribute name="PostalCode" type="String" default=""/>
+    <aura:attribute name="searchText" type="String" default=""/>
+    <aura:attribute name="MultiSelect" type="String[]" default="Get Chamber of Commerce,Get Company Details,Get Legal Entity Details,Search By Postcode"/>
+    <aura:attribute name="SelectedAPI" type="String" />
+    <aura:attribute name="value" type="String" default="option1"/> 
+    <aura:registerEvent name="SearchEvent" type="c:SearchEvent"/>
+    <lightning:card variant="Narrow" title="Search" iconName="standard:account">
+        <aura:set attribute="actions">
+            <lightning:button class="slds-theme_brand" iconPosition="right" variant="brand" type="submit" label="Search" iconName="standard:search"></lightning:button>
+        </aura:set>
+        <div class="slds-form slds-form_stacked">
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title">
+                    <lightning:button class="slds-theme_base slds-section__title-action" iconPosition="left" variant="base" label="Company Information" iconName="utility:switch"></lightning:button>
+                </h3>
+                <div class="slds-section__content">
+                    <lightning:layout>
+                        <lightning:layoutItem flexibility="grow">
+                            <lightning:input class="slds-p-right_none slds-p-left_none" label="Trade Name" placeholder="Placeholder Text" required="true" type="text" variant="standard" value="{!v.TradeName}"></lightning:input>
+                            <lightning:input class="slds-p-right_none slds-p-left_none" label="Phone" type="text" variant="standard" value="{!v.Phone}"></lightning:input>
+                            <lightning:input class="slds-p-right_none slds-p-left_none" label="Domain" type="text" variant="standard" value="{!v.Domain}"></lightning:input>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem flexibility="grow">
+                            <lightning:inputAddress  aura:id="Address" class="slds-p-around_medium slds-container_center slds-align_absolute-center" addressLabel="Address" fieldLevelHelp="Help Text for inputAddress field." streetLabel="Street" cityLabel="City" provinceLabel="Home" countryLabel="Home Addition" postalCodeLabel="PostalCode" street="121 Spear St." variant="standard"></lightning:inputAddress>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+            </div>
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title">
+                    <lightning:button class="slds-theme_base slds-section__title-action" iconPosition="left" variant="base" label="Checked Details" iconName="utility:switch" onclick="{!c.changeState}"></lightning:button>
+                </h3>
+                <div class="slds-section__content">
+                    <lightning:layout>
+                        <lightning:layoutItem >
+                            <lightning:input type="checkbox" label="Get Company Details"></lightning:input>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem >
+                            <lightning:input type="checkbox" label="Get Legal Entity Details"></lightning:input>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                    <lightning:layout>
+                        <lightning:layoutItem >
+                            <lightning:input type="checkbox" label="Search By Postcode"></lightning:input>
+                        </lightning:layoutItem>
+                        
+                    </lightning:layout>
+                </div>
+            </div>
+        </div>
+    </lightning:card>
+    <!--Earlier search box-->
+    <!--<lightning:layout verticalAlign="end" horizontalAlign="left" >
+        <lightning:layoutItem >
+            <lightning:select name="select" label="Select the Service" required="true" aura:id="levels">
+                <aura:iteration items="{!v.MultiSelect}" var="item">
+                    <option value="{!item}" text="{!item}"></option>
+                </aura:iteration>
+            </lightning:select>
+        </lightning:layoutItem>
+        <lightning:layoutItem >
+            <div class="slds-form slds-form_stacked">
+                <div class="slds-media slds-theme_default">
+                    <div class="slds-media__body">
+                        <lightning:input value="{!v.searchText}" type="search"  name="search"  placeholder="Search Company Info"/>
+                    </div>
+                </div>
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem>
+            <div class="slds-form slds-form_stacked">
+                <div class="slds-media slds-theme_default">
+                    <div class="slds-media__figure slds-media__figure_reverse">
+                        <lightning:button class="slds-theme_neutral" variant="neutral" label="Search" onclick="{!c.onSearchSubmit}" ></lightning:button>
+                    </div>
+                </div>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>-->
+</aura:component>

@@ -1,0 +1,14 @@
+<aura:component controller="CompanyDetailsController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="wrapperList" type="object"/>
+    <aura:attribute name="searchText" type="String" default=""/>
+    <aura:attribute name="selectedAccountId" type="String" />
+    <aura:handler name="AccountSelect" event="c:AccountSelect" action="{!c.onAccountSelect}"/>
+    <aura:method name="search" action="{!c.doSearch}" description="">
+        <aura:attribute name="searchParam" type="String" />
+    </aura:method>
+    <aura:if isTrue='{!v.wrapperList.length > 0}'>
+        <aura:iteration items="{!v.wrapperList}" var="result">
+            <c:AccountTile DossierNumber="{!result.dossier_number}" wrapperList="{!v.wrapperList}" />
+        </aura:iteration> 
+    </aura:if>
+</aura:component>

@@ -1,0 +1,73 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="wrapperList" type="object"/>
+    <aura:attribute name="DossierNumber" type="String" />
+    <aura:attribute name="selected" type="Boolean" default="false" />
+    <aura:registerEvent name="AccountSelect" type="c:AccountSelect"/>
+    <aura:registerEvent name="AccountSelected" type="c:AccountSelected"/>
+    <aura:if isTrue='{!v.wrapperList.length > 0}'>
+        <aura:iteration items="{!v.wrapperList}" var="result"> 
+            <div class="slds-card__body_inner">
+                <lightning:layout class="slds-wrap" > 
+                   <lightning:layoutItem flexibility="auto" padding="around-small">
+                        <ul class="slds-has-dividers_around-space">
+                            <li class="slds-item">
+                                <lightning:tile class="slds-tile_board" label="{!'Company Name: '+result.name}" href="https://www.google.com/" >
+                                    <aura:set attribute="media"></aura:set>
+                                    <div class="slds-tile__detail">
+                                        <dl class="slds-dl_inline">
+                                          <dt class="slds-dl_inline__label" title="Chamber of Commerce:">Chamber of Commerce:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.dossier_number}">{!result.dossier_number}</dd>
+                                            <dt class="slds-dl_inline__label" title="Establishment Number:">Establishment Number:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.establishment_number}">{!result.establishment_number}</dd>
+                                            <dt class="slds-dl_inline__label" title="Company Name:">Match Type:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.name}">{!result.match_type}</dd>
+                                            <dt class="slds-dl_inline__label" title="Chamber of Commerce:">Establishment City:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.dossier_number}">{!result.establishment_city }</dd>
+                                            <dt class="slds-dl_inline__label" title="Establishment Number:">Establishment Street:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.establishment_number}">{!result.establishment_street}</dd>
+                                            <dt class="slds-dl_inline__label" title="Chamber of Commerce:">Correspondence City:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.dossier_number}">{!result.correspondence_city}</dd>
+                                            <dt class="slds-dl_inline__label" title="Establishment Number:">Correspondence Street :</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.establishment_number}">{!result.correspondence_street }</dd>
+                                            <dt class="slds-dl_inline__label" title="Establishment Number:">Economically Active:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.establishment_number}">{!result.indication_economically_active}</dd>
+                                        </dl>
+                                    </div>
+                                </lightning:tile>
+                            </li>
+                        </ul>
+                    </lightning:layoutItem >
+                    <lightning:layoutItem flexibility="auto" padding="around-small">
+                        <ul class="slds-has-dividers_around-space">
+                            <li class="slds-item">
+                                <lightning:tile class="slds-tile_board" label="{!'Company Name: '+result.name}" href="https://www.google.com/" >
+                                    <aura:set attribute="media"></aura:set>
+                                    <div class="slds-tile__detail">
+                                        <dl class="slds-dl_inline">
+                                            <dt class="slds-dl_inline__label" title="Chamber of Commerce:">Chamber of Commerce:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.dossier_number}">{!result.dossier_number}</dd>
+                                            <dt class="slds-dl_inline__label" title="Establishment Number:">Establishment Number:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.establishment_number}">{!result.establishment_number}</dd>
+                                            <dt class="slds-dl_inline__label" title="Company Name:">Match Type:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.name}">{!result.match_type}</dd>
+                                            <dt class="slds-dl_inline__label" title="Chamber of Commerce:">Establishment City:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.dossier_number}">{!result.establishment_city }</dd>
+                                            <dt class="slds-dl_inline__label" title="Establishment Number:">Establishment Street:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.establishment_number}">{!result.establishment_street}</dd>
+                                            <dt class="slds-dl_inline__label" title="Chamber of Commerce:">Correspondence City:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.dossier_number}">{!result.correspondence_city}</dd>
+                                            <dt class="slds-dl_inline__label" title="Establishment Number:">Correspondence Street :</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.establishment_number}">{!result.correspondence_street }</dd>
+                                            <dt class="slds-dl_inline__label" title="Establishment Number:">Economically Active:</dt>
+                                            <dd class="slds-dl_inline__detail" title="{!result.establishment_number}">{!result.indication_economically_active}</dd>  
+                                        </dl>
+                                    </div>
+                                </lightning:tile>
+                            </li>
+                        </ul>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+        </aura:iteration>
+    </aura:if>
+</aura:component>

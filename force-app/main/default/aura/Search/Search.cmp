@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="SearchEvent" event="c:SearchEvent" action="{!c.onSubmit}"/>    
+    <lightning:card >
+    <c:SearchForm/>
+    </lightning:card>
+    <lightning:card title="Matching Companies" iconName="standard:account">
+        <c:SearchResults aura:id='childComponent'/>
+    </lightning:card>  
+</aura:component>
