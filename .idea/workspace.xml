@@ -1,7 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0faa720d-2e4e-4142-bfe3-896400424c4f" name="Default Changelist" comment="" />
+    <list default="true" id="0faa720d-2e4e-4142-bfe3-896400424c4f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CompanyInfoComponents.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/AccountSelect/AccountSelect.evt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/AccountSelect/AccountSelect.evt-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/AccountSelected/AccountSelected.evt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/AccountSelected/AccountSelected.evt-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/AccountTile/AccountTile.cmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/AccountTile/AccountTile.cmp-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/AccountTile/AccountTile.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/AccountTile/AccountTileController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/Search/Search.cmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/Search/Search.cmp-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/Search/SearchController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchEvent/SearchEvent.evt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchEvent/SearchEvent.evt-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchForm/SearchForm.cmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchForm/SearchForm.cmp-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchForm/SearchFormController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchResults/SearchResults.cmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchResults/SearchResults.cmp-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchResults/SearchResults.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchResults/SearchResultsController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/aura/SearchResults/SearchResultsHelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/CompanyDetailsController.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/CompanyDetailsController.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/CompanyDetailsControllerHelper.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/CompanyDetailsControllerHelper.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/LoggerUtil.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/LoggerUtil.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/wwwWebservicesNlSoapMockImpl.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/wwwWebservicesNlSoapMockImpl.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/flexipages/Account_Record_Page.flexipage-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/flexipages/Account_Record_Page1.flexipage-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/Account.object-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/AccountNumber.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/AccountSource.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/AnnualRevenue.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/BillingAddress.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/CleanStatus.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/DandbCompanyId.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Description.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/DunsNumber.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Fax.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Industry.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Jigsaw.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/NaicsCode.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/NaicsDesc.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Name.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/NumberOfEmployees.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/OperatingHoursId.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/OwnerId.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Ownership.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/ParentId.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Phone.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Rating.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/ShippingAddress.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Sic.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/SicDesc.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Site.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/TickerSymbol.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Tradestyle.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Type.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/Website.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Account/fields/YearStarted.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Credentials__c/Credentials__c.object-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Credentials__c/fields/Password__c.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/objects/Credentials__c/fields/Username__c.field-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/profiles/Admin.profile-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/profiles/Custom%3A Marketing Profile.profile-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/profiles/Custom%3A Sales Profile.profile-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/profiles/Custom%3A Support Profile.profile-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/remoteSiteSettings/CompanyInfo.remoteSite-meta.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -214,7 +290,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544702112992" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544702282993" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -245,7 +321,7 @@
       <workItem from="1544223272570" duration="4714000" />
       <workItem from="1544435594954" duration="1277000" />
       <workItem from="1544620749676" duration="3110000" />
-      <workItem from="1544700052050" duration="403000" />
+      <workItem from="1544700052050" duration="653000" />
     </task>
     <task id="LOCAL-00001" summary="Added Components,Mock Class etc.">
       <created>1544699334875</created>
@@ -265,7 +341,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9515000" />
+    <option name="totallyTimeSpent" value="9765000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="947" extended-state="0" />
@@ -284,9 +360,9 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Log Viewer" order="7" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.498779" visible="true" weight="0.32982457" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.501221" side_tool="true" visible="true" weight="0.32982457" />
+      <window_info anchor="bottom" id="Log Viewer" order="7" sideWeight="0.7356532" weight="0.32982457" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.4981685" visible="true" weight="0.32982457" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50183153" side_tool="true" visible="true" weight="0.32982457" />
       <window_info anchor="bottom" id="Anonymous Apex" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="12" />
