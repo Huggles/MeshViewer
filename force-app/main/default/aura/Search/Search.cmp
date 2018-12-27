@@ -1,9 +1,20 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:component controller="CompanyDetailsController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="step" type="string" default="1" />
+    <aura:attribute name="companyList" type="object" default="{}" />
+    <aura:attribute name="selected" type="object" default="{}" />
     <aura:handler name="SearchEvent" event="c:SearchEvent" action="{!c.onSubmit}"/>    
-    <lightning:card >
-    <c:SearchForm/>
+    <aura:handler name="AccountSelected" event="c:AccountSelected" action="{!c.onSelect}"/>    
+    <lightning:progressIndicator currentStep="{!v.step}" type="base" hasError="false" variant="base">
+        <lightning:progressStep label="Search for companies" value="1"/>
+        <lightning:progressStep label="Select company" value="2"/>
+        <lightning:progressStep label="Sync information" value="3"/>
+    </lightning:progressIndicator>
+    <lightning:card class="{!v.step == '1' ? '' : 'slds-hide'}">
+        <c:SearchForm recordId="{!v.recordId}"/>
     </lightning:card>
-    <lightning:card title="Matching Companies" iconName="standard:account">
-        <c:SearchResults aura:id='childComponent'/>
+
+    <lightning:card class="{!v.step == '2' ? '' : 'slds-hide'}" title="Matching Companies" iconName="standard:account">
+        <lightning:button class="slds-theme_neutral" iconPosition="left" variant="brand" type="submit" label="Search Again" iconName="utility:chevronleft" onclick="{!c.onBack}" />
+        <c:SearchResults recordId="{!v.recordId}" wrapperList="{!v.companyList}" />
     </lightning:card>  
 </aura:component>

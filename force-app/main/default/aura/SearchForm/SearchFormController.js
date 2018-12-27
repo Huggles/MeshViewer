@@ -1,16 +1,7 @@
 ({
-    // Handle the event to submit the input search string
     onSearchSubmit: function( component, event, helper ) {
-        // Getting the string
-        var searchString = component.get("v.searchText");
-        // Getting the event
         var updateEvent = component.getEvent("SearchEvent");
-        // Setting the param on the event
-        updateEvent.setParams({ "SearchEvent": {
-            "searchText" : searchString
-        }
-        });
-        // Fire the event
+        updateEvent.setParams({ "params": component.get('v.searchFields')});
         updateEvent.fire();
     },
     handleChange: function(component,event,helper){
@@ -18,6 +9,32 @@
     },
     changeState : function changeState (component){ 
         component.set('v.isexpanded',component.get('v.isexpanded'));
+    },
+    handleRecordUpdated: function(component, event, helper) {
+        var eventParams = event.getParams();
+        if(eventParams.changeType === "LOADED") {
+           // record is loaded (render other component which needs record data value)
+            console.log(helper.outputProxy(component.get('v.simpleRecord')));
+            var record = component.get('v.simpleRecord');
+            var searchFields = {
+                street: record.BillingStreet,
+                city: record.BillingCity,
+                postcode: record.BillingPostalCode,
+                country: record.BillingCountry,
+                province: record.BillingState,
+                name: record.Name,
+                phone: record.Phone,
+                domain: record.Website
+            }
+            component.set('v.searchFields', searchFields);
+            
+        } else if(eventParams.changeType === "CHANGED") {
+            // record is changed
+        } else if(eventParams.changeType === "REMOVED") {
+            // record is deleted
+        } else if(eventParams.changeType === "ERROR") {
+            // there’s an error while loading, saving, or deleting the record
+        }
     }
     
 })

@@ -22,7 +22,7 @@
     padding: 6px 8px;
 }
 .THIS.selected {
-    border: 3px solid rgb(0, 112, 210);
+    background-color: #CCC;
 }
 .THIS.dl-horizontal dd {
     margin-left: 120px;
