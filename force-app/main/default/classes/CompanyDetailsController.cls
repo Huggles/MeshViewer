@@ -14,14 +14,24 @@ public class CompanyDetailsController {
         return null;
     }
     @AuraEnabled
-    public static String getInfo(String dossierNumber){
+    public static String getInfo(String dossierNumber, Id accountId){
         System.debug('getInfo');
         if(dossierNumber!=null){
-            wwwWebservicesNlSoap.DutchBusinessDossierV3 response = CompanyDetailsControllerHelper.getInfo(dossierNumber);
+            wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier = CompanyDetailsControllerHelper.getInfo(dossierNumber);
             System.debug('getInfoResponse');
-            System.debug(response);
-            return JSON.serialize(response);
+            System.debug(dossier);
+            Id savedRecord = CompanyDetailsControllerHelper.saveDutchBusinessDossier(dossier, accountId); 
+            return savedRecord; //JSON.serialize(dossier);
         }
         return null;
     } 
+    @AuraEnabled
+    public static Id getDossierRecordId(Integer dossierNumber){
+        // @todo security
+        List<Dutch_Business_Dossier__c> results = [SELECT Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :dossierNumber];
+        if (results.size() > 0) {
+            return results[0].Id;
+        }
+        return null;
+    }
 }

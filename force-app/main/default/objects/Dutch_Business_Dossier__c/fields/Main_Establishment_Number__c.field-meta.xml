@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Main_Establishment_Number__c</fullName>
+    <description>The establishment number for the main establishment of the business.  Optional.</description>
+    <externalId>false</externalId>
+    <label>Main Establishment Number</label>
+    <precision>12</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

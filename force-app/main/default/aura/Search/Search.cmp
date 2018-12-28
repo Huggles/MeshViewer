@@ -2,19 +2,43 @@
     <aura:attribute name="step" type="string" default="1" />
     <aura:attribute name="companyList" type="object" default="{}" />
     <aura:attribute name="selected" type="object" default="{}" />
+    <aura:attribute name="dossierId" type="String" />
+    
+    <aura:attribute name="simpleRecord" type="object" default="{}" />
+    <force:recordData aura:id="recordHandler"
+    recordId="{!v.recordId}"
+    targetFields="{!v.simpleRecord}"
+    layoutType="FULL"
+    mode="EDIT"
+    recordUpdated="{!c.handleRecordUpdated}"
+    />
+
     <aura:handler name="SearchEvent" event="c:SearchEvent" action="{!c.onSubmit}"/>    
-    <aura:handler name="AccountSelected" event="c:AccountSelected" action="{!c.onSelect}"/>    
-    <lightning:progressIndicator currentStep="{!v.step}" type="base" hasError="false" variant="base">
-        <lightning:progressStep label="Search for companies" value="1"/>
-        <lightning:progressStep label="Select company" value="2"/>
-        <lightning:progressStep label="Sync information" value="3"/>
-    </lightning:progressIndicator>
+    <aura:handler name="AccountSelected" event="c:AccountSelected" action="{!c.onSelect}"/>
+    <div class="{!v.step == '4' ? 'slds-hide' : ''}">
+        <lightning:progressIndicator currentStep="{!v.step}" type="base" hasError="false" variant="base">
+            <lightning:progressStep label="Search for companies" value="1"/>
+            <lightning:progressStep label="Select company" value="2"/>
+            <lightning:progressStep label="Sync information" value="3"/>
+        </lightning:progressIndicator>
+    </div>
     <lightning:card class="{!v.step == '1' ? '' : 'slds-hide'}">
         <c:SearchForm recordId="{!v.recordId}"/>
     </lightning:card>
 
     <lightning:card class="{!v.step == '2' ? '' : 'slds-hide'}" title="Matching Companies" iconName="standard:account">
-        <lightning:button class="slds-theme_neutral" iconPosition="left" variant="brand" type="submit" label="Search Again" iconName="utility:chevronleft" onclick="{!c.onBack}" />
+        <lightning:button iconPosition="left" variant="neutral" type="submit" label="Search Again" iconName="utility:chevronleft" onclick="{!c.onBack}" />
         <c:SearchResults recordId="{!v.recordId}" wrapperList="{!v.companyList}" />
     </lightning:card>  
+
+    <div class="{!v.step == '4' ? '' : 'slds-hide'}" >
+        <!-- <lightning:button class="slds-theme_brand" iconPosition="left" variant="brand" type="submit" label="Sync latest info" iconName="utility:refresh" onclick="{!c.onRefresh}" /> -->
+        <aura:if isTrue="{!v.dossierId}">
+            <lightning:recordForm
+            recordId="{!v.dossierId}"
+            objectApiName="Dutch_Business_Dossier__c"
+            layoutType="Full"
+            mode="view" />
+        </aura:if>
+    </div> 
 </aura:component>

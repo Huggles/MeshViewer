@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rsin_Number__c</fullName>
+    <description>The 9 number RSIN (`Rechtspersonen Samenwerkingsverbanden Informatie Nummer`) identifying the business’ legal entity.  Optional, businesses with a sole proprietor (`eenmanszaken`) do not have an rsin_number.</description>
+    <externalId>false</externalId>
+    <label>Rsin Number</label>
+    <precision>9</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
