@@ -45,7 +45,9 @@ public with sharing class CompanyDetailsControllerHelper {
             throw new AuraHandledException(ex.getMessage());
         }
 
-        if(returnedResults.results.item.size()>0){
+        System.debug(returnedResults);
+
+        if(returnedResults != null && returnedResults.results != null && returnedResults.results.item != null && returnedResults.results.item.size()>0){
             searchResults=returnedResults.results.item;
         }
         else{
@@ -57,12 +59,12 @@ public with sharing class CompanyDetailsControllerHelper {
     }
 
     public static wwwWebservicesNlSoap.DutchBusinessDossierV3 getInfo(String dossierNumber) {
-        System.debug('getInfo');
-        System.debug(dossierNumber);
+        if (dossierNumber == null) return null;
         stub=new wwwWebservicesNlSoap.Webservices_nlPort(); 
         stub.HeaderLogin= getAuthentication();
         try{
-            wwwWebservicesNlSoap.DutchBusinessDossierV3 response = stub.dutchBusinessGetDossierV3(dossierNumber, '000036043249');
+            wwwWebservicesNlSoap.DutchBusinessDossierV3 response;
+            response = stub.dutchBusinessGetDossierV3(dossierNumber, null);
             System.debug('RETURNED');
             System.debug(response);
             return response;
@@ -74,37 +76,60 @@ public with sharing class CompanyDetailsControllerHelper {
     }
 
     public static Id saveDutchBusinessDossier(wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier, Id accountId) {
-        // Condense all trade names into single field, seperated by new lines.
+        List<Dutch_Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
+        Dutch_Business_Dossier__c d;
+
         String trade_names = '';
-        for (Integer i = 0; i < dossier.trade_names.item.size(); i++) {
-            trade_names += dossier.trade_names.item[i] + '/n';
+        if (dossier.trade_names != null && dossier.trade_names.item != null && dossier.trade_names.item.size() > 0) {
+            // Condense all trade names into single field, seperated by new lines.
+            for (Integer i = 0; i < dossier.trade_names.item.size(); i++) {
+                trade_names += dossier.trade_names.item[i] + '/n';
+            }
+        }
+
+        if (dbds.size() < 1) {
+            d = new Dutch_Business_Dossier__c();
+            d.Account__c = accountId;
+        }
+        else {
+            d = dbds[0];
+            if (d.Account__c !=  accountId) {
+                throw new AuraHandledException('Dossier is already allocated to another Account');
+            }
         }
 
         // @todo add addresses and everything from 'Contact person' on.
-        Dutch_Business_Dossier__c d = new Dutch_Business_Dossier__c(
-            Account__c = accountId,
-            Name = dossier.legal_name,
-            Dossier_Number__c = Integer.valueOf(dossier.dossier_number),
-            Establishment_Number__c = Integer.valueOf(dossier.establishment_number),
-            Main_Establishment_Number__c = Integer.valueOf(dossier.main_establishment_number),
-            Indication_Main_Establishment__c = Boolean.valueOf(dossier.indication_main_establishment),
-            Rsin_Number__c = Integer.valueOf(dossier.rsin_number),
-            Chamber_Number__c = Integer.valueOf(dossier.chamber_number),
-            Legal_Form_Code__c = Integer.valueOf(dossier.legal_form_code),
-            Legal_Form_Text__c = String.valueOf(dossier.legal_form_text),
-            Indication_Organisation_Code__c = String.valueOf(dossier.indication_organisation_code),
-            Trade_Name_45__c = dossier.trade_name_45,
-            Trade_Name_Full__c = dossier.trade_name_full,
-            Trade_Names__c = trade_names,
-            Telephone_Number__c = dossier.telephone_number,
-            Mobile_Number__c = dossier.mobile_number,
-            Domain_Name__c = dossier.domain_name
-        );
+        d.Name = dossier.legal_name;
+        d.Dossier_Number__c = Integer.valueOf(dossier.dossier_number);
+        d.Establishment_Number__c = Integer.valueOf(dossier.establishment_number);
+        d.Main_Establishment_Number__c = Integer.valueOf(dossier.main_establishment_number);
+        d.Indication_Main_Establishment__c = Boolean.valueOf(dossier.indication_main_establishment);
+        d.Rsin_Number__c = Integer.valueOf(dossier.rsin_number);
+        d.Chamber_Number__c = Integer.valueOf(dossier.chamber_number);
+        d.Legal_Form_Code__c = Integer.valueOf(dossier.legal_form_code);
+        d.Legal_Form_Text__c = String.valueOf(dossier.legal_form_text);
+        d.Indication_Organisation_Code__c = String.valueOf(dossier.indication_organisation_code);
+        d.Trade_Name_45__c = dossier.trade_name_45;
+        d.Trade_Name_Full__c = dossier.trade_name_full;
+        d.Trade_Names__c = trade_names;
+        d.Telephone_Number__c = dossier.telephone_number;
+        d.Mobile_Number__c = dossier.mobile_number;
+        d.Domain_Name__c = dossier.domain_name;
 
         // @todo add security checking
-        insert d;
+        upsert d;
 
         return d.Id;
+    }
+
+    public static boolean updateAccountDossier(Id accountId, Integer dossierNumber) {
+        List<Account> accts = [SELECT Id, Dossier_Number__c FROM Account WHERE Id = :accountId];
+        if (accts.size() > 0) {
+            accts[0].Dossier_Number__c = dossierNumber;
+            update accts;
+            return true;
+        }
+        return false;
     }
 
     public class CompanySearchDto {

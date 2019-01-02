@@ -32,7 +32,6 @@
     </lightning:card>  
 
     <div class="{!v.step == '4' ? '' : 'slds-hide'}" >
-        <!-- <lightning:button class="slds-theme_brand" iconPosition="left" variant="brand" type="submit" label="Sync latest info" iconName="utility:refresh" onclick="{!c.onRefresh}" /> -->
         <aura:if isTrue="{!v.dossierId}">
             <lightning:recordForm
             recordId="{!v.dossierId}"
