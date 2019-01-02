@@ -116,10 +116,49 @@ public with sharing class CompanyDetailsControllerHelper {
         d.Mobile_Number__c = dossier.mobile_number;
         d.Domain_Name__c = dossier.domain_name;
 
+        d.Authorized_Share_Capital__c = dossier.authorized_share_capital;
+        d.Authorized_Share_Capital_Currency__c = dossier.authorized_share_capital_currency;
+        d.Class_Personnel__c = String.valueOf(dossier.class_personnel);
+        d.Class_Personnel_Fulltime__c = String.valueOf(dossier.class_personnel_fulltime);
+        d.Continuation_Date__c = convertDate(dossier.continuation_date);
+        d.Discontinuation_Date__c = convertDate(dossier.discontinuation_date);
+        d.Establishment_Date__c = convertDate(dossier.establishment_date);
+        d.Founding_Date__c = convertDate(dossier.founding_date);
+        d.Issued_Share_Capital__c = Integer.valueOf(dossier.issued_share_capital);
+        d.Issued_Share_Capital_Currency__c = dossier.issued_share_capital_currency;
+        d.Paid_Up_Share_Capital__c = Integer.valueOf(dossier.paid_up_share_capital);
+        d.Paid_Up_Share_Capital_Currency__c = dossier.paid_up_share_capital_currency;
+        d.Personnel__c = dossier.personnel;
+        d.Personnel_Fulltime__c = dossier.personnel_fulltime;
+        d.Personnel_Reference_Date__c = convertDate(dossier.personnel_reference_date);
+        d.Primary_Sbi_Code__c = dossier.primary_sbi_code;
+        d.Primary_Sbi_Code_Text__c = dossier.primary_sbi_code_text;
+        d.Secondary_Sbi_Code_1__c = dossier.secondary_sbi_code1;
+        d.Secondary_Sbi_Code_1_Text__c = dossier.secondary_sbi_code1_text;
+        d.Secondary_Sbi_Code_2__c = dossier.secondary_sbi_code2;
+        d.Secondary_Sbi_Code_2_Text__c = dossier.secondary_sbi_code2_text;
+        d.Status__c = determineStatus(dossier);
+
         // @todo add security checking
         upsert d;
 
         return d.Id;
+    }
+
+    private static String determineStatus(wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier) {
+        List<String> status = new List<String>();
+        if (Boolean.valueOf(dossier.indication_import) == true) status.add('Import');
+        if (Boolean.valueOf(dossier.indication_export) == true) status.add('Export');
+        if (Boolean.valueOf(dossier.indication_economically_active) == true) status.add('Economically Active');
+        if (Boolean.valueOf(dossier.indication_non_mailing) == true) status.add('Non Mailing');
+        if (Boolean.valueOf(dossier.indication_bankruptcy) == true) status.add('Bankruptcy');
+        if (Boolean.valueOf(dossier.indication_dip) == true) status.add('DIP');
+        return String.join(status, ';');
+    }
+
+    private static Date convertDate(wwwWebservicesNlSoap.DutchBusinessDateV3 d) {
+        if (d != null) return Date.newInstance(d.year, d.month, d.day);
+        return null;
     }
 
     public static boolean updateAccountDossier(Id accountId, Integer dossierNumber) {
