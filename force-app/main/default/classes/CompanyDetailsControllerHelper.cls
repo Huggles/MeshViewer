@@ -75,7 +75,36 @@ public with sharing class CompanyDetailsControllerHelper {
         }
     }
 
+    private static Boolean checkAccess() {
+         List<String> fields = new List<String>{'Name','Dossier_Number__c','Establishment_Number__c','Main_Establishment_Number__c',
+        'Indication_Main_Establishment__c','Rsin_Number__c','Chamber_Number__c','Legal_Form_Code__c','Legal_Form_Text__c','Indication_Organisation_Code__c',
+        'Trade_Name_45__c','Trade_Name_Full__c','Trade_Names__c','Telephone_Number__c','Mobile_Number__c','Domain_Name__c','Authorized_Share_Capital__c',
+        'Authorized_Share_Capital_Currency__c','Class_Personnel__c','Class_Personnel_Fulltime__c','Continuation_Date__c','Discontinuation_Date__c','Establishment_Date__c',
+        'Founding_Date__c','Issued_Share_Capital__c','Issued_Share_Capital_Currency__c','Paid_Up_Share_Capital__c','Paid_Up_Share_Capital_Currency__c',
+        'Personnel__c','Personnel_Fulltime__c','Personnel_Reference_Date__c','Primary_Sbi_Code__c','Primary_Sbi_Code_Text__c','Secondary_Sbi_Code_1__c',
+        'Secondary_Sbi_Code_1_Text__c','Secondary_Sbi_Code_2__c','Secondary_Sbi_Code_2_Text__c','Status__c'};
+
+        Schema.sObjectType.Dutch_Business_Dossier__c.fields.getMap();
+
+        Schema.DescribeSObjectResult a_desc = Dutch_Business_Dossier__c.sObjectType.getDescribe(); 
+        //for the Account object, you can replace that with any object you have, standard or custom
+        Map<String, Schema.SObjectField> a_fields = a_desc.fields.getMap();
+
+        for(Schema.sObjectField fld: a_fields.values()){ 
+            if (fld.getDescribe().isUpdateable() == false && fields.contains(fld.getDescribe().getName())) {
+                return false;
+            }
+        }
+
+
+        return true;
+    }
+
     public static Id saveDutchBusinessDossier(wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier, Id accountId) {
+        if (Schema.sObjectType.Dutch_Business_Dossier__c.fields.Id.isAccessible() == false ||
+            Schema.sObjectType.Dutch_Business_Dossier__c.fields.Account__c.isAccessible() == false ||
+            checkAccess() == false) throw new NoAccessException();
+
         List<Dutch_Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
         Dutch_Business_Dossier__c d;
 
@@ -98,7 +127,7 @@ public with sharing class CompanyDetailsControllerHelper {
             }
         }
 
-        // @todo add addresses and everything from 'Contact person' on.
+        // @todo add addresses and contact.
         d.Name = dossier.legal_name;
         d.Dossier_Number__c = Integer.valueOf(dossier.dossier_number);
         d.Establishment_Number__c = Integer.valueOf(dossier.establishment_number);
@@ -139,7 +168,6 @@ public with sharing class CompanyDetailsControllerHelper {
         d.Secondary_Sbi_Code_2_Text__c = dossier.secondary_sbi_code2_text;
         d.Status__c = determineStatus(dossier);
 
-        // @todo add security checking
         upsert d;
 
         return d.Id;
@@ -147,12 +175,12 @@ public with sharing class CompanyDetailsControllerHelper {
 
     private static String determineStatus(wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier) {
         List<String> status = new List<String>();
-        if (Boolean.valueOf(dossier.indication_import) == true) status.add('Import');
-        if (Boolean.valueOf(dossier.indication_export) == true) status.add('Export');
-        if (Boolean.valueOf(dossier.indication_economically_active) == true) status.add('Economically Active');
-        if (Boolean.valueOf(dossier.indication_non_mailing) == true) status.add('Non Mailing');
-        if (Boolean.valueOf(dossier.indication_bankruptcy) == true) status.add('Bankruptcy');
-        if (Boolean.valueOf(dossier.indication_dip) == true) status.add('DIP');
+        if (dossier.indication_import != null && Boolean.valueOf(dossier.indication_import) == true) status.add('Import');
+        if (dossier.indication_export != null && Boolean.valueOf(dossier.indication_export) == true) status.add('Export');
+        if (dossier.indication_economically_active != null && Boolean.valueOf(dossier.indication_economically_active) == true) status.add('Economically Active');
+        if (dossier.indication_non_mailing != null && Boolean.valueOf(dossier.indication_non_mailing) == true) status.add('Non Mailing');
+        if (dossier.indication_bankruptcy != null && Boolean.valueOf(dossier.indication_bankruptcy) == true) status.add('Bankruptcy');
+        if (dossier.indication_dip != null && Boolean.valueOf(dossier.indication_dip) == true) status.add('DIP');
         return String.join(status, ';');
     }
 

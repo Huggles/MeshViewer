@@ -28,7 +28,8 @@ public class CompanyDetailsController {
     } 
     @AuraEnabled
     public static Id getDossierRecordId(Integer dossierNumber){
-        // @todo security
+        if (Schema.sObjectType.Dutch_Business_Dossier__c.fields.Id.isAccessible() == false) throw new NoAccessException();
+        
         List<Dutch_Business_Dossier__c> results = [SELECT Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :dossierNumber];
         if (results.size() > 0) {
             return results[0].Id;
