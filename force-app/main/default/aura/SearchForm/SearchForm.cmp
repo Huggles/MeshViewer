@@ -1,0 +1,58 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="searchFields" type="object" default="{}"/>
+    <aura:attribute name="simpleRecord" type="object"/>
+    <aura:attribute name="error" type="string"/>
+
+    <force:recordData aura:id="recordLoader"
+      recordId="{!v.recordId}"
+      targetFields="{!v.simpleRecord}"
+      targetError="{!v.error}"
+      recordUpdated="{!c.handleRecordUpdated}"
+      layoutType="FULL"
+      />
+
+    <aura:registerEvent name="SearchEvent" type="c:SearchEvent"/>
+    <lightning:card variant="Narrow" title="Search" iconName="standard:account">
+        <aura:set attribute="actions">
+            <lightning:button class="slds-theme_brand" iconPosition="right" variant="brand" type="submit" label="Search" iconName="standard:search" onclick="{!c.onSearchSubmit}" />
+        </aura:set>
+        {!v.error}
+        <div class="slds-form slds-form_stacked">
+            <lightning:layout>
+                <lightning:layoutItem flexibility="grow" >
+                    <fieldset class='slds-form-element'>
+                        <legend class="slds-form-element__label slds-form-element__legend">Company Details</legend>
+                        <div class="slds-form-element__control">
+                            <lightning:input class="slds-p-right_none slds-p-left_none" label="Trade Name" placeholder="Placeholder Text" required="true" type="text" variant="standard" value="{!v.searchFields.name}"></lightning:input>
+                        </div>
+                        <div class="slds-form-element__control"><lightning:input class="slds-p-right_none slds-p-left_none" label="Phone" type="text" variant="standard" value="{!v.searchFields.phone}"></lightning:input></div>
+                        <div class="slds-form-element__control"><lightning:input class="slds-p-right_none slds-p-left_none" label="Domain" type="text" variant="standard" value="{!v.searchFields.domain}"></lightning:input></div>
+                    </fieldset>
+                </lightning:layoutItem>
+                <lightning:layoutItem flexibility="grow">
+                    <lightning:inputAddress  aura:id="Address" class="slds-p-around_medium slds-container_center slds-align_absolute-center" addressLabel="Address" streetLabel="Street" cityLabel="City" provinceLabel="Province" postalCodeLabel="Post Code" countryLabel="Country"
+                        country="{!v.searchFields.country}" street="{!v.searchFields.street}" city="{!v.searchFields.city}" postalCode="{!v.searchFields.postcode}" province="{!v.searchFields.province}"></lightning:inputAddress>
+                </lightning:layoutItem>
+            </lightning:layout>
+            <fieldset class="slds-form-element">
+                <legend class="slds-form-element__legend slds-form-element__label">Details to Sync</legend>
+                <div class="slds-form-element__control">
+                    <div class="slds-checkbox_button-group">
+                    <span class="slds-button slds-checkbox_button">
+                        <input id="monday" name="checkbox" type="checkbox" value="monday" checked="checked"/>
+                        <label class="slds-checkbox_button__label" for="monday">
+                        <span class="slds-checkbox_faux">Company Details</span>
+                        </label>
+                    </span>
+                    <span class="slds-button slds-checkbox_button">
+                        <input id="tuesday" name="checkbox" type="checkbox" value="tuesday" />
+                        <label class="slds-checkbox_button__label" for="tuesday">
+                        <span class="slds-checkbox_faux">Legal Entity Details</span>
+                        </label>
+                    </span>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </lightning:card>
+</aura:component>

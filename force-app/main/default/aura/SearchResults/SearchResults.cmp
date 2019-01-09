@@ -1,0 +1,19 @@
+<aura:component controller="CompanyDetailsController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="wrapperList" type="object"/>
+    <aura:attribute name="searchText" type="String" default=""/>
+    <aura:attribute name="selected" type="String"/>
+    <aura:handler name="AccountSelect" event="c:AccountSelect" action="{!c.onSelect}"/>    
+    <aura:registerEvent name="AccountSelected" type="c:AccountSelected"/>
+    <aura:if isTrue='{!v.wrapperList.length > 0}'>
+        <lightning:button class="slds-theme_brand" iconPosition="right" variant="brand" type="submit" label="Confirm" iconName="utility:check" onclick="{!c.onConfirm}" disabled="{!v.selected == null}"/>
+        <lightning:layout multipleRows="true">
+        <aura:iteration items="{!v.wrapperList}" var="result">
+            <aura:if isTrue="{!result.indication_economically_active == true}">
+                <lightning:layoutItem padding="around-small" size="4">
+                    <c:AccountTile result="{!result}" />
+                </lightning:layoutItem>
+            </aura:if>
+        </aura:iteration> 
+    </lightning:layout>
+    </aura:if>
+</aura:component>

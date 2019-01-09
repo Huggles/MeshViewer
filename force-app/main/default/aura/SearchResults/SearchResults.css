@@ -1,0 +1,10 @@
+.THIS.tile {
+    position:relative;
+    display: inline-block;
+    width: 220px; /* changed for 3 challenge */
+    height: 220px;
+    padding: 1px !important;
+}
+.THIS.selected {
+    border: 3px solid rgb(0, 112, 210);
+}
