@@ -1,6 +1,6 @@
 ({
     onSearchSubmit: function( component, event, helper ) {
-        var updateEvent = component.getEvent("SearchEvent");
+        var updateEvent = component.getEvent("dossierSearchSubmitEvent");
         updateEvent.setParams({ "params": component.get('v.searchFields')});
         updateEvent.fire();
     },
@@ -14,7 +14,6 @@
         var eventParams = event.getParams();
         if(eventParams.changeType === "LOADED") {
            // record is loaded (render other component which needs record data value)
-            console.log(helper.outputProxy(component.get('v.simpleRecord')));
             var record = component.get('v.simpleRecord');
             var searchFields = {
                 street: record.BillingStreet,

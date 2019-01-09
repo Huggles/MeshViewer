@@ -1,9 +1,9 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:component>
     <aura:attribute name="result" type="object"/>
     <aura:attribute name="style" type="string" default="slds-tile slds-media" />
     <aura:attribute name="variant" type="string" default="" />
     <aura:attribute name="icon" type="string" default="utility:add" />
-    <aura:registerEvent name="AccountSelect" type="c:AccountSelect"/>
+    <aura:registerEvent name="dossierSelectedEvent" type="c:dossierSelectedEvent"/>
 
     <!-- <lightning:tile class="slds-tile_board" label="{!v.result.name + ' (' + v.result.dossier_number + ')'}" onclick="{!c.onClick}" >
         <aura:set attribute="media">

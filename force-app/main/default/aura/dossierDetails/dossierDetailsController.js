@@ -21,14 +21,14 @@
         var eventParams = event.getParams();
         if(eventParams.changeType === "LOADED" || eventParams.changeType === "CHANGED") {
            // record is loaded (render other component which needs record data value)
-            console.log(helper.outputProxy(component.get('v.simpleRecord')));
-            var record = component.get('v.simpleRecord');
-            if (record.Dossier_Number__c != null) {
-                component.set('v.step', '4');
-                helper.callServer(component, 'c.getDossierRecordId', {dossierNumber: record.Dossier_Number__c}, function(response){
-                    component.set('v.dossierId', response);
-                })
-            }
+            // console.log(helper.outputProxy(component.get('v.simpleRecord')));
+            // var record = component.get('v.simpleRecord');
+            // if (record.Dossier_Number__c != null && record.Dutch_Business_Dossier__c != null) {
+            //     component.set('v.step', '4');
+            //     // helper.callServer(component, 'c.getDossierRecordId', {dossierNumber: record.Dossier_Number__c}, function(response){
+            //     //     // component.set('v.dossierId', response);
+            //     // })
+            // }
         } else if(eventParams.changeType === "REMOVED") {
             // record is deleted
         } else if(eventParams.changeType === "ERROR") {

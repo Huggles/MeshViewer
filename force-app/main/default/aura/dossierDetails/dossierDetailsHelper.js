@@ -69,5 +69,6 @@
     handleCompanyData : function(component, response) {
         component.set('v.step', '3');
         component.find("recordHandler").reloadRecord(true);
+        this.showToast('Success', 'Company.info data sync succesful', 'success'); //@todo labels on all toasts
     }
 })

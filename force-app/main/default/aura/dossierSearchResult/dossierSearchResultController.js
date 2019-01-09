@@ -6,7 +6,7 @@
         component.set('v.variant', 'inverse');
         component.set('v.icon', 'utility:check');
         // Getting the event
-        var updateEvent = component.getEvent("AccountSelect");
+        var updateEvent = component.getEvent("dossierSelectedEvent");
         // Setting the param on the event 
         updateEvent.setParams({ "DossierNumber": record.dossier_number });
         // Fire the event so all the components can hear it

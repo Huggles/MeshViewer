@@ -44,9 +44,9 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>Search</componentName>
+            <componentName>dossierDetails</componentName>
         </componentInstances>
-        <name>Facet-1870824e-7e1d-4b1c-95dd-fe1afb040596</name>
+        <name>Facet-0613d58f-ed42-421c-97e7-be7f3c0c204a</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -90,11 +90,11 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>body</name>
-                <value>Facet-1870824e-7e1d-4b1c-95dd-fe1afb040596</value>
+                <value>Facet-0613d58f-ed42-421c-97e7-be7f3c0c204a</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
-                <value>Company Info</value>
+                <value>Company.info Details</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
@@ -162,6 +162,9 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <componentInstances>
+            <componentName>dossierSyncLauncher</componentName>
+        </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
                 <name>tabs</name>

@@ -21,7 +21,7 @@ public class CompanyDetailsController {
             System.debug('getInfoResponse');
             System.debug(dossier);
             Id savedRecord = CompanyDetailsControllerHelper.saveDutchBusinessDossier(dossier, accountId); 
-            CompanyDetailsControllerHelper.updateAccountDossier(accountId, Integer.valueOf(dossier.dossier_number));
+            CompanyDetailsControllerHelper.updateAccountDossier(accountId, savedRecord);
             return savedRecord;
         }
         return null;
