@@ -1,15 +1,49 @@
 ({
+    /**
+     * Ignore search params if dossier number populated. 
+     * @param {*} component 
+     * @param {*} event 
+     * @param {*} helper 
+     */
+    populateDossier: function (component, event, helper) {
+        var fields = component.get('v.searchFields');
+        if (fields.dossier_number != null && fields.dossier_number != '') {
+            component.set('v.disableSearch', true);
+        }
+        else component.set('v.disableSearch', false);
+    },
+    /**
+     * Fire search event to dossierDetails component
+     * @param {*} component 
+     * @param {*} event 
+     * @param {*} helper 
+     */
     onSearchSubmit: function( component, event, helper ) {
         var updateEvent = component.getEvent("dossierSearchSubmitEvent");
         updateEvent.setParams({ "params": component.get('v.searchFields')});
         updateEvent.fire();
     },
-    handleChange: function(component,event,helper){
-        component.set("v.SelectedAPI", component.find("levels").get("v.value"));
+    /**
+     * Bypass search and attempt retrieve. Fire dossier number to dossierDetails component.
+     * @param {*} component 
+     * @param {*} event 
+     * @param {*} helper 
+     */
+    onMatchDossier: function( component, event, helper ) {
+        // Getting the event
+        var updateEvent = component.getEvent("dossierSelectionConfirmedEvent");
+        // Setting the param on the event 
+        var fields = component.get('v.searchFields');
+        updateEvent.setParams({ "DossierNumber": fields.dossier_number });
+        // Fire the event so all the components can hear it
+        updateEvent.fire();
     },
-    changeState : function changeState (component){ 
-        component.set('v.isexpanded',component.get('v.isexpanded'));
-    },
+    /**
+     * Populate search fields with data from current Account record.
+     * @param {*} component 
+     * @param {*} event 
+     * @param {*} helper 
+     */
     handleRecordUpdated: function(component, event, helper) {
         var eventParams = event.getParams();
         if(eventParams.changeType === "LOADED") {

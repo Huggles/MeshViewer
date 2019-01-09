@@ -14,7 +14,6 @@
     layoutType="FULL"
     fields="Dutch_Business_Dossier__c"
     mode="EDIT"
-    recordUpdated="{!c.handleRecordUpdated}"
     />
 
     <div class="{!v.simpleRecord.Dutch_Business_Dossier__c != null ? 'slds-hide' : ''}">

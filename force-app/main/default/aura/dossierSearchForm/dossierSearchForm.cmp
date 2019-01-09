@@ -1,16 +1,21 @@
 <aura:component implements="force:hasRecordId">
     <aura:attribute name="searchFields" type="object" default="{}" />
     <aura:attribute name="simpleRecord" type="object" />
+    <aura:attribute name="disableSearch" type="Boolean" default="false" />
     <aura:attribute name="error" type="string" />
 
     <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" targetFields="{!v.simpleRecord}" targetError="{!v.error}"
         recordUpdated="{!c.handleRecordUpdated}" layoutType="FULL" />
 
     <aura:registerEvent name="dossierSearchSubmitEvent" type="c:dossierSearchSubmitEvent" />
+    <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent"/>
+
     <lightning:card variant="Narrow" title="Search" iconName="standard:account">
         <aura:set attribute="actions">
-            <lightning:button class="slds-theme_brand" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Confirm}"
-                iconName="standard:search" onclick="{!c.onSearchSubmit}" />
+            <lightning:button class="{!v.disableSearch == false ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Confirm}"
+                iconName="standard:search" onclick="{!c.onSearchSubmit}"/>
+            <lightning:button class="{!v.disableSearch == true ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Match_Dossier}"
+                iconName="utility:forward" onclick="{!c.onMatchDossier}"/>
         </aura:set>
         {!v.error}
         <div class="slds-form slds-form_stacked">
@@ -20,19 +25,19 @@
                         <legend class="slds-form-element__label slds-form-element__legend">{!$Label.c.Company_Info_Search_Company_Details}</legend>
                         <div class="slds-form-element__control">
                             <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Trade_Name}"
-                                required="true" type="text" variant="standard" value="{!v.searchFields.name}"></lightning:input>
+                                required="true" type="text" variant="standard" value="{!v.searchFields.name}" disabled="{!v.disableSearch}"></lightning:input>
                         </div>
                         <div class="slds-form-element__control">
                             <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Dossier_Number}"
-                                type="text" variant="standard" value="{!v.searchFields.dossier_number}"></lightning:input>
+                                type="text" variant="standard" value="{!v.searchFields.dossier_number}" onchange="{!c.populateDossier}"></lightning:input>
                         </div>
                         <div class="slds-form-element__control">
                             <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Phone}"
-                                type="text" variant="standard" value="{!v.searchFields.phone}"></lightning:input>
+                                type="text" variant="standard" value="{!v.searchFields.phone}" disabled="{!v.disableSearch}"></lightning:input>
                         </div>
                         <div class="slds-form-element__control">
                             <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Domain}"
-                                type="text" variant="standard" value="{!v.searchFields.domain}"></lightning:input>
+                                type="text" variant="standard" value="{!v.searchFields.domain}" disabled="{!v.disableSearch}"></lightning:input>
                         </div>
                     </fieldset>
                 </lightning:layoutItem>
@@ -42,7 +47,7 @@
                         cityLabel="{!$Label.c.Company_Info_Search_City}" provinceLabel="{!$Label.c.Company_Info_Search_Province}"
                         postalCodeLabel="{!$Label.c.Company_Info_Search_Postal_Code}" countryLabel="{!$Label.c.Company_Info_Search_Country}"
                         country="{!v.searchFields.country}" street="{!v.searchFields.street}" city="{!v.searchFields.city}"
-                        postalCode="{!v.searchFields.postcode}" province="{!v.searchFields.province}"></lightning:inputAddress>
+                        postalCode="{!v.searchFields.postcode}" province="{!v.searchFields.province}" disabled="{!v.disableSearch}"></lightning:inputAddress>
                 </lightning:layoutItem>
             </lightning:layout>
             <fieldset class="slds-form-element">
