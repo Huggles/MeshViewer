@@ -98,5 +98,8 @@
         component.set('v.step', '3');
         component.find("recordHandler").reloadRecord(true);
         this.showToast(component, 'Success', 'Company.info data sync successful', 'success'); //@todo labels on all toasts
+        // Close quick action if that is the origin.
+        var dismissActionPanel = $A.get("e.force:closeQuickAction"); 
+        dismissActionPanel.fire(); 
     }
 })

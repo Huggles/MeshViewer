@@ -1,20 +1,26 @@
-
 <aura:component implements="force:hasRecordId">
-    <aura:attribute name="wrapperList" type="object"/>
-    <aura:attribute name="searchText" type="String" default=""/>
-    <aura:attribute name="selected" type="String"/>
-    <aura:handler name="dossierSelectedEvent" event="c:dossierSelectedEvent" action="{!c.onSelect}"/>    
-    <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent"/>
+    <aura:attribute name="wrapperList" type="object" />
+    <aura:attribute name="searchText" type="String" default="" />
+    <aura:attribute name="selected" type="String" />
+    <aura:handler name="dossierSelectedEvent" event="c:dossierSelectedEvent" action="{!c.onSelect}" />
+    <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent" />
     <aura:if isTrue='{!v.wrapperList.length > 0}'>
-        <lightning:button class="slds-theme_brand" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Results_Confirm}" iconName="utility:check" onclick="{!c.onConfirm}" disabled="{!v.selected == null}"/>
+        <lightning:button class="slds-theme_brand" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Results_Confirm}"
+            iconName="utility:check" onclick="{!c.onConfirm}" disabled="{!v.selected == null}" />
         <lightning:layout multipleRows="true">
-        <aura:iteration items="{!v.wrapperList}" var="result">
-            <aura:if isTrue="{!result.indication_economically_active == true}">
-                <lightning:layoutItem padding="around-small" size="4">
-                    <c:dossierSearchResult result="{!result}" />
-                </lightning:layoutItem>
-            </aura:if>
-        </aura:iteration> 
-    </lightning:layout>
+            <aura:iteration items="{!v.wrapperList}" var="result">
+                <aura:if isTrue="{!result.indication_economically_active == true}">
+                    <lightning:layoutItem padding="around-small" size="4">
+                        <c:dossierSearchResult result="{!result}" />
+                    </lightning:layoutItem>
+                </aura:if>
+            </aura:iteration>
+        </lightning:layout>
+        <aura:set attribute="else">
+            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                <span class="slds-assistive-text">error</span>
+                <h2>{!$Label.c.Company_Info_Search_No_Results}</h2>
+            </div>
+        </aura:set>
     </aura:if>
 </aura:component>

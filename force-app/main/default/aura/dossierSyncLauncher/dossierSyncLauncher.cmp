@@ -1,24 +1,6 @@
 <aura:component implements="flexipage:availableForRecordHome,force:hasRecordId">
     <aura:attribute name="simpleRecord" type="Object" />
-    <aura:attribute name="displayForm" type="Boolean" default="false" />
     <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" fields="Name,Company_Info_Sync__c, Dutch_Business_Dossier__c"
         targetFields="{!v.simpleRecord}" recordUpdated="{!c.display}" />
-
-    <aura:if isTrue="{!v.displayForm}">
-        <div aura:id="editDialog" role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open"
-            style="z-index: 9070;">
-            <div class="slds-modal__container">
-                <div class="slds-modal__header">
-                    <h2 class="slds-text-heading_medium">{!$Label.c.Company_Info_Sync}</h2>
-                </div>
-                <div class="slds-modal__content slds-p-horizontal_medium">
-                    <c:dossierDetails recordId="{!v.recordId}" />
-                </div>
-                <div class="slds-modal__footer">
-                    <lightning:button label="Later" onclick="{!c.hideModal}"></lightning:button>
-                </div>
-            </div>
-        </div>
-        <div aura:id="overlay" class="slds-backdrop slds-backdrop_open" style="z-index: 9065;"></div>
-    </aura:if>
+    <lightning:quickActionAPI aura:id="quickActionAPI" />   
 </aura:component>

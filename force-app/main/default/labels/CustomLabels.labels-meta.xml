@@ -78,6 +78,13 @@
         <value>Chamber of Commerce Number</value>
     </labels>
     <labels>
+        <fullName>Company_Info_Search_Match_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Match Dossier</shortDescription>
+        <value>Match Chamber of Commerce Number</value>
+    </labels>
+    <labels>
         <fullName>Company_Info_Search_Phone</fullName>
         <language>en_US</language>
         <protected>true</protected>
