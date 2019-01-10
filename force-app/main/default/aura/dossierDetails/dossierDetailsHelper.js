@@ -33,10 +33,8 @@
             }
             else if (state === "ERROR") {
                 var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
+                if (errors && errors[0] && errors[0].message) {
                         _this.showToast(component, 'Error', errors[0].message, 'error');
-                    }
                 } else {
                     _this.showToast(component, "Error", 'Unknown Error', 'error');
                 }

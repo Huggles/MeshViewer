@@ -5,7 +5,7 @@
 * TBD Mapping of parameters
 * TBD Error Handling
 */
-public with sharing class CompanyDetailsControllerHelper {
+public with sharing class CompanyInfoService {
 
     private static wwwWebservicesNlSoap.Webservices_nlPort stub;
     private static list<wwwWebservicesNlSoap.DutchBusinessReferenceV2> searchResults;
@@ -31,7 +31,7 @@ public with sharing class CompanyDetailsControllerHelper {
     * @description :Sets header
     * @param String searchText
     */
-    public static wwwWebservicesNlSoap.DutchBusinessReferenceV2[] search(CompanyDetailsControllerHelper.CompanySearchDto searchParams){
+    public static wwwWebservicesNlSoap.DutchBusinessReferenceV2[] search(CompanyInfoService.CompanySearchDto searchParams){
         // Handle valid postcodes that the web service does not like
         if (searchParams.postcode != null)
             searchParams.postcode = searchParams.postcode.replaceAll('(\\s+)', '').toUpperCase();

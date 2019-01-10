@@ -85,6 +85,13 @@
         <value>Match Chamber of Commerce Number</value>
     </labels>
     <labels>
+        <fullName>Company_Info_Search_No_Results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search No Results</shortDescription>
+        <value>No results found</value>
+    </labels>
+    <labels>
         <fullName>Company_Info_Search_Phone</fullName>
         <language>en_US</language>
         <protected>true</protected>
