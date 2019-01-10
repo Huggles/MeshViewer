@@ -153,7 +153,7 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Account.Company_Info_Sync</actionName>
+            <actionName>Account.Company_Info</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>
