@@ -2,26 +2,26 @@
 * Created by Asifsayyed on 02/12/18.
 * @param SearchString
 */
-public class CompanyDetailsController {
+public with sharing class CompanyDetailsController {
     private static list<wwwWebservicesNlSoap.DutchBusinessReferenceV2> searchResults;
     @AuraEnabled
     public static wwwWebservicesNlSoap.DutchBusinessReferenceV2[] search(String searchParams){
         System.debug('search');
         if(searchParams!=null){
-            CompanyDetailsControllerHelper.CompanySearchDto params = (CompanyDetailsControllerHelper.CompanySearchDto)JSON.deserialize(searchParams, CompanyDetailsControllerHelper.CompanySearchDto.class);
-            return CompanyDetailsControllerHelper.search(params);
+            CompanyInfoService.CompanySearchDto params = (CompanyInfoService.CompanySearchDto)JSON.deserialize(searchParams, CompanyInfoService.CompanySearchDto.class);
+            return CompanyInfoService.search(params);
         }
-        return null;
+        return null; 
     }
     @AuraEnabled
     public static String getInfo(String dossierNumber, Id accountId){
         System.debug('getInfo');
         if(dossierNumber!=null){
-            wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier = CompanyDetailsControllerHelper.getInfo(dossierNumber);
+            wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier = CompanyInfoService.getInfo(dossierNumber);
             System.debug('getInfoResponse');
             System.debug(dossier);
-            Id savedRecord = CompanyDetailsControllerHelper.saveDutchBusinessDossier(dossier, accountId); 
-            CompanyDetailsControllerHelper.updateAccountDossier(accountId, Integer.valueOf(dossier.dossier_number));
+            Id savedRecord = CompanyInfoService.saveDutchBusinessDossier(dossier, accountId); 
+            CompanyInfoService.updateAccountDossier(accountId, savedRecord);
             return savedRecord;
         }
         return null;

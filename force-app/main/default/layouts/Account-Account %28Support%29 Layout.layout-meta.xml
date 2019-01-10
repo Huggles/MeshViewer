@@ -43,7 +43,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Dossier_Number__c</field>
+                <field>Company_Info_Sync__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

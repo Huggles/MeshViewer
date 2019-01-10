@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Company_Info_Details_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Details Help</shortDescription>
+        <value>The below details are synchronised from Company.info.</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company_Info_Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Error_Incomplete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company_Info_Error_Incomplete</shortDescription>
+        <value>Error 101 received from Company.info for Salesforce. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Error_Unknown</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Error Unknown</shortDescription>
+        <value>Error 102 received from Company.info for Salesforce. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Matching_Companies</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Matching Companies</shortDescription>
+        <value>Matching Companies</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_City</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Company_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Company Details</shortDescription>
+        <value>Company Details</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Confirm</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Confirm</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Country</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Details</shortDescription>
+        <value>Details to Sync</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Details_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Details Dossier</shortDescription>
+        <value>Company Details</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Details_Legal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Details Legal</shortDescription>
+        <value>Legal Entity Details</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Domain</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Domain</shortDescription>
+        <value>Domain</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Dossier_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Dossier Number</shortDescription>
+        <value>Chamber of Commerce Number</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Help</shortDescription>
+        <value>To sync information from Company.info you will need to match this account to a registered company. Use this search form to find a match.
+Note: If you know the chamber of commerce number please enter it here as it will bypass the search.</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Match_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Match Dossier</shortDescription>
+        <value>Match Chamber of Commerce Number</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_No_Results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search No Results</shortDescription>
+        <value>No results found</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Postal_Code</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Postal Code</shortDescription>
+        <value>Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Province</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Province</shortDescription>
+        <value>Province</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Reset</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Reset</shortDescription>
+        <value>Search Again</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Results_Confirm</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Results Confirm</shortDescription>
+        <value>Confirm</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Results_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Results Help</shortDescription>
+        <value>The following companies match your search results. Please select the correct match for this account.</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Street</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Street</shortDescription>
+        <value>Street</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Trade_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Trade Name</shortDescription>
+        <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Sync</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Sync</shortDescription>
+        <value>Company Info Sync</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Sync_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Sync Success</shortDescription>
+        <value>Company.info sync was successful.</value>
+    </labels>
+</CustomLabels>

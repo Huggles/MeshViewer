@@ -5,7 +5,7 @@
 * TBD Mapping of parameters
 * TBD Error Handling
 */
-public with sharing class CompanyDetailsControllerHelper {
+public with sharing class CompanyInfoService {
 
     private static wwwWebservicesNlSoap.Webservices_nlPort stub;
     private static list<wwwWebservicesNlSoap.DutchBusinessReferenceV2> searchResults;
@@ -31,9 +31,10 @@ public with sharing class CompanyDetailsControllerHelper {
     * @description :Sets header
     * @param String searchText
     */
-    public static wwwWebservicesNlSoap.DutchBusinessReferenceV2[] search(CompanyDetailsControllerHelper.CompanySearchDto searchParams){
+    public static wwwWebservicesNlSoap.DutchBusinessReferenceV2[] search(CompanyInfoService.CompanySearchDto searchParams){
         // Handle valid postcodes that the web service does not like
-        searchParams.postcode = searchParams.postcode.replaceAll('(\\s+)', '').toUpperCase();
+        if (searchParams.postcode != null)
+            searchParams.postcode = searchParams.postcode.replaceAll('(\\s+)', '').toUpperCase();
 
         stub=new wwwWebservicesNlSoap.Webservices_nlPort();
         stub.HeaderLogin= getAuthentication();
@@ -76,7 +77,7 @@ public with sharing class CompanyDetailsControllerHelper {
     }
 
     private static Boolean checkAccess() {
-         List<String> fields = new List<String>{'Name','Dossier_Number__c','Establishment_Number__c','Main_Establishment_Number__c',
+         List<String> fields = new List<String>{'Name','Establishment_Number__c','Main_Establishment_Number__c',
         'Indication_Main_Establishment__c','Rsin_Number__c','Chamber_Number__c','Legal_Form_Code__c','Legal_Form_Text__c','Indication_Organisation_Code__c',
         'Trade_Name_45__c','Trade_Name_Full__c','Trade_Names__c','Telephone_Number__c','Mobile_Number__c','Domain_Name__c','Authorized_Share_Capital__c',
         'Authorized_Share_Capital_Currency__c','Class_Personnel__c','Class_Personnel_Fulltime__c','Continuation_Date__c','Discontinuation_Date__c','Establishment_Date__c',
@@ -169,8 +170,15 @@ public with sharing class CompanyDetailsControllerHelper {
         d.Status__c = determineStatus(dossier);
 
         upsert d;
-
         return d.Id;
+    }
+
+    public static void updateAccountDossier(Id accountId, Id dossierId) {
+        List<Account> accts = [SELECT Id, Dutch_Business_Dossier__c FROM Account WHERE Id = :accountId];
+        if (accts.size() == 1 && dossierId != NULL) {
+            accts[0].Dutch_Business_Dossier__c = dossierId;
+            update accts;
+        }
     }
 
     private static String determineStatus(wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier) {
@@ -187,16 +195,6 @@ public with sharing class CompanyDetailsControllerHelper {
     private static Date convertDate(wwwWebservicesNlSoap.DutchBusinessDateV3 d) {
         if (d != null) return Date.newInstance(d.year, d.month, d.day);
         return null;
-    }
-
-    public static boolean updateAccountDossier(Id accountId, Integer dossierNumber) {
-        List<Account> accts = [SELECT Id, Dossier_Number__c FROM Account WHERE Id = :accountId];
-        if (accts.size() > 0) {
-            accts[0].Dossier_Number__c = dossierNumber;
-            update accts;
-            return true;
-        }
-        return false;
     }
 
     public class CompanySearchDto {
