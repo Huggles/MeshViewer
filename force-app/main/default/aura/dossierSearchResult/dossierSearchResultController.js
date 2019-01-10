@@ -7,9 +7,9 @@
          */
         onClick : function(component, event, helper) {
                 var record = component.get("v.result");
-                component.set('v.style', 'slds-tile slds-media selected');
-                component.set('v.variant', 'inverse');
-                component.set('v.icon', 'utility:check');
+                // component.set('v.style', 'slds-tile slds-media selected');
+                // component.set('v.variant', 'inverse');
+                component.set('v.icon', 'action:approval');
                 // Getting the event
                 var updateEvent = component.getEvent("dossierSelectedEvent");
                 // Setting the param on the event 

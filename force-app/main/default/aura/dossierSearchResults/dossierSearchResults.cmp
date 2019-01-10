@@ -5,13 +5,14 @@
     <aura:handler name="dossierSelectedEvent" event="c:dossierSelectedEvent" action="{!c.onSelect}" />
     <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent" />
     <aura:if isTrue='{!v.wrapperList.length > 0}'>
-        <lightning:button class="slds-theme_brand" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Results_Confirm}"
+        <lightning:button class="slds-theme_brand slds-float_right" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Results_Confirm}"
             iconName="utility:check" onclick="{!c.onConfirm}" disabled="{!v.selected == null}" />
+        <div class="slds-m-top_medium slds-text-title">{!$Label.c.Company_Info_Search_Results_Help}</div>
         <lightning:layout multipleRows="true">
             <aura:iteration items="{!v.wrapperList}" var="result">
                 <aura:if isTrue="{!result.indication_economically_active == true}">
-                    <lightning:layoutItem padding="around-small" size="4">
-                        <c:dossierSearchResult result="{!result}" />
+                    <lightning:layoutItem padding="around-small" >
+                        <c:dossierSearchResult aura:id="searchResult" result="{!result}" />
                     </lightning:layoutItem>
                 </aura:if>
             </aura:iteration>

@@ -8,6 +8,12 @@
     onSelect : function(component, event, helper) {
         var params = event.getParams();
         component.set('v.selected', params.DossierNumber);
+        var results = component.find('searchResult');
+        for (var i = 0; i < results.length; i++) {
+            if (results[i].get('v.result').dossier_number !== params.DossierNumber) {
+                results[i].set('v.icon', 'action:new');
+            }
+        }
     },
     /**
      * Fire dossier number to dossierDetails component to confirm selection.

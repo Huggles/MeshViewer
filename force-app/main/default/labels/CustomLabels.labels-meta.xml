@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>Company_Info_Details_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Details Help</shortDescription>
+        <value>The below details are synchronised from Company.info.</value>
+    </labels>
+    <labels>
         <fullName>Company_Info_Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -99,6 +106,14 @@
         <value>Chamber of Commerce Number</value>
     </labels>
     <labels>
+        <fullName>Company_Info_Search_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Help</shortDescription>
+        <value>To sync information from Company.info you will need to match this account to a registered company. Use this search form to find a match.
+Note: If you know the chamber of commerce number please enter it here as it will bypass the search.</value>
+    </labels>
+    <labels>
         <fullName>Company_Info_Search_Match_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -146,6 +161,13 @@
         <protected>true</protected>
         <shortDescription>Company Info Search Results Confirm</shortDescription>
         <value>Confirm</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Search_Results_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Search Results Help</shortDescription>
+        <value>The following companies match your search results. Please select the correct match for this account.</value>
     </labels>
     <labels>
         <fullName>Company_Info_Search_Street</fullName>

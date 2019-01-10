@@ -1,8 +1,8 @@
 <aura:component>
-    <aura:attribute name="result" type="object"/>
+    <aura:attribute name="result" type="object" access="public"/>
     <aura:attribute name="style" type="string" default="slds-tile slds-media" />
     <aura:attribute name="variant" type="string" default="" />
-    <aura:attribute name="icon" type="string" default="utility:add" />
+    <aura:attribute name="icon" type="string" default="action:new" access="public"/>
     <aura:registerEvent name="dossierSelectedEvent" type="c:dossierSelectedEvent"/>
 
     <!-- <lightning:tile class="slds-tile_board" label="{!v.result.name + ' (' + v.result.dossier_number + ')'}" onclick="{!c.onClick}" >
@@ -20,16 +20,17 @@
 
     <article aura:id="{!v.result.dossier_number}" class="{!v.style}" onclick="{!c.onClick}" style="cursor:pointer" >
         <div class="slds-media__figure">
-            <lightning:icon iconName="{!v.icon}" variant="{!v.variant}"/>
+            <lightning:icon iconName="{!v.icon}" variant="{!v.variant}" size="x-small"/>
         </div>
         <div class="slds-media__body">
-            <h3 class="slds-tile__title slds-truncate" title="{!v.result.name + ' (' + v.result.dossier_number + ')'}">{!v.result.name + ' (' + v.result.dossier_number + ')'}</h3>
+            <h3 class="slds-tile__title slds-truncate" title="{!v.result.name + ' (' + v.result.dossier_number + ')'}">{!v.result.name}</h3>
             <div class="slds-tile__detail">
+                <div>{!v.result.dossier_number}</div>
                 <div>{!v.result.establishment_street + ', ' + v.result.establishment_city}</div>
-                <dl class="slds-list_horizontal slds-wrap">
+                <!-- <dl class="slds-list_horizontal slds-wrap">
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Establishment #">Establishment #:</dt>
                     <dd class="slds-item_detail slds-truncate" title="{!v.result.establishment_number}">{!v.result.establishment_number}</dd>
-                </dl>
+                </dl> -->
             </div>
         </div>
     </article>

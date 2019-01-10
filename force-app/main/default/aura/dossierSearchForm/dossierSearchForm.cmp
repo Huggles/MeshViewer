@@ -17,40 +17,26 @@
             <lightning:button class="{!v.disableSearch == true ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Match_Dossier}"
                 iconName="utility:forward" onclick="{!c.onMatchDossier}"/>
         </aura:set>
-        {!v.error}
-        <div class="slds-form slds-form_stacked">
-            <lightning:layout>
-                <lightning:layoutItem flexibility="grow">
-                    <fieldset class='slds-form-element'>
-                        <legend class="slds-form-element__label slds-form-element__legend">{!$Label.c.Company_Info_Search_Company_Details}</legend>
-                        <div class="slds-form-element__control">
-                            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Trade_Name}"
-                                required="true" type="text" variant="standard" value="{!v.searchFields.name}" disabled="{!v.disableSearch}"></lightning:input>
-                        </div>
-                        <div class="slds-form-element__control">
-                            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Dossier_Number}"
-                                type="text" variant="standard" value="{!v.searchFields.dossier_number}" onchange="{!c.populateDossier}"></lightning:input>
-                        </div>
-                        <div class="slds-form-element__control">
-                            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Phone}"
-                                type="text" variant="standard" value="{!v.searchFields.phone}" disabled="{!v.disableSearch}"></lightning:input>
-                        </div>
-                        <div class="slds-form-element__control">
-                            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Domain}"
-                                type="text" variant="standard" value="{!v.searchFields.domain}" disabled="{!v.disableSearch}"></lightning:input>
-                        </div>
-                    </fieldset>
-                </lightning:layoutItem>
-                <lightning:layoutItem flexibility="grow">
-                    <lightning:inputAddress aura:id="Address" class="slds-p-around_medium slds-container_center slds-align_absolute-center"
-                        addressLabel="{!$Label.c.Company_Info_Search_Address}" streetLabel="{!$Label.c.Company_Info_Search_Street}"
-                        cityLabel="{!$Label.c.Company_Info_Search_City}" provinceLabel="{!$Label.c.Company_Info_Search_Province}"
-                        postalCodeLabel="{!$Label.c.Company_Info_Search_Postal_Code}" countryLabel="{!$Label.c.Company_Info_Search_Country}"
-                        country="{!v.searchFields.country}" street="{!v.searchFields.street}" city="{!v.searchFields.city}"
-                        postalCode="{!v.searchFields.postcode}" province="{!v.searchFields.province}" disabled="{!v.disableSearch}"></lightning:inputAddress>
-                </lightning:layoutItem>
-            </lightning:layout>
-            <fieldset class="slds-form-element">
+        <div class="slds-text-color_error">{!v.error}</div>
+
+        <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.Company_Info_Search_Help}</div>
+
+        <div class="slds-form slds-form_horizontal">
+            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Trade_Name}"
+                type="text" variant="standard" value="{!v.searchFields.name}" disabled="{!v.disableSearch}"></lightning:input>
+            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Dossier_Number}"
+                type="text" variant="standard" value="{!v.searchFields.dossier_number}" onchange="{!c.populateDossier}"></lightning:input>
+            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Phone}"
+                type="text" variant="standard" value="{!v.searchFields.phone}" disabled="{!v.disableSearch}"></lightning:input>
+            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Company_Info_Search_Domain}"
+                type="text" variant="standard" value="{!v.searchFields.domain}" disabled="{!v.disableSearch}"></lightning:input>
+            <lightning:inputAddress aura:id="Address"
+                addressLabel="{!$Label.c.Company_Info_Search_Address}" streetLabel="{!$Label.c.Company_Info_Search_Street}"
+                cityLabel="{!$Label.c.Company_Info_Search_City}" provinceLabel="{!$Label.c.Company_Info_Search_Province}"
+                postalCodeLabel="{!$Label.c.Company_Info_Search_Postal_Code}" countryLabel="{!$Label.c.Company_Info_Search_Country}"
+                country="{!v.searchFields.country}" street="{!v.searchFields.street}" city="{!v.searchFields.city}"
+                postalCode="{!v.searchFields.postcode}" province="{!v.searchFields.province}" disabled="{!v.disableSearch}"></lightning:inputAddress>
+            <!-- <fieldset class="slds-form-element slds-m-top_medium">
                 <legend class="slds-form-element__legend slds-form-element__label">{!$Label.c.Company_Info_Search_Details}</legend>
                 <div class="slds-form-element__control">
                     <div class="slds-checkbox_button-group">
@@ -68,7 +54,7 @@
                         </span>
                     </div>
                 </div>
-            </fieldset>
+            </fieldset> -->
         </div>
     </lightning:card>
 </aura:component>

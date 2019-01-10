@@ -15,6 +15,7 @@
             callback(stubResponse);
             return;
         }
+
         // create a one-time use instance of the serverEcho action
         // in the server-side controller
         var _this = this;

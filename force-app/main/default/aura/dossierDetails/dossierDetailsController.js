@@ -24,7 +24,7 @@
         component.set('v.selected', params.DossierNumber);
         helper.callServer(component, 'c.getInfo', {dossierNumber: params.DossierNumber, accountId: component.get('v.recordId')}, function(response) {
             helper.handleCompanyData(component);
-        });//, 'a013E00000615qtQAA');
+        });//, true);
     },
     /**
      * Decrement step to allow another search to take place
