@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>Company_Info_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company_Info_Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Error_Incomplete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company_Info_Error_Incomplete</shortDescription>
+        <value>Error 101 received from Company.info for Salesforce. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Error_Unknown</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Error Unknown</shortDescription>
+        <value>Error 102 received from Company.info for Salesforce. Please contact support for assistance.</value>
+    </labels>
+    <labels>
         <fullName>Company_Info_Matching_Companies</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -141,10 +162,24 @@
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>Company_Info_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
         <fullName>Company_Info_Sync</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Company Info Sync</shortDescription>
         <value>Company Info Sync</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Sync_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company Info Sync Success</shortDescription>
+        <value>Company.info sync was successful.</value>
     </labels>
 </CustomLabels>
