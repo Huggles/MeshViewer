@@ -9,11 +9,14 @@
 
     <aura:registerEvent name="dossierSearchSubmitEvent" type="c:dossierSearchSubmitEvent" />
     <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent"/>
-
-    <lightning:card variant="Narrow" title="Search" iconName="standard:account">
+    
+    <lightning:card variant="Narrow" title="Search" >
+            <aura:set attribute="title">
+                    <div class="logoContainer"><img src="{!$Resource.compinfologo}"/></div>
+            </aura:set>
         <aura:set attribute="actions">
             <lightning:button class="{!v.disableSearch == false ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Confirm}"
-                iconName="standard:search" onclick="{!c.onSearchSubmit}"/>
+                 onclick="{!c.onSearchSubmit}"/>
             <lightning:button class="{!v.disableSearch == true ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Company_Info_Search_Match_Dossier}"
                 iconName="utility:forward" onclick="{!c.onMatchDossier}"/>
         </aura:set>

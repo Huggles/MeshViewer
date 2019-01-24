@@ -1,20 +1,18 @@
-<aura:component controller="CompanyDetailsController" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+<aura:component controller="CompanyDetailsController" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+    access="global">
     <aura:attribute name="step" type="string" default="1" />
     <aura:attribute name="companyList" type="object" default="{}" />
     <aura:attribute name="selected" type="object" default="{}" />
     <aura:attribute name="dossierId" type="String" />
     <aura:attribute name="simpleRecord" type="object" default="{}" />
+	<aura:attribute name="myTitleName" type="Aura.Component[]">
+    	<div class="logoContainer"><img src="{!$Resource.compinfologo}"/></div>
+    </aura:attribute>
+    <aura:handler name="dossierSearchSubmitEvent" event="c:dossierSearchSubmitEvent" action="{!c.onSubmit}" />
+    <aura:handler name="dossierSelectionConfirmedEvent" event="c:dossierSelectionConfirmedEvent" action="{!c.onSelect}" />
 
-    <aura:handler name="dossierSearchSubmitEvent" event="c:dossierSearchSubmitEvent" action="{!c.onSubmit}"/>    
-    <aura:handler name="dossierSelectionConfirmedEvent" event="c:dossierSelectionConfirmedEvent" action="{!c.onSelect}"/>
-
-    <force:recordData aura:id="recordHandler"
-    recordId="{!v.recordId}"
-    targetFields="{!v.simpleRecord}"
-    layoutType="FULL"
-    fields="cinfo_sales__Dutch_Business_Dossier__c"
-    mode="EDIT"
-    />
+    <force:recordData aura:id="recordHandler" recordId="{!v.recordId}" targetFields="{!v.simpleRecord}" layoutType="FULL"
+        fields="cinfo_sales__Dutch_Business_Dossier__c" mode="EDIT" />
 
     <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? 'slds-hide' : ''}">
         <!-- <lightning:progressIndicator currentStep="{!v.step}" type="base" hasError="false" variant="base">
@@ -22,23 +20,38 @@
             <lightning:progressStep label="Select company" value="2"/>
             <lightning:progressStep label="Sync information" value="3"/>
         </lightning:progressIndicator> -->
-    
+
         <div class="{!v.step == '1' ? '' : 'slds-hide'}">
-            <c:dossierSearchForm recordId="{!v.recordId}"/>
+            <c:dossierSearchForm recordId="{!v.recordId}" />
         </div>
 
         <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.Company_Info_Matching_Companies}" iconName="standard:account">
-            <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Company_Info_Search_Reset}" iconName="utility:chevronleft" onclick="{!c.onBack}" />
+            <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Company_Info_Search_Reset}"
+                iconName="utility:chevronleft" onclick="{!c.onBack}" />
             <c:dossierSearchResults recordId="{!v.recordId}" wrapperList="{!v.companyList}" />
-        </div>  
+        </div>
     </div>
 
-    <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? '' : 'slds-hide'}" >
+    <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? '' : 'slds-hide'}">
+        <lightning:card variant="Narrow" >
+		
+		    <aura:set attribute="title">
+            {!v.myTitleName}
+            </aura:set>
+            <aura:set attribute="actions">
+                <lightning:button label="Organisation Tree" />
+                <lightning:button label="Director List" />
+                <lightning:button label="News" />
+            </aura:set>
+            <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.Company_Info_Details_Help}</div>
+            <c:PageLayoutRecordDisplay RecordId="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c}" PageLayoutName="Dutch_Business_Dossier__c-Dutch Business Dossier Layout" objectApiName="cinfo_sales__Dutch_Business_Dossier__c" />
+        </lightning:card>
+    </div>
+    <!--
+    <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? '' : 'slds-hide'}">
+        <div class="logoContainer"><img src="{!$Resource.compinfologo}" /></div>
         <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.Company_Info_Details_Help}</div>
-        <lightning:recordForm
-        recordId="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c}"
-        objectApiName="cinfo_sales__Dutch_Business_Dossier__c"
-        layoutType="Full"
-        mode="view" />
-    </div> 
+        <lightning:recordForm recordId="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c}" objectApiName="cinfo_sales__Dutch_Business_Dossier__c"
+            layoutType="Full" columns="2" mode="readonly" />
+    </div>-->
 </aura:component>
