@@ -1,4 +1,4 @@
-public class PageLayoutRecordDisplayController {
+public with sharing class PageLayoutRecordDisplayController {
     @AuraEnabled
     
     public static PageLayout getPageLayoutMetadata(String pageLayoutName, String objectName) {
