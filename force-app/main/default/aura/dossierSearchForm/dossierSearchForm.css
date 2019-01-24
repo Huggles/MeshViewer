@@ -1,0 +1,9 @@
+.THIS {
+}
+.THIS .logoContainer {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 20%;
+  height: 20%;
+}
