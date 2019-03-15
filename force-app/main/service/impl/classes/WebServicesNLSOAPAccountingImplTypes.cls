@@ -48,7 +48,7 @@ public abstract class WebServicesNLSOAPAccountingImplTypes extends WebservicesNl
     }
     public class accountViewV2ResponseType {
         public AccountV2 out;
-        private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/','string','1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'out'};
     }
@@ -89,5 +89,6 @@ public abstract class WebServicesNLSOAPAccountingImplTypes extends WebservicesNl
         private String[] balancethreshold_type_info = new String[]{'balancethreshold','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'id','name','address','environment','reseller','contactname','contactemail','telephone','fax','description','creationtime','lastmodified','clientcode','comments','usernameprefix','balance','balancethreshold'};
+
     }
 }

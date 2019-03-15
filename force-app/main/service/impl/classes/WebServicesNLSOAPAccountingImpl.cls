@@ -6,7 +6,7 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
 
     public AccountViewDto accountView(String accountId){
 
-        getAuthentication();
+       // getAuthentication();
 
         accountViewV2RequestType request_x = new accountViewV2RequestType();
         if(accountid != ''){
@@ -16,26 +16,10 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         accountViewV2ResponseType response_x;
         Map<String, accountViewV2ResponseType> response_map_x = new Map<String, accountViewV2ResponseType>();
         response_map_x.put('response_x', response_x);
-        system.debug(logginglevel.error, 'this = '+ this);
-        system.debug(logginglevel.error, 'request_x = '+ request_x);
-        system.debug(logginglevel.error, 'response_map_x = '+ response_map_x);
-        system.debug(logginglevel.error, 'some string thing' + new String[]{endpoint_x,
-            'https://ws1.webservices.nl/soap_doclit.php/accountViewV2',
-            'http://www.webservices.nl/soap/',
-            'accountViewV2',
-            'http://www.webservices.nl/soap/',
-            'accountViewV2Response',
-            'accountViewV2ResponseType'});
-
-            Map<String, Object> m = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(this));
-            system.debug(logginglevel.error, 'Key values are here ********');
-            for(String key: m.keySet()){
-                system.debug(logginglevel.error, 'key = '+ m.get(key));
-            }
-
-            
+        
+        Webservices_nlPort port = new Webservices_nlPort();
         WebServiceCallout.invoke(
-            this,
+            port, // this didn't work, most likely because of the stub class name OR because stub is a subclass originally.
             request_x,
             response_map_x,
             new String[]{endpoint_x,
@@ -43,8 +27,8 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             'http://www.webservices.nl/soap/',
             'accountViewV2',
             'http://www.webservices.nl/soap/',
-            'accountViewV2Response',
-            'accountViewV2ResponseType'}
+            'accountViewV2Response', // SOME typename on the remote(not related to our codebase, just something at the ws side)
+            'WebServicesNLSOAPAccountingImplTypes.accountViewV2ResponseType'} // typepath in the code. Very important
         );   
         response_x = response_map_x.get('response_x');
         AccountViewDto result = new AccountViewDto();

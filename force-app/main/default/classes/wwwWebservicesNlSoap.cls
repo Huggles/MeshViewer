@@ -1096,7 +1096,7 @@ public class wwwWebservicesNlSoap {
             Map<String, Object> m = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(this));
             system.debug(logginglevel.error, 'Key values are here ********');
             for(String key: m.keySet()){
-                system.debug(logginglevel.error, 'key = '+ m.get(key));
+                system.debug(logginglevel.error, 'key = '+key+' '+ m.get(key));
             }
             WebServiceCallout.invoke(
                     this,

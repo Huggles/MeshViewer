@@ -1,6 +1,6 @@
 public interface IWebservicesNlSOAP {
 
-    void getAuthentication();
+    //void getAuthentication(Webservices_nlPort port);
 
 
 }
