@@ -1083,6 +1083,21 @@ public class wwwWebservicesNlSoap {
             request_x.establishment_number = establishment_number;
             Map<String, wwwWebservicesNlSoap.dutchBusinessGetDossierV3ResponseType> response_map_x = new Map<String, wwwWebservicesNlSoap.dutchBusinessGetDossierV3ResponseType>();
             response_map_x.put('response_x', response_x);
+        system.debug(logginglevel.error, 'this = '+ this);
+        system.debug(logginglevel.error, 'request_x = '+ request_x);
+        system.debug(logginglevel.error, 'response_map_x = '+ response_map_x);
+        system.debug(logginglevel.error, 'some string thing' + new String[]{endpoint_x,
+            'https://ws1.webservices.nl/soap_doclit.php/accountViewV2',
+            'http://www.webservices.nl/soap/',
+            'accountViewV2',
+            'http://www.webservices.nl/soap/',
+            'accountViewV2Response',
+            'accountViewV2ResponseType'});
+            Map<String, Object> m = (Map<String, Object>) JSON.deserializeUntyped(JSON.serialize(this));
+            system.debug(logginglevel.error, 'Key values are here ********');
+            for(String key: m.keySet()){
+                system.debug(logginglevel.error, 'key = '+ m.get(key));
+            }
             WebServiceCallout.invoke(
                     this,
                     request_x,

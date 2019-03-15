@@ -1,5 +1,5 @@
 public with sharing abstract class CompanyInfoWebServiceSOAP {
-    public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php';
+ /*   public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php';
     public Map<String,String> inputHttpHeaders_x;
     public Map<String,String> outputHttpHeaders_x;
     public String clientCertName_x;
@@ -13,7 +13,7 @@ public with sharing abstract class CompanyInfoWebServiceSOAP {
     private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/', 'wwwWebservicesNlSoapVPROK'};
 
 
-
+*/
 
 
 }
