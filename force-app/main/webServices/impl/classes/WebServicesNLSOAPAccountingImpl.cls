@@ -1,3 +1,7 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+Description     : Company info Accounting integration implementation class. NB: it extends the Accounting implementation type class!
+******************************************************************************************/
 public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting{
 
     public AccountViewDto accountView(){

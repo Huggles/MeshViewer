@@ -1,3 +1,7 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+Description     : Interface class for CompanyInfo DutchBusiness webservice layer
+******************************************************************************************/
 public interface IWebServicesNLSOAPDutchBusiness extends IWebServicesNLSOAP{
     
     DutchBusinessDto dutchBusinessGetDossierV3(String dossier_number,String establishment_number);

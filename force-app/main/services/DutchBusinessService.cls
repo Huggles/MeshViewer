@@ -1,3 +1,7 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+Description     : Service layer for DutchBusiness webservice calls and data processing
+******************************************************************************************/
 public with sharing class DutchBusinessService {
     
    private static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2PagedResult returnedResults;

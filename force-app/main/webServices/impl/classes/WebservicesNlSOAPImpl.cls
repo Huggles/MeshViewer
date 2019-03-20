@@ -1,3 +1,7 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+Description     : Company info baseline integration implementation class. NB: it extends the baseline implementation type class!
+******************************************************************************************/
 public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes implements IWebservicesNlSOAP{
     public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; //TODO: mover to other place?
     //public Map<String,String> inputHttpHeaders_x;

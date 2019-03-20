@@ -1,3 +1,7 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+Description     : Company info baselione integration implementation Type class. NB: it is the top level company.info webservice implementation class!
+******************************************************************************************/
 public abstract class WebservicesNlSOAPImplTypes {
         
     public class HeaderAuthenticateType {

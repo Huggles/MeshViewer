@@ -1,3 +1,7 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+Description     : Useb by fflib Application class to wire together the servicve definition and implementation
+******************************************************************************************/
 public class WebServicesNLSOAPDutchBusiness {
 
 

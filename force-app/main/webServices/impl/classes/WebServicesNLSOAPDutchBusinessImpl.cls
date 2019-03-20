@@ -1,3 +1,7 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+Description     : Company info DutchBusiness integration implementation class. NB: it extends the DutchBusiness implementation type class!
+******************************************************************************************/
 public class WebServicesNLSOAPDutchBusinessImpl extends WebServicesNLSOAPDutchBusinessImplTypes implements IWebServicesNLSOAPDutchBusiness {
     
 public WebServicesNLSOAPDutchBusinessImpl(){
