@@ -1,11 +1,11 @@
 public class WebServicesNLSOAPAccounting {
 
 
-    public AccountViewDto accountView(){
+    public static AccountViewDto accountView(){
         return newInstance().accountView();
     }
 
-    public AccountViewDto accountView(String accountId){
+    public static AccountViewDto accountView(String accountId){
         return newInstance().accountView(accountId);
     }
 

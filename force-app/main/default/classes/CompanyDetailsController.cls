@@ -3,13 +3,13 @@
 * @param SearchString
 */
 public with sharing class CompanyDetailsController {
-    private static list<wwwWebservicesNlSoap.DutchBusinessReferenceV2> searchResults;
+    private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults;
     @AuraEnabled
-    public static wwwWebservicesNlSoap.DutchBusinessReferenceV2[] search(String searchParams){
+    public static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2[] search(String searchParams){
         System.debug('search');
         if(searchParams!=null){
-            CompanyInfoService.CompanySearchDto params = (CompanyInfoService.CompanySearchDto)JSON.deserialize(searchParams, CompanyInfoService.CompanySearchDto.class);
-            return CompanyInfoService.search(params);
+            DutchBusinessService.CompanySearchDto params = (DutchBusinessService.CompanySearchDto)JSON.deserialize(searchParams, DutchBusinessService.CompanySearchDto.class);
+            return DutchBusinessService.searchForDossiers(params);
         }
         return null; 
     }
@@ -17,11 +17,13 @@ public with sharing class CompanyDetailsController {
     public static String getInfo(String dossierNumber, Id accountId){
         System.debug('getInfo');
         if(dossierNumber!=null){
-            wwwWebservicesNlSoap.DutchBusinessDossierV3 dossier = CompanyInfoService.getInfo(dossierNumber);
+
+            DutchBusinessDto dto = DutchBusinessService.getInfo(dossierNumber);
+            WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessDossierV3 dossier = dto.DutchBusinessDossierV3;
             System.debug('getInfoResponse');
             System.debug(dossier);
-            Id savedRecord = CompanyInfoService.saveDutchBusinessDossier(dossier, accountId); 
-            CompanyInfoService.updateAccountDossier(accountId, savedRecord);
+            Id savedRecord = DutchBusinessService.saveDutchBusinessDossier(dossier, accountId); 
+            DutchBusinessService.updateAccountDossier(accountId, savedRecord);
             return savedRecord;
         }
         return null;

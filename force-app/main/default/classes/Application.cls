@@ -1,4 +1,4 @@
-public  class Application {
+public with sharing class Application {
 
 
     // Configure and create the ServiceFactory for this Application
@@ -6,8 +6,7 @@ public  class Application {
             new fflib_Application.ServiceFactory(
                     new Map<Type, Type>{
                             IWebservicesNlSOAP.class => WebservicesNlSOAPImpl.class,
-                            IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class
+                            IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
+                            IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class
                     });
-
- 
 }

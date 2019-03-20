@@ -17,7 +17,7 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         Map<String, accountViewV2ResponseType> response_map_x = new Map<String, accountViewV2ResponseType>();
         response_map_x.put('response_x', response_x);
         
-        Webservices_nlPort port = new Webservices_nlPort();
+        //Webservices_nlPort port = new Webservices_nlPort();
         WebServiceCallout.invoke(
             port, // this didn't work, most likely because of the stub class name OR because stub is a subclass originally.
             request_x,
