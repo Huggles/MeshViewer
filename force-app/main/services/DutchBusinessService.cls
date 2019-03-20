@@ -6,7 +6,9 @@ public with sharing class DutchBusinessService {
     
    private static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2PagedResult returnedResults;
    private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults; 
-    
+    public static final Integer paramInt=null;
+    public static final Boolean Strict_Search = False;
+
    public static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2[] searchForDossiers(CompanySearchDto searchParams){
         // Handle valid postcodes that the web service does not like
         if (searchParams.postcode != null)
@@ -14,7 +16,7 @@ public with sharing class DutchBusinessService {
 
         IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
         try{
-            returnedResults = service.dutchBusinessSearchParametersV2(searchParams.name,searchParams.city,searchParams.street,searchParams.postcode,null,null,searchParams.phone,searchParams.domain,Constants.Strict_Search,Constants.paramInt).DutchBusinessReferenceV2PagedResult;
+            returnedResults = service.dutchBusinessSearchParametersV2(searchParams.name,searchParams.city,searchParams.street,searchParams.postcode,null,null,searchParams.phone,searchParams.domain,Strict_Search,paramInt).DutchBusinessReferenceV2PagedResult;
             if(returnedResults != null && returnedResults.results != null && returnedResults.results.item != null && returnedResults.results.item.size()>0){
                 searchResults=returnedResults.results.item;
             }
