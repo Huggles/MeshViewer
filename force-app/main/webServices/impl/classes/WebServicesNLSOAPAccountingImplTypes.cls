@@ -95,4 +95,5 @@ public abstract class WebServicesNLSOAPAccountingImplTypes extends WebservicesNl
         private String[] field_order_type_info = new String[]{'id','name','address','environment','reseller','contactname','contactemail','telephone','fax','description','creationtime','lastmodified','clientcode','comments','usernameprefix','balance','balancethreshold'};
 
     }
+
 }

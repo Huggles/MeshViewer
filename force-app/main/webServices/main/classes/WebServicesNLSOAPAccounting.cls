@@ -12,7 +12,9 @@ public class WebServicesNLSOAPAccounting {
     public static AccountViewDto accountView(String accountId){
         return newInstance().accountView(accountId);
     }
-
+    public userCreateResponseDto userCreate(UserCreateInputDto input){
+        return newInstance().userCreate(input);
+    }
     public static IWebServicesNLSOAPAccounting newInstance() {
         return (IWebServicesNLSOAPAccounting) Application.Service.newInstance(IWebServicesNLSOAPAccounting.class);
     }

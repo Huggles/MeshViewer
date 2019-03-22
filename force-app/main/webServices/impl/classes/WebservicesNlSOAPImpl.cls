@@ -16,21 +16,7 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
    // private String HeaderLogin_hns = 'HeaderLogin=http://www.webservices.nl/soap/';
     private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/','wwwWebservicesNlSoap'};
     public Webservices_nlPort port;
-    
 
-/*
-   public void getAuthentication(Webservices_nlPort port){
-       
-
-        Credentials__c CS = Credentials__c.getOrgDefaults();
-        HeaderLoginType header= new HeaderLoginType();
-        header.userName=cs.Username__c;//'appsolutelytest_bfc9bbb2';
-        header.passWord=cs.Password__c;//'5Z9wwVa-hYzy*mFY)VW.-U$!5Vu}Ymc{';//
-        System.debug(logginglevel.error,'get auth');
-        System.debug(logginglevel.error,header);
-        port.HeaderLogin = header;
-    }
-*/
     public WebservicesNlSOAPImpl(){
         port = new Webservices_nlPort();
     }

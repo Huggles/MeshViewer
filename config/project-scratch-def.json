@@ -1,6 +1,7 @@
 {
-    "orgName": "CompanyInfo DevScratch",
+    "orgName": "CompanyDataByAppsolutely Dev",
     "edition": "Developer",
+    "language": "en_US",
     "orgPreferences" : {
         "enabled": ["S1DesktopEnabled"]
     }
