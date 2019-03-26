@@ -1,7 +1,7 @@
 public with sharing class DutchBusinessAccountingService {
 
     // Onboarding of the new customer. First new user is created and then the trial budged is added; customerDossierNumber is the only param required
-    public static void onboardCustomer(String customerDossierNumber){
+    public static Integer onboardCustomer(String customerDossierNumber){
         UserCreateInputDto input = new UserCreateInputDto();
         input.nickname = customerDossierNumber;
         input.accountId = 13972; //TODO: get the account ID from Custom Settings or CMT
@@ -14,18 +14,22 @@ public with sharing class DutchBusinessAccountingService {
         input.telephone = '';
         input.fax = ''; // pretty sure it is not needed
         input.clientcode = ''; // TODO: undertands what is this
-        input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyDate for Salesforce application';
+        input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
+        list<Integer> lst = new list<Integer>();
+        lst.add(23);
+        input.usergroups = lst;
         Integer userId;
         userId = createCIUser(input);
         addTrialToCIUser(userId);
+        return userId;
     }
     
     // creates an integration user for the customer. Gives back the Id of the user in the Company.info backend
     private static Integer createCIUser(UserCreateInputDto input){
         IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
-        service.userCreate(input);
+        userCreateResponseDto response = service.userCreate(input);
 
-        return null;
+        return response.id;
     }
 
     private static Integer addTrialToCIUser(Integer userId){

@@ -18,7 +18,7 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
     public Webservices_nlPort port;
 
     public WebservicesNlSOAPImpl(){
-        port = new Webservices_nlPort();
+        port = new Webservices_nlPort('User');
     }
     public class Webservices_nlPort {
         public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php';
@@ -33,14 +33,20 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
         public HeaderAuthenticateType HeaderAuthenticate;
         private String HeaderAuthenticate_hns = 'HeaderAuthenticate=http://www.webservices.nl/soap/';
         private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/','wwwWebservicesNlSoap'}; // wwwWebservicesNlSoap is from the old WS file name. Might need to change if something breaks
-        public Webservices_nlPort(){
-            getAuthentication();
+        public Webservices_nlPort(String scope){ // scope is either user or admin
+            getAuthentication(scope);
         }
-        public void getAuthentication(){
+        public void getAuthentication(String scope){
             Credentials__c CS = Credentials__c.getOrgDefaults();
             HeaderLogin = new HeaderLoginType();
-            HeaderLogin.userName=cs.Username__c;//'appsolutelytest_bfc9bbb2';
-            HeaderLogin.passWord=cs.Password__c;//'5Z9wwVa-hYzy*mFY)VW.-U$!5Vu}Ymc{';//
+            if(scope == 'User'){
+                HeaderLogin.userName=cs.Username__c;//'appsolutelytest_bfc9bbb2';
+                HeaderLogin.passWord=cs.Password__c;//'5Z9wwVa-hYzy*mFY)VW.-U$!5Vu}Ymc{';//
+            }else{
+                HeaderLogin.userName=cs.CompanyInfoResellerAdminUsername__c;//'appsolutelytest_Admin';
+                HeaderLogin.passWord=cs.CompanyInfoResellerAdminPassword__c;//'q{UfUzSJj7V,*Q$vw(Y_Sk2gyG,UVJG$';//
+            }
+            
         }
     }
 

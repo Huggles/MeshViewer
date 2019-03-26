@@ -7,9 +7,64 @@ public class WebServicesNLSOAPDutchBusinessImpl extends WebServicesNLSOAPDutchBu
 public WebServicesNLSOAPDutchBusinessImpl(){
         super();
 }
-    
-    
-    public DutchBusinessDto dutchBusinessGetDossierV3(String dossier_number,String establishment_number){
+    public DutchBusinessDossierResponse dutchBusinessGetDossier(dutchBusinessGetDossierRequest params){
+
+        try{
+            DutchBusinessDossierV3 response = dutchBusinessGetDossierV3(params.dossier_number, params.establishment_number);
+            DutchBusinessDossierResponse result = new DutchBusinessDossierResponse();
+            result.legal_name = response.legal_name ;
+            result.dossier_number = response.dossier_number ;
+            result.establishment_number = response.establishment_number ;
+            result.main_establishment_number = response.main_establishment_number ;
+            result.indication_main_establishment = response.indication_main_establishment ;
+            result.rsin_number = response.rsin_number ;
+            result.chamber_number = response.chamber_number ;
+            result.legal_form_code = response.legal_form_code ;
+            result.legal_form_text = response.legal_form_text ;
+            result.indication_organisation_code = response.indication_organisation_code ;
+            result.trade_name_45 = response.trade_name_45 ;
+            result.trade_name_full = response.trade_name_full;
+            result.trade_names = new list<String>();
+            for(StringArray str: response.trade_names){
+                result.trade_names.add(str.item);
+            }
+            
+            result.telephone_number = response.telephone_number ;
+            result.mobile_number = response.mobile_number ;
+            result.domain_name = response.domain_name ;
+            result.authorized_share_capital = response.authorized_share_capital ;
+            result.authorized_share_capital_currency = response.authorized_share_capital_currency ;
+            result.class_personnel = response.class_personnel ;
+            result.class_personnel_fulltime = response.class_personnel_fulltime ;
+            result.continuation_date = response.continuation_date ;
+            result.discontinuation_date = response.discontinuation_date ;
+            result.establishment_date = response.establishment_date ;
+            result.founding_date = response.founding_date ;
+            result.issued_share_capital = response.issued_share_capital ;
+            result.issued_share_capital_currency = response.issued_share_capital_currency ;
+            result.paid_up_share_capital = response.paid_up_share_capital ;
+            result.paid_up_share_capital_currency = response.paid_up_share_capital_currency ;
+            result.personnel = response.personnel ;
+            result.personnel_fulltime = response.personnel_fulltime ;
+            result.personnel_reference_date = response.personnel_reference_date ;
+            result.primary_sbi_code = response.primary_sbi_code ;
+            result.primary_sbi_code_text = response.primary_sbi_code_text ;
+            result.secondary_sbi_code1 = response.secondary_sbi_code1 ;
+            result.secondary_sbi_code1_text = response.secondary_sbi_code1_text ;
+            result.secondary_sbi_code2 = response.secondary_sbi_code2 ;
+            result.Secondary_Sbi_Code_2_Text__c = response.Secondary_Sbi_Code_2_Text__c ;
+
+            return result;
+
+        }catch(System.CalloutException ex){
+            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(System.Exception ee){
+            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+        }
+
+    }
+     
+    public DutchBusinessDossierV3 dutchBusinessGetDossierV3(String dossier_number,String establishment_number){
         
 
         dutchBusinessGetDossierV3RequestType request_x = new dutchBusinessGetDossierV3RequestType();
@@ -32,12 +87,41 @@ public WebServicesNLSOAPDutchBusinessImpl(){
                         'WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessGetDossierV3ResponseType'} // NB!!! The type file name should be prepended to the ws method name
         );
         response_x = response_map_x.get('response_x');
-        DutchBusinessDto r = new DutchBusinessDto();
-        r.DutchBusinessDossierV3 = response_x.out;
-        return  r;
+        return response_x.out;
+    }
+    public dutchBusinessSearchParametersResponse dutchBusinessSearchParameters(dutchBusinessSearchParametersRequest params){
+        try{
+            dutchBusinessSearchParametersResponse result;
+            DutchBusinessReferenceV2PagedResult response = dutchBusinessSearchParametersV2(params.name,params.city,params.street,params.postcode,null,null,params.phone,params.domain,false,null);   
+            result.curpage = response.paging.curpage;
+            result.perpage = response.paging.perpage;
+            result.numpages = response.paging.numpages;
+            result.numresults = response.paging.numresults;
+            result.maxresults = response.paging.maxresults;
+            for(DutchBusinessReferenceV2 item: response.results.item){
+                    DutchBusinessReference restItem = new DutchBusinessReference();
+                    restItem.dossier_number = item.dossier_number ;
+                    restItem.establishment_number = item.establishment_number ;
+                    restItem.name = item.name ;
+                    restItem.match_type = item.match_type ;
+                    restItem.establishment_city = item.establishment_city ;
+                    restItem.establishment_street = item.establishment_street ;
+                    restItem.correspondence_city = item.correspondence_city ;
+                    restItem.correspondence_street = item.correspondence_street ;
+                    restItem.indication_economically_active =  item.indication_economically_active ;
+                    response.items.add(restItem);
+            }
+        return result;
+            
+        }catch(System.CalloutException ex){
+            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(System.Exception ex){
+            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+        }
+
     }
 
-        public DutchBusinessDto dutchBusinessSearchParametersV2(String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page) {
+        public DutchBusinessReferenceV2PagedResult dutchBusinessSearchParametersV2(String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page) {
             
             dutchBusinessSearchParametersV2RequestType request_x = new dutchBusinessSearchParametersV2RequestType();
             dutchBusinessSearchParametersV2ResponseType response_x;
@@ -66,9 +150,9 @@ public WebServicesNLSOAPDutchBusinessImpl(){
                             'WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessSearchParametersV2ResponseType'}
             );
             response_x = response_map_x.get('response_x');
-            DutchBusinessDto result = new DutchBusinessDto();
-            result.DutchBusinessReferenceV2PagedResult = response_x.out;
-            return result;
+            //DutchBusinessDto result = new DutchBusinessDto();
+            return response_x.out;
+            //return result;
         }
 
 //________________________*****************************************************___________________________________________________

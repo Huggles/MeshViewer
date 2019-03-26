@@ -8,7 +8,8 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
 
     // constructor
     public WebServicesNLSOAPAccountingImpl(){
-        super();
+        //super(); not applicable due to the need of running this service using admin credentials
+        port = new Webservices_nlPort('Admin');
     }
 
 
@@ -64,6 +65,8 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
     public userCreateResponseDto userCreate(UserCreateInputDto input){
         
         intArray arr = new intArray();
+        system.debug(logginglevel.error, '******** input = ' + input);
+        arr.item = new List<Integer>();
         for(Integer value: input.usergroups){
             arr.item.add(value);
         }
