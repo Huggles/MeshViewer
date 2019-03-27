@@ -25,10 +25,11 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.trade_name_45 = response.trade_name_45 ;
             result.trade_name_full = response.trade_name_full;
             result.trade_names = new list<String>();
-            for(String str: response.trade_names.item){
-                result.trade_names.add(str);
+            if(response.trade_names != null){
+                for(String str: response.trade_names.item){
+                    result.trade_names.add(str);
+                }
             }
-
             result.telephone_number = response.telephone_number ;
             result.mobile_number = response.mobile_number ;
             result.domain_name = response.domain_name ;
@@ -36,17 +37,17 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.authorized_share_capital_currency = response.authorized_share_capital_currency ;
             result.class_personnel = response.class_personnel ;
             result.class_personnel_fulltime = response.class_personnel_fulltime ;
-            result.continuation_date = Date.newInstance(response.continuation_date.year, response.continuation_date.month, response.continuation_date.day);
-            result.discontinuation_date = Date.newInstance(response.discontinuation_date.year, response.discontinuation_date.month, response.discontinuation_date.day);
-            result.establishment_date = Date.newInstance(response.establishment_date.year, response.establishment_date.month, response.establishment_date.day);
-            result.founding_date = Date.newInstance(response.founding_date.year, response.founding_date.month, response.founding_date.day);
+            result.continuation_date = getDate(response.continuation_date); //Date.newInstance(response.continuation_date.year, response.continuation_date.month, response.continuation_date.day);
+            result.discontinuation_date = getDate(response.discontinuation_date); //Date.newInstance(response.discontinuation_date.year, response.discontinuation_date.month, response.discontinuation_date.day);
+            result.establishment_date = getDate(response.establishment_date); //Date.newInstance(response.establishment_date.year, response.establishment_date.month, response.establishment_date.day);
+            result.founding_date = getDate(response.founding_date); //Date.newInstance(response.founding_date.year, response.founding_date.month, response.founding_date.day);
             result.issued_share_capital = response.issued_share_capital ;
             result.issued_share_capital_currency = response.issued_share_capital_currency ;
             result.paid_up_share_capital = response.paid_up_share_capital ;
             result.paid_up_share_capital_currency = response.paid_up_share_capital_currency ;
             result.personnel = response.personnel ;
             result.personnel_fulltime = response.personnel_fulltime ;
-            result.personnel_reference_date = Date.newInstance(response.personnel_reference_date.year, response.personnel_reference_date.month, response.personnel_reference_date.day);
+            result.personnel_reference_date = getDate(response.personnel_reference_date); //Date.newInstance(response.personnel_reference_date.year, response.personnel_reference_date.month, response.personnel_reference_date.day);
             result.primary_sbi_code = response.primary_sbi_code ;
             result.primary_sbi_code_text = response.primary_sbi_code_text ;
             result.secondary_sbi_code1 = response.secondary_sbi_code1 ;
@@ -63,7 +64,12 @@ public WebServicesNLSOAPDutchBusinessImpl(){
         }
 
     }
-     
+    private Date getDate(DutchBusinessDateV3 dt){
+        if(dt != null){
+            try{return Date.newInstance(dt.year, dt.month, dt.day);}catch(exception e){ throw new CustomException('Something happened while processing the webservice call response. Something wrong with the date. Date = '+dt+' '+e.getMessage());}
+        }
+        return null;
+    } 
     public DutchBusinessDossierV3 dutchBusinessGetDossierV3(String dossier_number,String establishment_number){
         
 
@@ -390,13 +396,6 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
-        }
-
-
-        private String getDate(DutchBusinessDateV3 dt){
-                String result;
-                result = dt.year + '-' + dt.month +'-'+ dt.day;
-                return result;
         }
 
 

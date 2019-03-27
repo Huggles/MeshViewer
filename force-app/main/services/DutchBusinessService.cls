@@ -37,7 +37,7 @@ public with sharing class DutchBusinessService {
         if (dossierNumber == null) return null;
         try{                                                            
             IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
-            DutchBusinessDto.DutchBusinessGetDossierRequest requestParams;// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
+            DutchBusinessDto.DutchBusinessGetDossierRequest requestParams = new DutchBusinessDto.DutchBusinessGetDossierRequest();// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
             requestParams.dossier_number = dossierNumber;
             requestParams.establishment_number = null;
             return service.dutchBusinessGetDossier(requestParams);

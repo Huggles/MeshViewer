@@ -137,14 +137,14 @@ public with sharing class DutchBusinessDto {
                 }
         }
         public class DutchBusinessReference{
-                public String dossier_number;
-                public String establishment_number;
-                public String name;
-                public String match_type;
-                public String establishment_city;
-                public String establishment_street;
-                public String correspondence_city;
-                public String correspondence_street;
-                public Boolean indication_economically_active;
+                @AuraEnabled public String dossier_number;
+                @AuraEnabled public String establishment_number;
+                @AuraEnabled public String name;
+                @AuraEnabled public String match_type;
+                @AuraEnabled public String establishment_city;
+                @AuraEnabled public String establishment_street;
+                @AuraEnabled public String correspondence_city;
+                @AuraEnabled public String correspondence_street;
+                @AuraEnabled public Boolean indication_economically_active;
         }
 }
