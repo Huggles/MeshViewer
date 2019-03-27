@@ -13,11 +13,11 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
     }
 
 
-    public AccountViewDto accountView(){
+    public DutchBusinessAccountingDto.AccountViewResponseDto accountView(){
         return accountView('');
     }
 // badly designed accountView call. The original webservice method must remain as it was. The wrapper method should utilise DTOs. Will be TODO IF WE USE THIOS WS METHOD IN FUTURE. OTHERWISE TO DELETE
-    public AccountViewDto accountView(String accountId){
+    public DutchBusinessAccountingDto.AccountViewResponseDto accountView(String accountId){
         accountViewV2RequestType request_x = new accountViewV2RequestType();
         if(accountid != ''){
             request_x.accountid = Integer.valueOf(accountid);
@@ -39,7 +39,7 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             'WebServicesNLSOAPAccountingImplTypes.accountViewV2ResponseType'} // typepath in the code. Very important
         );   
         response_x = response_map_x.get('response_x');
-        AccountViewDto result = new AccountViewDto();
+        DutchBusinessAccountingDto.AccountViewResponseDto result = new DutchBusinessAccountingDto.AccountViewResponseDto();
         //result.companyInfoId = String.valueOf(response_x.out.id);
         result.companyInfoId = String.valueOf(response_x.out.id);
         result.Name = response_x.out.name;
@@ -62,7 +62,7 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         return result;
     }
 // Main method to create a user. Utilises createUserV2 method. 
-    public userCreateResponseDto userCreate(UserCreateInputDto input){
+    public DutchBusinessAccountingDto.userCreateResponseDto userCreate(DutchBusinessAccountingDto.userCreateRequestDto input){
         
         intArray arr = new intArray();
         system.debug(logginglevel.error, '******** input = ' + input);
@@ -76,7 +76,7 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         }catch(System.CalloutException ex){
             throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
         }
-        userCreateResponseDto result = new userCreateResponseDto();
+        DutchBusinessAccountingDto.userCreateResponseDto result = new DutchBusinessAccountingDto.userCreateResponseDto();
         result.id = response.id;
         result.nickname = response.nickname;
         result.password = response.password;

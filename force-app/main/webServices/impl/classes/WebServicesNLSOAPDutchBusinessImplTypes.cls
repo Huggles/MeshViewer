@@ -359,7 +359,7 @@ public abstract class WebServicesNLSOAPDutchBusinessImplTypes  extends Webservic
         private String[] field_order_type_info = new String[]{'item'};
     }
     public class DutchBusinessReferenceV2 {
-        @AuraEnabled public String dossier_number{get;set;}
+        /*@AuraEnabled public String dossier_number{get;set;}
         @AuraEnabled public String establishment_number{get;set;}
         @AuraEnabled public String name{get;set;}
         @AuraEnabled public String match_type{get;set;}
@@ -367,7 +367,18 @@ public abstract class WebServicesNLSOAPDutchBusinessImplTypes  extends Webservic
         @AuraEnabled public String establishment_street{get;set;}
         @AuraEnabled public String correspondence_city{get;set;}
         @AuraEnabled public String correspondence_street{get;set;}
-        @AuraEnabled public Boolean indication_economically_active{get;set;}
+        @AuraEnabled public Boolean indication_economically_active{get;set;}*/
+
+        public String dossier_number;
+        public String establishment_number;
+        public String name;
+        public String match_type;
+        public String establishment_city;
+        public String establishment_street;
+        public String correspondence_street;
+        public String correspondence_city;
+        public Boolean indication_economically_active;
+
         private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/','string','1','1','false'};
         private String[] establishment_number_type_info = new String[]{'establishment_number','http://www.webservices.nl/soap/','string','0','1','false'};
         private String[] name_type_info = new String[]{'name','http://www.webservices.nl/soap/','string','1','1','false'};
