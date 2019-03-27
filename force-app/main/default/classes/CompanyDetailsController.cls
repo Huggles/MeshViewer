@@ -3,12 +3,11 @@
 * @param SearchString
 */
 public with sharing class CompanyDetailsController {
-    private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults;
+    //private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults;
     @AuraEnabled
-    public static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2[] search(String searchParams){
-        System.debug('search');
+    public static List<DutchBusinessDto.DutchBusinessReference> search(String searchParams){
         if(searchParams!=null){
-            DutchBusinessService.CompanySearchDto params = (DutchBusinessService.CompanySearchDto)JSON.deserialize(searchParams, DutchBusinessService.CompanySearchDto.class);
+            DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
             return DutchBusinessService.searchForDossiers(params);
         }
         return null; 
@@ -18,8 +17,7 @@ public with sharing class CompanyDetailsController {
         System.debug('getInfo');
         if(dossierNumber!=null){
 
-            DutchBusinessDto dto = DutchBusinessService.getInfo(dossierNumber);
-            WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessDossierV3 dossier = dto.DutchBusinessDossierV3;
+            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
             System.debug('getInfoResponse');
             System.debug(dossier);
             Id savedRecord = DutchBusinessService.saveDutchBusinessDossier(dossier, accountId); 
