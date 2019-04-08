@@ -11,8 +11,74 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         //super(); not applicable due to the need of running this service using admin credentials
         port = new Webservices_nlPort('Admin');
     }
+    public boolean userChangeBalance(DutchBusinessAccountingDto.userChangeBalanceRequestDto input){
 
+        boolean result = false;
+        try{
+            userEditBalance(input.userId, input.balance);
+            result = true;
+        }catch(System.CalloutException ex){
+            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(System.Exception ex){
+            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+        }
 
+        return result;
+    }
+    public void userEditBalance(Integer userid,Double balance) {
+        userEditBalanceRequestType request_x = new userEditBalanceRequestType();
+        request_x.userid = userid;
+        request_x.balance = balance;
+        //userEditBalanceResponseType response_x;
+        //Map<String, userEditBalanceResponseType> response_map_x = new Map<String, userEditBalanceResponseType>();
+        //response_map_x.put('response_x', response_x);
+        WebServiceCallout.invoke(
+            port,
+            request_x,
+            null,//response_map_x,
+            new String[]{endpoint_x,
+            'https://ws1.webservices.nl/soap_doclit.php/userEditBalance',
+            'http://www.webservices.nl/soap/',
+            'userEditBalance',
+            'http://www.webservices.nl/soap/',
+            'userEditBalanceResponse',
+            'WebServicesNLSOAPAccountingImplTypes.userEditBalanceResponseType'}
+        );
+    }
+
+    public DutchBusinessAccountingDto.userViewBalanceResponse userGetBalance(DutchBusinessAccountingDto.userViewBalanceRequest input){
+        DutchBusinessAccountingDto.userViewBalanceResponse result = new DutchBusinessAccountingDto.userViewBalanceResponse();
+        try{
+            result.balance = userViewBalance(input.userId);
+        }catch(System.CalloutException ex){
+            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(System.Exception ex){
+            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+        }
+
+        return result;
+    }
+    public Double userViewBalance(Integer userid) {
+        userViewBalanceRequestType request_x = new userViewBalanceRequestType();
+        request_x.userid = userid;
+        userViewBalanceResponseType response_x;
+        Map<String, userViewBalanceResponseType> response_map_x = new Map<String, userViewBalanceResponseType>();
+        response_map_x.put('response_x', response_x);
+        WebServiceCallout.invoke(
+            port,
+            request_x,
+            response_map_x,
+            new String[]{endpoint_x,
+            'https://ws1.webservices.nl/soap_doclit.php/userViewBalance',
+            'http://www.webservices.nl/soap/',
+            'userViewBalance',
+            'http://www.webservices.nl/soap/',
+            'userViewBalanceResponse',
+            'WebServicesNLSOAPAccountingImplTypes.userViewBalanceResponseType'}
+        );
+        response_x = response_map_x.get('response_x');
+        return response_x.balance;
+    }
     public DutchBusinessAccountingDto.AccountViewResponseDto accountView(){
         return accountView('');
     }
@@ -75,6 +141,8 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             response = userCreateV2(input.accountId, input.nickname, input.password, arr, input.email, input.companyname, input.address, input.contactname, input.contactemail, input.telephone, input.fax, input.clientcode, input.comments);
         }catch(System.CalloutException ex){
             throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(System.Exception ex){
+            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
         }
         DutchBusinessAccountingDto.userCreateResponseDto result = new DutchBusinessAccountingDto.userCreateResponseDto();
         result.id = response.id;

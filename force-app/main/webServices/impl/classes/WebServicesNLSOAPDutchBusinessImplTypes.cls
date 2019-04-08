@@ -358,7 +358,7 @@ public abstract class WebServicesNLSOAPDutchBusinessImplTypes  extends Webservic
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'item'};
     }
-    public class DutchBusinessReferenceV2 {
+    public class DutchBusinessReferenceV2 { 
         /*@AuraEnabled public String dossier_number{get;set;}
         @AuraEnabled public String establishment_number{get;set;}
         @AuraEnabled public String name{get;set;}

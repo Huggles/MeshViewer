@@ -5,6 +5,14 @@ Description     : Useb by fflib Application class to wire together the servicve 
 public class WebServicesNLSOAPAccounting {
 
 
+    public static boolean userChangeBalance(DutchBusinessAccountingDto.userChangeBalanceRequestDto input){
+        return newInstance().userChangeBalance(input);
+    }
+
+    public static DutchBusinessAccountingDto.userViewBalanceResponse userGetBalance(DutchBusinessAccountingDto.userViewBalanceRequest input){
+        return newInstance().userGetBalance(input);
+    }
+
     public static DutchBusinessAccountingDto.AccountViewResponseDto accountView(){
         return newInstance().accountView();
     }

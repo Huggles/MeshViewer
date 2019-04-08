@@ -31,14 +31,39 @@ public with sharing class DutchBusinessAccountingService {
         return response;
     }
 
-    private static Integer addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
-        Integer amount; // TODO: get the trial amount from custom settings or CMT
-        addBudgetToUser(amount, userId.id);
-        return null;
+    private static Double addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
+        Double amount; // TODO: get the trial amount from custom settings or CMT
+        return addBudgetToUserAndGetBalanceOnSuccess(amount, userId.id);
+        //return null;
     }
 
-    private static void addBudgetToUser(Integer amount, Integer userId){
-        //TODO implement this
+    public static boolean addBudget(Double amount, Integer userId){
+        DutchBusinessAccountingDto.userChangeBalanceRequestDto input = new DutchBusinessAccountingDto.userChangeBalanceRequestDto();
+        input.userId = userId;
+        input.balance = amount;
+        IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
+        try{
+            service.userChangeBalance(input);
+            return true;
+        }catch(exception e){
+            return false;
+        }
+
+    }
+
+    public static Double getBalance(Integer userId){
+        DutchBusinessAccountingDto.userViewBalanceRequest input = new DutchBusinessAccountingDto.userViewBalanceRequest();
+        input.userId = userId;
+        IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
+        return service.userGetBalance(input).balance;
+    }
+
+    private static Double addBudgetToUserAndGetBalanceOnSuccess(Double amount, Integer userId){
+        if(addBudget(amount, userId)){
+            return getBalance(userId);
+        }else{
+            return null;
+        }
     }
 
 }

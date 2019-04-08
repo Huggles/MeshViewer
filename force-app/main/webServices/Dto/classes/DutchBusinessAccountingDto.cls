@@ -39,4 +39,14 @@ public with sharing class DutchBusinessAccountingDto {
         public String nickname;
         public String password;
     }
+    public class userViewBalanceRequest{
+        public Integer userId;
+    }
+    public class userViewBalanceResponse{
+        public Double balance;
+    }
+    public class userChangeBalanceRequestDto{
+        public Integer userId;
+        public double balance;
+    }
 }

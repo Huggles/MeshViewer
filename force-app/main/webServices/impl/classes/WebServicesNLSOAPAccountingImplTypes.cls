@@ -96,4 +96,28 @@ public abstract class WebServicesNLSOAPAccountingImplTypes extends WebservicesNl
 
     }
 
+    public class userViewBalanceRequestType {
+        public Integer userid;
+        private String[] userid_type_info = new String[]{'userid','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'userid'};
+    }
+    public class userViewBalanceResponseType {
+        public Double balance;
+        private String[] balance_type_info = new String[]{'balance','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'balance'};
+    }
+    public class userEditBalanceResponseType {
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{};
+    }
+    public class userEditBalanceRequestType {
+        public Integer userid;
+        public Double balance;
+        private String[] userid_type_info = new String[]{'userid','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] balance_type_info = new String[]{'balance','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'userid','balance'};
+    }
 }
