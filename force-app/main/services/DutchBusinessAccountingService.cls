@@ -29,7 +29,7 @@ public with sharing class DutchBusinessAccountingService {
         DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(input);
 
         return response;
-    }
+    } 
 
     private static Double addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
         Double amount; // TODO: get the trial amount from custom settings or CMT
