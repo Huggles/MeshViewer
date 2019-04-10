@@ -30,7 +30,32 @@ public static PermissionSet ps;
         system.debug('************* uwList= '+ uwList);
         return uwList;
     }
+    @AuraEnabled(cacheable=true)
+    public static boolean getUserOnboarded(){
+       try{
+           return DutchBusinessAccountingService.getUserOnboarded();
+       }catch(exception e){
+            // throw something
+            return false;
+        } 
+    }
 
+
+
+    @AuraEnabled
+    public static void enableTrial(){
+        DutchBusinessAccountingDto.userCreateResponseDto resp = DutchBusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId());
+        system.debug(resp);
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Decimal getUserBalance(){
+        Decimal balance = DutchBusinessAccountingService.getBalance();
+        system.debug('balance is '+ balance);
+        return balance;
+    }
+
+    
 
     @AuraEnabled
     public static void assignUsers(List<String> UserIdList){

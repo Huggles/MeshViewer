@@ -1,0 +1,16 @@
+<template>
+        {onboarded}1
+    <lightning-card title="Enable trial" icon-name="custom:custom14">  
+        <div class="slds-m-around_medium">
+            <div id="waiting" if:false={onboarded}>
+                <lightning-button
+                    label="Enable trial"
+                    onclick={enableTrial}
+                ></lightning-button>
+            </div>
+            <div id="hide" if:true={onboarded}> 
+            </div>
+        </div>
+    </lightning-card>
+    
+</template>

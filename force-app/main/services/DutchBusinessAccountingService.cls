@@ -16,11 +16,31 @@ public with sharing class DutchBusinessAccountingService {
         input.clientcode = ''; // TODO: undertands what is this
         input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
         list<Integer> lst = new list<Integer>();
-        lst.add(23);// TODO: this will be implemented pererately and will be configurable
+        lst.add(23);// TODO: this will be implemented sepererately and will be configurable
         input.usergroups = lst;
         DutchBusinessAccountingDto.userCreateResponseDto userResp = createCIUser(input);
         addTrialToCIUser(userResp);
+        Credentials__c cs = Credentials__c.getOrgDefaults();
+        cs.Username__c = userResp.nickname;
+        cs.Password__c = userResp.password;
+        cs.CompanyInfoUserId__c = userResp.id;
+        update cs;
+        //userResp.id;
         return userResp;
+    }
+
+    
+    public static boolean getUserOnboarded(){
+        try{
+            Credentials__c cs = Credentials__c.getOrgDefaults();
+            if(cs.Username__c != null && cs.Username__c != '' && cs.Password__c != null && cs.Password__c != ''){
+                return true;
+            }else{
+                return false;}
+        }catch(exception e){
+            // throw something
+            return false;
+        }
     }
     
     // creates an integration user for the customer. Gives back the Id of the user in the Company.info backend
@@ -31,10 +51,9 @@ public with sharing class DutchBusinessAccountingService {
         return response;
     } 
 
-    private static Double addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
-        Double amount; // TODO: get the trial amount from custom settings or CMT
-        return addBudgetToUserAndGetBalanceOnSuccess(amount, userId.id);
-        //return null;
+    private static void addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
+        Double amount = 3000; // TODO: get the trial amount from custom settings or CMT
+        addBudget(amount, userId.id);
     }
 
     public static boolean addBudget(Double amount, Integer userId){
@@ -43,27 +62,38 @@ public with sharing class DutchBusinessAccountingService {
         input.balance = amount;
         IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
         try{
-            service.userChangeBalance(input);
-            return true;
-        }catch(exception e){
-            return false;
+            return service.userChangeBalance(input);
+            //return true;
+        }catch(System.CalloutException ex){
+            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(System.Exception ex){
+            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
         }
 
     }
+    public static boolean addBudget(Double amount){
+        DutchBusinessAccountingDto.userChangeBalanceRequestDto input = new DutchBusinessAccountingDto.userChangeBalanceRequestDto();
+        Credentials__c cs = Credentials__c.getOrgDefaults();
+        return addBudget(amount, (Integer)cs.CompanyInfoUserId__c);
 
-    public static Double getBalance(Integer userId){
+    }
+
+    public static Double getBalance(){
         DutchBusinessAccountingDto.userViewBalanceRequest input = new DutchBusinessAccountingDto.userViewBalanceRequest();
-        input.userId = userId;
+        Credentials__c cs = Credentials__c.getOrgDefaults();
+        input.userId = (integer)cs.CompanyInfoUserId__c;
         IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
         return service.userGetBalance(input).balance;
     }
 
-    private static Double addBudgetToUserAndGetBalanceOnSuccess(Double amount, Integer userId){
+ /*   private static Double addBudgetToUserAndGetBalanceOnSuccess(Double amount, Integer userId){
+
         if(addBudget(amount, userId)){
-            return getBalance(userId);
+            //system.debug('calling getbalance userId = ' + input.userId);
+            return getBalance();
         }else{
             return null;
         }
-    }
+    }*/
 
 }

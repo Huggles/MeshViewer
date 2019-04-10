@@ -3,8 +3,14 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
+            "c/balanceCard": [
+                "balanceCard/balanceCard.js"
+            ],
             "c/configApp": [
                 "configApp/configApp.js"
+            ],
+            "c/onboardCustomer": [
+                "onboardCustomer/onboardCustomer.js"
             ]
         }
     },

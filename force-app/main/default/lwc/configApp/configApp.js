@@ -17,7 +17,7 @@ export default class configApp extends LightningElement {
 
     @track greeting = 'World';
     @track columns = columns;
-    @track ready = true;
+    @track ready = false;
     @track users;
     @track error;
     @track searchKey = '';

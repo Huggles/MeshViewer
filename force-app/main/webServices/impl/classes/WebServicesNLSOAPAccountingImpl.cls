@@ -25,17 +25,17 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
 
         return result;
     }
-    public void userEditBalance(Integer userid,Double balance) {
+    public userEditBalanceResponseType userEditBalance(Integer userid,Double balance) {
         userEditBalanceRequestType request_x = new userEditBalanceRequestType();
         request_x.userid = userid;
         request_x.balance = balance;
-        //userEditBalanceResponseType response_x;
-        //Map<String, userEditBalanceResponseType> response_map_x = new Map<String, userEditBalanceResponseType>();
-        //response_map_x.put('response_x', response_x);
+        userEditBalanceResponseType response_x;
+        Map<String, userEditBalanceResponseType> response_map_x = new Map<String, userEditBalanceResponseType>();
+        response_map_x.put('response_x', response_x);
         WebServiceCallout.invoke(
             port,
             request_x,
-            null,//response_map_x,
+            response_map_x,
             new String[]{endpoint_x,
             'https://ws1.webservices.nl/soap_doclit.php/userEditBalance',
             'http://www.webservices.nl/soap/',
@@ -44,6 +44,8 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             'userEditBalanceResponse',
             'WebServicesNLSOAPAccountingImplTypes.userEditBalanceResponseType'}
         );
+        response_x = response_map_x.get('response_x');
+        return response_x;
     }
 
     public DutchBusinessAccountingDto.userViewBalanceResponse userGetBalance(DutchBusinessAccountingDto.userViewBalanceRequest input){
