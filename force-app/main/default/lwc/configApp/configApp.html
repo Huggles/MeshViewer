@@ -1,37 +1,21 @@
 <template>
-    <lightning-card title="<Product Name> configuration page" icon-name="custom:custom14">       
-        <div id="waiting" if:false={ready}>Loading…</div>
-        <div id="display" if:true={ready}> 
-            <div style="height: 500px">
-                <p class="slds-p-left_xx-small">
-                    <lightning-button
-                        label="Enable/Disable selected users"
-                        onclick={addRemoveUsers}
-                    ></lightning-button>
-                    <lightning-input
-                    type="search"
-                    onchange={handleKeyChange}
-                    class="slds-m-bottom_small"
-                    label="Search"
-                    value={searchKey}
-                ></lightning-input>
-                </p>
-                <lightning-datatable
-                    data={users}
-                    columns={columns}
-                    key-field="Id"
-                    onsort={updateColumnSorting}
-                    onrowselection={getSelectedName}
-                ></lightning-datatable>
-            </div>
-        </div>
-        <div class="slds-m-around_medium">
-            <p>Hello, {greeting}!</p>
-            <lightning-input label="Name" value={greeting} onchange={changeHandler}></lightning-input>
-        </div>
-    </lightning-card>
+
+        
+
+    <div id="waiting" if:false={ready}>
+            <lightning-card title="Dutch Business configuration page" icon-name="custom:custom14"> Loading…</lightning-card>
+    </div>
+    <div id="waitingFinished" if:true={ready}>   
+                <div id="customerOnboarded" if:true={onboarded}>
+                    <div><c-balance-Card></c-balance-Card></div>
+                    <div><c-license-Control-List></c-license-Control-List></div>
+                </div>
+                <div id="customerNotOnboarded" if:true={showOnboarded}>
+                    <c-onboard-Customer onuseronboarded={handleUserOnboarded}></c-onboard-Customer>
+                </div>
+
+    </div>
+
 </template>
-
-
 
 

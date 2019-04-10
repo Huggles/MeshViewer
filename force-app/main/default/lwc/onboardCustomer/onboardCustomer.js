@@ -27,21 +27,32 @@ wiredUserOnboarded(result){
 }
 
 enableTrial(event){
-    const evt = new ShowToastEvent({
-        title: 'Success',
-        message: 'Users were added to the application',
-        variant: 'success'
-    });
-    this.dispatchEvent(evt);
-    enableTrial()
-    .then(result => {
-       // .then(() => {
-        console.log('SUCCESS123');
 
+    enableTrial().then(result => {
+        console.log('SUCCESS123');
+        const evt = new ShowToastEvent({
+            title: 'Success',
+            message: 'The org was activated',
+            variant: 'success'
+        });
+        this.dispatchEvent(evt);
+        const event = new CustomEvent('userOnboarded', {
+            // detail contains only primitives
+            //detail: this.product.fields.Id.value
+        });
+        // Fire the event from c-tile
+        this.dispatchEvent(event);
         return refreshApex(this.isUserOnboarded);
     })
     .catch(error => {
         this.error = error;
+        console.log(this.error);
+        const evt = new ShowToastEvent({
+            title: 'Error',
+            message: 'There was an error during org activation.',
+            variant: 'error'
+        });
+        this.dispatchEvent(evt);
     });
 }
  

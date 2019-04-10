@@ -1,0 +1,33 @@
+<template>
+    <lightning-card title="License manager" icon-name="custom:custom14">       
+        <div id="waiting" if:false={ready}>Loading…</div>
+        <div id="display" if:true={ready}> 
+            <div style="height: 500px">
+                <p class="slds-p-left_xx-small">
+                    <lightning-button
+                        label="Enable/Disable selected users"
+                        onclick={addRemoveUsers}
+                    ></lightning-button>
+                    <lightning-input
+                    type="search"
+                    onchange={handleKeyChange}
+                    class="slds-m-bottom_small"
+                    label="Search"
+                    value={searchKey}
+                ></lightning-input>
+                </p>
+                <lightning-datatable
+                    data={users}
+                    columns={columns}
+                    key-field="Id"
+                    onsort={updateColumnSorting}
+                    onrowselection={getSelectedName}
+                ></lightning-datatable>
+            </div>
+        </div>
+    </lightning-card>
+</template>
+
+
+
+

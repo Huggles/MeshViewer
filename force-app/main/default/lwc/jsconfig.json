@@ -11,6 +11,9 @@
             ],
             "c/onboardCustomer": [
                 "onboardCustomer/onboardCustomer.js"
+            ],
+            "c/licenseControlList": [
+                "licenseControlList/licenseControlList.js"
             ]
         }
     },
