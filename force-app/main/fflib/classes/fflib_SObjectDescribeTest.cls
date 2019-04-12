@@ -97,8 +97,8 @@ private class fflib_SObjectDescribeTest {
 		String fakeNamespace = 'fflib_test';
 		Map<String,Schema.SObjectType> fakeFieldData = new Map<String,Schema.SObjectType>{
 			'name__c' => Contact.SObjectType, //re-use stndard object types since we can't mock them
-			fakeNamespace+'__name__c' => Account.SObjectType //,
-			// 'createddate' => Lead.SObjectType
+			fakeNamespace+'__name__c' => Account.SObjectType,
+			'createddate' => Lead.SObjectType
 		};
 		fflib_SObjectDescribe.GlobalDescribeMap gdm = new fflib_SObjectDescribe.GlobalDescribeMap(fakeFieldData);
 		gdm.currentNamespace = fakeNamespace;

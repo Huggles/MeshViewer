@@ -46,7 +46,7 @@ public class fflib_SecurityUtils
     /**
      * CrudException represents a running user's lack of read/create/update/delete access at a profile (or permission set)
      * level. Sharing and field level security issues will never cause this.
-     **/ 
+     **/
     public class CrudException extends SecurityException{
     	
     	private CrudException(OperationType operation, Schema.SObjectType objectType){

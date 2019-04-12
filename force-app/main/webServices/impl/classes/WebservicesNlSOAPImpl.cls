@@ -38,13 +38,14 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
         }
         public void getAuthentication(String scope){
             Credentials__c CS = Credentials__c.getOrgDefaults();
+            ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
             HeaderLogin = new HeaderLoginType();
             if(scope == 'User'){
                 HeaderLogin.userName=cs.Username__c;//'appsolutelytest_bfc9bbb2';
                 HeaderLogin.passWord=cs.Password__c;//'5Z9wwVa-hYzy*mFY)VW.-U$!5Vu}Ymc{';//
             }else{
-                HeaderLogin.userName=cs.CompanyInfoResellerAdminUsername__c;//'appsolutelytest_Admin';
-                HeaderLogin.passWord=cs.CompanyInfoResellerAdminPassword__c;//'q{UfUzSJj7V,*Q$vw(Y_Sk2gyG,UVJG$';//
+                HeaderLogin.userName=configData.DataProviderAdminUsername__c;//'appsolutelytest_Admin';
+                HeaderLogin.passWord=configData.DataProviderAdminPassword__c;//'q{UfUzSJj7V,*Q$vw(Y_Sk2gyG,UVJG$';//
             }
             
         }

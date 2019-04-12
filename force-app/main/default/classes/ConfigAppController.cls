@@ -1,23 +1,36 @@
 public class ConfigAppController {
 public static PermissionSet ps;
     @AuraEnabled(cacheable=true)
-    public static List<UserWrapper> getUserList(String searchKey) {
+    public static List<UserWrapper> getUserList(String searchKey, String searchParam, String sortedBy, String sortedDirection) {
 
         list<String> enabledDutchBusinessUserIds = getDutchBusinessUserIds();
         list<UserWrapper> uwList = new list<UserWrapper>();
         list<User> userList;
-        if (String.isBlank(searchKey)) {
-            userList =  [SELECT Id, Name, isActive, Email FROM User]; // TODO: move to selector
-        }else{
-            String key = '%' + searchKey + '%';
-            userList =  [SELECT Id, Name, isActive, Email FROM User WHERE Name LIKE :key]; // TODO: move to selector
+        system.debug(searchParam);
+        if(sortedby == null){sortedby = 'Name';}
+        if(sortedDirection == null){sortedDirection = 'asc';}
+        system.debug('sortedBy = ' + sortedby);
+        system.debug('sortedDirection = ' + sortedDirection);
+        if(searchParam == 'Name'){
+            userList = UserSelector.newInstance().selectByNameLikeSearchKey(searchKey, sortedBy, sortedDirection);
+        }else if(searchParam == 'ProfileName'){
+            userList = UserSelector.newInstance().selectByProfileLikeSearchKey(searchKey, sortedBy, sortedDirection);
         }
-            for(User usr: userList){
+
+        set<Id> profileIdSet = new set<Id>();
+        for(User usr: userList){
+            profileIdSet.add(usr.profileId);
+        }
+        system.debug('profileIdSet'+profileIdSet);
+        map<Id, Profile> profileMap = new map<Id, Profile>();
+        profileMap = new map<Id, Profile>([SELECT Name From Profile WHERE Id IN :profileIdSet]);
+
+        for(User usr: userList){
             UserWrapper uw = new UserWrapper();
             uw.Id = usr.id;
             uw.Name = usr.name;
             uw.isActive = usr.isActive;
-            uw.Email = usr.Email;
+            try{uw.ProfileName = profileMap.get(usr.ProfileId).name;}catch(exception e){}
             system.debug('************* usr.Id = '+ usr.Id);
             
             system.debug('************* enabledDutchBusinessUserIds = '+ enabledDutchBusinessUserIds);
@@ -84,7 +97,8 @@ public static PermissionSet ps;
     private static list<String> getDutchBusinessUserIds(){
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Company_info_User'];
         system.debug('************* ps = '+ ps);
-        list <PermissionSetAssignment> psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];
+        list <PermissionSetAssignment> psaList = new list <PermissionSetAssignment>();
+        psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];
         list<String> result = new list<String>();
         system.debug('************* psalist = '+ psaList);
         for(PermissionSetAssignment psa: psaList){
@@ -98,7 +112,7 @@ public static PermissionSet ps;
         @AuraEnabled public String Id;
         @AuraEnabled public String Name;
         @AuraEnabled public boolean isActive;
-        @AuraEnabled public String Email;
+        @AuraEnabled public String ProfileName;
         @AuraEnabled public boolean DutchBusinessActive = false;
     }
 }

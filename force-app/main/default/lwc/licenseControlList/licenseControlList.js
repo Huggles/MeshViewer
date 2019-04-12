@@ -4,10 +4,10 @@ import assignUsers from '@salesforce/apex/ConfigAppController.assignUsers';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 const columns = [
-    {label: 'Full Name', fieldName: 'Name', type: 'string', sortable: 'true', sortedBy: 'Name'},
+    {label: 'Name', fieldName: 'Name', type: 'string', sortable: 'true'},
     {label: 'Active', fieldName: 'isActive', type: 'boolean'},
     {label: 'Dutch Business Active', fieldName: 'DutchBusinessActive', type: 'boolean'},
-    {label: 'Email', fieldName: 'Email', type: 'email'}
+    {label: 'Profile Name', fieldName: 'ProfileName', type: 'string', sortable: 'true'}
 
 ];
 const selectedUserIds = [];
@@ -21,10 +21,14 @@ export default class LicenseControlList extends LightningElement {
     @track users;
     @track error;
     @track searchKey = '';
+    @track sortedBy = 'Name';
+    @track sortedDirection = 'asc';
+
+    @track searchParam = 'Name'; 
 
     wiredUsersResult;
 
-    @wire(getUserList, { searchKey: '$searchKey' })
+    @wire(getUserList, { searchKey: '$searchKey', searchParam: '$searchParam', sortedBy: '$sortedBy',  sortedDirection: '$sortedDirection'})
     wiredUsers(result) {
         this.wiredUsersResult = result;
         if (result.data) {
@@ -56,9 +60,6 @@ export default class LicenseControlList extends LightningElement {
             variant: 'success'
         });
         this.dispatchEvent(evt);
-        //return refreshApex(this.users);
-        console.log('---ButtonClick---');
-        console.log(this.selectedUserIds);
         assignUsers({UserIdList:this.selectedUserIds})
         .then(result => {
            // .then(() => {
@@ -70,20 +71,23 @@ export default class LicenseControlList extends LightningElement {
             this.error = error;
         });
     }
-    changeHandler(event) {
-        this.greeting = event.target.value;
-        
-    }
       // The method onsort event handler
     updateColumnSorting(event) { // to ask Dan
-        var fieldName = event.detail.fieldName;
-        var sortDirection = event.detail.sortDirection;
+        console.log('test');
+        const fieldName = event.detail.fieldName;
+        const sortDir = event.detail.sortDirection;
+
+        console.log(event.detail.fieldName);
+        console.log(event.detail.sortDirection);
+        //console.log(event.target.sorted-direction);
+        //console.log(event.sorted-direction);
         // assign the latest attribute with the sorted column fieldName and sorted direction
         this.sortedBy = fieldName;
-        this.sortedDirection = sortDirection;
-        console.log('nazhal');
-        //this.data = this.sortData(fieldName, sortDirection);
-   }
+        this.sortedDirection = sortDir; //sortDirection;
+        console.log(this.sortedBy);
+        console.log(this.sortedDirection);
+        //this.data = this.sortData(fieldName, sortDirection);*/
+   } //as
 
 
 }

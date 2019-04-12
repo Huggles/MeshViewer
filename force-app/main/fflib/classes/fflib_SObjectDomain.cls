@@ -25,7 +25,7 @@
 **/
 
 /**
- * Base class aiding in the implemetnation of a Domain Model around SObject collections
+ * Base class aiding in the implementation of a Domain Model around SObject collections
  * 
  * Domain (software engineering). “a set of common requirements, terminology, and functionality 
  * for any software program constructed to solve a problem in that field”,
@@ -72,7 +72,7 @@ public virtual with sharing class fflib_SObjectDomain
 	private static Map<Type, List<fflib_SObjectDomain>> TriggerStateByClass; 
 	
 	/**
-	 * Retains the trigger tracking configuraiton used for each domain
+	 * Retains the trigger tracking configuration used for each domain
 	 **/
 	private static Map<Type, TriggerEvent> TriggerEventByClass;
 
@@ -90,7 +90,7 @@ public virtual with sharing class fflib_SObjectDomain
 	/**
 	 * Constructs the domain class with the data on which to apply the behaviour implemented within
 	 *
-	 * @param sObjectList A concreate list (e.g. List<Account> vs List<SObject>) of records
+	 * @param sObjectList A concrete list (e.g. List<Account> vs List<SObject>) of records
 
 	 **/
 	public fflib_SObjectDomain(List<SObject> sObjectList)
@@ -101,7 +101,7 @@ public virtual with sharing class fflib_SObjectDomain
 	/**
 	 * Constructs the domain class with the data and type on which to apply the behaviour implemented within
 	 *
-	 * @param sObjectList A list (e.g. List<Contact>, List<Account>, etc.) of records
+	 * @param sObjectList A list (e.g. List<Opportunity>, List<Account>, etc.) of records
 	 * @param sObjectType The Schema.SObjectType of the records contained in the list
 	 *
 	 * @remark Will support List<SObject> but all records in the list will be assumed to be of
@@ -272,6 +272,46 @@ public virtual with sharing class fflib_SObjectDomain
     	return Records;
     }
     
+	/**
+	 * Detects whether any values in context records have changed for given fields as strings
+	 * Returns list of SObject records that have changes in the specified fields
+	 **/
+	public List<SObject> getChangedRecords(Set<String> fieldNames)
+	{
+		List<SObject> changedRecords = new List<SObject>();
+		for(SObject newRecord : Records)
+		{
+			Id recordId = (Id)newRecord.get('Id');
+			if(Trigger.oldMap == null || !Trigger.oldMap.containsKey(recordId)) continue;
+			SObject oldRecord = Trigger.oldMap.get(recordId);
+			for(String fieldName : fieldNames)
+			{
+				if(oldRecord.get(fieldName) != newRecord.get(fieldName)) changedRecords.add(newRecord);
+			}
+		}
+		return changedRecords;
+	}
+
+	/**
+	 * Detects whether any values in context records have changed for given fields as tokens
+	 * Returns list of SObject records that have changes in the specified fields
+	 **/
+	public List<SObject> getChangedRecords(Set<Schema.SObjectField> fieldTokens)
+	{
+		List<SObject> changedRecords = new List<SObject>();
+		for(SObject newRecord : Records)
+		{
+			Id recordId = (Id)newRecord.get('Id');
+			if(Trigger.oldMap == null || !Trigger.oldMap.containsKey(recordId)) continue;
+			SObject oldRecord = Trigger.oldMap.get(recordId);
+			for(Schema.SObjectField fieldToken : fieldTokens)
+			{
+				if(oldRecord.get(fieldToken) != newRecord.get(fieldToken)) changedRecords.add(newRecord);
+			}
+		}
+		return changedRecords;
+	}
+
 	/**
 	 * Interface used to aid the triggerHandler in constructing instances of Domain classes
 	 **/
@@ -504,7 +544,7 @@ public virtual with sharing class fflib_SObjectDomain
 	public class Configuration
 	{
 		/** 
-		 * Backwards compatability mode for handleAfterUpdate routing to onValidate()
+		 * Backwards compatibility mode for handleAfterUpdate routing to onValidate()
 		 **/
 		public Boolean OldOnUpdateValidateBehaviour {get; private set;}		
 		/**
@@ -781,179 +821,92 @@ public virtual with sharing class fflib_SObjectDomain
 	 **/
 	public with sharing class TestSObjectDomain extends fflib_SObjectDomain
 	{
-//		private String someState;
-//
-//		public TestSObjectDomain(List<Contact> sObjectList)
-//		{
-//			// Domain classes are initialised with lists to enforce bulkification throughout
-//			super(sObjectList);
-//		}
-//
-//		public TestSObjectDomain(List<Contact> sObjectList, SObjectType sObjectType)
-//		{
-//			// Domain classes are initialised with lists to enforce bulkification throughout
-//			super(sObjectList, sObjectType);
-//		}
-//
-//		public override void onApplyDefaults()
-//		{
-//			// Not required in production code
-//			super.onApplyDefaults();
-//
-//			// Apply defaults to Testfflib_SObjectDomain
-//			for(Contact opportunity : (List<Contact>) Records)
-//			{
-//				opportunity.CloseDate = System.today().addDays(30);
-//			}
-//		}
-//
-//		public override void onValidate()
-//		{
-//			// Not required in production code
-//			super.onValidate();
-//
-//			// Validate Testfflib_SObjectDomain
-//			for(Contact opp : (List<Contact>) Records)
-//			{
-//				if(opp.Type!=null && opp.Type.startsWith('Existing') && opp.AccountId == null)
-//				{
-//					opp.AccountId.addError( error('You must provide an Account for Opportunities for existing Customers.', opp, Contact.AccountId) );
-//				}
-//			}
-//		}
-//
-//		public override void onValidate(Map<Id,SObject> existingRecords)
-//		{
-//			// Not required in production code
-//			super.onValidate(existingRecords);
-//
-//			// Validate changes to Testfflib_SObjectDomain
-//			for(Contact opp : (List<Contact>) Records)
-//			{
-//				Contact existingOpp = (Contact) existingRecords.get(opp.Id);
-//				if(opp.Type != existingOpp.Type)
-//				{
-//					opp.Type.addError( error('You cannot change the Contact type once it has been created.', opp, Contact.Type) );
-//				}
-//			}
-//		}
-//
-//		public override void onBeforeDelete()
-//		{
-//			// Not required in production code
-//			super.onBeforeDelete();
-//
-//			// Validate changes to Testfflib_SObjectDomain
-//			for(Contact opp : (List<Contact>) Records)
-//			{
-//				opp.addError( error('You cannot delete this Contact.', opp) );
-//			}
-//		}
-//
-//		public override void onAfterUndelete()
-//		{
-//			// Not required in production code
-//			super.onAfterUndelete();
-//		}
-//
-//		public override void onBeforeInsert()
-//		{
-//			// Assert this variable is null in the after insert (since this domain class is stateless)
-//			someState = 'This should not survice the trigger after phase';
-//		}
-//
-//		public override void onAfterInsert()
-//		{
-//			// This is a stateless domain class, so should not retain anything betweet before and after
-//			System.assertEquals(null, someState);
-//		}
 		private String someState;
-
-		public TestSObjectDomain(List<Contact> sObjectList)
+		
+		public TestSObjectDomain(List<Opportunity> sObjectList)
 		{
 			// Domain classes are initialised with lists to enforce bulkification throughout
 			super(sObjectList);
 		}
 
-		public TestSObjectDomain(List<Contact> sObjectList, SObjectType sObjectType)
+		public TestSObjectDomain(List<Opportunity> sObjectList, SObjectType sObjectType)
 		{
 			// Domain classes are initialised with lists to enforce bulkification throughout
 			super(sObjectList, sObjectType);
-		}
-
+		}			
+		
 		public override void onApplyDefaults()
 		{
 			// Not required in production code
 			super.onApplyDefaults();
-
+			
 			// Apply defaults to Testfflib_SObjectDomain
-			for(Contact cont : (List<Contact>) Records)
+			for(Opportunity opportunity : (List<Opportunity>) Records)
 			{
-				cont.FirstName = 'test';
+				opportunity.CloseDate = System.today().addDays(30);						
 			}
 		}
-
-		public override void onValidate()
+	
+		public override void onValidate()	
 		{
 			// Not required in production code
 			super.onValidate();
-
+			
 			// Validate Testfflib_SObjectDomain
-			for(Contact cont : (List<Contact>) Records)
+			for(Opportunity opp : (List<Opportunity>) Records)
 			{
-				if(cont.AccountId == null)
+				if(opp.Type!=null && opp.Type.startsWith('Existing') && opp.AccountId == null)
 				{
-					cont.AccountId.addError( error('You must provide an Account for Contacts.', cont, Contact.AccountId) );
-				}
-			}
+					opp.AccountId.addError( error('You must provide an Account for Opportunities for existing Customers.', opp, Opportunity.AccountId) );					
+				}			
+			}		
 		}
-
+		
 		public override void onValidate(Map<Id,SObject> existingRecords)
 		{
-			// Not required in production code
+			// Not required in production code	
 			super.onValidate(existingRecords);
-
+			
 			// Validate changes to Testfflib_SObjectDomain
-			for(Contact cont : (List<Contact>) Records)
+			for(Opportunity opp : (List<Opportunity>) Records)
 			{
-				Contact existingCont = (Contact) existingRecords.get(cont.Id);
-				if(cont.FirstName != existingCont.FirstName)
+				Opportunity existingOpp = (Opportunity) existingRecords.get(opp.Id);
+				if(opp.Type != existingOpp.Type)
 				{
-					cont.FirstName.addError( error('You cannot change the Contact firstname once it has been created.', cont, Contact.FirstName) );
+					opp.Type.addError( error('You cannot change the Opportunity type once it has been created.', opp, Opportunity.Type) );
 				}
 			}
 		}
-
+		
 		public override void onBeforeDelete()
 		{
 			// Not required in production code
 			super.onBeforeDelete();
-
+			
 			// Validate changes to Testfflib_SObjectDomain
-			for(Contact cont : (List<Contact>) Records)
+			for(Opportunity opp : (List<Opportunity>) Records)
 			{
-				cont.addError( error('You cannot delete this Contact.', cont) );
-			}
+				opp.addError( error('You cannot delete this Opportunity.', opp) );
+			}			
 		}
-
+		
 		public override void onAfterUndelete()
 		{
 			// Not required in production code
 			super.onAfterUndelete();
 		}
-
+		
 		public override void onBeforeInsert()
 		{
 			// Assert this variable is null in the after insert (since this domain class is stateless)
 			someState = 'This should not survice the trigger after phase';
 		}
-
+		
 		public override void onAfterInsert()
 		{
 			// This is a stateless domain class, so should not retain anything betweet before and after
 			System.assertEquals(null, someState);
 		}
-
 	}	
 	
 	/**
@@ -975,7 +928,7 @@ public virtual with sharing class fflib_SObjectDomain
 	{
 		public String someState;
 		
-		public TestSObjectStatefulDomain(List<Contact> sObjectList)
+		public TestSObjectStatefulDomain(List<Opportunity> sObjectList)
 		{
 			super(sObjectList);
 
@@ -989,22 +942,22 @@ public virtual with sharing class fflib_SObjectDomain
 			System.assertEquals(null, someState);
 			
 			// Process records			 
-			List<Contact> newContacts = new List<Contact>();
-			for(Contact cont : (List<Contact>) Records)
+			List<Opportunity> newOpps = new List<Opportunity>();
+			for(Opportunity opp : (List<Opportunity>) Records)
 			{
 				// Set some state sensitive to the incoming records
-				someState = 'Error on Record ' + cont.LastName;
+				someState = 'Error on Record ' + opp.Name;
 				
-				// Create a new Contact record to trigger recursive code path?
-				if(cont.LastName.equals('Test Recursive 1'))
-					newContacts.add(new Contact ( LastName = 'Test Recursive 2', FirstName = 'Existing Account' ));
+				// Create a new Opportunity record to trigger recursive code path?
+				if(opp.Name.equals('Test Recursive 1'))
+					newOpps.add(new Opportunity ( Name = 'Test Recursive 2', Type = 'Existing Account' ));
 			}				
 			
 			// If testing recursiving emulate an insert 	
-			if(newContacts.size()>0)
+			if(newOpps.size()>0)
 			{
 				// This will force recursion and thus validate via the above assert results in a new domain instance
-				fflib_SObjectDomain.Test.Database.onInsert(newContacts);		
+				fflib_SObjectDomain.Test.Database.onInsert(newOpps);		
 				fflib_SObjectDomain.triggerHandler(fflib_SObjectDomain.TestSObjectStatefulDomainConstructor.class);
 			}								
 		}
@@ -1013,8 +966,8 @@ public virtual with sharing class fflib_SObjectDomain
 		{ 
 			// Use the state set in the before insert (since this is a stateful domain class)
 			if(someState!=null)
-				for(Contact cont : (List<Contact>) Records)
-					cont.addError(error(someState, cont));
+				for(Opportunity opp : (List<Opportunity>) Records)
+					opp.addError(error(someState, opp));
 		}		
 	}	
 	
@@ -1035,12 +988,12 @@ public virtual with sharing class fflib_SObjectDomain
 	public with sharing class TestSObjectOnValidateBehaviour 
 		extends fflib_SObjectDomain 
 	{
-		public TestSObjectOnValidateBehaviour(List<Contact> sObjectList)
+		public TestSObjectOnValidateBehaviour(List<Opportunity> sObjectList)
 		{
 			super(sObjectList);
 			
-			// Enable old behaviour based on the test Contact name passed in 
-			if(sObjectList[0].LastName == 'Test Enable Old Behaviour')
+			// Enable old behaviour based on the test Opportunity name passed in 
+			if(sObjectList[0].Name == 'Test Enable Old Behaviour')
 				Configuration.enableOldOnUpdateValidateBehaviour();
 		}
 		
@@ -1061,6 +1014,29 @@ public virtual with sharing class fflib_SObjectDomain
 			return new TestSObjectOnValidateBehaviour(sObjectList);
 		}				
 	}
+
+	/**
+	 * Test domain class (ideally this would be in the test class, however Type.newInstance does not see such classes)
+	 **/
+	public with sharing class TestSObjectChangedRecords 
+		extends fflib_SObjectDomain 
+	{
+		public TestSObjectChangedRecords(List<Opportunity> sObjectList)
+		{
+			super(sObjectList);
+		}
+	}	
+	
+	/**
+	 * Typically an inner class to the domain class, supported here for test purposes
+	 **/	
+	public class TestSObjectChangedRecordsConstructor implements fflib_SObjectDomain.IConstructable
+	{
+		public fflib_SObjectDomain construct(List<SObject> sObjectList)
+		{
+			return new TestSObjectChangedRecords(sObjectList);
+		}				
+	}					
 	
 	/**
 	 * Test domain class (ideally this would be in the test class, however Type.newInstance does not see such classes)
@@ -1068,7 +1044,7 @@ public virtual with sharing class fflib_SObjectDomain
 	public with sharing class TestSObjectDisableBehaviour 
 		extends fflib_SObjectDomain 
 	{
-		public TestSObjectDisableBehaviour(List<Contact> sObjectList)
+		public TestSObjectDisableBehaviour(List<Opportunity> sObjectList)
 		{
 			super(sObjectList);
 		}

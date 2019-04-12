@@ -13,7 +13,7 @@ public with sharing class DutchBusinessAccountingService {
         input.contactemail = input.email; // take from the current user?
         input.telephone = '';
         input.fax = ''; // pretty sure it is not needed
-        input.clientcode = ''; // TODO: undertands what is this
+        input.clientcode = ''; // TODO: undertannvb  ds what is this
         input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
         list<Integer> lst = new list<Integer>();
         lst.add(23);// TODO: this will be implemented sepererately and will be configurable
@@ -24,7 +24,7 @@ public with sharing class DutchBusinessAccountingService {
         cs.Username__c = userResp.nickname;
         cs.Password__c = userResp.password;
         cs.CompanyInfoUserId__c = userResp.id;
-        update cs;
+        insert cs;
         //userResp.id;
         return userResp;
     }
@@ -52,7 +52,9 @@ public with sharing class DutchBusinessAccountingService {
     } 
 
     private static void addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
-        Double amount = 3000; // TODO: get the trial amount from custom settings or CMT
+        ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
+            
+        Double amount = configData.DefaultTrialBalance__c; // TODO: get the trial amount from custom settings or CMT
         addBudget(amount, userId.id);
     }
 

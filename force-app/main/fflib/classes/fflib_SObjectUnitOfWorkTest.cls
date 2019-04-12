@@ -27,13 +27,13 @@
 @IsTest
 private with sharing class fflib_SObjectUnitOfWorkTest
 {
-
-    private static List<Schema.SObjectType> MY_SOBJECTS2 =
-            new Schema.SObjectType[] {
-                    Account.SObjectType,
-                    Contact.SObjectType
-
-            };
+    // SObjects (in order of dependency) used by UnitOfWork in tests bellow
+    private static List<Schema.SObjectType> MY_SOBJECTS =
+        new Schema.SObjectType[] {
+            Product2.SObjectType,
+            PricebookEntry.SObjectType,
+            Opportunity.SObjectType,
+            OpportunityLineItem.SObjectType };
 
     @isTest
     private static void testUnitOfWorkEmail()
@@ -44,110 +44,159 @@ private with sharing class fflib_SObjectUnitOfWorkTest
         email.setToAddresses(new list<String>{ 'foobar@test.com' });
         email.setPlainTextBody('See Spot run.');
 
-        fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS2);
+        fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS);
 
-        Account acc = new Account(Name = 'test');
-        uow.registerNew( acc );
+        uow.m_emailWork = new Mock_SendEmailWork();
+
+        Opportunity opp = new Opportunity();
+        opp.Name = testRecordName;
+        opp.StageName = 'Open';
+        opp.CloseDate = System.today();
+        uow.registerNew( opp );
 
         uow.registerEmail( email );
 
-        uow.registerRelationship( email, acc );
+        uow.registerRelationship( email, opp );
 
         uow.commitWork();
 
-        List<Account> accs = [SELECT Id FROM Account];
+        List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name = :testRecordName order by Name];
 
-        // assert that an email was sent
-        system.assertEquals(1, Limits.getEmailInvocations());
+        // assert that mock email functionality was called
+        system.assert(((Mock_SendEmailWork) uow.m_emailWork).doWorkWasCalled);
 
-        System.assertEquals(1, accs.size());
+        System.assertEquals(1, opps.size());
     }
 
     @isTest
     private static void testUnitOfWorkNewDirtyDelete()
     {
-        // Insert Accounts with UnitOfWork
-
-        fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS2);
-        for(Integer i=0; i<10; i++)
+        // Insert Opportunities with UnitOfWork
         {
-            Account acc = new Account(Name = 'UoW Test Name ' + i);
-            uow.registerNew(new List<SObject>{acc});
-            for(Integer i2=0; i2<i+1; i2++)
+            fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS);
+            for(Integer o=0; o<10; o++)
             {
-                Contact cont = new Contact(LastName = acc.Name + i);
-                uow.registerNew(cont, Contact.AccountId, acc);
-
+                Opportunity opp = new Opportunity();
+                opp.Name = 'UoW Test Name ' + o;
+                opp.StageName = 'Open';
+                opp.CloseDate = System.today();
+                uow.registerNew(new List<SObject>{opp});
+                for(Integer i=0; i<o+1; i++)
+                {
+                    Product2 product = new Product2();
+                    product.Name = opp.Name + ' : Product : ' + i;
+                    uow.registerNew(new List<SObject>{product});
+                    PricebookEntry pbe = new PricebookEntry();
+                    pbe.UnitPrice = 10;
+                    pbe.IsActive = true;
+                    pbe.UseStandardPrice = false;
+                    pbe.Pricebook2Id = Test.getStandardPricebookId();
+                    uow.registerNew(pbe, PricebookEntry.Product2Id, product);
+                    OpportunityLineItem oppLineItem = new OpportunityLineItem();
+                    oppLineItem.Quantity = 1;
+                    oppLineItem.TotalPrice = 10;
+                    uow.registerRelationship(oppLineItem, OpportunityLineItem.PricebookEntryId, pbe);
+                    uow.registerNew(oppLineItem, OpportunityLineItem.OpportunityId, opp);
+                }
             }
-        }
 
             uow.commitWork();
-
+        }
 
         // Assert Results
-        assertResults2('UoW');
+        assertResults('UoW');
+        // TODO: Need to re-instate this check with a better approach, as it is not possible when
+        //       product triggers contribute to DML (e.g. in sample app Opportunity trigger)
+        // System.assertEquals(5 /* Oddly a setSavePoint consumes a DML */, Limits.getDmlStatements());
 
         // Records to update
-        List<Account> accs = [SELECT Id, Name, (SELECT Id FROM Contacts ORDER BY Email NULLS LAST) FROM Account WHERE Name LIKE 'UoW Test Name %' ORDER BY Name];
+        List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name like 'UoW Test Name %' order by Name];
 
         // Update some records with UnitOfWork
         {
-            uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS2);
-            Account acc = accs[0];
-            acc.Name = acc.Name + ' Changed';
-            uow.registerDirty(new List<SObject>{acc});
-            Contact cont = new Contact(LastName = acc.Name + ' : New Contact');
-            uow.registerNew(cont, Contact.AccountId, acc);
-            Contact existingContact = acc.Contacts[0];
-            existingContact.Email = 'dirty@test.com';
-            uow.registerDirty(new List<SObject>{existingContact});
-            existingContact.FirstName = 'Test';
-            uow.registerDirty(new List<SObject>{existingContact});
+            fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS);
+            Opportunity opp = opps[0];
+            opp.Name = opp.Name + ' Changed';
+            uow.registerDirty(new List<SObject>{opp});
+            Product2 product = new Product2();
+            product.Name = opp.Name + ' : New Product';
+            uow.registerNew(new List<SObject>{product});
+            PricebookEntry pbe = new PricebookEntry();
+            pbe.UnitPrice = 10;
+            pbe.IsActive = true;
+            pbe.UseStandardPrice = false;
+            pbe.Pricebook2Id = Test.getStandardPricebookId();
+            uow.registerNew(pbe, PricebookEntry.Product2Id, product);
+            OpportunityLineItem newOppLineItem = new OpportunityLineItem();
+            newOppLineItem.Quantity = 1;
+            newOppLineItem.TotalPrice = 10;
+            uow.registerRelationship(newOppLineItem, OpportunityLineItem.PricebookEntryId, pbe);
+            uow.registerNew(newOppLineItem, OpportunityLineItem.OpportunityId, opp);
+            OpportunityLineItem existingOppLine = opp.OpportunityLineItems[0];
+            // Test that operations on the same object can be daisy chained, and the same object registered as dirty more than once
+            // This verifies that using a Map to back the dirty records collection prevents duplicate registration.
+            existingOppLine.Quantity = 2;
+            uow.registerDirty(new List<SObject>{existingOppLine});
+            existingOppLine.TotalPrice = 20;
+            uow.registerDirty(new List<SObject>{existingOppLine});
             uow.commitWork();
         }
 
         // Assert Results
-        accs = [SELECT Id, Name, (SELECT Id, FirstName, Email FROM Contacts ORDER BY Email NULLS LAST) FROM Account WHERE Name LIKE 'UoW Test Name %' ORDER BY Name];
-        System.assertEquals(10, accs.size());
-        System.assertEquals('UoW Test Name 0 Changed', accs[0].Name);
-        System.assertEquals(2, accs[0].Contacts.size());
+        // TODO: Need to re-instate this check with a better approach, as it is not possible when
+        //       product triggers contribute to DML (e.g. in sample app Opportunity trigger)
+        // System.assertEquals(11, Limits.getDmlStatements());
+        opps = [select Id, Name, (Select Id, PricebookEntry.Product2.Name, Quantity, TotalPrice from OpportunityLineItems Order By PricebookEntry.Product2.Name) from Opportunity where Name like 'UoW Test Name %' order by Name];
+        System.assertEquals(10, opps.size());
+        System.assertEquals('UoW Test Name 0 Changed', opps[0].Name);
+        System.assertEquals(2, opps[0].OpportunityLineItems.size());
         // Verify that both fields were updated properly
-        System.assertEquals('dirty@test.com', accs[0].Contacts[0].Email);
-        System.assertEquals('Test', accs[0].Contacts[0].FirstName);
+        System.assertEquals(2, opps[0].OpportunityLineItems[0].Quantity);
+        System.assertEquals(20, opps[0].OpportunityLineItems[0].TotalPrice);
+        System.assertEquals('UoW Test Name 0 Changed : New Product', opps[0].OpportunityLineItems[1].PricebookEntry.Product2.Name);
 
         // Delete some records with the UnitOfWork
         {
-            uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS2);
-            uow.registerDeleted(new List<SObject>{accs[0].Contacts[1]}); // Delete contact
+            fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS);
+            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry.Product2}); // Delete PricebookEntry Product
+            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry}); // Delete PricebookEntry
+            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1]}); // Delete OpportunityLine Item
             // Register the same deletions more than once.
             // This verifies that using a Map to back the deleted records collection prevents duplicate registration.
-            uow.registerDeleted(new List<SObject>{accs[0].Contacts[1]}); // Delete contact
+            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry.Product2}); // Delete PricebookEntry Product
+            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1].PricebookEntry}); // Delete PricebookEntry
+            uow.registerDeleted(new List<SObject>{opps[0].OpportunityLineItems[1]}); // Delete OpportunityLine Item
             uow.commitWork();
         }
 
         // Assert Results
-        accs = [SELECT Id, Name, (SELECT Id, FirstName, Email FROM Contacts ORDER BY Email NULLS LAST) FROM Account WHERE Name LIKE 'UoW Test Name %' ORDER BY Name];
-        System.assertEquals(10, accs.size());
-        System.assertEquals('UoW Test Name 0 Changed', accs[0].Name);
-        System.assertEquals(1, accs[0].Contacts.size());
+        // TODO: Need to re-instate this check with a better approach, as it is not possible when
+        //       product triggers contribute to DML (e.g. in sample app Opportunity trigger)
+        // System.assertEquals(15, Limits.getDmlStatements());
+        opps = [select Id, Name, (Select Id, PricebookEntry.Product2.Name, Quantity from OpportunityLineItems Order By PricebookEntry.Product2.Name) from Opportunity where Name like 'UoW Test Name %' order by Name];
+        List<Product2> prods = [Select Id from Product2 where Name = 'UoW Test Name 0 Changed : New Product'];
+        System.assertEquals(10, opps.size());
+        System.assertEquals('UoW Test Name 0 Changed', opps[0].Name);
+        System.assertEquals(1, opps[0].OpportunityLineItems.size()); // Should have deleted OpportunityLineItem added above
+        System.assertEquals(0, prods.size()); // Should have deleted Product added above
     }
 
-    private static void assertResults2(String prefix)
+    private static void assertResults(String prefix)
     {
         // Standard Assertions on tests data inserted by tests
         String filter = prefix + ' Test Name %';
-        List<Account> accs = [SELECT Id, Name, (SELECT Id FROM Contacts ORDER BY Email NULLS LAST) FROM Account WHERE Name LIKE :filter ORDER BY Name];
-        System.assertEquals(10, accs.size());
-        System.assertEquals(1, accs[0].Contacts.size());
-        System.assertEquals(2, accs[1].Contacts.size());
-        System.assertEquals(3, accs[2].Contacts.size());
-        System.assertEquals(4, accs[3].Contacts.size());
-        System.assertEquals(5, accs[4].Contacts.size());
-        System.assertEquals(6, accs[5].Contacts.size());
-        System.assertEquals(7, accs[6].Contacts.size());
-        System.assertEquals(8, accs[7].Contacts.size());
-        System.assertEquals(9, accs[8].Contacts.size());
-        System.assertEquals(10, accs[9].Contacts.size());
+        List<Opportunity> opps = [select Id, Name, (Select Id from OpportunityLineItems) from Opportunity where Name like :filter order by Name];
+        System.assertEquals(10, opps.size());
+        System.assertEquals(1, opps[0].OpportunityLineItems.size());
+        System.assertEquals(2, opps[1].OpportunityLineItems.size());
+        System.assertEquals(3, opps[2].OpportunityLineItems.size());
+        System.assertEquals(4, opps[3].OpportunityLineItems.size());
+        System.assertEquals(5, opps[4].OpportunityLineItems.size());
+        System.assertEquals(6, opps[5].OpportunityLineItems.size());
+        System.assertEquals(7, opps[6].OpportunityLineItems.size());
+        System.assertEquals(8, opps[7].OpportunityLineItems.size());
+        System.assertEquals(9, opps[8].OpportunityLineItems.size());
+        System.assertEquals(10, opps[9].OpportunityLineItems.size());
     }
 
     /**
@@ -161,34 +210,52 @@ private with sharing class fflib_SObjectUnitOfWorkTest
     @isTest
     private static void testDerivedUnitOfWork_CommitSuccess()
     {
-        // Insert Accounts with UnitOfWork
-        DerivedUnitOfWork uow = new DerivedUnitOfWork(MY_SOBJECTS2);
-        for(Integer i=0; i<10; i++)
+        // Insert Opporunities with UnitOfWork
+        DerivedUnitOfWork uow = new DerivedUnitOfWork(MY_SOBJECTS);
+        for(Integer o=0; o<10; o++)
         {
-            Account acc = new Account(Name = 'UoW Test Name ' + i);
-            uow.registerNew(new List<SObject>{acc});
-            for(Integer i2=0; i2<i+1; i2++)
+            Opportunity opp = new Opportunity();
+            opp.Name = 'UoW Test Name ' + o;
+            opp.StageName = 'Open';
+            opp.CloseDate = System.today();
+            uow.registerNew(new List<SObject>{opp});
+            for(Integer i=0; i<o+1; i++)
             {
-                Contact cont = new Contact(LastName = acc.Name + i);
-                uow.registerNew(cont, Contact.AccountId, acc);
-
+                Product2 product = new Product2();
+                product.Name = opp.Name + ' : Product : ' + i;
+                uow.registerNew(new List<SObject>{product});
+                PricebookEntry pbe = new PricebookEntry();
+                pbe.UnitPrice = 10;
+                pbe.IsActive = true;
+                pbe.UseStandardPrice = false;
+                pbe.Pricebook2Id = Test.getStandardPricebookId();
+                uow.registerNew(pbe, PricebookEntry.Product2Id, product);
+                OpportunityLineItem oppLineItem = new OpportunityLineItem();
+                oppLineItem.Quantity = 1;
+                oppLineItem.TotalPrice = 10;
+                uow.registerRelationship(oppLineItem, OpportunityLineItem.PricebookEntryId, pbe);
+                uow.registerNew(oppLineItem, OpportunityLineItem.OpportunityId, opp);
             }
         }
         uow.commitWork();
 
         // Assert Results
-        assertResults2('UoW');
+        assertResults('UoW');
 
         assertEvents(new List<String> {
                 'onCommitWorkStarting'
+                , 'onPublishBeforeEventsStarting'
+                , 'onPublishBeforeEventsFinished'
                 , 'onDMLStarting'
                 , 'onDMLFinished'
                 , 'onDoWorkStarting'
                 , 'onDoWorkFinished'
                 , 'onCommitWorkFinishing'
+                , 'onPublishAfterSuccessEventsStarting'
+                , 'onPublishAfterSuccessEventsFinished'
                 , 'onCommitWorkFinished - true'
             }
-            , uow.getCommitWorkEventsFired(), new Set<Schema.SObjectType>(MY_SOBJECTS2), uow.getRegisteredTypes());
+            , uow.getCommitWorkEventsFired(), new Set<Schema.SObjectType>(MY_SOBJECTS), uow.getRegisteredTypes());
     }
 
     /**
@@ -202,10 +269,10 @@ private with sharing class fflib_SObjectUnitOfWorkTest
     @isTest
     private static void testDerivedUnitOfWork_CommitDMLFail()
     {
-        // Insert contacts with UnitOfWork forcing a failure on DML by not setting 'LastName' field
-        DerivedUnitOfWork uow = new DerivedUnitOfWork(MY_SOBJECTS2);
-        Contact cont = new Contact();
-        uow.registerNew(new List<SObject>{cont});
+        // Insert Opporunities with UnitOfWork forcing a failure on DML by not setting 'Name' field
+        DerivedUnitOfWork uow = new DerivedUnitOfWork(MY_SOBJECTS);
+        Opportunity opp = new Opportunity();
+        uow.registerNew(new List<SObject>{opp});
         Boolean didFail = false;
         System.DmlException caughtEx = null;
 
@@ -223,10 +290,14 @@ private with sharing class fflib_SObjectUnitOfWorkTest
 
         assertEvents(new List<String> {
                 'onCommitWorkStarting'
+                , 'onPublishBeforeEventsStarting'
+                , 'onPublishBeforeEventsFinished'
                 , 'onDMLStarting'
+                , 'onPublishAfterFailureEventsStarting'
+                , 'onPublishAfterFailureEventsFinished'
                 , 'onCommitWorkFinished - false'
             }
-            , uow.getCommitWorkEventsFired(), new Set<Schema.SObjectType>(MY_SOBJECTS2), uow.getRegisteredTypes());
+            , uow.getCommitWorkEventsFired(), new Set<Schema.SObjectType>(MY_SOBJECTS), uow.getRegisteredTypes());
     }
 
     /**
@@ -241,9 +312,12 @@ private with sharing class fflib_SObjectUnitOfWorkTest
     private static void testDerivedUnitOfWork_CommitDoWorkFail()
     {
         // Insert Opporunities with UnitOfWork
-        DerivedUnitOfWork uow = new DerivedUnitOfWork(MY_SOBJECTS2);
-        Contact cont = new Contact(LastName = 'last');
-        uow.registerNew(new List<SObject>{cont});
+        DerivedUnitOfWork uow = new DerivedUnitOfWork(MY_SOBJECTS);
+        Opportunity opp = new Opportunity();
+        opp.Name = 'UoW Test Name 1';
+        opp.StageName = 'Open';
+        opp.CloseDate = System.today();
+        uow.registerNew(new List<SObject>{opp});
 
         // register work that will fail during processing
         FailDoingWork fdw = new FailDoingWork();
@@ -266,12 +340,86 @@ private with sharing class fflib_SObjectUnitOfWorkTest
 
         assertEvents(new List<String> {
                 'onCommitWorkStarting'
+                , 'onPublishBeforeEventsStarting'
+                , 'onPublishBeforeEventsFinished'
                 , 'onDMLStarting'
                 , 'onDMLFinished'
                 , 'onDoWorkStarting'
+                , 'onPublishAfterFailureEventsStarting'
+                , 'onPublishAfterFailureEventsFinished'
                 , 'onCommitWorkFinished - false'
             }
-            , uow.getCommitWorkEventsFired(), new Set<Schema.SObjectType>(MY_SOBJECTS2), uow.getRegisteredTypes());
+            , uow.getCommitWorkEventsFired(), new Set<Schema.SObjectType>(MY_SOBJECTS), uow.getRegisteredTypes());
+    }
+
+    /**
+     * Try registering two instances of the same record as dirty. Second register should overwrite first.
+     *
+     *  Testing:
+     *
+     *      - Exception is thrown stopping second registration
+     */
+    @isTest
+    private static void testRegisterDirty_ExpectReplacement() {
+        final Opportunity insertedOpp = new Opportunity(Name = 'Original', StageName = 'Open', CloseDate = System.today());
+        insert insertedOpp;
+
+        Opportunity opp = new Opportunity(Id = insertedOpp.Id, Name = 'Never');
+        Opportunity opp2 = new Opportunity(Id = insertedOpp.Id, Name = 'Expected');
+
+        fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS);
+        uow.registerDirty(opp);
+        uow.registerDirty(opp2);
+        uow.commitWork();
+
+        Opportunity updated = [select Id, Name from Opportunity where Id = :insertedOpp.Id];
+        System.assertEquals('Expected', updated.Name);
+    }
+
+    /**
+     * Try registering a single field as dirty.
+     *
+     *  Testing:
+     *
+     *      - field is updated
+     */
+    @isTest
+    private static void testRegisterDirty_field() {
+        Opportunity opp = new Opportunity(Name = 'test name', StageName = 'Open', CloseDate = System.today());
+        insert opp;
+
+        Opportunity nameUpdate = new Opportunity(Id = opp.Id, Name = 'UpdateName');
+        Opportunity amountUpdate = new Opportunity(Id = opp.Id, Amount = 250);
+        fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS);
+        uow.registerDirty(nameUpdate);
+        uow.registerDirty(amountUpdate, new List<SObjectField> { Opportunity.Amount } );
+        uow.commitWork();
+
+        opp = [select Name, Amount from Opportunity where Id = :opp.Id];
+        System.assertEquals(opp.Name, nameUpdate.Name);
+        System.assertEquals(opp.Amount, amountUpdate.Amount);
+    }
+
+    @isTest
+    private static void testRegisterUpsert() {
+        Opportunity existingOpp = new Opportunity(Name = 'Existing Opportunity', StageName = 'Open', CloseDate = System.today());
+        insert existingOpp;
+
+        existingOpp.StageName = 'Closed';
+
+        Opportunity newOpportunity = new Opportunity(Name = 'New Opportunity', StageName = 'Closed', CloseDate = System.today());
+
+        System.assertEquals(1, [SELECT COUNT() FROM Opportunity]);
+        System.assertEquals(0, [SELECT COUNT() FROM Opportunity WHERE StageName = 'Closed']);
+        
+        Test.startTest();
+            fflib_SObjectUnitOfWork uow = new fflib_SObjectUnitOfWork(MY_SOBJECTS);
+            uow.registerUpsert(new List<Opportunity>{existingOpp, newOpportunity});
+            uow.commitWork();
+        Test.stopTest();
+
+        System.assertEquals(2, [SELECT COUNT() FROM Opportunity]);
+        System.assertEquals(2, [SELECT COUNT() FROM Opportunity WHERE StageName = 'Closed']);
     }
 
     /**
@@ -362,6 +510,16 @@ private with sharing class fflib_SObjectUnitOfWorkTest
             addEvent('onCommitWorkStarting');
         }
 
+        public override void onPublishBeforeEventsStarting()
+        {
+            addEvent('onPublishBeforeEventsStarting');
+        }
+
+        public override void onPublishBeforeEventsFinished()
+        {
+            addEvent('onPublishBeforeEventsFinished');
+        }
+
         public override void onDMLStarting()
         {
             addEvent('onDMLStarting');
@@ -387,10 +545,54 @@ private with sharing class fflib_SObjectUnitOfWorkTest
             addEvent('onCommitWorkFinishing');
         }
 
+        public override void onPublishAfterSuccessEventsStarting()
+        {
+            addEvent('onPublishAfterSuccessEventsStarting');
+        }
+
+        public override void onPublishAfterSuccessEventsFinished()
+        {
+            addEvent('onPublishAfterSuccessEventsFinished');
+        }
+
+        public override void onPublishAfterFailureEventsStarting()
+        {
+            addEvent('onPublishAfterFailureEventsStarting');
+        }
+
+        public override void onPublishAfterFailureEventsFinished()
+        {
+            addEvent('onPublishAfterFailureEventsFinished');
+        }
+
         public override void onCommitWorkFinished(Boolean wasSuccessful)
         {
             addEvent('onCommitWorkFinished - ' + wasSuccessful);
         }
+    }
+
+    /**
+     * Mock implementation of fflib_SObjectUnitOfWork.SendEmailWork
+     **/
+    private class Mock_SendEmailWork implements fflib_SObjectUnitOfWork.IEmailWork
+    {
+        public Mock_SendEmailWork()
+        {
+        }
+
+        public void registerEmail(Messaging.Email email)
+        {
+        }
+
+        public void doWork()
+        {
+            doWorkWasCalled = true;
+            // The code in the fflib_SObjectUnitOfWork class
+            // causes unit test failures in Orgs that do not
+            // have email enabled.
+        }
+
+        private boolean doWorkWasCalled = false;
     }
 
     public class DerivedUnitOfWorkException extends Exception {}

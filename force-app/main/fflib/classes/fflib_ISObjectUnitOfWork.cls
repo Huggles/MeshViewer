@@ -60,6 +60,16 @@ public interface fflib_ISObjectUnitOfWork
      **/
     void registerDirty(SObject record);
     /**
+     * Register specific fields on record to be updated when work is commited
+     *
+     * If the record has previously been registered as dirty, the dirty fields on the record in this call will overwrite
+     * the values of the previously registered dirty record
+     *
+     * @param record An existing record
+     * @param dirtyFields The fields to update if record is already registered
+     **/
+    void registerDirty(SObject record, List<SObjectField> dirtyFields);
+    /**
      * Register an existing record to be updated when commitWork is called,
      *   you may also provide a reference to the parent record instance (should also be registered as new separatly)
      *
@@ -75,6 +85,18 @@ public interface fflib_ISObjectUnitOfWork
      **/
     void registerDirty(List<SObject> records);
     /**
+     * Register a new or existing record to be inserted or updated during the commitWork method
+     *
+     * @param record An new or existing record
+     **/
+    void registerUpsert(SObject record);
+    /**
+     * Register a list of mix of new and existing records to be upserted during the commitWork method
+     *
+     * @param records A list of mix of existing and new records
+     **/
+    void registerUpsert(List<SObject> records);
+    /**
      * Register an existing record to be deleted during the commitWork method
      *
      * @param record An existing record
@@ -86,6 +108,45 @@ public interface fflib_ISObjectUnitOfWork
      * @param records A list of existing records
      **/
     void registerDeleted(List<SObject> records);
+    /**
+     * Register a newly created SObject (Platform Event) instance to be published when commitWork is called
+     *
+     * @param record A newly created SObject (Platform Event) instance to be inserted during commitWork
+     **/
+    void registerPublishBeforeTransaction(SObject record);
+    /**
+     * Register a list of newly created SObject (Platform Event) instance to be published when commitWork is called
+     *
+     * @param records A list of existing records
+     **/
+    void registerPublishBeforeTransaction(List<SObject> records);
+    /**
+     * Register a newly created SObject (Platform Event) instance to be published when commitWork has successfully
+     * completed
+     *
+     * @param record A newly created SObject (Platform Event) instance to be inserted during commitWork
+     **/
+    void registerPublishAfterSuccessTransaction(SObject record);
+    /**
+     * Register a list of newly created SObject (Platform Event) instance to be published when commitWork has successfully
+     * completed
+     *
+     * @param records A list of existing records
+     **/
+    void registerPublishAfterSuccessTransaction(List<SObject> records);
+    /**
+     * Register a newly created SObject (Platform Event) instance to be published when commitWork has caused an error
+     *
+     * @param record A newly created SObject (Platform Event) instance to be inserted during commitWork
+     **/
+    void registerPublishAfterFailureTransaction(SObject record);
+    /**
+     * Register a list of newly created SObject (Platform Event) instance to be published when commitWork has caused an
+     * error
+     *
+     * @param records A list of existing records
+     **/
+    void registerPublishAfterFailureTransaction(List<SObject> records);
     /**
      * Takes all the work that has been registered with the UnitOfWork and commits it to the database
      **/
