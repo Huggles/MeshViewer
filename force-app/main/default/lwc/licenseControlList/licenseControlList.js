@@ -89,5 +89,9 @@ export default class LicenseControlList extends LightningElement {
         //this.data = this.sortData(fieldName, sortDirection);*/
    } //as
 
+   handleUpdateSearchParam(event){
+    console.log('testing');
+        this.searchParam = event.detail;
+   }
 
 }

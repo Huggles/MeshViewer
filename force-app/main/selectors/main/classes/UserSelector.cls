@@ -41,6 +41,7 @@ public with sharing class UserSelector extends fflib_SObjectSelector implements 
        
         system.debug('sortedDirection' + sortedBy);
         system.debug('sortedDirection' + sortedDirection);
+        if(sortedBy == 'ProfileName'){sortedBy = 'Profile.name';}
         if(sortedDirection == 'asc'){
             
             queryFactory.setOrdering(sortedBy, fflib_QueryFactory.SortOrder.ASCENDING);

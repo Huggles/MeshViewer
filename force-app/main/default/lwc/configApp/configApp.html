@@ -7,8 +7,8 @@
     </div>
     <div id="waitingFinished" if:true={ready}>   
                 <div id="customerOnboarded" if:true={onboarded}>
-                    <div><c-balance-Card></c-balance-Card></div>
-                    <div><c-license-Control-List></c-license-Control-List></div>
+                    <c-balance-Card></c-balance-Card>
+                    <c-license-Control-List></c-license-Control-List>
                 </div>
                 <div id="customerNotOnboarded" if:true={showOnboarded}>
                     <c-onboard-Customer onuseronboarded={handleUserOnboarded}></c-onboard-Customer>
