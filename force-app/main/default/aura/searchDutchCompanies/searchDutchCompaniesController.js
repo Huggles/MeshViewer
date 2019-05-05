@@ -27,6 +27,7 @@
    },
    onBack2 : function (component, event, helper) {
     component.set('v.step', '2');
+    component.set('v.actionCompleted', false);
 },
    onSelect : function(component, event, helper) {
         var params = event.getParams();

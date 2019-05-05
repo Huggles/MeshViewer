@@ -417,6 +417,7 @@ public abstract class WebServicesNLSOAPDutchBusinessImplTypes  extends Webservic
         //private String[] field_order_type_info = new String[]{'trade_name','city','street','house_number','house_number_addition','telephone_number','domain_name','strict_search','page'};
 
     }
+    /*
     public class DutchBusinessLegalEntityData {
         public String dossier_number;
         public DateTime reference_date;
@@ -979,5 +980,6 @@ public abstract class WebServicesNLSOAPDutchBusinessImplTypes  extends Webservic
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'dossier_number','establishment_number','trade_name','establishment_city','establishment_street','correspondence_city','correspondence_street','indication_economically_active'};
     }
+    */
 
 }

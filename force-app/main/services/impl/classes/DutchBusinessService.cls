@@ -13,10 +13,6 @@ public with sharing class DutchBusinessService {
         // todo move everything to selector
         list<Dutch_Business_Dossier__c> dossList = new list<Dutch_Business_Dossier__c>();
         dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
-        system.debug('inside the get dossier account');
-        system.debug('Integer.valueOf(dossierNum) = ' + Integer.valueOf(dossierNum));
-        system.debug('dosslist = ' + dossList);
-        system.debug('dossList.get(0).Account__r.Id = ' + dossList.get(0).Account__r.Id);
         Account acc;
         if(dossList.size() >0){
             acc = [SELECT Id, Name From Account WHERE Id = :dossList.get(0).Account__r.Id];

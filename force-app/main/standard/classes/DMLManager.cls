@@ -51,10 +51,10 @@ public class DMLManager {
     /* Usually DML methods does not return DML result but enabled in few methods so that we can check failed values
     return DMl result, done for insertAsUser but can make similar methods if we'll need it in the future*/
 
-/*
+
     // Pass-thru methods to raw DML operations.
     // Don't really need insert as in momice at least as of now.
-   /* public static void insertAsSystem(sObject obj){ insert obj; }
+    public static void insertAsSystem(sObject obj){ insert obj; }
     public static void updateAsSystem(sObject obj){ update obj; }
     public static void upsertAsSystem(sObject obj){ upsert obj; }
 
@@ -64,7 +64,7 @@ public class DMLManager {
     public static void upsertAsSystem(List<SObject> objList){ upsert objList; }
     public static void deleteAsSystem(List<SObject> objList){ delete objList; }
 
-*/
+
     // Custom Exception Classes
     public virtual class DMLManagerException extends Exception{
         public SObjectType objType {get; private set;}

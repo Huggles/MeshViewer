@@ -73,7 +73,11 @@ public class dutchBusinessGetDossierV3SuccessMockImpl implements WebServiceMock 
            String responseNS,
            String responseName,
            String responseType) {
-               
+            WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessInsolvency dbi = new WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessInsolvency();
+            dbi.events = new WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessInsolvencyPublicationArray();
+            //dbi.events.item = new list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessInsolvency>();
+            WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessInsolvencyArray iarr = new WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessInsolvencyArray();
+            iarr.item = new list <WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessInsolvency>();   
             WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessGetDossierV3ResponseType resp = new WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessGetDossierV3ResponseType();
             WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessDossierV3 dossier = new WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessDossierV3();
             resp.out = dossier;
@@ -82,6 +86,7 @@ public class dutchBusinessGetDossierV3SuccessMockImpl implements WebServiceMock 
             dt.month = 1;
             dt.day = 1;
             resp.out.continuation_date = dt;
+            resp.out.insolvencies = iarr;
             response.put( 'response_x', resp);   
    }
 }

@@ -172,8 +172,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             return response_x.out;
             //return result;
         }
-
-//________________________*****************************************************___________________________________________________
+/*
         public DutchBusinessLegalEntityData dutchBusinessGetLegalEntity(String dossier_number) {
             dutchBusinessGetLegalEntityRequestType request_x = new dutchBusinessGetLegalEntityRequestType();
             dutchBusinessGetLegalEntityResponseType response_x;
@@ -408,8 +407,6 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             return response_x.out;
         }
 
+*/
 
 }
-
-
-

@@ -2,31 +2,35 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
 
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
     public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username){
-        DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
-        input.nickname = username;
-        input.accountId = 13972; //TODO: get the account ID from Custom Settings or CMT
-        input.password = ''; // we keep this empty so CompanyInfo will generate a new password
-        input.email = 'valerijs.prokudins@appsolutely.nl'; // TODO get the email address from custom setting or CMT
-        input.companyname = 'AppsolutelysCustomer'; // TODO: understand how to get the poroper value? Company information obj?
-        input.address = '';
-        input.contactname = ''; //Take from the current user?
-        input.contactemail = input.email; // take from the current user?
-        input.telephone = '';
-        input.fax = ''; // pretty sure it is not needed
-        input.clientcode = ''; // TODO: undertannvb  ds what is this
-        input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
-        list<Integer> lst = new list<Integer>();
-        //lst.add(23);// TODO: this will be implemented sepererately and will be configurable
-        input.usergroups = lst;
-        DutchBusinessAccountingDto.userCreateResponseDto userResp = createCIUser(input);
-        addTrialToCIUser(userResp);
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        cs.Username__c = userResp.nickname;
-        cs.Password__c = userResp.password;
-        cs.CompanyInfoUserId__c = userResp.id;
-        upsert cs;
-        //userResp.id;
-        return userResp;
+        try{
+            DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
+            input.nickname = username;
+            input.accountId = 13972; //TODO: get the account ID from Custom Settings or CMT
+            input.password = ''; // we keep this empty so CompanyInfo will generate a new password
+            input.email = 'valerijs.prokudins@appsolutely.nl'; // TODO get the email address from custom setting or CMT
+            input.companyname = 'AppsolutelysCustomer'; // TODO: understand how to get the poroper value? Company information obj?
+            input.address = '';
+            input.contactname = ''; //Take from the current user?
+            input.contactemail = input.email; // take from the current user?
+            input.telephone = '';
+            input.fax = ''; // pretty sure it is not needed
+            input.clientcode = ''; // TODO: undertannvb  ds what is this
+            input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
+            list<Integer> lst = new list<Integer>();
+            lst.add(23);// TODO: this will be implemented sepererately and will be configurable
+            input.usergroups = lst;
+            DutchBusinessAccountingDto.userCreateResponseDto userResp = createCIUser(input);
+            addTrialToCIUser(userResp);
+            Credentials__c cs = Credentials__c.getOrgDefaults();
+            cs.Username__c = userResp.nickname;
+            cs.Password__c = userResp.password;
+            cs.CompanyInfoUserId__c = userResp.id;
+            upsert cs;
+            //userResp.id;
+            return userResp;
+        }catch(exception ex){
+            throw new BdsException('Something happened while processing the webservice call response'+ex.getMessage());
+        }
     }
 
     
@@ -38,7 +42,6 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             }else{
                 return false;}
         }catch(exception e){
-            // throw something
             return false;
         }
     }
@@ -48,20 +51,22 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         try{    
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
             DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(input);
-
             return response;
         }catch(System.CalloutException ex){
-            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+            throw new BdsException('The call to the service was unsuccessfull'+ex.getMessage());
         }catch(System.Exception ex){
-            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+            throw new BdsException('Something happened while processing the webservice call response'+ex.getMessage());
         }
     } 
 
     public static boolean addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
-        ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
-            
-        Double amount = configData.DefaultTrialBalance__c; // TODO: get the trial amount from custom settings or CMT
-        return addBudget(amount, userId.id);
+        try{
+            ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];  
+            Double amount = configData.DefaultTrialBalance__c; // TODO: get the trial amount from custom settings or CMT
+            return addBudget(amount, userId.id);
+        }catch(exception ex){
+            throw new BdsException('Something happened while trying to execute addTrialToCIUser servive method'+ex.getMessage());
+        }
     }
 
     public static boolean addBudget(Double amount, Integer userId){
@@ -74,25 +79,36 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             return service.userChangeBalance(input);
             //return true;
         }catch(System.CalloutException ex){
-            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+            throw new BdsException('The call to the service was unsuccessfull'+ex.getMessage());
         }catch(System.Exception ex){
-            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+            throw new BdsException('Something happened while processing the webservice call response'+ex.getMessage());
         }
 
     }
     public static boolean addBudget(Double amount){
         DutchBusinessAccountingDto.userChangeBalanceRequestDto input = new DutchBusinessAccountingDto.userChangeBalanceRequestDto();
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        return addBudget(amount, (Integer)cs.CompanyInfoUserId__c);
+        try{
+            Credentials__c cs = Credentials__c.getOrgDefaults();
+            return addBudget(amount, (Integer)cs.CompanyInfoUserId__c);
+        }catch(Exception ex){
+            throw new BdsException('Something happened while trying to execute addBudget servive method'+ex.getMessage());
+        }
 
     }
 
     public static Double getBalance(){
         DutchBusinessAccountingDto.userViewBalanceRequest input = new DutchBusinessAccountingDto.userViewBalanceRequest();
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        input.userId = (integer)cs.CompanyInfoUserId__c;
-        IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
-        return service.userGetBalance(input).balance;
+        try{
+            Credentials__c cs = Credentials__c.getOrgDefaults();
+            input.userId = (integer)cs.CompanyInfoUserId__c;
+            IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
+system.debug('***********************&*&*&*&*&*&');
+            DutchBusinessAccountingDto.userViewBalanceResponse result = service.userGetBalance(input);
+            system.debug('***********************&*&*&*&*&*&'+result);
+            return result.balance;
+        }catch(Exception e){
+            throw new BdsException('Something happened while trying to execute getBalance servive method'+e.getMessage());
+        }
     }
 
  /*   private static Double addBudgetToUserAndGetBalanceOnSuccess(Double amount, Integer userId){

@@ -6,9 +6,7 @@
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Dutch Business Dossiers</relationshipLabel>
     <relationshipName>Dutch_Business_Dossiers</relationshipName>
-    <relationshipOrder>0</relationshipOrder>
-    <reparentableMasterDetail>false</reparentableMasterDetail>
     <trackTrending>false</trackTrending>
-    <type>MasterDetail</type>
-    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    <type>Lookup</type>
+    <required>false</required>
 </CustomField>
