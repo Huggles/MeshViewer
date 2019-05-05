@@ -18,9 +18,9 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             userEditBalance(input.userId, input.balance);
             result = true;
         }catch(System.CalloutException ex){
-            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+            throw new BdsException('The call to the service was unsuccessfull'+ex.getMessage());
         }catch(System.Exception ex){
-            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+            throw new BdsException('Something happened while processing the webservice call response'+ex.getMessage());
         }
 
         return result;
@@ -53,9 +53,9 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         try{
             result.balance = userViewBalance(input.userId);
         }catch(System.CalloutException ex){
-            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+            throw new BdsException(System.Label.Company_Info_WSCall_Unsuccessful + ex.getMessage());
         }catch(System.Exception ex){
-            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+            throw new BdsException(System.Label.Company_Info_WSCall_Unknown_Exception+ex.getMessage());
         }
 
         return result;
@@ -81,6 +81,78 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         response_x = response_map_x.get('response_x');
         return response_x.balance;
     }
+
+
+
+
+// Main method to create a user. Utilises createUserV2 method. 
+    public DutchBusinessAccountingDto.userCreateResponseDto userCreate(DutchBusinessAccountingDto.userCreateRequestDto input){
+        
+        intArray arr = new intArray();
+        system.debug(logginglevel.error, '******** input = ' + input);
+        arr.item = new List<Integer>();
+        if(input.usergroups != null){
+            for(Integer value: input.usergroups){
+                arr.item.add(value);
+            }
+        }else{
+            //todo: assign all groups or throw exception
+        }
+
+        userCreateV2ResponseType response;
+        try{
+            response = userCreateV2(input.accountId, input.nickname, input.password, arr, input.email, input.companyname, input.address, input.contactname, input.contactemail, input.telephone, input.fax, input.clientcode, input.comments);
+        }catch(System.CalloutException ex){
+            throw new BdsException(SYSTEM.label.Company_Info_WSCall_Unsuccessful + ex.getMessage());
+        }catch(System.Exception ex){
+            throw new BdsException(System.label.Company_Info_WSCall_Unknown_Exception+ex.getMessage());
+        }
+        DutchBusinessAccountingDto.userCreateResponseDto result = new DutchBusinessAccountingDto.userCreateResponseDto();
+        result.id = response.id;
+        result.nickname = response.nickname;
+        result.password = response.password;
+        return result;
+    }
+
+    private userCreateV2ResponseType userCreateV2(Integer accountid,String nickname,String password,intArray usergroups,String email,String companyname,String address,String contactname,String contactemail,String telephone,String fax,String clientcode,String comments) {
+        userCreateV2RequestType request_x = new userCreateV2RequestType();
+        request_x.accountid = accountid;
+        request_x.nickname = nickname;
+        request_x.password = password;
+        request_x.usergroups = usergroups;
+        request_x.email = email;
+        request_x.companyname = companyname;
+        request_x.address = address;
+        request_x.contactname = contactname;
+        request_x.contactemail = contactemail;
+        request_x.telephone = telephone;
+        request_x.fax = fax;
+        request_x.clientcode = clientcode;
+        request_x.comments = comments;
+        userCreateV2ResponseType response_x;
+        Map<String, userCreateV2ResponseType> response_map_x = new Map<String, userCreateV2ResponseType>();
+        response_map_x.put('response_x', response_x);
+        WebServiceCallout.invoke(
+            port,
+            request_x,
+            response_map_x,
+            new String[]{endpoint_x,
+            'https://ws1.webservices.nl/soap_doclit.php/userCreateV2',
+            'http://www.webservices.nl/soap/',
+            'userCreateV2',
+            'http://www.webservices.nl/soap/',
+            'userCreateV2Response',
+            'WebServicesNLSOAPAccountingImplTypes.userCreateV2ResponseType'}
+        );
+        response_x = response_map_x.get('response_x');
+        return response_x;
+    }
+
+
+
+
+
+    /*
     public DutchBusinessAccountingDto.AccountViewResponseDto accountView(){
         return accountView('');
     }
@@ -129,62 +201,5 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
 
         return result;
     }
-// Main method to create a user. Utilises createUserV2 method. 
-    public DutchBusinessAccountingDto.userCreateResponseDto userCreate(DutchBusinessAccountingDto.userCreateRequestDto input){
-        
-        intArray arr = new intArray();
-        system.debug(logginglevel.error, '******** input = ' + input);
-        arr.item = new List<Integer>();
-        for(Integer value: input.usergroups){
-            arr.item.add(value);
-        }
-        userCreateV2ResponseType response;
-        try{
-            response = userCreateV2(input.accountId, input.nickname, input.password, arr, input.email, input.companyname, input.address, input.contactname, input.contactemail, input.telephone, input.fax, input.clientcode, input.comments);
-        }catch(System.CalloutException ex){
-            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
-        }catch(System.Exception ex){
-            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
-        }
-        DutchBusinessAccountingDto.userCreateResponseDto result = new DutchBusinessAccountingDto.userCreateResponseDto();
-        result.id = response.id;
-        result.nickname = response.nickname;
-        result.password = response.password;
-        return result;
-    }
-
-    private userCreateV2ResponseType userCreateV2(Integer accountid,String nickname,String password,intArray usergroups,String email,String companyname,String address,String contactname,String contactemail,String telephone,String fax,String clientcode,String comments) {
-        userCreateV2RequestType request_x = new userCreateV2RequestType();
-        request_x.accountid = accountid;
-        request_x.nickname = nickname;
-        request_x.password = password;
-        request_x.usergroups = usergroups;
-        request_x.email = email;
-        request_x.companyname = companyname;
-        request_x.address = address;
-        request_x.contactname = contactname;
-        request_x.contactemail = contactemail;
-        request_x.telephone = telephone;
-        request_x.fax = fax;
-        request_x.clientcode = clientcode;
-        request_x.comments = comments;
-        userCreateV2ResponseType response_x;
-        Map<String, userCreateV2ResponseType> response_map_x = new Map<String, userCreateV2ResponseType>();
-        response_map_x.put('response_x', response_x);
-        WebServiceCallout.invoke(
-            port,
-            request_x,
-            response_map_x,
-            new String[]{endpoint_x,
-            'https://ws1.webservices.nl/soap_doclit.php/userCreateV2',
-            'http://www.webservices.nl/soap/',
-            'userCreateV2',
-            'http://www.webservices.nl/soap/',
-            'userCreateV2Response',
-            'WebServicesNLSOAPAccountingImplTypes.userCreateV2ResponseType'}
-        );
-        response_x = response_map_x.get('response_x');
-        return response_x;
-    }
-
+*/
 }

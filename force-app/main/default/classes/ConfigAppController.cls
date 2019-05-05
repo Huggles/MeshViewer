@@ -53,7 +53,12 @@ public static PermissionSet ps;
         } 
     }
 
-
+    @AuraEnabled
+    public static void addBudged(Double Amount){
+        system.debug('BEFORE CALLING*************');
+        boolean resp = DutchBusinessAccountingService.addBudget(amount);
+        system.debug('*************' + resp);
+    }
 
     @AuraEnabled
     public static void enableTrial(){

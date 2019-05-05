@@ -33,6 +33,7 @@ public with sharing class DutchBusinessAccountingDto {
         public String fax;
         public String clientcode;
         public String comments;
+       
     }
     public class userCreateResponseDto {
         public Integer id;

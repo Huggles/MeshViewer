@@ -5,12 +5,17 @@ Description     : Company info DutchBusiness integration implementation class. N
 public class WebServicesNLSOAPDutchBusinessImpl extends WebServicesNLSOAPDutchBusinessImplTypes implements IWebServicesNLSOAPDutchBusiness {
     
 public WebServicesNLSOAPDutchBusinessImpl(){
-        super();
+        //super();
+        port = new Webservices_nlPort('User');
 }
     public DutchBusinessDto.DutchBusinessGetDossierResponse dutchBusinessGetDossier(DutchBusinessDto.DutchBusinessGetDossierRequest params){
-
+        DutchBusinessDossierV3 response;
         try{
-            DutchBusinessDossierV3 response = dutchBusinessGetDossierV3(params.dossier_number, params.establishment_number);
+            response = dutchBusinessGetDossierV3(params.dossier_number, params.establishment_number);
+        }catch(System.CalloutException ex){
+            throw new BdsException(System.Label.Company_Info_WSCall_Unsuccessful + ex.getMessage());
+        }
+        try{
             DutchBusinessDto.DutchBusinessGetDossierResponse result = new DutchBusinessDto.DutchBusinessGetDossierResponse();
             result.legal_name = response.legal_name;
             result.dossier_number = response.dossier_number;
@@ -57,16 +62,17 @@ public WebServicesNLSOAPDutchBusinessImpl(){
 
             return result;
 
-        }catch(System.CalloutException ex){
-            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
         }catch(System.Exception ex){
-            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+            throw new BdsException(System.Label.Company_Info_WSCall_Unknown_Exception+ex.getMessage());
         }
 
     }
     private Date getDate(DutchBusinessDateV3 dt){
-        if(dt != null){
+        /*if(dt != null){
             try{return Date.newInstance(dt.year, dt.month, dt.day);}catch(exception e){ throw new CustomException('Something happened while processing the webservice call response. Something wrong with the date. Date = '+dt+' '+e.getMessage());}
+        }*/
+        if(dt != null){
+            return Date.newInstance(dt.year, dt.month, dt.day);
         }
         return null;
     } 
@@ -96,10 +102,16 @@ public WebServicesNLSOAPDutchBusinessImpl(){
         return response_x.out;
     }
     public DutchBusinessDto.DutchBusinessSearchParametersResponse dutchBusinessSearchParameters(DutchBusinessDto.DutchBusinessSearchParametersRequest params){
-        try{
-            DutchBusinessDto.DutchBusinessSearchParametersResponse result;
-            DutchBusinessReferenceV2PagedResult response = dutchBusinessSearchParametersV2(params.name,params.city,params.street,params.postcode,null,null,params.phone,params.domain,false,null);   
-            
+        
+        DutchBusinessDto.DutchBusinessSearchParametersResponse result;
+        DutchBusinessReferenceV2PagedResult response;
+            try{
+            response = dutchBusinessSearchParametersV2(params.name,params.city,params.street,params.postcode,null,null,params.phone,params.domain,false,null);   
+        }catch(System.CalloutException ex){
+            throw new BdsException(System.Label.Company_Info_WSCall_Unsuccessful + ex.getMessage());
+        }
+
+        try{    
             result = new DutchBusinessDto.DutchBusinessSearchParametersResponse();
             result.curpage = response.paging.curpage;
             result.perpage = response.paging.perpage;
@@ -121,10 +133,8 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             }
         return result;
             
-        }catch(System.CalloutException ex){
-            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
         }catch(System.Exception ex){
-            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+            throw new BdsException(System.Label.Company_Info_WSCall_Unknown_Exception+ex.getMessage());
         }
 
     }

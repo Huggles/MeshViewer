@@ -4,11 +4,11 @@ Description     : Useb by fflib Application class to wire together the servicve 
 ******************************************************************************************/
 public class WebServicesNLSOAPDutchBusiness {
 
-    public DutchBusinessDto.DutchBusinessGetDossierResponse dutchBusinessGetDossier(DutchBusinessDto.DutchBusinessGetDossierRequest params){
+    public static DutchBusinessDto.DutchBusinessGetDossierResponse dutchBusinessGetDossier(DutchBusinessDto.DutchBusinessGetDossierRequest params){
         return newInstance().dutchBusinessGetDossier(params);
     }
 
-    DutchBusinessDto.DutchBusinessSearchParametersResponse dutchBusinessSearchParameters(DutchBusinessDto.DutchBusinessSearchParametersRequest params){
+    public static DutchBusinessDto.DutchBusinessSearchParametersResponse dutchBusinessSearchParameters(DutchBusinessDto.DutchBusinessSearchParametersRequest params){
         return newInstance().dutchBusinessSearchParameters(params);
     }
 

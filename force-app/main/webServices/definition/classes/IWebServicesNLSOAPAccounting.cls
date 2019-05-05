@@ -6,7 +6,7 @@ public interface IWebServicesNLSOAPAccounting  extends IWebServicesNLSOAP{
 
     boolean userChangeBalance(DutchBusinessAccountingDto.userChangeBalanceRequestDto input);
     DutchBusinessAccountingDto.userViewBalanceResponse userGetBalance(DutchBusinessAccountingDto.userViewBalanceRequest input);
-    DutchBusinessAccountingDto.AccountViewResponseDto accountView();
-    DutchBusinessAccountingDto.AccountViewResponseDto accountView(String accountId);
+    //DutchBusinessAccountingDto.AccountViewResponseDto accountView();
+    //DutchBusinessAccountingDto.AccountViewResponseDto accountView(String accountId);
     DutchBusinessAccountingDto.UserCreateResponseDto userCreate(DutchBusinessAccountingDto.userCreateRequestDto input);
 }

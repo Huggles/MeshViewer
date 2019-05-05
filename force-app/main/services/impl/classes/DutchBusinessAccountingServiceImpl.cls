@@ -1,9 +1,9 @@
-public with sharing class DutchBusinessAccountingService {
+public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBusinessAccountingService{
 
-    // Onboarding of the new customer. First new user is created and then the trial budged is added; customerDossierNumber is the only param required
-    public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String customerDossierNumber){
+    // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
+    public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username){
         DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
-        input.nickname = customerDossierNumber;
+        input.nickname = username;
         input.accountId = 13972; //TODO: get the account ID from Custom Settings or CMT
         input.password = ''; // we keep this empty so CompanyInfo will generate a new password
         input.email = 'valerijs.prokudins@appsolutely.nl'; // TODO get the email address from custom setting or CMT
@@ -16,7 +16,7 @@ public with sharing class DutchBusinessAccountingService {
         input.clientcode = ''; // TODO: undertannvb  ds what is this
         input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
         list<Integer> lst = new list<Integer>();
-        lst.add(23);// TODO: this will be implemented sepererately and will be configurable
+        //lst.add(23);// TODO: this will be implemented sepererately and will be configurable
         input.usergroups = lst;
         DutchBusinessAccountingDto.userCreateResponseDto userResp = createCIUser(input);
         addTrialToCIUser(userResp);
@@ -24,7 +24,7 @@ public with sharing class DutchBusinessAccountingService {
         cs.Username__c = userResp.nickname;
         cs.Password__c = userResp.password;
         cs.CompanyInfoUserId__c = userResp.id;
-        insert cs;
+        upsert cs;
         //userResp.id;
         return userResp;
     }
@@ -44,18 +44,24 @@ public with sharing class DutchBusinessAccountingService {
     }
     
     // creates an integration user for the customer. Gives back the Id of the user in the Company.info backend
-    private static DutchBusinessAccountingDto.userCreateResponseDto createCIUser(DutchBusinessAccountingDto.UserCreateRequestDto input){
-        IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
-        DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(input);
+    public static DutchBusinessAccountingDto.userCreateResponseDto createCIUser(DutchBusinessAccountingDto.UserCreateRequestDto input){
+        try{    
+            IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
+            DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(input);
 
-        return response;
+            return response;
+        }catch(System.CalloutException ex){
+            throw new CustomException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(System.Exception ex){
+            throw new CustomException('Something happened while processing the webservice call response'+ex.getMessage());
+        }
     } 
 
-    private static void addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
+    public static boolean addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
         ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
             
         Double amount = configData.DefaultTrialBalance__c; // TODO: get the trial amount from custom settings or CMT
-        addBudget(amount, userId.id);
+        return addBudget(amount, userId.id);
     }
 
     public static boolean addBudget(Double amount, Integer userId){
@@ -64,6 +70,7 @@ public with sharing class DutchBusinessAccountingService {
         input.balance = amount;
         IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
         try{
+            
             return service.userChangeBalance(input);
             //return true;
         }catch(System.CalloutException ex){

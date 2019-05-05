@@ -9,6 +9,24 @@ public with sharing class DutchBusinessService {
     //public static final Integer paramInt=null;
     //public static final Boolean Strict_Search = False;
 
+    public static Account getDossierAccount(String dossierNum){
+        // todo move everything to selector
+        list<Dutch_Business_Dossier__c> dossList = new list<Dutch_Business_Dossier__c>();
+        dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
+        system.debug('inside the get dossier account');
+        system.debug('Integer.valueOf(dossierNum) = ' + Integer.valueOf(dossierNum));
+        system.debug('dosslist = ' + dossList);
+        system.debug('dossList.get(0).Account__r.Id = ' + dossList.get(0).Account__r.Id);
+        Account acc;
+        if(dossList.size() >0){
+            acc = [SELECT Id, Name From Account WHERE Id = :dossList.get(0).Account__r.Id];
+        }
+        if(dossList.size()>1){
+            //todo: log a warning  that one dossier per system allowed?
+        }
+        return acc;
+    }
+
    public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
         // Handle valid postcodes that the web service does not like
         if (searchParams.postcode != null){ // fix for postal code
@@ -21,6 +39,9 @@ public with sharing class DutchBusinessService {
             DutchBusinessDto.DutchBusinessSearchParametersResponse returnedResults = service.dutchBusinessSearchParameters(searchParams);
             if(returnedResults != null && returnedResults.items != null && returnedResults.items.size()>0){
                 searchResults=returnedResults.items;
+                system.debug('returnedResults = ' + returnedResults);
+                system.debug('returnedResults.items = ' + returnedResults.items.size());
+
             }
             else{
                 System.debug('no items');
@@ -34,7 +55,7 @@ public with sharing class DutchBusinessService {
     }
     
     public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber) {
-        if (dossierNumber == null) return null;
+        if (dossierNumber == null){ return null;}
         try{                                                            
             IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
             DutchBusinessDto.DutchBusinessGetDossierRequest requestParams = new DutchBusinessDto.DutchBusinessGetDossierRequest();// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
@@ -164,4 +185,5 @@ public with sharing class DutchBusinessService {
         if (dossier.indication_dip != null && Boolean.valueOf(dossier.indication_dip) == true) status.add('DIP');
         return String.join(status, ';');
     }
+    
 }

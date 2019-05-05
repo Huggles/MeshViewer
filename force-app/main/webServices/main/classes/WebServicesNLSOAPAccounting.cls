@@ -13,13 +13,13 @@ public class WebServicesNLSOAPAccounting {
         return newInstance().userGetBalance(input);
     }
 
-    public static DutchBusinessAccountingDto.AccountViewResponseDto accountView(){
+    /*public static DutchBusinessAccountingDto.AccountViewResponseDto accountView(){
         return newInstance().accountView();
     }
 
     public static DutchBusinessAccountingDto.AccountViewResponseDto accountView(String accountId){
         return newInstance().accountView(accountId);
-    }
+    }*/
     public DutchBusinessAccountingDto.userCreateResponseDto userCreate(DutchBusinessAccountingDto.UserCreateRequestDto input){
         return newInstance().userCreate(input);
     }

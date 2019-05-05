@@ -17,7 +17,8 @@ public with sharing class Application {
                     new Map<Type, Type>{
                             IWebservicesNlSOAP.class => WebservicesNlSOAPImpl.class,
                             IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
-                            IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class
+                            IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class,
+                            IDutchBusinessAccountingService.class => DutchBusinessAccountingServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application
