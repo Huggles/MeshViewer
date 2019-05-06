@@ -1,0 +1,18 @@
+<template>
+    <div id="waiting" if:false={ready}>
+            <lightning-card title="Dutch Business configuration page" icon-name="custom:custom14"> Loading…</lightning-card>
+    </div>
+    <div id="waitingFinished" if:true={ready}>   
+                <div id="customerOnboarded" if:true={onboarded}>
+                    <c-balance-Card></c-balance-Card>
+                    <c-license-Control-List></c-license-Control-List>
+                </div>
+                <div id="customerNotOnboarded" if:true={showOnboarded}>
+                    <c-onboard-Customer onuseronboarded={handleUserOnboarded}></c-onboard-Customer>
+                </div>
+
+    </div>
+
+</template>
+
+

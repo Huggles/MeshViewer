@@ -1,0 +1,38 @@
+<aura:component controller="CompanyDetailsController" implements="force:lightningQuickAction" access="global">
+
+    <aura:attribute name="existingAccount" type="Account" />
+    <aura:attribute name="existingAccountId" type="String" />
+    <aura:attribute name="step" type="string" default="1" />
+    
+    <aura:attribute name="companyList" type="object" default="{}" />
+    <aura:attribute name="selected" type="object" default="{}" />
+    <aura:attribute name="dossier" type="object" default="{}" />
+    <aura:attribute name="actionCompleted" type="boolean" default="false" />
+    <aura:attribute name="accountExists" type="boolean" default="false" />
+    <aura:handler name="dossierSearchSubmitEvent" event="c:dossierSearchSubmitEvent" action="{!c.onSubmit}" />
+    <aura:handler name="dossierSelectionConfirmedEvent" event="c:dossierSelectionConfirmedEvent" action="{!c.onSelect}" />
+    <aura:handler name="toUpdateAccountEvent" event="c:toUpdateAccountEvent" action="{!c.DML}" /> 
+    
+
+
+    
+    
+    
+    
+    <div class="{!v.step == '1' ? '' : 'slds-hide'}">
+        <c:dossierSearchForm  />
+    </div>
+
+    <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.Company_Info_Matching_Companies}" iconName="standard:account">
+        <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Company_Info_Search_Reset}"
+            iconName="utility:chevronleft" onclick="{!c.onBack}" />
+        <c:dossierSearchResults wrapperList="{!v.companyList}" />
+    </div>
+
+    <div class="{!v.step == '3' ? '' : 'slds-hide'}" title="{!$Label.c.Company_Info_Matching_Companies}" iconName="standard:account">
+        <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Company_Info_Back_To_Search}"
+            iconName="utility:chevronleft" onclick="{!c.onBack2}" />
+        <c:dossierCard dossier="{!v.dossier}" actionCompleted="{!v.actionCompleted}" accountExists="{!v.accountExists}" />
+    </div>
+    
+</aura:component>

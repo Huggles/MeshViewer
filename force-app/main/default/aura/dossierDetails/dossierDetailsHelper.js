@@ -86,6 +86,7 @@
      * @param {*} response 
      */
     handleSearchResults : function(component, response) {
+        console.log(response);
         component.set('v.companyList', response);
         component.set('v.step', '2');
     },

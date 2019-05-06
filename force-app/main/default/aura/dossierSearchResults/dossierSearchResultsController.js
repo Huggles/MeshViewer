@@ -27,6 +27,7 @@
         // Setting the param on the event 
         updateEvent.setParams({ "DossierNumber": component.get('v.selected') });
         // Fire the event so all the components can hear it
+        console.log('firing dossierSelectionConfirmedEvent');
         updateEvent.fire();
     }
 

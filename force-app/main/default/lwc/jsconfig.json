@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "c/balanceCard": [
+                "balanceCard/balanceCard.js"
+            ],
+            "c/configApp": [
+                "configApp/configApp.js"
+            ],
+            "c/licenseControlList": [
+                "licenseControlList/licenseControlList.js"
+            ],
+            "c/onboardCustomer": [
+                "onboardCustomer/onboardCustomer.js"
+            ],
+            "c/searchParamSelector": [
+                "searchParamSelector/searchParamSelector.js"
+            ]
+        }
+    },
+    "include": [
+        "**/*",
+        "../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}

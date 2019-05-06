@@ -1,4 +1,19 @@
 ({
+    doInit: function (cmp, event, helper) {
+        var searchFields = {
+            street: '',
+            city: '',
+            postcode: '',
+            country: '',
+            province: '',
+            name: '',
+            phone: '',
+            domain: ''
+        }
+        cmp.set('v.searchFields', searchFields);
+
+
+    },
     /**
      * Ignore search params if dossier number populated. 
      * @param {*} component 
@@ -8,7 +23,7 @@
     populateDossier: function (component, event, helper) {
         var fields = component.get('v.searchFields');
         if (fields.dossier_number != null && fields.dossier_number != '') {
-            component.set('v.disableSearch', true);
+            //component.set('v.disableSearch', true);
         }
         else component.set('v.disableSearch', false);
     },
