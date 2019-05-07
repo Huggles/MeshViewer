@@ -26,18 +26,6 @@ wiredUserOnboarded(result){
         this.error = undefined;
     }
 }
-openmodalWindow() {
-    console.log('openmodal pressed');
-    this.openmodal = true
-    console.log(this.openmodal);
-}
-closeModal() {
-    this.openmodal = false
-} 
-saveMethod() {
-    alert('save method invoked');
-    this.closeModal();
-}
 
 enableTrial(event){
 
