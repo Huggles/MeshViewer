@@ -23,6 +23,16 @@ public with sharing class DutchBusinessService {
         return acc;
     }
 
+    public static string createAccountForDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier){
+        system.debug('dossier = '+ dossier);
+        if(dossier != null){
+            Account a = new Account(Name = dossier.trade_name_full);
+            insert a;
+            return a.id;
+        }
+        return null;
+    }
+
    public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
         // Handle valid postcodes that the web service does not like
         if (searchParams.postcode != null){ // fix for postal code
@@ -106,6 +116,10 @@ public with sharing class DutchBusinessService {
 
         List<Dutch_Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
         Dutch_Business_Dossier__c d;
+
+        if(accountId == null){
+
+        }
 
         String trade_names = '';
         if (dossier.trade_names != null && dossier.trade_names.size() > 0) {

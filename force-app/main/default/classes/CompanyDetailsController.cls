@@ -57,12 +57,20 @@ public with sharing class CompanyDetailsController {
         system.debug('dossierDto = '+dossier);
 
         system.debug('accountId = ' + accountId);
-        try{
+
+
+
+        //try{
+            if(accountId == null || accountId == ''){
+                accountId = DutchBusinessService.createAccountForDossier(dossier);
+            }
+            system.debug('accountId after insert ' + accountId);
             Id savedRecord = DutchBusinessService.saveDutchBusinessDossier(dossier, accountId); 
             DutchBusinessService.updateAccountDossier(accountId, savedRecord);       
-        }catch(Exception e){
-            // todo logging and notificztion
-        }
+        /*}catch(Exception e){
+           system.debug('inside some exception that throws n othing'); // todo logging and notificztion
+            throw new BdsException('Something happened while trying to execute createUpdateAccount servive method'+e.getMessage());
+        }*/
 
 
         return null;

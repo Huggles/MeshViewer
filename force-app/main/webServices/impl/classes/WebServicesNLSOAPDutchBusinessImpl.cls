@@ -30,9 +30,12 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.trade_name_45 = response.trade_name_45 ;
             result.trade_name_full = response.trade_name_full;
             result.trade_names = new list<String>();
+            system.debug('asdasdasdasd = '+response.trade_names);
             if(response.trade_names != null){
-                for(String str: response.trade_names.item){
-                    result.trade_names.add(str);
+                if(response.trade_names.item != null){
+                    for(String str: response.trade_names.item){
+                        result.trade_names.add(str);
+                    }
                 }
             }
             result.telephone_number = response.telephone_number ;
@@ -63,7 +66,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             return result;
 
         }catch(System.Exception ex){
-            throw new BdsException(System.Label.Company_Info_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.Company_Info_WSCall_Unknown_Exception+ex.getLineNumber()+ex.getMessage());
         }
 
     }

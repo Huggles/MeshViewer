@@ -17,10 +17,6 @@ export default class balanceCard extends LightningElement {
     @wire(getUserBalance)
     wiredBalance(result) {
         this.wiredBalanceResult = result;
-        //this.amountToAdd = 10;
-        console.log(result);
-        console.log(this.wiredBalanceResult.data);
-        console.log(this.wiredBalanceResult);
         if (this.wiredBalanceResult.data !== undefined) {
             console.log('result');
             this.balanceAmount = this.wiredBalanceResult.data;

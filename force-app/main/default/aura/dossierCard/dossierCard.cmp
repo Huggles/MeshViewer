@@ -3,7 +3,6 @@
     <aura:attribute name="accountExists" type="boolean" default="false" access="public"/>
     <aura:attribute name="actionCompleted" type="boolean" default="false" access="public"/>
     <aura:registerEvent name="toUpdateAccountEvent" type="c:toUpdateAccountEvent"/>
-    account exists = {!v.accountExists} AND action completed = {!v.actionCompleted}
     <lightning:button class="{!v.accountExists ? 'slds-theme_brand slds-float_right' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!v.actionCompleted ? $Label.c.Company_Info_Dossier_Account_Update_Completed : $Label.c.Company_Info_Dossier_Account_Update}"
         iconName="utility:check" onclick="{!c.onClick}" disabled="{!v.actionCompleted}"/>
     <lightning:button class="{!!v.accountExists ? 'slds-theme_brand slds-float_right' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!v.actionCompleted ? $Label.c.Company_Info_Dossier_Account_Create_Completed : $Label.c.Company_Info_Dossier_Account_Create}"
@@ -17,10 +16,9 @@
             <h3 class="slds-tile__title slds-truncate" title="{!v.dossier.name + ' (' + v.dossier.dossier_number + ')'}">{!v.dossier.name}</h3>
             <div class="slds-tile__detail">
                 <div>Dossier Number = {!v.dossier.dossier_number}</div>
-                <div>{!v.dossier.establishment_date + ', ' + v.dossier.establishment_number}</div>
-                <div>{!v.dossier.indication_main_establishment + ', ' + v.dossier.establishment_city}</div>
-                <div>{!v.dossier.founding_date + ', ' + v.dossier.indication_main_establishment}</div>
-
+                <div>Establishment date = {!v.dossier.establishment_date}</div>
+                <div>Establishment Number = {!v.dossier.establishment_number}</div>
+               
 
             </div>
         </div>
