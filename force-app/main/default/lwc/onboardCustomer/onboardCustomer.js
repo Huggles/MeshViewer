@@ -10,6 +10,7 @@ export default class onboardCustomer extends LightningElement {
 
 @track onboarded = false;
 @track error;
+@track openmodal = false;
 
 isUserOnboarded;
 
@@ -24,6 +25,18 @@ wiredUserOnboarded(result){
         //this.ready = true;
         this.error = undefined;
     }
+}
+openmodalWindow() {
+    console.log('openmodal pressed');
+    this.openmodal = true
+    console.log(this.openmodal);
+}
+closeModal() {
+    this.openmodal = false
+} 
+saveMethod() {
+    alert('save method invoked');
+    this.closeModal();
 }
 
 enableTrial(event){
