@@ -77,7 +77,7 @@ public static PermissionSet ps;
 
     @AuraEnabled
     public static void assignUsers(List<String> UserIdList){
-        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Company_info_User'];
+        ps = [SELECT Id FROM PermissionSet WHERE Name = 'BusinessDataForSalesforce_User'];
         list<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
         list<String> enabledDutchBusinessUserIds = getDutchBusinessUserIds();
         list<String> psaToDelete = new list<String>();
@@ -100,7 +100,7 @@ public static PermissionSet ps;
     }
 
     private static list<String> getDutchBusinessUserIds(){
-        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Company_info_User'];
+        ps = [SELECT Id FROM PermissionSet WHERE Name = 'BDS_User'];
         system.debug('************* ps = '+ ps);
         list <PermissionSetAssignment> psaList = new list <PermissionSetAssignment>();
         psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];

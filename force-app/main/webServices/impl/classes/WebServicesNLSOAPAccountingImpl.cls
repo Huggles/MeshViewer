@@ -18,9 +18,11 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             userEditBalance(input.userId, input.balance);
             result = true;
         }catch(System.CalloutException ex){
-            throw new BdsException('The call to the service was unsuccessfull'+ex.getMessage());
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
-            throw new BdsException('Something happened while processing the webservice call response'+ex.getMessage());
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
 
         return result;
@@ -53,9 +55,11 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         try{
             result.balance = userViewBalance(input.userId);
         }catch(System.CalloutException ex){
-            throw new BdsException(System.Label.Company_Info_WSCall_Unsuccessful + ex.getMessage());
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
-            throw new BdsException(System.Label.Company_Info_WSCall_Unknown_Exception+ex.getMessage());
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
 
         return result;
@@ -102,16 +106,19 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         userCreateV2ResponseType response;
         try{
             response = userCreateV2(input.accountId, input.nickname, input.password, arr, input.email, input.companyname, input.address, input.contactname, input.contactemail, input.telephone, input.fax, input.clientcode, input.comments);
+            
+            DutchBusinessAccountingDto.userCreateResponseDto result = new DutchBusinessAccountingDto.userCreateResponseDto();
+            result.id = response.id;
+            result.nickname = response.nickname;
+            result.password = response.password;
+            return result;
         }catch(System.CalloutException ex){
-            throw new BdsException(SYSTEM.label.Company_Info_WSCall_Unsuccessful + ex.getMessage());
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
-            throw new BdsException(System.label.Company_Info_WSCall_Unknown_Exception+ex.getMessage());
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
-        DutchBusinessAccountingDto.userCreateResponseDto result = new DutchBusinessAccountingDto.userCreateResponseDto();
-        result.id = response.id;
-        result.nickname = response.nickname;
-        result.password = response.password;
-        return result;
     }
 
     private userCreateV2ResponseType userCreateV2(Integer accountid,String nickname,String password,intArray usergroups,String email,String companyname,String address,String contactname,String contactemail,String telephone,String fax,String clientcode,String comments) {
