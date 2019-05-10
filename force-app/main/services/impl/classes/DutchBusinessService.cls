@@ -3,9 +3,9 @@ Author          : ValerijsProkudins
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
 public with sharing class DutchBusinessService {
-    
-   //private static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2PagedResult returnedResults;
-   //private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults; 
+
+    //private static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2PagedResult returnedResults;
+    //private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults;
     //public static final Integer paramInt=null;
     //public static final Boolean Strict_Search = False;
 
@@ -43,7 +43,7 @@ public with sharing class DutchBusinessService {
         }
     }
 
-   public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
+    public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
         // Handle valid postcodes that the web service does not like
         if (searchParams.postcode != null){ // fix for postal code
             searchParams.postcode = searchParams.postcode.replaceAll('(\\s+)', '').toUpperCase();
@@ -72,10 +72,10 @@ public with sharing class DutchBusinessService {
             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
     }
-    
+
     public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber) {
         if (dossierNumber == null){ return null;}
-        try{                                                            
+        try{
             IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
             DutchBusinessDto.DutchBusinessGetDossierRequest requestParams = new DutchBusinessDto.DutchBusinessGetDossierRequest();// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
             requestParams.dossier_number = dossierNumber;
@@ -105,39 +105,39 @@ public with sharing class DutchBusinessService {
             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
     }
-    
-    
+
+
     private static Boolean checkAccess() {
         List<String> fields = new List<String>{'Name','Establishment_Number__c','Main_Establishment_Number__c',
-        'Indication_Main_Establishment__c','Rsin_Number__c','Chamber_Number__c','Legal_Form_Code__c','Legal_Form_Text__c','Indication_Organisation_Code__c',
-        'Trade_Name_45__c','Trade_Name_Full__c','Trade_Names__c','Telephone_Number__c','Mobile_Number__c','Domain_Name__c','Authorized_Share_Capital__c',
-        'Authorized_Share_Capital_Currency__c','Class_Personnel__c','Class_Personnel_Fulltime__c','Continuation_Date__c','Discontinuation_Date__c','Establishment_Date__c',
-        'Founding_Date__c','Issued_Share_Capital__c','Issued_Share_Capital_Currency__c','Paid_Up_Share_Capital__c','Paid_Up_Share_Capital_Currency__c',
-        'Personnel__c','Personnel_Fulltime__c','Personnel_Reference_Date__c','Primary_Sbi_Code__c','Primary_Sbi_Code_Text__c','Secondary_Sbi_Code_1__c',
-        'Secondary_Sbi_Code_1_Text__c','Secondary_Sbi_Code_2__c','Secondary_Sbi_Code_2_Text__c','Status__c'};
+                'Indication_Main_Establishment__c','Rsin_Number__c','Chamber_Number__c','Legal_Form_Code__c','Legal_Form_Text__c','Indication_Organisation_Code__c',
+                'Trade_Name_45__c','Trade_Name_Full__c','Trade_Names__c','Telephone_Number__c','Mobile_Number__c','Domain_Name__c','Authorized_Share_Capital__c',
+                'Authorized_Share_Capital_Currency__c','Class_Personnel__c','Class_Personnel_Fulltime__c','Continuation_Date__c','Discontinuation_Date__c','Establishment_Date__c',
+                'Founding_Date__c','Issued_Share_Capital__c','Issued_Share_Capital_Currency__c','Paid_Up_Share_Capital__c','Paid_Up_Share_Capital_Currency__c',
+                'Personnel__c','Personnel_Fulltime__c','Personnel_Reference_Date__c','Primary_Sbi_Code__c','Primary_Sbi_Code_Text__c','Secondary_Sbi_Code_1__c',
+                'Secondary_Sbi_Code_1_Text__c','Secondary_Sbi_Code_2__c','Secondary_Sbi_Code_2_Text__c','Status__c'};
 
         Schema.sObjectType.Dutch_Business_Dossier__c.fields.getMap();
 
-        Schema.DescribeSObjectResult a_desc = Dutch_Business_Dossier__c.sObjectType.getDescribe(); 
+        Schema.DescribeSObjectResult a_desc = Dutch_Business_Dossier__c.sObjectType.getDescribe();
         //for the Account object, you can replace that with any object you have, standard or custom
         Map<String, Schema.SObjectField> a_fields = a_desc.fields.getMap();
 
-        for(Schema.sObjectField fld: a_fields.values()){ 
+        for(Schema.sObjectField fld: a_fields.values()){
             if (fld.getDescribe().isUpdateable() == false && fields.contains(fld.getDescribe().getName())) {
                 return false;
             }
         }
 
-
         return true;
     }
 
+
     public static Id saveDutchBusinessDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Id accountId) {
-        
+
         try{
             if (Schema.sObjectType.Dutch_Business_Dossier__c.fields.Id.isAccessible() == false ||
-                Schema.sObjectType.Dutch_Business_Dossier__c.fields.Account__c.isAccessible() == false ||
-                checkAccess() == false) throw new NoAccessException();
+                    Schema.sObjectType.Dutch_Business_Dossier__c.fields.Account__c.isAccessible() == false ||
+                    checkAccess() == false) throw new NoAccessException();
 
             List<Dutch_Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
             Dutch_Business_Dossier__c d;
@@ -165,6 +165,25 @@ public with sharing class DutchBusinessService {
                 }
             }
 
+            Map<Integer, String> chamberNumberPickListValuesMap = new Map<Integer, String>();
+            for( Schema.PicklistEntry pickListVal : Dutch_Business_Dossier__c.Chamber_Number__c.getDescribe().getPicklistValues()){
+                String a = String.valueOf(pickListVal.getLabel()).substring(0,2);
+                chamberNumberPickListValuesMap.put(Integer.valueOf(a),pickListVal.getLabel());
+            }
+            System.debug(chamberNumberPickListValuesMap);
+
+            Map<String, String> orgCodePickListValuesMap = new Map<String, String>();
+            for( Schema.PicklistEntry pickListVal : Dutch_Business_Dossier__c.Indication_Organisation_Code__c.getDescribe().getPicklistValues()){
+                String a = String.valueOf(pickListVal.getLabel()).substring(0,1);
+                orgCodePickListValuesMap.put(a,pickListVal.getLabel());
+            }
+
+            Map<String, String> genderPickListValuesMap = new Map<String, String>();
+            for( Schema.PicklistEntry pickListVal : Dutch_Business_Dossier__c.Indication_Organisation_Code__c.getDescribe().getPicklistValues()){
+                String a = String.valueOf(pickListVal.getLabel()).substring(0,1);
+                genderPickListValuesMap.put(a,pickListVal.getLabel());
+            }
+
             // @todo add addresses and contact.
             system.debug('VPROK tests dosier = '+ dossier);
             d.Name = dossier.legal_name;
@@ -173,10 +192,10 @@ public with sharing class DutchBusinessService {
             d.Main_Establishment_Number__c = Integer.valueOf(dossier.main_establishment_number);
             d.Indication_Main_Establishment__c = Boolean.valueOf(dossier.indication_main_establishment);
             if(dossier.rsin_number != null){d.Rsin_Number__c = Integer.valueOf(dossier.rsin_number);}
-            if(dossier.chamber_number != null){d.Chamber_Number__c = Integer.valueOf(dossier.chamber_number);}
+            if(dossier.chamber_number != null){d.Chamber_Number__c = chamberNumberPickListValuesMap.get(Integer.valueOf(dossier.chamber_number));}
             if(dossier.legal_form_code != null){d.Legal_Form_Code__c = Integer.valueOf(dossier.legal_form_code);}
             if(dossier.legal_form_text != null){d.Legal_Form_Text__c = String.valueOf(dossier.legal_form_text);}
-            if(dossier.indication_organisation_code != null){d.Indication_Organisation_Code__c = String.valueOf(dossier.indication_organisation_code);}
+            if(dossier.indication_organisation_code != null){d.Indication_Organisation_Code__c = orgCodePickListValuesMap.get(String.valueOf(dossier.indication_organisation_code));}
             d.Trade_Name_45__c = dossier.trade_name_45;
             d.Trade_Name_Full__c = dossier.trade_name_full;
             d.Trade_Names__c = trade_names;
@@ -207,6 +226,30 @@ public with sharing class DutchBusinessService {
             d.Secondary_Sbi_Code_2_Text__c = dossier.secondary_sbi_code2_text;
             d.Status__c = determineStatus(dossier);
 
+            //d.Annual_Financial_Statement_Summary__c = dossier.annual_financial_statement_summary; I cannot edit the DutchBusinessDto to add this field
+            d.Personnel_CI__c = dossier.personnel_ci;
+            if(dossier.class_personnel_ci != null){ d.Class_Personnel_CI__c = String.valueOf(dossier.class_personnel_ci); }
+            d.Personnel_CI_Reference_Date__c = dossier.personnel_ci_reference_date;
+            d.Contact_Initials__c = dossier.contact_initials;
+            d.Contact_Prefix__c = dossier.contact_prefix;
+            d.Contact_Surname__c = dossier.contact_surname;
+            d.Contact_Title1__c = dossier.contact_title1;
+            d.Contact_Title2__c = dossier.contact_title2;
+            if(dossier.contact_gender != null) {d.Contact_Gender__c = genderPickListValuesMap.get(dossier.contact_gender);}
+            d.Correspondence_Address__c = dossier.correspondence_address_official_address; //I think this should be combination of all correspondence_address_xxx
+            d.Establishment_Address__c = dossier.establishment_address_official_address; //combination of all establishment_address_xxx
+            if (dossier.indication_bankruptcy != null) { d.Indication_Bankruptcy__c = dossier.indication_bankruptcy;}
+            if (dossier.indication_dip != null) { d.Indication_Dip__c = dossier.indication_dip;}
+            if (dossier.indication_economically_active != null) { d.Indication_Economically_Active__c = dossier.indication_economically_active;}
+            if (dossier.indication_export != null) { d.Indication_Export__c = dossier.indication_export;}
+            if (dossier.indication_import != null) { d.Indication_Import__c = dossier.indication_import;}
+            if (dossier.indication_main_establishment != null) { d.Indication_Main_Establishment__c = dossier.indication_main_establishment;}
+            if (dossier.indication_non_mailing != null) { d.Indication_Non_Mailing__c = dossier.indication_non_mailing;}
+            //d.Insolvencies__c = dossier.insolvencies; add insolvencies to DutchBusinessDto
+            //d.Sbi_Collection__c = dossier.sbi_collection; add sbi_collection to DutchBusinessDto
+            // d.Structure__c = dossier.structure; add structure to DutchBusinessDto
+
+
             upsert d;
             return d.Id;
         }catch(BdsException ex){
@@ -233,5 +276,5 @@ public with sharing class DutchBusinessService {
             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
     }
-    
+
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Indication_Bankruptcy__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Boolean indicating if the business is currently registered as bankrupt (Dutch: ‘Faillissement’).</description>
+    <externalId>false</externalId>
+    <label>Indication Bankruptcy</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

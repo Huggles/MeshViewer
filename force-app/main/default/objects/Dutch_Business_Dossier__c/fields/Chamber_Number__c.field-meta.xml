@@ -18,10 +18,72 @@
 37	Noordwest-Holland</description>
     <externalId>false</externalId>
     <label>Chamber Number</label>
-    <precision>2</precision>
     <required>false</required>
-    <scale>0</scale>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>01	Noord Nederland</fullName>
+                <default>false</default>
+                <label>01	Noord Nederland</label>
+            </value>
+            <value>
+                <fullName>08	Oost Nederland</fullName>
+                <default>false</default>
+                <label>08	Oost Nederland</label>
+            </value>
+            <value>
+                <fullName>09	Centraal Gelderland</fullName>
+                <default>false</default>
+                <label>09	Centraal Gelderland</label>
+            </value>
+            <value>
+                <fullName>14	Limburg</fullName>
+                <default>false</default>
+                <label>14	Limburg</label>
+            </value>
+            <value>
+                <fullName>17	Brabant</fullName>
+                <default>false</default>
+                <label>17	Brabant</label>
+            </value>
+            <value>
+                <fullName>20	Zuid West Nederland</fullName>
+                <default>false</default>
+                <label>20	Zuid West Nederland</label>
+            </value>
+            <value>
+                <fullName>24	Rotterdam</fullName>
+                <default>false</default>
+                <label>24	Rotterdam</label>
+            </value>
+            <value>
+                <fullName>27	Den Haag</fullName>
+                <default>false</default>
+                <label>27	Den Haag</label>
+            </value>
+            <value>
+                <fullName>30	Midden Nederland</fullName>
+                <default>false</default>
+                <label>30	Midden Nederland</label>
+            </value>
+            <value>
+                <fullName>32	Gooi-, Eem- en Flevoland</fullName>
+                <default>false</default>
+                <label>32	Gooi-, Eem- en Flevoland</label>
+            </value>
+            <value>
+                <fullName>34	Amsterdam</fullName>
+                <default>false</default>
+                <label>34	Amsterdam</label>
+            </value>
+            <value>
+                <fullName>37	Noordwest-Holland</fullName>
+                <default>false</default>
+                <label>37	Noordwest-Holland</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>
