@@ -1,4 +1,4 @@
-public class ConfigAppController {
+public with sharing class ConfigAppController {
 public static PermissionSet ps;
     @AuraEnabled(cacheable=true)
     public static List<UserWrapper> getUserList(String searchKey, String searchParam, String sortedBy, String sortedDirection) {

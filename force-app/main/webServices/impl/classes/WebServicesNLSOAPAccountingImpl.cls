@@ -4,7 +4,7 @@ Description     : Company info Accounting integration implementation class. NB: 
                   All original company.info methods are wrapped into our methods to provide DTO wrapping for both request and response params.
                   This is done to completely isolate webservice layer from the service layer. This will allow to adapt to webservice changes/updates quickly and without too much effort.
 ******************************************************************************************/
-public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting{
+public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting{
 
     // constructor
     public WebServicesNLSOAPAccountingImpl(){

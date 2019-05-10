@@ -53,22 +53,18 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object createUpdateAccount(String dossierObj, String accountId){
         DutchBusinessDto.DutchBusinessGetDossierResponse dossier  = castToDossierDto(dossierObj);
-        //DutchBusinessDto.DutchBusinessGetDossierResponse dossierDto = (DutchBusinessDto.DutchBusinessGetDossierResponse)dossier;
-        system.debug('dossierDto = '+dossier);
-
-        system.debug('accountId = ' + accountId);
-
-
-
         //try{
-            if(accountId == null || accountId == ''){
-                accountId = DutchBusinessService.createAccountForDossier(dossier);
-            }
-            system.debug('accountId after insert ' + accountId);
-            Id savedRecord = DutchBusinessService.saveDutchBusinessDossier(dossier, accountId); 
-            DutchBusinessService.updateAccountDossier(accountId, savedRecord);       
+           // if(accountId == null || accountId == ''){
+                //accountId = DutchBusinessService.createAccountForDossier(dossier);
+           // }
+            DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId); 
+            
+            DutchBusinessService.updateAccountDossier(dossier);
+
+             //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
+             //DutchBusinessService.createUpdateAccountAndDossier(accountId, dossier);
         /*}catch(Exception e){
-           system.debug('inside some exception that throws n othing'); // todo logging and notificztion
+            system.debug('inside some exception that throws n othing'); // todo logging and notificztion
             throw new BdsException('Something happened while trying to execute createUpdateAccount servive method'+e.getMessage());
         }*/
 

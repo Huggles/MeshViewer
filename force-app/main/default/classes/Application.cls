@@ -8,7 +8,9 @@ public with sharing class Application {
     public static final fflib_Application.UnitOfWorkFactory UnitOfWork =
         new fflib_Application.UnitOfWorkFactory(
             new List < SObjectType > {
-                User.SObjectType
+                User.SObjectType,
+                Account.SObjectType,
+                Dutch_Business_Dossier__c.SObjectType
                 });
 
     // Configure and create the ServiceFactory for this Application
