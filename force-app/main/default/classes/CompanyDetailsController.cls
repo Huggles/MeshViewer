@@ -21,11 +21,15 @@ public with sharing class CompanyDetailsController {
         if(dossierNumber!=null){
 
             DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
-            System.debug('getInfoResponse');
+            /*System.debug('getInfoResponse');
             System.debug(dossier);
             Id savedRecord = DutchBusinessService.saveDutchBusinessDossier(dossier, accountId); 
             DutchBusinessService.updateAccountDossier(accountId, savedRecord);
-            return savedRecord;
+            return savedRecord;*/
+            DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId); 
+            
+            
+            return DutchBusinessService.updateAccountDossier(dossier);
         }
         return null;
     } 

@@ -2,7 +2,7 @@
 Author          : ValerijsProkudins
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
-public with sharing class DutchBusinessService {
+public with sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
     
    //private static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2PagedResult returnedResults;
    //private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults; 
@@ -30,7 +30,7 @@ public with sharing class DutchBusinessService {
         }
     }
 
-    public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
+    private static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         try{
             list<String> existinAccountIds = new list<String>();
             Account acc = new Account();
@@ -56,7 +56,7 @@ public with sharing class DutchBusinessService {
     }
 
     // checks for account duplicates. Return a list of IDs if duplicates exist.
-    public static list<String> checkForAccountDuplicates(Account acc){
+    private static list<String> checkForAccountDuplicates(Account acc){
         list<String> result = new list<String>();
         list<Account> accounts = new list<Account>();
         accounts.add(acc);
@@ -75,14 +75,23 @@ public with sharing class DutchBusinessService {
     }
 
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
-    public static void createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        list<String> existinAccountIds;
-        Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
-        Dutch_Business_Dossier__c d = saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
-        //unitOfWork.registerRelationship(acc, Account.Dutch_Business_Dossier__c, d);
-        
-        unitOfWork.commitWork();
+    public static boolean createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+        try{
+            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+            list<String> existinAccountIds;
+            Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
+            Dutch_Business_Dossier__c d = saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
+            //unitOfWork.registerRelationship(acc, Account.Dutch_Business_Dossier__c, d);
+            unitOfWork.commitWork();
+            //unitOfWork.registerDirty(acc, Account.Dutch_Business_Dossier__c, d); // to update a field on account level once dossier is inserted
+            //unitOfWork.commitWork(); // need to wait until circullar references are releassed ion fflib. so far using another method link: https://github.com/financialforcedev/fflib-apex-common/pull/195
+            return true;
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+        }
     }
     
     public static Dutch_Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork) {
@@ -212,7 +221,8 @@ public with sharing class DutchBusinessService {
 
     }
     // TODO: rewrite properly, the method should notify if there were problems during update TODO: MOVE STUFF TO SELECTOR AND UOW
-    public static void updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
+    // was void before. not tyoo logical to return dossier Id from this method. Cut the corner to both get dossierId for  controller and Not research how to handle void methods  with this framework
+    public static String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
         try{
             list<Dutch_Business_Dossier__c> dossierList = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
             List<Account> accts = [SELECT Id, Dutch_Business_Dossier__c FROM Account WHERE Id = :dossierList.get(0).Account__c];
@@ -220,15 +230,17 @@ public with sharing class DutchBusinessService {
                 accts[0].Dutch_Business_Dossier__c = dossierList.get(0).Id;
                 update accts;
             }
+            return dossierList.get(0).Id;
         }catch(BdsException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
+        //return null;
     }
     // TODO: rewrite properly, the method should notify if there were problems during update
-    public static void updateAccountDossier(Id accountId, Id dossierId) {
+    /*public static boolean updateAccountDossier(Id accountId, Id dossierId) {
         try{
             List<Account> accts = [SELECT Id, Dutch_Business_Dossier__c FROM Account WHERE Id = :accountId];
             if (accts.size() == 1 && dossierId != NULL) {
@@ -241,7 +253,7 @@ public with sharing class DutchBusinessService {
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
-    }
+    }*/
     
     
     private static Boolean checkAccess() {
@@ -269,7 +281,7 @@ public with sharing class DutchBusinessService {
         return true;
     }
 
-    public static Id saveDutchBusinessDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Id accountId) {
+   /* public static Id saveDutchBusinessDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Id accountId) { // delete?
         
         try{
             if (Schema.sObjectType.Dutch_Business_Dossier__c.fields.Id.isAccessible() == false ||
@@ -354,7 +366,7 @@ public with sharing class DutchBusinessService {
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
-    }
+    }*/
     private static String determineStatus(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
         try{
             List<String> status = new List<String>();

@@ -20,7 +20,8 @@ public with sharing class Application {
                             IWebservicesNlSOAP.class => WebservicesNlSOAPImpl.class,
                             IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
                             IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class,
-                            IDutchBusinessAccountingService.class => DutchBusinessAccountingServiceImpl.class
+                            IDutchBusinessAccountingService.class => DutchBusinessAccountingServiceImpl.class,
+                            IDutchBusinessService.class => DutchBusinessServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application
