@@ -13,10 +13,20 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         try{    // todo move everything to selector
         //TODO: enhance with duplicate logic. mb account is there but has no dossier
             list<Dutch_Business_Dossier__c> dossList = new list<Dutch_Business_Dossier__c>();
-            dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
+            set<Integer> dossNumSet = new set<Integer>();
+            dossNumSet.add(Integer.valueOf(dossierNum));
+            dossList = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(dossNumSet);
+            //dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
             Account acc;
+            //list<Account> accList;// = new list<Account>();
+            set<String> accIdSet=new set<String>();
+            for(Dutch_Business_Dossier__c dbd: dossList){
+                system.debug('*************** account__r.name = '+ dbd.account__r.name);
+                accIdSet.add(dbd.Account__r.Id);
+            }
             if(dossList.size() >0){
-                acc = [SELECT Id, Name From Account WHERE Id = :dossList.get(0).Account__r.Id];
+                acc = AccountSelector.newInstance().selectById(dossList.get(0).Account__r.Id);
+                //acc = [SELECT Id, Name From Account WHERE Id = :dossList.get(0).Account__r.Id];
             }
             if(dossList.size()>1){
                 //todo: log a warning  that one dossier per system allowed?
@@ -26,7 +36,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
         }
     }
 
@@ -51,7 +61,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
         }
     }
 
@@ -90,7 +100,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
         }
     }
     
@@ -199,7 +209,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
         }
     }
     
@@ -215,7 +225,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
         }
 
 
@@ -235,7 +245,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
         }
         //return null;
     }
@@ -251,7 +261,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
         }
     }*/
     

@@ -8,48 +8,88 @@
 public with sharing class CompanyDetailsController {
     //private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults;
     @AuraEnabled
-    public static List<DutchBusinessDto.DutchBusinessReference> search(String searchParams){
+    public static Object search(String searchParams){
         if(searchParams!=null){
-            DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
-            return DutchBusinessService.searchForDossiers(params);
+            try{
+                DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
+                Object result = (Object)DutchBusinessService.searchForDossiers(params);
+                AuraResponseWrapper output = new AuraResponseWrapper((Object)result, 'SUCCESS', '');
+                return output;
+            }catch(BdsException ex){
+                AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', 'Exception Happened, please contact your system administrator'); // move the msg to label.
+                return output;
+            }catch(System.Exception ex){
+                ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+                AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', 'Exception Happened, please contact your system administrator'); // move the msg to label.
+                return output;
+            }
         }
         return null; 
     }
     @AuraEnabled
-    public static String getInfo(String dossierNumber, Id accountId){
+    public static Object getInfo(String dossierNumber, Id accountId){
         System.debug('getInfo');
         if(dossierNumber!=null){
+            try{
+                DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
+                DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId); 
+            
+                //return DutchBusinessService.updateAccountDossier(dossier);
+                AuraResponseWrapper output = new AuraResponseWrapper((Object)DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId), 'SUCCESS', '');
+                return output;
 
-            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
-            /*System.debug('getInfoResponse');
-            System.debug(dossier);
-            Id savedRecord = DutchBusinessService.saveDutchBusinessDossier(dossier, accountId); 
-            DutchBusinessService.updateAccountDossier(accountId, savedRecord);
-            return savedRecord;*/
-            DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId); 
-            
-            
-            return DutchBusinessService.updateAccountDossier(dossier);
+            }catch(BdsException ex){
+                //throw ex; // we dont log bds exceptions, only throwing them further
+                //ErrorLogUtil.logException(ex);
+                system.debug('********************************** BDS cought - no logging');
+                AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', 'Exception Happened, please contact your system administrator'); // move the msg to label.
+                return output;
+                //throw new AuraHandledException(ex.getMessage());
+            }catch(System.Exception ex){
+                ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+                system.debug('********************************** Unexpected cought cought -  logged');
+                AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', 'Exception Happened, please contact your system administrator'); // move the msg to label.
+                return output;
+                //throw new AuraHandledException(ex.getMessage());
+                //throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            }
         }
         return null;
     } 
     @AuraEnabled
     public static Object getInfoNoSaving(String dossierNumber){
         System.debug('getInfoNoSaving');
-        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
-        Account acc = DutchBusinessService.getDossierAccount(dossier.dossier_number);
-        String AccountId = '';
-        if(acc != null){
-            AccountId = acc.Id;
+        try{
+            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
+            Account acc = DutchBusinessService.getDossierAccount(dossier.dossier_number);
+            String AccountId = '';
+            if(acc != null){
+                AccountId = acc.Id;
+            }
+            System.debug('getInfoNoSavingResponse');
+            System.debug(dossier);
+            list<Object> result = new list<Object>();
+            result.add(dossier);
+            result.add(AccountId);
+            result.add(acc);
+            //result.add();
+            AuraResponseWrapper output = new AuraResponseWrapper((Object)result, 'SUCCESS', '');
+            return output;
+        }catch(BdsException ex){
+            //throw ex; // we dont log bds exceptions, only throwing them further
+            //ErrorLogUtil.logException(ex);
+            system.debug('********************************** BDS cought - no logging');
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', 'Exception Happened, please contact your system administrator'); // move the msg to label.
+            return output;
+            //throw new AuraHandledException(ex.getMessage());
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            system.debug('********************************** Unexpected cought cought -  logged');
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', 'Exception Happened, please contact your system administrator'); // move the msg to label.
+            return output;
+            //throw new AuraHandledException(ex.getMessage());
+            //throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
         }
-        System.debug('getInfoNoSavingResponse');
-        System.debug(dossier);
-        list<Object> result = new list<Object>();
-        result.add(dossier);
-        result.add(AccountId);
-        result.add(acc);
-        //result.add();
-        return result;
 
     }
 
@@ -57,23 +97,21 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object createUpdateAccount(String dossierObj, String accountId){
         DutchBusinessDto.DutchBusinessGetDossierResponse dossier  = castToDossierDto(dossierObj);
-        //try{
-           // if(accountId == null || accountId == ''){
-                //accountId = DutchBusinessService.createAccountForDossier(dossier);
-           // }
-            DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId); 
-            
+        try{
+
+            DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId);    
             DutchBusinessService.updateAccountDossier(dossier);
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'SUCCESS', '');
+            return output;
+        }catch(BdsException ex){
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', 'Exception Happened, please contact your system administrator'); // move the msg to label.
+            return output;
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', 'Exception Happened, please contact your system administrator'); // move the msg to label.
+            return output;
 
-             //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
-             //DutchBusinessService.createUpdateAccountAndDossier(accountId, dossier);
-        /*}catch(Exception e){
-            system.debug('inside some exception that throws n othing'); // todo logging and notificztion
-            throw new BdsException('Something happened while trying to execute createUpdateAccount servive method'+e.getMessage());
-        }*/
-
-
-        return null;
+        }
     }
     private static DutchBusinessDto.DutchBusinessGetDossierResponse castToDossierDto(String str){
         DutchBusinessDto.DutchBusinessGetDossierResponse response = (DutchBusinessDto.DutchBusinessGetDossierResponse)JSON.deserialize(str, DutchBusinessDto.DutchBusinessGetDossierResponse.class); //= new DutchBusinessDto.DutchBusinessGetDossierResponse();

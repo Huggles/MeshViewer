@@ -28,6 +28,8 @@ public with sharing class Application {
     public static final fflib_Application.SelectorFactory Selector =
         new fflib_Application.SelectorFactory(
             new Map < SObjectType, Type > {
-                User.SObjectType => UserSelector.class
+                User.SObjectType => UserSelector.class,
+                Account.SObjectType => AccountSelector.class,
+                Dutch_Business_Dossier__c.SObjectType => DutchBusinessDossierSelector.class
                 });
 }

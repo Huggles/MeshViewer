@@ -28,10 +28,20 @@
             var state = response.getState();
             console.log(state);
             if (state === "SUCCESS") {
+                if(response.getReturnValue().state === 'SUCCESS'){
+                    console.log('SUCCESS IN WRAPPER');
+                    callback(response.getReturnValue().response);
+                }else if(response.getReturnValue().state === 'ERROR'){
+                    console.log('SUCCESS IN WRAPPER');
+                    _this.showToast(component, $A.get('$Label.c.BDS_Error'), response.getReturnValue().errorMsg, 'error');
+                }
                 console.log('2testtetst');
                 console.log(response.getReturnValue());
+                console.log('and the objects state = ');
+                console.log(response.getReturnValue().state);
+                console.log(response.getReturnValue().errorMsg);
                 console.log(response);
-                callback(response.getReturnValue());
+                //callback(response.getReturnValue());
             }
             else if (state === "INCOMPLETE") {
                 _this.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.BDS_Error_Incomplete'), 'error');
