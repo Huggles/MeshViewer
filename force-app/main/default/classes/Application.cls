@@ -8,7 +8,9 @@ public with sharing class Application {
     public static final fflib_Application.UnitOfWorkFactory UnitOfWork =
         new fflib_Application.UnitOfWorkFactory(
             new List < SObjectType > {
-                User.SObjectType
+                User.SObjectType,
+                Account.SObjectType,
+                Dutch_Business_Dossier__c.SObjectType
                 });
 
     // Configure and create the ServiceFactory for this Application
@@ -18,7 +20,8 @@ public with sharing class Application {
                             IWebservicesNlSOAP.class => WebservicesNlSOAPImpl.class,
                             IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
                             IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class,
-                            IDutchBusinessAccountingService.class => DutchBusinessAccountingServiceImpl.class
+                            IDutchBusinessAccountingService.class => DutchBusinessAccountingServiceImpl.class,
+                            IDutchBusinessService.class => DutchBusinessServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application

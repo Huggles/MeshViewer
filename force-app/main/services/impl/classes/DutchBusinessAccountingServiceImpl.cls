@@ -28,8 +28,11 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             upsert cs;
             //userResp.id;
             return userResp;
-        }catch(exception ex){
-            throw new BdsException('Something happened while processing the webservice call response'+ex.getMessage());
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
     }
 
@@ -52,10 +55,11 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
             DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(input);
             return response;
-        }catch(System.CalloutException ex){
-            throw new BdsException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            throw new BdsException('Something happened while processing the webservice call response'+ex.getMessage());
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
     } 
 
@@ -64,8 +68,11 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];  
             Double amount = configData.DefaultTrialBalance__c; // TODO: get the trial amount from custom settings or CMT
             return addBudget(amount, userId.id);
-        }catch(exception ex){
-            throw new BdsException('Something happened while trying to execute addTrialToCIUser servive method'+ex.getMessage());
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
     }
 
@@ -78,10 +85,11 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             
             return service.userChangeBalance(input);
             //return true;
-        }catch(System.CalloutException ex){
-            throw new BdsException('The call to the service was unsuccessfull'+ex.getMessage());
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            throw new BdsException('Something happened while processing the webservice call response'+ex.getMessage());
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
 
     }
@@ -90,8 +98,11 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
             return addBudget(amount, (Integer)cs.CompanyInfoUserId__c);
-        }catch(Exception ex){
-            throw new BdsException('Something happened while trying to execute addBudget servive method'+ex.getMessage());
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
 
     }
@@ -102,23 +113,13 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             Credentials__c cs = Credentials__c.getOrgDefaults();
             input.userId = (integer)cs.CompanyInfoUserId__c;
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
-system.debug('***********************&*&*&*&*&*&');
             DutchBusinessAccountingDto.userViewBalanceResponse result = service.userGetBalance(input);
-            system.debug('***********************&*&*&*&*&*&'+result);
             return result.balance;
-        }catch(Exception e){
-            throw new BdsException('Something happened while trying to execute getBalance servive method'+e.getMessage());
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
     }
-
- /*   private static Double addBudgetToUserAndGetBalanceOnSuccess(Double amount, Integer userId){
-
-        if(addBudget(amount, userId)){
-            //system.debug('calling getbalance userId = ' + input.userId);
-            return getBalance();
-        }else{
-            return null;
-        }
-    }*/
-
 }

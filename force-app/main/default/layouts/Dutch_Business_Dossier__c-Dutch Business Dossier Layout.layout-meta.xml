@@ -30,6 +30,10 @@
                 <behavior>Readonly</behavior>
                 <field>Indication_Main_Establishment__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Chamber_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

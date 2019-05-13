@@ -1,4 +1,4 @@
-public class ConfigAppController {
+public with sharing class ConfigAppController {
 public static PermissionSet ps;
     @AuraEnabled(cacheable=true)
     public static List<UserWrapper> getUserList(String searchKey, String searchParam, String sortedBy, String sortedDirection) {
@@ -77,7 +77,8 @@ public static PermissionSet ps;
 
     @AuraEnabled
     public static void assignUsers(List<String> UserIdList){
-        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Company_info_User'];
+        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Business_Data_For_Salesforce_User'];
+        system.debug('pspspspspspspspspspspspsps = '+ps);
         list<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
         list<String> enabledDutchBusinessUserIds = getDutchBusinessUserIds();
         list<String> psaToDelete = new list<String>();
@@ -100,7 +101,7 @@ public static PermissionSet ps;
     }
 
     private static list<String> getDutchBusinessUserIds(){
-        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Company_info_User'];
+        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Business_Data_For_Salesforce_User'];
         system.debug('************* ps = '+ ps);
         list <PermissionSetAssignment> psaList = new list <PermissionSetAssignment>();
         psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];

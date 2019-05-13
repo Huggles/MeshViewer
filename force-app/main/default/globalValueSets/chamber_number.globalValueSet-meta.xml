@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>01</fullName>
+        <default>false</default>
+        <label>Noord Nederland</label>
+    </customValue>
+    <customValue>
+        <fullName>08</fullName>
+        <default>false</default>
+        <label>Oost Nederland</label>
+    </customValue>
+    <customValue>
+        <fullName>09</fullName>
+        <default>false</default>
+        <label>Centraal Gelderland</label>
+    </customValue>
+    <customValue>
+        <fullName>14</fullName>
+        <default>false</default>
+        <label>Limburg</label>
+    </customValue>
+    <customValue>
+        <fullName>17</fullName>
+        <default>false</default>
+        <label>Brabant</label>
+    </customValue>
+    <customValue>
+        <fullName>20</fullName>
+        <default>false</default>
+        <label>Zuid West Nederland</label>
+    </customValue>
+    <customValue>
+        <fullName>24</fullName>
+        <default>false</default>
+        <label>Rotterdam</label>
+    </customValue>
+    <customValue>
+        <fullName>27</fullName>
+        <default>false</default>
+        <label>Den Haag</label>
+    </customValue>
+    <customValue>
+        <fullName>30</fullName>
+        <default>false</default>
+        <label>Midden Nederland</label>
+    </customValue>
+    <customValue>
+        <fullName>32</fullName>
+        <default>false</default>
+        <label>Gooi-, Eem- en Flevoland</label>
+    </customValue>
+    <customValue>
+        <fullName>34</fullName>
+        <default>false</default>
+        <label>Amsterdam</label>
+    </customValue>
+    <customValue>
+        <fullName>37</fullName>
+        <default>false</default>
+        <label>Noordwest-Holland</label>
+    </customValue>
+    <description>value set for chamber_number__c field on dossier object</description>
+    <masterLabel>Chamber Number</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
