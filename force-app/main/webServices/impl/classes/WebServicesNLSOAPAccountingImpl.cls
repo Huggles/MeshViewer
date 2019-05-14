@@ -113,10 +113,10 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
             result.password = response.password;
             return result;
         }catch(System.CalloutException ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            ErrorLogUtil.logException(ex, port); // logging whenever we catch any exception other than BdsException type
             throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            ErrorLogUtil.logException(ex, port); // logging whenever we catch any exception other than BdsException type
             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
         }
     }
