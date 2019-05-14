@@ -2,62 +2,87 @@ public with sharing class ConfigAppController {
 public static PermissionSet ps;
     @AuraEnabled(cacheable=true)
     public static List<UserWrapper> getUserList(String searchKey, String searchParam, String sortedBy, String sortedDirection) {
-
-        list<String> enabledDutchBusinessUserIds = getDutchBusinessUserIds();
-        list<UserWrapper> uwList = new list<UserWrapper>();
-        list<User> userList;
-        system.debug(searchParam);
-        if(sortedby == null){sortedby = 'Name';}
-        if(sortedDirection == null){sortedDirection = 'asc';}
-        system.debug('sortedBy = ' + sortedby);
-        system.debug('sortedDirection = ' + sortedDirection);
-        if(searchParam == 'Name'){
-            userList = UserSelector.newInstance().selectByNameLikeSearchKey(searchKey, sortedBy, sortedDirection);
-        }else if(searchParam == 'ProfileName'){
-            userList = UserSelector.newInstance().selectByProfileLikeSearchKey(searchKey, sortedBy, sortedDirection);
-        }
-
-        set<Id> profileIdSet = new set<Id>();
-        for(User usr: userList){
-            profileIdSet.add(usr.profileId);
-        }
-        system.debug('profileIdSet'+profileIdSet);
-        map<Id, Profile> profileMap = new map<Id, Profile>();
-        profileMap = new map<Id, Profile>([SELECT Name From Profile WHERE Id IN :profileIdSet]);
-
-        for(User usr: userList){
-            UserWrapper uw = new UserWrapper();
-            uw.Id = usr.id;
-            uw.Name = usr.name;
-            uw.isActive = usr.isActive;
-            try{uw.ProfileName = profileMap.get(usr.ProfileId).name;}catch(exception e){}
-            system.debug('************* usr.Id = '+ usr.Id);
-            
-            system.debug('************* enabledDutchBusinessUserIds = '+ enabledDutchBusinessUserIds);
-            system.debug('************* enabledDutchBusinessUserIds.contains(usr.Id) = '+ enabledDutchBusinessUserIds.contains(usr.Id));
-            if(enabledDutchBusinessUserIds.contains(usr.Id)){
-                uw.DutchBusinessActive = true;
+        try{
+            list<String> enabledDutchBusinessUserIds = getDutchBusinessUserIds();
+            list<UserWrapper> uwList = new list<UserWrapper>();
+            list<User> userList;
+            system.debug(searchParam);
+            if(sortedby == null){sortedby = 'Name';}
+            if(sortedDirection == null){sortedDirection = 'asc';}
+            system.debug('sortedBy = ' + sortedby);
+            system.debug('sortedDirection = ' + sortedDirection);
+            if(searchParam == 'Name'){
+                userList = UserSelector.newInstance().selectByNameLikeSearchKey(searchKey, sortedBy, sortedDirection);
+            }else if(searchParam == 'ProfileName'){
+                userList = UserSelector.newInstance().selectByProfileLikeSearchKey(searchKey, sortedBy, sortedDirection);
             }
-            uwList.add(uw);
+
+            set<Id> profileIdSet = new set<Id>();
+            for(User usr: userList){
+                profileIdSet.add(usr.profileId);
+            }
+            system.debug('profileIdSet'+profileIdSet);
+            map<Id, Profile> profileMap = new map<Id, Profile>();
+            profileMap = new map<Id, Profile>([SELECT Name From Profile WHERE Id IN :profileIdSet]);
+
+            for(User usr: userList){
+                UserWrapper uw = new UserWrapper();
+                uw.Id = usr.id;
+                uw.Name = usr.name;
+                uw.isActive = usr.isActive;
+                try{uw.ProfileName = profileMap.get(usr.ProfileId).name;}catch(exception e){}
+                system.debug('************* usr.Id = '+ usr.Id);
+                
+                system.debug('************* enabledDutchBusinessUserIds = '+ enabledDutchBusinessUserIds);
+                system.debug('************* enabledDutchBusinessUserIds.contains(usr.Id) = '+ enabledDutchBusinessUserIds.contains(usr.Id));
+                if(enabledDutchBusinessUserIds.contains(usr.Id)){
+                    uw.DutchBusinessActive = true;
+                }
+                uwList.add(uw);
+            }
+            system.debug('************* uwList= '+ uwList);
+            return uwList;
+        }catch(BdsException ex){
+            //throw ex; // we dont log bds exceptions, only throwing them further
+            //TODO: implement error callback and reporting
+            return null;
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
+            return null;
         }
-        system.debug('************* uwList= '+ uwList);
-        return uwList;
     }
     @AuraEnabled(cacheable=true)
     public static boolean getUserOnboarded(){
        try{
            return DutchBusinessAccountingService.getUserOnboarded();
-       }catch(exception e){
-            // throw something
+       }catch(BdsException ex){
+            //throw ex; // we dont log bds exceptions, only throwing them further
+            //TODO: implement error callback and reporting
+            return false;
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
             return false;
         } 
     }
 
     @AuraEnabled
     public static void addBudged(Double Amount){
-        system.debug('BEFORE CALLING*************');
-        boolean resp = DutchBusinessAccountingService.addBudget(amount);
-        system.debug('*************' + resp);
+        try{
+            boolean resp = DutchBusinessAccountingService.addBudget(amount);
+        }catch(BdsException ex){
+            //throw ex; // we dont log bds exceptions, only throwing them further
+            //TODO: implement error callback and reporting
+           // return null;
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
+            //return null;
+        }
 
     }
 
@@ -72,7 +97,7 @@ public static PermissionSet ps;
             //return output;
             return false;
         }catch(System.Exception ex){
-            ErrorLogUtil.logMessage(ex); // logging whenever we catch any exception other than BdsException type
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
             //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
             //return output;
             return false;
