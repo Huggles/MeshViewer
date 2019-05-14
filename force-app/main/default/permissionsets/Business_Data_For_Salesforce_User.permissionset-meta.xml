@@ -202,6 +202,11 @@
         <field>Dutch_Business_Dossier__c.Trade_Names__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Trace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Business Data for Salesforce User</label>
     <objectPermissions>
@@ -222,4 +227,17 @@
         <object>Dutch_Business_Dossier__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Error_Log__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <tabSettings>
+        <tab>Error_Log__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
