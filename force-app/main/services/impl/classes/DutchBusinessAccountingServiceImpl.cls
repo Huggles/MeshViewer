@@ -19,6 +19,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             list<Integer> lst = new list<Integer>();
             lst.add(23);// TODO: this will be implemented sepererately and will be configurable
             input.usergroups = lst;
+            ErrorLogUtil.logMessage(input);
             DutchBusinessAccountingDto.userCreateResponseDto userResp = createCIUser(input);
             addTrialToCIUser(userResp);
             Credentials__c cs = Credentials__c.getOrgDefaults();

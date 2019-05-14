@@ -58,12 +58,25 @@ public static PermissionSet ps;
         system.debug('BEFORE CALLING*************');
         boolean resp = DutchBusinessAccountingService.addBudget(amount);
         system.debug('*************' + resp);
+
     }
 
     @AuraEnabled
-    public static void enableTrial(){
-        DutchBusinessAccountingDto.userCreateResponseDto resp = DutchBusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId());
-        system.debug(resp);
+    public static boolean enableTrial(){
+        try{
+            DutchBusinessAccountingDto.userCreateResponseDto resp = DutchBusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId());
+            system.debug(resp);
+            return true;
+        }catch(BdsException ex){
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
+            return false;
+        }catch(System.Exception ex){
+            ErrorLogUtil.logMessage(ex); // logging whenever we catch any exception other than BdsException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
+            return false;
+        }
     }
 
     @AuraEnabled(cacheable=true)
