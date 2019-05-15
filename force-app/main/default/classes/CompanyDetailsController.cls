@@ -104,9 +104,6 @@ public with sharing class CompanyDetailsController {
             DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId);    
             DutchBusinessService.updateAccountDossier(dossier);
             AuraResponseWrapper output = new AuraResponseWrapper(null, 'SUCCESS', '');
-            Account aaa;
-            system.debug(aaa.name);
-
             return output;
         }catch(BdsException ex){
             AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
