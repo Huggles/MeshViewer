@@ -14,5 +14,21 @@ public with sharing class AuraResponseWrapper {
         this.state = 'SUCCESS';
         this.errorMsg = '';
     }
+    public AuraResponseWrapper(Exception response) {
+        
+        //Application.rollback(); // perform database rollback
+        if(response instanceof BdsException){
+            this.response = null;
+            this.state = 'ERROR';
+            this.errorMsg = response.getMessage(); //= System.Label.BDS_WSCall_Generic_UI_Exception;    // todo handle known types for proper messaging
+        }else{
+            this.response = null;
+            this.state = 'ERROR';
+            this.errorMsg = System.Label.BDS_WSCall_Generic_UI_Exception;
+        }
+
+        
+
+    }
 
 }

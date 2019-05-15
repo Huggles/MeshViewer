@@ -30,12 +30,15 @@ public with sharing class ErrorLogUtil {
     }
 
     public static void logException(Exception e) {
+        Application.rollback(); // perform database rollback
         (new ErrorLogUtil()).doLog(e);
     }
     public static void logException(Exception e, Object msg) {
+        Application.rollback(); // perform database rollback
         (new ErrorLogUtil()).doLog(e, msg);
     }
     public static void logMessage(Object msg) {
+        Application.rollback(); // perform database rollback
         (new ErrorLogUtil()).doLog(msg);
     }
     private void doLog(Exception e) {
@@ -68,12 +71,22 @@ public with sharing class ErrorLogUtil {
     }
     private void doLog(Exception e, Object msg) {
         Error_Log__c log = new Error_Log__c();
-        log.Trace__c = JSON.serializePretty(msg) + '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
+        /*if(e instanceof BdsException){
+            BdsException ex = (BdsException)e;
+            log.Trace__c = JSON.serializePretty(msg) + '\n' + 'Type: ' + ex.originalException.getTypeName() + '\n' + 'Cause: ' + ex.getCause() + '\n' + 'Message: '
+                + ex.getMessage() + '\n' + 'Line #: ' + ex.getLineNumber() + '\n' + ex.getStackTraceString() + '\n';
+        }else{*/
+            log.Trace__c = JSON.serializePretty(msg) + '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
                 + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
+       // }
+        
         System.debug(LoggingLevel.ERROR, log.Trace__c);
+
         if (Test.isRunningTest()) {
             ErrorLogUtil.errorLogged = true;
         }
+        //Application.rollback(); // perform database rollback(because off full handled cycle)
+
         // storing the log in a queable to ensure we don't run into issues with callouts
         if ((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) >= 1) {
             if (!Test.isRunningTest())

@@ -3,6 +3,15 @@ Author          : ValerijsProkudins
 Description     : Application class. Please refer to fflib docs or https://quirkyapex.com/2017/12/03/fflib-application-structure/
 ******************************************************************************************/
 public with sharing class Application {
+    private static SavePoint sp;
+    public static void getSavePoint(){
+        if(sp == null){
+            sp = Database.setSavepoint();
+        }
+    }
+    public static void rollback(){
+        Database.rollback(sp);
+    }
 
     // Configure and create the UnitOfWorkFactory for this Application
     public static final fflib_Application.UnitOfWorkFactory UnitOfWork =
@@ -32,4 +41,6 @@ public with sharing class Application {
                 Account.SObjectType => AccountSelector.class,
                 Dutch_Business_Dossier__c.SObjectType => DutchBusinessDossierSelector.class
                 });
+
+
 }

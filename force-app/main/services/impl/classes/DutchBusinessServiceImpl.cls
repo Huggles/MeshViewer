@@ -36,7 +36,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -61,7 +61,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -70,24 +70,29 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         list<String> result = new list<String>();
         list<Account> accounts = new list<Account>();
         accounts.add(acc);
-        Datacloud.FindDuplicatesResult[] results = Datacloud.FindDuplicates.findDuplicates(accounts);
-        for (Datacloud.FindDuplicatesResult dupeResult : results) {
-            for (Datacloud.DuplicateResult dupeRes : dupeResult.getDuplicateResults()) {
-                for (Datacloud.MatchResult matchRes : dupeRes.getMatchResults()) {
-                    for (Datacloud.MatchRecord matchRec : matchRes.getMatchRecords()) {
-                        result.add((string)matchRec.getRecord().get('id'));
+        try{
+            Datacloud.FindDuplicatesResult[] results = Datacloud.FindDuplicates.findDuplicates(accounts);
+            for (Datacloud.FindDuplicatesResult dupeResult : results) {
+                for (Datacloud.DuplicateResult dupeRes : dupeResult.getDuplicateResults()) {
+                    for (Datacloud.MatchResult matchRes : dupeRes.getMatchResults()) {
+                        for (Datacloud.MatchRecord matchRec : matchRes.getMatchRecords()) {
+                            result.add((string)matchRec.getRecord().get('id'));
+                        }
                     }
                 }
             }
+        }catch(System.HandledException e){
+            //expected, no dup rules for account are active
         }
-
         return result;
     }
 
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
     public static boolean createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+        Application.getSavePoint();
         try{
-            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+            //fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
+            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
             list<String> existinAccountIds;
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
             Dutch_Business_Dossier__c d = saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
@@ -100,7 +105,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
     
@@ -209,7 +214,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
     
@@ -225,7 +230,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
 
@@ -245,7 +250,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
         //return null;
     }
@@ -261,7 +266,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }*/
     
@@ -374,7 +379,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }*/
     private static String determineStatus(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
@@ -391,7 +396,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
     

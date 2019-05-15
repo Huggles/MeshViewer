@@ -13,14 +13,14 @@ public with sharing class CompanyDetailsController {
             try{
                 DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
                 Object result = (Object)DutchBusinessService.searchForDossiers(params);
-                AuraResponseWrapper output = new AuraResponseWrapper((Object)result, 'SUCCESS', '');
+                AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
                 return output;
             }catch(BdsException ex){
-                AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+                AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
                 return output;
             }catch(System.Exception ex){
                 ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-                AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+                AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
                 return output;
             }
         }
@@ -35,23 +35,25 @@ public with sharing class CompanyDetailsController {
                 DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId); 
             
                 //return DutchBusinessService.updateAccountDossier(dossier);
-                AuraResponseWrapper output = new AuraResponseWrapper((Object)DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId), 'SUCCESS', '');
+                AuraResponseWrapper output = new AuraResponseWrapper((Object)DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId));
                 return output;
 
             }catch(BdsException ex){
                 //throw ex; // we dont log bds exceptions, only throwing them further
                 //ErrorLogUtil.logException(ex);
                 system.debug('********************************** BDS cought - no logging');
-                AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+                //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+                AuraResponseWrapper output = new AuraResponseWrapper(ex); // move the msg to label.
+                
                 return output;
                 //throw new AuraHandledException(ex.getMessage());
             }catch(System.Exception ex){
                 ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
                 system.debug('********************************** Unexpected cought cought -  logged');
-                AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+                AuraResponseWrapper output = new AuraResponseWrapper(ex); // move the msg to label.
                 return output;
                 //throw new AuraHandledException(ex.getMessage());
-                //throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+                //throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
             }
         }
         return null;
@@ -73,22 +75,22 @@ public with sharing class CompanyDetailsController {
             result.add(AccountId);
             result.add(acc);
             //result.add();
-            AuraResponseWrapper output = new AuraResponseWrapper((Object)result, 'SUCCESS', '');
+            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
         }catch(BdsException ex){
             //throw ex; // we dont log bds exceptions, only throwing them further
             //ErrorLogUtil.logException(ex);
             system.debug('********************************** BDS cought - no logging');
-            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
             return output;
             //throw new AuraHandledException(ex.getMessage());
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
             system.debug('********************************** Unexpected cought cought -  logged');
-            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
             return output;
             //throw new AuraHandledException(ex.getMessage());
-            //throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage());
+            //throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
     }
@@ -102,13 +104,16 @@ public with sharing class CompanyDetailsController {
             DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId);    
             DutchBusinessService.updateAccountDossier(dossier);
             AuraResponseWrapper output = new AuraResponseWrapper(null, 'SUCCESS', '');
+            Account aaa;
+            system.debug(aaa.name);
+
             return output;
         }catch(BdsException ex){
-            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
             return output;
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
             return output;
 
         }
