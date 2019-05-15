@@ -10,27 +10,27 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     //public static final Boolean Strict_Search = False;
 
     public static Account getDossierAccount(String dossierNum){
-        try{    // todo move everything to selector
+        try{    
         //TODO: enhance with duplicate logic. mb account is there but has no dossier
             list<Dutch_Business_Dossier__c> dossList = new list<Dutch_Business_Dossier__c>();
-            set<Integer> dossNumSet = new set<Integer>();
-            dossNumSet.add(Integer.valueOf(dossierNum));
-            dossList = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(dossNumSet);
+
+            //set<Integer> dossNumSet = new set<Integer>();
+            //dossNumSet.add(Integer.valueOf(dossierNum));
+            dossList = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<Integer>{Integer.valueOf(dossierNum)});
             //dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
             Account acc;
-            //list<Account> accList;// = new list<Account>();
-            set<String> accIdSet=new set<String>();
-            for(Dutch_Business_Dossier__c dbd: dossList){
-                system.debug('*************** account__r.name = '+ dbd.account__r.name);
-                accIdSet.add(dbd.Account__r.Id);
-            }
+            list<Account> accList = new list<Account>();
             if(dossList.size() >0){
-                acc = AccountSelector.newInstance().selectById(dossList.get(0).Account__r.Id);
-                //acc = [SELECT Id, Name From Account WHERE Id = :dossList.get(0).Account__r.Id];
+                set<Id> accIdSet=new set<Id>();
+                for(Dutch_Business_Dossier__c dbd: dossList){
+                    accIdSet.add(dbd.Account__c);
+                }
+                accList = AccountSelector.newInstance().selectById(accIdSet);
+                return accList.get(0);
             }
-            if(dossList.size()>1){
+            //if(dossList.size()>1){
                 //todo: log a warning  that one dossier per system allowed?
-            }
+            //}
             return acc;
         }catch(BdsException ex){
             throw ex; // we dont log bds exceptions, only throwing them further

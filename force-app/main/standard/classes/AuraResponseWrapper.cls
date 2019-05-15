@@ -9,4 +9,10 @@ public with sharing class AuraResponseWrapper {
         this.state = state;
         this.errorMsg = errorMsg;
     }
+    public AuraResponseWrapper(Object response) {
+        this.response = response;
+        this.state = 'SUCCESS';
+        this.errorMsg = '';
+    }
+
 }
