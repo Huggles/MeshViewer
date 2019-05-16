@@ -116,6 +116,9 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.numpages = response.paging.numpages;
             result.numresults = response.paging.numresults;
             result.maxresults = response.paging.maxresults;
+            if(response.results == null){
+                // TODO: HANDLE EMPTY SEARCH exceptions.
+            }
             for(DutchBusinessReferenceV2 item: response.results.item){
                     DutchBusinessDto.DutchBusinessReference restItem = new DutchBusinessDto.DutchBusinessReference();
                     restItem.dossier_number = item.dossier_number ;

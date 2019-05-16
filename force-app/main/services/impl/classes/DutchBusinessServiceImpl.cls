@@ -89,9 +89,10 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
     public static boolean createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
-        Application.getSavePoint();
+        
         try{
             //fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
+            //Application.getSavePoint();
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
             list<String> existinAccountIds;
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
@@ -136,7 +137,12 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             }
             // @todo add addresses and contact.
             system.debug('VPROK tests dosier = '+ dossier);
-            d.Name = dossier.trade_name_full;//dossier.legal_name;
+            if(dossier.legal_name != null && dossier.legal_name != ''){
+                d.Name = dossier.legal_name;//dossier.legal_name;
+            }else{
+                d.Name = dossier.trade_name_full;//dossier.legal_name;
+            }
+            
             d.Dossier_Number__c = Integer.valueOf(dossier.dossier_number);
             d.Establishment_Number__c = Integer.valueOf(dossier.establishment_number);
             d.Main_Establishment_Number__c = Integer.valueOf(dossier.main_establishment_number);
