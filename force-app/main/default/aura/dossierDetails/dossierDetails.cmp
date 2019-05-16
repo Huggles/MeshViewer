@@ -13,7 +13,7 @@
 
     <force:recordData aura:id="recordHandler" recordId="{!v.recordId}" targetFields="{!v.simpleRecord}" layoutType="FULL"
                       fields="cinfo_sales__Dutch_Business_Dossier__c" mode="EDIT" />
-
+                    
     <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? 'slds-hide' : ''}">
         <!-- <lightning:progressIndicator currentStep="{!v.step}" type="base" hasError="false" variant="base">
             <lightning:progressStep label="Search for companies" value="1"/>

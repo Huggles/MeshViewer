@@ -12,6 +12,7 @@ public with sharing class CompanyDetailsController {
         if(searchParams!=null){
             try{
                 DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
+                
                 Object result = (Object)DutchBusinessService.searchForDossiers(params);
                 AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
                 return output;
@@ -31,12 +32,14 @@ public with sharing class CompanyDetailsController {
         System.debug('getInfo');
         if(dossierNumber!=null){
             try{
+                
                 DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
-                DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId); 
+                //DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId); 
             
                 //return DutchBusinessService.updateAccountDossier(dossier);
-                AuraResponseWrapper output = new AuraResponseWrapper((Object)DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId));
-                return output;
+                //AuraResponseWrapper output = new AuraResponseWrapper((Object)DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId));
+
+                return createUpdateAccount(dossier, accountId);
 
             }catch(BdsException ex){
                 //throw ex; // we dont log bds exceptions, only throwing them further
@@ -99,6 +102,10 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object createUpdateAccount(String dossierObj, String accountId){
         DutchBusinessDto.DutchBusinessGetDossierResponse dossier  = castToDossierDto(dossierObj);
+        return createUpdateAccount(dossier, accountId);           
+    }
+    
+    public static Object createUpdateAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
         try{
 
             DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId);    
