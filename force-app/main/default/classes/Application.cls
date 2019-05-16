@@ -10,7 +10,9 @@ public with sharing class Application {
         }
     }
     public static void rollback(){
-        Database.rollback(sp);
+        if(sp != null){
+            Database.rollback(sp);
+        }
     }
 
     // Configure and create the UnitOfWorkFactory for this Application
