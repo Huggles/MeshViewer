@@ -24,12 +24,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Dutch_Business_Dossier__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Dutch_Business_Dossier__c.Authorized_Share_Capital_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Dutch_Business_Dossier__c.Authorized_Share_Capital__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Dutch_Business_Dossier__c.Chamber_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
