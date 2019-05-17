@@ -137,13 +137,13 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             }
             // @todo add addresses and contact.
             system.debug('VPROK tests dosier = '+ dossier);
-            /* if we will need legal name on name field
+            // if we will need legal name on name field
             if(dossier.legal_name != null && dossier.legal_name != ''){
                 d.Name = dossier.legal_name;//dossier.legal_name;
             }else{
                 d.Name = dossier.trade_name_full;//dossier.legal_name;
-            }*/
-            d.Name = dossier.trade_name_full;
+            }
+            //d.Name = dossier.trade_name_full;
             d.Dossier_Number__c = Integer.valueOf(dossier.dossier_number);
             d.Establishment_Number__c = Integer.valueOf(dossier.establishment_number);
             d.Main_Establishment_Number__c = Integer.valueOf(dossier.main_establishment_number);
