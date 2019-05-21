@@ -38,7 +38,7 @@ public with sharing class CompanyDetailsController {
             
                 //return DutchBusinessService.updateAccountDossier(dossier);
                 //AuraResponseWrapper output = new AuraResponseWrapper((Object)DutchBusinessService.createUpdateAccountAndDossier(dossier, accountId));
-AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier, accountId));
+                AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier, accountId));
                 return output;
 
             }catch(BdsException ex){
@@ -103,7 +103,7 @@ AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier
     }
 
 
-    @AuraEnabled
+    //@AuraEnabled
     public static list<Object>  createUpdateAccount(String dossierObj, String accountId){
         DutchBusinessDto.DutchBusinessGetDossierResponse dossier  = castToDossierDto(dossierObj);
         return createUpdateAccount(dossier, accountId);           
@@ -131,15 +131,21 @@ AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier
         DutchBusinessDto.DutchBusinessGetDossierResponse response = (DutchBusinessDto.DutchBusinessGetDossierResponse)JSON.deserialize(str, DutchBusinessDto.DutchBusinessGetDossierResponse.class); //= new DutchBusinessDto.DutchBusinessGetDossierResponse();
         return response;
     }
-
+/*
     @AuraEnabled
-    public static Id getDossierRecordId(Integer dossierNumber){
+    public static Id getDossierRecordId(Integer dossierNum){
         if (Schema.sObjectType.Dutch_Business_Dossier__c.fields.Id.isAccessible() == false) throw new NoAccessException();
         
-        List<Dutch_Business_Dossier__c> results = [SELECT Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :dossierNumber];
+         = [SELECT Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :dossierNumber];
         if (results.size() > 0) {
+            return results[0].Id;
+        }
+
+        List<Dutch_Business_Dossier__c> results = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<Integer>{dossierNum});
+        if(results.size() >0){
             return results[0].Id;
         }
         return null;
     }
+    */
 }

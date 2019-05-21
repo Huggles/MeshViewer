@@ -3,11 +3,6 @@ Author          : ValerijsProkudins
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
 public with sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
-    
-   //private static WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2PagedResult returnedResults;
-   //private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults; 
-    //public static final Integer paramInt=null;
-    //public static final Boolean Strict_Search = False;
 
     public static Account getDossierAccount(String dossierNum){
         try{
@@ -39,6 +34,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
+
 
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         try{
