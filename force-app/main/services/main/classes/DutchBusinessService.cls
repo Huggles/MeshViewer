@@ -21,10 +21,15 @@ public with sharing class DutchBusinessService {
         return newInstance().getDossier(dossierNumber);
     }
 
-    public static boolean createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+    public static list<Object> createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
         return newInstance().createUpdateAccountAndDossier(dossier, accountId);
     }
-
+    public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
+        return newInstance().createAccountForDossier(accountId, dossier, unitOfWork);
+    }
+    public static list<String> checkForAccountDuplicates(Account acc){
+        return newInstance().checkForAccountDuplicates(acc);
+    }
     public static IDutchBusinessService newInstance() {
         return (IDutchBusinessService) Application.Service.newInstance(IDutchBusinessService.class);
     }

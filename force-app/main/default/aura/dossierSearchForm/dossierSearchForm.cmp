@@ -14,7 +14,7 @@
     
     <lightning:card variant="Narrow" title="Search" >
             <aura:set attribute="title">
-                    <div class="logoContainer"><img src="{!$Resource.compinfologo}"/></div>
+                    <div class="logoContainer"><img src="{!$Resource.AppsolutelyLogo}"/></div>
             </aura:set>
         <aura:set attribute="actions">
             <lightning:button class="{!v.disableSearch == false ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.BDS_Search_Confirm}"

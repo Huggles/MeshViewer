@@ -5,6 +5,7 @@ public interface IDutchBusinessService {
     List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams);
     DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber);
     String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier);
-    boolean createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId);
-    
+    list<Object> createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId);
+    Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
+    list<String> checkForAccountDuplicates(Account acc);
 }

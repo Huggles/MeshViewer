@@ -25,13 +25,15 @@
    onBack : function (component, event, helper) {
        component.set('v.step', '1');
    },
+
    onBack2 : function (component, event, helper) {
     component.set('v.step', '2');
     component.set('v.actionCompleted', false);
 },
+
    onSelect : function(component, event, helper) {
         var params = event.getParams();
-        var responseStub = '{"chamber_number":"30","class_personnel":5,"class_personnel_fulltime":5,"domain_name":"","dossier_number":"67511325","establishment_date":"2016-12-19","establishment_number":"000036043249","founding_date":"2016-12-19","indication_main_establishment":true,"indication_organisation_code":"O","issued_share_capital":1000,"issued_share_capital_currency":"EUR","legal_form_code":"41","legal_form_text":"Besloten Vennootschap met gewone structuur","legal_name":"APPSolutely B.V.","main_establishment_number":"000036043249","mobile_number":"","paid_up_share_capital":1000,"paid_up_share_capital_currency":"EUR","personnel":10,"personnel_fulltime":10,"personnel_reference_date":"2017-10-11","primary_sbi_code":"70221","primary_sbi_code_text":"Organisatie-adviesbureaus","rsin_number":"857039878","secondary_sbi_code1":"78202","secondary_sbi_code1_text":"Uitleenbureaus","secondary_sbi_code2":"","secondary_sbi_code2_text":"","telephone_number":"","trade_name_45":"APPSolutely B.V.","trade_name_full":"APPSolutely B.V.","trade_names":["APPSolutely B.V."]}';
+        //var responseStub = '{"chamber_number":"30","class_personnel":5,"class_personnel_fulltime":5,"domain_name":"","dossier_number":"67511325","establishment_date":"2016-12-19","establishment_number":"000036043249","founding_date":"2016-12-19","indication_main_establishment":true,"indication_organisation_code":"O","issued_share_capital":1000,"issued_share_capital_currency":"EUR","legal_form_code":"41","legal_form_text":"Besloten Vennootschap met gewone structuur","legal_name":"APPSolutely B.V.","main_establishment_number":"000036043249","mobile_number":"","paid_up_share_capital":1000,"paid_up_share_capital_currency":"EUR","personnel":10,"personnel_fulltime":10,"personnel_reference_date":"2017-10-11","primary_sbi_code":"70221","primary_sbi_code_text":"Organisatie-adviesbureaus","rsin_number":"857039878","secondary_sbi_code1":"78202","secondary_sbi_code1_text":"Uitleenbureaus","secondary_sbi_code2":"","secondary_sbi_code2_text":"","telephone_number":"","trade_name_45":"APPSolutely B.V.","trade_name_full":"APPSolutely B.V.","trade_names":["APPSolutely B.V."]}';
         component.set('v.selected', params.DossierNumber);
         helper.callServer(component, 'c.getInfoNoSaving', {dossierNumber: params.DossierNumber}, function(response) {
             helper.handleDossierSelect(component, response);

@@ -10,7 +10,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     //public static final Boolean Strict_Search = False;
 
     public static Account getDossierAccount(String dossierNum){
-        try{    
+        try{
         //TODO: enhance with duplicate logic. mb account is there but has no dossier
             list<Dutch_Business_Dossier__c> dossList = new list<Dutch_Business_Dossier__c>();
 
@@ -40,13 +40,15 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         }
     }
 
-    private static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
+    public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         try{
+            system.debug('inside the method = ' + dossier);
             list<String> existinAccountIds = new list<String>();
             Account acc = new Account();
             acc.Name = dossier.trade_name_full;
             if(accountId == null || AccountId == ''){ // create an account
                 existinAccountIds = checkForAccountDuplicates(acc);
+                system.debug('existinAccountIds = '+ existinAccountIds);
                 if(existinAccountIds.size()>0){ // dup found -> need to update
                     acc.Id = existinAccountIds.get(0);
                     unitOfWork.registerDirty(acc);
@@ -66,7 +68,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     }
 
     // checks for account duplicates. Return a list of IDs if duplicates exist.
-    private static list<String> checkForAccountDuplicates(Account acc){
+    public static list<String> checkForAccountDuplicates(Account acc){
         list<String> result = new list<String>();
         list<Account> accounts = new list<Account>();
         accounts.add(acc);
@@ -82,15 +84,18 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
                 }
             }
         }catch(System.HandledException e){
+            system.debug('exception = '+e);
+            //return result;
             //expected, no dup rules for account are active
         }
         return result;
     }
 
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
-    public static boolean createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+    public static list<Object> createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
         
         try{
+            list<Object> result = new list<Object>();
             //fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
             //Application.getSavePoint();
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
@@ -101,7 +106,9 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             unitOfWork.commitWork();
             //unitOfWork.registerDirty(acc, Account.Dutch_Business_Dossier__c, d); // to update a field on account level once dossier is inserted
             //unitOfWork.commitWork(); // need to wait until circullar references are releassed ion fflib. so far using another method link: https://github.com/financialforcedev/fflib-apex-common/pull/195
-            return true;
+            result.add(d);
+            result.add(acc);
+            return result;
         }catch(BdsException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
@@ -122,6 +129,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
                 for (Integer i = 0; i < dossier.trade_names.size(); i++) {
                     trade_names += dossier.trade_names[i] + '/n';
                 }
+
             }
 
             if (dbds.size() < 1) { // no dossiers found
