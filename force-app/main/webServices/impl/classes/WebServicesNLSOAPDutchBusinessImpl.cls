@@ -89,11 +89,11 @@ public WebServicesNLSOAPDutchBusinessImpl(){
         Map<String, dutchBusinessGetDossierV3ResponseType> response_map_x = new Map<String, dutchBusinessGetDossierV3ResponseType>();
         response_map_x.put('response_x', response_x);
 
-        WebServiceCallout.invoke(
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
                 port,
                 request_x,
                 response_map_x,
-                new String[]{endpoint_x,
+                new String[]{port.endpoint_x,
                         'https://ws1.webservices.nl/soap_doclit.php/dutchBusinessGetDossierV3',
                         'http://www.webservices.nl/soap/',
                         'dutchBusinessGetDossierV3',
@@ -116,21 +116,30 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.numpages = response.paging.numpages;
             result.numresults = response.paging.numresults;
             result.maxresults = response.paging.maxresults;
-            if(response.results == null){
+            system.debug(response);
+            system.debug(response.results);
+            system.debug(response.results.item);
+            if(response.results != null){
+                
+                if(response.results.item != null) {
+                    for(DutchBusinessReferenceV2 item: response.results.item){
+                            DutchBusinessDto.DutchBusinessReference restItem = new DutchBusinessDto.DutchBusinessReference();
+                            restItem.dossier_number = item.dossier_number ;
+                            restItem.establishment_number = item.establishment_number ;
+                            restItem.name = item.name ;
+                            restItem.match_type = item.match_type ;
+                            restItem.establishment_city = item.establishment_city ;
+                            restItem.establishment_street = item.establishment_street ;
+                            restItem.correspondence_city = item.correspondence_city ;
+                            restItem.correspondence_street = item.correspondence_street ;
+                            restItem.indication_economically_active =  item.indication_economically_active ;
+                            result.items.add(restItem);
+                    }
+                }else{
+                    // TODO: HANDLE EMPTY SEARCH exceptions.
+                }
+            }else{
                 // TODO: HANDLE EMPTY SEARCH exceptions.
-            }
-            for(DutchBusinessReferenceV2 item: response.results.item){
-                    DutchBusinessDto.DutchBusinessReference restItem = new DutchBusinessDto.DutchBusinessReference();
-                    restItem.dossier_number = item.dossier_number ;
-                    restItem.establishment_number = item.establishment_number ;
-                    restItem.name = item.name ;
-                    restItem.match_type = item.match_type ;
-                    restItem.establishment_city = item.establishment_city ;
-                    restItem.establishment_street = item.establishment_street ;
-                    restItem.correspondence_city = item.correspondence_city ;
-                    restItem.correspondence_street = item.correspondence_street ;
-                    restItem.indication_economically_active =  item.indication_economically_active ;
-                    result.items.add(restItem);
             }
         return result;
             
@@ -160,11 +169,10 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             request_x.page = page;
             Map<String, dutchBusinessSearchParametersV2ResponseType> response_map_x = new Map<String, dutchBusinessSearchParametersV2ResponseType>();
             response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-                    port,
+            ExecuteCallout(port, // executing using a wrapper method to support fallbackserver url
                     request_x,
                     response_map_x,
-                    new String[]{endpoint_x,
+                    new String[]{port.endpoint_x,
                             'https://ws1.webservices.nl/soap_doclit.php/dutchBusinessSearchParametersV2',
                             'http://www.webservices.nl/soap/',
                             'dutchBusinessSearchParametersV2',
@@ -172,11 +180,24 @@ public WebServicesNLSOAPDutchBusinessImpl(){
                             'dutchBusinessSearchParametersV2Response',
                             'WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessSearchParametersV2ResponseType'}
             );
+            /*WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
+                    port,
+                    request_x,
+                    response_map_x,
+                    new String[]{port.endpoint_x,
+                            'https://ws1.webservices.nl/soap_doclit.php/dutchBusinessSearchParametersV2',
+                            'http://www.webservices.nl/soap/',
+                            'dutchBusinessSearchParametersV2',
+                            'http://www.webservices.nl/soap/',
+                            'dutchBusinessSearchParametersV2Response',
+                            'WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessSearchParametersV2ResponseType'}
+            );*/
+            
             response_x = response_map_x.get('response_x');
-            //DutchBusinessDto result = new DutchBusinessDto();
             return response_x.out;
-            //return result;
+            
         }
+         
 /*
         public DutchBusinessLegalEntityData dutchBusinessGetLegalEntity(String dossier_number) {
             dutchBusinessGetLegalEntityRequestType request_x = new dutchBusinessGetLegalEntityRequestType();

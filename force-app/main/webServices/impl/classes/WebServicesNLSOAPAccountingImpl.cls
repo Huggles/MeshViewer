@@ -34,11 +34,11 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         userEditBalanceResponseType response_x;
         Map<String, userEditBalanceResponseType> response_map_x = new Map<String, userEditBalanceResponseType>();
         response_map_x.put('response_x', response_x);
-        WebServiceCallout.invoke(
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
             port,
             request_x,
             response_map_x,
-            new String[]{endpoint_x,
+            new String[]{port.endpoint_x,
             'https://ws1.webservices.nl/soap_doclit.php/userEditBalance',
             'http://www.webservices.nl/soap/',
             'userEditBalance',
@@ -70,11 +70,11 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         userViewBalanceResponseType response_x;
         Map<String, userViewBalanceResponseType> response_map_x = new Map<String, userViewBalanceResponseType>();
         response_map_x.put('response_x', response_x);
-        WebServiceCallout.invoke(
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
             port,
             request_x,
             response_map_x,
-            new String[]{endpoint_x,
+            new String[]{port.endpoint_x,
             'https://ws1.webservices.nl/soap_doclit.php/userViewBalance',
             'http://www.webservices.nl/soap/',
             'userViewBalance',
@@ -139,11 +139,11 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         userCreateV2ResponseType response_x;
         Map<String, userCreateV2ResponseType> response_map_x = new Map<String, userCreateV2ResponseType>();
         response_map_x.put('response_x', response_x);
-        WebServiceCallout.invoke(
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
             port,
             request_x,
             response_map_x,
-            new String[]{endpoint_x,
+            new String[]{port.endpoint_x,
             'https://ws1.webservices.nl/soap_doclit.php/userCreateV2',
             'http://www.webservices.nl/soap/',
             'userCreateV2',

@@ -3,7 +3,7 @@ Author          : ValerijsProkudins
 Description     : Company info baseline integration implementation class. NB: it extends the baseline implementation type class!
 ******************************************************************************************/
 public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes implements IWebservicesNlSOAP{
-    public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; //TODO: mover to other place?
+    //public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; //TODO: mover to other place?
     //public Map<String,String> inputHttpHeaders_x;
     //public Map<String,String> outputHttpHeaders_x;
     //public String clientCertName_x;
@@ -19,9 +19,10 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
 
     public WebservicesNlSOAPImpl(){
         //port = new Webservices_nlPort('User');
+        //this.endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php';
     }
     public class Webservices_nlPort {
-        public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php';
+        public String endpoint_x;// = 'https://ws1.webservices.nl:443/soap_doclit.php';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -35,6 +36,16 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
         private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/','wwwWebservicesNlSoap'}; // wwwWebservicesNlSoap is from the old WS file name. Might need to change if something breaks
         public Webservices_nlPort(String scope){ // scope is either user or admin
             HeaderLogin = getAuthentication(scope);
+            endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; // TODO: move to CMT
+        }
+        /*public Webservices_nlPort(String scope, boolean fallback){ // scope is either user or admin
+            HeaderLogin = getAuthentication(scope);
+            system.debug('************ FALLBACK SERVER USED');
+            //this.endpoint_x = 'https://ws2.webservices.nl:443/soap_doclit.php'; // fallbackURL ws2.webservices.nl
+            //endpoint_x = 'https://ws2.webservices.nl:443/soap_doclit.php'; // fallbackURL ws2.webservices.nl
+        }*/
+        public void useFallback(){
+            endpoint_x = 'https://ws2.webservices.nl:443/soap_doclit.php';
         }
         public HeaderLoginType getAuthentication(String scope){
             HeaderLoginType HeaderLogin;
@@ -61,6 +72,30 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
             return HeaderLogin;
             
         }
+    }
+
+
+
+    public void ExecuteCallout(Webservices_nlPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray){
+        try{
+            WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
+                    port,
+                    request_x,
+                    response_map_x,
+                    infoArray
+            );
+        }catch(CalloutException e){
+            system.debug('*********** Using the fallback server port = '+ port);
+            port.useFallback();
+            infoArray.set(0, port.endpoint_x);
+system.debug('*********** Using the fallback server port222 = '+ port);
+            WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
+                    port,
+                    request_x,
+                    response_map_x,
+                    infoArray
+            );
+        }// if fallback fails we roll up the callback exception???
     }
 
 
