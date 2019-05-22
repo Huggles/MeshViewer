@@ -1,3 +1,4 @@
+
 public with sharing class DutchBusinessDossierSelector extends fflib_SObjectSelector implements IDutchBusinessDossierSelector  {
 
     public DutchBusinessDossierSelector() {

@@ -13,7 +13,7 @@ public with sharing class AccountSelector extends fflib_SObjectSelector implemen
         return new List<Schema.SObjectField>{
                 Account.Id,
                 Account.Name,
-                account.Dutch_Business_Dossier__c
+                Account.Dutch_Business_Dossier__c
         };
     }
 
