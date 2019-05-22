@@ -19,7 +19,10 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.legal_name = response.legal_name;
             result.dossier_number = response.dossier_number;
             result.establishment_number = response.establishment_number;
-            result.main_establishment_number = response.main_establishment_number;
+            if(response.main_establishment_number != null){ // TODO: make a special faultless method for this
+                result.main_establishment_number = response.main_establishment_number;
+            }
+            
             result.indication_main_establishment = response.indication_main_establishment ;
             result.rsin_number = response.rsin_number ;
             result.chamber_number = response.chamber_number ;

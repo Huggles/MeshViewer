@@ -4,6 +4,30 @@ Description     : Service layer for DutchBusiness webservice calls and data proc
 ******************************************************************************************/
 public with sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
 
+    //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
+    public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+        
+        try{
+            list<Object> result = new list<Object>();
+            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
+            list<String> existinAccountIds;
+            Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
+            Dutch_Business_Dossier__c d = saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
+            //unitOfWork.registerRelationship(acc, Account.Dutch_Business_Dossier__c, d);
+            unitOfWork.commitWork();
+            //unitOfWork.registerDirty(acc, Account.Dutch_Business_Dossier__c, d); // to update a field on account level once dossier is inserted
+            //unitOfWork.commitWork(); // need to wait until circullar references are releassed ion fflib. so far using another method link: https://github.com/financialforcedev/fflib-apex-common/pull/195
+            result.add(d);
+            result.add(acc);
+            return result;
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+        }
+    }
+
     public static Account getDossierAccount(String dossierNum){
         try{
         //TODO: enhance with duplicate logic. mb account is there but has no dossier
@@ -11,7 +35,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
             //set<Integer> dossNumSet = new set<Integer>();
             //dossNumSet.add(Integer.valueOf(dossierNum));
-            dossList = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<Integer>{Integer.valueOf(dossierNum)});
+            dossList = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossierNum});
             //dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
             Account acc;
             list<Account> accList = new list<Account>();
@@ -38,7 +62,6 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         try{
-            system.debug('inside the method = ' + dossier);
             list<String> existinAccountIds = new list<String>();
             Account acc = new Account();
             acc.Name = dossier.trade_name_full;
@@ -87,36 +110,17 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         return result;
     }
 
-    //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
-    public static list<Object> createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
-        
-        try{
-            list<Object> result = new list<Object>();
-            //fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
-            //Application.getSavePoint();
-            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
-            list<String> existinAccountIds;
-            Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
-            Dutch_Business_Dossier__c d = saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
-            //unitOfWork.registerRelationship(acc, Account.Dutch_Business_Dossier__c, d);
-            unitOfWork.commitWork();
-            //unitOfWork.registerDirty(acc, Account.Dutch_Business_Dossier__c, d); // to update a field on account level once dossier is inserted
-            //unitOfWork.commitWork(); // need to wait until circullar references are releassed ion fflib. so far using another method link: https://github.com/financialforcedev/fflib-apex-common/pull/195
-            result.add(d);
-            result.add(acc);
-            return result;
-        }catch(BdsException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
-    }
+
     
     public static Dutch_Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork) {
             boolean dossierExists = false;
             // TODO: move to selector
-            List<Dutch_Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
+            //List<Dutch_Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
+            
+            list<Dutch_Business_Dossier__c> dbds = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});
+           
+           
+            
             Dutch_Business_Dossier__c d;
 
             String trade_names = '';
@@ -148,7 +152,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
                 d.Name = dossier.trade_name_full;//dossier.legal_name;
             }
             //d.Name = dossier.trade_name_full;
-            d.Dossier_Number__c = Integer.valueOf(dossier.dossier_number);
+            d.Dossier_Number__c = dossier.dossier_number;
             d.Establishment_Number__c = Integer.valueOf(dossier.establishment_number);
             d.Main_Establishment_Number__c = Integer.valueOf(dossier.main_establishment_number);
             d.Indication_Main_Establishment__c = Boolean.valueOf(dossier.indication_main_establishment);
@@ -211,13 +215,6 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             DutchBusinessDto.DutchBusinessSearchParametersResponse returnedResults = service.dutchBusinessSearchParameters(searchParams);
             if(returnedResults != null && returnedResults.items != null && returnedResults.items.size()>0){
                 searchResults=returnedResults.items;
-                system.debug('returnedResults = ' + returnedResults);
-                system.debug('returnedResults.items = ' + returnedResults.items.size());
-
-            }
-            else{
-                System.debug('no items');
-                // searchResults=returnedResults;
             }
             //return parsed result
             return searchResults;
@@ -250,8 +247,8 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     // was void before. not tyoo logical to return dossier Id from this method. Cut the corner to both get dossierId for  controller and Not research how to handle void methods  with this framework
     public static String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
         try{
-            list<Dutch_Business_Dossier__c> dossierList = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
-            List<Account> accts = [SELECT Id, Dutch_Business_Dossier__c FROM Account WHERE Id = :dossierList.get(0).Account__c];
+            list<Dutch_Business_Dossier__c> dossierList = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossierNum});//[SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
+            List<Account> accts = AccountSelector.newInstance().selectById(new set<Id>{dossierList.get(0).Account__c});//[SELECT Id, Dutch_Business_Dossier__c FROM Account WHERE Id = :dossierList.get(0).Account__c];
             if (accts.size() == 1) {
                 accts[0].Dutch_Business_Dossier__c = dossierList.get(0).Id;
                 update accts;

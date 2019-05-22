@@ -21,8 +21,8 @@ public with sharing class DutchBusinessService {
         return newInstance().getDossier(dossierNumber);
     }
 
-    public static list<Object> createUpdateAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
-        return newInstance().createUpdateAccountAndDossier(dossier, accountId);
+    public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+        return newInstance().upsertAccountAndDossier(dossier, accountId);
     }
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         return newInstance().createAccountForDossier(accountId, dossier, unitOfWork);
