@@ -75,12 +75,13 @@ public with sharing class CompanyDetailsController {
     }
 
 
+
     //@AuraEnabled
     /*public static list<Object>  createUpdateAccount(String dossierObj, String accountId){
         DutchBusinessDto.DutchBusinessGetDossierResponse dossier  = castToDossierDto(dossierObj);
         return createUpdateAccount(dossier, accountId);           
     }*/
-    
+     
     public static list<Object> createUpdateAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
             
             list<Object> result = new list<object>();
