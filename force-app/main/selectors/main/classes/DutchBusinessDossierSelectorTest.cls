@@ -5,7 +5,7 @@ public with sharing class DutchBusinessDossierSelectorTest {
     @isTest
     static void testGetInstance() {
         Object o = DutchBusinessDossierSelector.newInstance();
-        System.assert(o instanceof AccoDutchBusinessDossierSelectoruntSelector);
+        System.assert(o instanceof DutchBusinessDossierSelector);
     }
     @isTest
     static void testGetSObjectFields() {
@@ -23,6 +23,7 @@ public with sharing class DutchBusinessDossierSelectorTest {
             }));
         }
         Test.stopTest();
+        
 
     }
 
