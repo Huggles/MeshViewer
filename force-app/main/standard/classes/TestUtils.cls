@@ -67,6 +67,7 @@ public class TestUtils {
         Id permissionSetId = permissionSetIdsByName.get(permissionSetName);
         if (permissionSetId == null) {
             PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :permissionSetName LIMIT 1];
+            system.debug('permissionSet = '+ permissionSet + 'user = ' + u.Id + ' ' + u);
             permissionSetIdsByName.put(permissionSetName, permissionSet.Id);
             permissionSetId = permissionSet.Id;
         }
@@ -100,3 +101,4 @@ public class TestUtils {
     }
 
 }
+
