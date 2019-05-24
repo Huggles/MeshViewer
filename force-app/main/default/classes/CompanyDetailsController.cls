@@ -9,6 +9,7 @@ public with sharing class CompanyDetailsController {
     //private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults;
     @AuraEnabled
     public static Object search(String searchParams){
+        system.debug('searchParams = '+searchParams);
         if(searchParams!=null){
             try{
                 DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
@@ -90,9 +91,9 @@ public with sharing class CompanyDetailsController {
             //AuraResponseWrapper output = new AuraResponseWrapper(result);
             return result;
     }
-    private static DutchBusinessDto.DutchBusinessGetDossierResponse castToDossierDto(String str){
+   /* private static DutchBusinessDto.DutchBusinessGetDossierResponse castToDossierDto(String str){
         DutchBusinessDto.DutchBusinessGetDossierResponse response = (DutchBusinessDto.DutchBusinessGetDossierResponse)JSON.deserialize(str, DutchBusinessDto.DutchBusinessGetDossierResponse.class); //= new DutchBusinessDto.DutchBusinessGetDossierResponse();
         return response;
-    }
+    }*/
 
 }
