@@ -11,7 +11,7 @@ public with sharing class DutchBusinessDossierSelectorTest {
     static void testGetSObjectFields() {
         DutchBusinessDossierSelector selector = (DutchBusinessDossierSelector) DutchBusinessDossierSelector.newInstance();
         Test.startTest();
-        //System.runAs(TestUtils.getBDSUser()) { didnt work. need to check with jaap how testutils work
+        System.runAs(TestUtils.getBDSUser()) { //didnt work. need to check with jaap how testutils work
             List<Schema.SObjectField> fields = selector.getSObjectFieldList();
             Set<Schema.SObjectField> fieldsAsSet = new Set<Schema.SObjectField>(fields);
             System.assert(fieldsAsSet.containsAll(new List<Schema.SObjectField>{
@@ -21,7 +21,7 @@ public with sharing class DutchBusinessDossierSelectorTest {
                 Dutch_Business_Dossier__c.Account__r.Id,
                 Dutch_Business_Dossier__c.Account__r.name
             }));
-        //}
+        }
         Test.stopTest();
         
 
@@ -31,10 +31,10 @@ public with sharing class DutchBusinessDossierSelectorTest {
     static void testGetSObjectType() {
         DutchBusinessDossierSelector selector = (DutchBusinessDossierSelector) DutchBusinessDossierSelector.newInstance();
         Test.startTest();
-        //System.runAs(TestUtils.getBDSUser()) {didnt work. need to check with jaap how testutils work
+        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
             Schema.SObjectType tpe = selector.getSObjectType();
             System.assertEquals(Dutch_Business_Dossier__c.sObjectType, tpe);
-        //}
+        }
         Test.stopTest();
 
     }
@@ -54,11 +54,11 @@ public with sharing class DutchBusinessDossierSelectorTest {
         
 
         Test.startTest();
-        //System.runAs(TestUtils.getBDSUser()) {didnt work. need to check with jaap how testutils work
+        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
             IDutchBusinessDossierSelector selector = DutchBusinessDossierSelector.newInstance();
             List<Dutch_Business_Dossier__c> dossiersReturned = selector.selectByDossierNumber(dossierNumSet);
             System.assertEquals(10, dossiersReturned.size());
-        //}
+        }
         Test.stopTest();
 
 
