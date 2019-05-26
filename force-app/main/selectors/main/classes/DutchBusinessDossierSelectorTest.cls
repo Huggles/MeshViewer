@@ -1,4 +1,7 @@
-@isTest // Dutch_Business_Dossier__c
+/****************************************************************************************
+Author          : ValerijsProkudins
+******************************************************************************************/
+@isTest
 public with sharing class DutchBusinessDossierSelectorTest {
 
     
