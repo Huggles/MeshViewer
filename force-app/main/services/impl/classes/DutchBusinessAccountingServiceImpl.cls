@@ -35,7 +35,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             return userResp;
         }catch(Exception e){
             ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
-            //return null; // never happens hence logging throws exceptions
+            return null; // never happens hence logging throws exceptions
         }
     }
 
