@@ -149,9 +149,6 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             //d.Name = dossier.trade_name_full;
             d.Dossier_Number__c = dossier.dossier_number;
             d.Establishment_Number__c = convertToInteger(dossier.establishment_number);
-            string crap;
-            d.Establishment_Number__c = integer.valueOf(crap);
-            
             d.Main_Establishment_Number__c = convertToInteger(dossier.main_establishment_number);
             d.Indication_Main_Establishment__c = dossier.indication_main_establishment; //convertToBoolean(dossier.indication_main_establishment);
             d.Rsin_Number__c = convertToInteger(dossier.rsin_number);
