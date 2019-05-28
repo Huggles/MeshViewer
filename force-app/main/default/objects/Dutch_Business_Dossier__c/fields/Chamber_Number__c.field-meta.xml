@@ -25,64 +25,64 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>01	Noord Nederland</fullName>
+                <fullName>01</fullName>
                 <default>false</default>
-                <label>01	Noord Nederland</label>
+                <label>Noord Nederland</label>
             </value>
             <value>
-                <fullName>08	Oost Nederland</fullName>
+                <fullName>08</fullName>
                 <default>false</default>
-                <label>08	Oost Nederland</label>
+                <label>Oost Nederland</label>
             </value>
             <value>
-                <fullName>09	Centraal Gelderland</fullName>
+                <fullName>09</fullName>
                 <default>false</default>
-                <label>09	Centraal Gelderland</label>
+                <label>Centraal Gelderland</label>
             </value>
             <value>
-                <fullName>14	Limburg</fullName>
+                <fullName>14</fullName>
                 <default>false</default>
-                <label>14	Limburg</label>
+                <label>Limburg</label>
             </value>
             <value>
-                <fullName>17	Brabant</fullName>
+                <fullName>17</fullName>
                 <default>false</default>
-                <label>17	Brabant</label>
+                <label>Brabant</label>
             </value>
             <value>
-                <fullName>20	Zuid West Nederland</fullName>
+                <fullName>20</fullName>
                 <default>false</default>
-                <label>20	Zuid West Nederland</label>
+                <label>Zuid West Nederland</label>
             </value>
             <value>
-                <fullName>24	Rotterdam</fullName>
+                <fullName>24</fullName>
                 <default>false</default>
-                <label>24	Rotterdam</label>
+                <label>Rotterdam</label>
             </value>
             <value>
-                <fullName>27	Den Haag</fullName>
+                <fullName>27</fullName>
                 <default>false</default>
-                <label>27	Den Haag</label>
+                <label>Den Haag</label>
             </value>
             <value>
-                <fullName>30	Midden Nederland</fullName>
+                <fullName>30</fullName>
                 <default>false</default>
-                <label>30	Midden Nederland</label>
+                <label>Midden Nederland</label>
             </value>
             <value>
-                <fullName>32	Gooi-, Eem- en Flevoland</fullName>
+                <fullName>32</fullName>
                 <default>false</default>
-                <label>32	Gooi-, Eem- en Flevoland</label>
+                <label>Gooi-, Eem- en Flevoland</label>
             </value>
             <value>
-                <fullName>34	Amsterdam</fullName>
+                <fullName>34</fullName>
                 <default>false</default>
-                <label>34	Amsterdam</label>
+                <label>Amsterdam</label>
             </value>
             <value>
-                <fullName>37	Noordwest-Holland</fullName>
+                <fullName>37</fullName>
                 <default>false</default>
-                <label>37	Noordwest-Holland</label>
+                <label>Noordwest-Holland</label>
             </value>
         </valueSetDefinition>
     </valueSet>

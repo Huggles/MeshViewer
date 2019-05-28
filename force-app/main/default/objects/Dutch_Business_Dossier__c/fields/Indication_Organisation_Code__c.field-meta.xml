@@ -16,24 +16,24 @@ K	Church community (Dutch: ‘Kerkgenootschap’)
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>O	Business</fullName>
+                <fullName>V</fullName>
                 <default>false</default>
-                <label>O	Business</label>
+                <label>Association</label>
             </value>
             <value>
-                <fullName>V	Association</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
-                <label>V	Association</label>
+                <label>Non-profit organisation</label>
             </value>
             <value>
-                <fullName>S	Non-profit organisation</fullName>
+                <fullName>K</fullName>
                 <default>false</default>
-                <label>S	Non-profit organisation</label>
+                <label>Church community</label>
             </value>
             <value>
-                <fullName>K	Church community</fullName>
+                <fullName>O</fullName>
                 <default>false</default>
-                <label>K	Church community</label>
+                <label>Business</label>
             </value>
         </valueSetDefinition>
     </valueSet>

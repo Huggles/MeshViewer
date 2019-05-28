@@ -10,14 +10,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>m	Male</fullName>
+                <fullName>m</fullName>
                 <default>false</default>
-                <label>m	Male</label>
+                <label>Male</label>
             </value>
             <value>
-                <fullName>f	Female</fullName>
+                <fullName>f</fullName>
                 <default>false</default>
-                <label>f	Female</label>
+                <label>Female</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -165,25 +165,6 @@ public with sharing class DutchBusinessService {
                 }
             }
 
-            Map<Integer, String> chamberNumberPickListValuesMap = new Map<Integer, String>();
-            for( Schema.PicklistEntry pickListVal : Dutch_Business_Dossier__c.Chamber_Number__c.getDescribe().getPicklistValues()){
-                String a = String.valueOf(pickListVal.getLabel()).substring(0,2);
-                chamberNumberPickListValuesMap.put(Integer.valueOf(a),pickListVal.getLabel());
-            }
-            System.debug(chamberNumberPickListValuesMap);
-
-            Map<String, String> orgCodePickListValuesMap = new Map<String, String>();
-            for( Schema.PicklistEntry pickListVal : Dutch_Business_Dossier__c.Indication_Organisation_Code__c.getDescribe().getPicklistValues()){
-                String a = String.valueOf(pickListVal.getLabel()).substring(0,1);
-                orgCodePickListValuesMap.put(a,pickListVal.getLabel());
-            }
-
-            Map<String, String> genderPickListValuesMap = new Map<String, String>();
-            for( Schema.PicklistEntry pickListVal : Dutch_Business_Dossier__c.Indication_Organisation_Code__c.getDescribe().getPicklistValues()){
-                String a = String.valueOf(pickListVal.getLabel()).substring(0,1);
-                genderPickListValuesMap.put(a,pickListVal.getLabel());
-            }
-
             // @todo add addresses and contact.
             system.debug('VPROK tests dosier = '+ dossier);
             d.Name = dossier.legal_name;
@@ -192,10 +173,10 @@ public with sharing class DutchBusinessService {
             d.Main_Establishment_Number__c = Integer.valueOf(dossier.main_establishment_number);
             d.Indication_Main_Establishment__c = Boolean.valueOf(dossier.indication_main_establishment);
             if(dossier.rsin_number != null){d.Rsin_Number__c = Integer.valueOf(dossier.rsin_number);}
-            if(dossier.chamber_number != null){d.Chamber_Number__c = chamberNumberPickListValuesMap.get(Integer.valueOf(dossier.chamber_number));}
+            if(dossier.chamber_number != null){d.Chamber_Number__c = dossier.chamber_number;}
             if(dossier.legal_form_code != null){d.Legal_Form_Code__c = Integer.valueOf(dossier.legal_form_code);}
             if(dossier.legal_form_text != null){d.Legal_Form_Text__c = String.valueOf(dossier.legal_form_text);}
-            if(dossier.indication_organisation_code != null){d.Indication_Organisation_Code__c = orgCodePickListValuesMap.get(String.valueOf(dossier.indication_organisation_code));}
+            if(dossier.indication_organisation_code != null){d.Indication_Organisation_Code__c = dossier.indication_organisation_code;}
             d.Trade_Name_45__c = dossier.trade_name_45;
             d.Trade_Name_Full__c = dossier.trade_name_full;
             d.Trade_Names__c = trade_names;
@@ -235,7 +216,7 @@ public with sharing class DutchBusinessService {
             d.Contact_Surname__c = dossier.contact_surname;
             d.Contact_Title1__c = dossier.contact_title1;
             d.Contact_Title2__c = dossier.contact_title2;
-            if(dossier.contact_gender != null) {d.Contact_Gender__c = genderPickListValuesMap.get(dossier.contact_gender);}
+            if(dossier.contact_gender != null) {d.Contact_Gender__c = dossier.contact_gender;}
             d.Correspondence_Address__c = dossier.correspondence_address_official_address; //I think this should be combination of all correspondence_address_xxx
             d.Establishment_Address__c = dossier.establishment_address_official_address; //combination of all establishment_address_xxx
             if (dossier.indication_bankruptcy != null) { d.Indication_Bankruptcy__c = dossier.indication_bankruptcy;}
