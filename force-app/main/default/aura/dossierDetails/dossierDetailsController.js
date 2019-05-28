@@ -22,7 +22,7 @@
     onSelect : function(component, event, helper) {
         var params = event.getParams();
         component.set('v.selected', params.DossierNumber);
-        helper.callServer(component, 'c.getInfo', {dossierNumber: params.DossierNumber, accountId: component.get('v.recordId')}, function(response) {
+        helper.callServer(component, 'c.createDossier', {dossierNumber: params.DossierNumber, accountId: component.get('v.recordId')}, function(response) {
             helper.handleCompanyData(component);
         });//, true);
     },

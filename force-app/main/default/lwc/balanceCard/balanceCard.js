@@ -35,6 +35,7 @@ export default class balanceCard extends LightningElement {
 
     addBudged(event){
         addBudged({Amount: this.amountToAdd}).then(result => {
+            console.log(result);
             console.log('SUCCESS123');
             const evt = new ShowToastEvent({
                 title: 'Success',

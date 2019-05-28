@@ -38,6 +38,10 @@
                 <behavior>Edit</behavior>
                 <field>Annual_Financial_Statement_Summary__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Chamber_Code__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

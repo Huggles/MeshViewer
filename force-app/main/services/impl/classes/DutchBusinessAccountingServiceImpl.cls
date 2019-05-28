@@ -2,23 +2,25 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
 
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
     public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username){
+
+        DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
+        input.nickname = username;
+        input.accountId = 13972; //TODO: get the account ID from Custom Settings or CMT
+        input.password = ''; // we keep this empty so CompanyInfo will generate a new password
+        input.email = 'valerijs.prokudins@appsolutely.nl'; // TODO get the email address from custom setting or CMT
+        input.companyname = 'AppsolutelysCustomer'; // TODO: understand how to get the poroper value? Company information obj?
+        input.address = '';
+        input.contactname = ''; //Take from the current user?
+        input.contactemail = input.email; // take from the current user?
+        input.telephone = '';
+        input.fax = ''; // pretty sure it is not needed
+        input.clientcode = ''; // TODO: undertannvb  ds what is this
+        input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
+        list<Integer> lst = new list<Integer>();
+        lst.add(23);// TODO: this will be implemented sepererately and will be configurable
+        input.usergroups = lst;
         try{
-            DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
-            input.nickname = username;
-            input.accountId = 13972; //TODO: get the account ID from Custom Settings or CMT
-            input.password = ''; // we keep this empty so CompanyInfo will generate a new password
-            input.email = 'valerijs.prokudins@appsolutely.nl'; // TODO get the email address from custom setting or CMT
-            input.companyname = 'AppsolutelysCustomer'; // TODO: understand how to get the poroper value? Company information obj?
-            input.address = '';
-            input.contactname = ''; //Take from the current user?
-            input.contactemail = input.email; // take from the current user?
-            input.telephone = '';
-            input.fax = ''; // pretty sure it is not needed
-            input.clientcode = ''; // TODO: undertannvb  ds what is this
-            input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
-            list<Integer> lst = new list<Integer>();
-            lst.add(23);// TODO: this will be implemented sepererately and will be configurable
-            input.usergroups = lst;
+            //ErrorLogUtil.logMessage(input);
             DutchBusinessAccountingDto.userCreateResponseDto userResp = createCIUser(input);
             addTrialToCIUser(userResp);
             Credentials__c cs = Credentials__c.getOrgDefaults();
@@ -31,8 +33,8 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         }catch(BdsException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            ErrorLogUtil.logException(ex, input); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -59,7 +61,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     } 
 
@@ -72,7 +74,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -89,7 +91,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
     }
@@ -102,7 +104,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
     }
@@ -119,7 +121,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 }

@@ -117,11 +117,13 @@ public virtual class fflib_SObjectUnitOfWork
      */
     public fflib_SObjectUnitOfWork(List<Schema.SObjectType> sObjectTypes)
     {
+        
         this(sObjectTypes,new SimpleDML());
     }
 
     public fflib_SObjectUnitOfWork(List<Schema.SObjectType> sObjectTypes, IDML dml)
     {
+        Application.getSavePoint();
         m_sObjectTypes = sObjectTypes.clone();
 
         for (Schema.SObjectType sObjectType : m_sObjectTypes)

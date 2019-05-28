@@ -28,10 +28,15 @@
             var state = response.getState();
             console.log(state);
             if (state === "SUCCESS") {
-                console.log('2testtetst');
-                console.log(response.getReturnValue());
-                console.log(response);
-                callback(response.getReturnValue());
+                if(response.getReturnValue().state === 'SUCCESS'){
+                    console.log('SUCCESS IN WRAPPER');
+                    callback(response.getReturnValue().response);
+                }else if(response.getReturnValue().state === 'ERROR'){
+                    console.log('SUCCESS IN WRAPPER');
+                    _this.showToast(component, $A.get('$Label.c.BDS_Error'), response.getReturnValue().errorMsg, 'error');
+                }
+               
+                //callback(response.getReturnValue());
             }
             else if (state === "INCOMPLETE") {
                 _this.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.BDS_Error_Incomplete'), 'error');
@@ -99,22 +104,31 @@
      * @param {*} component 
      */
     handleDossierSelect : function(component, response) {
+        console.log('hello!');
         this.showToast(component, $A.get('$Label.c.BDS_Success'), $A.get('$Label.c.BDS_Sync_Success'), 'success');
         component.set('v.dossier', response[0]);
-        component.set('v.existingAccountId', response[1]);
-        component.set('v.existingAccount', response[2]);
-        if(response[2]){
-            component.set('v.accountExists', true);
-        }
-        console.log('dossier');
+        component.set('v.existingAccountId', response[1].Id);
+        //component.set('v.existingAccount', response[2]);
+        //if(response[2]){
+        //    component.set('v.accountExists', true);
+        //}
+        console.log('dossier____');
         console.log(component.get('v.dossier'));
-        console.log('accid');
+        console.log(JSON.parse(JSON.stringify(response[1])));
+        console.log('acc_____');
         console.log(component.get('v.existingAccountId'));
-        console.log('acc');
-        console.log(component.get('v.existingAccount'));
-        console.log('accExist?');
-        console.log(component.get('v.accountExists'));
-        component.set('v.step', '3');
+        console.log(JSON.parse(JSON.stringify(response[1])));
+        console.log('almost end________')
+        console.log(response[1]);
+        //component.set('v.step', '3');
+        var navEvt = $A.get("e.force:navigateToSObject");
+        navEvt.setParams({
+          "recordId": response[1].Id,
+          "slideDevName": "related"
+        });
+        navEvt.fire();
+        var dismissActionPanel = $A.get("e.force:closeQuickAction"); 
+        dismissActionPanel.fire(); 
 
     },
     handlecreateUpdateAccount : function(component, response){

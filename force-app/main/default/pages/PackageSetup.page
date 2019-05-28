@@ -1,0 +1,20 @@
+<apex:page>
+  <apex:includeLightning />
+  <div id="container">
+</div>
+
+<script>
+$Lightning.use('cinfo_sales:PackageConfigApp', function()
+{
+    $Lightning.createComponent(
+        'cinfo_sales:configApp',
+        {},
+        'container',
+        function(cmp)
+        {
+        console.log('component created');
+        }
+    );
+});
+</script>
+</apex:page>

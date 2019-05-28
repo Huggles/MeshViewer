@@ -4,10 +4,9 @@
     <description>The Chamber of Commerce number, consisting of 8 numbers (e.g., 00123456).  This number is unique and will not change as long as the organisation exists.  Subsidiaries (‘Nevenvestigingen’) of the organisation are registered using the same dossier number.</description>
     <externalId>true</externalId>
     <label>Dossier Number</label>
-    <precision>8</precision>
-    <required>true</required>
-    <scale>0</scale>
+    <length>8</length>
+    <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
-    <unique>true</unique>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

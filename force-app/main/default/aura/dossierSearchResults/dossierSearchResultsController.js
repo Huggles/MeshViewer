@@ -11,7 +11,7 @@
         var results = component.find('searchResult');
         for (var i = 0; i < results.length; i++) {
             if (results[i].get('v.result').dossier_number !== params.DossierNumber) {
-                results[i].set('v.icon', 'action:new');
+                results[i].set('v.icon', 'action:record');
             }
         }
     },

@@ -2,7 +2,7 @@
     <aura:attribute name="result" type="object" access="public"/>
     <aura:attribute name="style" type="string" default="slds-tile slds-media" />
     <aura:attribute name="variant" type="string" default="" />
-    <aura:attribute name="icon" type="string" default="action:new" access="public"/>
+    <aura:attribute name="icon" type="string" default="action:record" access="public"/>
     <aura:registerEvent name="dossierSelectedEvent" type="c:dossierSelectedEvent"/>
 
     <!-- <lightning:tile class="slds-tile_board" label="{!v.result.name + ' (' + v.result.dossier_number + ')'}" onclick="{!c.onClick}" >

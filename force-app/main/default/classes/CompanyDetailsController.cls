@@ -3,91 +3,96 @@
 * @param SearchString
 */ 
 
-// TODO handle empty search
+// TODO handle empty search System.Label.BDS_WSCall_Generic_UI_Exception
 
 public with sharing class CompanyDetailsController {
     //private static list<WebServicesNLSOAPDutchBusinessImplTypes.DutchBusinessReferenceV2> searchResults;
     @AuraEnabled
-    public static List<DutchBusinessDto.DutchBusinessReference> search(String searchParams){
+    public static Object search(String searchParams){
         if(searchParams!=null){
-            DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
-            return DutchBusinessService.searchForDossiers(params);
+            try{
+                DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
+                
+                Object result = (Object)DutchBusinessService.searchForDossiers(params);
+                AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
+                return output;
+            }catch(BdsException ex){
+                AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+                return output;
+            }catch(System.Exception ex){
+                ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+                AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+                return output;
+            }
         }
         return null; 
     }
     @AuraEnabled
-    public static String getInfo(String dossierNumber, Id accountId){
+    public static Object createDossier(String dossierNumber, Id accountId){
         System.debug('getInfo');
         if(dossierNumber!=null){
+            try{
+                
+                DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
+                AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier, accountId));
+                return output;
 
-            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
-            System.debug('getInfoResponse');
-            System.debug(dossier);
-            Id savedRecord = DutchBusinessService.saveDutchBusinessDossier(dossier, accountId); 
-            DutchBusinessService.updateAccountDossier(accountId, savedRecord);
-            return savedRecord;
+            }catch(BdsException ex){
+                AuraResponseWrapper output = new AuraResponseWrapper(ex); // move the msg to label.
+                return output;
+            }catch(System.Exception ex){
+                ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+                AuraResponseWrapper output = new AuraResponseWrapper(ex); // move the msg to label.
+                return output;
+                }
         }
         return null;
     } 
     @AuraEnabled
-    public static Object getInfoNoSaving(String dossierNumber){
+    public static Object createDossier(String dossierNumber){
         System.debug('getInfoNoSaving');
-        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
-        Account acc = DutchBusinessService.getDossierAccount(dossier.dossier_number);
-        String AccountId = '';
-        if(acc != null){
-            AccountId = acc.Id;
+        try{
+            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
+            Account acc = DutchBusinessService.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number
+            String AccountId = '';
+            if(acc != null){
+                AccountId = acc.Id;
+            }
+            list<Object> result = new list<Object>();
+            result = createUpdateAccount(dossier, accountId);
+            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
+            return output;
+        }catch(BdsException ex){
+            AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            return output;
+            //throw new AuraHandledException(ex.getMessage());
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            AuraResponseWrapper output = new AuraResponseWrapper(ex);//null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            return output;
         }
-        System.debug('getInfoNoSavingResponse');
-        System.debug(dossier);
-        list<Object> result = new list<Object>();
-        result.add(dossier);
-        result.add(AccountId);
-        result.add(acc);
-        //result.add();
-        return result;
 
     }
 
 
-    @AuraEnabled
-    public static Object createUpdateAccount(String dossierObj, String accountId){
+
+    //@AuraEnabled
+    /*public static list<Object>  createUpdateAccount(String dossierObj, String accountId){
         DutchBusinessDto.DutchBusinessGetDossierResponse dossier  = castToDossierDto(dossierObj);
-        //DutchBusinessDto.DutchBusinessGetDossierResponse dossierDto = (DutchBusinessDto.DutchBusinessGetDossierResponse)dossier;
-        system.debug('dossierDto = '+dossier);
-
-        system.debug('accountId = ' + accountId);
-
-
-
-        //try{
-            if(accountId == null || accountId == ''){
-                accountId = DutchBusinessService.createAccountForDossier(dossier);
-            }
-            system.debug('accountId after insert ' + accountId);
-            Id savedRecord = DutchBusinessService.saveDutchBusinessDossier(dossier, accountId); 
-            DutchBusinessService.updateAccountDossier(accountId, savedRecord);       
-        /*}catch(Exception e){
-           system.debug('inside some exception that throws n othing'); // todo logging and notificztion
-            throw new BdsException('Something happened while trying to execute createUpdateAccount servive method'+e.getMessage());
-        }*/
-
-
-        return null;
+        return createUpdateAccount(dossier, accountId);           
+    }*/
+     
+    public static list<Object> createUpdateAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+            
+            list<Object> result = new list<object>();
+            result = DutchBusinessService.upsertAccountAndDossier(dossier, accountId);    
+            DutchBusinessService.updateAccountDossier(dossier); // will be gone later once fflib is updated
+            //AuraResponseWrapper output = new AuraResponseWrapper(result);
+            return result;
     }
     private static DutchBusinessDto.DutchBusinessGetDossierResponse castToDossierDto(String str){
         DutchBusinessDto.DutchBusinessGetDossierResponse response = (DutchBusinessDto.DutchBusinessGetDossierResponse)JSON.deserialize(str, DutchBusinessDto.DutchBusinessGetDossierResponse.class); //= new DutchBusinessDto.DutchBusinessGetDossierResponse();
         return response;
     }
 
-    @AuraEnabled
-    public static Id getDossierRecordId(Integer dossierNumber){
-        if (Schema.sObjectType.Dutch_Business_Dossier__c.fields.Id.isAccessible() == false) throw new NoAccessException();
-        
-        List<Dutch_Business_Dossier__c> results = [SELECT Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :dossierNumber];
-        if (results.size() > 0) {
-            return results[0].Id;
-        }
-        return null;
-    }
 }

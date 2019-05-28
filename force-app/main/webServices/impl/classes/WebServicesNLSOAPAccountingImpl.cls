@@ -4,7 +4,7 @@ Description     : Company info Accounting integration implementation class. NB: 
                   All original company.info methods are wrapped into our methods to provide DTO wrapping for both request and response params.
                   This is done to completely isolate webservice layer from the service layer. This will allow to adapt to webservice changes/updates quickly and without too much effort.
 ******************************************************************************************/
-public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting{
+public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting{
 
     // constructor
     public WebServicesNLSOAPAccountingImpl(){
@@ -22,7 +22,7 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
         return result;
@@ -34,11 +34,11 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         userEditBalanceResponseType response_x;
         Map<String, userEditBalanceResponseType> response_map_x = new Map<String, userEditBalanceResponseType>();
         response_map_x.put('response_x', response_x);
-        WebServiceCallout.invoke(
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
             port,
             request_x,
             response_map_x,
-            new String[]{endpoint_x,
+            new String[]{port.endpoint_x,
             'https://ws1.webservices.nl/soap_doclit.php/userEditBalance',
             'http://www.webservices.nl/soap/',
             'userEditBalance',
@@ -59,7 +59,7 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
         return result;
@@ -70,11 +70,11 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         userViewBalanceResponseType response_x;
         Map<String, userViewBalanceResponseType> response_map_x = new Map<String, userViewBalanceResponseType>();
         response_map_x.put('response_x', response_x);
-        WebServiceCallout.invoke(
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
             port,
             request_x,
             response_map_x,
-            new String[]{endpoint_x,
+            new String[]{port.endpoint_x,
             'https://ws1.webservices.nl/soap_doclit.php/userViewBalance',
             'http://www.webservices.nl/soap/',
             'userViewBalance',
@@ -113,11 +113,11 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
             result.password = response.password;
             return result;
         }catch(System.CalloutException ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            ErrorLogUtil.logException(ex, port); // logging whenever we catch any exception other than BdsException type
             throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            ErrorLogUtil.logException(ex, port); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -139,11 +139,11 @@ public class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccounting
         userCreateV2ResponseType response_x;
         Map<String, userCreateV2ResponseType> response_map_x = new Map<String, userCreateV2ResponseType>();
         response_map_x.put('response_x', response_x);
-        WebServiceCallout.invoke(
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
             port,
             request_x,
             response_map_x,
-            new String[]{endpoint_x,
+            new String[]{port.endpoint_x,
             'https://ws1.webservices.nl/soap_doclit.php/userCreateV2',
             'http://www.webservices.nl/soap/',
             'userCreateV2',

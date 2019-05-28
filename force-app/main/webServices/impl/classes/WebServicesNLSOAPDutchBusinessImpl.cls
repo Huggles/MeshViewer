@@ -2,7 +2,7 @@
 Author          : ValerijsProkudins
 Description     : Company info DutchBusiness integration implementation class. NB: it extends the DutchBusiness implementation type class!
 ******************************************************************************************/
-public class WebServicesNLSOAPDutchBusinessImpl extends WebServicesNLSOAPDutchBusinessImplTypes implements IWebServicesNLSOAPDutchBusiness {
+public with sharing class WebServicesNLSOAPDutchBusinessImpl extends WebServicesNLSOAPDutchBusinessImplTypes implements IWebServicesNLSOAPDutchBusiness {
     
 public WebServicesNLSOAPDutchBusinessImpl(){
         //super();
@@ -19,7 +19,10 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.legal_name = response.legal_name;
             result.dossier_number = response.dossier_number;
             result.establishment_number = response.establishment_number;
-            result.main_establishment_number = response.main_establishment_number;
+            if(response.main_establishment_number != null){ // TODO: make a special faultless method for this
+                result.main_establishment_number = response.main_establishment_number;
+            }
+            
             result.indication_main_establishment = response.indication_main_establishment ;
             result.rsin_number = response.rsin_number ;
             result.chamber_number = response.chamber_number ;
@@ -69,7 +72,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
     }
@@ -89,11 +92,11 @@ public WebServicesNLSOAPDutchBusinessImpl(){
         Map<String, dutchBusinessGetDossierV3ResponseType> response_map_x = new Map<String, dutchBusinessGetDossierV3ResponseType>();
         response_map_x.put('response_x', response_x);
 
-        WebServiceCallout.invoke(
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
                 port,
                 request_x,
                 response_map_x,
-                new String[]{endpoint_x,
+                new String[]{port.endpoint_x,
                         'https://ws1.webservices.nl/soap_doclit.php/dutchBusinessGetDossierV3',
                         'http://www.webservices.nl/soap/',
                         'dutchBusinessGetDossierV3',
@@ -116,18 +119,30 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.numpages = response.paging.numpages;
             result.numresults = response.paging.numresults;
             result.maxresults = response.paging.maxresults;
-            for(DutchBusinessReferenceV2 item: response.results.item){
-                    DutchBusinessDto.DutchBusinessReference restItem = new DutchBusinessDto.DutchBusinessReference();
-                    restItem.dossier_number = item.dossier_number ;
-                    restItem.establishment_number = item.establishment_number ;
-                    restItem.name = item.name ;
-                    restItem.match_type = item.match_type ;
-                    restItem.establishment_city = item.establishment_city ;
-                    restItem.establishment_street = item.establishment_street ;
-                    restItem.correspondence_city = item.correspondence_city ;
-                    restItem.correspondence_street = item.correspondence_street ;
-                    restItem.indication_economically_active =  item.indication_economically_active ;
-                    result.items.add(restItem);
+            system.debug(response);
+            system.debug(response.results);
+            system.debug(response.results.item);
+            if(response.results != null){
+                
+                if(response.results.item != null) {
+                    for(DutchBusinessReferenceV2 item: response.results.item){
+                            DutchBusinessDto.DutchBusinessReference restItem = new DutchBusinessDto.DutchBusinessReference();
+                            restItem.dossier_number = item.dossier_number ;
+                            restItem.establishment_number = item.establishment_number ;
+                            restItem.name = item.name ;
+                            restItem.match_type = item.match_type ;
+                            restItem.establishment_city = item.establishment_city ;
+                            restItem.establishment_street = item.establishment_street ;
+                            restItem.correspondence_city = item.correspondence_city ;
+                            restItem.correspondence_street = item.correspondence_street ;
+                            restItem.indication_economically_active =  item.indication_economically_active ;
+                            result.items.add(restItem);
+                    }
+                }else{
+                    // TODO: HANDLE EMPTY SEARCH exceptions.
+                }
+            }else{
+                // TODO: HANDLE EMPTY SEARCH exceptions.
             }
         return result;
             
@@ -136,7 +151,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage());
+            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
     }
@@ -157,11 +172,10 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             request_x.page = page;
             Map<String, dutchBusinessSearchParametersV2ResponseType> response_map_x = new Map<String, dutchBusinessSearchParametersV2ResponseType>();
             response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-                    port,
+            ExecuteCallout(port, // executing using a wrapper method to support fallbackserver url
                     request_x,
                     response_map_x,
-                    new String[]{endpoint_x,
+                    new String[]{port.endpoint_x,
                             'https://ws1.webservices.nl/soap_doclit.php/dutchBusinessSearchParametersV2',
                             'http://www.webservices.nl/soap/',
                             'dutchBusinessSearchParametersV2',
@@ -169,11 +183,24 @@ public WebServicesNLSOAPDutchBusinessImpl(){
                             'dutchBusinessSearchParametersV2Response',
                             'WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessSearchParametersV2ResponseType'}
             );
+            /*WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
+                    port,
+                    request_x,
+                    response_map_x,
+                    new String[]{port.endpoint_x,
+                            'https://ws1.webservices.nl/soap_doclit.php/dutchBusinessSearchParametersV2',
+                            'http://www.webservices.nl/soap/',
+                            'dutchBusinessSearchParametersV2',
+                            'http://www.webservices.nl/soap/',
+                            'dutchBusinessSearchParametersV2Response',
+                            'WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessSearchParametersV2ResponseType'}
+            );*/
+            
             response_x = response_map_x.get('response_x');
-            //DutchBusinessDto result = new DutchBusinessDto();
             return response_x.out;
-            //return result;
+            
         }
+         
 /*
         public DutchBusinessLegalEntityData dutchBusinessGetLegalEntity(String dossier_number) {
             dutchBusinessGetLegalEntityRequestType request_x = new dutchBusinessGetLegalEntityRequestType();

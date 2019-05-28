@@ -22,12 +22,20 @@
         var action = component.get(methodName);
         action.setParams(params);
 
+      
+
+
         // Create a callback that is executed after 
         // the server-side action returns
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
-                callback(response.getReturnValue());
+                if(response.getReturnValue().state ==="SUCCESS"){
+                    callback(response.getReturnValue().response);
+                }else{
+                    _this.showToast(component, $A.get('$Label.c.BDS_Error'), response.getReturnValue().errorMsg, 'error');
+                }
+                
             }
             else if (state === "INCOMPLETE") {
                 _this.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.BDS_Error_Incomplete'), 'error');
