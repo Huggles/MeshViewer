@@ -194,6 +194,29 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             d.Chamber_Code__c = dossier.chamber_number;//convertToString(dossier.chamber_number);
             d.Status__c = determineStatus(dossier);
 
+            //d.Annual_Financial_Statement_Summary__c = dossier.annual_financial_statement_summary; I cannot edit the DutchBusinessDto to add this field
+            d.Personnel_CI__c = dossier.personnel_ci;
+            d.Class_Personnel_CI__c = convertToString(dossier.class_personnel_ci);
+            d.Personnel_CI_Reference_Date__c = dossier.personnel_ci_reference_date;
+            d.Contact_Initials__c = dossier.contact_initials;
+            d.Contact_Prefix__c = dossier.contact_prefix;
+            d.Contact_Surname__c = dossier.contact_surname;
+            d.Contact_Title1__c = dossier.contact_title1;
+            d.Contact_Title2__c = dossier.contact_title2;
+            d.Contact_Gender__c = dossier.contact_gender;
+            d.Correspondence_Address__c = dossier.correspondence_address_official_address; //I think this should be combination of all correspondence_address_xxx
+            d.Establishment_Address__c = dossier.establishment_address_official_address; //combination of all establishment_address_xxx
+            d.Indication_Bankruptcy__c = dossier.indication_bankruptcy;
+            d.Indication_Dip__c = dossier.indication_dip;
+            d.Indication_Economically_Active__c = dossier.indication_economically_active;
+            d.Indication_Export__c = dossier.indication_export;
+            d.Indication_Import__c = dossier.indication_import;
+            d.Indication_Main_Establishment__c = dossier.indication_main_establishment;
+            d.Indication_Non_Mailing__c = dossier.indication_non_mailing;
+            //d.Insolvencies__c = dossier.insolvencies; add insolvencies to DutchBusinessDto
+            //d.Sbi_Collection__c = dossier.sbi_collection; add sbi_collection to DutchBusinessDto
+            // d.Structure__c = dossier.structure; add structure to DutchBusinessDto
+
             //upsert d;
             if(dossierExists){
                 unitOfWork.registerDirty(d, Dutch_Business_Dossier__c.Account__c, acc);
