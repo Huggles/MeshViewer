@@ -1,3 +1,8 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+
+TODO: Move custom metadatas query to selector
+******************************************************************************************/
 public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBusinessAccountingService{
 
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
@@ -20,7 +25,6 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         lst.add(23);// TODO: this will be implemented sepererately and will be configurable
         input.usergroups = lst;
         try{
-            //ErrorLogUtil.logMessage(input);
             DutchBusinessAccountingDto.userCreateResponseDto userResp = createCIUser(input);
             addTrialToCIUser(userResp);
             Credentials__c cs = Credentials__c.getOrgDefaults();
@@ -28,13 +32,10 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             cs.Password__c = userResp.password;
             cs.CompanyInfoUserId__c = userResp.id;
             upsert cs;
-            //userResp.id;
             return userResp;
-        }catch(BdsException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex, input); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
     }
 
@@ -57,24 +58,20 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
             DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(input);
             return response;
-        }catch(BdsException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
     } 
 
     public static boolean addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
         try{
             ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];  
-            Double amount = configData.DefaultTrialBalance__c; // TODO: get the trial amount from custom settings or CMT
+            Double amount = configData.DefaultTrialBalance__c; 
             return addBudget(amount, userId.id);
-        }catch(BdsException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
     }
 
@@ -83,16 +80,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         input.userId = userId;
         input.balance = amount;
         IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
-        try{
-            
-            return service.userChangeBalance(input);
-            //return true;
-        }catch(BdsException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
+        return service.userChangeBalance(input);
 
     }
     public static boolean addBudget(Double amount){
@@ -100,11 +88,9 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
             return addBudget(amount, (Integer)cs.CompanyInfoUserId__c);
-        }catch(BdsException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
 
     }
@@ -117,11 +103,9 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
             DutchBusinessAccountingDto.userViewBalanceResponse result = service.userGetBalance(input);
             return result.balance;
-        }catch(BdsException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
     }
 }

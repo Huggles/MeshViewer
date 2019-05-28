@@ -1,4 +1,7 @@
-@isTest // Dutch_Business_Dossier__c
+/****************************************************************************************
+Author          : ValerijsProkudins
+******************************************************************************************/
+@isTest
 public with sharing class DutchBusinessDossierSelectorTest {
 
     
@@ -11,7 +14,7 @@ public with sharing class DutchBusinessDossierSelectorTest {
     static void testGetSObjectFields() {
         DutchBusinessDossierSelector selector = (DutchBusinessDossierSelector) DutchBusinessDossierSelector.newInstance();
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {
+        System.runAs(TestUtils.getBDSUser()) { //didnt work. need to check with jaap how testutils work
             List<Schema.SObjectField> fields = selector.getSObjectFieldList();
             Set<Schema.SObjectField> fieldsAsSet = new Set<Schema.SObjectField>(fields);
             System.assert(fieldsAsSet.containsAll(new List<Schema.SObjectField>{
@@ -31,30 +34,33 @@ public with sharing class DutchBusinessDossierSelectorTest {
     static void testGetSObjectType() {
         DutchBusinessDossierSelector selector = (DutchBusinessDossierSelector) DutchBusinessDossierSelector.newInstance();
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {
+        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
             Schema.SObjectType tpe = selector.getSObjectType();
             System.assertEquals(Dutch_Business_Dossier__c.sObjectType, tpe);
         }
         Test.stopTest();
 
     }
-
+   
 
     @isTest
-    static void testSelectById() {
-        List<Account> accounts = new List<Account>();
+    static void testSelectByDossierNumber() {
+        List<Dutch_Business_Dossier__c> dossiers = new List<Dutch_Business_Dossier__c>();
+        Set<String> dossierNumSet = new set<String>();
         for (Integer i2 = 0; i2 < 10 ; i2++) {
-            accounts.add(new Account(Name = 'test'+i2));
+            dossiers.add(new Dutch_Business_Dossier__c(Name = 'test'+i2, Dossier_Number__c=string.valueOf(i2)));
+            dossierNumSet.add(string.valueOf(i2));
         }
-        insert accounts;
+        insert dossiers;
+        
 
-        Set<Id> idSet = (new Map<Id, Account>(accounts)).keySet();
+        
 
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {
-            IAccountSelector selector = AccountSelector.newInstance();
-            List<Account> accountsReturned = selector.selectById(idSet);
-            System.assertEquals(10, accountsReturned.size());
+        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
+            IDutchBusinessDossierSelector selector = DutchBusinessDossierSelector.newInstance();
+            List<Dutch_Business_Dossier__c> dossiersReturned = selector.selectByDossierNumber(dossierNumSet);
+            System.assertEquals(10, dossiersReturned.size());
         }
         Test.stopTest();
 

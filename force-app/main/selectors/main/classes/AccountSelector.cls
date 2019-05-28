@@ -1,3 +1,6 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+******************************************************************************************/
 public with sharing class AccountSelector extends fflib_SObjectSelector implements IAccountSelector{
     public AccountSelector() {
         super(false, // Do not include FieldSet fields
