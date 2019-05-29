@@ -158,7 +158,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             d.Main_Establishment_Number__c = convertToInteger(dossier.main_establishment_number);
             d.Indication_Main_Establishment__c = dossier.indication_main_establishment; //convertToBoolean(dossier.indication_main_establishment);
             d.Rsin_Number__c = convertToInteger(dossier.rsin_number);
-            d.Chamber_Number__c = convertToInteger(dossier.chamber_number);
+            d.Chamber_Number__c = dossier.chamber_number;
             d.Legal_Form_Code__c = convertToInteger(dossier.legal_form_code);
             d.Legal_Form_Text__c = dossier.legal_form_text;//;convertToString(dossier.legal_form_text);
             d.Indication_Organisation_Code__c = dossier.indication_organisation_code;//convertToString(dossier.indication_organisation_code);
@@ -206,13 +206,13 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             d.Contact_Gender__c = dossier.contact_gender;
             d.Correspondence_Address__c = dossier.correspondence_address_official_address; //I think this should be combination of all correspondence_address_xxx
             d.Establishment_Address__c = dossier.establishment_address_official_address; //combination of all establishment_address_xxx
-            d.Indication_Bankruptcy__c = dossier.indication_bankruptcy;
-            d.Indication_Dip__c = dossier.indication_dip;
-            d.Indication_Economically_Active__c = dossier.indication_economically_active;
-            d.Indication_Export__c = dossier.indication_export;
-            d.Indication_Import__c = dossier.indication_import;
-            d.Indication_Main_Establishment__c = dossier.indication_main_establishment;
-            d.Indication_Non_Mailing__c = dossier.indication_non_mailing;
+            if (dossier.indication_bankruptcy != null) { d.Indication_Bankruptcy__c = dossier.indication_bankruptcy;}
+            if (dossier.indication_dip != null) { d.Indication_Dip__c = dossier.indication_dip;}
+            if (dossier.indication_economically_active != null) { d.Indication_Economically_Active__c = dossier.indication_economically_active;}
+            if (dossier.indication_export != null) { d.Indication_Export__c = dossier.indication_export;}
+            if (dossier.indication_import != null) { d.Indication_Import__c = dossier.indication_import;}
+            if (dossier.indication_main_establishment != null) { d.Indication_Main_Establishment__c = dossier.indication_main_establishment;}
+            if (dossier.indication_non_mailing != null) { d.Indication_Non_Mailing__c = dossier.indication_non_mailing;}
             //d.Insolvencies__c = dossier.insolvencies; add insolvencies to DutchBusinessDto
             //d.Sbi_Collection__c = dossier.sbi_collection; add sbi_collection to DutchBusinessDto
             // d.Structure__c = dossier.structure; add structure to DutchBusinessDto
@@ -449,7 +449,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
+        }Something happened while working at the DutchBusinessService levelInsert failed. First exception on row 0; first error: INVALID_TYPE_ON_FIELD_IN_RECORD, Indication Bankruptcy: value not of required type: : [cinfo_sales__Indication_Bankruptcy__c]
     }*/
     private static String determineStatus(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
         try{

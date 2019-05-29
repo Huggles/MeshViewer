@@ -12,8 +12,7 @@ public with sharing class CompanyDetailsController {
         if(searchParams!=null){
             try{
                 DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
-                
-                Object result = (Object)DutchBusinessService.searchForDossiers(params);
+                Object result = (Object)DutchBusinessServiceImpl.searchForDossiers(params);
                 AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
                 return output;
             }catch(BdsException ex){
@@ -33,7 +32,7 @@ public with sharing class CompanyDetailsController {
         if(dossierNumber!=null){
             try{
                 
-                DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
+                DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessServiceImpl.getDossier(dossierNumber);
                 AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier, accountId));
                 return output;
 
@@ -52,8 +51,8 @@ public with sharing class CompanyDetailsController {
     public static Object createDossier(String dossierNumber){
         System.debug('getInfoNoSaving');
         try{
-            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
-            Account acc = DutchBusinessService.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number
+            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessServiceImpl.getDossier(dossierNumber);
+            Account acc = DutchBusinessServiceImpl.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number
             String AccountId = '';
             if(acc != null){
                 AccountId = acc.Id;
@@ -83,12 +82,12 @@ public with sharing class CompanyDetailsController {
     }*/
      
     public static list<Object> createUpdateAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
-            
-            list<Object> result = new list<object>();
-            result = DutchBusinessService.upsertAccountAndDossier(dossier, accountId);    
-            DutchBusinessService.updateAccountDossier(dossier); // will be gone later once fflib is updated
-            //AuraResponseWrapper output = new AuraResponseWrapper(result);
-            return result;
+
+        list<Object> result = new list<object>();
+        result = DutchBusinessServiceImpl.upsertAccountAndDossier(dossier, accountId);
+        DutchBusinessServiceImpl.updateAccountDossier(dossier); // will be gone later once fflib is updated
+        //AuraResponseWrapper output = new AuraResponseWrapper(result);
+        return result;
     }
     private static DutchBusinessDto.DutchBusinessGetDossierResponse castToDossierDto(String str){
         DutchBusinessDto.DutchBusinessGetDossierResponse response = (DutchBusinessDto.DutchBusinessGetDossierResponse)JSON.deserialize(str, DutchBusinessDto.DutchBusinessGetDossierResponse.class); //= new DutchBusinessDto.DutchBusinessGetDossierResponse();
