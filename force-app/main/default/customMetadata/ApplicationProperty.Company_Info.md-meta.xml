@@ -3,6 +3,10 @@
     <label>Company.Info</label>
     <protected>true</protected>
     <values>
+        <field>Appsolutely_Contact_Email__c</field>
+        <value xsi:type="xsd:string">dan.nicholson@appsolutely.nl</value>
+    </values>
+    <values>
         <field>DataProviderAdminPassword__c</field>
         <value xsi:type="xsd:string">q{UfUzSJj7V,*Q$vw(Y_Sk2gyG,UVJG$</value>
     </values>
@@ -13,6 +17,14 @@
     <values>
         <field>DataProviderName__c</field>
         <value xsi:type="xsd:string">Company.Info</value>
+    </values>
+    <values>
+        <field>Data_Provider_Account_Comment__c</field>
+        <value xsi:type="xsd:string">A user for reselling by Appsolutely. Registered through the BDS application</value>
+    </values>
+    <values>
+        <field>Data_Provider_Account_Id__c</field>
+        <value xsi:type="xsd:string">13972</value>
     </values>
     <values>
         <field>DefaultTrialBalance__c</field>
