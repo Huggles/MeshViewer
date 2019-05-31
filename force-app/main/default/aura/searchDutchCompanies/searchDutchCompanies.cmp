@@ -1,4 +1,4 @@
-<aura:component controller="CompanyDetailsController" implements="force:lightningQuickAction" access="global">
+<aura:component controller="CompanyDetailsController" implements="force:lightningQuickAction">
 
     <aura:attribute name="existingAccount" type="Account" />
     <aura:attribute name="existingAccountId" type="String" />
@@ -12,12 +12,6 @@
     <aura:handler name="dossierSearchSubmitEvent" event="c:dossierSearchSubmitEvent" action="{!c.onSubmit}" />
     <aura:handler name="dossierSelectionConfirmedEvent" event="c:dossierSelectionConfirmedEvent" action="{!c.onSelect}" />
     <aura:handler name="toUpdateAccountEvent" event="c:toUpdateAccountEvent" action="{!c.DML}" /> 
-    
-
-
-    
-    
-    
     
     <div class="{!v.step == '1' ? '' : 'slds-hide'}">
         <c:dossierSearchForm  />

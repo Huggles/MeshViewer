@@ -6,7 +6,7 @@
     <aura:attribute name="dossierId" type="String" />
     <aura:attribute name="simpleRecord" type="object" default="{}" />
     <aura:attribute name="myTitleName" type="Aura.Component[]">
-        <div class="logoContainer"><img src="{!$Resource.compinfologo}"/></div>
+        <div class="logoContainer"><img src="{!$Resource.AppsolutelyLogo}"/></div>
     </aura:attribute>
     <aura:handler name="dossierSearchSubmitEvent" event="c:dossierSearchSubmitEvent" action="{!c.onSubmit}" />
     <aura:handler name="dossierSelectionConfirmedEvent" event="c:dossierSelectionConfirmedEvent" action="{!c.onSelect}" />
@@ -41,11 +41,11 @@
             {!v.myTitleName}
             </aura:set>
 
-                <aura:set attribute="actions">
+                <!-- <aura:set attribute="actions">
                     <lightning:button label="Organisation Tree" />
                     <lightning:button label="Director List" />
                     <lightning:button label="News" />
-                </aura:set>
+                </aura:set> -->
             </lightning:card>
         </div>
 

@@ -1,5 +1,4 @@
-<aura:component implements="force:hasRecordId, force:lightningQuickAction"
-    access="global">
+<aura:component implements="force:hasRecordId" >
     <aura:attribute name="searchFields" type="object" default="{}" />
     <aura:attribute name="simpleRecord" type="object" />
     <aura:attribute name="disableSearch" type="Boolean" default="false" />
