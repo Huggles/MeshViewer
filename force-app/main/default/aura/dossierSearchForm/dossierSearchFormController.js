@@ -23,7 +23,7 @@
     populateDossier: function (component, event, helper) {
         var fields = component.get('v.searchFields');
         if (fields.dossier_number != null && fields.dossier_number != '') {
-            //component.set('v.disableSearch', true);
+            component.set('v.disableSearch', true);
         }
         else component.set('v.disableSearch', false);
     },
