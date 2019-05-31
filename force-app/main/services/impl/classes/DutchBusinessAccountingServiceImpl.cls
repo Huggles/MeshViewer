@@ -12,7 +12,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         if (aps.size() < 0) throw new BdsException(System.Label.BDS_Error_Config);
         ApplicationProperty__mdt ap = aps[0];
 
-        Organization orgDetails = [SELECT Id, LanguageLocaleKey, Address, City, Country, Division, Fax, Name, Phone, PostalCode, State, Street FROM Organization WHERE Id = :UserInfo.getOrganizationId()];
+        Organization orgDetails = [SELECT Id, Address, Fax, Name, Phone FROM Organization WHERE Id = :UserInfo.getOrganizationId()];
 
         DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
         input.nickname = username;
