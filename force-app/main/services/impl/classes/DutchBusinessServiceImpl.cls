@@ -194,7 +194,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             d.Chamber_Code__c = dossier.chamber_number;//convertToString(dossier.chamber_number);
             d.Status__c = determineStatus(dossier);
 
-            //d.Annual_Financial_Statement_Summary__c = dossier.annual_financial_statement_summary; I cannot edit the DutchBusinessDto to add this field
+            d.Annual_Financial_Statement_Summary__c = dossier.annual_financial_statement_summary;
             d.Personnel_CI__c = dossier.personnel_ci;
             d.Class_Personnel_CI__c = convertToString(dossier.class_personnel_ci);
             d.Personnel_CI_Reference_Date__c = dossier.personnel_ci_reference_date;
@@ -213,9 +213,9 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             if (dossier.indication_import != null) { d.Indication_Import__c = dossier.indication_import;}
             if (dossier.indication_main_establishment != null) { d.Indication_Main_Establishment__c = dossier.indication_main_establishment;}
             if (dossier.indication_non_mailing != null) { d.Indication_Non_Mailing__c = dossier.indication_non_mailing;}
-            //d.Insolvencies__c = dossier.insolvencies; add insolvencies to DutchBusinessDto
-            //d.Sbi_Collection__c = dossier.sbi_collection; add sbi_collection to DutchBusinessDto
-            // d.Structure__c = dossier.structure; add structure to DutchBusinessDto
+            d.Insolvencies__c = dossier.insolvencies;
+            d.Sbi_Collection__c = dossier.sbi_collection;
+            d.Structure__c = dossier.structure;
 
             //upsert d;
             if(dossierExists){

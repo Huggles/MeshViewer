@@ -17,7 +17,7 @@ public with sharing class DutchBusinessServiceImplTest {
 
         test.startTest();
         string dossierNumber = '123';
-        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessServiceImpl.getDossier(dossierNumber);
+        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
         system.assertNotEquals(null, dossier);
         test.stopTest();
     }
@@ -39,7 +39,7 @@ public with sharing class DutchBusinessServiceImplTest {
         Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
 
 
-        List<DutchBusinessDto.DutchBusinessReference> results = DutchBusinessServiceImpl.searchForDossiers(searchParams);
+        List<DutchBusinessDto.DutchBusinessReference> results = DutchBusinessService.searchForDossiers(searchParams);
         system.debug(results);
         system.assertEquals(results.get(0).dossier_number, '199');
 
@@ -81,7 +81,7 @@ public with sharing class DutchBusinessServiceImplTest {
         
         test.startTest();
 
-        list<Object> results = DutchBusinessServiceImpl.upsertAccountAndDossier(InputDossier, ExistingAccount.Id);
+        list<Object> results = DutchBusinessService.upsertAccountAndDossier(InputDossier, ExistingAccount.Id);
         system.debug(results);
         test.stopTest();
 
@@ -120,7 +120,7 @@ public with sharing class DutchBusinessServiceImplTest {
         
         test.startTest();
 
-        list<Object> results = DutchBusinessServiceImpl.upsertAccountAndDossier(InputDossier, null);
+        list<Object> results = DutchBusinessService.upsertAccountAndDossier(InputDossier, null);
         system.debug(results);
         test.stopTest();
 
@@ -193,7 +193,7 @@ public with sharing class DutchBusinessServiceImplTest {
             //Application.service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
             test.startTest();
             //IDutchBusinessService service = DutchBusinessService.newInstance();
-            Account result = DutchBusinessServiceImpl.getDossierAccount(String.valueOf(dossierNumber));
+            Account result = DutchBusinessService.getDossierAccount(String.valueOf(dossierNumber));
             system.assertEquals(acc.Id, result.Id);
     }
 
