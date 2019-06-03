@@ -1,9 +1,16 @@
 <template>
     <div id="waiting" if:false={onboarded}>
-        <lightning-card title="***Enable trial" icon-name="custom:custom14">
-            ***Thank you for installing the Customer.info app. To begin, please request a trial account.
-            <div class="slds-m-around_medium">
-                <lightning-button onclick={enableTrial} label="***Request trial"></lightning-button>
+        <lightning-card title={label.Config_Title} icon-name="custom:custom14">
+            <div  class='slds-p-around_medium'>
+                <div>{label.Config_Account_ActivateDescription} <a href="javascript:void(0);" onclick={enableTrial} class="slds-text-link_reset"><span class="slds-text-link">{label.Config_Account_ActivateDescriptionRequest}</span></a>.</div>
+                <lightning-input label={label.Config_Account_Username} type="text" value={username} disabled></lightning-input>
+                <lightning-input label={label.Config_Account_Password} type="password" value={password} disabled></lightning-input>
+    
+                <div class="slds-clearfix slds-m-top_small">
+                    <div class="slds-float_right">
+                        <lightning-button variant="brand" label={label.Config_Account_Save} disabled></lightning-button>
+                    </div>
+                </div>
             </div>
         </lightning-card>
     </div>
