@@ -1,7 +1,7 @@
 /**
 * Created by Asifsayyed on 02/12/18.
 * @param SearchString
-*/ 
+*/
 
 public with sharing class CompanyDetailsController {
     @AuraEnabled
@@ -10,7 +10,7 @@ public with sharing class CompanyDetailsController {
         if(searchParams!=null){
             try{
                 DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
-                
+
                 Object result = (Object)DutchBusinessService.searchForDossiers(params);
                 AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
                 return output;
@@ -18,7 +18,7 @@ public with sharing class CompanyDetailsController {
                 return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
             }
         }
-        return null; 
+        return null;
     }
     @AuraEnabled
     public static Object createDossier(String dossierNumber, Id accountId){
@@ -33,7 +33,7 @@ public with sharing class CompanyDetailsController {
             }
         }
         return null;
-    } 
+    }
     @AuraEnabled
     public static Object createDossier(String dossierNumber){
         System.debug('getInfoNoSaving');
@@ -52,12 +52,12 @@ public with sharing class CompanyDetailsController {
             return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
         }
     }
-    public static list<Object> createUpdateAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){    
-            list<Object> result = new list<object>();
-            result = DutchBusinessService.upsertAccountAndDossier(dossier, accountId);    
-            DutchBusinessService.updateAccountDossier(dossier); // will be gone later once fflib is updated
-            //AuraResponseWrapper output = new AuraResponseWrapper(result);
-            return result;
+    public static list<Object> createUpdateAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+        list<Object> result = new list<object>();
+        result = DutchBusinessService.upsertAccountAndDossier(dossier, accountId);
+        DutchBusinessService.updateAccountDossier(dossier); // will be gone later once fflib is updated
+        //AuraResponseWrapper output = new AuraResponseWrapper(result);
+        return result;
     }
 
 }
