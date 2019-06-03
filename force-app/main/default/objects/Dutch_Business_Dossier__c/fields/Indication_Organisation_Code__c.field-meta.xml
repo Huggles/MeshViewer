@@ -9,9 +9,32 @@ K	Church community (Dutch: ‘Kerkgenootschap’)
 &lt;empty&gt;	Unknown</description>
     <externalId>false</externalId>
     <label>Indication Organisation Code</label>
-    <length>1</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>V</fullName>
+                <default>false</default>
+                <label>Association</label>
+            </value>
+            <value>
+                <fullName>S</fullName>
+                <default>false</default>
+                <label>Non-profit organisation</label>
+            </value>
+            <value>
+                <fullName>K</fullName>
+                <default>false</default>
+                <label>Church community</label>
+            </value>
+            <value>
+                <fullName>O</fullName>
+                <default>false</default>
+                <label>Business</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

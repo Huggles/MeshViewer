@@ -3,7 +3,7 @@
     <fullName>Personnel_Reference_Date__c</fullName>
     <description>The reference date (peildatum) of the number of employees.</description>
     <externalId>false</externalId>
-    <label>Personnel Reference Date</label>
+    <label>Reference Date Of Number Of Employees</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Date</type>

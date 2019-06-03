@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Personnel_CI_Reference_Date__c</fullName>
+    <description>A DutchBusinessDateV3.  The reference date (peildatum) of the number of employees recorded by company.info</description>
+    <externalId>false</externalId>
+    <label>Reference Date Of Nr Of Employees wrt CI</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>
