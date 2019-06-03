@@ -111,6 +111,11 @@ public static PermissionSet ps;
         return balance;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static Boolean userCheckActive(){
+        return DutchBusinessAccountingService.userCheckActive();
+    }
+
     
 
     @AuraEnabled

@@ -252,6 +252,10 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
+        <tab>Business_Data_Setup</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Dutch_Business_Dossier__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>

@@ -324,6 +324,13 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>The call to the service was unsuccessful</value>
     </labels>
     <labels>
+        <fullName>Config_Account_AwaitingActivation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_AwaitingActivation</shortDescription>
+        <value>Your account has not been activated yet. Please try again later.</value>
+    </labels>
+    <labels>
         <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>
         <language>en_US</language>
         <protected>false</protected>

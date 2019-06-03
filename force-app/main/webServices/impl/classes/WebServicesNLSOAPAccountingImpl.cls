@@ -81,6 +81,43 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
     }
 
 
+    public DutchBusinessAccountingDto.userViewV2Response userCheckActive(DutchBusinessAccountingDto.userCheckActiveRequest input){
+        DutchBusinessAccountingDto.userViewV2Response result = new DutchBusinessAccountingDto.userViewV2Response();
+        System.debug('userId' + input.userId);
+        try{
+            if (input.userId != null)
+                result.active = userGetDetails(input.userId).out.active;
+            else result.active = false;
+
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
+        }
+        return result;
+    }
+    public userViewV2ResponseType userGetDetails(Integer userid) {
+        userCheckActiveRequestType request_x = new userCheckActiveRequestType();
+        request_x.userid = userid;
+        userViewV2ResponseType response_x;
+        Map<String, userViewV2ResponseType> response_map_x = new Map<String, userViewV2ResponseType>();
+        response_map_x.put('response_x', response_x);
+        ExecuteCallout(// executing using a wrapper method to support fallbackserver url
+            port,
+            request_x,
+            response_map_x,
+            new String[]{port.endpoint_x,
+            'https://ws1.webservices.nl/soap_doclit.php/userViewV2',
+            'http://www.webservices.nl/soap/',
+            'userViewV2',
+            'http://www.webservices.nl/soap/',
+            'userViewV2Response',
+            'WebServicesNLSOAPAccountingImplTypes.userViewV2ResponseType'}
+        );
+        response_x = response_map_x.get('response_x');
+        return response_x;
+    }
+
+
 
 
 // Main method to create a user. Utilises createUserV2 method. 

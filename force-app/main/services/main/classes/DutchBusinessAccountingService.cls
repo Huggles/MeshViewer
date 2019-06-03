@@ -26,6 +26,10 @@ public with sharing class DutchBusinessAccountingService {
     public static Double getBalance(){ // get balance for currently active CompanyInfo user in the app
         return newInstance().getBalance();
     }
+
+    public static Boolean userCheckActive(){ // get balance for currently active CompanyInfo user in the app
+        return newInstance().userCheckActive();
+    }
     
     public static IDutchBusinessAccountingService newInstance() {
         return (IDutchBusinessAccountingService) Application.Service.newInstance(IDutchBusinessAccountingService.class);
