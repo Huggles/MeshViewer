@@ -1,3 +1,7 @@
+/****************************************************************************************
+Author          : ValerijsProkudins
+Description     : Wrapper for aura and lwc responses to handle log saving on exceptions
+******************************************************************************************/
 public with sharing class AuraResponseWrapper {
  
 @AuraEnabled public Object response;
@@ -15,8 +19,6 @@ public with sharing class AuraResponseWrapper {
         this.errorMsg = '';
     }
     public AuraResponseWrapper(Exception response) {
-        
-        //Application.rollback(); // perform database rollback
         if(response instanceof BdsException){
             this.response = null;
             this.state = 'ERROR';
@@ -26,9 +28,16 @@ public with sharing class AuraResponseWrapper {
             this.state = 'ERROR';
             this.errorMsg = System.Label.BDS_WSCall_Generic_UI_Exception;
         }
-
-        
-
     }
-
+    public AuraResponseWrapper(Exception response, Object msg) {
+        if(response instanceof BdsException){
+            this.response = null;
+            this.state = 'ERROR';
+            this.errorMsg = response.getMessage(); //= System.Label.BDS_WSCall_Generic_UI_Exception;    // todo handle known types for proper messaging
+        }else{
+            this.response = null;
+            this.state = 'ERROR';
+            this.errorMsg = JSON.serializePretty(msg);
+        }
+    }
 }

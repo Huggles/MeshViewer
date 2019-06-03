@@ -65,9 +65,10 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
                 HeaderLogin.passWord=configData.DataProviderAdminPassword__c;//'q{UfUzSJj7V,*Q$vw(Y_Sk2gyG,UVJG$';//         
             }
             if(HeaderLogin == null){
+
                 BdsException ex = new BdsException(System.Label.BDS_NoAuthAppNotActive);//'No authentication data found. The app is not activated');
                 ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-                throw new BdsException(System.Label.BDS_NoAuthAppNotActive);//'No authentication data found. The app is not activated');
+                //throw new BdsException(System.Label.BDS_NoAuthAppNotActive);//'No authentication data found. The app is not activated');
             }
             return HeaderLogin;
             

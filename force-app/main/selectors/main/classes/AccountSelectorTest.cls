@@ -27,7 +27,7 @@ public with sharing class AccountSelectorTest {
     static void testGetSObjectType() {
         AccountSelector selector = (AccountSelector) AccountSelector.newInstance();
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {
+        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
             Schema.SObjectType tpe = selector.getSObjectType();
             System.assertEquals(Account.sObjectType, tpe);
         }
@@ -47,7 +47,7 @@ public with sharing class AccountSelectorTest {
         Set<Id> idSet = (new Map<Id, Account>(accounts)).keySet();
 
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {
+        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
             IAccountSelector selector = AccountSelector.newInstance();
             List<Account> accountsReturned = selector.selectById(idSet);
             System.assertEquals(10, accountsReturned.size());

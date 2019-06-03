@@ -67,18 +67,20 @@ public WebServicesNLSOAPDutchBusinessImpl(){
 
             return result;
 
-        }catch(System.CalloutException ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
 
     }
     private Date getDate(DutchBusinessDateV3 dt){
         if(dt != null){
-            return Date.newInstance(dt.year, dt.month, dt.day);
+            try{
+                return Date.newInstance(dt.year, dt.month, dt.day);
+            }catch(exception e){
+                ErrorLogUtil.logMessage(e);
+                return null; // we just log and let the process proceed
+            }
         }
         return null;
     } 
@@ -146,12 +148,9 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             }
         return result;
             
-        }catch(System.CalloutException ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
 
     }

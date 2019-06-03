@@ -17,12 +17,10 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         try{
             userEditBalance(input.userId, input.balance);
             result = true;
-        }catch(System.CalloutException ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_ChangeBalance_Exception);
+            return null; // never happens hence logging throws exceptions
         }
 
         return result;
@@ -54,14 +52,10 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         DutchBusinessAccountingDto.userViewBalanceResponse result = new DutchBusinessAccountingDto.userViewBalanceResponse();
         try{
             result.balance = userViewBalance(input.userId);
-        }catch(System.CalloutException ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
-
         return result;
     }
     public Double userViewBalance(Integer userid) {
@@ -112,12 +106,9 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
             result.nickname = response.nickname;
             result.password = response.password;
             return result;
-        }catch(System.CalloutException ex){
-            ErrorLogUtil.logException(ex, port); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unsuccessful + ex.getMessage()); // throwing Bds exception further up
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex, port); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
         }
     }
 

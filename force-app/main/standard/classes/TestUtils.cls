@@ -26,6 +26,20 @@ public class TestUtils {
         set;
     }
 
+private static User createUserWithPermissionSet(String profileName, String PermissionSetName){
+        User u = usersByProfileName.get(profileName);
+        if (u == null) {
+            u = createUniqueUser(profileName);
+            usersByProfileName.put(profileName, u);
+            insert u;
+            System.runAs(getSystemAdminUserNotInserted()) {
+                giveUserPermissionSet('Business_Data_For_Salesforce_User', u);
+            }
+        }
+        return u;
+}
+
+
     /**
      * Helper method to create a user (not insert it!) with the given profilename.
      *
@@ -67,6 +81,7 @@ public class TestUtils {
         Id permissionSetId = permissionSetIdsByName.get(permissionSetName);
         if (permissionSetId == null) {
             PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :permissionSetName LIMIT 1];
+            system.debug('permissionSet = '+ permissionSet + 'user = ' + u.Id + ' ' + u);
             permissionSetIdsByName.put(permissionSetName, permissionSet.Id);
             permissionSetId = permissionSet.Id;
         }
@@ -80,7 +95,7 @@ public class TestUtils {
      * @return
      */
     public static User getBDSUser() {
-        return createUser('Standard User');
+        return createUserWithPermissionSet('Standard User', 'Business_Data_For_Salesforce_User');
     }
 
     public static User getUniqueBDSUser() {
@@ -100,3 +115,4 @@ public class TestUtils {
     }
 
 }
+
