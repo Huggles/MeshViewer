@@ -8,21 +8,27 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
     public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username){
 
+        List<ApplicationProperty__mdt> aps = [SELECT Appsolutely_Contact_Email__c, Data_Provider_Account_Id__c, Data_Provider_Account_Comment__c FROM ApplicationProperty__mdt LIMIT 1];
+        if (aps.size() < 0) throw new BdsException(System.Label.BDS_Error_Config);
+        ApplicationProperty__mdt ap = aps[0];
+
+        Organization orgDetails = [SELECT Id, Address, Fax, Name, Phone FROM Organization WHERE Id = :UserInfo.getOrganizationId()];
+
         DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
         input.nickname = username;
-        input.accountId = 13972; //TODO: get the account ID from Custom Settings or CMT
+        input.accountId = Integer.valueOf(ap.Data_Provider_Account_Id__c);
         input.password = ''; // we keep this empty so CompanyInfo will generate a new password
-        input.email = 'valerijs.prokudins@appsolutely.nl'; // TODO get the email address from custom setting or CMT
-        input.companyname = 'AppsolutelysCustomer'; // TODO: understand how to get the poroper value? Company information obj?
-        input.address = '';
-        input.contactname = ''; //Take from the current user?
-        input.contactemail = input.email; // take from the current user?
-        input.telephone = '';
-        input.fax = ''; // pretty sure it is not needed
-        input.clientcode = ''; // TODO: undertannvb  ds what is this
-        input.comments = 'A user for reselling by Appsolutely. Registered through the CompanyData for Salesforce application';
+        input.email = ap.Appsolutely_Contact_Email__c;
+        input.companyname = orgDetails.Name;
+        input.address = orgDetails.Address.getStreet() + ', ' + orgDetails.Address.getPostalCode();
+        input.contactname = UserInfo.GetName();
+        input.contactemail = UserInfo.GetUserEmail();
+        input.telephone = orgDetails.Phone;
+        input.fax = orgDetails.Fax;
+        input.clientcode = ''; // TODO: understand what is this
+        input.comments = ap.Data_Provider_Account_Comment__c;
         list<Integer> lst = new list<Integer>();
-        lst.add(23);// TODO: this will be implemented sepererately and will be configurable
+        lst.add(23); // TODO: this will be implemented sepererately and will be configurable
         input.usergroups = lst;
         try{
             DutchBusinessAccountingDto.userCreateResponseDto userResp = createCIUser(input);

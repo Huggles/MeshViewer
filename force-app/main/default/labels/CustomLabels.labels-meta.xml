@@ -64,6 +64,13 @@
         <value>Error 102 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
     </labels>
     <labels>
+        <fullName>BDS_Error_Config</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS_Error_Config</shortDescription>
+        <value>Error 103 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
+    </labels>
+    <labels>
         <fullName>BDS_Get_Dossier_Results_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
