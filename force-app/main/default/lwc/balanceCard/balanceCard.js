@@ -1,6 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import getUserBalance from '@salesforce/apex/ConfigAppController.getUserBalance';
-import addBudged from '@salesforce/apex/ConfigAppController.addBudged';
+import addBudget from '@salesforce/apex/ConfigAppController.addBudget';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import Config_Balance_Threshold_Description from '@salesforce/label/c.Config_Balance_Threshold_Description';
@@ -40,8 +40,8 @@ export default class balanceCard extends LightningElement {
         this.amountToAdd = event.target.value;
     }
 
-    addBudged(event){
-        addBudged({Amount: this.amountToAdd}).then(result => {
+    addBudget(event){
+        addBudget({Amount: this.amountToAdd}).then(result => {
             // @todo these don't work in VF apparently
             // const evt = new ShowToastEvent({
             //     title: 'Success',
