@@ -2,7 +2,7 @@
 Author          : ValerijsProkudins
 Description     : Company info baseline integration implementation class. NB: it extends the baseline implementation type class!
 ******************************************************************************************/
-public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes implements IWebservicesNlSOAP{
+public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes implements IWebservicesNlSOAP{
     //public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; //TODO: mover to other place?
     //public Map<String,String> inputHttpHeaders_x;
     //public Map<String,String> outputHttpHeaders_x;
@@ -21,7 +21,7 @@ public abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes i
         //port = new Webservices_nlPort('User');
         //this.endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php';
     }
-    public class Webservices_nlPort {
+    public with sharing class Webservices_nlPort {
         public String endpoint_x;// = 'https://ws1.webservices.nl:443/soap_doclit.php';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
