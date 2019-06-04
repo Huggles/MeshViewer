@@ -29,7 +29,7 @@
             <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.BDS_Search_Trade_Name}"
                 type="text" variant="standard" value="{!v.searchFields.name}" disabled="{!v.disableSearch}"></lightning:input>
             <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.BDS_Search_Dossier_Number}"
-                type="text" variant="standard" value="{!v.searchFields.dossier_number}" onchange="{!c.populateDossier}" disabled="{!v.disableSearch}"></lightning:input>
+                type="text" variant="standard" value="{!v.searchFields.dossier_number}" onchange="{!c.populateDossier}" ></lightning:input>
             <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.BDS_Search_Phone}"
                 type="text" variant="standard" value="{!v.searchFields.phone}" disabled="{!v.disableSearch}"></lightning:input>
             <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.BDS_Search_Domain}"

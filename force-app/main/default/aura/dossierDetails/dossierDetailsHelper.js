@@ -83,6 +83,7 @@
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
             "title": title,
+            "mode": (type == 'error' ? 'sticky' : 'dismissible'),
             "message": message,
             "type": (type == null ? 'info' : type)
         });

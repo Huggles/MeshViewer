@@ -26,7 +26,6 @@
         // the server-side action returns
         action.setCallback(this, function(response) {
             var state = response.getState();
-            console.log(state);
             if (state === "SUCCESS") {
                 if(response.getReturnValue().state === 'SUCCESS'){
                     console.log('SUCCESS IN WRAPPER');
@@ -84,6 +83,7 @@
         var toastEvent = $A.get("e.force:showToast");
         toastEvent.setParams({
             "title": title,
+            "mode": (type == 'error' ? 'sticky' : 'dismissible'),
             "message": message,
             "type": (type == null ? 'info' : type)
         });
@@ -95,7 +95,6 @@
      * @param {*} response 
      */
     handleSearchResults : function(component, response) {
-        console.log(response);
         component.set('v.companyList', response);
         component.set('v.step', '2');
     },
