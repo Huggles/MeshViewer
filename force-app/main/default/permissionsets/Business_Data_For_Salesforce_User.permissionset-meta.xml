@@ -357,6 +357,10 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
+        <tab>Customer_connect_config</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Dutch_Business_Dossier__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>

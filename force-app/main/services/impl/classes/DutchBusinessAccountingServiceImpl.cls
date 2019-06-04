@@ -114,4 +114,18 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             return null; // never happens hence logging throws exceptions
         }
     }
+
+    public static Boolean userCheckActive(){
+        DutchBusinessAccountingDto.userCheckActiveRequest input = new DutchBusinessAccountingDto.userCheckActiveRequest();
+        try{
+            Credentials__c cs = Credentials__c.getOrgDefaults();
+            input.userId = (integer)cs.CompanyInfoUserId__c;
+            IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
+            DutchBusinessAccountingDto.userViewV2Response result = service.userCheckActive(input);
+            return result.active;
+        }catch(Exception e){
+            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            return null; // never happens hence logging throws exceptions
+        }
+    }
 }

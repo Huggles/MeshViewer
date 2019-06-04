@@ -121,4 +121,78 @@ public abstract class WebServicesNLSOAPAccountingImplTypes extends WebservicesNl
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'userid','balance'};
     }
+
+    public class userCheckActiveRequestType {
+        public Integer userid;
+        private String[] userid_type_info = new String[]{'userid','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'userid'};
+    }
+
+    public class userViewV2ResponseType {
+        public UserType out;
+        private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'out'};
+    }
+
+     public class UserType{
+        public Integer id;
+        public String nickname;
+        public String email;
+        public Double balance;
+        public Double balancethreshold;
+        public String notificationrecipients;
+        public String companyname;
+        public String address;
+        public String contactname;
+        public String contactemail;
+        public String telephone;
+        public String fax;
+        public String clientcode;
+        public String comments;
+        public String creationtime;
+        public String lastmodified;
+        public Boolean active;
+        public Integer account_id;
+        public String account_name;
+        public UserGroupArray usergroups;
+        private String[] id_type_info = new String[]{'id','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] nickname_type_info = new String[]{'nickname','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] email_type_info = new String[]{'email','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] balance_type_info = new String[]{'balance','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] balancethreshold_type_info = new String[]{'balancethreshold','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] notificationrecipients_type_info = new String[]{'notificationrecipients','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] companyname_type_info = new String[]{'companyname','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] address_type_info = new String[]{'address','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] contactname_type_info = new String[]{'contactname','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] contactemail_type_info = new String[]{'contactemail','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] telephone_type_info = new String[]{'telephone','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] fax_type_info = new String[]{'fax','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] clientcode_type_info = new String[]{'clientcode','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] comments_type_info = new String[]{'comments','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] creationtime_type_info = new String[]{'creationtime','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] lastmodified_type_info = new String[]{'lastmodified','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] active_type_info = new String[]{'active','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] account_id_type_info = new String[]{'account_id','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] account_name_type_info = new String[]{'account_name','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] usergroups_type_info = new String[]{'usergroups','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'id','nickname','email','balance','balancethreshold','notificationrecipients','companyname','address','contactname','contactemail','telephone','fax','clientcode','comments','creationtime','lastmodified','active','account_id','account_name','usergroups'};
+    }
+    public class UserGroupArray {
+        public UserGroup[] item;
+        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'item'};
+    }
+    public class UserGroup {
+        public Integer id;
+        public String name;
+        private String[] id_type_info = new String[]{'id','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] name_type_info = new String[]{'name','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'id','name'};
+    }
+   
 }

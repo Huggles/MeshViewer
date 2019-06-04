@@ -3,6 +3,8 @@ public static PermissionSet ps;
     @AuraEnabled(cacheable=true)
     public static List<UserWrapper> getUserList(String searchKey, String searchParam, String sortedBy, String sortedDirection) {
         try{
+            fflib_SecurityUtils.checkRead(Profile.SObjectType, new List<String>{'Id','Name'});
+
             list<String> enabledDutchBusinessUserIds = getDutchBusinessUserIds();
             list<UserWrapper> uwList = new list<UserWrapper>();
             list<User> userList;
@@ -109,6 +111,11 @@ public static PermissionSet ps;
         Decimal balance = DutchBusinessAccountingService.getBalance();
         system.debug('balance is '+ balance);
         return balance;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Boolean userCheckActive(){
+        return DutchBusinessAccountingService.userCheckActive();
     }
 
     

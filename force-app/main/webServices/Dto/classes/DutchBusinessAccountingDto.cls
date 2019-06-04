@@ -1,4 +1,5 @@
 public with sharing class DutchBusinessAccountingDto {
+    
     public class AccountViewResponseDto {
         public String companyInfoId;
         public String Name;
@@ -50,4 +51,11 @@ public with sharing class DutchBusinessAccountingDto {
         public Integer userId;
         public double balance;
     }
+    public class userCheckActiveRequest{
+        public Integer userId;
+    }
+    public class userViewV2Response{
+        public Boolean active;
+    }
+
 }

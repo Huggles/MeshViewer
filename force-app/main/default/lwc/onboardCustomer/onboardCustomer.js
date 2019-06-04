@@ -3,7 +3,12 @@ import getUserOnboarded from '@salesforce/apex/ConfigAppController.getUserOnboar
 import enableTrial from '@salesforce/apex/ConfigAppController.enableTrial';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+import Config_Account_ActivateDescription from '@salesforce/label/c.Config_Account_ActivateDescription';
+import Config_Account_ActivateDescriptionRequest from '@salesforce/label/c.Config_Account_ActivateDescriptionRequest';
+import Config_Account_Username from '@salesforce/label/c.Config_Account_Username';
+import Config_Account_Password from '@salesforce/label/c.Config_Account_Password';
+import Config_Account_Save from '@salesforce/label/c.Config_Account_Save';
+import Config_Title from '@salesforce/label/c.Config_Title';
 
 
 export default class onboardCustomer extends LightningElement {
@@ -11,6 +16,18 @@ export default class onboardCustomer extends LightningElement {
 @track onboarded = false;
 @track error;
 @track openmodal = false;
+
+username;
+password;
+
+label = {
+    Config_Account_ActivateDescription,
+    Config_Account_ActivateDescriptionRequest,
+    Config_Account_Username,
+    Config_Account_Password,
+    Config_Account_Save,
+    Config_Title
+}
 
 isUserOnboarded;
 
