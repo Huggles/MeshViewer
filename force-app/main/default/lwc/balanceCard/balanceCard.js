@@ -3,8 +3,7 @@ import getUserBalance from '@salesforce/apex/ConfigAppController.getUserBalance'
 import addBudged from '@salesforce/apex/ConfigAppController.addBudged';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
-
+import Config_Balance_Threshold_Description from '@salesforce/label/c.Config_Balance_Threshold_Description';
 
 export default class balanceCard extends LightningElement {
 
@@ -13,6 +12,10 @@ export default class balanceCard extends LightningElement {
     amountToAdd = 10;
 
     wiredBalanceResult;
+
+    label = {
+        Config_Balance_Threshold_Description
+    }
     
     @wire(getUserBalance)
     wiredBalance(result) {

@@ -1,20 +1,18 @@
 <template>
-    <div id="waiting" if:false={ready}>
-        <lightning-card title="***Dutch Business configuration page" icon-name="custom:custom14">***Loading…</lightning-card>
-    </div>
-    <div id="waitingFinished" if:true={ready}>
-        <div id="customerOnboarded" if:true={userActive}>
-            <c-balance-card></c-balance-card>
+    <lightning-card title={label.Config_Title} icon-name="custom:custom14">
+        <div id="waiting" if:false={ready}>
+            <lightning-card title="***Dutch Business configuration page" icon-name="custom:custom14">***Loading…</lightning-card>
         </div>
-        <div id="awaitingActivation" if:true={awaitingActivation}>
-            <lightning-card title={label.Config_Title} icon-name="custom:custom14">
-                <div  class='slds-p-around_medium'>
-                    {label.Config_Account_AwaitingActivation}
-                </div>
-            </lightning-card>
+        <div id="waitingFinished" if:true={ready}>
+            <div id="customerOnboarded" if:true={userActive}>
+                <c-balance-card></c-balance-card>
+            </div>
+            <div id="awaitingActivation" class='slds-p-around_medium' if:true={awaitingActivation}>
+                <div>{label.Config_Account_AwaitingActivation}</div>
+            </div>
+            <div id="customerNotOnboarded" if:true={showOnboarded}>
+                <c-onboard-customer onuseronboarded={handleUserOnboarded}></c-onboard-customer>
+            </div>
         </div>
-        <div id="customerNotOnboarded" if:true={showOnboarded}>
-            <c-onboard-customer onuseronboarded={handleUserOnboarded}></c-onboard-customer>
-        </div>
-    </div>
+    </lightning-card>
 </template>
