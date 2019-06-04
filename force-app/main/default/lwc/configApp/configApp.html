@@ -7,7 +7,11 @@
             <c-balance-card></c-balance-card>
         </div>
         <div id="awaitingActivation" if:true={awaitingActivation}>
-            {label.Config_Account_AwaitingActivation}
+            <lightning-card title={label.Config_Title} icon-name="custom:custom14">
+                <div  class='slds-p-around_medium'>
+                    {label.Config_Account_AwaitingActivation}
+                </div>
+            </lightning-card>
         </div>
         <div id="customerNotOnboarded" if:true={showOnboarded}>
             <c-onboard-customer onuseronboarded={handleUserOnboarded}></c-onboard-customer>

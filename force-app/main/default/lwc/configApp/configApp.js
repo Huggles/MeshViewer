@@ -4,7 +4,7 @@ import userCheckActive from '@salesforce/apex/ConfigAppController.userCheckActiv
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import Config_Account_AwaitingActivation from '@salesforce/label/c.Config_Account_AwaitingActivation';
-
+import Config_Title from '@salesforce/label/c.Config_Title';
 
 export default class configApp extends LightningElement {
 
@@ -16,7 +16,8 @@ export default class configApp extends LightningElement {
     @track userActive;
 
     label = {
-        Config_Account_AwaitingActivation
+        Config_Account_AwaitingActivation,
+        Config_Title
     }
 
     @wire(getUserOnboarded)

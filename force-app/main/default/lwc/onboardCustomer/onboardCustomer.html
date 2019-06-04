@@ -1,7 +1,7 @@
 <template>
     <div id="waiting" if:false={onboarded}>
         <lightning-card title={label.Config_Title} icon-name="custom:custom14">
-            <div  class='slds-p-around_medium'>
+            <div  class='slds-p-around_medium cc_max_50'>
                 <div>{label.Config_Account_ActivateDescription} <a href="javascript:void(0);" onclick={enableTrial} class="slds-text-link_reset"><span class="slds-text-link">{label.Config_Account_ActivateDescriptionRequest}</span></a>.</div>
                 <lightning-input label={label.Config_Account_Username} type="text" value={username} disabled></lightning-input>
                 <lightning-input label={label.Config_Account_Password} type="password" value={password} disabled></lightning-input>
