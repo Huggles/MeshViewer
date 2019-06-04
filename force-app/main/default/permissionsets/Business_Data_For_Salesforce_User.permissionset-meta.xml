@@ -357,7 +357,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
-        <tab>Business_Data_Setup</tab>
+        <tab>Customer_connect_config</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
