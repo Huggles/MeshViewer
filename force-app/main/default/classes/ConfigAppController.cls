@@ -72,7 +72,7 @@ public static PermissionSet ps;
     }
 
     @AuraEnabled
-    public static void addBudged(Double Amount){
+    public static void addBudget(Double Amount){
         try{
             boolean resp = DutchBusinessAccountingService.addBudget(amount);
         }catch(BdsException ex){
