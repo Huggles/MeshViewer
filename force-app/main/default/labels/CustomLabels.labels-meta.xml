@@ -71,6 +71,13 @@
         <value>The threshold slider determines the value your balance must drop to before you are notfied.</value>
     </labels>
     <labels>
+        <fullName>Config_Balance_Updated</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Balance_Updated</shortDescription>
+        <value>Your balance has been updated.</value>
+    </labels>
+    <labels>
         <fullName>BDS_Dossier_Account_Update_Completed</fullName>
         <language>en_US</language>
         <protected>true</protected>
