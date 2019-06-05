@@ -50,7 +50,7 @@
             if (response === true)
                 helper.showToast(component, $A.get('$Label.c.BDS_Success'), $A.get('$Label.c.Dossier_Removed'), 'success');
             else 
-                helper.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.Error_Remove_Dossier'), 'success');
+                helper.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.Error_Remove_Dossier'), 'error');
             component.find('recordHandler').reloadRecord(true);
         });
         

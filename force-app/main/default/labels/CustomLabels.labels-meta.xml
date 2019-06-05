@@ -152,7 +152,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>BDS_Error_Remove_Dossier</shortDescription>
-        <value>Error 104 received from Customer.connect. Please contact support for assistance.</value>
+        <value>There was a problem removing the dossier. Please ensure you have permission to carry out this action.</value>
     </labels>
     <labels>
         <fullName>BDS_Establishment_Date</fullName>
