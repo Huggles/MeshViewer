@@ -19,7 +19,7 @@ public with sharing class CompanyDetailsControllerTest {
         test.startTest();
         Object result = CompanyDetailsController.search(searchParams);
         //system.assertEquals('nulls', String.valueOf(result));
-        ((IDutchBusinessService)mocks.verify(mockService, 1)).searchForDossiers((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject());
+        ((IBusinessService)mocks.verify(mockService, 1)).searchForDossiers((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject());
         test.stopTest();
 
     }
