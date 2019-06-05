@@ -323,6 +323,23 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         }
         //return null;
     }
+
+    public static Boolean deleteDossier(Id accountId) {
+        try{
+            Account acct = AccountSelector.newInstance().selectById(accountId);
+            list<Dutch_Business_Dossier__c> dossierList = DutchBusinessDossierSelector.newInstance().selectById(new set<Id>{acct.Dutch_Business_Dossier__c});
+            if (dossierList.size() == 1) {
+                delete dossierList[0];
+                return true;
+            }
+            return false;
+        }catch(BdsException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+        }
+    }
     // TODO: rewrite properly, the method should notify if there were problems during update
     /*public static boolean updateAccountDossier(Id accountId, Id dossierId) {
         try{

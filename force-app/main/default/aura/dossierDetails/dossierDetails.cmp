@@ -36,6 +36,9 @@
             <div class="slds-box slds-theme_default slds-m-bottom_small">
                 <lightning:card variant="Narrow" >
                     <aura:set attribute="title">{!v.myTitleName}</aura:set>
+                    <aura:set attribute="actions">
+                        <lightning:button label="{!$Label.c.Dossier_Remove}" onclick="{!c.removeDossier}" ></lightning:button>
+                    </aura:set>
                 </lightning:card>
             </div>
             <c:PageLayoutRecordDisplay RecordId="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c}" PageLayoutName="Dutch_Business_Dossier__c-Dutch Business Dossier Layout" objectApiName="cinfo_sales__Dutch_Business_Dossier__c" />

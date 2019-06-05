@@ -59,4 +59,15 @@ public with sharing class CompanyDetailsController {
         return result;
     }
 
+    @AuraEnabled
+    public static Object deleteDossier(Id recordId){
+        try{
+            Boolean result = DutchBusinessService.deleteDossier(recordId);
+            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
+            return output;
+        }catch(Exception e){
+            return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
+        }
+    }
+
 }

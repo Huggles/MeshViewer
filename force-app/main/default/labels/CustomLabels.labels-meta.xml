@@ -106,6 +106,20 @@
         <value>Dossier Number</value>
     </labels>
     <labels>
+        <fullName>Dossier_Remove</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Remove</shortDescription>
+        <value>Remove Dossier</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Removed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Removed</shortDescription>
+        <value>Dossier Removed</value>
+    </labels>
+    <labels>
         <fullName>BDS_Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -132,6 +146,13 @@
         <protected>true</protected>
         <shortDescription>Dutch Business Data Error Unknown</shortDescription>
         <value>Error 102 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Remove_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS_Error_Remove_Dossier</shortDescription>
+        <value>Error 104 received from Customer.connect. Please contact support for assistance.</value>
     </labels>
     <labels>
         <fullName>BDS_Establishment_Date</fullName>

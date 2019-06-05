@@ -38,6 +38,15 @@ public with sharing class DutchBusinessDossierSelector extends fflib_SObjectSele
         return result;
     }
 
+    public List<Dutch_Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) {
+        fflib_QueryFactory queryFactory = newQueryFactory();
+        List<Dutch_Business_Dossier__c> result = new list<Dutch_Business_Dossier__c>();
+        queryFactory.setCondition('Id IN :dosserIdSet');
+        queryFactory.setLimit(20);
+        result = Database.query(queryFactory.toSOQL());
+        return result;
+    }
+
 
 
 }
