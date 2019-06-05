@@ -59,7 +59,6 @@
     </nameField>
     <pluralLabel>Dutch Business Dossiers</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
-
 </CustomObject>
