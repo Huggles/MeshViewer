@@ -1,7 +1,7 @@
 <template>
     <lightning-card title={label.Config_Title} icon-name="custom:custom14">
         <div id="waiting" if:false={ready}>
-            <lightning-card title="***Dutch Business configuration page" icon-name="custom:custom14">***Loading…</lightning-card>
+            <lightning-card title={label.Config_Page_Title} icon-name="custom:custom14">{label.Config_Loading}</lightning-card>
         </div>
         <div id="waitingFinished" if:true={ready}>
             <div id="customerOnboarded" if:true={userActive}>

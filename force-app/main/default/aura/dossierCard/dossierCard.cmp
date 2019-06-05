@@ -15,10 +15,9 @@
         <div class="slds-media__body">
             <h3 class="slds-tile__title slds-truncate" title="{!v.dossier.name + ' (' + v.dossier.dossier_number + ')'}">{!v.dossier.name}</h3>
             <div class="slds-tile__detail">
-                <div>Dossier Number = {!v.dossier.dossier_number}</div>
-                <div>Establishment date = {!v.dossier.establishment_date}</div>
-                <div>Establishment Number = {!v.dossier.establishment_number}</div>
-               
+                <div>{!$Label.c.BDS_Dossier_Number} = {!v.dossier.dossier_number}</div>
+                <div>{!$Label.c.BDS_Establishment_Date} = {!v.dossier.establishment_date}</div>
+                <div>{!$Label.c.BDS_Establishment_Number} = {!v.dossier.establishment_number}</div>
 
             </div>
         </div>
