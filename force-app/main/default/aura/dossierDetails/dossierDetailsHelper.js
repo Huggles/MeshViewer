@@ -33,7 +33,11 @@
                 if(response.getReturnValue().state ==="SUCCESS"){
                     callback(response.getReturnValue().response);
                 }else{
-                    _this.showToast(component, $A.get('$Label.c.BDS_Error'), response.getReturnValue().errorMsg, 'error');
+                    var parts = response.getReturnValue().errorMsg.split(':');
+                    if (parts.length === 2)
+                        _this.showToast(component, parts[0], parts[1], 'error');
+                    else
+                        _this.showToast(component, $A.get('$Label.c.BDS_Error'), response.getReturnValue().errorMsg, 'error');
                 }
                 
             }
@@ -43,7 +47,11 @@
             else if (state === "ERROR") {
                 var errors = response.getError();
                 if (errors && errors[0] && errors[0].message) {
-                        _this.showToast(component, $A.get('$Label.c.BDS_Error'), errors[0].message, 'error');
+                        var parts = errors[0].message.split(':');
+                        if (parts.length === 2)
+                            _this.showToast(component, parts[0], parts[1], 'error');
+                        else
+                            _this.showToast(component, $A.get('$Label.c.BDS_Error'), errors[0].message, 'error');
                 } else {
                     _this.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.BDS_Error_Unknown'), 'error');
                 }
