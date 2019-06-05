@@ -8,6 +8,48 @@
         <value>Back to results</value>
     </labels>
     <labels>
+        <fullName>BDS_DBSCall_AccountDupCheck_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while checking for duplicates</value>
+    </labels>
+    <labels>
+        <fullName>BDS_DBSCall_AccountSave_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened creating the matching account</value>
+    </labels>
+    <labels>
+        <fullName>BDS_DBSCall_AccountSearch_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened searching for matching account</value>
+    </labels>
+    <labels>
+        <fullName>BDS_DBSCall_DossierSave_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while trying to save the dossier.</value>
+    </labels>
+    <labels>
+        <fullName>BDS_DBSCall_Unknown_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while working at the DutchBusinessService level</value>
+    </labels>
+    <labels>
+        <fullName>BDS_DML_Manager_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS DML Manager Error</shortDescription>
+        <value>DMLManager ERROR:  An existing record could not be found for object with Id =</value>
+    </labels>
+    <labels>
         <fullName>BDS_Details_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -36,35 +78,6 @@
         <value>Update Account</value>
     </labels>
     <labels>
-        <fullName>Config_Account_Username</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_Username</shortDescription>
-        <value>Username</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_Password</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_Password</shortDescription>
-        <value>Password</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_Save</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_Save</shortDescription>
-        <value>Save Credentials</value>
-    </labels>
-    <labels>
-        <fullName>Config_Title</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Title</shortDescription>
-        <value>Customer.connect Configuration</value>
-    </labels>
-    
-    <labels>
         <fullName>BDS_Dossier_Account_Update_Completed</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -72,11 +85,25 @@
         <value>Account Updated</value>
     </labels>
     <labels>
+        <fullName>BDS_Dossier_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Number</shortDescription>
+        <value>Dossier Number</value>
+    </labels>
+    <labels>
         <fullName>BDS_Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>BDS_Error</shortDescription>
         <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>BDS_Error_Config</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS_Error_Config</shortDescription>
+        <value>Error 103 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
     </labels>
     <labels>
         <fullName>BDS_Error_Incomplete</fullName>
@@ -93,11 +120,18 @@
         <value>Error 102 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
     </labels>
     <labels>
-        <fullName>BDS_Error_Config</fullName>
+        <fullName>BDS_Establishment_Date</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Error_Config</shortDescription>
-        <value>Error 103 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
+        <shortDescription>Establishment Date</shortDescription>
+        <value>Establishment Date</value>
+    </labels>
+    <labels>
+        <fullName>BDS_Establishment_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Establishment Number</shortDescription>
+        <value>Establishment Number</value>
     </labels>
     <labels>
         <fullName>BDS_Get_Dossier_Results_Help</fullName>
@@ -290,11 +324,11 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>Dutch Business Data sync was successful.</value>
     </labels>
     <labels>
-        <fullName>BDS_WSCall_Unknown_Exception</fullName>
+        <fullName>BDS_WSCall_ChangeBalance_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while processing the web-service call response</value>
+        <value>Something happened while working at the DutchBusinessService level</value>
     </labels>
     <labels>
         <fullName>BDS_WSCall_Generic_UI_Exception</fullName>
@@ -304,46 +338,11 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>Exception Happened, please contact your system administrator</value>
     </labels>
     <labels>
-        <fullName>BDS_WSCall_ChangeBalance_Exception</fullName>
+        <fullName>BDS_WSCall_Unknown_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while working at the DutchBusinessService level</value>
-    </labels>   
-    <labels>
-        <fullName>BDS_DBSCall_Unknown_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while working at the DutchBusinessService level</value>
-    </labels>
-    <labels>
-        <fullName>BDS_DBSCall_AccountSave_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened creating the matching account</value>
-    </labels>
-    <labels>
-        <fullName>BDS_DBSCall_AccountDupCheck_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while checking for duplicates</value>
-    </labels>
-    <labels>
-        <fullName>BDS_DBSCall_AccountSearch_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened searching for matching account</value>
-    </labels>
-    <labels>
-        <fullName>BDS_DBSCall_DossierSave_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while trying to save the dossier.</value>
+        <value>Something happened while processing the web-service call response</value>
     </labels>
     <labels>
         <fullName>BDS_WSCall_Unsuccessful</fullName>
@@ -353,18 +352,11 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>The call to the service was unsuccessful</value>
     </labels>
     <labels>
-        <fullName>Config_Account_AwaitingActivation</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_AwaitingActivation</shortDescription>
-        <value>Your account has not been activated yet. Please try again later. One of our Account Managers will be in touch once your account has been activated.</value>
-    </labels>
-    <labels>
         <fullName>Config_Account_ActivateDescription</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config_Account_ActivateDescription</shortDescription>
-        <value>Thank you for installing the Customer.connect app. To begin, enter your credentials or </value>
+        <value>Thank you for installing the Customer.connect app. To begin, enter your credentials or</value>
     </labels>
     <labels>
         <fullName>Config_Account_ActivateDescriptionRequest</fullName>
@@ -372,6 +364,104 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <protected>true</protected>
         <shortDescription>Config_Account_ActivateDescriptionRequest</shortDescription>
         <value>request a trial</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_AwaitingActivation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_AwaitingActivation</shortDescription>
+        <value>Your account has not been activated yet. Please try again later. One of our Account Managers will be in touch once your account has been activated.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Password</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Password</shortDescription>
+        <value>Password</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Save</shortDescription>
+        <value>Save Credentials</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Username</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Username</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>Config_Add_Budget</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Add Budget</shortDescription>
+        <value>Add Budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Changed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Changed</shortDescription>
+        <value>The balance was changed</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Error</shortDescription>
+        <value>There was an error during org activation.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Management</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Management</shortDescription>
+        <value>Balance Management</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Management_Text</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Management Text</shortDescription>
+        <value>See your current budget, manage your threshold and buy additional budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Current_Budget</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Current Budget</shortDescription>
+        <value>Current Budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Current_Threshold</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Current Threshold</shortDescription>
+        <value>Current Threshold</value>
+    </labels>
+    <labels>
+        <fullName>Config_Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Loading</shortDescription>
+        <value>Loading...</value>
+    </labels>
+    <labels>
+        <fullName>Config_Page_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Page Title</shortDescription>
+        <value>Dutch Business configuration page</value>
+    </labels>
+    <labels>
+        <fullName>Config_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Title</shortDescription>
+        <value>Customer.connect Configuration</value>
     </labels>
     <labels>
         <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>

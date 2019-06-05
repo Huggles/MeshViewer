@@ -1,24 +1,23 @@
 <template>
     <div class="slds-p-around_small slds-card slds-card_boundary">
-            <div class="slds-text-heading_medium">***Balance Management</div>
+            <div class="slds-text-heading_medium">{label.Config_Balance_Management}</div>
             <div class="slds-border_bottom" style="font-size: 0.8125rem;">
-                
-                ***See your current budget, manage your threshold and buy additional budget
+                {label.Config_Balance_Management_Text}
             </div>
-            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">***CURRENT BUDGET</div>
+            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Current_Budget}</div>
             <div class="slds-border_bottom slds-text-align_center slds-text-heading_large" style="color: rgb(21, 137, 238);">
                     <div id="waiting" if:false={ready}>
-                        ***Loading...
+                        {label.Config_Loading}
                     </div>
                     <div id="loaded" if:true={ready}>
                             € {balanceAmount}
                     </div>
             </div>
-            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">***Current Threshold</div>
+            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Current_Threshold}</div>
             <div class="slds-border_bottom">
                 <lightning-slider class="slds-m-top_small slds-m-bottom_medium slds-align_absolute-center" max="100" step="10" type="horizontal" value="50" variant="label-hidden" disabled></lightning-slider>
             </div>
-            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">***add budget</div>
+            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Add_Budget}</div>
             <div>
                 <lightning-layout>
                     <lightning-layout-item size="4"></lightning-layout-item>
