@@ -36,7 +36,6 @@ public with sharing class CompanyDetailsController {
     }
     @AuraEnabled
     public static Object createDossier(String dossierNumber){
-        System.debug('getInfoNoSaving');
         try{
             DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
             Account acc = DutchBusinessService.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number

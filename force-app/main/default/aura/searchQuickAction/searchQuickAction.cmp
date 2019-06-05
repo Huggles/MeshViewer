@@ -1,0 +1,4 @@
+<aura:component implements="force:lightningQuickAction">
+    <c:dossierDetails />
+</aura:component>	
+

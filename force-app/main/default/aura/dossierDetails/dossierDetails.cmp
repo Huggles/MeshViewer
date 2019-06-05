@@ -11,8 +11,10 @@
     <aura:handler name="dossierSearchSubmitEvent" event="c:dossierSearchSubmitEvent" action="{!c.onSubmit}" />
     <aura:handler name="dossierSelectionConfirmedEvent" event="c:dossierSelectionConfirmedEvent" action="{!c.onSelect}" />
 
-    <force:recordData aura:id="recordHandler" recordId="{!v.recordId}" targetFields="{!v.simpleRecord}" layoutType="FULL"
-                      fields="cinfo_sales__Dutch_Business_Dossier__c" mode="EDIT" />
+    <aura:if isTrue="{!v.recordId}">
+        <force:recordData aura:id="recordHandler" recordId="{!v.recordId}" targetFields="{!v.simpleRecord}" layoutType="FULL"
+            fields="cinfo_sales__Dutch_Business_Dossier__c" mode="EDIT" />
+    </aura:if>
                     
     <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? 'slds-hide' : ''}">
         <!-- <lightning:progressIndicator currentStep="{!v.step}" type="base" hasError="false" variant="base">

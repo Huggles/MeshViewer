@@ -95,7 +95,6 @@
      * @param {*} response 
      */
     handleSearchResults : function(component, response) {
-        console.log(response);
         component.set('v.companyList', response);
         component.set('v.step', '2');
     },
@@ -103,11 +102,22 @@
      * Increment step and refresh LDS record.
      * @param {*} component 
      */
-    handleCompanyData : function(component) {
+    handleCompanyData : function(component, response) {
         component.set('v.step', '3');
-        component.find("recordHandler").reloadRecord(true);
+
+        if (component.get('v.recordId'))
+            component.find("recordHandler").reloadRecord(true);
+
         this.showToast(component, $A.get('$Label.c.BDS_Success'), $A.get('$Label.c.BDS_Sync_Success'), 'success');
         // Close quick action if that is the origin.
+        
+        var navEvt = $A.get("e.force:navigateToSObject");
+        navEvt.setParams({
+          "recordId": response[1].Id,
+          "slideDevName": "related"
+        });
+        navEvt.fire();
+
         var dismissActionPanel = $A.get("e.force:closeQuickAction"); 
         dismissActionPanel.fire(); 
     }
