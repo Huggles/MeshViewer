@@ -25,8 +25,8 @@
             <c:dossierSearchForm recordId="{!v.recordId}" />
         </div>
 
-        <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.BDS_Matching_Companies}" iconName="standard:account">
-            <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.BDS_Search_Reset}"
+        <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.Matching_Companies}" iconName="standard:account">
+            <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Search_Reset}"
                 iconName="utility:chevronleft" onclick="{!c.onBack}" />
 
             <c:dossierSearchResults recordId="{!v.recordId}" wrapperList="{!v.companyList}" />
@@ -58,7 +58,7 @@
     <!--
     <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? '' : 'slds-hide'}">
         <div class="logoContainer"><img src="{!$Resource.compinfologo}" /></div>
-        <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.BDS_Details_Help}</div>
+        <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.Details_Help}</div>
         <lightning:recordForm recordId="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c}" objectApiName="cinfo_sales__Dutch_Business_Dossier__c"
             layoutType="Full" columns="2" mode="readonly" />
     </div>-->

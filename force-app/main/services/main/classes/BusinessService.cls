@@ -1,4 +1,4 @@
-public with sharing class DutchBusinessService {
+public with sharing class BusinessService {
 
     public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
         return newInstance().searchForDossiers(searchParams);
@@ -29,7 +29,7 @@ public with sharing class DutchBusinessService {
     public static list<String> checkForAccountDuplicates(Account acc){
         return newInstance().checkForAccountDuplicates(acc);
     }*/
-    public static IDutchBusinessService newInstance() {
-        return (IDutchBusinessService) Application.Service.newInstance(IDutchBusinessService.class);
+    public static IBusinessService newInstance() {
+        return (IBusinessService) Application.Service.newInstance(IBusinessService.class);
     }
 }

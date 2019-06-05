@@ -33,20 +33,20 @@
                     callback(response.getReturnValue().response);
                 }else if(response.getReturnValue().state === 'ERROR'){
                     console.log('SUCCESS IN WRAPPER');
-                    _this.showToast(component, $A.get('$Label.c.BDS_Error'), response.getReturnValue().errorMsg, 'error');
+                    _this.showToast(component, $A.get('$Label.c.Error'), response.getReturnValue().errorMsg, 'error');
                 }
                
                 //callback(response.getReturnValue());
             }
             else if (state === "INCOMPLETE") {
-                _this.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.BDS_Error_Incomplete'), 'error');
+                _this.showToast(component, $A.get('$Label.c.Error'), $A.get('$Label.c.Error_Incomplete'), 'error');
             }
             else if (state === "ERROR") {
                 var errors = response.getError();
                 if (errors && errors[0] && errors[0].message) {
-                        _this.showToast(component, $A.get('$Label.c.BDS_Error'), errors[0].message, 'error');
+                        _this.showToast(component, $A.get('$Label.c.Error'), errors[0].message, 'error');
                 } else {
-                    _this.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.BDS_Error_Unknown'), 'error');
+                    _this.showToast(component, $A.get('$Label.c.Error'), $A.get('$Label.c.Error_Unknown'), 'error');
                 }
             }
         });
@@ -105,7 +105,7 @@
      */
     handleDossierSelect : function(component, response) {
         console.log('hello!');
-        this.showToast(component, $A.get('$Label.c.BDS_Success'), $A.get('$Label.c.BDS_Sync_Success'), 'success');
+        this.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Sync_Success'), 'success');
         component.set('v.dossier', response[0]);
         component.set('v.existingAccountId', response[1].Id);
         //component.set('v.existingAccount', response[2]);

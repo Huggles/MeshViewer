@@ -1,5 +1,5 @@
 @isTest
-public with sharing class DutchBusinessServiceImplTest {
+public with sharing class BusinessServiceImplTest {
 
     @isTest
     public static void testGetDossier(){
@@ -39,7 +39,7 @@ public with sharing class DutchBusinessServiceImplTest {
         Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
 
 
-        List<DutchBusinessDto.DutchBusinessReference> results = DutchBusinessService.searchForDossiers(searchParams);
+        List<DutchBusinessDto.DutchBusinessReference> results = BusinessService.searchForDossiers(searchParams);
         system.debug(results);
         system.assertEquals(results.get(0).dossier_number, '199');
 
@@ -51,7 +51,7 @@ public with sharing class DutchBusinessServiceImplTest {
     public static void upsertAccountAndDossierExistingAccountAndDossier(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-        IDutchBusinessDossierSelector selectorMockDossier = (IDutchBusinessDossierSelector)mocks.mock(IDutchBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
+        IDutchBusinessDossierSelector selectorMockDossier = (IDutchBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
         IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
         IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
 
@@ -81,7 +81,7 @@ public with sharing class DutchBusinessServiceImplTest {
 
         test.startTest();
 
-        list<Object> results = DutchBusinessService.upsertAccountAndDossier(InputDossier, ExistingAccount.Id);
+        list<Object> results = BusinessService.upsertAccountAndDossier(InputDossier, ExistingAccount.Id);
         system.debug(results);
         test.stopTest();
 
@@ -90,7 +90,7 @@ public with sharing class DutchBusinessServiceImplTest {
     public static void upsertAccountAndDossierNewAccountAndDossier(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-        IDutchBusinessDossierSelector selectorMockDossier = (IDutchBusinessDossierSelector)mocks.mock(IDutchBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
+        IDutchBusinessDossierSelector selectorMockDossier = (IDutchBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
         IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
         IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
 
@@ -120,17 +120,17 @@ public with sharing class DutchBusinessServiceImplTest {
 
         test.startTest();
 
-        list<Object> results = DutchBusinessService.upsertAccountAndDossier(InputDossier, null);
+        list<Object> results = BusinessService.upsertAccountAndDossier(InputDossier, null);
         system.debug(results);
         test.stopTest();
 
     }
 
     @isTest
-    public static void testSaveDutchBusinessDossierUow() {
+    public static void testSaveBusinessDossierUow() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-        IDutchBusinessDossierSelector selectorMockDossier = (IDutchBusinessDossierSelector)mocks.mock(IDutchBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
+        IDutchBusinessDossierSelector selectorMockDossier = (IDutchBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
         IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
         IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
 
@@ -213,7 +213,7 @@ public with sharing class DutchBusinessServiceImplTest {
         Application.UnitOfWork.setMock(uowMock);
 
         test.startTest();
-        list<Object> results = DutchBusinessService.upsertAccountAndDossier(InputDossier, null);
+        list<Object> results = BusinessService.upsertAccountAndDossier(InputDossier, null);
         test.stopTest();
         Dutch_Business_Dossier__c d = (Dutch_Business_Dossier__c) results.get(0);
         System.assertEquals(d.Annual_Financial_Statement_Summary__c,'summary');
@@ -298,11 +298,11 @@ public with sharing class DutchBusinessServiceImplTest {
             result.add(d);
             result.add(acc);
             return result;
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -321,7 +321,7 @@ public with sharing class DutchBusinessServiceImplTest {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         //fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
         //IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
-        IDutchBusinessDossierSelector selectorMockDossier = (IDutchBusinessDossierSelector)mocks.mock(IDutchBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
+        IDutchBusinessDossierSelector selectorMockDossier = (IDutchBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
         IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
         // Given
         mocks.startStubbing();
@@ -348,8 +348,8 @@ public with sharing class DutchBusinessServiceImplTest {
         Application.Selector.setMock(selectorMockDossier);
         //Application.service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
         test.startTest();
-        //IDutchBusinessService service = DutchBusinessService.newInstance();
-        Account result = DutchBusinessService.getDossierAccount(String.valueOf(dossierNumber));
+        //IDutchBusinessService service = BusinessService.newInstance();
+        Account result = BusinessService.getDossierAccount(String.valueOf(dossierNumber));
         system.assertEquals(acc.Id, result.Id);
     }
 
@@ -414,7 +414,7 @@ public with sharing class DutchBusinessServiceImplTest {
         test.startTest();
 
 
-        Account result = DutchBusinessService.createAccountForDossier(accountId, dossier, uowMock); 
+        Account result = BusinessService.createAccountForDossier(accountId, dossier, uowMock);
         test.stopTest();
         system.assertEquals(result.name, acc.Name);
     }*/

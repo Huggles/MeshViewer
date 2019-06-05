@@ -31,8 +31,8 @@ public with sharing class Application {
                             IWebservicesNlSOAP.class => WebservicesNlSOAPImpl.class,
                             IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
                             IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class,
-                            IDutchBusinessAccountingService.class => DutchBusinessAccountingServiceImpl.class,
-                            IDutchBusinessService.class => DutchBusinessServiceImpl.class
+                            IBusinessAccountingService.class => BusinessAccountingServiceImpl.class,
+                            IBusinessService.class => BusinessServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application
@@ -41,7 +41,7 @@ public with sharing class Application {
             new Map < SObjectType, Type > {
                 User.SObjectType => UserSelector.class,
                 Account.SObjectType => AccountSelector.class,
-                Dutch_Business_Dossier__c.SObjectType => DutchBusinessDossierSelector.class
+                Dutch_Business_Dossier__c.SObjectType => BusinessDossierSelector.class
                 });
 
 

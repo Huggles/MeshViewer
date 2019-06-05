@@ -177,7 +177,7 @@ public with sharing class DMLManager {
         }
 
         if(existingRecord == null){
-            throw new DMLManagerException( System.Label.BDS_DML_Manager_Error + obj.Id);
+            throw new DMLManagerException( System.Label.DML_Manager_Error + obj.Id);
         }
 
         Map<String,Object> fieldsMap = getFieldMapFromExistingSObject(obj);

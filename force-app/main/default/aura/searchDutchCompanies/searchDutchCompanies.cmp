@@ -17,14 +17,14 @@
         <c:dossierSearchForm  />
     </div>
 
-    <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.BDS_Matching_Companies}" iconName="standard:account">
-        <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.BDS_Search_Reset}"
+    <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.Matching_Companies}" iconName="standard:account">
+        <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Search_Reset}"
             iconName="utility:chevronleft" onclick="{!c.onBack}" />
         <c:dossierSearchResults wrapperList="{!v.companyList}" />
     </div>
 
-    <div class="{!v.step == '3' ? '' : 'slds-hide'}" title="{!$Label.c.BDS_Matching_Companies}" iconName="standard:account">
-        <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.BDS_Back_To_Search}"
+    <div class="{!v.step == '3' ? '' : 'slds-hide'}" title="{!$Label.c.Matching_Companies}" iconName="standard:account">
+        <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Back_To_Search}"
             iconName="utility:chevronleft" onclick="{!c.onBack2}" />
         <c:dossierCard dossier="{!v.dossier}" actionCompleted="{!v.actionCompleted}" accountExists="{!v.accountExists}" />
     </div>

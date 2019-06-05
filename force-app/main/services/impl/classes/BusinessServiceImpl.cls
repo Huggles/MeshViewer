@@ -2,7 +2,7 @@
 Author          : ValerijsProkudins
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
-public with sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
+public with sharing class BusinessServiceImpl implements IBusinessService {
 
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
     public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
@@ -12,7 +12,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
             list<String> existinAccountIds;
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
-            Dutch_Business_Dossier__c d = saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
+            Dutch_Business_Dossier__c d = saveBusinessDossierUow(dossier, acc, unitOfWork);
             //unitOfWork.registerRelationship(acc, Account.Dutch_Business_Dossier__c, d);
             unitOfWork.commitWork();
             //unitOfWork.registerDirty(acc, Account.Dutch_Business_Dossier__c, d); // to update a field on account level once dossier is inserted
@@ -20,11 +20,11 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             result.add(d);
             result.add(acc);
             return result;
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -35,7 +35,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
             //set<Integer> dossNumSet = new set<Integer>();
             //dossNumSet.add(Integer.valueOf(dossierNum));
-            dossList = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossierNum});
+            dossList = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossierNum});
             //dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
             Account acc;
             list<Account> accList = new list<Account>();
@@ -51,11 +51,11 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             //todo: log a warning  that one dossier per system allowed?
             //}
             return acc;
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -81,8 +81,8 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             return acc;
 
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -112,13 +112,13 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
 
 
-    private static Dutch_Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork) {
+    private static Dutch_Business_Dossier__c saveBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork) {
         try{
             boolean dossierExists = false;
             // TODO: move to selector
             //List<Dutch_Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
 
-            list<Dutch_Business_Dossier__c> dbds = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});
+            list<Dutch_Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});
 
 
 
@@ -226,8 +226,8 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
             return d;
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -279,11 +279,11 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             }
             //return parsed result
             return searchResults;
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -295,11 +295,11 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             requestParams.dossier_number = dossierNumber;
             requestParams.establishment_number = null;
             return service.dutchBusinessGetDossier(requestParams);
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
 
 
@@ -308,18 +308,18 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     // was void before. not tyoo logical to return dossier Id from this method. Cut the corner to both get dossierId for  controller and Not research how to handle void methods  with this framework
     public static String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
         try{
-            list<Dutch_Business_Dossier__c> dossierList = DutchBusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});//[SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
+            list<Dutch_Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});//[SELECT Id, Account__c FROM Dutch_Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
             List<Account> accts = AccountSelector.newInstance().selectById(new set<Id>{dossierList.get(0).Account__c});//[SELECT Id, Dutch_Business_Dossier__c FROM Account WHERE Id = :dossierList.get(0).Account__c];
             if (accts.size() == 1) {
                 accts[0].Dutch_Business_Dossier__c = dossierList.get(0).Id;
                 update accts;
             }
             return dossierList.get(0).Id;
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
         //return null;
     }
@@ -331,11 +331,11 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
                 accts[0].Dutch_Business_Dossier__c = dossierId;
                 update accts;
             }
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 
@@ -444,11 +444,11 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
              upsert d;
              return d.Id;
-         }catch(BdsException ex){
+         }catch(CCException ex){
              throw ex; // we dont log bds exceptions, only throwing them further
          }catch(System.Exception ex){
-             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-             throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+             throw new CCException(System.Label.WSCall_Unknown_Exception+ex.getMessage(), ex);
          }Something happened while working at the DutchBusinessService levelInsert failed. First exception on row 0; first error: INVALID_TYPE_ON_FIELD_IN_RECORD, Indication Bankruptcy: value not of required type: : [cinfo_sales__Indication_Bankruptcy__c]
      }*/
     private static String determineStatus(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
@@ -461,11 +461,11 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             if (dossier.indication_bankruptcy != null && Boolean.valueOf(dossier.indication_bankruptcy) == true) status.add('Bankruptcy');
             if (dossier.indication_dip != null && Boolean.valueOf(dossier.indication_dip) == true) status.add('DIP');
             return String.join(status, ';');
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.WSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 

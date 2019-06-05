@@ -1,7 +1,7 @@
 /****************************************************************************************
 Author          : ValerijsProkudins
-Description     : Company info Accounting integration implementation class. NB: it extends the Accounting implementation type class!
-                  All original company.info methods are wrapped into our methods to provide DTO wrapping for both request and response params.
+Description     : Company Connect Accounting integration implementation class. NB: it extends the Accounting implementation type class!
+                  All original Company.Connect methods are wrapped into our methods to provide DTO wrapping for both request and response params.
                   This is done to completely isolate webservice layer from the service layer. This will allow to adapt to webservice changes/updates quickly and without too much effort.
 ******************************************************************************************/
 public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting{
@@ -19,7 +19,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
             result = true;
 
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_ChangeBalance_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_ChangeBalance_Exception);
             return null; // never happens hence logging throws exceptions
         }
 
@@ -53,7 +53,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         try{
             result.balance = userViewBalance(input.userId);
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
         return result;
@@ -90,7 +90,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
             else result.active = false;
 
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
         return result;
@@ -144,7 +144,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
             result.password = response.password;
             return result;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
     }

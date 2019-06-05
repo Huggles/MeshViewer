@@ -66,9 +66,9 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
             }
             if(HeaderLogin == null){
 
-                BdsException ex = new BdsException(System.Label.BDS_NoAuthAppNotActive);//'No authentication data found. The app is not activated');
-                ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-                //throw new BdsException(System.Label.BDS_NoAuthAppNotActive);//'No authentication data found. The app is not activated');
+                CCException ex = new CCException(System.Label.NoAuthAppNotActive);//'No authentication data found. The app is not activated');
+                ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+                //throw new CCException(System.Label.NoAuthAppNotActive);//'No authentication data found. The app is not activated');
             }
             return HeaderLogin;
             

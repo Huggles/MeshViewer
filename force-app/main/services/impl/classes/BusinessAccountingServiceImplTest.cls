@@ -1,5 +1,5 @@
 @isTest
-public with sharing class DutchBusinessAccountingServiceImplTest {
+public with sharing class BusinessAccountingServiceImplTest {
 
 
 @isTest
@@ -16,8 +16,8 @@ public static void onboardCustomer(){
     //mocks.stopStubbing(); 
 
     test.startTest();
-    //Application.service.setMock(IDutchBusinessAccountingService.class, mockWS);
-    IDutchBusinessAccountingService service = DutchBusinessAccountingService.newInstance();
+    //Application.service.setMock(IBusinessAccountingService.class, mockWS);
+    IBusinessAccountingService service = BusinessAccountingService.newInstance();
         mocks.when(mockWS.userCreate((DutchBusinessAccountingDto.UserCreateRequestDto)fflib_Match.anyObject())).thenReturn(output);
     mocks.stopStubbing();  
     Application.service.setMock(IWebServicesNLSOAPAccounting.class, mockWS);
@@ -25,7 +25,7 @@ public static void onboardCustomer(){
 
 
     DutchBusinessAccountingDto.userCreateResponseDto result = service.onboardCustomer('1234');
-    //((IDutchBusinessAccountingService)mocks.verify(mockWS)).CreateCIUser((DutchBusinessAccountingDto.UserCreateRequestDto)fflib_Match.anyObject());
+    //((IBusinessAccountingService)mocks.verify(mockWS)).CreateCIUser((DutchBusinessAccountingDto.UserCreateRequestDto)fflib_Match.anyObject());
     system.assertEquals(result.nickname, output.nickname); 
 
 
@@ -54,7 +54,7 @@ public static void testCreateCIUser(){
     mocks.when(mockWS.userCreate((DutchBusinessAccountingDto.UserCreateRequestDto)fflib_Match.anyObject())).thenReturn(output);
     mocks.stopStubbing();  
     Application.service.setMock(IWebServicesNLSOAPAccounting.class, mockWS);
-    IDutchBusinessAccountingService service = DutchBusinessAccountingService.newInstance();
+    IBusinessAccountingService service = BusinessAccountingService.newInstance();
 
     DutchBusinessAccountingDto.userCreateResponseDto result = service.CreateCIUser(input);
     ((IWebServicesNLSOAPAccounting)mocks.verify(mockWS)).userCreate((DutchBusinessAccountingDto.UserCreateRequestDto)fflib_Match.anyObject());
@@ -64,7 +64,7 @@ public static void testCreateCIUser(){
 
 @isTest
 public static void testGetUserOnboardedFail(){
-    system.assert(!DutchBusinessAccountingServiceImpl.GetUserOnboarded());
+    system.assert(!BusinessAccountingServiceImpl.GetUserOnboarded());
 
 }
 @isTest
@@ -73,7 +73,7 @@ public static void testGetUserOnboardedSuccess(){
     cs.Username__c = 'mock';
     cs.Password__c = 'mock';
     insert cs;
-    system.assert(DutchBusinessAccountingServiceImpl.GetUserOnboarded());
+    system.assert(BusinessAccountingServiceImpl.GetUserOnboarded());
 
 }
 @isTest
@@ -81,10 +81,10 @@ public static void testAddBudget(){
 
     fflib_ApexMocks mocks = new fflib_ApexMocks();
 //given
-    //IDutchBusinessAccountingService mockService = (IDutchBusinessAccountingService)mocks.mock(IDutchBusinessAccountingService.class);
+    //IBusinessAccountingService mockService = (IBusinessAccountingService)mocks.mock(IBusinessAccountingService.class);
     IWebServicesNLSOAPAccounting mockWS = (IWebServicesNLSOAPAccounting)mocks.mock(IWebServicesNLSOAPAccounting.class);
     
-    //Application.service.setMock(IDutchBusinessAccountingService.class, mockService);
+    //Application.service.setMock(IBusinessAccountingService.class, mockService);
     Credentials__c CS = Credentials__c.getOrgDefaults();
     cs.Username__c = 'mock';
     cs.Password__c = 'mock';
@@ -102,7 +102,7 @@ public static void testAddBudget(){
     mocks.stopStubbing();
     Application.service.setMock(IWebServicesNLSOAPAccounting.class, mockWS);
     // when
-    IDutchBusinessAccountingService service = DutchBusinessAccountingService.newInstance();
+    IBusinessAccountingService service = BusinessAccountingService.newInstance();
 
     boolean result = service.addBudget(amount);
 
@@ -116,10 +116,10 @@ public static void testAddBudget(){
 public static void testGetBalance(){
     fflib_ApexMocks mocks = new fflib_ApexMocks();
 //given
-    //IDutchBusinessAccountingService mockService = (IDutchBusinessAccountingService)mocks.mock(IDutchBusinessAccountingService.class);
+    //IBusinessAccountingService mockService = (IBusinessAccountingService)mocks.mock(IBusinessAccountingService.class);
     IWebServicesNLSOAPAccounting mockWS = (IWebServicesNLSOAPAccounting)mocks.mock(IWebServicesNLSOAPAccounting.class);
     
-    //Application.service.setMock(IDutchBusinessAccountingService.class, mockService);
+    //Application.service.setMock(IBusinessAccountingService.class, mockService);
     Credentials__c CS = Credentials__c.getOrgDefaults();
     cs.Username__c = 'mock';
     cs.Password__c = 'mock';
@@ -136,7 +136,7 @@ public static void testGetBalance(){
     mocks.stopStubbing();
     Application.service.setMock(IWebServicesNLSOAPAccounting.class, mockWS);
     // when
-    IDutchBusinessAccountingService service = DutchBusinessAccountingService.newInstance();
+    IBusinessAccountingService service = BusinessAccountingService.newInstance();
     Double result = service.getBalance();
     system.assertEquals(result, output.balance);
 

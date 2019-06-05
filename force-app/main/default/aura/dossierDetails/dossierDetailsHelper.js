@@ -33,19 +33,19 @@
                 if(response.getReturnValue().state ==="SUCCESS"){
                     callback(response.getReturnValue().response);
                 }else{
-                    _this.showToast(component, $A.get('$Label.c.BDS_Error'), response.getReturnValue().errorMsg, 'error');
+                    _this.showToast(component, $A.get('$Label.c.Error'), response.getReturnValue().errorMsg, 'error');
                 }
                 
             }
             else if (state === "INCOMPLETE") {
-                _this.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.BDS_Error_Incomplete'), 'error');
+                _this.showToast(component, $A.get('$Label.c.Error'), $A.get('$Label.c.Error_Incomplete'), 'error');
             }
             else if (state === "ERROR") {
                 var errors = response.getError();
                 if (errors && errors[0] && errors[0].message) {
-                        _this.showToast(component, $A.get('$Label.c.BDS_Error'), errors[0].message, 'error');
+                        _this.showToast(component, $A.get('$Label.c.Error'), errors[0].message, 'error');
                 } else {
-                    _this.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.BDS_Error_Unknown'), 'error');
+                    _this.showToast(component, $A.get('$Label.c.Error'), $A.get('$Label.c.Error_Unknown'), 'error');
                 }
             }
         });
@@ -105,7 +105,7 @@
     handleCompanyData : function(component) {
         component.set('v.step', '3');
         component.find("recordHandler").reloadRecord(true);
-        this.showToast(component, $A.get('$Label.c.BDS_Success'), $A.get('$Label.c.BDS_Sync_Success'), 'success');
+        this.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Sync_Success'), 'success');
         // Close quick action if that is the origin.
         var dismissActionPanel = $A.get("e.force:closeQuickAction"); 
         dismissActionPanel.fire(); 

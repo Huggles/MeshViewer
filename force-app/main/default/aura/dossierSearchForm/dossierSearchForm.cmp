@@ -16,44 +16,44 @@
                     <div class="logoContainer"><img src="{!$Resource.AppsolutelyLogo}"/></div>
             </aura:set>
         <aura:set attribute="actions">
-            <lightning:button class="{!v.disableSearch == false ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.BDS_Search_Confirm}"
+            <lightning:button class="{!v.disableSearch == false ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Search_Confirm}"
                  onclick="{!c.onSearchSubmit}"/>
-            <lightning:button class="{!v.disableSearch == true ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.BDS_Search_Match_Dossier}"
+            <lightning:button class="{!v.disableSearch == true ? 'slds-theme_brand' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Search_Match_Dossier}"
                 iconName="utility:forward" onclick="{!c.onMatchDossier}"/>
         </aura:set>
         <div class="slds-text-color_error">{!v.error}</div>
 
-        <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.BDS_Search_Help}</div>
+        <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.Search_Help}</div>
 
         <div class="slds-form slds-form_horizontal">
-            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.BDS_Search_Trade_Name}"
+            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Search_Trade_Name}"
                 type="text" variant="standard" value="{!v.searchFields.name}" disabled="{!v.disableSearch}"></lightning:input>
-            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.BDS_Search_Dossier_Number}"
+            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Search_Dossier_Number}"
                 type="text" variant="standard" value="{!v.searchFields.dossier_number}" onchange="{!c.populateDossier}" disabled="{!v.disableSearch}"></lightning:input>
-            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.BDS_Search_Phone}"
+            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Search_Phone}"
                 type="text" variant="standard" value="{!v.searchFields.phone}" disabled="{!v.disableSearch}"></lightning:input>
-            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.BDS_Search_Domain}"
+            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Search_Domain}"
                 type="text" variant="standard" value="{!v.searchFields.domain}" disabled="{!v.disableSearch}"></lightning:input>
             <lightning:inputAddress aura:id="Address"
-                addressLabel="{!$Label.c.BDS_Search_Address}" streetLabel="{!$Label.c.BDS_Search_Street}"
-                cityLabel="{!$Label.c.BDS_Search_City}" provinceLabel="{!$Label.c.BDS_Search_Province}"
-                postalCodeLabel="{!$Label.c.BDS_Search_Postal_Code}" countryLabel="{!$Label.c.BDS_Search_Country}"
+                addressLabel="{!$Label.c.Search_Address}" streetLabel="{!$Label.c.Search_Street}"
+                cityLabel="{!$Label.c.Search_City}" provinceLabel="{!$Label.c.Search_Province}"
+                postalCodeLabel="{!$Label.c.Search_Postal_Code}" countryLabel="{!$Label.c.Search_Country}"
                 country="{!v.searchFields.country}" street="{!v.searchFields.street}" city="{!v.searchFields.city}"
                 postalCode="{!v.searchFields.postcode}" province="{!v.searchFields.province}" disabled="{!v.disableSearch}"></lightning:inputAddress>
             <!-- <fieldset class="slds-form-element slds-m-top_medium">
-                <legend class="slds-form-element__legend slds-form-element__label">{!$Label.c.BDS_Search_Details}</legend>
+                <legend class="slds-form-element__legend slds-form-element__label">{!$Label.c.Search_Details}</legend>
                 <div class="slds-form-element__control">
                     <div class="slds-checkbox_button-group">
                         <span class="slds-button slds-checkbox_button">
                             <input id="monday" name="checkbox" type="checkbox" value="monday" checked="checked" />
                             <label class="slds-checkbox_button__label" for="monday">
-                                <span class="slds-checkbox_faux">{!$Label.c.BDS_Search_Details_Dossier}</span>
+                                <span class="slds-checkbox_faux">{!$Label.c.Search_Details_Dossier}</span>
                             </label>
                         </span>
                         <span class="slds-button slds-checkbox_button">
                             <input id="tuesday" name="checkbox" type="checkbox" value="tuesday" />
                             <label class="slds-checkbox_button__label" for="tuesday">
-                                <span class="slds-checkbox_faux">{!$Label.c.BDS_Search_Details_Legal}</span>
+                                <span class="slds-checkbox_faux">{!$Label.c.Search_Details_Legal}</span>
                             </label>
                         </span>
                     </div>

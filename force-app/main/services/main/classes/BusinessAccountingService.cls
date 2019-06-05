@@ -1,4 +1,4 @@
-public with sharing class DutchBusinessAccountingService {
+public with sharing class BusinessAccountingService {
     
     
     public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username){
@@ -23,16 +23,16 @@ public with sharing class DutchBusinessAccountingService {
         return newInstance().addBudget(amount);
     }    
     
-    public static Double getBalance(){ // get balance for currently active CompanyInfo user in the app
+    public static Double getBalance(){ // get balance for currently active CompanyConnect user in the app
         return newInstance().getBalance();
     }
 
-    public static Boolean userCheckActive(){ // get balance for currently active CompanyInfo user in the app
+    public static Boolean userCheckActive(){ // get balance for currently active CompanyConnect user in the app
         return newInstance().userCheckActive();
     }
     
-    public static IDutchBusinessAccountingService newInstance() {
-        return (IDutchBusinessAccountingService) Application.Service.newInstance(IDutchBusinessAccountingService.class);
+    public static IBusinessAccountingService newInstance() {
+        return (IBusinessAccountingService) Application.Service.newInstance(IBusinessAccountingService.class);
     }
 
 }
