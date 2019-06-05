@@ -33,7 +33,7 @@
         </div>
 
         <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? '' : 'slds-hide'}">
-            <div class="slds-box slds-theme_default">
+            <div class="slds-box slds-theme_default slds-m-bottom_small">
                 <lightning:card variant="Narrow" >
                     <aura:set attribute="title">{!v.myTitleName}</aura:set>
                 </lightning:card>
