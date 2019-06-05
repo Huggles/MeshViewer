@@ -128,7 +128,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             if (dossier.trade_names != null && dossier.trade_names.size() > 0) {
                 // Condense all trade names into single field, seperated by new lines.
                 for (Integer i = 0; i < dossier.trade_names.size(); i++) {
-                    trade_names += dossier.trade_names[i] + '/n';
+                    trade_names += dossier.trade_names[i] + (i == dossier.trade_names.size()-1 ? '' : ', ');
                 }
 
             }
