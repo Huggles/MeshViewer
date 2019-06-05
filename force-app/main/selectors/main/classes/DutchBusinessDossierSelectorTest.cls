@@ -45,10 +45,15 @@ public with sharing class DutchBusinessDossierSelectorTest {
 
     @isTest
     static void testSelectByDossierNumber() {
+        List<Account> accounts = new List<Account>();
+        for (Integer i2 = 0; i2 < 10 ; i2++) {
+            accounts.add(new Account(Name = 'test'+i2));
+        }
+        insert accounts;
         List<Dutch_Business_Dossier__c> dossiers = new List<Dutch_Business_Dossier__c>();
         Set<String> dossierNumSet = new set<String>();
         for (Integer i2 = 0; i2 < 10 ; i2++) {
-            dossiers.add(new Dutch_Business_Dossier__c(Name = 'test'+i2, Dossier_Number__c=string.valueOf(i2)));
+            dossiers.add(new Dutch_Business_Dossier__c(Account__c = accounts[0].Id, Name = 'test'+i2, Dossier_Number__c=string.valueOf(i2)));
             dossierNumSet.add(string.valueOf(i2));
         }
         insert dossiers;
