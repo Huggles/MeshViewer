@@ -1,6 +1,6 @@
 import { LightningElement, track, wire } from 'lwc';
 import getUserBalance from '@salesforce/apex/ConfigAppController.getUserBalance';
-import addBudged from '@salesforce/apex/ConfigAppController.addBudged';
+import addBudget from '@salesforce/apex/ConfigAppController.addBudget';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import Config_Balance_Management_Text from '@salesforce/label/c.Config_Balance_Management_Text';
@@ -11,11 +11,14 @@ import Config_Current_Threshold from '@salesforce/label/c.Config_Current_Thresho
 import Config_Add_Budget from '@salesforce/label/c.Config_Add_Budget';
 import Config_Balance_Changed from '@salesforce/label/c.Config_Balance_Changed';
 import Config_Balance_Error from '@salesforce/label/c.Config_Balance_Error';
-
+import Config_Balance_Threshold_Description from '@salesforce/label/c.Config_Balance_Threshold_Description';
+import Config_Balance_Updated from '@salesforce/label/c.Config_Balance_Updated';
 export default class balanceCard extends LightningElement {
 
     @track ready = false;
     @track balanceAmount;
+    @track error;
+    @track success;
     amountToAdd = 10;
 
     label = {
@@ -26,11 +29,13 @@ export default class balanceCard extends LightningElement {
         Config_Current_Threshold,
         Config_Add_Budget,
         Config_Balance_Changed,
-        Config_Balance_Error
+        Config_Balance_Error,
+        Config_Balance_Threshold_Description,
+        Config_Balance_Updated
     }
 
     wiredBalanceResult;
-    
+
     @wire(getUserBalance)
     wiredBalance(result) {
         this.wiredBalanceResult = result;
@@ -50,35 +55,28 @@ export default class balanceCard extends LightningElement {
         this.amountToAdd = event.target.value;
     }
 
-    addBudged(event){
-        addBudged({Amount: this.amountToAdd}).then(result => {
-            console.log(result);
-            console.log('SUCCESS123');
-            const evt = new ShowToastEvent({
-                title: 'Success',
-                message:  Config_Balance_Changed,
-                variant: 'success'
-            });
-            this.dispatchEvent(evt);
-            const event = new CustomEvent('userOnboarded', { // why here?
-                // detail contains only primitives
-                //detail: this.product.fields.Id.value
-            });
-            // Fire the event from c-tile
-            this.dispatchEvent(event);
-            //return null;
-            return refreshApex(this.wiredBalanceResult);
-        })
-        .catch(error => {
+    addBudget(event){
+        addBudget({Amount: this.amountToAdd}).then(result => {
+            // @todo these don't work in VF apparently
+            // const evt = new ShowToastEvent({
+            //     title: 'Success',
+            //     message: this.label.Config_Balance_Changed,
+            //     variant: 'success'
+            // });
+            // this.dispatchEvent(evt);
+            this.success = this.label.Config_Balance_Updated;
+        return refreshApex(this.wiredBalanceResult);
+    })
+    .catch(error => {
             this.error = error;
-            console.log(this.error);
-            const evt = new ShowToastEvent({
-                title: 'Error',
-                message: Config_Balance_Error,
-                variant: 'error'
-            });
-            this.dispatchEvent(evt);
-        });
+        // @todo these don't work in VF apparently
+        // const evt = new ShowToastEvent({
+        //     title: 'Error',
+        //     message: this.label.Config_Balance_Error,
+        //     variant: 'error'
+        // });
+        // this.dispatchEvent(evt);
+    });
     }
 
 

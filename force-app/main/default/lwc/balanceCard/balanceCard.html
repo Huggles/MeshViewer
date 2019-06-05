@@ -1,39 +1,46 @@
 <template>
-    <div class="slds-p-around_small slds-card slds-card_boundary">
-            <div class="slds-text-heading_medium">{label.Config_Balance_Management}</div>
-            <div class="slds-border_bottom" style="font-size: 0.8125rem;">
-                {label.Config_Balance_Management_Text}
+    <div class="slds-p-around_small">
+        <div if:true={error} class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+            <h2>{error}</h2>
+        </div>
+        <div if:true={success} class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_success" role="alert">
+            <h2>{success}</h2>
+        </div>
+        <div class="slds-text-heading_medium">{label.Config_Balance_Management}</div>
+        <div class="slds-border_bottom" style="font-size: 0.8125rem;">
+            {label.Config_Balance_Management_Text}
+        </div>
+        <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Current_Budget}</div>
+        <div class="slds-border_bottom slds-text-align_center slds-text-heading_large" style="color: rgb(21, 137, 238);">
+            <div id="waiting" if:false={ready}>
+                {label.Config_Loading}
             </div>
-            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Current_Budget}</div>
-            <div class="slds-border_bottom slds-text-align_center slds-text-heading_large" style="color: rgb(21, 137, 238);">
-                    <div id="waiting" if:false={ready}>
-                        {label.Config_Loading}
-                    </div>
-                    <div id="loaded" if:true={ready}>
-                            € {balanceAmount}
-                    </div>
-            </div>
-            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Current_Threshold}</div>
-            <div class="slds-border_bottom">
-                <lightning-slider class="slds-m-top_small slds-m-bottom_medium slds-align_absolute-center" max="100" step="10" type="horizontal" value="50" variant="label-hidden" disabled></lightning-slider>
-            </div>
-            <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Add_Budget}</div>
-            <div>
-                <lightning-layout>
-                    <lightning-layout-item size="4"></lightning-layout-item>
-                    <lightning-layout-item size="2">
-                        <div class="slds-form slds-form_horizontal">
-                            <lightning-input label="€" type="number" variant="standard" min="5" value={amountToAdd} onchange={handleNumChange}></lightning-input>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="3">
-                        <div class="slds-align_absolute-center">
-                            <lightning-button class="slds-theme_brand" variant="brand" label="Add Budget" onclick={addBudged}></lightning-button>
-                        </div>
-                    </lightning-layout-item>
-                    <lightning-layout-item size="3"></lightning-layout-item>
-                </lightning-layout>
+            <div id="loaded" if:true={ready}>
+                € {balanceAmount}
             </div>
         </div>
+        <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Current_Threshold}</div>
+        <div class="slds-text-align_center">{label.Config_Balance_Threshold_Description}</div>
+        <div class="slds-border_bottom">
+            <lightning-slider class="slds-m-top_small slds-m-bottom_medium slds-align_absolute-center" max="100" step="10" type="horizontal" value="50" variant="label-hidden" disabled></lightning-slider>
+        </div>
+        <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Add_Budget}</div>
+        <div>
+            <lightning-layout>
+                <lightning-layout-item size="5"></lightning-layout-item>
+                <lightning-layout-item size="1">
+                    <div class="slds-form slds-form_horizontal">
+                        <lightning-input label="€" type="number" variant="standard" min="5" value={amountToAdd} onchange={handleNumChange}></lightning-input>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="1">
+                    <div class="slds-align_absolute-center">
+                        <lightning-button class="slds-theme_brand cc-button-padding" variant="brand" label="Add Budget" onclick={addBudget}></lightning-button>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="4"></lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </div>
 
 </template>

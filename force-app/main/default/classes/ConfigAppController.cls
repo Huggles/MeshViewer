@@ -72,7 +72,7 @@ public static PermissionSet ps;
     }
 
     @AuraEnabled
-    public static void addBudged(Double Amount){
+    public static void addBudget(Double Amount){
         try{
             boolean resp = DutchBusinessAccountingService.addBudget(amount);
         }catch(BdsException ex){
@@ -122,6 +122,11 @@ public static PermissionSet ps;
 
     @AuraEnabled
     public static void assignUsers(List<String> UserIdList){
+        fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
+        fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
+        fflib_SecurityUtils.checkObjectIsDeletable(PermissionSetAssignment.SObjectType);
+        fflib_SecurityUtils.checkUpdate(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
+        fflib_SecurityUtils.checkInsert(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Business_Data_For_Salesforce_User'];
         system.debug('pspspspspspspspspspspspsps = '+ps);
         list<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
