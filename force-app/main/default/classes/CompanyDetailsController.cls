@@ -66,7 +66,7 @@ public with sharing class CompanyDetailsController {
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
         }catch(Exception e){
-            return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
+            return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
         }
     }
 
