@@ -14,7 +14,7 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.BDS_Sync__c</field>
+        <field>Account.CC_Sync__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
