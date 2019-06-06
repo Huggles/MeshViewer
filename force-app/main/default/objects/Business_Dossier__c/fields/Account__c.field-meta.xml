@@ -6,7 +6,9 @@
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Business Dossiers</relationshipLabel>
     <relationshipName>Business_Dossiers</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
     <trackTrending>false</trackTrending>
-    <type>Lookup</type>
-    <required>false</required>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
 </CustomField>
