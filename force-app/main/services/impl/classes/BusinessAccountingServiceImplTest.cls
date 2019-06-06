@@ -88,7 +88,7 @@ public static void testAddBudget(){
     Credentials__c CS = Credentials__c.getOrgDefaults();
     cs.Username__c = 'mock';
     cs.Password__c = 'mock';
-    cs.CompanyInfoUserId__c = 1234;
+    cs.CompanyConnectUserId__c = 1234;
     insert cs; 
     mocks.startStubbing();
     
@@ -123,7 +123,7 @@ public static void testGetBalance(){
     Credentials__c CS = Credentials__c.getOrgDefaults();
     cs.Username__c = 'mock';
     cs.Password__c = 'mock';
-    cs.CompanyInfoUserId__c = 1234;
+    cs.CompanyConnectUserId__c = 1234;
     insert cs; 
     mocks.startStubbing();
     DutchBusinessAccountingDto.userViewBalanceRequest input = new DutchBusinessAccountingDto.userViewBalanceRequest();

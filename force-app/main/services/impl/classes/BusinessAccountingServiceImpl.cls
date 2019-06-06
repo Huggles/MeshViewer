@@ -36,7 +36,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
             Credentials__c cs = Credentials__c.getOrgDefaults();
             cs.Username__c = userResp.nickname;
             cs.Password__c = userResp.password;
-            cs.CompanyInfoUserId__c = userResp.id;
+            cs.CompanyConnectUserId__c = userResp.id;
             upsert cs;
             return userResp;
         }catch(Exception e){
@@ -93,7 +93,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
         DutchBusinessAccountingDto.userChangeBalanceRequestDto input = new DutchBusinessAccountingDto.userChangeBalanceRequestDto();
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            return addBudget(amount, (Integer)cs.CompanyInfoUserId__c);
+            return addBudget(amount, (Integer)cs.CompanyConnectUserId__c);
         }catch(Exception e){
             ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
@@ -105,7 +105,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
         DutchBusinessAccountingDto.userViewBalanceRequest input = new DutchBusinessAccountingDto.userViewBalanceRequest();
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            input.userId = (integer)cs.CompanyInfoUserId__c;
+            input.userId = (integer)cs.CompanyConnectUserId__c;
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
             DutchBusinessAccountingDto.userViewBalanceResponse result = service.userGetBalance(input);
             return result.balance;
@@ -119,7 +119,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
         DutchBusinessAccountingDto.userCheckActiveRequest input = new DutchBusinessAccountingDto.userCheckActiveRequest();
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            input.userId = (integer)cs.CompanyInfoUserId__c;
+            input.userId = (integer)cs.CompanyConnectUserId__c;
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
             DutchBusinessAccountingDto.userViewV2Response result = service.userCheckActive(input);
             return result.active;
