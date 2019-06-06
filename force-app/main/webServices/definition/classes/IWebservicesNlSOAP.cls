@@ -1,6 +1,6 @@
 /****************************************************************************************
 Author          : ValerijsProkudins
-Description     : Interface class for baseline CompanyInfo webservice layer
+Description     : Interface class for baseline CompanyConnect webservice layer
 ******************************************************************************************/
 public interface IWebservicesNlSOAP {
 

@@ -24,7 +24,7 @@ public static void testUserGetBalanceFailure(){
         IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
         try{
             DutchBusinessAccountingDto.userViewBalanceResponse response = service.userGetBalance(new DutchBusinessAccountingDto.userViewBalanceRequest());
-        }catch(BdsException e){
+        }catch(CCException e){
             flag = true;
         }
         Test.stopTest();
@@ -53,7 +53,7 @@ public static void testUserChangeBalanceFailure(){
     try{
         IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
         boolean response = service.userChangeBalance(new DutchBusinessAccountingDto.userChangeBalanceRequestDto());
-    }catch(BdsException e){
+    }catch(CCException e){
         flag = true;
     }
         Test.stopTest();
@@ -83,7 +83,7 @@ public static void testUserCreateFailure(){
     try{
         IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
         DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(new DutchBusinessAccountingDto.UserCreateRequestDto());
-    }catch(BdsException e){
+    }catch(CCException e){
         flag = true;
     }
         Test.stopTest();

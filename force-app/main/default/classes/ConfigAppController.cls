@@ -5,7 +5,7 @@ public static PermissionSet ps;
         try{
             fflib_SecurityUtils.checkRead(Profile.SObjectType, new List<String>{'Id','Name'});
 
-            list<String> enabledDutchBusinessUserIds = getDutchBusinessUserIds();
+            list<String> enabledBusinessUserIds = getBusinessUserIds();
             list<UserWrapper> uwList = new list<UserWrapper>();
             list<User> userList;
             system.debug(searchParam);
@@ -35,22 +35,22 @@ public static PermissionSet ps;
                 try{uw.ProfileName = profileMap.get(usr.ProfileId).name;}catch(exception e){}
                 system.debug('************* usr.Id = '+ usr.Id);
                 
-                system.debug('************* enabledDutchBusinessUserIds = '+ enabledDutchBusinessUserIds);
-                system.debug('************* enabledDutchBusinessUserIds.contains(usr.Id) = '+ enabledDutchBusinessUserIds.contains(usr.Id));
-                if(enabledDutchBusinessUserIds.contains(usr.Id)){
-                    uw.DutchBusinessActive = true;
+                system.debug('************* enabledBusinessUserIds = '+ enabledBusinessUserIds);
+                system.debug('************* enabledBusinessUserIds.contains(usr.Id) = '+ enabledBusinessUserIds.contains(usr.Id));
+                if(enabledBusinessUserIds.contains(usr.Id)){
+                    uw.BusinessActive = true;
                 }
                 uwList.add(uw);
             }
             system.debug('************* uwList= '+ uwList);
             return uwList;
-        }catch(BdsException ex){
+        }catch(CCException ex){
             //throw ex; // we dont log bds exceptions, only throwing them further
             //TODO: implement error callback and reporting
             return null;
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
             //return output;
             return null;
         }
@@ -58,14 +58,14 @@ public static PermissionSet ps;
     @AuraEnabled(cacheable=true)
     public static boolean getUserOnboarded(){
        try{
-           return DutchBusinessAccountingService.getUserOnboarded();
-       }catch(BdsException ex){
+           return BusinessAccountingService.getUserOnboarded();
+       }catch(CCException ex){
             //throw ex; // we dont log bds exceptions, only throwing them further
             //TODO: implement error callback and reporting
             return false;
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
             //return output;
             return false;
         } 
@@ -74,14 +74,14 @@ public static PermissionSet ps;
     @AuraEnabled
     public static void addBudget(Double Amount){
         try{
-            boolean resp = DutchBusinessAccountingService.addBudget(amount);
-        }catch(BdsException ex){
+            boolean resp = BusinessAccountingService.addBudget(amount);
+        }catch(CCException ex){
             //throw ex; // we dont log bds exceptions, only throwing them further
             //TODO: implement error callback and reporting
            // return null;
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
             //return output;
             //return null;
         }
@@ -91,16 +91,16 @@ public static PermissionSet ps;
     @AuraEnabled
     public static boolean enableTrial(){
         try{
-            DutchBusinessAccountingDto.userCreateResponseDto resp = DutchBusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId());
+            DutchBusinessAccountingDto.userCreateResponseDto resp = BusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId());
             system.debug(resp);
             return true;
-        }catch(BdsException ex){
-            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+        }catch(CCException ex){
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
             //return output;
             return false;
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.BDS_WSCall_Generic_UI_Exception); // move the msg to label.
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
             //return output;
             return false;
         }
@@ -108,14 +108,14 @@ public static PermissionSet ps;
 
     @AuraEnabled(cacheable=true)
     public static Decimal getUserBalance(){
-        Decimal balance = DutchBusinessAccountingService.getBalance();
+        Decimal balance = BusinessAccountingService.getBalance();
         system.debug('balance is '+ balance);
         return balance;
     }
 
     @AuraEnabled(cacheable=true)
     public static Boolean userCheckActive(){
-        return DutchBusinessAccountingService.userCheckActive();
+        return BusinessAccountingService.userCheckActive();
     }
 
     
@@ -130,11 +130,11 @@ public static PermissionSet ps;
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Business_Data_For_Salesforce_User'];
         system.debug('pspspspspspspspspspspspsps = '+ps);
         list<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
-        list<String> enabledDutchBusinessUserIds = getDutchBusinessUserIds();
+        list<String> enabledBusinessUserIds = getBusinessUserIds();
         list<String> psaToDelete = new list<String>();
         
         for(String usrId: UserIdList){
-            if(!enabledDutchBusinessUserIds.contains(usrId)){
+            if(!enabledBusinessUserIds.contains(usrId)){
                 PermissionSetAssignment psa = new PermissionSetAssignment();
                 psa.AssigneeId = usrId;
                 psa.PermissionSetId = ps.Id;
@@ -150,7 +150,7 @@ public static PermissionSet ps;
         system.debug(logginglevel.error,'Users = '+UserIdList);
     }
 
-    private static list<String> getDutchBusinessUserIds(){
+    private static list<String> getBusinessUserIds(){
         fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
         fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Business_Data_For_Salesforce_User'];
@@ -171,7 +171,7 @@ public static PermissionSet ps;
         @AuraEnabled public String Name;
         @AuraEnabled public boolean isActive;
         @AuraEnabled public String ProfileName;
-        @AuraEnabled public boolean DutchBusinessActive = false;
+        @AuraEnabled public boolean BusinessActive = false;
     }
 }
 

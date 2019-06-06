@@ -12,7 +12,7 @@
 
     <aura:if isTrue="{!v.recordId}">
         <force:recordData aura:id="recordHandler" recordId="{!v.recordId}" targetFields="{!v.simpleRecord}" layoutType="FULL"
-            fields="cinfo_sales__Dutch_Business_Dossier__c" mode="EDIT" />
+                          fields="cinfo_sales__Business_Dossier__c" mode="EDIT" />
     </aura:if>
 
     <div class="{!(!v.simpleRecord ? (v.recordId ? 'spinnerHolder' : 'slds-hide') : 'slds-hide')}">
@@ -20,19 +20,19 @@
     </div>
 
     <div class="{!(!v.simpleRecord ? (v.recordId ? 'slds-hide' : '') : '')}">
-                    
-        <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? 'slds-hide' : ''}">
+
+        <div class="{!v.simpleRecord.cinfo_sales__Business_Dossier__c != null ? 'slds-hide' : ''}">
             <div class="{!v.step == '1' ? '' : 'slds-hide'}">
                 <c:dossierSearchForm recordId="{!v.recordId}" />
             </div>
-            <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.BDS_Matching_Companies}" iconName="standard:account">
-                <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.BDS_Search_Reset}"
-                    iconName="utility:chevronleft" onclick="{!c.onBack}" />
+            <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.Matching_Companies}" iconName="standard:account">
+                <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Search_Reset}"
+                                  iconName="utility:chevronleft" onclick="{!c.onBack}" />
                 <c:dossierSearchResults recordId="{!v.recordId}" wrapperList="{!v.companyList}" />
             </div>
         </div>
 
-        <div class="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c != null ? '' : 'slds-hide'}">
+        <div class="{!v.simpleRecord.cinfo_sales__Business_Dossier__c != null ? '' : 'slds-hide'}">
             <div class="slds-box slds-theme_default slds-m-bottom_small">
                 <lightning:card variant="Narrow" >
                     <aura:set attribute="title">{!v.myTitleName}</aura:set>
@@ -41,7 +41,7 @@
                     </aura:set>
                 </lightning:card>
             </div>
-            <c:PageLayoutRecordDisplay RecordId="{!v.simpleRecord.cinfo_sales__Dutch_Business_Dossier__c}" PageLayoutName="Dutch_Business_Dossier__c-Dutch Business Dossier Layout" objectApiName="cinfo_sales__Dutch_Business_Dossier__c" />
+            <c:PageLayoutRecordDisplay RecordId="{!v.simpleRecord.cinfo_sales__Business_Dossier__c}" PageLayoutName="Business_Dossier__c-Dutch Business Dossier Layout" objectApiName="cinfo_sales__Business_Dossier__c" />
         </div>
     </div>
 </aura:component>

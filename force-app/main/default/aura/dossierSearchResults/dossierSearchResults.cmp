@@ -5,9 +5,9 @@
     <aura:handler name="dossierSelectedEvent" event="c:dossierSelectedEvent" action="{!c.onSelect}" />
     <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent" />
     <aura:if isTrue='{!v.wrapperList.length > 0}'>
-        <lightning:button class="slds-theme_brand slds-float_right" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.BDS_Search_Results_Confirm}"
+        <lightning:button class="slds-theme_brand slds-float_right" iconPosition="right" variant="brand" type="submit" label="{!$Label.c.Search_Results_Confirm}"
             iconName="utility:check" onclick="{!c.onConfirm}" disabled="{!v.selected == null}" />
-        <div class="slds-m-top_medium slds-text-title">{!$Label.c.BDS_Search_Results_Help}</div>
+        <div class="slds-m-top_medium slds-text-title">{!$Label.c.Search_Results_Help}</div>
         <lightning:layout multipleRows="true">
             <aura:iteration items="{!v.wrapperList}" var="result">
                 <!--<aura:if isTrue="{!result.indication_economically_active == false}">-->
@@ -20,7 +20,7 @@
         <aura:set attribute="else">
             <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
                 <span class="slds-assistive-text">error</span>
-                <h2>{!$Label.c.BDS_Search_No_Results}</h2>
+                <h2>{!$Label.c.Search_No_Results}</h2>
             </div>
         </aura:set>
     </aura:if>

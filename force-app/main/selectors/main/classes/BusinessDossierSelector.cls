@@ -2,36 +2,36 @@
 /****************************************************************************************
 Author          : ValerijsProkudins
 ******************************************************************************************/
-public with sharing class DutchBusinessDossierSelector extends fflib_SObjectSelector implements IDutchBusinessDossierSelector  {
+public with sharing class BusinessDossierSelector extends fflib_SObjectSelector implements IBusinessDossierSelector  {
 
-    public DutchBusinessDossierSelector() {
+    public BusinessDossierSelector() {
         super(false, // Do not include FieldSet fields
                 true,  // enforce Object level security
                 true); // enforce Field level security
     }
 
-    public static IDutchBusinessDossierSelector newInstance() {
-        return (IDutchBusinessDossierSelector) Application.Selector.newInstance(Dutch_Business_Dossier__c.SObjectType);
+    public static IBusinessDossierSelector newInstance() {
+        return (IBusinessDossierSelector) Application.Selector.newInstance(Business_Dossier__c.SObjectType);
     }
 
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
-                Dutch_Business_Dossier__c.Id,
-                Dutch_Business_Dossier__c.Name,
-                Dutch_Business_Dossier__c.Account__c,
-                Dutch_Business_Dossier__c.Account__r.Id,
-                Dutch_Business_Dossier__c.Account__r.name
+                Business_Dossier__c.Id,
+                Business_Dossier__c.Name,
+                Business_Dossier__c.Account__c,
+                Business_Dossier__c.Account__r.Id,
+                Business_Dossier__c.Account__r.name
         };
     }
 
     public Schema.SObjectType getSObjectType() {
-        return Dutch_Business_Dossier__c.sObjectType;
+        return Business_Dossier__c.sObjectType;
     }
 
 
-    public List<Dutch_Business_Dossier__c> selectByDossierNumber(set<String> dossierNumSet){//, String sortedBy, String sortedDirection) {
+    public List<Business_Dossier__c> selectByDossierNumber(set<String> dossierNumSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
-        List<Dutch_Business_Dossier__c> result = new list<Dutch_Business_Dossier__c>();
+        List<Business_Dossier__c> result = new list<Business_Dossier__c>();
         queryFactory.setEnforceFLS(true);
         queryFactory.setCondition('Dossier_Number__c IN :dossierNumSet');
         queryFactory.setLimit(20);
@@ -39,9 +39,9 @@ public with sharing class DutchBusinessDossierSelector extends fflib_SObjectSele
         return result;
     }
 
-    public List<Dutch_Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) {
+    public List<Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
-        List<Dutch_Business_Dossier__c> result = new list<Dutch_Business_Dossier__c>();
+        List<Business_Dossier__c> result = new list<Business_Dossier__c>();
         queryFactory.setEnforceFLS(true);
         queryFactory.setCondition('Id IN :dosserIdSet');
         queryFactory.setLimit(20);
