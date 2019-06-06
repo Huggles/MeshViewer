@@ -42,21 +42,21 @@ public with sharing class ErrorLogUtil {
     }
 
     public static void logAndCommit(Exception e){
-        if(e instanceof BdsException){
+        if(e instanceof CCException){
             //throw e;
         }else{
             Error_Log__c log = new Error_Log__c();
             log.Trace__c = '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
                 + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
                 getLogList().add(log);
-                //throw new BdsException(msg+ex.getMessage(), ex);
+                //throw new CCException(msg+ex.getMessage(), ex);
         }
         
         Application.rollback(); // perform database rollback
         (new ErrorLogUtil()).doLog();
     }
     public static AuraResponseWrapper logAndCommitUI(Exception e, Object msg){
-        if(e instanceof BdsException){
+        if(e instanceof CCException){
             Application.rollback(); // perform database rollback
             (new ErrorLogUtil()).doLog();
             return new AuraResponseWrapper(e);
@@ -71,15 +71,14 @@ public with sharing class ErrorLogUtil {
         }
 
     }
-
     public static void logException(Exception e, Object msg) {
         system.debug('logging exception');
-        if(e instanceof BdsException){
+        if(e instanceof CCException){
             throw e;
         }else{
             Error_Log__c log = new Error_Log__c();
             log.Trace__c = JSON.serializePretty(msg) + '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
-                + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
+                    + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
             getLogList().add(log);
 
             // Format the error from the Company.info server if that's what it is. Otherwise just pass it through.
@@ -94,19 +93,19 @@ public with sharing class ErrorLogUtil {
                 }
             }
 
-            throw new BdsException(msg + ':' + actualError);
+            throw new CCException(msg + ':' + actualError);
         }
     }
 
     public static void logException(Exception e) {
-        if(e instanceof BdsException){
+        if(e instanceof CCException){
             throw e;
         }else{
             Error_Log__c log = new Error_Log__c();
             log.Trace__c = '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
                 + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
             getLogList().add(log);
-            throw new BdsException(e.getMessage());//System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            throw new CCException(e.getMessage());//System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
 

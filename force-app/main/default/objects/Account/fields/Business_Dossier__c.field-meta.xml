@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Dutch_Business_Dossier__c</fullName>
+    <fullName>Business_Dossier__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Dutch Business Dossier</label>
-    <referenceTo>Dutch_Business_Dossier__c</referenceTo>
+    <label>Business Dossier</label>
+    <referenceTo>Business_Dossier__c</referenceTo>
     <relationshipLabel>Accounts</relationshipLabel>
     <relationshipName>Accounts</relationshipName>
     <required>false</required>

@@ -21,7 +21,7 @@ public with sharing class Application {
             new List < SObjectType > {
                 User.SObjectType,
                 Account.SObjectType,
-                Dutch_Business_Dossier__c.SObjectType
+                Business_Dossier__c.SObjectType
                 });
 
     // Configure and create the ServiceFactory for this Application
@@ -31,8 +31,8 @@ public with sharing class Application {
                             IWebservicesNlSOAP.class => WebservicesNlSOAPImpl.class,
                             IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
                             IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class,
-                            IDutchBusinessAccountingService.class => DutchBusinessAccountingServiceImpl.class,
-                            IDutchBusinessService.class => DutchBusinessServiceImpl.class
+                            IBusinessAccountingService.class => BusinessAccountingServiceImpl.class,
+                            IBusinessService.class => BusinessServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application
@@ -41,7 +41,7 @@ public with sharing class Application {
             new Map < SObjectType, Type > {
                 User.SObjectType => UserSelector.class,
                 Account.SObjectType => AccountSelector.class,
-                Dutch_Business_Dossier__c.SObjectType => DutchBusinessDossierSelector.class
+                Business_Dossier__c.SObjectType => BusinessDossierSelector.class
                 });
 
 

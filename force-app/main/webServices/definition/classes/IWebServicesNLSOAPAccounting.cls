@@ -1,6 +1,6 @@
 /****************************************************************************************
 Author          : ValerijsProkudins
-Description     : Interface class for CompanyInfo Accounting webservice layer
+Description     : Interface class for CompanyConnect Accounting webservice layer
 ******************************************************************************************/
 public interface IWebServicesNLSOAPAccounting  extends IWebServicesNLSOAP{
 

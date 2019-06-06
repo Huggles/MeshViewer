@@ -48,9 +48,9 @@
         var callParams = {recordId: component.get('v.recordId')};
         helper.callServer(component, 'c.deleteDossier', callParams, function(response) {
             if (response === true)
-                helper.showToast(component, $A.get('$Label.c.BDS_Success'), $A.get('$Label.c.Dossier_Removed'), 'success');
+                helper.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Dossier_Removed'), 'success');
             else 
-                helper.showToast(component, $A.get('$Label.c.BDS_Error'), $A.get('$Label.c.Error_Remove_Dossier'), 'error');
+                helper.showToast(component, $A.get('$Label.c.Error'), $A.get('$Label.c.Error_Remove_Dossier'), 'error');
             component.find('recordHandler').reloadRecord(true);
         });
         
