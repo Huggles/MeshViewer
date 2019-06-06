@@ -81,7 +81,20 @@ public with sharing class ErrorLogUtil {
             log.Trace__c = JSON.serializePretty(msg) + '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
                 + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
             getLogList().add(log);
-            throw new BdsException(JSON.serializePretty(msg) + e.getMessage());
+
+            // Format the error from the Company.info server if that's what it is. Otherwise just pass it through.
+            String actualError = e.getMessage();
+            if (actualError.contains('faultcode=')) {
+                List<String> parts = actualError.split(':');
+                if (parts.size() == 4) {
+                    List<String> moreparts = parts[2].split('faultcode=');
+                    if (moreparts.size() == 2) {
+                        actualError = moreparts[0];
+                    }
+                }
+            }
+
+            throw new BdsException(msg + ':' + actualError);
         }
     }
 

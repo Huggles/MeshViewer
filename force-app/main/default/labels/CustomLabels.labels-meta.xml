@@ -251,7 +251,7 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dutch Business Data Search Match Dossier</shortDescription>
-        <value>Match Chamber of Commerce Number</value>
+        <value>Find</value>
     </labels>
     <labels>
         <fullName>BDS_Search_No_Results</fullName>
@@ -356,7 +356,7 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while processing the web-service call response</value>
+        <value>There was a problem</value>
     </labels>
     <labels>
         <fullName>BDS_WSCall_Unsuccessful</fullName>
