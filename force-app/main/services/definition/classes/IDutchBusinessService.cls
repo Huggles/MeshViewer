@@ -6,6 +6,7 @@ public interface IDutchBusinessService {
     DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber);
     String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier);
     list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId);
+    Boolean deleteDossier(Id accountId);
     //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
     //list<String> checkForAccountDuplicates(Account acc);
 }
