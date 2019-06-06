@@ -327,17 +327,17 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     public static Boolean deleteDossier(Id accountId) {
         try{
             Account acct = AccountSelector.newInstance().selectById(accountId);
-            list<Dutch_Business_Dossier__c> dossierList = DutchBusinessDossierSelector.newInstance().selectById(new set<Id>{acct.Dutch_Business_Dossier__c});
+            list<Dutch_Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{acct.Dutch_Business_Dossier__c});
             if (dossierList.size() == 1) {
                 delete dossierList[0];
                 return true;
             }
             return false;
-        }catch(BdsException ex){
+        }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new BdsException(System.Label.BDS_DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
     // TODO: rewrite properly, the method should notify if there were problems during update

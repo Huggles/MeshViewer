@@ -62,7 +62,7 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object deleteDossier(Id recordId){
         try{
-            Boolean result = DutchBusinessService.deleteDossier(recordId);
+            Boolean result = BusinessService.deleteDossier(recordId);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
         }catch(Exception e){
