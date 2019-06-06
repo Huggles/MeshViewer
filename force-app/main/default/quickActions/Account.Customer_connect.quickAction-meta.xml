@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <height>350</height>
     <label>Customer.connect</label>
-    <lightningComponent>cinfo_sales__dossierDetails</lightningComponent>
+    <lightningComponent>cust_connect__dossierDetails</lightningComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>LightningComponent</type>
     <width>-100</width>

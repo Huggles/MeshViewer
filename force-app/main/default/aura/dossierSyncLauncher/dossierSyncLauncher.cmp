@@ -1,7 +1,7 @@
 <aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
     <aura:attribute name="simpleRecord" type="Object" />
     <aura:attribute name="error" type="String" />
-    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" fields="Name,cinfo_sales__BDS_Sync__c, cinfo_sales__Dutch_Business_Dossier__c"
+    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" fields="Name,cust_connect__BDS_Sync__c, cust_connect__Dutch_Business_Dossier__c"
         targetFields="{!v.simpleRecord}" recordUpdated="{!c.display}" targetError="{!v.error}" />
     <lightning:quickActionAPI aura:id="quickActionAPI" />   
 </aura:component>

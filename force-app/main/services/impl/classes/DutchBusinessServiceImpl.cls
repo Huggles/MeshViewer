@@ -466,7 +466,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
          }catch(System.Exception ex){
              ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
              throw new BdsException(System.Label.BDS_WSCall_Unknown_Exception+ex.getMessage(), ex);
-         }Something happened while working at the DutchBusinessService levelInsert failed. First exception on row 0; first error: INVALID_TYPE_ON_FIELD_IN_RECORD, Indication Bankruptcy: value not of required type: : [cinfo_sales__Indication_Bankruptcy__c]
+         }Something happened while working at the DutchBusinessService levelInsert failed. First exception on row 0; first error: INVALID_TYPE_ON_FIELD_IN_RECORD, Indication Bankruptcy: value not of required type: : [cust_connect__Indication_Bankruptcy__c]
      }*/
     private static String determineStatus(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
         try{
