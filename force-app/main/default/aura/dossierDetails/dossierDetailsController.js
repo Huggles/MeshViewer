@@ -36,5 +36,23 @@
      */
     onBack : function (component, event, helper) {
         component.set('v.step', '1');
+    },
+
+    /**
+     * Unlink dossier and delete associated record(s)
+     * @param {*} component 
+     * @param {*} event 
+     * @param {*} helper 
+     */
+    removeDossier : function (component, event, helper) {
+        var callParams = {recordId: component.get('v.recordId')};
+        helper.callServer(component, 'c.deleteDossier', callParams, function(response) {
+            if (response === true)
+                helper.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Dossier_Removed'), 'success');
+            else 
+                helper.showToast(component, $A.get('$Label.c.Error'), $A.get('$Label.c.Error_Remove_Dossier'), 'error');
+            component.find('recordHandler').reloadRecord(true);
+        });
+        
     }
 })

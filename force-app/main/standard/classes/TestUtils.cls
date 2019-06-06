@@ -94,11 +94,11 @@ private static User createUserWithPermissionSet(String profileName, String Permi
      *
      * @return
      */
-    public static User getBDSUser() {
+    public static User getCompanyConnectUser() {
         return createUserWithPermissionSet('Standard User', 'Business_Data_For_Salesforce_User');
     }
 
-    public static User getUniqueBDSUser() {
+    public static User getUniqueCompanyConnectUser() {
         return createUniqueUser('Standard User');
     }
 

@@ -3,13 +3,13 @@ Author          : ValerijsProkudins
 
 TODO: Move custom metadatas query to selector
 ******************************************************************************************/
-public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBusinessAccountingService{
+public with sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService{
 
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
     public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username){
 
         List<ApplicationProperty__mdt> aps = [SELECT Appsolutely_Contact_Email__c, Data_Provider_Account_Id__c, Data_Provider_Account_Comment__c FROM ApplicationProperty__mdt LIMIT 1];
-        if (aps.size() < 0) throw new BdsException(System.Label.BDS_Error_Config);
+        if (aps.size() < 0) throw new CCException(System.Label.Error_Config);
         ApplicationProperty__mdt ap = aps[0];
 
         Organization orgDetails = [SELECT Id, Address, Fax, Name, Phone FROM Organization WHERE Id = :UserInfo.getOrganizationId()];
@@ -17,7 +17,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
         input.nickname = username;
         input.accountId = Integer.valueOf(ap.Data_Provider_Account_Id__c);
-        input.password = ''; // we keep this empty so CompanyInfo will generate a new password
+        input.password = ''; // we keep this empty so CompanyConnect will generate a new password
         input.email = ap.Appsolutely_Contact_Email__c;
         input.companyname = orgDetails.Name;
         input.address = orgDetails.Address.getStreet() + ', ' + orgDetails.Address.getPostalCode();
@@ -36,11 +36,11 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             Credentials__c cs = Credentials__c.getOrgDefaults();
             cs.Username__c = userResp.nickname;
             cs.Password__c = userResp.password;
-            cs.CompanyInfoUserId__c = userResp.id;
+            cs.CompanyConnectUserId__c = userResp.id;
             upsert cs;
             return userResp;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
     }
@@ -65,7 +65,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(input);
             return response;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
     } 
@@ -76,7 +76,7 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
             Double amount = configData.DefaultTrialBalance__c; 
             return addBudget(amount, userId.id);
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
     }
@@ -93,9 +93,9 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         DutchBusinessAccountingDto.userChangeBalanceRequestDto input = new DutchBusinessAccountingDto.userChangeBalanceRequestDto();
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            return addBudget(amount, (Integer)cs.CompanyInfoUserId__c);
+            return addBudget(amount, (Integer)cs.CompanyConnectUserId__c);
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
 
@@ -105,12 +105,12 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         DutchBusinessAccountingDto.userViewBalanceRequest input = new DutchBusinessAccountingDto.userViewBalanceRequest();
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            input.userId = (integer)cs.CompanyInfoUserId__c;
+            input.userId = (integer)cs.CompanyConnectUserId__c;
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
             DutchBusinessAccountingDto.userViewBalanceResponse result = service.userGetBalance(input);
             return result.balance;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
     }
@@ -119,12 +119,12 @@ public with sharing class DutchBusinessAccountingServiceImpl implements IDutchBu
         DutchBusinessAccountingDto.userCheckActiveRequest input = new DutchBusinessAccountingDto.userCheckActiveRequest();
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            input.userId = (integer)cs.CompanyInfoUserId__c;
+            input.userId = (integer)cs.CompanyConnectUserId__c;
             IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
             DutchBusinessAccountingDto.userViewV2Response result = service.userCheckActive(input);
             return result.active;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
     }

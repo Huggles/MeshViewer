@@ -19,21 +19,21 @@ public with sharing class AuraResponseWrapper {
         this.errorMsg = '';
     }
     public AuraResponseWrapper(Exception response) {
-        if(response instanceof BdsException){
+        if(response instanceof CCException){
             this.response = null;
             this.state = 'ERROR';
-            this.errorMsg = response.getMessage(); //= System.Label.BDS_WSCall_Generic_UI_Exception;    // todo handle known types for proper messaging
+            this.errorMsg = response.getMessage(); //= System.Label.WSCall_Generic_UI_Exception;    // todo handle known types for proper messaging
         }else{
             this.response = null;
             this.state = 'ERROR';
-            this.errorMsg = System.Label.BDS_WSCall_Generic_UI_Exception;
+            this.errorMsg = System.Label.WSCall_Generic_UI_Exception;
         }
     }
     public AuraResponseWrapper(Exception response, Object msg) {
-        if(response instanceof BdsException){
+        if(response instanceof CCException){
             this.response = null;
             this.state = 'ERROR';
-            this.errorMsg = response.getMessage(); //= System.Label.BDS_WSCall_Generic_UI_Exception;    // todo handle known types for proper messaging
+            this.errorMsg = response.getMessage(); //= System.Label.WSCall_Generic_UI_Exception;    // todo handle known types for proper messaging
         }else{
             this.response = null;
             this.state = 'ERROR';

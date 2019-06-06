@@ -68,7 +68,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             return result;
 
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
 
@@ -149,7 +149,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
         return result;
             
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.BDS_WSCall_Unknown_Exception);
+            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
             return null; // never happens hence logging throws exceptions
         }
 

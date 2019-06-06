@@ -4,21 +4,24 @@
     <aura:attribute name="actionCompleted" type="boolean" default="false" access="public"/>
     <aura:attribute name="icon" type="string" default="utility:add" access="public"/>
     <aura:registerEvent name="toUpdateAccountEvent" type="c:toUpdateAccountEvent"/>
-    <!--<lightning:button class="{!v.accountExists ? 'slds-theme_brand slds-float_right' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!v.actionCompleted ? $Label.c.BDS_Dossier_Account_Update_Completed : $Label.c.BDS_Dossier_Account_Update}"
+    <!--<lightning:button class="{!v.accountExists ? 'slds-theme_brand slds-float_right' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!v.actionCompleted ? $Label.c.Dossier_Account_Update_Completed : $Label.c.Dossier_Account_Update}"
         iconName="utility:check" onclick="{!c.onClick}" disabled="{!v.actionCompleted}"/>
-    <lightning:button class="{!!v.accountExists ? 'slds-theme_brand slds-float_right' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!v.actionCompleted ? $Label.c.BDS_Dossier_Account_Create_Completed : $Label.c.BDS_Dossier_Account_Create}"
+    <lightning:button class="{!!v.accountExists ? 'slds-theme_brand slds-float_right' : 'slds-hide'}" iconPosition="right" variant="brand" type="submit" label="{!v.actionCompleted ? $Label.c.Dossier_Account_Create_Completed : $Label.c.Dossier_Account_Create}"
         iconName="utility:check" onclick="{!c.onClick}" disabled="{!v.actionCompleted}"/>-->
-    <div class="slds-m-top_medium slds-text-title">{!$Label.c.BDS_Get_Dossier_Results_Help}</div>
-    <article aura:id="{!v.dossier.dossier_number}" onclick="{!c.onClick}" style="cursor:pointer" >
+    <div class="slds-m-top_medium slds-text-title">{!$Label.c.Get_Dossier_Results_Help}</div>
+    <article aura:id="{!v.dossier.dossier_number}" class="{!v.style}" onclick="{!c.onClick}" style="cursor:pointer" >
+
         <div class="slds-media__figure">
             <lightning:icon iconName="{v.icon}" size="x-small"/>
         </div>
         <div class="slds-media__body">
             <h3 class="slds-tile__title slds-truncate" title="{!v.dossier.name + ' (' + v.dossier.dossier_number + ')'}">{!v.dossier.name}</h3>
             <div class="slds-tile__detail">
-                <div>{!$Label.c.BDS_Dossier_Number} = {!v.dossier.dossier_number}</div>
-                <div>{!$Label.c.BDS_Establishment_Date} = {!v.dossier.establishment_date}</div>
-                <div>{!$Label.c.BDS_Establishment_Number} = {!v.dossier.establishment_number}</div>
+
+                <div>{!$Label.c.Dossier_Number} = {!v.dossier.dossier_number}</div>
+                <div>{!$Label.c.Establishment_Date} = {!v.dossier.establishment_date}</div>
+                <div>{!$Label.c.Establishment_Number} = {!v.dossier.establishment_number}</div>
+
             </div>
         </div>
     </article>

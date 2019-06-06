@@ -1,4 +1,4 @@
-public with sharing class DutchBusinessService {
+public with sharing class BusinessService {
 
     public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
         return newInstance().searchForDossiers(searchParams);
@@ -18,18 +18,21 @@ public with sharing class DutchBusinessService {
     public static Account getDossierAccount(String dossierNum){
         return newInstance().getDossierAccount(dossierNum);
     }
+    public static Boolean deleteDossier(Id accountId){
+        return newInstance().deleteDossier(accountId);
+    }
     /*
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         return newInstance().createAccountForDossier(accountId, dossier, unitOfWork);
     }
-    public static Dutch_Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork){
+    public static Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork){
         return newInstance().saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
     }
     
     public static list<String> checkForAccountDuplicates(Account acc){
         return newInstance().checkForAccountDuplicates(acc);
     }*/
-    public static IDutchBusinessService newInstance() {
-        return (IDutchBusinessService) Application.Service.newInstance(IDutchBusinessService.class);
+    public static IBusinessService newInstance() {
+        return (IBusinessService) Application.Service.newInstance(IBusinessService.class);
     }
 }
