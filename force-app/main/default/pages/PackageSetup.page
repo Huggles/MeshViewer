@@ -4,10 +4,10 @@
 </div>
 
 <script>
-$Lightning.use('cinfo_sales:PackageConfigApp', function()
+$Lightning.use('cust_connect:PackageConfigApp', function()
 {
     $Lightning.createComponent(
-        'cinfo_sales:configApp',
+        'cust_connect:configApp',
         {},
         'container',
         function(cmp)
