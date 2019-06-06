@@ -4,8 +4,8 @@
     <externalId>false</externalId>
     <label>Account</label>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Dutch Business Dossiers</relationshipLabel>
-    <relationshipName>Dutch_Business_Dossiers</relationshipName>
+    <relationshipLabel>Business Dossiers</relationshipLabel>
+    <relationshipName>Business_Dossiers</relationshipName>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
     <required>false</required>

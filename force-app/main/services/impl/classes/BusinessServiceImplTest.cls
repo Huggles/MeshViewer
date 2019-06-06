@@ -58,7 +58,7 @@ public with sharing class BusinessServiceImplTest {
         mocks.startStubbing();
 
         Account ExistingAccount = new Account(Id=fflib_IDGenerator.generate(Account.SObjectType), Name='Test');
-        Dutch_Business_Dossier__c ExistingDossier = new Dutch_Business_Dossier__c(Id=fflib_IDGenerator.generate(Dutch_Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
+        Business_Dossier__c ExistingDossier = new Business_Dossier__c(Id=fflib_IDGenerator.generate(Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
         DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
         InputDossier.dossier_number = '123456';
         InputDossier.legal_name = 'Test';
@@ -67,8 +67,8 @@ public with sharing class BusinessServiceImplTest {
 
 
 
-        mocks.when(selectorMockDossier.sObjectType()).thenReturn(Dutch_Business_Dossier__c.SObjectType);
-        mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Dutch_Business_Dossier__c>{ExistingDossier});
+        mocks.when(selectorMockDossier.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
+        mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Business_Dossier__c>{ExistingDossier});
         mocks.when(selectorMockAccount.sObjectType()).thenReturn(Account.SObjectType);
         mocks.when(selectorMockAccount.selectById(new set<Id>{ExistingAccount.Id})).thenReturn(new list<Account>{ExistingAccount});
 
@@ -97,7 +97,7 @@ public with sharing class BusinessServiceImplTest {
         mocks.startStubbing();
 
         //Account ExistingAccount = new Account(Id=fflib_IDGenerator.generate(Account.SObjectType), Name='Test'); 
-        //Dutch_Business_Dossier__c ExistingDossier = new Dutch_Business_Dossier__c(Id=fflib_IDGenerator.generate(Dutch_Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
+        //Business_Dossier__c ExistingDossier = new Business_Dossier__c(Id=fflib_IDGenerator.generate(Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
         DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
         InputDossier.dossier_number = '123456';
         InputDossier.legal_name = 'Test';
@@ -106,8 +106,8 @@ public with sharing class BusinessServiceImplTest {
 
 
 
-        mocks.when(selectorMockDossier.sObjectType()).thenReturn(Dutch_Business_Dossier__c.SObjectType);
-        mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Dutch_Business_Dossier__c>());
+        mocks.when(selectorMockDossier.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
+        mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Business_Dossier__c>());
         mocks.when(selectorMockAccount.sObjectType()).thenReturn(Account.SObjectType);
         //mocks.when(selectorMockAccount.selectById(new set<Id>{ExistingAccount.Id})).thenReturn();
 
@@ -137,7 +137,7 @@ public with sharing class BusinessServiceImplTest {
         mocks.startStubbing();
 
         //Account ExistingAccount = new Account(Id=fflib_IDGenerator.generate(Account.SObjectType), Name='Test');
-        //Dutch_Business_Dossier__c ExistingDossier = new Dutch_Business_Dossier__c(Id=fflib_IDGenerator.generate(Dutch_Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
+        //Business_Dossier__c ExistingDossier = new Business_Dossier__c(Id=fflib_IDGenerator.generate(Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
         DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
 
         InputDossier.annual_financial_statement_summary = 'summary';
@@ -200,8 +200,8 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.trade_name_45 = '14';
         InputDossier.trade_names = new list<String>{'Test', 'Test2', 'Test3'};
 
-        mocks.when(selectorMockDossier.sObjectType()).thenReturn(Dutch_Business_Dossier__c.SObjectType);
-        mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Dutch_Business_Dossier__c>());
+        mocks.when(selectorMockDossier.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
+        mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Business_Dossier__c>());
         mocks.when(selectorMockAccount.sObjectType()).thenReturn(Account.SObjectType);
         //mocks.when(selectorMockAccount.selectById(new set<Id>{ExistingAccount.Id})).thenReturn();
 
@@ -215,7 +215,7 @@ public with sharing class BusinessServiceImplTest {
         test.startTest();
         list<Object> results = BusinessService.upsertAccountAndDossier(InputDossier, null);
         test.stopTest();
-        Dutch_Business_Dossier__c d = (Dutch_Business_Dossier__c) results.get(0);
+        Business_Dossier__c d = (Business_Dossier__c) results.get(0);
         System.assertEquals(d.Annual_Financial_Statement_Summary__c,'summary');
         System.assertEquals(d.Authorized_Share_Capital__c, 12);
         System.assertEquals(d.Authorized_Share_Capital_Currency__c, 'authorized_share_capital_currency');
@@ -290,10 +290,10 @@ public with sharing class BusinessServiceImplTest {
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
             list<String> existinAccountIds;
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
-            Dutch_Business_Dossier__c d = saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
-            //unitOfWork.registerRelationship(acc, Account.Dutch_Business_Dossier__c, d);
+            Business_Dossier__c d = saveDutchBusinessDossierUow(dossier, acc, unitOfWork);
+            //unitOfWork.registerRelationship(acc, Account.Business_Dossier__c, d);
             unitOfWork.commitWork();
-            //unitOfWork.registerDirty(acc, Account.Dutch_Business_Dossier__c, d); // to update a field on account level once dossier is inserted
+            //unitOfWork.registerDirty(acc, Account.Business_Dossier__c, d); // to update a field on account level once dossier is inserted
             //unitOfWork.commitWork(); // need to wait until circullar references are releassed ion fflib. so far using another method link: https://github.com/financialforcedev/fflib-apex-common/pull/195
             result.add(d);
             result.add(acc);
@@ -330,15 +330,15 @@ public with sharing class BusinessServiceImplTest {
                 Name = 'Test',
                 Id = fflib_IDGenerator.generate(Account.SObjectType)
         );
-        List<Dutch_Business_Dossier__c> dossierList = new List<Dutch_Business_Dossier__c> {
-                new Dutch_Business_Dossier__c(
-                        Id = fflib_IDGenerator.generate(Dutch_Business_Dossier__c.SObjectType),
+        List<Business_Dossier__c> dossierList = new List<Business_Dossier__c> {
+                new Business_Dossier__c(
+                        Id = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType),
                         Name = 'Test',
                         Dossier_Number__c = dossierNumber,
                         Account__c = acc.Id
                 )
         };
-        mocks.when(selectorMockDossier.sObjectType()).thenReturn(Dutch_Business_Dossier__c.SObjectType);
+        mocks.when(selectorMockDossier.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
         mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{dossierNumber})).thenReturn(dossierList);
         mocks.when(selectorMockAccount.sObjectType()).thenReturn(Account.SObjectType);
         mocks.when(selectorMockAccount.selectById(new set<Id>{acc.Id})).thenReturn(new list<Account>{acc});

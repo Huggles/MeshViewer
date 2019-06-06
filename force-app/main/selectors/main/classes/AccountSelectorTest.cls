@@ -16,7 +16,7 @@ public with sharing class AccountSelectorTest {
             System.assert(fieldsAsSet.containsAll(new List<Schema.SObjectField>{
                 Account.Id,
                 Account.Name,
-                account.Dutch_Business_Dossier__c
+                account.Business_Dossier__c
             }));
         }
         Test.stopTest();

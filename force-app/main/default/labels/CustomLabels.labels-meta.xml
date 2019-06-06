@@ -377,7 +377,7 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while processing the web-service call response</value>
+        <value>There was a problem</value>
     </labels>
     <labels>
         <fullName>WSCall_Unsuccessful</fullName>

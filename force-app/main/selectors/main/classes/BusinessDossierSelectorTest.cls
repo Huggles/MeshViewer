@@ -18,11 +18,11 @@ public with sharing class BusinessDossierSelectorTest {
             List<Schema.SObjectField> fields = selector.getSObjectFieldList();
             Set<Schema.SObjectField> fieldsAsSet = new Set<Schema.SObjectField>(fields);
             System.assert(fieldsAsSet.containsAll(new List<Schema.SObjectField>{
-                Dutch_Business_Dossier__c.Id,
-                Dutch_Business_Dossier__c.Name,
-                Dutch_Business_Dossier__c.Account__c,
-                Dutch_Business_Dossier__c.Account__r.Id,
-                Dutch_Business_Dossier__c.Account__r.name
+                Business_Dossier__c.Id,
+                Business_Dossier__c.Name,
+                Business_Dossier__c.Account__c,
+                Business_Dossier__c.Account__r.Id,
+                Business_Dossier__c.Account__r.name
             }));
         }
         Test.stopTest();
@@ -36,7 +36,7 @@ public with sharing class BusinessDossierSelectorTest {
         Test.startTest();
         System.runAs(TestUtils.getCompanyConnectUser()) {//didnt work. need to check with jaap how testutils work
             Schema.SObjectType tpe = selector.getSObjectType();
-            System.assertEquals(Dutch_Business_Dossier__c.sObjectType, tpe);
+            System.assertEquals(Business_Dossier__c.sObjectType, tpe);
         }
         Test.stopTest();
 
@@ -45,10 +45,10 @@ public with sharing class BusinessDossierSelectorTest {
 
     @isTest
     static void testSelectByDossierNumber() {
-        List<Dutch_Business_Dossier__c> dossiers = new List<Dutch_Business_Dossier__c>();
+        List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
         Set<String> dossierNumSet = new set<String>();
         for (Integer i2 = 0; i2 < 10 ; i2++) {
-            dossiers.add(new Dutch_Business_Dossier__c(Name = 'test'+i2, Dossier_Number__c=string.valueOf(i2)));
+            dossiers.add(new Business_Dossier__c(Name = 'test'+i2, Dossier_Number__c=string.valueOf(i2)));
             dossierNumSet.add(string.valueOf(i2));
         }
         insert dossiers;
@@ -59,7 +59,7 @@ public with sharing class BusinessDossierSelectorTest {
         Test.startTest();
         System.runAs(TestUtils.getCompanyConnectUser()) {//didnt work. need to check with jaap how testutils work
             IBusinessDossierSelector selector = BusinessDossierSelector.newInstance();
-            List<Dutch_Business_Dossier__c> dossiersReturned = selector.selectByDossierNumber(dossierNumSet);
+            List<Business_Dossier__c> dossiersReturned = selector.selectByDossierNumber(dossierNumSet);
             System.assertEquals(10, dossiersReturned.size());
         }
         Test.stopTest();
