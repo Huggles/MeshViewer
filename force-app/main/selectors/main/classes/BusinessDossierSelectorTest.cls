@@ -14,7 +14,7 @@ public with sharing class BusinessDossierSelectorTest {
     static void testGetSObjectFields() {
         BusinessDossierSelector selector = (BusinessDossierSelector) BusinessDossierSelector.newInstance();
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) { //didnt work. need to check with jaap how testutils work
+        System.runAs(TestUtils.getCompanyConnectUser()) { //didnt work. need to check with jaap how testutils work
             List<Schema.SObjectField> fields = selector.getSObjectFieldList();
             Set<Schema.SObjectField> fieldsAsSet = new Set<Schema.SObjectField>(fields);
             System.assert(fieldsAsSet.containsAll(new List<Schema.SObjectField>{
@@ -34,7 +34,7 @@ public with sharing class BusinessDossierSelectorTest {
     static void testGetSObjectType() {
         BusinessDossierSelector selector = (BusinessDossierSelector) BusinessDossierSelector.newInstance();
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
+        System.runAs(TestUtils.getCompanyConnectUser()) {//didnt work. need to check with jaap how testutils work
             Schema.SObjectType tpe = selector.getSObjectType();
             System.assertEquals(Dutch_Business_Dossier__c.sObjectType, tpe);
         }
@@ -57,7 +57,7 @@ public with sharing class BusinessDossierSelectorTest {
         
 
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
+        System.runAs(TestUtils.getCompanyConnectUser()) {//didnt work. need to check with jaap how testutils work
             IBusinessDossierSelector selector = BusinessDossierSelector.newInstance();
             List<Dutch_Business_Dossier__c> dossiersReturned = selector.selectByDossierNumber(dossierNumSet);
             System.assertEquals(10, dossiersReturned.size());

@@ -26,7 +26,7 @@
                 <c:dossierSearchForm recordId="{!v.recordId}" />
             </div>
             <div class="{!v.step == '2' ? '' : 'slds-hide'}" title="{!$Label.c.Matching_Companies}" iconName="standard:account">
-                <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.BDS_Search_Reset}"
+                <lightning:button iconPosition="left" variant="neutral" type="submit" label="{!$Label.c.Search_Reset}"
                                   iconName="utility:chevronleft" onclick="{!c.onBack}" />
                 <c:dossierSearchResults recordId="{!v.recordId}" wrapperList="{!v.companyList}" />
             </div>

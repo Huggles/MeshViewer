@@ -10,7 +10,7 @@ public with sharing class AccountSelectorTest {
     static void testGetSObjectFields() {
         AccountSelector selector = (AccountSelector) AccountSelector.newInstance();
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {
+        System.runAs(TestUtils.getCompanyConnectUser()) {
             List<Schema.SObjectField> fields = selector.getSObjectFieldList();
             Set<Schema.SObjectField> fieldsAsSet = new Set<Schema.SObjectField>(fields);
             System.assert(fieldsAsSet.containsAll(new List<Schema.SObjectField>{
@@ -27,7 +27,7 @@ public with sharing class AccountSelectorTest {
     static void testGetSObjectType() {
         AccountSelector selector = (AccountSelector) AccountSelector.newInstance();
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
+        System.runAs(TestUtils.getCompanyConnectUser()) {//didnt work. need to check with jaap how testutils work
             Schema.SObjectType tpe = selector.getSObjectType();
             System.assertEquals(Account.sObjectType, tpe);
         }
@@ -47,7 +47,7 @@ public with sharing class AccountSelectorTest {
         Set<Id> idSet = (new Map<Id, Account>(accounts)).keySet();
 
         Test.startTest();
-        System.runAs(TestUtils.getBDSUser()) {//didnt work. need to check with jaap how testutils work
+        System.runAs(TestUtils.getCompanyConnectUser()) {//didnt work. need to check with jaap how testutils work
             IAccountSelector selector = AccountSelector.newInstance();
             List<Account> accountsReturned = selector.selectById(idSet);
             System.assertEquals(10, accountsReturned.size());
