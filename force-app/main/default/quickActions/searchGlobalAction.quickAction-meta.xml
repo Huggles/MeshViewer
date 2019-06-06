@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <height>350</height>
-    <label>Company.connect</label>
-    <lightningComponent>cinfo_sales__dossierDetails</lightningComponent>
+    <height>500</height>
+    <label>Customer.connect Search</label>
+    <lightningComponent>cinfo_sales__searchQuickAction</lightningComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>LightningComponent</type>
     <width>-100</width>

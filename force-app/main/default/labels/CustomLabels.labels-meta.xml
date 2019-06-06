@@ -106,6 +106,20 @@
         <value>Dossier Number</value>
     </labels>
     <labels>
+        <fullName>Dossier_Remove</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Remove</shortDescription>
+        <value>Remove Dossier</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Removed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Removed</shortDescription>
+        <value>Dossier Removed</value>
+    </labels>
+    <labels>
         <fullName>Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -132,6 +146,13 @@
         <protected>true</protected>
         <shortDescription> Business Data Error Unknown</shortDescription>
         <value>Error 102 received from  Business Data for Salesforce. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Remove_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_Remove_Dossier</shortDescription>
+        <value>There was a problem removing the dossier. Please ensure you have permission to carry out this action.</value>
     </labels>
     <labels>
         <fullName>Establishment_Date</fullName>
@@ -250,8 +271,8 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <fullName>Search_Match_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Match Dossier</shortDescription>
-        <value>Match Chamber of Commerce Number</value>
+        <shortDescription>Dutch Business Data Search Match Dossier</shortDescription>
+        <value>Find</value>
     </labels>
     <labels>
         <fullName>Search_No_Results</fullName>

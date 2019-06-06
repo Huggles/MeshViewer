@@ -3,7 +3,7 @@
     <platformActionList>
         <actionListContext>Global</actionListContext>
         <platformActionListItems>
-            <actionName>searchDutchCompanies</actionName>
+            <actionName>searchGlobalAction</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
         </platformActionListItems>

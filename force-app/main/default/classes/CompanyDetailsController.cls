@@ -36,7 +36,6 @@ public with sharing class CompanyDetailsController {
     }
     @AuraEnabled
     public static Object createDossier(String dossierNumber){
-        System.debug('getInfoNoSaving');
         try{
             DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber);
             Account acc = BusinessService.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number
@@ -58,6 +57,17 @@ public with sharing class CompanyDetailsController {
         BusinessService.updateAccountDossier(dossier); // will be gone later once fflib is updated
         //AuraResponseWrapper output = new AuraResponseWrapper(result);
         return result;
+    }
+
+    @AuraEnabled
+    public static Object deleteDossier(Id recordId){
+        try{
+            Boolean result = DutchBusinessService.deleteDossier(recordId);
+            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
+            return output;
+        }catch(Exception e){
+            return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
+        }
     }
 
 }

@@ -71,7 +71,6 @@ public with sharing class ErrorLogUtil {
         }
 
     }
-
     public static void logException(Exception e, Object msg) {
         system.debug('logging exception');
         if(e instanceof CCException){
@@ -79,9 +78,22 @@ public with sharing class ErrorLogUtil {
         }else{
             Error_Log__c log = new Error_Log__c();
             log.Trace__c = JSON.serializePretty(msg) + '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
-                + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
+                    + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
             getLogList().add(log);
-            throw new CCException(JSON.serializePretty(msg) + e.getMessage());
+
+            // Format the error from the Company.info server if that's what it is. Otherwise just pass it through.
+            String actualError = e.getMessage();
+            if (actualError.contains('faultcode=')) {
+                List<String> parts = actualError.split(':');
+                if (parts.size() == 4) {
+                    List<String> moreparts = parts[2].split('faultcode=');
+                    if (moreparts.size() == 2) {
+                        actualError = moreparts[0];
+                    }
+                }
+            }
+
+            throw new CCException(msg + ':' + actualError);
         }
     }
 
