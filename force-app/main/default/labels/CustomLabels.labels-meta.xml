@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
-        <fullName>BDS_Back_To_Search</fullName>
+        <fullName>Back_To_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Back_To_Search</shortDescription>
+        <shortDescription>Back_To_Search</shortDescription>
         <value>Back to results</value>
     </labels>
     <labels>
-        <fullName>BDS_DBSCall_AccountDupCheck_Exception</fullName>
+        <fullName>DBSCall_AccountDupCheck_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
         <value>Something happened while checking for duplicates</value>
     </labels>
     <labels>
-        <fullName>BDS_DBSCall_AccountSave_Exception</fullName>
+        <fullName>DBSCall_AccountSave_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
         <value>Something happened creating the matching account</value>
     </labels>
     <labels>
-        <fullName>BDS_DBSCall_AccountSearch_Exception</fullName>
+        <fullName>DBSCall_AccountSearch_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
         <value>Something happened searching for matching account</value>
     </labels>
     <labels>
-        <fullName>BDS_DBSCall_DossierSave_Exception</fullName>
+        <fullName>DBSCall_DossierSave_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
         <value>Something happened while trying to save the dossier.</value>
     </labels>
     <labels>
-        <fullName>BDS_DBSCall_Unknown_Exception</fullName>
+        <fullName>DBSCall_Unknown_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while working at the DutchBusinessService level</value>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while working at the BusinessService level</value>
     </labels>
     <labels>
-        <fullName>BDS_DML_Manager_Error</fullName>
+        <fullName>DML_Manager_Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>BDS DML Manager Error</shortDescription>
         <value>DMLManager ERROR:  An existing record could not be found for object with Id =</value>
     </labels>
     <labels>
-        <fullName>BDS_Details_Help</fullName>
+        <fullName>Details_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Details Help</shortDescription>
-        <value>The below details are synchronised from Dutch Business Data.</value>
+        <shortDescription> Business Data Details Help</shortDescription>
+        <value>The below details are synchronised from  Business Data.</value>
     </labels>
     <labels>
-        <fullName>BDS_Dossier_Account_Create</fullName>
+        <fullName>Dossier_Account_Create</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Dossier_Account_Create</shortDescription>
+        <shortDescription>Dossier_Account_Create</shortDescription>
         <value>Create Account</value>
     </labels>
     <labels>
-        <fullName>BDS_Dossier_Account_Create_Completed</fullName>
+        <fullName>Dossier_Account_Create_Completed</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Dossier_Account_Create_Completed</shortDescription>
+        <shortDescription>Dossier_Account_Create_Completed</shortDescription>
         <value>Account Created</value>
     </labels>
     <labels>
-        <fullName>BDS_Dossier_Account_Update</fullName>
+        <fullName>Dossier_Account_Update</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Dossier_Account_Update</shortDescription>
+        <shortDescription>Dossier_Account_Update</shortDescription>
         <value>Update Account</value>
     </labels>
     <labels>
@@ -92,14 +92,14 @@
         <value>Your balance has been updated.</value>
     </labels>
     <labels>
-        <fullName>BDS_Dossier_Account_Update_Completed</fullName>
+        <fullName>Dossier_Account_Update_Completed</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Dossier_Account_Update_Completed</shortDescription>
+        <shortDescription>Dossier_Account_Update_Completed</shortDescription>
         <value>Account Updated</value>
     </labels>
     <labels>
-        <fullName>BDS_Dossier_Number</fullName>
+        <fullName>Dossier_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier Number</shortDescription>
@@ -120,270 +120,270 @@
         <value>Dossier Removed</value>
     </labels>
     <labels>
-        <fullName>BDS_Error</fullName>
+        <fullName>Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Error</shortDescription>
+        <shortDescription>Error</shortDescription>
         <value>Error</value>
     </labels>
     <labels>
-        <fullName>BDS_Error_Config</fullName>
+        <fullName>Error_Config</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Error_Config</shortDescription>
-        <value>Error 103 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
+        <shortDescription>Error_Config</shortDescription>
+        <value>Error 103 received from  Business Data for Salesforce. Please contact support for assistance.</value>
     </labels>
     <labels>
-        <fullName>BDS_Error_Incomplete</fullName>
+        <fullName>Error_Incomplete</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Error_Incomplete</shortDescription>
-        <value>Error 101 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
+        <shortDescription>Error_Incomplete</shortDescription>
+        <value>Error 101 received from  Business Data for Salesforce. Please contact support for assistance.</value>
     </labels>
     <labels>
-        <fullName>BDS_Error_Unknown</fullName>
+        <fullName>Error_Unknown</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Error Unknown</shortDescription>
-        <value>Error 102 received from Dutch Business Data for Salesforce. Please contact support for assistance.</value>
+        <shortDescription> Business Data Error Unknown</shortDescription>
+        <value>Error 102 received from  Business Data for Salesforce. Please contact support for assistance.</value>
     </labels>
     <labels>
         <fullName>Error_Remove_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Error_Remove_Dossier</shortDescription>
+        <shortDescription>Error_Remove_Dossier</shortDescription>
         <value>There was a problem removing the dossier. Please ensure you have permission to carry out this action.</value>
     </labels>
     <labels>
-        <fullName>BDS_Establishment_Date</fullName>
+        <fullName>Establishment_Date</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Establishment Date</shortDescription>
         <value>Establishment Date</value>
     </labels>
     <labels>
-        <fullName>BDS_Establishment_Number</fullName>
+        <fullName>Establishment_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Establishment Number</shortDescription>
         <value>Establishment Number</value>
     </labels>
     <labels>
-        <fullName>BDS_Get_Dossier_Results_Help</fullName>
+        <fullName>Get_Dossier_Results_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_Get_Dossier_Results_Help</shortDescription>
+        <shortDescription>Get_Dossier_Results_Help</shortDescription>
         <value>Below is the detailed company dossier. Please press create account to proceed with account creation.</value>
     </labels>
     <labels>
-        <fullName>BDS_Matching_Companies</fullName>
+        <fullName>Matching_Companies</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Matching Companies</shortDescription>
+        <shortDescription> Business Data Matching Companies</shortDescription>
         <value>Matching Companies</value>
     </labels>
     <labels>
-        <fullName>BDS_NoAuthAppNotActive</fullName>
+        <fullName>NoAuthAppNotActive</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_NoAuthAppNotActive</shortDescription>
+        <shortDescription>NoAuthAppNotActive</shortDescription>
         <value>No authentication data found. The app is not activated</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Address</fullName>
+        <fullName>Search_Address</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Address</shortDescription>
+        <shortDescription> Business Data Search Address</shortDescription>
         <value>Address</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_City</fullName>
+        <fullName>Search_City</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search City</shortDescription>
+        <shortDescription> Business Data Search City</shortDescription>
         <value>City</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Company_Details</fullName>
+        <fullName>Search_Company_Details</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Company Details</shortDescription>
+        <shortDescription> Business Data Search Company Details</shortDescription>
         <value>Company Details</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Confirm</fullName>
+        <fullName>Search_Confirm</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Confirm</shortDescription>
+        <shortDescription> Business Data Search Confirm</shortDescription>
         <value>Search</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Country</fullName>
+        <fullName>Search_Country</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Country</shortDescription>
+        <shortDescription> Business Data Search Country</shortDescription>
         <value>Country</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Details</fullName>
+        <fullName>Search_Details</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Details</shortDescription>
+        <shortDescription> Business Data Search Details</shortDescription>
         <value>Details to Sync</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Details_Dossier</fullName>
+        <fullName>Search_Details_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Details Dossier</shortDescription>
+        <shortDescription> Business Data Search Details Dossier</shortDescription>
         <value>Company Details</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Details_Legal</fullName>
+        <fullName>Search_Details_Legal</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Details Legal</shortDescription>
+        <shortDescription> Business Data Search Details Legal</shortDescription>
         <value>Legal Entity Details</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Domain</fullName>
+        <fullName>Search_Domain</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>CDutch Business Data Search Domain</shortDescription>
+        <shortDescription> Business Data Search Domain</shortDescription>
         <value>Domain</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Dossier_Number</fullName>
+        <fullName>Search_Dossier_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Dossier Number</shortDescription>
+        <shortDescription> Business Data Search Dossier Number</shortDescription>
         <value>Chamber of Commerce Number</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Help</fullName>
+        <fullName>Search_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Help</shortDescription>
+        <shortDescription> Business Data Search Help</shortDescription>
         <value>To sync information from Dutch Business you will need to match this account to a registered company. Use this search form to find a match.
 Note: If you know the chamber of commerce number please enter it here as it will bypass the search.</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Match_Dossier</fullName>
+        <fullName>Search_Match_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dutch Business Data Search Match Dossier</shortDescription>
         <value>Find</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_No_Results</fullName>
+        <fullName>Search_No_Results</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search No Results</shortDescription>
+        <shortDescription> Business Data Search No Results</shortDescription>
         <value>No results found</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Phone</fullName>
+        <fullName>Search_Phone</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Phone</shortDescription>
+        <shortDescription> Business Data Search Phone</shortDescription>
         <value>Phone</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Postal_Code</fullName>
+        <fullName>Search_Postal_Code</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Postal Code</shortDescription>
+        <shortDescription> Business Data Search Postal Code</shortDescription>
         <value>Postal Code</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Province</fullName>
+        <fullName>Search_Province</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Province</shortDescription>
+        <shortDescription> Business Data Search Province</shortDescription>
         <value>Province</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Reset</fullName>
+        <fullName>Search_Reset</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Reset</shortDescription>
+        <shortDescription> Business Data Search Reset</shortDescription>
         <value>Search Again</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Results_Confirm</fullName>
+        <fullName>Search_Results_Confirm</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Results Confirm</shortDescription>
+        <shortDescription> Business Data Search Results Confirm</shortDescription>
         <value>Confirm</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Results_Help</fullName>
+        <fullName>Search_Results_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Results Help</shortDescription>
+        <shortDescription> Business Data Search Results Help</shortDescription>
         <value>The following companies match your search results. Please select the correct match for this account.</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Street</fullName>
+        <fullName>Search_Street</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Street</shortDescription>
+        <shortDescription> Business Data Search Street</shortDescription>
         <value>Street</value>
     </labels>
     <labels>
-        <fullName>BDS_Search_Trade_Name</fullName>
+        <fullName>Search_Trade_Name</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Trade Name</shortDescription>
+        <shortDescription> Business Data Search Trade Name</shortDescription>
         <value>Trade Name</value>
     </labels>
     <labels>
-        <fullName>BDS_Success</fullName>
+        <fullName>Success</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Success</shortDescription>
+        <shortDescription> Business Data Success</shortDescription>
         <value>Success</value>
     </labels>
     <labels>
-        <fullName>BDS_Sync</fullName>
+        <fullName>Sync</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Sync</shortDescription>
-        <value>Dutch Business Data Sync</value>
+        <shortDescription> Business Data Sync</shortDescription>
+        <value> Business Data Sync</value>
     </labels>
     <labels>
-        <fullName>BDS_Sync_Success</fullName>
+        <fullName>Sync_Success</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dutch Business Data Sync Success</shortDescription>
-        <value>Dutch Business Data sync was successful.</value>
+        <shortDescription> Business Data Sync Success</shortDescription>
+        <value> Business Data sync was successful.</value>
     </labels>
     <labels>
-        <fullName>BDS_WSCall_ChangeBalance_Exception</fullName>
+        <fullName>WSCall_ChangeBalance_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while working at the DutchBusinessService level</value>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while working at the BusinessService level</value>
     </labels>
     <labels>
-        <fullName>BDS_WSCall_Generic_UI_Exception</fullName>
+        <fullName>WSCall_Generic_UI_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
         <value>Exception Happened, please contact your system administrator</value>
     </labels>
     <labels>
-        <fullName>BDS_WSCall_Unknown_Exception</fullName>
+        <fullName>WSCall_Unknown_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unknown_Exception</shortDescription>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
         <value>There was a problem</value>
     </labels>
     <labels>
-        <fullName>BDS_WSCall_Unsuccessful</fullName>
+        <fullName>WSCall_Unsuccessful</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>BDS_WSCall_Unsuccessfull</shortDescription>
+        <shortDescription>WSCall_Unsuccessfull</shortDescription>
         <value>The call to the service was unsuccessful</value>
     </labels>
     <labels>
@@ -489,7 +489,7 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config Page Title</shortDescription>
-        <value>Dutch Business configuration page</value>
+        <value> Business configuration page</value>
     </labels>
     <labels>
         <fullName>Config_Title</fullName>

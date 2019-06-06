@@ -9,7 +9,7 @@ public with sharing class WebservicesNlSOAPImplTest {
         insert cs;
         Test.startTest();
         boolean error = false;
-            try{IWebservicesNlSOAP service = WebservicesNlSOAP.newInstance();}catch(BdsException e){error = true;}
+            try{IWebservicesNlSOAP service = WebservicesNlSOAP.newInstance();}catch(CCException e){error = true;}
         Test.stopTest();
         system.assert(!error);  
     }
@@ -19,7 +19,7 @@ public with sharing class WebservicesNlSOAPImplTest {
         
         Test.startTest();
         boolean error = false;
-            try{IWebservicesNlSOAP service = WebservicesNlSOAP.newInstance();}catch(BdsException e){error = true;}
+            try{IWebservicesNlSOAP service = WebservicesNlSOAP.newInstance();}catch(CCException e){error = true;}
         Test.stopTest();
         system.assert(error);  
     }*/

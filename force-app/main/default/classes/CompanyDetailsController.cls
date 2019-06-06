@@ -11,11 +11,11 @@ public with sharing class CompanyDetailsController {
             try{
                 DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
 
-                Object result = (Object)DutchBusinessService.searchForDossiers(params);
+                Object result = (Object) BusinessService.searchForDossiers(params);
                 AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
                 return output;
             }catch(Exception e){
-                return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
+                return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
             }
         }
         return null;
@@ -25,11 +25,11 @@ public with sharing class CompanyDetailsController {
         System.debug('getInfo');
         if(dossierNumber!=null){
             try{
-                DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
+                DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber);
                 AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier, accountId));
                 return output;
             }catch(Exception e){
-                return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
+                return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
             }
         }
         return null;
@@ -37,8 +37,8 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object createDossier(String dossierNumber){
         try{
-            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = DutchBusinessService.getDossier(dossierNumber);
-            Account acc = DutchBusinessService.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number
+            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber);
+            Account acc = BusinessService.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number
             String AccountId = '';
             if(acc != null){
                 AccountId = acc.Id;
@@ -48,13 +48,13 @@ public with sharing class CompanyDetailsController {
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
         }catch(Exception e){
-            return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
+            return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
         }
     }
     public static list<Object> createUpdateAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
         list<Object> result = new list<object>();
-        result = DutchBusinessService.upsertAccountAndDossier(dossier, accountId);
-        DutchBusinessService.updateAccountDossier(dossier); // will be gone later once fflib is updated
+        result = BusinessService.upsertAccountAndDossier(dossier, accountId);
+        BusinessService.updateAccountDossier(dossier); // will be gone later once fflib is updated
         //AuraResponseWrapper output = new AuraResponseWrapper(result);
         return result;
     }
@@ -62,11 +62,11 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object deleteDossier(Id recordId){
         try{
-            Boolean result = DutchBusinessService.deleteDossier(recordId);
+            Boolean result = BusinessService.deleteDossier(recordId);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
         }catch(Exception e){
-            return ErrorLogUtil.logAndCommitUI(e, System.Label.BDS_WSCall_Generic_UI_Exception);
+            return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
         }
     }
 
