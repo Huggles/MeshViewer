@@ -29,6 +29,7 @@ public with sharing class AccountSelector extends fflib_SObjectSelector implemen
     public list<Account> selectById(set<ID> IdSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Account> result = new list<Account>();
+        queryFactory.setEnforceFLS(true);
         queryFactory.setCondition('Id IN :IdSet');
         queryFactory.setLimit(20);
         result = Database.query(queryFactory.toSOQL());
@@ -37,6 +38,7 @@ public with sharing class AccountSelector extends fflib_SObjectSelector implemen
    public Account selectById(String Id){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         Account result = new Account();
+        queryFactory.setEnforceFLS(true);
         queryFactory.setCondition('Id = :Id');
         queryFactory.setLimit(1);
         result = Database.query(queryFactory.toSOQL());

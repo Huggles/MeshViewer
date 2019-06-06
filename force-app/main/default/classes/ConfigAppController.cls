@@ -151,6 +151,8 @@ public static PermissionSet ps;
     }
 
     private static list<String> getBusinessUserIds(){
+        fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
+        fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Business_Data_For_Salesforce_User'];
         system.debug('************* ps = '+ ps);
         list <PermissionSetAssignment> psaList = new list <PermissionSetAssignment>();
