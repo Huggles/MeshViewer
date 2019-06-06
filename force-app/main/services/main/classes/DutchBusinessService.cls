@@ -18,6 +18,9 @@ public with sharing class DutchBusinessService {
     public static Account getDossierAccount(String dossierNum){
         return newInstance().getDossierAccount(dossierNum);
     }
+    public static Boolean deleteDossier(Id accountId){
+        return newInstance().deleteDossier(accountId);
+    }
     /*
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         return newInstance().createAccountForDossier(accountId, dossier, unitOfWork);
