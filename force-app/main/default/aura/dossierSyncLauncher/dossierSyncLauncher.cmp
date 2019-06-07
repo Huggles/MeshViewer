@@ -1,4 +1,4 @@
-<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+<aura:component implements="force:hasRecordId">
     <aura:attribute name="simpleRecord" type="Object" />
     <aura:attribute name="error" type="String" />
     <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" fields="Name,cust_connect__CC_Sync__c, cust_connect__Business_Dossier__c"

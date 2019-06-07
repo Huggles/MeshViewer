@@ -56,26 +56,23 @@ export default class balanceCard extends LightningElement {
     }
 
     addBudget(event){
+        if (this.amountToAdd < 5) return;
         addBudget({Amount: this.amountToAdd}).then(result => {
-            // @todo these don't work in VF apparently
-            // const evt = new ShowToastEvent({
-            //     title: 'Success',
-            //     message: this.label.Config_Balance_Changed,
-            //     variant: 'success'
-            // });
-            // this.dispatchEvent(evt);
-            this.success = this.label.Config_Balance_Updated;
+            const evt = new ShowToastEvent({
+                title: 'Success',
+                message: this.label.Config_Balance_Updated,
+                variant: 'success'
+            });
+            this.dispatchEvent(evt);
         return refreshApex(this.wiredBalanceResult);
     })
     .catch(error => {
-            this.error = error;
-        // @todo these don't work in VF apparently
-        // const evt = new ShowToastEvent({
-        //     title: 'Error',
-        //     message: this.label.Config_Balance_Error,
-        //     variant: 'error'
-        // });
-        // this.dispatchEvent(evt);
+        const evt = new ShowToastEvent({
+            title: 'Error',
+            message: error,
+            variant: 'error'
+        });
+        this.dispatchEvent(evt);
     });
     }
 

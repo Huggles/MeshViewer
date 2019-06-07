@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>CompanyDetailsController</apexClass>
+        <apexClass>BusinessService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>BusinessService</apexClass>
+        <apexClass>CompanyDetailsController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -14,12 +14,12 @@
     </classAccesses>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.CC_Sync__c</field>
+        <field>Account.Business_Dossier__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.Business_Dossier__c</field>
+        <field>Account.CC_Sync__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -323,7 +323,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Business Data for Salesforce User</label>
+    <label>Customer.connect Administrator</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -352,11 +352,11 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
-        <tab>Customer_connect_config</tab>
+        <tab>Business_Dossier__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>Business_Dossier__c</tab>
+        <tab>Customer_connect_configuration</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
