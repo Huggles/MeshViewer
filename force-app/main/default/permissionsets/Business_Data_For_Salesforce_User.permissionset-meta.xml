@@ -352,7 +352,7 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
-        <tab>Customer_connect_config</tab>
+        <tab>Customer_connect_configuration</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
