@@ -16,7 +16,7 @@
                 {label.Config_Loading}
             </div>
             <div id="loaded" if:true={ready}>
-                € {balanceAmount}
+                <lightning-formatted-number value={balanceAmount} format-style="currency" currency-code="EUR" currency-display-as="symbol"></lightning-formatted-number>
             </div>
         </div>
         <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Current_Threshold}</div>
