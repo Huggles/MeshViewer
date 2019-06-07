@@ -18,7 +18,7 @@ public class TestUtils {
                 AdminUser = createUniqueUser('System Administrator');
                 System.runAs(getSystemAdminUser()) {
                     insert AdminUser;
-                    giveUserPermissionSet('Business_Data_For_Salesforce_User', AdminUser);
+                    giveUserPermissionSet('Customer_connect_user', AdminUser);
                 }
             }
             return AdminUser;
@@ -33,7 +33,7 @@ private static User createUserWithPermissionSet(String profileName, String Permi
             usersByProfileName.put(profileName, u);
             insert u;
             System.runAs(getSystemAdminUserNotInserted()) {
-                giveUserPermissionSet('Business_Data_For_Salesforce_User', u);
+                giveUserPermissionSet('Customer_connect_user', u);
             }
         }
         return u;
@@ -54,7 +54,7 @@ private static User createUserWithPermissionSet(String profileName, String Permi
             usersByProfileName.put(profileName, u);
             System.runAs(getSystemAdminUserNotInserted()) {
                 insert u;
-                giveUserPermissionSet('Business_Data_For_Salesforce_User', AdminUser);
+                giveUserPermissionSet('Customer_connect_user', AdminUser);
             }
         }
         return u;
@@ -95,7 +95,7 @@ private static User createUserWithPermissionSet(String profileName, String Permi
      * @return
      */
     public static User getCompanyConnectUser() {
-        return createUserWithPermissionSet('Standard User', 'Business_Data_For_Salesforce_User');
+        return createUserWithPermissionSet('Standard User', 'Customer_connect_user');
     }
 
     public static User getUniqueCompanyConnectUser() {
