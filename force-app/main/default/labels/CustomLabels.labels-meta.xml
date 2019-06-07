@@ -275,6 +275,13 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>Find</value>
     </labels>
     <labels>
+        <fullName>New_Account_CC</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New_Account_CC</shortDescription>
+        <value>New Account with Customer.connect</value>
+    </labels>
+    <labels>
         <fullName>Search_No_Results</fullName>
         <language>en_US</language>
         <protected>true</protected>
