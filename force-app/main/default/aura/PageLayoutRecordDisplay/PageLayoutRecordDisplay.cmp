@@ -1,4 +1,4 @@
-<aura:component controller="PageLayoutRecordDisplayController" implements="flexipage:availableForAllPageTypes" access="global">
+<aura:component controller="PageLayoutRecordDisplayController">
     <aura:attribute name="PageLayoutName" type="String" access="global"/>
     <aura:attribute name="RecordId" type="String" access="global"/>
     <aura:attribute name="objectApiName" type="String" Default = ""/>
