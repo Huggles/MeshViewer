@@ -68,8 +68,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.annual_financial_statement_summary = String.valueOf(response.annual_financial_statement_summary);
             result.personnel_ci = response.personnel_ci;
             result.class_personnel_ci = response.class_personnel_ci;
-            System.debug('======response.personnel_ci_reference_date: '+response.personnel_ci_reference_date);
-            //result.personnel_ci_reference_date = Date.valueOf(response.personnel_ci_reference_date);
+            result.personnel_ci_reference_date =getDate(response.personnel_ci_reference_date);
             result.contact_initials = response.contact_initials;
             result.contact_prefix = response.contact_prefix;
             result.contact_surname = response.contact_surname;
@@ -87,24 +86,28 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.sbi_collection = String.valueOf(response.sbi_collection);
             result.structure = String.valueOf(response.structure);
 
-            //result.Correspondence_Address__c = response.correspondence_address_official_address; //I think this should be combination of all correspondence_address_xxx
-            System.debug('======response.correspondence_address.original.address '+response.correspondence_address.original.address + response.correspondence_address.original.postcode + response.correspondence_address.original.city + response.correspondence_address.original.house_number + response.correspondence_address.original.house_number_addition);
-            result.correspondence_address_original_address = response.correspondence_address.original.address;
-            result.correspondence_address_original_postcode = response.correspondence_address.original.postcode;
-            result.correspondence_address_original_street = response.correspondence_address.original.street;
-            result.correspondence_address_original_house_number = response.correspondence_address.original.house_number;
-            result.correspondence_address_original_house_number_addition = response.correspondence_address.original.house_number_addition;
-            result.correspondence_address_original_city = response.correspondence_address.original.city;
-            result.correspondence_address_original_country = response.correspondence_address.original.country;
-            //result.Correspondence_Address__c = response.correspondence_address_official_address; //I think this should be combination of all correspondence_address_xxx
-            System.debug('======response.establishment_address.original.address '+response.establishment_address.original.address + response.establishment_address.original.postcode + response.establishment_address.original.city + response.establishment_address.original.house_number + response.establishment_address.original.house_number_addition);
-            result.establishment_address_original_address = response.establishment_address.original.address;
-            result.establishment_address_original_postcode = response.establishment_address.original.postcode;
-            result.establishment_address_original_street = response.establishment_address.original.street;
-            result.establishment_address_original_house_number = response.establishment_address.original.house_number;
-            result.establishment_address_original_house_number_addition = response.establishment_address.original.house_number_addition;
-            result.establishment_address_original_city = response.establishment_address.original.city;
-            result.establishment_address_original_country = response.establishment_address.original.country;
+            if (response.correspondence_address <> null) {
+                if (response.correspondence_address.original <> null) {
+                    result.correspondence_address_original_address = response.correspondence_address.original.address;
+                    result.correspondence_address_original_postcode = response.correspondence_address.original.postcode;
+                    result.correspondence_address_original_street = response.correspondence_address.original.street;
+                    result.correspondence_address_original_house_number = response.correspondence_address.original.house_number;
+                    result.correspondence_address_original_house_number_addition = response.correspondence_address.original.house_number_addition;
+                    result.correspondence_address_original_city = response.correspondence_address.original.city;
+                    result.correspondence_address_original_country = response.correspondence_address.original.country;
+                }
+            }
+            if (response.establishment_address <> null) {
+                if (response.establishment_address.original <> null) {
+                    result.establishment_address_original_address = response.establishment_address.original.address;
+                    result.establishment_address_original_postcode = response.establishment_address.original.postcode;
+                    result.establishment_address_original_street = response.establishment_address.original.street;
+                    result.establishment_address_original_house_number = response.establishment_address.original.house_number;
+                    result.establishment_address_original_house_number_addition = response.establishment_address.original.house_number_addition;
+                    result.establishment_address_original_city = response.establishment_address.original.city;
+                    result.establishment_address_original_country = response.establishment_address.original.country;
+                }
+            }
 
             return result;
 
