@@ -74,7 +74,7 @@ public with sharing class DutchBusinessDto {
         @AuraEnabled public String establishment_address_official_house_number_addition;
         @AuraEnabled public String establishment_address_official_country;
         @AuraEnabled public String establishment_address_formatted_address;
-        @AuraEnabled public String eestablishment_address_postcode;
+        @AuraEnabled public String establishment_address_postcode;
         @AuraEnabled public String establishment_address_city;
         @AuraEnabled public String establishment_address_street;
         @AuraEnabled public Integer establishment_address_house_number;

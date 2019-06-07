@@ -155,11 +155,11 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             }
             //d.Name = dossier.trade_name_full;
             d.Dossier_Number__c = dossier.dossier_number;
-            d.Establishment_Number__c = convertToInteger(dossier.establishment_number);
-            d.Main_Establishment_Number__c = convertToInteger(dossier.main_establishment_number);
+            d.Establishment_Number__c = dossier.establishment_number;
+            d.Main_Establishment_Number__c = dossier.main_establishment_number;
             d.Indication_Main_Establishment__c = dossier.indication_main_establishment; //convertToBoolean(dossier.indication_main_establishment);
             d.Rsin_Number__c = convertToInteger(dossier.rsin_number);
-            d.Chamber_Number__c = dossier.chamber_number;
+            d.Chamber_Number__c = convertToInteger(dossier.chamber_number);
             d.Legal_Form_Code__c = convertToInteger(dossier.legal_form_code);
             d.Legal_Form_Text__c = dossier.legal_form_text;//;convertToString(dossier.legal_form_text);
             d.Indication_Organisation_Code__c = dossier.indication_organisation_code;//convertToString(dossier.indication_organisation_code);
@@ -192,7 +192,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Secondary_Sbi_Code_2__c = dossier.secondary_sbi_code2;
             d.Secondary_Sbi_Code_2_Text__c = dossier.secondary_sbi_code2_text;
 
-            d.Chamber_Code__c = dossier.chamber_number;//convertToString(dossier.chamber_number);
+            d.Chamber_Code__c = dossier.chamber_number;
             d.Status__c = determineStatus(dossier);
 
             d.Annual_Financial_Statement_Summary__c = dossier.annual_financial_statement_summary;
@@ -205,8 +205,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Contact_Title1__c = dossier.contact_title1;
             d.Contact_Title2__c = dossier.contact_title2;
             d.Contact_Gender__c = dossier.contact_gender;
-            d.Correspondence_Address__c = dossier.correspondence_address_official_address; //I think this should be combination of all correspondence_address_xxx
-            d.Establishment_Address__c = dossier.establishment_address_official_address; //combination of all establishment_address_xxx
             if (dossier.indication_bankruptcy != null) { d.Indication_Bankruptcy__c = dossier.indication_bankruptcy;}
             if (dossier.indication_dip != null) { d.Indication_Dip__c = dossier.indication_dip;}
             if (dossier.indication_economically_active != null) { d.Indication_Economically_Active__c = dossier.indication_economically_active;}
@@ -217,6 +215,30 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Insolvencies__c = dossier.insolvencies;
             d.Sbi_Collection__c = dossier.sbi_collection;
             d.Structure__c = dossier.structure;
+
+            Dossier_Address__c establishmentAddress = new Dossier_Address__c();
+            establishmentAddress.Name = dossier.establishment_address_original_address;
+            establishmentAddress.Postcode__c = dossier.establishment_address_original_postcode;
+            establishmentAddress.Street__c = dossier.establishment_address_original_street;
+            establishmentAddress.City__c = dossier.establishment_address_original_city;
+            establishmentAddress.House_Number__c = String.valueOf(dossier.establishment_address_original_house_number);
+            establishmentAddress.House_Number_Addition__c = dossier.establishment_address_original_house_number_addition;
+            establishmentAddress.Country__c = dossier.establishment_address_original_country;
+
+            Dossier_Address__c correspondenceAddress = new Dossier_Address__c();
+            correspondenceAddress.Name = dossier.correspondence_address_original_address;
+            correspondenceAddress.Postcode__c = dossier.correspondence_address_original_postcode;
+            correspondenceAddress.Street__c = dossier.correspondence_address_original_street;
+            correspondenceAddress.City__c = dossier.correspondence_address_original_city;
+            correspondenceAddress.House_Number__c = String.valueOf(dossier.correspondence_address_original_house_number);
+            correspondenceAddress.House_Number_Addition__c = dossier.correspondence_address_original_house_number_addition;
+            correspondenceAddress.Country__c = dossier.correspondence_address_original_country;
+
+            insert correspondenceAddress;
+            insert establishmentAddress;
+
+            d.Correspondence_Address__c = correspondenceAddress.Id;
+            d.Establishment_Address__c = establishmentAddress.Id;
 
             //upsert d;
             if(dossierExists){
