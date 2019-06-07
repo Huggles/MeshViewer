@@ -127,7 +127,7 @@ public static PermissionSet ps;
         fflib_SecurityUtils.checkObjectIsDeletable(PermissionSetAssignment.SObjectType);
         fflib_SecurityUtils.checkUpdate(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
         fflib_SecurityUtils.checkInsert(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
-        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Business_Data_For_Salesforce_User'];
+        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
         system.debug('pspspspspspspspspspspspsps = '+ps);
         list<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
         list<String> enabledBusinessUserIds = getBusinessUserIds();
@@ -153,7 +153,7 @@ public static PermissionSet ps;
     private static list<String> getBusinessUserIds(){
         fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
         fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
-        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Business_Data_For_Salesforce_User'];
+        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
         system.debug('************* ps = '+ ps);
         list <PermissionSetAssignment> psaList = new list <PermissionSetAssignment>();
         psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];
