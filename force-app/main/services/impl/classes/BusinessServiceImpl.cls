@@ -238,8 +238,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             insert correspondenceAddress;
             insert establishmentAddress;
 
-            d.Correspondence_Address__c = correspondenceAddress.Id;
-            d.Establishment_Address__c = establishmentAddress.Id;
+            d.Address_Correspondence__c = correspondenceAddress.Id;
+            d.Address_Establishment__c = establishmentAddress.Id;
 
             //upsert d;
             if(dossierExists){

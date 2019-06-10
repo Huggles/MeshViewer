@@ -44,11 +44,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Account.CleanStatus</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Account.DandbCompanyId</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -239,7 +234,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Business_Dossier__c.Correspondence_Address__c</field>
+        <field>Business_Dossier__c.Address_Correspondence__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -259,7 +254,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Business_Dossier__c.Establishment_Address__c</field>
+        <field>Business_Dossier__c.Address_Establishment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

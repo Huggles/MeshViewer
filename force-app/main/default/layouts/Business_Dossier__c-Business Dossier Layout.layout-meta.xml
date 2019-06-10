@@ -44,11 +44,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Establishment_Address__c</field>
+                <field>Address_Establishment__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Correspondence_Address__c</field>
+                <field>Address_Correspondence__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
