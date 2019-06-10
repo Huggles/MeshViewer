@@ -1,4 +1,4 @@
-<aura:component controller="CompanyDetailsController" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction">
+<aura:component controller="CompanyDetailsController" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
     <aura:attribute name="step" type="string" default="1" />
     <aura:attribute name="companyList" type="object" default="{}" />
     <aura:attribute name="selected" type="object" default="{}" />
