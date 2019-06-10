@@ -146,7 +146,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 }*/
             }
             // @todo add addresses and contact.
-            system.debug('VPROK tests dosier = '+ dossier);
+            system.debug('VPROK tests dosier: ');
+            System.debug(JSON.serialize(dossier));
             // if we will need legal name on name field
             if(dossier.legal_name != null && dossier.legal_name != ''){
                 d.Name = dossier.legal_name;//dossier.legal_name;
@@ -158,7 +159,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Establishment_Number__c = dossier.establishment_number;
             d.Main_Establishment_Number__c = dossier.main_establishment_number;
             d.Indication_Main_Establishment__c = dossier.indication_main_establishment; //convertToBoolean(dossier.indication_main_establishment);
-            d.Rsin_Number__c = convertToInteger(dossier.rsin_number);
+            d.Rsin_Number__c = dossier.rsin_number;
             d.Chamber_Number__c = convertToInteger(dossier.chamber_number);
             d.Legal_Form_Code__c = convertToInteger(dossier.legal_form_code);
             d.Legal_Form_Text__c = dossier.legal_form_text;//;convertToString(dossier.legal_form_text);
@@ -174,17 +175,17 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Authorized_Share_Capital_Currency__c = dossier.authorized_share_capital_currency;
             d.Class_Personnel__c = convertToString(dossier.class_personnel);
             d.Class_Personnel_Fulltime__c = convertToString(dossier.class_personnel_fulltime);
-            d.Continuation_Date__c = dossier.continuation_date;
-            d.Discontinuation_Date__c = dossier.discontinuation_date;
-            d.Establishment_Date__c = dossier.establishment_date;
-            d.Founding_Date__c = dossier.founding_date;
+            d.Continuation_Date__c = validDate(dossier.continuation_date);
+            d.Discontinuation_Date__c = validDate(dossier.discontinuation_date);
+            d.Establishment_Date__c = validDate(dossier.establishment_date);
+            d.Founding_Date__c = validDate(dossier.founding_date);
             d.Issued_Share_Capital__c = convertToInteger(dossier.issued_share_capital);
             d.Issued_Share_Capital_Currency__c = dossier.issued_share_capital_currency;
             d.Paid_Up_Share_Capital__c = convertToInteger(dossier.paid_up_share_capital);
             d.Paid_Up_Share_Capital_Currency__c = dossier.paid_up_share_capital_currency;
             d.Personnel__c = dossier.personnel;
             d.Personnel_Fulltime__c = dossier.personnel_fulltime;
-            d.Personnel_Reference_Date__c = dossier.personnel_reference_date;
+            d.Personnel_Reference_Date__c = validDate(dossier.personnel_reference_date);
             d.Primary_Sbi_Code__c = dossier.primary_sbi_code;
             d.Primary_Sbi_Code_Text__c = dossier.primary_sbi_code_text;
             d.Secondary_Sbi_Code_1__c = dossier.secondary_sbi_code1;
@@ -198,7 +199,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Annual_Financial_Statement_Summary__c = dossier.annual_financial_statement_summary;
             d.Personnel_CI__c = dossier.personnel_ci;
             d.Class_Personnel_CI__c = convertToString(dossier.class_personnel_ci);
-            d.Personnel_CI_Reference_Date__c = dossier.personnel_ci_reference_date;
+            d.Personnel_CI_Reference_Date__c = validDate(dossier.personnel_ci_reference_date);
             d.Contact_Initials__c = dossier.contact_initials;
             d.Contact_Prefix__c = dossier.contact_prefix;
             d.Contact_Surname__c = dossier.contact_surname;
@@ -252,6 +253,13 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
             throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
+    }
+
+    private static Date validDate(Date theDate) {
+        if (theDate == null) return null;
+        Date d = Date.valueOf(theDate);
+        if (d.year() < 1000) return null;
+        return d;
     }
 
     // method to skip doing if for every value

@@ -266,7 +266,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Personnel_Reference_Date__c , Date.valueOf('2019-2-12'));
         System.assertEquals(d.Primary_Sbi_Code__c , 'sbi_code');
         System.assertEquals(d.Primary_Sbi_Code_Text__c , 'sbi_code_text');
-        System.assertEquals(d.Rsin_Number__c , 13);
+        System.assertEquals(d.Rsin_Number__c , '13');
         System.assertEquals(d.Sbi_Collection__c , 'sbi_collection');
         System.assertEquals(d.Secondary_Sbi_Code_1__c , 'secondary_sbi_code1');
         System.assertEquals(d.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
