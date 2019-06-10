@@ -159,7 +159,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Establishment_Number__c = dossier.establishment_number;
             d.Main_Establishment_Number__c = dossier.main_establishment_number;
             d.Indication_Main_Establishment__c = dossier.indication_main_establishment; //convertToBoolean(dossier.indication_main_establishment);
-            d.Rsin_Number__c = dossier.rsin_number;
+            d.Rsin_Number__c = String.valueOf(dossier.rsin_number);
             d.Chamber_Number__c = convertToInteger(dossier.chamber_number);
             d.Legal_Form_Code__c = convertToInteger(dossier.legal_form_code);
             d.Legal_Form_Text__c = dossier.legal_form_text;//;convertToString(dossier.legal_form_text);
