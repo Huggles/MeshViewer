@@ -1,6 +1,6 @@
 public interface IBusinessAccountingService {
 
-    DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username);
+    DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username, String password);
     boolean getUserOnboarded();
     DutchBusinessAccountingDto.userCreateResponseDto createCIUser(DutchBusinessAccountingDto.UserCreateRequestDto input);
     boolean addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId);

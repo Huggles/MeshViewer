@@ -408,6 +408,20 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>request a trial</value>
     </labels>
     <labels>
+        <fullName>Config_Account_CreateAccount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_CreateAccount</shortDescription>
+        <value>Request a trial</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ExistingUser</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ExistingUser</shortDescription>
+        <value>I am an existing user</value>
+    </labels>
+    <labels>
         <fullName>Config_Account_AwaitingActivation</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -429,11 +443,25 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>Save Credentials</value>
     </labels>
     <labels>
+        <fullName>Config_Credentials</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Credentials</shortDescription>
+        <value>Credentials</value>
+    </labels>
+    <labels>
         <fullName>Config_Account_Username</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config_Account_Username</shortDescription>
         <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ID</shortDescription>
+        <value>ID</value>
     </labels>
     <labels>
         <fullName>Config_Add_Budget</fullName>
