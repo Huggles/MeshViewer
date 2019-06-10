@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label>Customer.connect setup</label>
+        <name>Customerconnect_Administration</name>
+    </customApplications>
+    <customLabels>
+        <label>Terug naar resultaten</label>
+        <name>Back_To_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>Dank u voor het installeren van Custommer.connect. Om te starten, voer uw gebruikersgegevens in of</label>
+        <name>Config_Account_ActivateDescription</name>
+    </customLabels>
+    <customLabels>
+        <label>vraag een proeflicentie aan</label>
+        <name>Config_Account_ActivateDescriptionRequest</name>
+    </customLabels>
+    <customLabels>
+        <label>Uw account is nog niet geactiveerd. Probeer het later nogmaals. Een van onze accountmanagers neemt contact met u op zodra uw account is geactiveerd.</label>
+        <name>Config_Account_AwaitingActivation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Config_Account_CreateAccount --></label>
+        <name>Config_Account_CreateAccount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Config_Account_ExistingUser --></label>
+        <name>Config_Account_ExistingUser</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Config_Account_ID --></label>
+        <name>Config_Account_ID</name>
+    </customLabels>
+    <customLabels>
+        <label>Paswoord</label>
+        <name>Config_Account_Password</name>
+    </customLabels>
+    <customLabels>
+        <label>Sla op</label>
+        <name>Config_Account_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Gebruikersnaam</label>
+        <name>Config_Account_Username</name>
+    </customLabels>
+    <customLabels>
+        <label>Voeg budget toe</label>
+        <name>Config_Add_Budget</name>
+    </customLabels>
+    <customLabels>
+        <label>Uw balans is veranderd</label>
+        <name>Config_Balance_Changed</name>
+    </customLabels>
+    <customLabels>
+        <label>Er is een fout opgetreden tijdens de activering van deze org. Neem contact met ons op.</label>
+        <name>Config_Balance_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Budgetmanagement</label>
+        <name>Config_Balance_Management</name>
+    </customLabels>
+    <customLabels>
+        <label>Bekijk uw huidige budget, wijzig uw grenswaarde en koop aanvullend budget.</label>
+        <name>Config_Balance_Management_Text</name>
+    </customLabels>
+    <customLabels>
+        <label>De grenswaarde geeft aan wanneer u een waarschuwing krijgt dat uw budget bijna geconsumeerd is.</label>
+        <name>Config_Balance_Threshold_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Uw budget is opgewaardeerd.</label>
+        <name>Config_Balance_Updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Config_Credentials --></label>
+        <name>Config_Credentials</name>
+    </customLabels>
+    <customLabels>
+        <label>Huidig budget</label>
+        <name>Config_Current_Budget</name>
+    </customLabels>
+    <customLabels>
+        <label>Huidige grenswaarde</label>
+        <name>Config_Current_Threshold</name>
+    </customLabels>
+    <customLabels>
+        <label>Laden…</label>
+        <name>Config_Loading</name>
+    </customLabels>
+    <customLabels>
+        <label>Customer.connect configuratie pagina</label>
+        <name>Config_Page_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Customer.connect configuratie</label>
+        <name>Config_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- WSCall_Unknown_Exception --></label>
+        <name>DBSCall_AccountDupCheck_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- WSCall_Unknown_Exception --></label>
+        <name>DBSCall_AccountSave_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- WSCall_Unknown_Exception --></label>
+        <name>DBSCall_AccountSearch_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- WSCall_Unknown_Exception --></label>
+        <name>DBSCall_DossierSave_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- WSCall_Unknown_Exception --></label>
+        <name>DBSCall_Unknown_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label>DMLManager Fout: Er kon geen bestaand record gevonden worden voor het object met Id =</label>
+        <name>DML_Manager_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>De onderstaande details zijn gesynchroniseerd vanuit Customer.connect</label>
+        <name>Details_Help</name>
+    </customLabels>
+    <customLabels>
+        <label>Creeer organisatie</label>
+        <name>Dossier_Account_Create</name>
+    </customLabels>
+    <customLabels>
+        <label>Organisatie gecreeerd</label>
+        <name>Dossier_Account_Create_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label>Werk organisatie bij</label>
+        <name>Dossier_Account_Update</name>
+    </customLabels>
+    <customLabels>
+        <label>Organisatie bijgewerkt</label>
+        <name>Dossier_Account_Update_Completed</name>
+    </customLabels>
+    <customLabels>
+        <label>Kamer van Koophandel nummer</label>
+        <name>Dossier_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Verwijder Customer.connect gegevens</label>
+        <name>Dossier_Remove</name>
+    </customLabels>
+    <customLabels>
+        <label>Customer.connect gegevens verwijderd</label>
+        <name>Dossier_Removed</name>
+    </customLabels>
+    <customLabels>
+        <label>Fout</label>
+        <name>Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Fout 103 ontvangen van Customer.connect. Neem contact op met support.</label>
+        <name>Error_Config</name>
+    </customLabels>
+    <customLabels>
+        <label>Fout 101 ontvangen van Customer.connect. Neem contact op met support.</label>
+        <name>Error_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label>Er was een probleem met het verwijderen van de Customer.connect gegevens. Controleer of u toestemming heeft Customer.connect gegevens te verwijderen.</label>
+        <name>Error_Remove_Dossier</name>
+    </customLabels>
+    <customLabels>
+        <label>Fout 102 ontvangen van Customer.connect. Neem contact op met support.</label>
+        <name>Error_Unknown</name>
+    </customLabels>
+    <customLabels>
+        <label>Vestigingsdatum</label>
+        <name>Establishment_Date</name>
+    </customLabels>
+    <customLabels>
+        <label>Vestigingsnummer</label>
+        <name>Establishment_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Onderstaand de gedetailleerde organisatie gegevens. Druk op creeer organisatie om de organisatie (Account) aan te maken.</label>
+        <name>Get_Dossier_Results_Help</name>
+    </customLabels>
+    <customLabels>
+        <label>Overeenkomstige organisatie</label>
+        <name>Matching_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label>Nieuwe Organisatie op basis van Customer.connect</label>
+        <name>New_Account_CC</name>
+    </customLabels>
+    <customLabels>
+        <label>Geen Customer.connect authenticatie data gevonden. Customer.connect is nog niet geactiveerd</label>
+        <name>NoAuthAppNotActive</name>
+    </customLabels>
+    <customLabels>
+        <label>Adres</label>
+        <name>Search_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Stad</label>
+        <name>Search_City</name>
+    </customLabels>
+    <customLabels>
+        <label>Organisatie details</label>
+        <name>Search_Company_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Zoek</label>
+        <name>Search_Confirm</name>
+    </customLabels>
+    <customLabels>
+        <label>Land</label>
+        <name>Search_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Details om te synchroniseren</label>
+        <name>Search_Details</name>
+    </customLabels>
+    <customLabels>
+        <label>Organisatie details</label>
+        <name>Search_Details_Dossier</name>
+    </customLabels>
+    <customLabels>
+        <label>Juridische entiteit details</label>
+        <name>Search_Details_Legal</name>
+    </customLabels>
+    <customLabels>
+        <label>Domeinnaam</label>
+        <name>Search_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label>Kamer van Koophandel nummer</label>
+        <name>Search_Dossier_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Om informatie van Nederlandse organisatie te vinden, moet u dit account relateren aan gegevens van een organisatie bekend in het KvK.
+Opmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisatie, zoek dan hier op.</label>
+        <name>Search_Help</name>
+    </customLabels>
+    <customLabels>
+        <label>Vind</label>
+        <name>Search_Match_Dossier</name>
+    </customLabels>
+    <customLabels>
+        <label>Geen resultaten</label>
+        <name>Search_No_Results</name>
+    </customLabels>
+    <customLabels>
+        <label>Telefoonnummer</label>
+        <name>Search_Phone</name>
+    </customLabels>
+    <customLabels>
+        <label>Postcode</label>
+        <name>Search_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label>Provincie</label>
+        <name>Search_Province</name>
+    </customLabels>
+    <customLabels>
+        <label>Zoek nogmaals</label>
+        <name>Search_Reset</name>
+    </customLabels>
+    <customLabels>
+        <label>Bevestig</label>
+        <name>Search_Results_Confirm</name>
+    </customLabels>
+    <customLabels>
+        <label>De volgende organisaties komen overeen met u zoekcriteria. Selecteer alstublieft de juiste organisatie.</label>
+        <name>Search_Results_Help</name>
+    </customLabels>
+    <customLabels>
+        <label>Straat</label>
+        <name>Search_Street</name>
+    </customLabels>
+    <customLabels>
+        <label>Handelsnaam</label>
+        <name>Search_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Succes</label>
+        <name>Success</name>
+    </customLabels>
+    <customLabels>
+        <label>Customer.connect synchronisatie</label>
+        <name>Sync</name>
+    </customLabels>
+    <customLabels>
+        <label>Customer.connect synchronisatie is succesvol uitgevoerd</label>
+        <name>Sync_Success</name>
+    </customLabels>
+    <customLabels>
+        <label>Een fout is opgetreden tijdens het veranderen van het budget.</label>
+        <name>WSCall_ChangeBalance_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label>Een fout is opgetreden. Neem contact op met uw systeembeheerder.</label>
+        <name>WSCall_Generic_UI_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label>Een onbekende fout is opgetreden</label>
+        <name>WSCall_Unknown_Exception</name>
+    </customLabels>
+    <customLabels>
+        <label>Customer.connect kan de systemen van de data leverancier niet bereiken. Probeer het later nog een keer.</label>
+        <name>WSCall_Unsuccessful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error when selecting a cross-object fieldsset is not allowed and attempted. --></label>
+        <name>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error when selecting a field set for a different sobject type. --></label>
+        <name>fflib_QueryFactory_fieldset_wrong_sobject_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Presented when attempting to nest subqueries. --></label>
+        <name>fflib_QueryFactory_recursive_subquery_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Presented when attempting to create a subquery from an invalid relationship. --></label>
+        <name>fflib_QueryFactory_subquery_invalid_relationship</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_insertable --></label>
+        <name>fflib_security_error_field_not_insertable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_readable --></label>
+        <name>fflib_security_error_field_not_readable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_field_not_updateable --></label>
+        <name>fflib_security_error_field_not_updateable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_deletable --></label>
+        <name>fflib_security_error_object_not_deletable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_insertable --></label>
+        <name>fflib_security_error_object_not_insertable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_readable --></label>
+        <name>fflib_security_error_object_not_readable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fflib_security_error_object_not_updateable --></label>
+        <name>fflib_security_error_object_not_updateable</name>
+    </customLabels>
+    <customPageWebLinks>
+        <label><!-- Link to config --></label>
+        <name>Link_to_config</name>
+    </customPageWebLinks>
+    <customTabs>
+        <label>Customer.connect setup</label>
+        <name>Customer_connect_configuration</name>
+    </customTabs>
+    <quickActions>
+        <label><!-- LogACall --></label>
+        <name>LogACall</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewAccount --></label>
+        <name>NewAccount</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewCase --></label>
+        <name>NewCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewContact --></label>
+        <name>NewContact</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewEvent --></label>
+        <name>NewEvent</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewGroup --></label>
+        <name>NewGroup</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewLead --></label>
+        <name>NewLead</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewNote --></label>
+        <name>NewNote</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewOpportunity --></label>
+        <name>NewOpportunity</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewTask --></label>
+        <name>NewTask</name>
+    </quickActions>
+    <quickActions>
+        <label>Nieuw Account met Customer.connect</label>
+        <name>searchGlobalAction</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- SendEmail --></label>
+        <name>SendEmail</name>
+    </quickActions>
+</Translations>
