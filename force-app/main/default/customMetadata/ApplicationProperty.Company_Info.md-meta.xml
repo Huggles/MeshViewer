@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Appsolutely_Contact_Email__c</field>
-        <value xsi:type="xsd:string">dan.nicholson@appsolutely.nl</value>
+        <value xsi:type="xsd:string">customer.connect.support@appsolutely.nl</value>
     </values>
     <values>
         <field>DataProviderAdminPassword__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Data_Provider_Account_Comment__c</field>
-        <value xsi:type="xsd:string">A user for reselling by Appsolutely. Registered through the BDS application</value>
+        <value xsi:type="xsd:string">A user for reselling by Appsolutely. Registered through the Customer.connect application</value>
     </values>
     <values>
         <field>Data_Provider_Account_Id__c</field>
