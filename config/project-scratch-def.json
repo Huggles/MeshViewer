@@ -3,6 +3,6 @@
     "edition": "Developer",
     "language": "en_US",
     "orgPreferences" : {
-        "enabled": ["S1DesktopEnabled"]
+        "enabled": ["S1DesktopEnabled", "Translation"]
     }
 }
