@@ -4,7 +4,8 @@
     <description>Financial summary from the last known annual financial statement DutchBusinessAnnualFinancialStatementSummary.</description>
     <externalId>false</externalId>
     <label>Annual_Financial Statement Summary</label>
-    <required>false</required>
+    <length>131072</length>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
 </CustomField>

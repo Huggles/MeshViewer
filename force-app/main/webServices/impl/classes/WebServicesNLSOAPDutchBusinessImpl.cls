@@ -65,6 +65,50 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.secondary_sbi_code2 = response.secondary_sbi_code2 ;
             result.Secondary_Sbi_Code2_Text = response.Secondary_Sbi_Code2_Text;
 
+            result.annual_financial_statement_summary = String.valueOf(response.annual_financial_statement_summary);
+            result.personnel_ci = response.personnel_ci;
+            result.class_personnel_ci = response.class_personnel_ci;
+            result.personnel_ci_reference_date =getDate(response.personnel_ci_reference_date);
+            result.contact_initials = response.contact_initials;
+            result.contact_prefix = response.contact_prefix;
+            result.contact_surname = response.contact_surname;
+            result.contact_title1 = response.contact_title1;
+            result.contact_title2 = response.contact_title2;
+            result.contact_gender = response.contact_gender;
+            result.indication_bankruptcy = response.indication_bankruptcy;
+            result.indication_dip = response.indication_dip;
+            result.indication_economically_active = response.indication_economically_active;
+            result.indication_export = response.indication_export;
+            result.indication_import = response.indication_import;
+            result.indication_main_establishment = response.indication_main_establishment;
+            result.indication_non_mailing = response.indication_non_mailing;
+            result.insolvencies = String.valueOf(response.insolvencies);
+            result.sbi_collection = String.valueOf(response.sbi_collection);
+            result.structure = String.valueOf(response.structure);
+
+            if (response.correspondence_address <> null) {
+                if (response.correspondence_address.original <> null) {
+                    result.correspondence_address_original_address = response.correspondence_address.original.address;
+                    result.correspondence_address_original_postcode = response.correspondence_address.original.postcode;
+                    result.correspondence_address_original_street = response.correspondence_address.original.street;
+                    result.correspondence_address_original_house_number = response.correspondence_address.original.house_number;
+                    result.correspondence_address_original_house_number_addition = response.correspondence_address.original.house_number_addition;
+                    result.correspondence_address_original_city = response.correspondence_address.original.city;
+                    result.correspondence_address_original_country = response.correspondence_address.original.country;
+                }
+            }
+            if (response.establishment_address <> null) {
+                if (response.establishment_address.original <> null) {
+                    result.establishment_address_original_address = response.establishment_address.original.address;
+                    result.establishment_address_original_postcode = response.establishment_address.original.postcode;
+                    result.establishment_address_original_street = response.establishment_address.original.street;
+                    result.establishment_address_original_house_number = response.establishment_address.original.house_number;
+                    result.establishment_address_original_house_number_addition = response.establishment_address.original.house_number_addition;
+                    result.establishment_address_original_city = response.establishment_address.original.city;
+                    result.establishment_address_original_country = response.establishment_address.original.country;
+                }
+            }
+
             return result;
 
         }catch(Exception e){

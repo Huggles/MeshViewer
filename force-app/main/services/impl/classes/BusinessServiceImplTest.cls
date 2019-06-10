@@ -154,11 +154,9 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.contact_title1 = 'title1';
         InputDossier.contact_title2 = 'title2';
         InputDossier.continuation_date = Date.valueOf('2019-2-12');
-        InputDossier.correspondence_address_official_address = 'correspondence_address';
         InputDossier.discontinuation_date = Date.valueOf('2019-2-12');
         InputDossier.domain_name = 'domain_name';
         InputDossier.dossier_number = '123456';
-        InputDossier.establishment_address_official_address = 'establishment_address';
         InputDossier.establishment_date = Date.valueOf('2019-2-12');
         InputDossier.establishment_number = '10';
         InputDossier.founding_date = Date.valueOf('2019-2-12');
@@ -199,6 +197,20 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.secondary_sbi_code2_text = 'secondary_sbi_code2_text';
         InputDossier.trade_name_45 = '14';
         InputDossier.trade_names = new list<String>{'Test', 'Test2', 'Test3'};
+        InputDossier.correspondence_address_original_address = 'correspondence_address.original.address';
+        InputDossier.correspondence_address_original_postcode = 'correspondence_address.original.postcode';
+        InputDossier.correspondence_address_original_street = 'correspondence_address.original.street';
+        InputDossier.correspondence_address_original_house_number = 1;
+        InputDossier.correspondence_address_original_house_number_addition = 'correspondence_address.original.house_number_addition';
+        InputDossier.correspondence_address_original_city = 'correspondence_address.original.city';
+        InputDossier.correspondence_address_original_country = 'correspondence_address.original.country';
+        InputDossier.establishment_address_original_address = 'establishment_address.original.address';
+        InputDossier.establishment_address_original_postcode = 'establishment_address.original.postcode';
+        InputDossier.establishment_address_original_street = 'establishment_address.original.street';
+        InputDossier.establishment_address_original_house_number = 2;
+        InputDossier.establishment_address_original_house_number_addition = 'establishment_address.original.house_number_addition';
+        InputDossier.establishment_address_original_city = 'establishment_address.original.city';
+        InputDossier.establishment_address_original_country = 'establishment_address.original.country';
 
         mocks.when(selectorMockDossier.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
         mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Business_Dossier__c>());
@@ -219,7 +231,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Annual_Financial_Statement_Summary__c,'summary');
         System.assertEquals(d.Authorized_Share_Capital__c, 12);
         System.assertEquals(d.Authorized_Share_Capital_Currency__c, 'authorized_share_capital_currency');
-        System.assertEquals(d.Chamber_Number__c , '1');
+        System.assertEquals(d.Chamber_Number__c , 1);
         System.assertEquals(d.Class_Personnel__c , '1');
         System.assertEquals(d.Class_Personnel_CI__c , '1');
         System.assertEquals(d.Class_Personnel_Fulltime__c , '1');
@@ -230,13 +242,11 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Contact_Title1__c , 'title1');
         System.assertEquals(d.Contact_Title2__c , 'title2');
         System.assertEquals(d.Continuation_Date__c , Date.valueOf('2019-2-12'));
-        System.assertEquals(d.Correspondence_Address__c , 'correspondence_address');
         System.assertEquals(d.Discontinuation_Date__c , Date.valueOf('2019-2-12'));
         System.assertEquals(d.Domain_Name__c , 'domain_name');
         System.assertEquals(d.Dossier_Number__c , '123456');
-        System.assertEquals(d.Establishment_Address__c , 'establishment_address');
         System.assertEquals(d.Establishment_Date__c , Date.valueOf('2019-2-12'));
-        System.assertEquals(d.Establishment_Number__c , 10);
+        System.assertEquals(d.Establishment_Number__c , '10');
         System.assertEquals(d.Founding_Date__c, Date.valueOf('2019-2-12'));
         System.assertEquals(d.Indication_Main_Establishment__c , true);
         System.assertEquals(d.Indication_Organisation_Code__c , '10');
@@ -245,7 +255,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Issued_Share_Capital_Currency__c , 'issued_share_capital_currency');
         System.assertEquals(d.Legal_Form_Code__c , 11);
         System.assertEquals(d.Legal_Form_Text__c , 'legal_form');
-        System.assertEquals(d.Main_Establishment_Number__c , 12);
+        System.assertEquals(d.Main_Establishment_Number__c , '12');
         System.assertEquals(d.Mobile_Number__c , '12334234');
         System.assertEquals(d.Paid_Up_Share_Capital__c , 12334234);
         System.assertEquals(d.Paid_Up_Share_Capital_Currency__c , 'paid_up_share_capital_currency');
@@ -256,7 +266,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Personnel_Reference_Date__c , Date.valueOf('2019-2-12'));
         System.assertEquals(d.Primary_Sbi_Code__c , 'sbi_code');
         System.assertEquals(d.Primary_Sbi_Code_Text__c , 'sbi_code_text');
-        System.assertEquals(d.Rsin_Number__c , 13);
+        System.assertEquals(d.Rsin_Number__c , '13');
         System.assertEquals(d.Sbi_Collection__c , 'sbi_collection');
         System.assertEquals(d.Secondary_Sbi_Code_1__c , 'secondary_sbi_code1');
         System.assertEquals(d.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
@@ -275,10 +285,25 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Indication_Import__c, true);
         System.assertEquals(d.Indication_Main_Establishment__c , true);
         System.assertEquals(d.Indication_Non_Mailing__c , false);
+        
+        Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Id = :d.Correspondence_Address__c LIMIT 1];
 
+        System.assertEquals(cAddress.Name, 'correspondence_address.original.address');
+        System.assertEquals(cAddress.Postcode__c, 'correspondence_address.original.postcode');
+        System.assertEquals(cAddress.Country__c, 'correspondence_address.original.country');
+        System.assertEquals(cAddress.City__c, 'correspondence_address.original.city');
+        System.assertEquals(cAddress.Street__c, 'correspondence_address.original.street');
+        System.assertEquals(cAddress.House_Number_Addition__c, 'correspondence_address.original.house_number_addition');
+        System.assertEquals(cAddress.House_Number__c, '1');
 
-
-
+        Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Id = :d.Establishment_Address__c LIMIT 1];
+        System.assertEquals(eAddress.Name, 'establishment_address.original.address');
+        System.assertEquals(eAddress.Postcode__c, 'establishment_address.original.postcode');
+        System.assertEquals(eAddress.Country__c, 'establishment_address.original.country');
+        System.assertEquals(eAddress.City__c, 'establishment_address.original.city');
+        System.assertEquals(eAddress.Street__c, 'establishment_address.original.street');
+        System.assertEquals(eAddress.House_Number_Addition__c, 'establishment_address.original.house_number_addition');
+        System.assertEquals(eAddress.House_Number__c, '2');
 
     }
 /*
