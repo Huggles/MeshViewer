@@ -387,6 +387,13 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }
     }
 
+    public static DutchBusinessDto.DutchBusinessVatNumber requestVAT(String dossierNumber) {
+        IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
+        DutchBusinessDto.DutchBusinessGetVatNumberRequest requestParams = new DutchBusinessDto.DutchBusinessGetVatNumberRequest();// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
+        requestParams.dossier_number = dossierNumber;
+        return service.businessGetVatNumber(requestParams);
+    }
+
     public static list<Object> upsertDossier(Business_Dossier__c dossier){
 
         try{

@@ -29,6 +29,10 @@ public with sharing class BusinessService {
     public static List<Object> upsertDossier(Business_Dossier__c dossier){
         return newInstance().upsertDossier(dossier);
     }
+
+    public static DutchBusinessDto.DutchBusinessVatNumber requestVat(String dossierNumber){
+        return newInstance().requestVat(dossierNumber);
+    }
     /*
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         return newInstance().createAccountForDossier(accountId, dossier, unitOfWork);

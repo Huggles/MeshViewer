@@ -12,6 +12,10 @@ public class WebServicesNLSOAPDutchBusiness {
         return newInstance().dutchBusinessSearchParameters(params);
     }
 
+    public static DutchBusinessDto.DutchBusinessVatNumber businessGetVatNumber(DutchBusinessDto.DutchBusinessGetVatNumberRequest params){
+        return newInstance().businessGetVatNumber(params);
+    }
+
     public static IWebServicesNLSOAPDutchBusiness newInstance() {
         return (IWebServicesNLSOAPDutchBusiness) Application.Service.newInstance(IWebServicesNLSOAPDutchBusiness.class);
     }

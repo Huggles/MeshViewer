@@ -73,23 +73,19 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object getVATDetails(String dossierId){
         try{
-
-            System.debug('Getting VAT for: ' + dossierId);
             // 1. Get existing dossier from ID
-            Business_Dossier__c result = BusinessService.selectDossier(dossierId);            
+            Business_Dossier__c result = BusinessService.selectDossier(dossierId);        
             // 2. WebService call to get VAT
-            // @todo
-            String vat_number = '12345';
-
+            DutchBusinessDto.DutchBusinessVatNumber vatResponse = BusinessService.requestVAT(result.Dossier_Number__c);
             // 3. Add VAT number to dossier
-            result.VAT_Number__c = vat_number;
-            
+            result.VAT_Number__c = vatResponse.vat_number;
             // 4. Save
             BusinessService.upsertDossier(result);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
         }catch(Exception e){
-            return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
+            System.debug(e.getMessage());
+            return ErrorLogUtil.logAndCommitUI(e, e.getMessage());
         }
     }
 
