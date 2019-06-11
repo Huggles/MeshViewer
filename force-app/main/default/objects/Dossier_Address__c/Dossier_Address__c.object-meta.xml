@@ -53,12 +53,12 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <label>Dossier Address</label>
+    <label>Business Address</label>
     <nameField>
-        <label>Dossier Address Name</label>
+        <label>Business Address Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Dossier Addresses</pluralLabel>
+    <pluralLabel>Business Addresses</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

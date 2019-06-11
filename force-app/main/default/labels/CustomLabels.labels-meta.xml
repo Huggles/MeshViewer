@@ -113,6 +113,13 @@
         <value>Remove Customer.connect data</value>
     </labels>
     <labels>
+        <fullName>VAT_Retrieve</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VAT_Retrieve</shortDescription>
+        <value>Get VAT information</value>
+    </labels>
+    <labels>
         <fullName>Dossier_Removed</fullName>
         <language>en_US</language>
         <protected>true</protected>

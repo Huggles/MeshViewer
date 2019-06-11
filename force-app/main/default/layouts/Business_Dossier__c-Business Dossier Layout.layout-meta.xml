@@ -50,6 +50,10 @@
                 <behavior>Edit</behavior>
                 <field>Address_Correspondence__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>VAT_Number__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

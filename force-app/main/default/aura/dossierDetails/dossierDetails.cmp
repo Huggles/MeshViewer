@@ -37,6 +37,7 @@
                 <lightning:card variant="Narrow" >
                     <aura:set attribute="title">{!v.myTitleName}</aura:set>
                     <aura:set attribute="actions">
+                        <lightning:button label="{!$Label.c.VAT_Retrieve}" onclick="{!c.getVAT}" ></lightning:button>
                         <lightning:button label="{!$Label.c.Dossier_Remove}" onclick="{!c.removeDossier}" ></lightning:button>
                     </aura:set>
                 </lightning:card>

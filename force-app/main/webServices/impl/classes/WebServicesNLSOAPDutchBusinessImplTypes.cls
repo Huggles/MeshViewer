@@ -417,6 +417,22 @@ public abstract class WebServicesNLSOAPDutchBusinessImplTypes  extends Webservic
         //private String[] field_order_type_info = new String[]{'trade_name','city','street','house_number','house_number_addition','telephone_number','domain_name','strict_search','page'};
 
     }
+
+    public class dutchBusinessGetVatNumberRequestType {
+        public String dossier_number;
+        private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'dossier_number'};
+    }
+
+    public class dutchBusinessGetVatNumberResponseType {
+        public DutchBusinessDto.DutchBusinessVatNumber out;
+        private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'out'};
+    }
+
+    
     /*
     public class DutchBusinessLegalEntityData {
         public String dossier_number;
