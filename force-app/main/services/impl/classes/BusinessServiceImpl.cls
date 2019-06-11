@@ -14,7 +14,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
             Business_Dossier__c d = saveBusinessDossierUow(dossier, acc, unitOfWork);
             //unitOfWork.registerRelationship(acc, Account.Business_Dossier__c, d);
-            unitOfWork.commitWork();
+            //unitOfWork.commitWork();//TODO cross check if it is ok to do it in saveBusinessDossierUow method and not here
             //unitOfWork.registerDirty(acc, Account.Business_Dossier__c, d); // to update a field on account level once dossier is inserted
             //unitOfWork.commitWork(); // need to wait until circullar references are releassed ion fflib. so far using another method link: https://github.com/financialforcedev/fflib-apex-common/pull/195
             result.add(d);
@@ -197,6 +197,11 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Status__c = determineStatus(dossier);
 
             d.Annual_Financial_Statement_Summary__c = dossier.annual_financial_statement_summary;
+            d.Year__c = dossier.annual_financial_statement_summary_year;
+            d.Profit__c = dossier.annual_financial_statement_summary_profit;
+            d.Turnover__c = dossier.annual_financial_statement_summary_turnover;
+            d.Assets__c = dossier.annual_financial_statement_summary_assets;
+
             d.Personnel_CI__c = dossier.personnel_ci;
             d.Class_Personnel_CI__c = convertToString(dossier.class_personnel_ci);
             d.Personnel_CI_Reference_Date__c = validDate(dossier.personnel_ci_reference_date);
@@ -214,8 +219,13 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             if (dossier.indication_main_establishment != null) { d.Indication_Main_Establishment__c = dossier.indication_main_establishment;}
             if (dossier.indication_non_mailing != null) { d.Indication_Non_Mailing__c = dossier.indication_non_mailing;}
             d.Insolvencies__c = dossier.insolvencies;
-            d.Sbi_Collection__c = dossier.sbi_collection;
+
+            //d.Sbi_Collection__c = dossier.sbi_collection;
+
             d.Structure__c = dossier.structure;
+            d.Number_Of_Subsidiaries__c = dossier.structure_number_of_subsidiaries;
+            d.Parent_Chamber_Of_Commerce_Number__c = dossier.structure_parent;
+            d.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dossier.structure_ultimate_parent;
 
             Dossier_Address__c establishmentAddress = new Dossier_Address__c();
             establishmentAddress.Name = dossier.establishment_address_original_address;
@@ -246,6 +256,13 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 unitOfWork.registerDirty(d, Business_Dossier__c.Account__c, acc);
             }else{
                 unitOfWork.registerNew(d, Business_Dossier__c.Account__c, acc);
+            }
+            unitOfWork.commitWork();
+            if(dossier.sbi_collection <> null) {
+                for (Integer i = 0; i < dossier.sbi_collection.size(); i++) {
+                    dossier.sbi_collection[i].Business_Dossier__c = d.Id;
+                }
+                insert dossier.sbi_collection;
             }
 
             return d;

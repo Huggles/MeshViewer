@@ -66,6 +66,12 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.Secondary_Sbi_Code2_Text = response.Secondary_Sbi_Code2_Text;
 
             result.annual_financial_statement_summary = String.valueOf(response.annual_financial_statement_summary);
+            if(response.annual_financial_statement_summary <> null) {
+                result.annual_financial_statement_summary_year = String.valueOf(response.annual_financial_statement_summary.year);
+                result.annual_financial_statement_summary_profit = getMoneyValue(response.annual_financial_statement_summary.profit);
+                result.annual_financial_statement_summary_turnover = getMoneyValue(response.annual_financial_statement_summary.turnover);
+                result.annual_financial_statement_summary_assets = getMoneyValue(response.annual_financial_statement_summary.assets);
+            }
             result.personnel_ci = response.personnel_ci;
             result.class_personnel_ci = response.class_personnel_ci;
             result.personnel_ci_reference_date =getDate(response.personnel_ci_reference_date);
@@ -83,8 +89,40 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.indication_main_establishment = response.indication_main_establishment;
             result.indication_non_mailing = response.indication_non_mailing;
             result.insolvencies = String.valueOf(response.insolvencies);
-            result.sbi_collection = String.valueOf(response.sbi_collection);
+
+            List<Business_Data_SBI__c> sbiCollection = new List<Business_Data_SBI__c>();
+            if(response.sbi_collection <> null) {
+                if(response.sbi_collection.original <> null) {
+                    if(response.sbi_collection.original.item <> null) {
+                        for (Integer i = 0; i < response.sbi_collection.original.item.size(); i++) {
+                            Business_Data_SBI__c original = new Business_Data_SBI__c();
+                            original.SBI_Type__c = 'original';
+                            original.SBI_Code__c = response.sbi_collection.original.item[i].sbi_code;
+                            original.SBI_Description__c = response.sbi_collection.original.item[i].description;
+                            sbiCollection.add(original);
+                        }
+                    }
+                }
+                if(response.sbi_collection.company_info <> null) {
+                    if(response.sbi_collection.company_info.item <> null) {
+                        for (Integer i = 0; i < response.sbi_collection.company_info.item.size(); i++) {
+                            Business_Data_SBI__c original = new Business_Data_SBI__c();
+                            original.SBI_Type__c = 'company_info';
+                            original.SBI_Code__c = response.sbi_collection.company_info.item[i].sbi_code;
+                            original.SBI_Description__c = response.sbi_collection.company_info.item[i].description;
+                            sbiCollection.add(original);
+                        }
+                    }
+                }
+            }
+            result.sbi_collection = sbiCollection;
+
             result.structure = String.valueOf(response.structure);
+            if(response.structure <> null) {
+                result.structure_parent = response.structure.parent;
+                result.structure_ultimate_parent = response.structure.ultimate_parent;
+                result.structure_number_of_subsidiaries = String.valueOf(response.structure.number_of_subsidiaries);
+            }
 
             if (response.correspondence_address <> null) {
                 if (response.correspondence_address.original <> null) {
@@ -127,10 +165,21 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             }
         }
         return null;
-    } 
-    public DutchBusinessDossierV3 dutchBusinessGetDossierV3(String dossier_number,String establishment_number){
-        
+    }
+    private String getMoneyValue(DutchBusinessMoneyV2 money) {
+        String formattedMoney;
+        if(money != null) {
+            try{
+            formattedMoney = String.valueOf(money.formatted);
+            }catch(exception e){
+                ErrorLogUtil.logMessage(e);
+                formattedMoney = null;
+            }
+        }
+        return formattedMoney;
+    }
 
+    public DutchBusinessDossierV3 dutchBusinessGetDossierV3(String dossier_number,String establishment_number){
         dutchBusinessGetDossierV3RequestType request_x = new dutchBusinessGetDossierV3RequestType();
         dutchBusinessGetDossierV3ResponseType response_x;
         request_x.dossier_number = dossier_number;

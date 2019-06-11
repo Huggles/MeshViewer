@@ -141,6 +141,10 @@ public with sharing class BusinessServiceImplTest {
         DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
 
         InputDossier.annual_financial_statement_summary = 'summary';
+        InputDossier.annual_financial_statement_summary_year = 'year';
+        InputDossier.annual_financial_statement_summary_profit = 'profit';
+        InputDossier.annual_financial_statement_summary_turnover = 'turnover';
+        InputDossier.annual_financial_statement_summary_assets = 'assets';
         InputDossier.authorized_share_capital = 12;
         InputDossier.authorized_share_capital_currency = 'authorized_share_capital_currency';
         InputDossier.chamber_number = '1';
@@ -183,8 +187,12 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.personnel_reference_date = Date.valueOf('2019-2-12');
         InputDossier.primary_sbi_code = 'sbi_code';
         InputDossier.primary_sbi_code_text = 'sbi_code_text';
-        InputDossier.sbi_collection = 'sbi_collection';
+        Business_Data_SBI__c s1 = new Business_Data_SBI__c(SBI_Type__c = 'original', SBI_Description__c = 'desc', SBI_Code__c = '11');
+        InputDossier.sbi_collection = new List<Business_Data_SBI__c>{s1};
         InputDossier.structure = 'structure';
+        InputDossier.structure_number_of_subsidiaries = '1';
+        InputDossier.structure_parent = '123';
+        InputDossier.structure_ultimate_parent = '1122';
         InputDossier.telephone_number = '12334234';
         InputDossier.trade_name_full = 'trade_name';
         InputDossier.indication_organisation_code = '10';
@@ -228,7 +236,10 @@ public with sharing class BusinessServiceImplTest {
         list<Object> results = BusinessService.upsertAccountAndDossier(InputDossier, null);
         test.stopTest();
         Business_Dossier__c d = (Business_Dossier__c) results.get(0);
-        System.assertEquals(d.Annual_Financial_Statement_Summary__c,'summary');
+        System.assertEquals(d.Year__c, 'year');
+        System.assertEquals(d.Profit__c, 'profit');
+        System.assertEquals(d.Assets__c, 'assets');
+        System.assertEquals(d.Turnover__c, 'turnover');
         System.assertEquals(d.Authorized_Share_Capital__c, 12);
         System.assertEquals(d.Authorized_Share_Capital_Currency__c, 'authorized_share_capital_currency');
         System.assertEquals(d.Chamber_Number__c , 1);
@@ -267,13 +278,20 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Primary_Sbi_Code__c , 'sbi_code');
         System.assertEquals(d.Primary_Sbi_Code_Text__c , 'sbi_code_text');
         System.assertEquals(d.Rsin_Number__c , '13');
-        System.assertEquals(d.Sbi_Collection__c , 'sbi_collection');
+
+        Business_Data_SBI__c sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :d.Id LIMIT 1];
+        System.assertEquals(sbi.SBI_Type__c, 'original');
+        System.assertEquals(sbi.SBI_Description__c, 'desc');
+        System.assertEquals(sbi.SBI_Code__c , '11');
+
         System.assertEquals(d.Secondary_Sbi_Code_1__c , 'secondary_sbi_code1');
         System.assertEquals(d.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
         System.assertEquals(d.Secondary_Sbi_Code_2__c, 'secondary_sbi_code2');
         System.assertEquals(d.Secondary_Sbi_Code_2_Text__c , 'secondary_sbi_code2_text');
         System.assertEquals(d.Status__c , 'Import');
-        System.assertEquals(d.Structure__c , 'structure');
+        System.assertEquals(d.Number_Of_Subsidiaries__c, '1');
+        System.assertEquals(d.Parent_Chamber_Of_Commerce_Number__c, '123');
+        System.assertEquals(d.Ultimate_Parent_Chamber_Of_Commerce_Nr__c, '1122');
         System.assertEquals(d.Telephone_Number__c , '12334234');
         System.assertEquals(d.Trade_Name_45__c , '14');
         System.assertEquals(d.Trade_Name_Full__c , 'trade_name');
