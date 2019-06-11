@@ -17,6 +17,8 @@ export default class configApp extends LightningElement {
     isUserOnboarded;
     @track userActive;
 
+    activeData;
+
     label = {
         Config_Account_AwaitingActivation,
         Config_Title,
@@ -43,6 +45,7 @@ export default class configApp extends LightningElement {
 
     @wire(userCheckActive)
     wiredActive(result) {
+        this.activeData = result;
         if (result.data !== undefined) {
             this.userActive = result.data;
             this.error = undefined;
@@ -54,6 +57,11 @@ export default class configApp extends LightningElement {
 
     handleUserOnboarded(){
         this.onboarded = true;
+        refreshApex(this.activeData);
+    }
+
+    get canShowOnboarded() {
+        return this.showOnboarded || this.userActive;
     }
 
     get awaitingActivation() {

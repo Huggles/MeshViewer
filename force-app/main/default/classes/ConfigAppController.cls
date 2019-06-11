@@ -89,10 +89,51 @@ public static PermissionSet ps;
     }
 
     @AuraEnabled
-    public static boolean enableTrial(){
+    public static boolean enableTrial(String password){
         try{
-            DutchBusinessAccountingDto.userCreateResponseDto resp = BusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId());
+            DutchBusinessAccountingDto.userCreateResponseDto resp = BusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId(), password);
             system.debug(resp);
+            return true;
+        }catch(CCException ex){
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
+            return false;
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
+            return false;
+        }
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Credentials__c getCredentials(){
+        try{
+            System.debug('credentials');
+            Credentials__c cs = Credentials__c.getOrgDefaults();
+            System.debug(cs);
+            return cs;
+
+        }catch(CCException ex){
+            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
+            return null;
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
+            //return output;
+            return null;
+        }
+    }
+
+    @AuraEnabled
+    public static boolean saveCredentials(String username, String password, String userId){
+        try{
+            Credentials__c cs = Credentials__c.getOrgDefaults();
+            cs.Username__c = username;
+            cs.Password__c = password;
+            cs.CompanyConnectUserId__c = Decimal.valueOf(userId);
+            upsert cs;
             return true;
         }catch(CCException ex){
             AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.

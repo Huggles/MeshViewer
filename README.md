@@ -11,6 +11,12 @@
 5. In the Customer.connect Administration app, request a trial.
 6. Activate the trial via the email link sent.
 
+
+Managed package changes:
+1. Assign the packaged publisher layout to the global publisher layout assignment for the relevant user.
+2. For the admin profile, set the Customer.connect Configuration tab to default on.
+
+
 ## Resources
 
 
