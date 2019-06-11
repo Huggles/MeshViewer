@@ -210,7 +210,7 @@ QuickAction.searchGlobalAction	New Account with Customer.connect	Nieuw Account m
 
 ButtonOrLink.Campaign.ViewCampaignInfluenceReport	View Campaign Influence Report
 ButtonOrLink.CustomPageItem.Link_to_config	Link to config
-CustomField.cust_connect__Business_Dossier__c.Chamber_Code.FieldLabel	Chamber Code
+CustomField.cust_connect__Business_Dossier__c.Chamber_Code.FieldLabel	Kvk Kantoor
 CustomField.cust_connect__Business_Dossier__c.Status.FieldLabel	Status
 CustomField.cust_connect__Dossier_Address__c.Postcode.FieldLabel	Postcode
 CustomField.cust_connect__Error_Log__c.Trace.FieldLabel	Trace
