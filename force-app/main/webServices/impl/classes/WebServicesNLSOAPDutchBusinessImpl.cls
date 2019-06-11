@@ -88,7 +88,24 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.indication_import = response.indication_import;
             result.indication_main_establishment = response.indication_main_establishment;
             result.indication_non_mailing = response.indication_non_mailing;
-            result.insolvencies = String.valueOf(response.insolvencies);
+
+            String s;
+            List<String> insolvencies = new List<String>();
+            if (response.insolvencies <> null) {
+                if (response.insolvencies.item <> null) {
+                    for (Integer i = 0; i < response.insolvencies.item.size(); i++) {
+                        s = 'Insolvency_id - ' + response.insolvencies.item[i].insolvency_id + ' : [';
+                        if (response.insolvencies.item[i].events <> null) {
+                            for (Integer j = 0; j < response.insolvencies.item[i].events.item.size(); j++) {
+                                s = s + '\n Description - ' + response.insolvencies.item[i].events.item[j].description + ', Date - ' + getDate(response.insolvencies.item[i].events.item[j].date_x) + ';';
+                            }
+                        }
+                        s = s + ']';
+                        insolvencies.add(s);
+                    }
+                }
+            }
+            result.insolvencies = String.join(insolvencies, '\n');
 
             List<Business_Data_SBI__c> sbiCollection = new List<Business_Data_SBI__c>();
             if(response.sbi_collection <> null) {
