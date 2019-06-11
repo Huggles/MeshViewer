@@ -371,6 +371,38 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }
+
+    public static Business_Dossier__c selectDossier(Id dossierId) {
+        try{
+            list<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
+            if (dossierList.size() == 1) {
+                return dossierList[0];
+            }
+            return null;
+        }catch(CCException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+        }
+    }
+
+    public static list<Object> upsertDossier(Business_Dossier__c dossier){
+
+        try{
+            list<Object> result = new list<Object>();
+            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
+            unitOfWork.registerDirty(dossier);
+            unitOfWork.commitWork();
+            result.add(dossier);
+            return result;
+        }catch(CCException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+        }
+    }
     // TODO: rewrite properly, the method should notify if there were problems during update
     /*public static boolean updateAccountDossier(Id accountId, Id dossierId) {
         try{

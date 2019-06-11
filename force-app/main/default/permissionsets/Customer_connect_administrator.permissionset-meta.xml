@@ -28,6 +28,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Business_Dossier__c.Address_Correspondence__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Dossier__c.Address_Establishment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Business_Dossier__c.Annual_Financial_Statement_Summary__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -103,11 +113,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Business_Dossier__c.Address_Correspondence__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Business_Dossier__c.Discontinuation_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -119,11 +124,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Business_Dossier__c.Dossier_Number__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Business_Dossier__c.Address_Establishment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -319,6 +319,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Business_Dossier__c.Trade_Names__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Dossier__c.VAT_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

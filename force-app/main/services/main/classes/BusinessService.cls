@@ -21,6 +21,14 @@ public with sharing class BusinessService {
     public static Boolean deleteDossier(Id accountId){
         return newInstance().deleteDossier(accountId);
     }
+    
+    public static Business_Dossier__c selectDossier(Id dossierId){
+        return newInstance().selectDossier(dossierId);
+    }
+
+    public static List<Object> upsertDossier(Business_Dossier__c dossier){
+        return newInstance().upsertDossier(dossier);
+    }
     /*
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         return newInstance().createAccountForDossier(accountId, dossier, unitOfWork);
