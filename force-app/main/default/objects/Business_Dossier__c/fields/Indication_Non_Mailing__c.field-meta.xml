@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Boolean indicating if the business has specified that the ‘Vereniging Kamers van Koophandel’ and the ‘de kamers van koophandel’ may not supply the business’ information to third parties for direct marketing purposes.</description>
     <externalId>false</externalId>
-    <label>Indication Non Mailing</label>
+    <label>Non Mailing</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
