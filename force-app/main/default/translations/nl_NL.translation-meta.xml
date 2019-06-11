@@ -21,15 +21,15 @@
         <name>Config_Account_AwaitingActivation</name>
     </customLabels>
     <customLabels>
-        <label><!-- Config_Account_CreateAccount --></label>
+        <label>Vraag een proeflicentie aan</label>
         <name>Config_Account_CreateAccount</name>
     </customLabels>
     <customLabels>
-        <label><!-- Config_Account_ExistingUser --></label>
+        <label>Ik ben al een gebruiker</label>
         <name>Config_Account_ExistingUser</name>
     </customLabels>
     <customLabels>
-        <label><!-- Config_Account_ID --></label>
+        <label>ID</label>
         <name>Config_Account_ID</name>
     </customLabels>
     <customLabels>
@@ -73,7 +73,7 @@
         <name>Config_Balance_Updated</name>
     </customLabels>
     <customLabels>
-        <label><!-- Config_Credentials --></label>
+        <label>Geloofsbrieven</label>
         <name>Config_Credentials</name>
     </customLabels>
     <customLabels>

@@ -52,12 +52,12 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <label>Business Dossier</label>
+    <label>Business Data</label>
     <nameField>
         <label>Legal Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Business Dossiers</pluralLabel>
+    <pluralLabel>Business Data</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

@@ -15,7 +15,7 @@
 11	750 to 999 employees
 12	1000 or more employees</description>
     <externalId>false</externalId>
-    <label>Classification Of Number Of Employees</label>
+    <label>Number Of Employees (Range)</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

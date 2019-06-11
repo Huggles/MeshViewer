@@ -3,7 +3,7 @@
     <fullName>Data_Provider_Account_Comment__c</fullName>
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
-    <label>Data Provider Account Comment</label>
+    <label>Data Provider Account Remark</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

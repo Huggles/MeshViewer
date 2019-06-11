@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Boolean indicating if the business is currently registered as bankrupt (Dutch: ‘Faillissement’).</description>
     <externalId>false</externalId>
-    <label>Indication Bankruptcy</label>
+    <label>Bankrupt</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

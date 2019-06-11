@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <label>Correspondence Address</label>
     <referenceTo>Dossier_Address__c</referenceTo>
-    <relationshipLabel>Business Dossiers (Correspondence Address)</relationshipLabel>
+    <relationshipLabel>Business Data (Correspondence Address)</relationshipLabel>
     <relationshipName>Business_Dossiers1</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
