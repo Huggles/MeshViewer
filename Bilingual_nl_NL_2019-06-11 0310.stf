@@ -1,0 +1,661 @@
+# Use the Bilingual file to review translations, edit labels that have already been translated, and add translations for labels that haven't been translated.
+# - The TRANSLATED section of the file contains the text that has been translated and needs to be reviewed.
+# - The UNTRANSLATED section of the file contains text that hasn't been translated. You can replace untranslated labels in the LABEL column with translated values.
+
+# The Out of Date indicators are:
+# - An asterisk (*): The label is out of date. A change was made to the default language label and the translation hasn't been updated.
+# - A dash (-): The translation is current.
+
+# Notes:
+# Don't add columns to or remove columns from this file.
+# Tabs (\t), new lines (\n) and carriage returns (\r) are represented by special characters in this file. These characters should be preserved in the import file to maintain formatting.
+# Lines that begin with the # symbol are ignored during import.
+# Salesforce translation files are exported in the UTF-8 encoding to support extended and double-byte characters. This encoding cannot be changed.
+
+# Language: Dutch
+Language code: nl_NL
+Type: Bilingual
+
+------------------TRANSLATED-------------------
+
+# KEY	LABEL	TRANSLATION	OUT OF DATE
+
+CustomApp.Customerconnect_Administration	Customer.connect Setup	Customer.connect setup	-
+CustomField.cust_connect__ApplicationProperty__c.Appsolutely_Contact_Email.FieldLabel	Appsolutely Contact Email	Appsolutely Email adres	-
+CustomField.cust_connect__ApplicationProperty__c.DataProviderAdminPassword.FieldLabel	Data Provider Admin Password	Wachtwoord dataleverancier	-
+CustomField.cust_connect__ApplicationProperty__c.DataProviderAdminUsername.FieldLabel	Data Provider Admin Username	Gebruikersnaam dataleverancier	-
+CustomField.cust_connect__ApplicationProperty__c.DataProviderName.FieldLabel	Data Provider Name	Naam dataleverancier	-
+CustomField.cust_connect__ApplicationProperty__c.Data_Provider_Account_Comment.FieldLabel	Data Provider Account Remark	Dataleverancier account opmerking	*
+CustomField.cust_connect__ApplicationProperty__c.Data_Provider_Account_Id.FieldLabel	Data Provider Account Id	Dataleverancier account id	-
+CustomField.cust_connect__ApplicationProperty__c.DefaultTrialBalance.FieldLabel	Default Trial Balance	Default Trial Balans	-
+CustomField.cust_connect__Business_Dossier__c.Account.FieldLabel	Account	Organisatie	-
+CustomField.cust_connect__Business_Dossier__c.Account.RelatedListLabel	Business Data	Organisatiegegevens	*
+CustomField.cust_connect__Business_Dossier__c.Address_Correspondence.FieldLabel	Correspondence Address	Correspondentieadres	-
+CustomField.cust_connect__Business_Dossier__c.Address_Correspondence.RelatedListLabel	Business Data (Correspondence Address)	Organisatiegegevens (Correspondentie adres)	*
+CustomField.cust_connect__Business_Dossier__c.Address_Establishment.FieldLabel	Establishment Address	Vestigingsadres	-
+CustomField.cust_connect__Business_Dossier__c.Address_Establishment.RelatedListLabel	Business Data	Organisatiegegevens (Vestigingsadres)	*
+CustomField.cust_connect__Business_Dossier__c.Annual_Financial_Statement_Summary.FieldLabel	Annual_Financial Statement Summary	Samenvatting van het jaarverslag	-
+CustomField.cust_connect__Business_Dossier__c.Authorized_Share_Capital.FieldLabel	Authorized Share Capital	Maatschappelijk kapitaal	-
+CustomField.cust_connect__Business_Dossier__c.Authorized_Share_Capital_Currency.FieldLabel	Currency For Authorized Share Capital	Valuta-eenheid maatschappelijk kapitaal	-
+CustomField.cust_connect__Business_Dossier__c.Chamber_Number.FieldLabel	Chamber Number	KvK nummer	-
+CustomField.cust_connect__Business_Dossier__c.Class_Personnel.FieldLabel	Number Of Employees (Range)	Aantal medewerkers (bereik)	*
+CustomField.cust_connect__Business_Dossier__c.Class_Personnel_CI.FieldLabel	Number of Employees (Company.info)	Aantal medewerkers (bereik) Company.info	*
+CustomField.cust_connect__Business_Dossier__c.Class_Personnel_Fulltime.FieldLabel	Number of Fulltime Employees (Range)	Aantal voltijdsmedewerkers (bereik)	*
+CustomField.cust_connect__Business_Dossier__c.Contact_Gender.FieldLabel	Contact Gender	Geslacht contactpersoon	-
+CustomField.cust_connect__Business_Dossier__c.Contact_Initials.FieldLabel	Contact Initials	Voorletters contactpersoon	-
+CustomField.cust_connect__Business_Dossier__c.Contact_Prefix.FieldLabel	Contact Prefix	Voorvoegsel	-
+CustomField.cust_connect__Business_Dossier__c.Contact_Surname.FieldLabel	Contact Surname	Achternaam	-
+CustomField.cust_connect__Business_Dossier__c.Contact_Title1.FieldLabel	Contact First Title	Titel	-
+CustomField.cust_connect__Business_Dossier__c.Contact_Title2.FieldLabel	Contact Second Title	Tweede titel	-
+CustomField.cust_connect__Business_Dossier__c.Continuation_Date.FieldLabel	Continuation Date	Continueringsdatum	-
+CustomField.cust_connect__Business_Dossier__c.Discontinuation_Date.FieldLabel	Discontinuation Date	Opheffingsdatum	-
+CustomField.cust_connect__Business_Dossier__c.Domain_Name.FieldLabel	Domain Name	Domeinnaam	-
+CustomField.cust_connect__Business_Dossier__c.Dossier_Number.FieldLabel	Chamber of Commerce Number	Dossiernummer	*
+CustomField.cust_connect__Business_Dossier__c.Establishment_Date.FieldLabel	Establishment Date	Vestigingsdatum	-
+CustomField.cust_connect__Business_Dossier__c.Establishment_Number.FieldLabel	Establishment Number	Locatienummer	-
+CustomField.cust_connect__Business_Dossier__c.Founding_Date.FieldLabel	Founding Date	Oprichtingsdatum	-
+CustomField.cust_connect__Business_Dossier__c.Indication_Bankruptcy.FieldLabel	Bankrupt	Failliet	*
+CustomField.cust_connect__Business_Dossier__c.Indication_Dip.FieldLabel	Debtor in possession	In surseance	*
+CustomField.cust_connect__Business_Dossier__c.Indication_Economically_Active.FieldLabel	Economically Active	Economisch actief	*
+CustomField.cust_connect__Business_Dossier__c.Indication_Export.FieldLabel	Exports	Exporteert	*
+CustomField.cust_connect__Business_Dossier__c.Indication_Import.FieldLabel	Imports	Importeert	*
+CustomField.cust_connect__Business_Dossier__c.Indication_Main_Establishment.FieldLabel	Main Establishment	Hoofdvestiging	*
+CustomField.cust_connect__Business_Dossier__c.Indication_Non_Mailing.FieldLabel	Non Mailing	Niet gebruiken voor direct mailing	*
+CustomField.cust_connect__Business_Dossier__c.Indication_Organisation_Code.FieldLabel	Organisation Code	Organisatiecode	*
+CustomField.cust_connect__Business_Dossier__c.Insolvencies.FieldLabel	Insolvencies	TBD	-
+CustomField.cust_connect__Business_Dossier__c.Issued_Share_Capital.FieldLabel	Issued Share Capital	Uitgezet aandelenkapitaal	-
+CustomField.cust_connect__Business_Dossier__c.Issued_Share_Capital_Currency.FieldLabel	Currency For Issued Share Capital	Valuta-eenheid uitgezet aandelenkapitaal	-
+CustomField.cust_connect__Business_Dossier__c.Legal_Form_Code.FieldLabel	Legal Form Code	Juridische vorm code	-
+CustomField.cust_connect__Business_Dossier__c.Legal_Form_Text.FieldLabel	Legal Form Text	Juridische vorm	-
+CustomField.cust_connect__Business_Dossier__c.Main_Establishment_Number.FieldLabel	Main Establishment Number	Hoofdvestigingsnummer	-
+CustomField.cust_connect__Business_Dossier__c.Mobile_Number.FieldLabel	Mobile Number	Mobiel	-
+CustomField.cust_connect__Business_Dossier__c.Paid_Up_Share_Capital.FieldLabel	Paid Up Share Capital	Gestort kapitaal	-
+CustomField.cust_connect__Business_Dossier__c.Paid_Up_Share_Capital_Currency.FieldLabel	Currency For Paid Up Share Capital	Valuta-eenheid gestort kapitaal	-
+CustomField.cust_connect__Business_Dossier__c.Personnel.FieldLabel	Number Of Employees	Aantal medewerkers	-
+CustomField.cust_connect__Business_Dossier__c.Personnel_CI.FieldLabel	Number Of Employees wrt Company Info	Aantal medewerkers Company.info	-
+CustomField.cust_connect__Business_Dossier__c.Personnel_CI_Reference_Date.FieldLabel	Reference Date Of Nr Of Employees wrt CI	Peildatum aant medewerkers Company.info	-
+CustomField.cust_connect__Business_Dossier__c.Personnel_Fulltime.FieldLabel	Number of Fulltime Employees	Aantal voltijdsmedewerkers	-
+CustomField.cust_connect__Business_Dossier__c.Personnel_Reference_Date.FieldLabel	Reference Date Of Number Of Employees	Peildatum aantal medewerkers	-
+CustomField.cust_connect__Business_Dossier__c.Primary_Sbi_Code.FieldLabel	Primary SBI Code	Hoofd SBI code	-
+CustomField.cust_connect__Business_Dossier__c.Primary_Sbi_Code_Text.FieldLabel	Primary SBI Description	Hoofd SBI code beschrijving	*
+CustomField.cust_connect__Business_Dossier__c.Rsin_Number.FieldLabel	RSIN Number	RSIN nummer	-
+CustomField.cust_connect__Business_Dossier__c.Sbi_Collection.FieldLabel	Sbi_Collection	SBI codes	-
+CustomField.cust_connect__Business_Dossier__c.Secondary_Sbi_Code_1.FieldLabel	Secondary SBI Code 1	Secondaire SBI code	-
+CustomField.cust_connect__Business_Dossier__c.Secondary_Sbi_Code_1_Text.FieldLabel	Secondary SBI Code 1 Text	Secondaire SBI code beschrijving	-
+CustomField.cust_connect__Business_Dossier__c.Secondary_Sbi_Code_2.FieldLabel	Secondary SBI Code 2	Tertiaire SBI code	-
+CustomField.cust_connect__Business_Dossier__c.Secondary_Sbi_Code_2_Text.FieldLabel	Secondary SBI Code 2 Text	Tertiaire SBI code beschrijving	-
+CustomField.cust_connect__Business_Dossier__c.Structure.FieldLabel	Structure	Structuur	-
+CustomField.cust_connect__Business_Dossier__c.Telephone_Number.FieldLabel	Telephone Number	Telefoonnummer	-
+CustomField.cust_connect__Business_Dossier__c.Trade_Name_45.FieldLabel	Trade Name	Handelsnaam	-
+CustomField.cust_connect__Business_Dossier__c.Trade_Name_Full.FieldLabel	Trade Name Full	Volledige handelsnaam	-
+CustomField.cust_connect__Business_Dossier__c.Trade_Names.FieldLabel	Trade Names	Handelsnamen	-
+CustomField.cust_connect__Credentials__c.CompanyConnectUserId.FieldLabel	CompanyConnectUserId	Company.connect gebruikersid	-
+CustomField.cust_connect__Credentials__c.Password.FieldLabel	Password	Paswoord	-
+CustomField.cust_connect__Credentials__c.Username.FieldLabel	Username	Gebruikersnaam	-
+CustomField.cust_connect__Dossier_Address__c.City.FieldLabel	City	Stad	-
+CustomField.cust_connect__Dossier_Address__c.Country.FieldLabel	Country	Land	-
+CustomField.cust_connect__Dossier_Address__c.House_Number.FieldLabel	House Number	Huisnummer	-
+CustomField.cust_connect__Dossier_Address__c.House_Number_Addition.FieldLabel	House Number Addition	Huisnummer toevoeging	-
+CustomField.cust_connect__Dossier_Address__c.Street.FieldLabel	Street	Straat	-
+CustomField.cust_connect__Error_Log__c.Trace.HelpText	The trace incl line number, error message etc. of the exception	De trace met het regelnummer waar de fout is opgetreden, de fout boodschap en andere informatie over de exceptie	-
+CustomField.Account.Business_Dossier.FieldLabel	Business Dossier	Business data	-
+CustomField.Account.Business_Dossier.RelatedListLabel	Accounts	Organisaties	-
+CustomField.Account.CC_Sync.FieldLabel	Business Data Sync	Customer.connect synchronisatie	-
+CustomField.Account.CC_Sync.HelpText	Select to enable sync with Business Data	Vink aan voor synchronisatie met Customer.connect	-
+LayoutSection.cust_connect__Business_Dossier__c.Business Dossier Layout.Contact Information_4	Contact Information	Contactgegevens	-
+LayoutSection.cust_connect__Business_Dossier__c.Business Dossier Layout.Employees Information_5	Employees Information	Medewerkersgegevens	-
+LayoutSection.cust_connect__Business_Dossier__c.Business Dossier Layout.SBI Information_1	SBI Information	SBI informatie	-
+LayoutSection.cust_connect__Business_Dossier__c.Business Dossier Layout.Share Capital_6	Share Capital	Aandeelhouderskapitaal	-
+LayoutSection.cust_connect__Business_Dossier__c.Business Dossier Layout.Trade Information_3	Trade Information	Handelsinformatie	-
+PicklistValue.cust_connect__Business_Dossier__c.Contact_Gender.Female	Female	Vrouwelijk	-
+PicklistValue.cust_connect__Business_Dossier__c.Contact_Gender.Male	Male	Mannelijk	-
+PicklistValue.cust_connect__Business_Dossier__c.Indication_Organisation_Code.Association	Association	Vereniging	-
+PicklistValue.cust_connect__Business_Dossier__c.Indication_Organisation_Code.Business	Business	Bedrijf	-
+PicklistValue.cust_connect__Business_Dossier__c.Indication_Organisation_Code.Church community	Church community	Kerkgenootschap	-
+PicklistValue.cust_connect__Business_Dossier__c.Indication_Organisation_Code.Non-profit organisation	Non-profit organisation	Non-profit organisatie	-
+PicklistValue.cust_connect__Business_Dossier__c.Status.Bankruptcy	Bankruptcy	Faillisement	-
+PicklistValue.cust_connect__Business_Dossier__c.Status.DIP	DIP	Surseance van betaling	-
+PicklistValue.cust_connect__Business_Dossier__c.Status.Economically Active	Economically Active	Economisch actief	-
+PicklistValue.cust_connect__Business_Dossier__c.Status.Non Mailing	Non Mailing	Niet gebruiken voor direct mailing	-
+PicklistValue.Class_Personnel__e.1 employee	1 employee	1 medewerker	-
+PicklistValue.Class_Personnel__e.10 to 19 employees	10 to 19 employees	10 tot 19 medewerkers	-
+PicklistValue.Class_Personnel__e.100 to 199 employees	100 to 199 employees	100 tot 199 medewerkers	-
+PicklistValue.Class_Personnel__e.1000 or more employees	1000 or more employees	1000 of meer medewerkers	-
+PicklistValue.Class_Personnel__e.199 to 499 employees	199 to 499 employees	200 tot 499 medewerkers	-
+PicklistValue.Class_Personnel__e.2 to 4 employees	2 to 4 employees	2 tot 4 medewerkers	-
+PicklistValue.Class_Personnel__e.20 to 49 employees	20 to 49 employees	20 tot 49 medewerkers	-
+PicklistValue.Class_Personnel__e.5 to 9 employees	5 to 9 employees	5 tot 9 medewerkers	-
+PicklistValue.Class_Personnel__e.50 to 99 employees	50 to 99 employees	50 tot 99 medewerkers	-
+PicklistValue.Class_Personnel__e.500 to 749 employees	500 to 749 employees	500 tot 749 medewerkers	-
+PicklistValue.Class_Personnel__e.750 to 999 employees	750 to 999 employees	750 tot 999 medewerkers	-
+PicklistValue.Class_Personnel__e.no employees	no employees	Geen medewerkers	-
+WebTab.Customer_connect_configuration	Customer.connect Setup	Customer.connect setup	-
+CustomLabel.Back_To_Search	Back to results	Terug naar resultaten	-
+CustomLabel.Config_Account_ActivateDescription	Thank you for installing the Customer.connect app. To begin, enter your credentials or	Dank u voor het installeren van Custommer.connect. Om te starten, voer uw gebruikersgegevens in of	-
+CustomLabel.Config_Account_ActivateDescriptionRequest	request a trial	vraag een proeflicentie aan	-
+CustomLabel.Config_Account_AwaitingActivation	Your account has not been activated yet. Please try again later. One of our Account Managers will be in touch once your account has been activated.	Uw account is nog niet geactiveerd. Probeer het later nogmaals. Een van onze accountmanagers neemt contact met u op zodra uw account is geactiveerd.	-
+CustomLabel.Config_Account_CreateAccount	Request a trial	Vraag een proeflicentie aan	-
+CustomLabel.Config_Account_ExistingUser	I am an existing user	Ik ben al een gebruiker	-
+CustomLabel.Config_Account_ID	ID	ID	-
+CustomLabel.Config_Account_Password	Password	Wachtwoord	-
+CustomLabel.Config_Account_Save	Save Credentials	Opslaan	-
+CustomLabel.Config_Account_Username	Username	Gebruikersnaam	-
+CustomLabel.Config_Add_Budget	Add Budget	Voeg budget toe	-
+CustomLabel.Config_Balance_Changed	The balance was changed	Uw balans is veranderd	-
+CustomLabel.Config_Balance_Error	There was an error during org activation.	Er is een fout opgetreden tijdens de activering van deze org. Neem contact met ons op.	-
+CustomLabel.Config_Balance_Management	Balance Management	Budgetmanagement	-
+CustomLabel.Config_Balance_Management_Text	See your current budget, manage your threshold and buy additional budget	Bekijk uw huidige budget, wijzig uw grenswaarde en koop aanvullend budget.	-
+CustomLabel.Config_Balance_Threshold_Description	The threshold slider determines the value your balance must drop to before you are notfied.	De grenswaarde geeft aan wanneer u een waarschuwing krijgt dat uw budget bijna geconsumeerd is.	-
+CustomLabel.Config_Balance_Updated	Your balance has been updated.	Uw budget is opgewaardeerd.	-
+CustomLabel.Config_Credentials	Credentials	Inloggegevens	-
+CustomLabel.Config_Current_Budget	Current Budget	Huidig budget	-
+CustomLabel.Config_Current_Threshold	Current Threshold	Huidige grenswaarde	-
+CustomLabel.Config_Loading	Loading...	Laden…	-
+CustomLabel.Config_Page_Title	Customer.connect configuration page	Customer.connect configuratie pagina	-
+CustomLabel.Config_Title	Customer.connect Setup	Customer.connect configuratie	-
+CustomLabel.DML_Manager_Error	DMLManager ERROR:  An existing record could not be found for object with Id =	DMLManager Fout: Er kon geen bestaand record gevonden worden voor het object met Id =	-
+CustomLabel.Details_Help	The below details are synchronised from  Business Data.	De onderstaande details zijn gesynchroniseerd vanuit Customer.connect	-
+CustomLabel.Dossier_Account_Create	Create Account	Creeer organisatie	-
+CustomLabel.Dossier_Account_Create_Completed	Account Created	Organisatie gecreeerd	-
+CustomLabel.Dossier_Account_Update	Update Account	Werk organisatie bij	-
+CustomLabel.Dossier_Account_Update_Completed	Account Updated	Organisatie bijgewerkt	-
+CustomLabel.Dossier_Number	Chamber of Commerce Number	Kamer van Koophandel nummer	-
+CustomLabel.Dossier_Remove	Remove Customer.connect data	Verwijder Customer.connect gegevens	-
+CustomLabel.Dossier_Removed	Customer.connect data Removed	Customer.connect gegevens verwijderd	-
+CustomLabel.Error	Error	Fout	-
+CustomLabel.Error_Config	Error 103 received from Customer.connect. Please contact support for assistance.	Fout 103 ontvangen van Customer.connect. Neem contact op met support.	-
+CustomLabel.Error_Incomplete	Error 101 received from Customer.connect. Please contact support for assistance.	Fout 101 ontvangen van Customer.connect. Neem contact op met support.	-
+CustomLabel.Error_Remove_Dossier	There was a problem removing the business data. Please ensure you have permission to carry out this action.	Er was een probleem met het verwijderen van de Customer.connect gegevens. Controleer of u toestemming heeft Customer.connect gegevens te verwijderen.	-
+CustomLabel.Error_Unknown	Error 102 received from Customer.connect. Please contact support for assistance.	Fout 102 ontvangen van Customer.connect. Neem contact op met support.	-
+CustomLabel.Establishment_Date	Establishment Date	Vestigingsdatum	-
+CustomLabel.Establishment_Number	Establishment Number	Vestigingsnummer	-
+CustomLabel.Get_Dossier_Results_Help	Below is the detailed company dossier. Please press create account to proceed with account creation.	Onderstaand de gedetailleerde organisatie gegevens. Druk op creeer organisatie om de organisatie (Account) aan te maken.	-
+CustomLabel.Matching_Companies	Matching Companies	Overeenkomstige organisatie	-
+CustomLabel.New_Account_CC	New Account with Customer.connect	Nieuwe Organisatie op basis van Customer.connect	-
+CustomLabel.NoAuthAppNotActive	No authentication data found. The app is not activated	Geen Customer.connect authenticatie data gevonden. Customer.connect is nog niet geactiveerd	-
+CustomLabel.Search_Address	Address	Adres	-
+CustomLabel.Search_City	City	Stad	-
+CustomLabel.Search_Company_Details	Company Details	Organisatie details	-
+CustomLabel.Search_Confirm	Search	Zoek	-
+CustomLabel.Search_Country	Country	Land	-
+CustomLabel.Search_Details	Details to Sync	Details om te synchroniseren	-
+CustomLabel.Search_Details_Dossier	Company Details	Organisatie details	-
+CustomLabel.Search_Details_Legal	Legal Entity Details	Juridische entiteit details	-
+CustomLabel.Search_Domain	Domain	Domeinnaam	-
+CustomLabel.Search_Dossier_Number	Chamber of Commerce Number	Kamer van Koophandel nummer	-
+CustomLabel.Search_Help	To sync information from Dutch Business you will need to match this account to a registered company. Use this search form to find a match.\nNote: If you know the chamber of commerce number please enter it here as it will bypass the search.	Om informatie van een Nederlandse organisatie te vinden, moet u dit account relateren aan gegevens van een organisatie bekend in het KvK.\nOpmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisatie, zoek dan hier op.	-
+CustomLabel.Search_Match_Dossier	Find	Zoek	-
+CustomLabel.Search_No_Results	No results found	Geen resultaten	-
+CustomLabel.Search_Phone	Phone	Telefoonnummer	-
+CustomLabel.Search_Postal_Code	Postal Code	Postcode	-
+CustomLabel.Search_Province	Province	Provincie	-
+CustomLabel.Search_Reset	Search Again	Zoek nogmaals	-
+CustomLabel.Search_Results_Confirm	Confirm	Bevestig	-
+CustomLabel.Search_Results_Help	The following companies match your search results. Please select the correct match for this account.	De volgende organisaties komen overeen met uw zoekcriteria. Selecteer de juiste organisatie.	-
+CustomLabel.Search_Street	Street	Straat	-
+CustomLabel.Search_Trade_Name	Trade Name	Handelsnaam	-
+CustomLabel.Success	Success	Gelukt	-
+CustomLabel.Sync	Business Data Sync	Customer.connect synchronisatie	-
+CustomLabel.Sync_Success	Business Data sync was successful.	Customer.connect synchronisatie is succesvol uitgevoerd	-
+CustomLabel.WSCall_ChangeBalance_Exception	Something happened while working at the BusinessService level	Een fout is opgetreden tijdens het veranderen van het budget.	-
+CustomLabel.WSCall_Generic_UI_Exception	Exception Happened, please contact your system administrator	Een fout is opgetreden. Neem contact op met uw systeembeheerder.	-
+CustomLabel.WSCall_Unknown_Exception	There was a problem	Een onbekende fout is opgetreden	-
+CustomLabel.WSCall_Unsuccessful	The call to the service was unsuccessful	Customer.connect kan de systemen van de data leverancier niet bereiken. Probeer het later nog een keer.	-
+QuickAction.searchGlobalAction	New Account with Customer.connect	Nieuw Account met Customer.connect	-
+
+
+------------------UNTRANSLATED-----------------
+
+# KEY	LABEL
+
+ButtonOrLink.Campaign.ViewCampaignInfluenceReport	View Campaign Influence Report
+ButtonOrLink.CustomPageItem.Link_to_config	Link to config
+CustomField.cust_connect__Business_Dossier__c.Chamber_Code.FieldLabel	Chamber Code
+CustomField.cust_connect__Business_Dossier__c.Status.FieldLabel	Status
+CustomField.cust_connect__Dossier_Address__c.Postcode.FieldLabel	Postcode
+CustomField.cust_connect__Error_Log__c.Trace.FieldLabel	Trace
+LayoutSection.cust_connect__Business_Dossier__c.Business Dossier Layout.Custom Links_9	Custom Links
+LayoutSection.cust_connect__Business_Dossier__c.Business Dossier Layout.Dates_2	Dates
+LayoutSection.cust_connect__Business_Dossier__c.Business Dossier Layout.Status_7	Status
+LayoutSection.CommunityMemberLayout.Community Member Layout.Basic Information_0	Basic Information
+LayoutSection.CommunityMemberLayout.Community Member Layout.Chatter Settings_2	Chatter Settings
+LayoutSection.CommunityMemberLayout.Community Member Layout.Language And Locale Settings_1	Language And Locale Settings
+LayoutSection.WorkCoaching.Coaching Layout.Coaching Information_0	Coaching Information
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Besloten Vennootschap blijkens statuten structuurvennootschap	Besloten Vennootschap blijkens statuten structuurvennootschap
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Besloten Vennootschap met gewone structuur	Besloten Vennootschap met gewone structuur
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Buitenlandse EG-vennootschap met hoofdnederzetting in Nederland	Buitenlandse EG-vennootschap met hoofdnederzetting in Nederland
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Buitenlandse EG-vennootschap met onderneming in Nederland	Buitenlandse EG-vennootschap met onderneming in Nederland
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Buitenlandse op EG-vennootschap lijkende vennootschap met hoofdnederzetting in Nederland	Buitenlandse op EG-vennootschap lijkende vennootschap met hoofdnederzetting in Nederland
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Buitenlandse op EG-vennootschap lijkende vennootschap met onderneming in Nederland	Buitenlandse op EG-vennootschap lijkende vennootschap met onderneming in Nederland
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Buitenlandse rechtsvorm met hoofdvestiging in Nederland	Buitenlandse rechtsvorm met hoofdvestiging in Nederland
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Commanditaire Vennootschap met meer dan één beherende vennoot	Commanditaire Vennootschap met meer dan één beherende vennoot
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Commanditaire Vennootschap met één beherende vennoot	Commanditaire Vennootschap met één beherende vennoot
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Coöperatie B.A. blijkens statuten structuurcoöperatie	Coöperatie B.A. blijkens statuten structuurcoöperatie
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Coöperatie B.A. met gewone structuur	Coöperatie B.A. met gewone structuur
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Coöperatie U.A. blijkens statuten structuurcoöperatie	Coöperatie U.A. blijkens statuten structuurcoöperatie
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Coöperatie U.A. met gewone structuur	Coöperatie U.A. met gewone structuur
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Coöperatie W.A. blijkens statuten structuurcoöperatie	Coöperatie W.A. blijkens statuten structuurcoöperatie
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Coöperatie W.A. met gewone structuur	Coöperatie W.A. met gewone structuur
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Eenmanszaak	Eenmanszaak
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Eenmanszaak met meer dan één eigenaar	Eenmanszaak met meer dan één eigenaar
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Europees Economisch Samenwerkingsverband	Europees Economisch Samenwerkingsverband
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Europese naamloze vennootschap (SE)	Europese naamloze vennootschap (SE)
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Europese naamloze vennootschap (SE) blijkens statuten structuurvennootschap	Europese naamloze vennootschap (SE) blijkens statuten structuurvennootschap
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Kerkgenootschap	Kerkgenootschap
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Maatschap	Maatschap
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.NV / BV in oprichting op A-formulier	NV / BV in oprichting op A-formulier
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.NV / BV in oprichting op B-formulier	NV / BV in oprichting op B-formulier
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.NV / BV in oprichting op D-formulier	NV / BV in oprichting op D-formulier
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.NV beleggingsmaatschappij met veranderlijk kapitaal blijkens statuten structuurvennootschap	NV beleggingsmaatschappij met veranderlijk kapitaal blijkens statuten structuurvennootschap
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Naamloze Vennootschap beleggingsmaatschappij met veranderlijk kapitaal	Naamloze Vennootschap beleggingsmaatschappij met veranderlijk kapitaal
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Naamloze Vennootschap blijkens statuten structuurvennootschap	Naamloze Vennootschap blijkens statuten structuurvennootschap
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Naamloze Vennootschap met gewone structuur	Naamloze Vennootschap met gewone structuur
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Nevenvestiging met hoofdvestiging in buitenland	Nevenvestiging met hoofdvestiging in buitenland
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Onderlinge waarborgmaatschappij B.A. blijkens statuten structuuronderlinge	Onderlinge waarborgmaatschappij B.A. blijkens statuten structuuronderlinge
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Onderlinge waarborgmaatschappij B.A. met gewone structuur	Onderlinge waarborgmaatschappij B.A. met gewone structuur
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Onderlinge waarborgmaatschappij U.A. blijkens statuten structuuronderlinge	Onderlinge waarborgmaatschappij U.A. blijkens statuten structuuronderlinge
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Onderlinge waarborgmaatschappij U.A. met gewone structuur	Onderlinge waarborgmaatschappij U.A. met gewone structuur
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Onderlinge waarborgmaatschappij W.A. blijkens statuten structuuronderlinge	Onderlinge waarborgmaatschappij W.A. blijkens statuten structuuronderlinge
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Onderlinge waarborgmaatschappij W.A. met gewone structuur	Onderlinge waarborgmaatschappij W.A. met gewone structuur
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Privaatrechtelijke rechtspersoon	Privaatrechtelijke rechtspersoon
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Publiekrechtelijke rechtspersoon	Publiekrechtelijke rechtspersoon
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Rechtspersoon in oprichting	Rechtspersoon in oprichting
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Rederij	Rederij
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Stichting	Stichting
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Vennootschap onder firma	Vennootschap onder firma
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Vereniging met beperkte rechtsbevoegdheid	Vereniging met beperkte rechtsbevoegdheid
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Vereniging met volledige rechtsbevoegdheid	Vereniging met volledige rechtsbevoegdheid
+PicklistValue.cust_connect__Business_Dossier__c.Legal_Form_Text.Vereniging van Eigenaars	Vereniging van Eigenaars
+PicklistValue.cust_connect__Business_Dossier__c.Status.Export	Export
+PicklistValue.cust_connect__Business_Dossier__c.Status.Import	Import
+PicklistValue.Standard.accountOwnership.Other	Other
+PicklistValue.Standard.accountOwnership.Private	Private
+PicklistValue.Standard.accountOwnership.Public	Public
+PicklistValue.Standard.accountOwnership.Subsidiary	Subsidiary
+PicklistValue.Standard.opportunityType.Existing Customer - Downgrade	Existing Customer - Downgrade
+PicklistValue.Standard.opportunityType.Existing Customer - Replacement	Existing Customer - Replacement
+PicklistValue.Standard.opportunityType.Existing Customer - Upgrade	Existing Customer - Upgrade
+PicklistValue.Standard.opportunityType.New Customer	New Customer
+PicklistValue.Standard.returnOrderStatus.Approved	Approved
+PicklistValue.Standard.returnOrderStatus.Canceled	Canceled
+PicklistValue.Standard.returnOrderStatus.Closed	Closed
+PicklistValue.Standard.returnOrderStatus.Draft	Draft
+PicklistValue.Standard.returnOrderStatus.Submitted	Submitted
+PicklistValue.Standard.returnOrderShipmentType.Next Business Day	Next Business Day
+PicklistValue.Standard.returnOrderShipmentType.Overnight	Overnight
+PicklistValue.Standard.returnOrderShipmentType.Pick Up	Pick Up
+PicklistValue.Standard.returnOrderShipmentType.Rush	Rush
+PicklistValue.Standard.returnOrderShipmentType.Standard	Standard
+PicklistValue.Standard.contactRole.Business User	Business User
+PicklistValue.Standard.contactRole.Decision Maker	Decision Maker
+PicklistValue.Standard.contactRole.Economic Buyer	Economic Buyer
+PicklistValue.Standard.contactRole.Economic Decision Maker	Economic Decision Maker
+PicklistValue.Standard.contactRole.Evaluator	Evaluator
+PicklistValue.Standard.contactRole.Executive Sponsor	Executive Sponsor
+PicklistValue.Standard.contactRole.Influencer	Influencer
+PicklistValue.Standard.contactRole.Other	Other
+PicklistValue.Standard.contactRole.Technical Buyer	Technical Buyer
+PicklistValue.Standard.returnOrderLineItemProcessPlan.Discard	Discard
+PicklistValue.Standard.returnOrderLineItemProcessPlan.Repair	Repair
+PicklistValue.Standard.returnOrderLineItemProcessPlan.Restock	Restock
+PicklistValue.Standard.returnOrderLineItemProcessPlan.Salvage	Salvage
+PicklistValue.Standard.returnOrderLineItemReasonForReturn.Damaged	Damaged
+PicklistValue.Standard.returnOrderLineItemReasonForReturn.Defective	Defective
+PicklistValue.Standard.returnOrderLineItemReasonForReturn.Duplicate Order	Duplicate Order
+PicklistValue.Standard.returnOrderLineItemReasonForReturn.Not Satisfied	Not Satisfied
+PicklistValue.Standard.returnOrderLineItemReasonForReturn.Other	Other
+PicklistValue.Standard.returnOrderLineItemReasonForReturn.Outdated	Outdated
+PicklistValue.Standard.returnOrderLineItemReasonForReturn.Wrong Item	Wrong Item
+PicklistValue.Standard.returnOrderLineItemReasonForReturn.Wrong Quantity	Wrong Quantity
+PicklistValue.Standard.returnOrderLineItemRepaymentMethod.Credit	Credit
+PicklistValue.Standard.returnOrderLineItemRepaymentMethod.Refund	Refund
+PicklistValue.Standard.returnOrderLineItemRepaymentMethod.Replace	Replace
+PicklistValue.Standard.returnOrderLineItemRepaymentMethod.Return	Return
+PicklistValue.Standard.caseType.Electrical	Electrical
+PicklistValue.Standard.caseType.Electronic	Electronic
+PicklistValue.Standard.caseType.Mechanical	Mechanical
+PicklistValue.Standard.caseType.Other	Other
+PicklistValue.Standard.caseType.Structural	Structural
+PicklistValue.Standard.caseOrigin.Email	Email
+PicklistValue.Standard.caseOrigin.Phone	Phone
+PicklistValue.Standard.caseOrigin.Web	Web
+PicklistValue.Standard.caseReason.Breakdown	Breakdown
+PicklistValue.Standard.caseReason.Equipment Complexity	Equipment Complexity
+PicklistValue.Standard.caseReason.Equipment Design	Equipment Design
+PicklistValue.Standard.caseReason.Feedback	Feedback
+PicklistValue.Standard.caseReason.Installation	Installation
+PicklistValue.Standard.caseReason.Other	Other
+PicklistValue.Standard.caseReason.Performance	Performance
+PicklistValue.Standard.partnerRole.Advertiser	Advertiser
+PicklistValue.Standard.partnerRole.Agency	Agency
+PicklistValue.Standard.partnerRole.Broker	Broker
+PicklistValue.Standard.partnerRole.Consultant	Consultant
+PicklistValue.Standard.partnerRole.Contractor	Contractor
+PicklistValue.Standard.partnerRole.Dealer	Dealer
+PicklistValue.Standard.partnerRole.Developer	Developer
+PicklistValue.Standard.partnerRole.Distributor	Distributor
+PicklistValue.Standard.partnerRole.Institution	Institution
+PicklistValue.Standard.partnerRole.Lender	Lender
+PicklistValue.Standard.partnerRole.Supplier	Supplier
+PicklistValue.Standard.partnerRole.System Integrator	System Integrator
+PicklistValue.Standard.partnerRole.VAR/Reseller	VAR/Reseller
+PicklistValue.Standard.leadStatus.Closed - Converted	Closed - Converted
+PicklistValue.Standard.leadStatus.Closed - Not Converted	Closed - Not Converted
+PicklistValue.Standard.leadStatus.Open - Not Contacted	Open - Not Contacted
+PicklistValue.Standard.leadStatus.Working - Contacted	Working - Contacted
+PicklistValue.Standard.caseStatus.Closed	Closed
+PicklistValue.Standard.caseStatus.Escalated	Escalated
+PicklistValue.Standard.caseStatus.New	New
+PicklistValue.Standard.caseStatus.Working	Working
+PicklistValue.Standard.accountRating.Cold	Cold
+PicklistValue.Standard.accountRating.Hot	Hot
+PicklistValue.Standard.accountRating.Warm	Warm
+PicklistValue.Standard.casePriority.High	High
+PicklistValue.Standard.casePriority.Low	Low
+PicklistValue.Standard.casePriority.Medium	Medium
+PicklistValue.Standard.solutionStatus.Draft	Draft
+PicklistValue.Standard.solutionStatus.Duplicate	Duplicate
+PicklistValue.Standard.solutionStatus.Reviewed	Reviewed
+PicklistValue.Standard.taskStatus.Completed	Completed
+PicklistValue.Standard.taskStatus.Deferred	Deferred
+PicklistValue.Standard.taskStatus.In Progress	In Progress
+PicklistValue.Standard.taskStatus.Not Started	Not Started
+PicklistValue.Standard.taskStatus.Waiting on someone else	Waiting on someone else
+PicklistValue.Standard.opportunityStage.Closed Lost	Closed Lost
+PicklistValue.Standard.opportunityStage.Closed Won	Closed Won
+PicklistValue.Standard.opportunityStage.Id. Decision Makers	Id. Decision Makers
+PicklistValue.Standard.opportunityStage.Needs Analysis	Needs Analysis
+PicklistValue.Standard.opportunityStage.Negotiation/Review	Negotiation/Review
+PicklistValue.Standard.opportunityStage.Perception Analysis	Perception Analysis
+PicklistValue.Standard.opportunityStage.Proposal/Price Quote	Proposal/Price Quote
+PicklistValue.Standard.opportunityStage.Prospecting	Prospecting
+PicklistValue.Standard.opportunityStage.Qualification	Qualification
+PicklistValue.Standard.opportunityStage.Value Proposition	Value Proposition
+PicklistValue.Standard.campaignType.Advertisement	Advertisement
+PicklistValue.Standard.campaignType.Banner Ads	Banner Ads
+PicklistValue.Standard.campaignType.Conference	Conference
+PicklistValue.Standard.campaignType.Direct Mail	Direct Mail
+PicklistValue.Standard.campaignType.Email	Email
+PicklistValue.Standard.campaignType.Other	Other
+PicklistValue.Standard.campaignType.Partners	Partners
+PicklistValue.Standard.campaignType.Public Relations	Public Relations
+PicklistValue.Standard.campaignType.Referral Program	Referral Program
+PicklistValue.Standard.campaignType.Telemarketing	Telemarketing
+PicklistValue.Standard.campaignType.Trade Show	Trade Show
+PicklistValue.Standard.campaignType.Webinar	Webinar
+PicklistValue.Standard.campaignStatus.Aborted	Aborted
+PicklistValue.Standard.campaignStatus.Completed	Completed
+PicklistValue.Standard.campaignStatus.In Progress	In Progress
+PicklistValue.Standard.campaignStatus.Planned	Planned
+PicklistValue.Standard.contractStatus.Activated	Activated
+PicklistValue.Standard.contractStatus.Draft	Draft
+PicklistValue.Standard.contractStatus.In Approval Process	In Approval Process
+PicklistValue.Standard.accountType.Channel Partner / Reseller	Channel Partner / Reseller
+PicklistValue.Standard.accountType.Customer - Channel	Customer - Channel
+PicklistValue.Standard.accountType.Customer - Direct	Customer - Direct
+PicklistValue.Standard.accountType.Installation Partner	Installation Partner
+PicklistValue.Standard.accountType.Other	Other
+PicklistValue.Standard.accountType.Prospect	Prospect
+PicklistValue.Standard.accountType.Technology Partner	Technology Partner
+PicklistValue.Standard.eventType.Call	Call
+PicklistValue.Standard.eventType.Email	Email
+PicklistValue.Standard.eventType.Meeting	Meeting
+PicklistValue.Standard.eventType.Other	Other
+PicklistValue.Standard.taskType.Call	Call
+PicklistValue.Standard.taskType.Email	Email
+PicklistValue.Standard.taskType.Meeting	Meeting
+PicklistValue.Standard.taskType.Other	Other
+PicklistValue.Standard.salesTeamRole.Account Manager	Account Manager
+PicklistValue.Standard.salesTeamRole.Channel Manager	Channel Manager
+PicklistValue.Standard.salesTeamRole.Executive Sponsor	Executive Sponsor
+PicklistValue.Standard.salesTeamRole.Lead Qualifier	Lead Qualifier
+PicklistValue.Standard.salesTeamRole.Pre-Sales Consultant	Pre-Sales Consultant
+PicklistValue.Standard.salesTeamRole.Sales Manager	Sales Manager
+PicklistValue.Standard.salesTeamRole.Sales Rep	Sales Rep
+PicklistValue.Standard.orderStatus.Activated	Activated
+PicklistValue.Standard.orderStatus.Draft	Draft
+PicklistValue.Standard.campaignMemberStatus.Planned	Planned
+PicklistValue.Standard.campaignMemberStatus.Received	Received
+PicklistValue.Standard.campaignMemberStatus.Responded	Responded
+PicklistValue.Standard.campaignMemberStatus.Sent	Sent
+PicklistValue.Standard.product2Family.None	None
+PicklistValue.Standard.accountContactRole.Business User	Business User
+PicklistValue.Standard.accountContactRole.Decision Maker	Decision Maker
+PicklistValue.Standard.accountContactRole.Economic Buyer	Economic Buyer
+PicklistValue.Standard.accountContactRole.Economic Decision Maker	Economic Decision Maker
+PicklistValue.Standard.accountContactRole.Evaluator	Evaluator
+PicklistValue.Standard.accountContactRole.Executive Sponsor	Executive Sponsor
+PicklistValue.Standard.accountContactRole.Influencer	Influencer
+PicklistValue.Standard.accountContactRole.Other	Other
+PicklistValue.Standard.accountContactRole.Technical Buyer	Technical Buyer
+PicklistValue.Standard.contractContactRole.Business User	Business User
+PicklistValue.Standard.contractContactRole.Decision Maker	Decision Maker
+PicklistValue.Standard.contractContactRole.Economic Buyer	Economic Buyer
+PicklistValue.Standard.contractContactRole.Economic Decision Maker	Economic Decision Maker
+PicklistValue.Standard.contractContactRole.Evaluator	Evaluator
+PicklistValue.Standard.contractContactRole.Executive Sponsor	Executive Sponsor
+PicklistValue.Standard.contractContactRole.Influencer	Influencer
+PicklistValue.Standard.contractContactRole.Other	Other
+PicklistValue.Standard.contractContactRole.Technical Buyer	Technical Buyer
+PicklistValue.Standard.industry.Agriculture	Agriculture
+PicklistValue.Standard.industry.Apparel	Apparel
+PicklistValue.Standard.industry.Banking	Banking
+PicklistValue.Standard.industry.Biotechnology	Biotechnology
+PicklistValue.Standard.industry.Chemicals	Chemicals
+PicklistValue.Standard.industry.Communications	Communications
+PicklistValue.Standard.industry.Construction	Construction
+PicklistValue.Standard.industry.Consulting	Consulting
+PicklistValue.Standard.industry.Education	Education
+PicklistValue.Standard.industry.Electronics	Electronics
+PicklistValue.Standard.industry.Energy	Energy
+PicklistValue.Standard.industry.Engineering	Engineering
+PicklistValue.Standard.industry.Entertainment	Entertainment
+PicklistValue.Standard.industry.Environmental	Environmental
+PicklistValue.Standard.industry.Finance	Finance
+PicklistValue.Standard.industry.Food & Beverage	Food & Beverage
+PicklistValue.Standard.industry.Government	Government
+PicklistValue.Standard.industry.Healthcare	Healthcare
+PicklistValue.Standard.industry.Hospitality	Hospitality
+PicklistValue.Standard.industry.Insurance	Insurance
+PicklistValue.Standard.industry.Machinery	Machinery
+PicklistValue.Standard.industry.Manufacturing	Manufacturing
+PicklistValue.Standard.industry.Media	Media
+PicklistValue.Standard.industry.Not For Profit	Not For Profit
+PicklistValue.Standard.industry.Other	Other
+PicklistValue.Standard.industry.Recreation	Recreation
+PicklistValue.Standard.industry.Retail	Retail
+PicklistValue.Standard.industry.Shipping	Shipping
+PicklistValue.Standard.industry.Technology	Technology
+PicklistValue.Standard.industry.Telecommunications	Telecommunications
+PicklistValue.Standard.industry.Transportation	Transportation
+PicklistValue.Standard.industry.Utilities	Utilities
+PicklistValue.Standard.assetStatus.Installed	Installed
+PicklistValue.Standard.assetStatus.Obsolete	Obsolete
+PicklistValue.Standard.assetStatus.Purchased	Purchased
+PicklistValue.Standard.assetStatus.Registered	Registered
+PicklistValue.Standard.assetStatus.Shipped	Shipped
+PicklistValue.Standard.fiscalYearQuarterPrefix.FQ	FQ
+PicklistValue.Standard.fiscalYearQuarterPrefix.Q	Q
+PicklistValue.Standard.fiscalYearQuarterPrefix.Quarter	Quarter
+PicklistValue.Standard.fiscalYearQuarterPrefix.Trimester	Trimester
+PicklistValue.Standard.fiscalYearPeriodPrefix.FP	FP
+PicklistValue.Standard.fiscalYearPeriodPrefix.Month	Month
+PicklistValue.Standard.fiscalYearPeriodPrefix.P	P
+PicklistValue.Standard.fiscalYearPeriodPrefix.Period	Period
+PicklistValue.Standard.fiscalYearQuarterName.Fall	Fall
+PicklistValue.Standard.fiscalYearQuarterName.Spring	Spring
+PicklistValue.Standard.fiscalYearQuarterName.Summer	Summer
+PicklistValue.Standard.fiscalYearQuarterName.Winter	Winter
+PicklistValue.Standard.caseContactRole.Business Contact	Business Contact
+PicklistValue.Standard.caseContactRole.Decision Maker	Decision Maker
+PicklistValue.Standard.caseContactRole.Other	Other
+PicklistValue.Standard.caseContactRole.Technical Contact	Technical Contact
+PicklistValue.Standard.forecastCategoryName.Best Case	Best Case
+PicklistValue.Standard.forecastCategoryName.Closed	Closed
+PicklistValue.Standard.forecastCategoryName.Commit	Commit
+PicklistValue.Standard.forecastCategoryName.Omitted	Omitted
+PicklistValue.Standard.forecastCategoryName.Pipeline	Pipeline
+PicklistValue.Standard.eventSubject.Call	Call
+PicklistValue.Standard.eventSubject.Email	Email
+PicklistValue.Standard.eventSubject.Meeting	Meeting
+PicklistValue.Standard.eventSubject.Other	Other
+PicklistValue.Standard.eventSubject.Send Letter/Quote	Send Letter/Quote
+PicklistValue.Standard.quickTextCategory.Closings	Closings
+PicklistValue.Standard.quickTextCategory.FAQ	FAQ
+PicklistValue.Standard.quickTextCategory.Greetings	Greetings
+PicklistValue.Standard.taskPriority.High	High
+PicklistValue.Standard.taskPriority.Low	Low
+PicklistValue.Standard.taskPriority.Normal	Normal
+PicklistValue.Standard.quickTextChannel.Email	Email
+PicklistValue.Standard.quickTextChannel.Event	Event
+PicklistValue.Standard.quickTextChannel.Internal	Internal
+PicklistValue.Standard.quickTextChannel.Phone	Phone
+PicklistValue.Standard.quickTextChannel.Portal	Portal
+PicklistValue.Standard.quickTextChannel.Task	Task
+PicklistValue.Standard.socialPostEngagementLevel.Commented	Commented
+PicklistValue.Standard.socialPostEngagementLevel.Resolved	Resolved
+PicklistValue.Standard.socialPostEngagementLevel.Reviewed	Reviewed
+PicklistValue.Standard.socialPostEngagementLevel.Submitted	Submitted
+PicklistValue.Standard.socialPostClassification.Customer Case	Customer Case
+PicklistValue.Standard.socialPostClassification.Inquiry	Inquiry
+PicklistValue.Standard.socialPostClassification.Lead	Lead
+PicklistValue.Standard.socialPostClassification.Outreach	Outreach
+PicklistValue.Standard.socialPostClassification.Product Review	Product Review
+PicklistValue.Standard.taskSubject.Call	Call
+PicklistValue.Standard.taskSubject.Email	Email
+PicklistValue.Standard.taskSubject.Other	Other
+PicklistValue.Standard.taskSubject.Send Letter	Send Letter
+PicklistValue.Standard.taskSubject.Send Quote	Send Quote
+PicklistValue.Standard.workOrderStatus.Canceled	Canceled
+PicklistValue.Standard.workOrderStatus.Cannot Complete	Cannot Complete
+PicklistValue.Standard.workOrderStatus.Closed	Closed
+PicklistValue.Standard.workOrderStatus.Completed	Completed
+PicklistValue.Standard.workOrderStatus.In Progress	In Progress
+PicklistValue.Standard.workOrderStatus.New	New
+PicklistValue.Standard.workOrderStatus.On Hold	On Hold
+PicklistValue.Standard.workOrderLineItemPriority.Critical	Critical
+PicklistValue.Standard.workOrderLineItemPriority.High	High
+PicklistValue.Standard.workOrderLineItemPriority.Low	Low
+PicklistValue.Standard.workOrderLineItemPriority.Medium	Medium
+PicklistValue.Standard.workOrderLineItemStatus.Canceled	Canceled
+PicklistValue.Standard.workOrderLineItemStatus.Cannot Complete	Cannot Complete
+PicklistValue.Standard.workOrderLineItemStatus.Closed	Closed
+PicklistValue.Standard.workOrderLineItemStatus.Completed	Completed
+PicklistValue.Standard.workOrderLineItemStatus.In Progress	In Progress
+PicklistValue.Standard.workOrderLineItemStatus.New	New
+PicklistValue.Standard.workOrderLineItemStatus.On Hold	On Hold
+PicklistValue.Standard.resourceAbsenceType.Medical	Medical
+PicklistValue.Standard.resourceAbsenceType.Meeting	Meeting
+PicklistValue.Standard.resourceAbsenceType.Training	Training
+PicklistValue.Standard.resourceAbsenceType.Vacation	Vacation
+PicklistValue.Standard.serviceAppointmentStatus.Canceled	Canceled
+PicklistValue.Standard.serviceAppointmentStatus.Cannot Complete	Cannot Complete
+PicklistValue.Standard.serviceAppointmentStatus.Completed	Completed
+PicklistValue.Standard.serviceAppointmentStatus.Dispatched	Dispatched
+PicklistValue.Standard.serviceAppointmentStatus.In Progress	In Progress
+PicklistValue.Standard.serviceAppointmentStatus.None	None
+PicklistValue.Standard.serviceAppointmentStatus.Scheduled	Scheduled
+PicklistValue.Standard.locationType.Plant	Plant
+PicklistValue.Standard.locationType.Site	Site
+PicklistValue.Standard.locationType.Van	Van
+PicklistValue.Standard.locationType.Warehouse	Warehouse
+PicklistValue.Standard.salutation.Dr.	Dr.
+PicklistValue.Standard.salutation.Mr.	Mr.
+PicklistValue.Standard.salutation.Mrs.	Mrs.
+PicklistValue.Standard.salutation.Ms.	Ms.
+PicklistValue.Standard.salutation.Prof.	Prof.
+PicklistValue.Standard.addressType.Billing	Billing
+PicklistValue.Standard.addressType.Home	Home
+PicklistValue.Standard.addressType.Mailing	Mailing
+PicklistValue.Standard.addressType.Shipping	Shipping
+PicklistValue.Standard.associatedLocationType.Bill To	Bill To
+PicklistValue.Standard.associatedLocationType.Ship To	Ship To
+PicklistValue.Standard.quantityUnitOfMeasure.Each	Each
+PicklistValue.Standard.productRequestStatus.Draft	Draft
+PicklistValue.Standard.productRequestStatus.Received	Received
+PicklistValue.Standard.productRequestStatus.Submitted	Submitted
+PicklistValue.Standard.productRequestShipmentType.Next Business Day	Next Business Day
+PicklistValue.Standard.productRequestShipmentType.Overnight	Overnight
+PicklistValue.Standard.productRequestShipmentType.Pick Up	Pick Up
+PicklistValue.Standard.productRequestShipmentType.Rush	Rush
+PicklistValue.Standard.timeSheetStatus.Approved	Approved
+PicklistValue.Standard.timeSheetStatus.New	New
+PicklistValue.Standard.timeSheetStatus.Submitted	Submitted
+PicklistValue.Standard.timeSheetEntryStatus.Approved	Approved
+PicklistValue.Standard.timeSheetEntryStatus.New	New
+PicklistValue.Standard.timeSheetEntryStatus.Submitted	Submitted
+PicklistValue.Standard.timeSheetEntryType.Direct	Direct
+PicklistValue.Standard.timeSheetEntryType.Indirect	Indirect
+PicklistValue.Standard.shipmentStatus.Delivered	Delivered
+PicklistValue.Standard.shipmentStatus.Shipped	Shipped
+PicklistValue.Standard.shipmentProvider.FedEx	FedEx
+PicklistValue.Standard.shipmentProvider.UPS	UPS
+PicklistValue.Standard.shipmentProvider.USPS	USPS
+PicklistValue.Standard.leadSource.Other	Other
+PicklistValue.Standard.leadSource.Partner Referral	Partner Referral
+PicklistValue.Standard.leadSource.Phone Inquiry	Phone Inquiry
+PicklistValue.Standard.leadSource.Purchased List	Purchased List
+PicklistValue.Standard.leadSource.Web	Web
+PicklistValue.Standard.productTransferStatus.Completed	Completed
+PicklistValue.Standard.productTransferStatus.Ready For Pickup	Ready For Pickup
+PicklistValue.Standard.assetRelationshipType.Crossgrade	Crossgrade
+PicklistValue.Standard.assetRelationshipType.Replacement	Replacement
+PicklistValue.Standard.assetRelationshipType.Upgrade	Upgrade
+PicklistValue.Standard.prodRequestLineItemStatus.Draft	Draft
+PicklistValue.Standard.prodRequestLineItemStatus.Received	Received
+PicklistValue.Standard.prodRequestLineItemStatus.Submitted	Submitted
+PicklistValue.Standard.digitalSignatureType.Default	Default
+PicklistValue.Standard.engagementActivityType.Email Hard Bounce	Email Hard Bounce
+PicklistValue.Standard.engagementActivityType.Email Open	Email Open
+PicklistValue.Standard.engagementActivityType.Email Opt-in	Email Opt-in
+PicklistValue.Standard.engagementActivityType.Email Preferences Open	Email Preferences Open
+PicklistValue.Standard.engagementActivityType.Email Send	Email Send
+PicklistValue.Standard.engagementActivityType.Email Soft Bounce	Email Soft Bounce
+PicklistValue.Standard.engagementActivityType.Email Spam Complaint	Email Spam Complaint
+PicklistValue.Standard.engagementActivityType.Email Unsubscribe	Email Unsubscribe
+PicklistValue.Standard.engagementActivityType.Form Submit Error	Form Submit Error
+PicklistValue.Standard.engagementActivityType.Form Submit Success	Form Submit Success
+PicklistValue.Standard.engagementActivityType.Form View	Form View
+PicklistValue.Standard.engagementActivityType.Landing Page Form Submit Error	Landing Page Form Submit Error
+PicklistValue.Standard.engagementActivityType.Landing Page Form Submit Success	Landing Page Form Submit Success
+PicklistValue.Standard.engagementActivityType.Landing Page View	Landing Page View
+PicklistValue.Standard.engagementActivityType.Link Click	Link Click
+PicklistValue.Standard.scorecardMetricCategory.Adoption	Adoption
+PicklistValue.Standard.scorecardMetricCategory.Field Enablement	Field Enablement
+PicklistValue.Standard.scorecardMetricCategory.Marketing	Marketing
+PicklistValue.Standard.scorecardMetricCategory.Sales	Sales
+PicklistValue.Standard.scorecardMetricCategory.Support	Support
+PicklistValue.chamber_number__e.Amsterdam	Amsterdam
+PicklistValue.chamber_number__e.Brabant	Brabant
+PicklistValue.chamber_number__e.Centraal Gelderland	Centraal Gelderland
+PicklistValue.chamber_number__e.Den Haag	Den Haag
+PicklistValue.chamber_number__e.Gooi-, Eem- en Flevoland	Gooi-, Eem- en Flevoland
+PicklistValue.chamber_number__e.Limburg	Limburg
+PicklistValue.chamber_number__e.Midden Nederland	Midden Nederland
+PicklistValue.chamber_number__e.Noord Nederland	Noord Nederland
+PicklistValue.chamber_number__e.Noordwest-Holland	Noordwest-Holland
+PicklistValue.chamber_number__e.Oost Nederland	Oost Nederland
+PicklistValue.chamber_number__e.Rotterdam	Rotterdam
+PicklistValue.chamber_number__e.Zuid West Nederland	Zuid West Nederland
+RecordType.Metric.Completion	Completion
+RecordType.Metric.Completion.Description	Measure achievement based on whether or not the metric is finished. Ideal for tracking milestones, or when you don't have metrics based on hard numbers. For example: Become Salesforce Certified.
+RecordType.Metric.Progress	Progress
+RecordType.Metric.Progress.Description	Measure achievement based on how much is finished compared to a targeted value. Ideal for tracking hard numbers and percentages. For example: Convert 50 Leads or Achieve 100% Customer Satisfaction.
+CustomLabel.DBSCall_AccountDupCheck_Exception	Something happened while checking for duplicates
+CustomLabel.DBSCall_AccountSave_Exception	Something happened creating the matching account
+CustomLabel.DBSCall_AccountSearch_Exception	Something happened searching for matching account
+CustomLabel.DBSCall_DossierSave_Exception	Something happened while trying to save the dossier.
+CustomLabel.DBSCall_Unknown_Exception	Something happened while working at the BusinessService level
+CustomLabel.VAT_Retrieve	Get VAT information
+CustomLabel.fflib_QueryFactory_crossobject_fieldsets_not_allowed_error	Cross-object fields not allowed and field "{0}" is a cross-object field.
+CustomLabel.fflib_QueryFactory_fieldset_wrong_sobject_error	Field set "{0}" is not for SObject type "{1}"
+CustomLabel.fflib_QueryFactory_recursive_subquery_error	Invalid call to subselectQuery.  You may not add a subselect query to a subselect query.
+CustomLabel.fflib_QueryFactory_subquery_invalid_relationship	Invalid call to subselectQuery.  Invalid relationship for table.
+CustomLabel.fflib_security_error_field_not_insertable	You do not have permission to insert field {1} on {0}
+CustomLabel.fflib_security_error_field_not_readable	You do not have permission to read the field {1} on {0}
+CustomLabel.fflib_security_error_field_not_updateable	You do not have permission to update the field {1} on {0}
+CustomLabel.fflib_security_error_object_not_deletable	You do not have permission to delete {0}
+CustomLabel.fflib_security_error_object_not_insertable	You do not have permission to insert {0}
+CustomLabel.fflib_security_error_object_not_readable	You do not have permission to read {0}
+CustomLabel.fflib_security_error_object_not_updateable	You do not have permission to update {0}
+QuickAction.Account.Customer_connect	Customer.connect

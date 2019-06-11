@@ -33,11 +33,11 @@
         <name>Config_Account_ID</name>
     </customLabels>
     <customLabels>
-        <label>Paswoord</label>
+        <label>Wachtwoord</label>
         <name>Config_Account_Password</name>
     </customLabels>
     <customLabels>
-        <label>Sla op</label>
+        <label>Opslaan</label>
         <name>Config_Account_Save</name>
     </customLabels>
     <customLabels>
@@ -73,7 +73,7 @@
         <name>Config_Balance_Updated</name>
     </customLabels>
     <customLabels>
-        <label>Geloofsbrieven</label>
+        <label>Inloggegevens</label>
         <name>Config_Credentials</name>
     </customLabels>
     <customLabels>
@@ -237,12 +237,12 @@
         <name>Search_Dossier_Number</name>
     </customLabels>
     <customLabels>
-        <label>Om informatie van Nederlandse organisatie te vinden, moet u dit account relateren aan gegevens van een organisatie bekend in het KvK.
+        <label>Om informatie van een Nederlandse organisatie te vinden, moet u dit account relateren aan gegevens van een organisatie bekend in het KvK.
 Opmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisatie, zoek dan hier op.</label>
         <name>Search_Help</name>
     </customLabels>
     <customLabels>
-        <label>Vind</label>
+        <label>Zoek</label>
         <name>Search_Match_Dossier</name>
     </customLabels>
     <customLabels>
@@ -270,7 +270,7 @@ Opmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisati
         <name>Search_Results_Confirm</name>
     </customLabels>
     <customLabels>
-        <label>De volgende organisaties komen overeen met u zoekcriteria. Selecteer alstublieft de juiste organisatie.</label>
+        <label>De volgende organisaties komen overeen met uw zoekcriteria. Selecteer de juiste organisatie.</label>
         <name>Search_Results_Help</name>
     </customLabels>
     <customLabels>
@@ -282,7 +282,7 @@ Opmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisati
         <name>Search_Trade_Name</name>
     </customLabels>
     <customLabels>
-        <label>Succes</label>
+        <label>Gelukt</label>
         <name>Success</name>
     </customLabels>
     <customLabels>
