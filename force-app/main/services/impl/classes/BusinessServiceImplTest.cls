@@ -280,7 +280,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Rsin_Number__c , '13');
 
         List<Business_Data_SBI__c> sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :d.Id LIMIT 1];
-        if (sbi <> null) {
+        if (sbi.size() > 0) {
             System.assertEquals(sbi[0].SBI_Type__c, 'original');
             System.assertEquals(sbi[0].SBI_Description__c, 'desc');
             System.assertEquals(sbi[0].SBI_Code__c , '11');
