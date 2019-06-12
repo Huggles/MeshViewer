@@ -163,9 +163,24 @@ public with sharing class DutchBusinessDto {
         @AuraEnabled public Boolean indication_economically_active;
     }
 
-    public class DutchBusinessStructure {
-        @AuraEnabled public Integer number_of_subsidiaries;
-        @AuraEnabled public String parent;
-        @AuraEnabled public String ultimate_parent;
+    public class DutchBusinessGetVatNumberRequest {
+        public String dossier_number;
+    }
+
+    public class DutchBusinessGetVatNumberResponse {
+        public String dossier_number;
+        public String vat_number;
+        public String date_last_update;
+    }
+
+    public class DutchBusinessVatNumber {
+        public String dossier_number;
+        public String vat_number;
+        public Date date_last_update;
+        private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] vat_number_type_info = new String[]{'vat_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] date_last_update_type_info = new String[]{'date_last_update','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'dossier_number','vat_number','date_last_update'};
     }
 }

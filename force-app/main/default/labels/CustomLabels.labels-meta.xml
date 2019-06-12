@@ -103,21 +103,28 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier Number</shortDescription>
-        <value>Dossier Number</value>
+        <value>Chamber of Commerce Number</value>
     </labels>
     <labels>
         <fullName>Dossier_Remove</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier Remove</shortDescription>
-        <value>Remove Dossier</value>
+        <value>Remove Customer.connect data</value>
+    </labels>
+    <labels>
+        <fullName>VAT_Retrieve</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VAT_Retrieve</shortDescription>
+        <value>Get VAT information</value>
     </labels>
     <labels>
         <fullName>Dossier_Removed</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier Removed</shortDescription>
-        <value>Dossier Removed</value>
+        <value>Customer.connect data Removed</value>
     </labels>
     <labels>
         <fullName>Error</fullName>
@@ -131,28 +138,28 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error_Config</shortDescription>
-        <value>Error 103 received from  Business Data for Salesforce. Please contact support for assistance.</value>
+        <value>Error 103 received from Customer.connect. Please contact support for assistance.</value>
     </labels>
     <labels>
         <fullName>Error_Incomplete</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error_Incomplete</shortDescription>
-        <value>Error 101 received from  Business Data for Salesforce. Please contact support for assistance.</value>
+        <value>Error 101 received from Customer.connect. Please contact support for assistance.</value>
     </labels>
     <labels>
         <fullName>Error_Unknown</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription> Business Data Error Unknown</shortDescription>
-        <value>Error 102 received from  Business Data for Salesforce. Please contact support for assistance.</value>
+        <value>Error 102 received from Customer.connect. Please contact support for assistance.</value>
     </labels>
     <labels>
         <fullName>Error_Remove_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error_Remove_Dossier</shortDescription>
-        <value>There was a problem removing the dossier. Please ensure you have permission to carry out this action.</value>
+        <value>There was a problem removing the business data. Please ensure you have permission to carry out this action.</value>
     </labels>
     <labels>
         <fullName>Establishment_Date</fullName>
@@ -408,6 +415,20 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>request a trial</value>
     </labels>
     <labels>
+        <fullName>Config_Account_CreateAccount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_CreateAccount</shortDescription>
+        <value>Request a trial</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ExistingUser</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ExistingUser</shortDescription>
+        <value>I am an existing user</value>
+    </labels>
+    <labels>
         <fullName>Config_Account_AwaitingActivation</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -429,11 +450,25 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>Save Credentials</value>
     </labels>
     <labels>
+        <fullName>Config_Credentials</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Credentials</shortDescription>
+        <value>Credentials</value>
+    </labels>
+    <labels>
         <fullName>Config_Account_Username</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config_Account_Username</shortDescription>
         <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ID</shortDescription>
+        <value>ID</value>
     </labels>
     <labels>
         <fullName>Config_Add_Budget</fullName>
@@ -496,14 +531,14 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config Page Title</shortDescription>
-        <value> Business configuration page</value>
+        <value> Customer.connect configuration page</value>
     </labels>
     <labels>
         <fullName>Config_Title</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config_Title</shortDescription>
-        <value>Customer.connect Configuration</value>
+        <value>Customer.connect Setup</value>
     </labels>
     <labels>
         <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>

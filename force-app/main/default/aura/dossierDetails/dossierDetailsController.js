@@ -54,5 +54,29 @@
             component.find('recordHandler').reloadRecord(true);
         });
         
+    },
+
+    /**
+     * Unlink dossier and delete associated record(s)
+     * @param {*} component 
+     * @param {*} event 
+     * @param {*} helper 
+     */
+    getVAT : function (component, event, helper) {
+        var callParams = {dossierId: component.get('v.simpleRecord').cust_connect__Business_Dossier__c};
+        helper.callServer(component, 'c.getVATDetails', callParams, function(response) {
+            if (response && response.cust_connect__VAT_Number__c !== undefined)
+                helper.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Dossier_Account_Update_Completed'), 'success');
+            else {
+                var errors = response.getError();
+                if (errors && errors[0] && errors[0].message) {
+                    _this.formattedToast(component, errors[0].message);
+                } else {
+                    _this.showToast(component, $A.get('$Label.c.Error'), $A.get('$Label.c.Error_Unknown'), 'error');
+                }
+            }
+            component.find('recordHandler').reloadRecord(true);
+        });
+        
     }
 })

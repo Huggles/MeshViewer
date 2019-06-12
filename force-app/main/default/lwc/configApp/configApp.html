@@ -10,7 +10,7 @@
             <div id="awaitingActivation" class='slds-p-around_medium' if:true={awaitingActivation}>
                 <div>{label.Config_Account_AwaitingActivation}</div>
             </div>
-            <div id="customerNotOnboarded" if:true={showOnboarded}>
+            <div id="customerNotOnboarded">
                 <c-onboard-customer onuseronboarded={handleUserOnboarded}></c-onboard-customer>
             </div>
         </div>

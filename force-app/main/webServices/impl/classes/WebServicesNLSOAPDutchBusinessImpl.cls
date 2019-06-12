@@ -309,6 +309,30 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             return response_x.out;
             
         }
+
+        public DutchBusinessDto.DutchBusinessVatNumber businessGetVatNumber(DutchBusinessDto.DutchBusinessGetVatNumberRequest params) 
+        {
+            dutchBusinessGetVatNumberRequestType request_x = new dutchBusinessGetVatNumberRequestType();
+            dutchBusinessGetVatNumberResponseType response_x;
+            request_x.dossier_number = params.dossier_number;
+            Map<String, dutchBusinessGetVatNumberResponseType> response_map_x = new Map<String, dutchBusinessGetVatNumberResponseType>();
+            response_map_x.put('response_x', response_x);
+
+            ExecuteCallout(// executing using a wrapper method to support fallbackserver url
+                    port,
+                    request_x,
+                    response_map_x,
+                    new String[]{port.endpoint_x,
+                            'https://ws1.webservices.nl/soap_doclit.php/dutchBusinessGetVatNumber',
+                            'http://www.webservices.nl/soap/',
+                            'dutchBusinessGetVatNumber',
+                            'http://www.webservices.nl/soap/',
+                            'dutchBusinessGetVatNumberResponse',
+                            'WebServicesNLSOAPDutchBusinessImplTypes.dutchBusinessGetVatNumberResponseType'} // NB!!! The type file name should be prepended to the ws method name
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
          
 /*
         public DutchBusinessLegalEntityData dutchBusinessGetLegalEntity(String dossier_number) {

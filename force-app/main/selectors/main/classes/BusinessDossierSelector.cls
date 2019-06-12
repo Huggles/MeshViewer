@@ -43,6 +43,7 @@ public with sharing class BusinessDossierSelector extends fflib_SObjectSelector 
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Business_Dossier__c> result = new list<Business_Dossier__c>();
         queryFactory.setEnforceFLS(true);
+        queryFactory.selectField('Dossier_Number__c');
         queryFactory.setCondition('Id IN :dosserIdSet');
         queryFactory.setLimit(20);
         result = Database.query(queryFactory.toSOQL());

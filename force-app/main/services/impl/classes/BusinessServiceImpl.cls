@@ -120,8 +120,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             //List<Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
 
             list<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});
-
-
+            list<Dossier_Address__c> adds = DossierAddressSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});
 
             Business_Dossier__c d;
 
@@ -235,6 +234,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             establishmentAddress.House_Number__c = String.valueOf(dossier.establishment_address_original_house_number);
             establishmentAddress.House_Number_Addition__c = dossier.establishment_address_original_house_number_addition;
             establishmentAddress.Country__c = dossier.establishment_address_original_country;
+            establishmentAddress.Type__c = 'Establishment';
 
             Dossier_Address__c correspondenceAddress = new Dossier_Address__c();
             correspondenceAddress.Name = dossier.correspondence_address_original_address;
@@ -244,14 +244,20 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             correspondenceAddress.House_Number__c = String.valueOf(dossier.correspondence_address_original_house_number);
             correspondenceAddress.House_Number_Addition__c = dossier.correspondence_address_original_house_number_addition;
             correspondenceAddress.Country__c = dossier.correspondence_address_original_country;
+            correspondenceAddress.Type__c = 'Correspondence';
 
-            insert correspondenceAddress;
-            insert establishmentAddress;
 
-            d.Address_Correspondence__c = correspondenceAddress.Id;
-            d.Address_Establishment__c = establishmentAddress.Id;
+            if (adds != null) {
+                for (Dossier_Address__c a : adds) {
+                    if (a.Type__c == 'Correspondence') {
+                        correspondenceAddress.Id = a.Id;
+                    }
+                    else if (a.Type__c == 'Establishment') {
+                        establishmentAddress.Id = a.Id;
+                    }
+                }
+            }
 
-            //upsert d;
             if(dossierExists){
                 unitOfWork.registerDirty(d, Business_Dossier__c.Account__c, acc);
             }else{
@@ -263,6 +269,18 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                     unitOfWork.registerNew(dossier.sbi_collection[i], Business_Data_SBI__c.Business_Dossier__c, d);
                 }
                 //insert dossier.sbi_collection;
+            }
+
+            if(correspondenceAddress.Id != null){
+                unitOfWork.registerDirty(correspondenceAddress, Dossier_Address__c.Business_Data__c, d);
+            }else{
+                unitOfWork.registerNew(correspondenceAddress, Dossier_Address__c.Business_Data__c, d);
+            }
+
+            if(establishmentAddress.Id != null){
+                unitOfWork.registerDirty(establishmentAddress, Dossier_Address__c.Business_Data__c, d);
+            }else{
+                unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, d);
             }
 
             return d;
@@ -385,6 +403,45 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+        }
+    }
+
+    public static Business_Dossier__c selectDossier(Id dossierId) {
+        try{
+            list<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
+            if (dossierList.size() == 1) {
+                return dossierList[0];
+            }
+            return null;
+        }catch(CCException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+        }
+    }
+
+    public static DutchBusinessDto.DutchBusinessVatNumber requestVAT(String dossierNumber) {
+        IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
+        DutchBusinessDto.DutchBusinessGetVatNumberRequest requestParams = new DutchBusinessDto.DutchBusinessGetVatNumberRequest();// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
+        requestParams.dossier_number = dossierNumber;
+        return service.businessGetVatNumber(requestParams);
+    }
+
+    public static list<Object> upsertDossier(Business_Dossier__c dossier){
+
+        try{
+            list<Object> result = new list<Object>();
+            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
+            unitOfWork.registerDirty(dossier);
+            unitOfWork.commitWork();
+            result.add(dossier);
+            return result;
+        }catch(CCException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
             throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }

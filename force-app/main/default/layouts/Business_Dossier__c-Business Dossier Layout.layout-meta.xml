@@ -36,11 +36,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Address_Establishment__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Address_Correspondence__c</field>
+                <field>VAT_Number__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -406,13 +402,23 @@
         <fields>SBI_Description__c</fields>
         <relatedList>Business_Data_SBI__c.Business_Dossier__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>Type__c</fields>
+        <fields>House_Number__c</fields>
+        <fields>House_Number_Addition__c</fields>
+        <fields>Street__c</fields>
+        <fields>City__c</fields>
+        <fields>Postcode__c</fields>
+        <fields>Country__c</fields>
+        <relatedList>Dossier_Address__c.Business_Data__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000000ODpT</masterLabel>
+        <masterLabel>00h0E000001Liq9</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

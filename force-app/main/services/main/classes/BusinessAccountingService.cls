@@ -1,8 +1,8 @@
 public with sharing class BusinessAccountingService {
     
     
-    public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username){
-        return newInstance().onboardCustomer(username);
+    public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username, String password){
+        return newInstance().onboardCustomer(username, password);
     }
     public static boolean getUserOnboarded(){
         return newInstance().getUserOnboarded();

@@ -13,6 +13,9 @@ import Config_Balance_Changed from '@salesforce/label/c.Config_Balance_Changed';
 import Config_Balance_Error from '@salesforce/label/c.Config_Balance_Error';
 import Config_Balance_Threshold_Description from '@salesforce/label/c.Config_Balance_Threshold_Description';
 import Config_Balance_Updated from '@salesforce/label/c.Config_Balance_Updated';
+import Success from '@salesforce/label/c.Success';
+import Error from '@salesforce/label/c.Error';
+
 export default class balanceCard extends LightningElement {
 
     @track ready = false;
@@ -31,7 +34,9 @@ export default class balanceCard extends LightningElement {
         Config_Balance_Changed,
         Config_Balance_Error,
         Config_Balance_Threshold_Description,
-        Config_Balance_Updated
+        Config_Balance_Updated,
+        Success,
+        Error
     }
 
     wiredBalanceResult;
@@ -59,7 +64,7 @@ export default class balanceCard extends LightningElement {
         if (this.amountToAdd < 5) return;
         addBudget({Amount: this.amountToAdd}).then(result => {
             const evt = new ShowToastEvent({
-                title: 'Success',
+                title: this.label.Success,
                 message: this.label.Config_Balance_Updated,
                 variant: 'success'
             });
@@ -68,7 +73,7 @@ export default class balanceCard extends LightningElement {
     })
     .catch(error => {
         const evt = new ShowToastEvent({
-            title: 'Error',
+            title: this.label.Error,
             message: error,
             variant: 'error'
         });

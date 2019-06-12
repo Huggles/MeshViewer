@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Indication of whether the company does import.  Optional.</description>
     <externalId>false</externalId>
-    <label>Indication Import</label>
+    <label>Imports</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

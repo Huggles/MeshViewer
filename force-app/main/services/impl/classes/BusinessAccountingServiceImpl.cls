@@ -6,7 +6,7 @@ TODO: Move custom metadatas query to selector
 public with sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService{
 
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
-    public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username){
+    public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username, String password){
 
         List<ApplicationProperty__mdt> aps = [SELECT Appsolutely_Contact_Email__c, Data_Provider_Account_Id__c, Data_Provider_Account_Comment__c FROM ApplicationProperty__mdt LIMIT 1];
         if (aps.size() < 0) throw new CCException(System.Label.Error_Config);
@@ -17,7 +17,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
         DutchBusinessAccountingDto.UserCreateRequestDto input = new DutchBusinessAccountingDto.UserCreateRequestDto();
         input.nickname = username;
         input.accountId = Integer.valueOf(ap.Data_Provider_Account_Id__c);
-        input.password = ''; // we keep this empty so CompanyConnect will generate a new password
+        input.password = password; // we can keep this empty so Company.info will generate a new password
         input.email = ap.Appsolutely_Contact_Email__c;
         input.companyname = orgDetails.Name;
         input.address = orgDetails.Address.getStreet() + ', ' + orgDetails.Address.getPostalCode();

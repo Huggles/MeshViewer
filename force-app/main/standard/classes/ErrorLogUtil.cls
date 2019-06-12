@@ -67,9 +67,23 @@ public with sharing class ErrorLogUtil {
             getLogList().add(log);
             Application.rollback(); // perform database rollback
             (new ErrorLogUtil()).doLog();
-            return new AuraResponseWrapper(e, msg);
+            return new AuraResponseWrapper(e, formatError(String.valueOf(msg)));
         }
 
+    }
+    private static String formatError(String msg) {
+        // Format the error from the Company.info server if that's what it is. Otherwise just pass it through.
+        String actualError = msg;
+        if (actualError.contains('faultcode=')) {
+            List<String> parts = actualError.split(':');
+            if (parts.size() == 4) {
+                List<String> moreparts = parts[2].split('faultcode=');
+                if (moreparts.size() == 2) {
+                    actualError = moreparts[0];
+                }
+            }
+        }
+        return actualError;
     }
     public static void logException(Exception e, Object msg) {
         system.debug('logging exception');
@@ -81,19 +95,9 @@ public with sharing class ErrorLogUtil {
                     + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
             getLogList().add(log);
 
-            // Format the error from the Company.info server if that's what it is. Otherwise just pass it through.
-            String actualError = e.getMessage();
-            if (actualError.contains('faultcode=')) {
-                List<String> parts = actualError.split(':');
-                if (parts.size() == 4) {
-                    List<String> moreparts = parts[2].split('faultcode=');
-                    if (moreparts.size() == 2) {
-                        actualError = moreparts[0];
-                    }
-                }
-            }
+            
 
-            throw new CCException(msg + ':' + actualError);
+            throw new CCException(msg + ':' + formatError(e.getMessage()));
         }
     }
 
