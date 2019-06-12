@@ -164,24 +164,6 @@ private class fflib_ApplicationTest
 	}	
 
 	@IsTest
-	private static void callingDomainFactoryWithInAccessableConstructorShouldGiveException()
-	{
-		try {
-			Domain.newInstance(new List<Product2>{ new Product2(Name = 'Test Product') });
-			System.assert(false, 'Expected exception');
-		} catch (fflib_Application.DeveloperException e) {
-			System.assertEquals('Domain constructor class not found for SObjectType Product2', e.getMessage());
-		}
-
-		try {
-			Domain.newInstance(new List<SObject>{ new Product2(Name = 'Test Product') }, Product2.SObjectType);
-			System.assert(false, 'Expected exception');
-		} catch (fflib_Application.DeveloperException e) {
-			System.assertEquals('Domain constructor class not found for SObjectType Product2', e.getMessage());
-		}		
-	}
-
-	@IsTest
 	private static void callingDomainFactoryWithContructorClassThatDoesNotSupportIConstructableShouldGiveException()
 	{
 		try {
