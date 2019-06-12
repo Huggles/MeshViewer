@@ -27,27 +27,6 @@
 @IsTest
 private with sharing class fflib_SObjectDomainTest 
 {
-
-	@IsTest
-	private static void testGetChangedFieldsAsStrings()
-	{
-		Account acct1 = new Account ( Id = '001E0000006mkRP', Name = 'Test1', AccountNumber = '12345', Site = 'Here'),
-		        acct2 = new Account ( Id = '001E0000006mkRQ', Name = 'Test2', AccountNumber = '54321', Site = 'There');
-		System.assertEquals(false, fflib_SObjectDomain.Test.Database.hasRecords());
-		fflib_SObjectDomain.Test.Database.onInsert(new Account[] { acct1, acct2 } );
-		System.assertEquals(true, fflib_SObjectDomain.Test.Database.hasRecords());
-		fflib_SObjectDomain.triggerHandler(fflib_SObjectDomain.TestSObjectChangedRecordsConstructor.class);
-		Account acct1changed = acct1.clone(),
-		        acct2changed = acct2.clone();
-		acct1changed.Name = 'Test1changed';
-		fflib_SObjectDomain.Test.Database.onUpdate(
-			new Account[]{ acct1, acct2},
-			new Map<Id, Account>{
-				acct1changed.Id => acct1,
-				acct2changed.Id => acct2
-			}
-		);
-	}
 	
 	/**
 	 * Create test user
