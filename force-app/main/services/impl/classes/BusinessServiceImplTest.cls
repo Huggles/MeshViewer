@@ -279,10 +279,12 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(d.Primary_Sbi_Code_Text__c , 'sbi_code_text');
         System.assertEquals(d.Rsin_Number__c , '13');
 
-        Business_Data_SBI__c sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :d.Id LIMIT 1];
-        System.assertEquals(sbi.SBI_Type__c, 'original');
-        System.assertEquals(sbi.SBI_Description__c, 'desc');
-        System.assertEquals(sbi.SBI_Code__c , '11');
+        List<Business_Data_SBI__c> sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :d.Id LIMIT 1];
+        if (sbi <> null) {
+            System.assertEquals(sbi[0].SBI_Type__c, 'original');
+            System.assertEquals(sbi[0].SBI_Description__c, 'desc');
+            System.assertEquals(sbi[0].SBI_Code__c , '11');
+        }
 
         System.assertEquals(d.Secondary_Sbi_Code_1__c , 'secondary_sbi_code1');
         System.assertEquals(d.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
