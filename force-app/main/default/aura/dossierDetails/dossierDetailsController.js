@@ -20,7 +20,7 @@
      */
     onSelect : function(component, event, helper) {
         var params = event.getParams();
-        var callParams = {dossierNumber: params.DossierNumber};
+        var callParams = {dossierNumber: params.DossierNumber, establishmentNumber: params.EstablishmentNumber};
         if (component.get('v.recordId'))
             callParams.accountId = component.get('v.recordId');
         component.set('v.selected', params.DossierNumber);

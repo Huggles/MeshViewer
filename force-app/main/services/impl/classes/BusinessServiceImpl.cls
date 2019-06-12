@@ -120,7 +120,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             //List<Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
 
             list<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});
-            list<Dossier_Address__c> adds = DossierAddressSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});
+            
 
             Business_Dossier__c d;
 
@@ -144,6 +144,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                     throw new AuraHandledException('Dossier is already allocated to another Account');
                 }*/
             }
+
+            list<Dossier_Address__c> adds = DossierAddressSelector.newInstance().selectByDossierId(new set<Id>{d.Id});
+
             // @todo add addresses and contact.
             system.debug('VPROK tests dosier: ');
             System.debug(JSON.serialize(dossier));
@@ -336,13 +339,13 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }
     }
 
-    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber) {
+    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber) {
         if (dossierNumber == null){ return null;}
         try{
             IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
             DutchBusinessDto.DutchBusinessGetDossierRequest requestParams = new DutchBusinessDto.DutchBusinessGetDossierRequest();// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
             requestParams.dossier_number = dossierNumber;
-            requestParams.establishment_number = null;
+            requestParams.establishment_number = establishmentNumber;
             return service.dutchBusinessGetDossier(requestParams);
         }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further

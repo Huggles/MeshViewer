@@ -14,6 +14,7 @@
                 var updateEvent = component.getEvent("dossierSelectedEvent");
                 // Setting the param on the event 
                 updateEvent.setParams({ "DossierNumber": record.dossier_number });
+                updateEvent.setParams({ "EstablishmentNumber": record.establishment_number });
                 // Fire the event so all the components can hear it
                 updateEvent.fire();
         }

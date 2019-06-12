@@ -3,7 +3,7 @@ public interface IBusinessService {
     //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
     //Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork);
     List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams);
-    DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber);
+    DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber);
     String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier);
     list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId);
     Boolean deleteDossier(Id accountId);

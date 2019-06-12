@@ -8,8 +8,8 @@ public with sharing class BusinessService {
         return newInstance().updateAccountDossier(dossier);
     }
 
-    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber){
-        return newInstance().getDossier(dossierNumber);
+    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber){
+        return newInstance().getDossier(dossierNumber, establishmentNumber);
     }
 
     public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){

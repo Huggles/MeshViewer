@@ -25,7 +25,7 @@ jobs:
           name: run apex tests
           command: |
             mkdir -p tests/junit
-            sfdx force:apex:test:run -d tests/junit -r junit
+            sfdx force:apex:test:run -d tests/junit -r junit -w 20
       - store_test_results:
           path: tests/junit
       - store_artifacts:
