@@ -14,7 +14,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
             Business_Dossier__c d = saveBusinessDossierUow(dossier, acc, unitOfWork);
             //unitOfWork.registerRelationship(acc, Account.Business_Dossier__c, d);
-            //unitOfWork.commitWork();//TODO cross check if it is ok to do it in saveBusinessDossierUow method and not here
+            unitOfWork.commitWork();
             //unitOfWork.registerDirty(acc, Account.Business_Dossier__c, d); // to update a field on account level once dossier is inserted
             //unitOfWork.commitWork(); // need to wait until circullar references are releassed ion fflib. so far using another method link: https://github.com/financialforcedev/fflib-apex-common/pull/195
             result.add(d);
@@ -257,12 +257,12 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             }else{
                 unitOfWork.registerNew(d, Business_Dossier__c.Account__c, acc);
             }
-            unitOfWork.commitWork();
             if(dossier.sbi_collection <> null) {
                 for (Integer i = 0; i < dossier.sbi_collection.size(); i++) {
-                    dossier.sbi_collection[i].Business_Dossier__c = d.Id;
+                    //dossier.sbi_collection[i].Business_Dossier__c = d.Id;
+                    unitOfWork.registerNew(dossier.sbi_collection[i], Business_Data_SBI__c.Business_Dossier__c, d);
                 }
-                insert dossier.sbi_collection;
+                //insert dossier.sbi_collection;
             }
 
             return d;
