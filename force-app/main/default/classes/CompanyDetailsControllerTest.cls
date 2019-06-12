@@ -39,7 +39,7 @@ public with sharing class CompanyDetailsControllerTest {
         AuraResponseWrapper output = new AuraResponseWrapper((Object)serviceResponse);
                 
         mocks.startStubbing();
-        mocks.when(mockService.getDossier(dossierNumber)).thenReturn(serviceResponse);
+        mocks.when(mockService.getDossier(dossierNumber, null)).thenReturn(serviceResponse);
         mocks.when(mockService.upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId())).thenReturn(new list<object>());
         mocks.when(mockService.updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject())).thenReturn('output');
         
@@ -47,9 +47,9 @@ public with sharing class CompanyDetailsControllerTest {
         Application.Service.setMock(IBusinessService.class, mockService);
 
         test.startTest();
-        Object result = CompanyDetailsController.createDossier(dossierNumber, accountId);
+        Object result = CompanyDetailsController.createDossier(dossierNumber, accountId, null);
         //system.assertEquals('nulls', String.valueOf(result));
-        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber);
+        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber, null);
         ((IBusinessService)mocks.verify(mockService, 1)).upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId());
         ((IBusinessService)mocks.verify(mockService, 1)).updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject());
         test.stopTest();
@@ -72,7 +72,7 @@ public with sharing class CompanyDetailsControllerTest {
         AuraResponseWrapper output = new AuraResponseWrapper((Object)serviceResponse);
                 
         mocks.startStubbing();
-        mocks.when(mockService.getDossier(dossierNumber)).thenReturn(serviceResponse);
+        mocks.when(mockService.getDossier(dossierNumber, null)).thenReturn(serviceResponse);
         mocks.when(mockService.upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId())).thenReturn(new list<object>());
         mocks.when(mockService.updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject())).thenReturn('output');
         mocks.when(mockService.getDossierAccount(dossierNumber)).thenReturn(acc);
@@ -81,9 +81,9 @@ public with sharing class CompanyDetailsControllerTest {
         Application.Service.setMock(IBusinessService.class, mockService);
 
         test.startTest();
-        Object result = CompanyDetailsController.createDossier(dossierNumber);
+        Object result = CompanyDetailsController.createDossier(dossierNumber, null);
 
-        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber);
+        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber, null);
         ((IBusinessService)mocks.verify(mockService, 1)).getDossierAccount(dossierNumber);
         ((IBusinessService)mocks.verify(mockService, 1)).upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId());
         ((IBusinessService)mocks.verify(mockService, 1)).updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject());

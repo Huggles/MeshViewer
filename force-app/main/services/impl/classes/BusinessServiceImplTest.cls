@@ -17,7 +17,7 @@ public with sharing class BusinessServiceImplTest {
 
         test.startTest();
         string dossierNumber = '123';
-        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber);
+        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber, null);
         system.assertNotEquals(null, dossier);
         test.stopTest();
     }
