@@ -119,7 +119,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             // TODO: move to selector
             //List<Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
 
-            list<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});
+            list<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumbers(new set<String>{dossier.dossier_number}, new set<String>{dossier.establishment_number});
             
 
             Business_Dossier__c d;
@@ -360,7 +360,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     // was void before. not tyoo logical to return dossier Id from this method. Cut the corner to both get dossierId for  controller and Not research how to handle void methods  with this framework
     public static String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
         try{
-            list<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossier.dossier_number});//[SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
+            list<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectByDossierNumbers(new set<String>{dossier.dossier_number}, new set<String>{dossier.establishment_number});//[SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
             List<Account> accts = AccountSelector.newInstance().selectById(new set<Id>{dossierList.get(0).Account__c});//[SELECT Id, Business_Dossier__c FROM Account WHERE Id = :dossierList.get(0).Account__c];
             if (accts.size() == 1) {
                 accts[0].Business_Dossier__c = dossierList.get(0).Id;
