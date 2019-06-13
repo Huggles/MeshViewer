@@ -21,11 +21,11 @@ public with sharing class CompanyDetailsController {
         return null;
     }
     @AuraEnabled
-    public static Object createDossier(String dossierNumber, Id accountId){
+    public static Object createDossier(String dossierNumber, String establishmentNumber, Id accountId){
         System.debug('getInfo');
         if(dossierNumber!=null){
             try{
-                DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber);
+                DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber, establishmentNumber);
                 AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier, accountId));
                 return output;
             }catch(Exception e){
@@ -35,10 +35,10 @@ public with sharing class CompanyDetailsController {
         return null;
     }
     @AuraEnabled
-    public static Object createDossier(String dossierNumber){
+    public static Object createDossier(String dossierNumber, String establishmentNumber){
         try{
-            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber);
-            Account acc = BusinessService.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number
+            DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber, establishmentNumber);
+            Account acc;// = BusinessService.getDossierAccount(dossier.dossier_number); // checking if there already is an account for this dossier number
             String AccountId = '';
             if(acc != null){
                 AccountId = acc.Id;
