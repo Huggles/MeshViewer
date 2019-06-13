@@ -37,7 +37,7 @@ public with sharing class AuraResponseWrapper {
         }else{
             this.response = null;
             this.state = 'ERROR';
-            this.errorMsg = JSON.serializePretty(msg);
+            this.errorMsg = String.valueOf(msg);
         }
     }
 }

@@ -28,87 +28,6 @@
 @IsTest
 private class fflib_ApplicationTest 
 {
-	@IsTest
-	private static void callingDomainFactoryShouldGiveRegisteredImplsAndMocks()
-	{
-		// Registered Accounts domain class by SObject List
-		Id testAccountId = fflib_IDGenerator.generate(Account.SObjectType);
-		fflib_ISObjectDomain domainObjectAcct = 
-			Domain.newInstance(
-				new List<Account> 
-					{ new Account( 
-						Id = testAccountId,
-						Name = 'Test Account') });
-		System.assert(domainObjectAcct instanceof AccountsDomain);
-		System.assertEquals(testAccountId, domainObjectAcct.getRecords()[0].Id);
-
-		// Registered Accounts domain class by SObject List
-		testAccountId = fflib_IDGenerator.generate(Account.SObjectType);
-		domainObjectAcct = 
-			Domain.newInstance(
-				new List<SObject> 
-					{ new Account( 
-						Id = testAccountId,
-						Name = 'Test Account') }
-				, Account.SObjectType);
-		System.assert(domainObjectAcct instanceof AccountsDomain);
-		System.assertEquals(testAccountId, domainObjectAcct.getRecords()[0].Id);		
-
-		// Registered Opportunities domain class by SObject List
-		Id testOpportunityId = fflib_IDGenerator.generate(Opportunity.SObjectType);
-		fflib_ISObjectDomain domainObjectOpp = 
-			Domain.newInstance(
-				new List<Opportunity> 
-					{ new Opportunity( 
-						Id = testOpportunityId,
-						Name = 'Test Opportunity') });
-		System.assertEquals(testOpportunityId, domainObjectOpp.getRecords()[0].Id);		
-		System.assert(domainObjectOpp instanceof OpportuntiesDomain);
-
-		// Test failure for creating new instance using IConstructable2
-		// for domain class that does not support it
-		testOpportunityId = fflib_IDGenerator.generate(Opportunity.SObjectType);
-		domainObjectOpp = 
-			Domain.newInstance(
-				new List<SObject> 
-					{ new Opportunity( 
-						Id = testOpportunityId,
-						Name = 'Test Opportunity') }
-				, Opportunity.SObjectType);
-		System.assertEquals(testOpportunityId, domainObjectOpp.getRecords()[0].Id);		
-		System.assert(domainObjectOpp instanceof OpportuntiesDomain);
-
-		// Given
-		fflib_ApexMocks mocks = new fflib_ApexMocks();
-		mocks.startStubbing();		
-		fflib_ISObjectDomain domainMock = new fflib_SObjectMocks.SObjectDomain(mocks);
-		mocks.when(domainMock.sObjectType()).thenReturn(Account.SObjectType);
-		mocks.stopStubbing();		
-		Domain.setMock(domainMock);
-
-		// When
-		domainObjectAcct = 
-			Domain.newInstance(
-				new List<Account> 
-					{ new Account( 
-						Id = testAccountId,
-						Name = 'Test Account') });
-
-		// Then
-		System.assert(domainObjectAcct instanceof fflib_SObjectMocks.SObjectDomain);
-
-		// When
-		domainObjectAcct = 
-			Domain.newInstance(
-				new List<SObject> 
-					{ new Account( 
-						Id = testAccountId,
-						Name = 'Test Account') }
-				, Account.SObjectType);
-
-		// Then
-		System.assert(domainObjectAcct instanceof fflib_SObjectMocks.SObjectDomain);		
-	}
 
 	@IsTest
 	private static void callingDomainFactoryWithIdsShouldGiveRegisteredImpls()
@@ -162,24 +81,6 @@ private class fflib_ApplicationTest
 			System.assertEquals('Must specify sObjectType', e.getMessage());
 		}
 	}	
-
-	@IsTest
-	private static void callingDomainFactoryWithInAccessableConstructorShouldGiveException()
-	{
-		try {
-			Domain.newInstance(new List<Product2>{ new Product2(Name = 'Test Product') });
-			System.assert(false, 'Expected exception');
-		} catch (fflib_Application.DeveloperException e) {
-			System.assertEquals('Domain constructor class not found for SObjectType Product2', e.getMessage());
-		}
-
-		try {
-			Domain.newInstance(new List<SObject>{ new Product2(Name = 'Test Product') }, Product2.SObjectType);
-			System.assert(false, 'Expected exception');
-		} catch (fflib_Application.DeveloperException e) {
-			System.assertEquals('Domain constructor class not found for SObjectType Product2', e.getMessage());
-		}		
-	}
 
 	@IsTest
 	private static void callingDomainFactoryWithContructorClassThatDoesNotSupportIConstructableShouldGiveException()
@@ -253,7 +154,6 @@ private class fflib_ApplicationTest
 	{
 		// Standard behaviour
 		System.assert(Selector.newInstance(Account.SObjectType) instanceof AccountsSelector);
-		System.assert(Selector.newInstance(Opportunity.SObjectType) instanceof OpportuntiesSelector);
 		try {
 			Selector.newInstance(User.SObjectType);
 			System.assert(false, 'Expected exception');
@@ -277,20 +177,6 @@ private class fflib_ApplicationTest
 		} catch (fflib_Application.DeveloperException e) {
 			System.assertEquals('Invalid record Id\'s set', e.getMessage());
 		}
-	}
-
-	@IsTest
-	private static void callingSelectorFactorySelectByIdWithMixedIdTypeListShouldGiveException()
-	{
-		try {
-			Selector.selectById(
-				new Set<Id> { 
-					fflib_IDGenerator.generate(Opportunity.SObjectType), 
-					fflib_IDGenerator.generate(Account.SObjectType) });
-			System.assert(true, 'Expected exception');
-		} catch (fflib_Application.DeveloperException e) {
-			System.assertEquals('Unable to determine SObjectType, Set contains Id\'s from different SObject types', e.getMessage());
-		}		
 	}
 
 	@IsTest
@@ -320,51 +206,7 @@ private class fflib_ApplicationTest
 		System.assertEquals(1, assertAccounts.size());
 		System.assertEquals(testAccountId, assertAccounts[0].Id);
 		System.assertEquals('Test Account', assertAccounts[0].Name);
-		System.assert(Selector.newInstance(Opportunity.SObjectType) instanceof OpportuntiesSelector);
 	}
-
-
-	@IsTest
-	private static void callingSelectoryFactorySselectByRelationshipPassRelatedIds()
-	{	
-		// Given
-		fflib_ApexMocks mocks = new fflib_ApexMocks();
-		mocks.startStubbing();
-		fflib_ISObjectSelector selectorMock = new fflib_SObjectMocks.SObjectSelector(mocks);
-		Id testAccountId = fflib_IDGenerator.generate(Account.SObjectType);
-		Id testOpportunityId = fflib_IDGenerator.generate(Opportunity.SObjectType);
-		List<Account> accounts = 
-			new List<Account> 
-				{ new Account( 
-					Id = testAccountId,
-					Name = 'Test Account') };
-		Set<Id> accountIds = new Map<Id, Account>(accounts).keySet();
-		mocks.when(selectorMock.selectSObjectsById(accountIds)).thenReturn(accounts);
-		mocks.when(selectorMock.sObjectType()).thenReturn(Account.SObjectType);
-		mocks.stopStubbing();
-		Selector.setMock(selectorMock);
-
-		// When
-		List<Opportunity> opportunties = 
-			new List<Opportunity>
-				{ new Opportunity(
-						Id = testOpportunityId,
-						Account = accounts[0],
-						AccountId = testAccountId,
-						Name = 'Test Opportunity 1'),
-				  new Opportunity(
-						Id = testOpportunityId,
-						Name = 'Test Opportunity 2') };
-		List<Account> assertAccounts = Selector.selectByRelationship(opportunties, Opportunity.AccountId);
-
-		// Then
-		System.assert(Selector.newInstance(Account.SObjectType) instanceof fflib_SObjectMocks.SObjectSelector);
-		System.assertEquals(1, assertAccounts.size());
-		System.assertEquals(testAccountId, assertAccounts[0].Id);
-		System.assertEquals('Test Account', assertAccounts[0].Name);
-		System.assert(Selector.newInstance(Opportunity.SObjectType) instanceof OpportuntiesSelector);
-	}
-
 
 	@IsTest
 	private static void callingUnitOfWorkWithCustomDML()
@@ -472,16 +314,13 @@ private class fflib_ApplicationTest
 	public static final fflib_Application.UnitOfWorkFactory UnitOfWork = 
 		new fflib_Application.UnitOfWorkFactory(
 				new List<SObjectType> { 
-					Account.SObjectType,
-					Opportunity.SObjectType,
-					OpportunityLineItem.SObjectType });	
+					Account.SObjectType });	
 
 	// Configure and create the SelectorFactory for this Application
 	public static final fflib_Application.SelectorFactory Selector = 
 		new fflib_Application.SelectorFactory(
 			new Map<SObjectType, Type> {
-					Account.SObjectType => AccountsSelector.class,
-					Opportunity.SObjectType => OpportuntiesSelector.class });
+					Account.SObjectType => AccountsSelector.class });
 
 	// Configure and create the DomainFactory for this Application
 	public static final fflib_Application.DomainFactory Domain = 
@@ -489,7 +328,6 @@ private class fflib_ApplicationTest
 			fflib_ApplicationTest.Selector,
 			new Map<SObjectType, Type> {
 					Account.SObjectType => AccountsConstructor.class,
-					Opportunity.SObjectType => OpportuntiesConstructor.class,
 					Contact.SObjectType => ContactsConstructor.class });
 
 	public class AccountsDomain extends fflib_SObjectDomain
@@ -518,35 +356,9 @@ private class fflib_ApplicationTest
 		}		
 	}	
 
-	public class OpportuntiesDomain extends fflib_SObjectDomain
-	{
-		public OpportuntiesDomain(List<Opportunity> sObjectList)
-		{
-			super(sObjectList);
-		}
-
-		public OpportuntiesDomain(List<SObject> sObjectList, SObjectType sObjectType)
-		{
-			super(sObjectList, sObjectType);
-		}		
-	}	
-
-	public class OpportuntiesConstructor implements fflib_SObjectDomain.IConstructable2
-	{
-		public fflib_SObjectDomain construct(List<SObject> sObjectList)
-		{
-			return new OpportuntiesDomain(sObjectList);
-		}
-
-		public fflib_SObjectDomain construct(List<SObject> sObjectList, SObjectType sObjectType)
-		{
-			return new OpportuntiesDomain(sObjectList, sObjectType);
-		}		
-	}
-
 	public class ContactsDomain extends fflib_SObjectDomain
 	{
-		public ContactsDomain(List<Opportunity> sObjectList)
+		public ContactsDomain(List<Contact> sObjectList)
 		{
 			super(sObjectList);
 		}
@@ -562,22 +374,6 @@ private class fflib_ApplicationTest
 	{
 
 	}		
-
-	class OpportuntiesSelector extends fflib_SObjectSelector
-	{
-		public List<Schema.SObjectField> getSObjectFieldList()
-		{
-			return new List<Schema.SObjectField> {
-				Opportunity.Name,
-				Opportunity.Id
-			};
-		}
-		
-		public Schema.SObjectType getSObjectType()
-		{
-			return Opportunity.sObjectType;
-		}
-	}
 	
 	class AccountsSelector extends fflib_SObjectSelector
 	{

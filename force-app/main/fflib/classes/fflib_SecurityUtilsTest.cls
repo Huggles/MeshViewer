@@ -130,11 +130,11 @@ private class fflib_SecurityUtilsTest {
 			{
 				fflib_SecurityUtils.SecurityException ex;
 				try{
-					fflib_SecurityUtils.checkObjectIsDeletable(Opportunity.SObjectType);
+					fflib_SecurityUtils.checkObjectIsDeletable(Account.SObjectType);
 				}catch(fflib_SecurityUtils.SecurityException e){
 					ex = e;
 				}
-				System.assertNotEquals(null, ex, 'Read only profile should not be able to delete Opportunity');
+				System.assertNotEquals(null, ex, 'Read only profile should not be able to delete Account');
 				System.assert(ex instanceof fflib_SecurityUtils.CrudException, 'Expected an CrudException, got '+ex.getTypeName());
 			}
 
@@ -143,7 +143,7 @@ private class fflib_SecurityUtilsTest {
 				fflib_SecurityUtils.checkObjectIsInsertable(Account.SObjectType);
 				fflib_SecurityUtils.checkObjectIsReadable(Contact.SObjectType);
 				fflib_SecurityUtils.checkObjectIsUpdateable(Lead.SObjectType);
-				fflib_SecurityUtils.checkObjectIsDeletable(Opportunity.SObjectType);
+				fflib_SecurityUtils.checkObjectIsDeletable(Account.SObjectType);
 			}
 		}
 	}

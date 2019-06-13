@@ -32,23 +32,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Structure__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Annual_Financial_Statement_Summary__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Chamber_Code__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Establishment_Address__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Correspondence_Address__c</field>
+                <field>VAT_Number__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -96,10 +84,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Secondary_Sbi_Code_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Sbi_Collection__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -325,10 +309,6 @@
                 <behavior>Edit</behavior>
                 <field>Indication_Export__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Insolvencies__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -361,13 +341,24 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Type__c</fields>
+        <fields>House_Number__c</fields>
+        <fields>House_Number_Addition__c</fields>
+        <fields>Street__c</fields>
+        <fields>City__c</fields>
+        <fields>Postcode__c</fields>
+        <fields>Country__c</fields>
+        <relatedList>Dossier_Address__c.Business_Data__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X000000NCOP</masterLabel>
+        <masterLabel>00h0E000001Liq9</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

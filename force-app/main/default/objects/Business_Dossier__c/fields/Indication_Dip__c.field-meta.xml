@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Boolean indicating if the business is currently registered as Debtor-in-Possession (Dutch: ‘in Surseance’).</description>
     <externalId>false</externalId>
-    <label>Indication Dip</label>
+    <label>Debtor in possession</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

@@ -39,10 +39,22 @@ public with sharing class BusinessDossierSelector extends fflib_SObjectSelector 
         return result;
     }
 
+    public List<Business_Dossier__c> selectByDossierNumbers(set<String> dossierNumSet, Set<String> establishmentNumSet){//, String sortedBy, String sortedDirection) {
+        fflib_QueryFactory queryFactory = newQueryFactory();
+        List<Business_Dossier__c> result = new list<Business_Dossier__c>();
+        queryFactory.setEnforceFLS(true);
+        queryFactory.setCondition('Dossier_Number__c IN :dossierNumSet');
+        queryFactory.setCondition('Establishment_Number__c IN :establishmentNumSet');
+        queryFactory.setLimit(20);
+        result = Database.query(queryFactory.toSOQL());
+        return result;
+    }
+
     public List<Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Business_Dossier__c> result = new list<Business_Dossier__c>();
         queryFactory.setEnforceFLS(true);
+        queryFactory.selectField('Dossier_Number__c');
         queryFactory.setCondition('Id IN :dosserIdSet');
         queryFactory.setLimit(20);
         result = Database.query(queryFactory.toSOQL());

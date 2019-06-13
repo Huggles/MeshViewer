@@ -32,6 +32,7 @@ public with sharing class CompanyDetailsControllerTest {
         // preparing service input data
         Account acc = new Account(Name = 'Test', Id=fflib_IDGenerator.generate(Account.SObjectType));
         String dossierNumber = '123456';
+        String establishmentNumber = '123456';
         Id accountId = acc.Id;
         // preparing service output data
         DutchBusinessDto.DutchBusinessGetDossierResponse serviceResponse = new DutchBusinessDto.DutchBusinessGetDossierResponse();
@@ -39,7 +40,7 @@ public with sharing class CompanyDetailsControllerTest {
         AuraResponseWrapper output = new AuraResponseWrapper((Object)serviceResponse);
                 
         mocks.startStubbing();
-        mocks.when(mockService.getDossier(dossierNumber)).thenReturn(serviceResponse);
+        mocks.when(mockService.getDossier(dossierNumber, establishmentNumber)).thenReturn(serviceResponse);
         mocks.when(mockService.upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId())).thenReturn(new list<object>());
         mocks.when(mockService.updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject())).thenReturn('output');
         
@@ -47,9 +48,9 @@ public with sharing class CompanyDetailsControllerTest {
         Application.Service.setMock(IBusinessService.class, mockService);
 
         test.startTest();
-        Object result = CompanyDetailsController.createDossier(dossierNumber, accountId);
+        Object result = CompanyDetailsController.createDossier(dossierNumber, establishmentNumber, accountId);
         //system.assertEquals('nulls', String.valueOf(result));
-        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber);
+        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber, establishmentNumber);
         ((IBusinessService)mocks.verify(mockService, 1)).upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId());
         ((IBusinessService)mocks.verify(mockService, 1)).updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject());
         test.stopTest();
@@ -64,6 +65,7 @@ public with sharing class CompanyDetailsControllerTest {
         // preparing service input data
         Account acc = new Account(Name = 'Test', Id=fflib_IDGenerator.generate(Account.SObjectType));
         String dossierNumber = '123456';
+        String establishmentNumber = '123456';
         Id accountId = acc.Id;
         // preparing service output data
         DutchBusinessDto.DutchBusinessGetDossierResponse serviceResponse = new DutchBusinessDto.DutchBusinessGetDossierResponse();
@@ -72,21 +74,21 @@ public with sharing class CompanyDetailsControllerTest {
         AuraResponseWrapper output = new AuraResponseWrapper((Object)serviceResponse);
                 
         mocks.startStubbing();
-        mocks.when(mockService.getDossier(dossierNumber)).thenReturn(serviceResponse);
+        mocks.when(mockService.getDossier(dossierNumber, establishmentNumber)).thenReturn(serviceResponse);
         mocks.when(mockService.upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId())).thenReturn(new list<object>());
         mocks.when(mockService.updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject())).thenReturn('output');
-        mocks.when(mockService.getDossierAccount(dossierNumber)).thenReturn(acc);
+        mocks.when(mockService.getDossierAccount(dossierNumber)).thenReturn(new Account());
         
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
         test.startTest();
-        Object result = CompanyDetailsController.createDossier(dossierNumber);
+        Object result = CompanyDetailsController.createDossier(dossierNumber, establishmentNumber);
 
-        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber);
-        ((IBusinessService)mocks.verify(mockService, 1)).getDossierAccount(dossierNumber);
-        ((IBusinessService)mocks.verify(mockService, 1)).upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId());
-        ((IBusinessService)mocks.verify(mockService, 1)).updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject());
+        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber, establishmentNumber);
+        ((IBusinessService)mocks.verify(mockService, 0)).getDossierAccount(dossierNumber);
+        // ((IBusinessService)mocks.verify(mockService, 1)).upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId());
+        // ((IBusinessService)mocks.verify(mockService, 1)).updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject());
         
         test.stopTest();
 

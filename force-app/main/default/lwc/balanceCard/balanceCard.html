@@ -25,7 +25,7 @@
             <lightning-slider class="slds-m-top_small slds-m-bottom_medium slds-align_absolute-center" max="100" step="10" type="horizontal" value="50" variant="label-hidden" disabled></lightning-slider>
         </div>
         <div class="slds-m-top_small slds-m-bottom_xx-small slds-text-align_center slds-text-title_caps slds-text-color_default">{label.Config_Add_Budget}</div>
-        <div>
+        <div class="slds-border_bottom">
             <lightning-layout>
                 <lightning-layout-item size="5"></lightning-layout-item>
                 <lightning-layout-item size="1">
@@ -33,9 +33,9 @@
                         <lightning-input label="€" type="number" variant="standard" min="5" value={amountToAdd} onchange={handleNumChange}></lightning-input>
                     </div>
                 </lightning-layout-item>
-                <lightning-layout-item size="1">
+                <lightning-layout-item size="2">
                     <div class="slds-align_absolute-center">
-                        <lightning-button class="slds-theme_brand cc-button-padding" variant="brand" label="Add Budget" onclick={addBudget}></lightning-button>
+                        <lightning-button class="slds-theme_brand cc-button-padding" variant="brand" label={label.Config_Add_Budget} onclick={addBudget}></lightning-button>
                     </div>
                 </lightning-layout-item>
                 <lightning-layout-item size="4"></lightning-layout-item>

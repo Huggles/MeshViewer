@@ -21,7 +21,8 @@ public with sharing class Application {
             new List < SObjectType > {
                 User.SObjectType,
                 Account.SObjectType,
-                Business_Dossier__c.SObjectType
+                Business_Dossier__c.SObjectType,
+                Dossier_Address__c.SObjectType
                 });
 
     // Configure and create the ServiceFactory for this Application
@@ -41,7 +42,8 @@ public with sharing class Application {
             new Map < SObjectType, Type > {
                 User.SObjectType => UserSelector.class,
                 Account.SObjectType => AccountSelector.class,
-                Business_Dossier__c.SObjectType => BusinessDossierSelector.class
+                Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
+                Dossier_Address__c.SObjectType => DossierAddressSelector.class
                 });
 
 

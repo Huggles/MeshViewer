@@ -8,8 +8,8 @@ public with sharing class BusinessService {
         return newInstance().updateAccountDossier(dossier);
     }
 
-    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber){
-        return newInstance().getDossier(dossierNumber);
+    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber){
+        return newInstance().getDossier(dossierNumber, establishmentNumber);
     }
 
     public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
@@ -20,6 +20,18 @@ public with sharing class BusinessService {
     }
     public static Boolean deleteDossier(Id accountId){
         return newInstance().deleteDossier(accountId);
+    }
+    
+    public static Business_Dossier__c selectDossier(Id dossierId){
+        return newInstance().selectDossier(dossierId);
+    }
+
+    public static List<Object> upsertDossier(Business_Dossier__c dossier){
+        return newInstance().upsertDossier(dossier);
+    }
+
+    public static DutchBusinessDto.DutchBusinessVatNumber requestVat(String dossierNumber){
+        return newInstance().requestVat(dossierNumber);
     }
     /*
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){

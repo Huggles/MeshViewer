@@ -9,7 +9,7 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <label>Customer.connect Administration</label>
+    <label>Customer.connect Setup</label>
     <navType>Standard</navType>
     <tabs>Customer_connect_configuration</tabs>
     <uiType>Lightning</uiType>

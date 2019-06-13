@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Boolean indicating if this is the main establishment of the business.</description>
     <externalId>false</externalId>
-    <label>Indication Main Establishment</label>
+    <label>Main Establishment</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

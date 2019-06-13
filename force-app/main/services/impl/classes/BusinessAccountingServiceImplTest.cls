@@ -24,7 +24,7 @@ public static void onboardCustomer(){
 
 
 
-    DutchBusinessAccountingDto.userCreateResponseDto result = service.onboardCustomer('1234');
+    DutchBusinessAccountingDto.userCreateResponseDto result = service.onboardCustomer('1234', 'testpass');
     //((IBusinessAccountingService)mocks.verify(mockWS)).CreateCIUser((DutchBusinessAccountingDto.UserCreateRequestDto)fflib_Match.anyObject());
     system.assertEquals(result.nickname, output.nickname); 
 
