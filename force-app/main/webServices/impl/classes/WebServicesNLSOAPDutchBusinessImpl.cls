@@ -94,14 +94,12 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             if (response.insolvencies <> null) {
                 if (response.insolvencies.item <> null) {
                     for (Integer i = 0; i < response.insolvencies.item.size(); i++) {
-                        s = 'Insolvency_id - ' + response.insolvencies.item[i].insolvency_id + ' : [';
                         if (response.insolvencies.item[i].events <> null) {
                             for (Integer j = 0; j < response.insolvencies.item[i].events.item.size(); j++) {
-                                s = s + '\n Description - ' + response.insolvencies.item[i].events.item[j].description + ', Date - ' + getDate(response.insolvencies.item[i].events.item[j].date_x) + ';';
+                                s = getDate(response.insolvencies.item[i].events.item[j].date_x).format() + ': ' + response.insolvencies.item[i].events.item[j].description;
+                                insolvencies.add(s);
                             }
                         }
-                        s = s + ']';
-                        insolvencies.add(s);
                     }
                 }
             }
