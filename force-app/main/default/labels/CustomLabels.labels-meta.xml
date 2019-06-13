@@ -145,7 +145,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error_Incomplete</shortDescription>
-        <value>Error 101 received from Customer.connect. Please contact support for assistance.</value>
+        <value>Some required fields are missing.</value>
     </labels>
     <labels>
         <fullName>Error_Unknown</fullName>

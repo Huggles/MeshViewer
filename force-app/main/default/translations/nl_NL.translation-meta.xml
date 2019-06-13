@@ -161,7 +161,7 @@
         <name>Error_Config</name>
     </customLabels>
     <customLabels>
-        <label>Fout 101 ontvangen van Customer.connect. Neem contact op met support.</label>
+        <label>Een aantal verplichte velden ontbreken.</label>
         <name>Error_Incomplete</name>
     </customLabels>
     <customLabels>
