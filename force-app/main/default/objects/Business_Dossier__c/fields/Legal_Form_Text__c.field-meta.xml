@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Legal_Form_Text__c</fullName>
+    <description>Description of the legal form (in Dutch).</description>
+    <externalId>false</externalId>
+    <label>Legal Form Text</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Eenmanszaak</fullName>
+                <default>false</default>
+                <label>Eenmanszaak</label>
+            </value>
+            <value>
+                <fullName>Eenmanszaak met meer dan één eigenaar</fullName>
+                <default>false</default>
+                <label>Eenmanszaak met meer dan één eigenaar</label>
+            </value>
+            <value>
+                <fullName>NV / BV in oprichting op A-formulier</fullName>
+                <default>false</default>
+                <label>NV / BV in oprichting op A-formulier</label>
+            </value>
+            <value>
+                <fullName>Rederij</fullName>
+                <default>false</default>
+                <label>Rederij</label>
+            </value>
+            <value>
+                <fullName>Maatschap</fullName>
+                <default>false</default>
+                <label>Maatschap</label>
+            </value>
+            <value>
+                <fullName>Vennootschap onder firma</fullName>
+                <default>false</default>
+                <label>Vennootschap onder firma</label>
+            </value>
+            <value>
+                <fullName>NV / BV in oprichting op B-formulier</fullName>
+                <default>false</default>
+                <label>NV / BV in oprichting op B-formulier</label>
+            </value>
+            <value>
+                <fullName>Commanditaire Vennootschap met één beherende vennoot</fullName>
+                <default>false</default>
+                <label>Commanditaire Vennootschap met één beherende vennoot</label>
+            </value>
+            <value>
+                <fullName>Commanditaire Vennootschap met meer dan één beherende vennoot</fullName>
+                <default>false</default>
+                <label>Commanditaire Vennootschap met meer dan één beherende vennoot</label>
+            </value>
+            <value>
+                <fullName>NV / BV in oprichting op D-formulier</fullName>
+                <default>false</default>
+                <label>NV / BV in oprichting op D-formulier</label>
+            </value>
+            <value>
+                <fullName>Rechtspersoon in oprichting</fullName>
+                <default>false</default>
+                <label>Rechtspersoon in oprichting</label>
+            </value>
+            <value>
+                <fullName>Besloten Vennootschap met gewone structuur</fullName>
+                <default>false</default>
+                <label>Besloten Vennootschap met gewone structuur</label>
+            </value>
+            <value>
+                <fullName>Besloten Vennootschap blijkens statuten structuurvennootschap</fullName>
+                <default>false</default>
+                <label>Besloten Vennootschap blijkens statuten structuurvennootschap</label>
+            </value>
+            <value>
+                <fullName>Naamloze Vennootschap met gewone structuur</fullName>
+                <default>false</default>
+                <label>Naamloze Vennootschap met gewone structuur</label>
+            </value>
+            <value>
+                <fullName>Naamloze Vennootschap blijkens statuten structuurvennootschap</fullName>
+                <default>false</default>
+                <label>Naamloze Vennootschap blijkens statuten structuurvennootschap</label>
+            </value>
+            <value>
+                <fullName>Naamloze Vennootschap beleggingsmaatschappij met veranderlijk kapitaal</fullName>
+                <default>false</default>
+                <label>Naamloze Vennootschap beleggingsmaatschappij met veranderlijk kapitaal</label>
+            </value>
+            <value>
+                <fullName>NV beleggingsmaatschappij met veranderlijk kapitaal blijkens statuten structuurvennootschap</fullName>
+                <default>false</default>
+                <label>NV beleggingsmaatschappij met veranderlijk kapitaal blijkens statuten structuurvennootschap</label>
+            </value>
+            <value>
+                <fullName>Europese naamloze vennootschap (SE)</fullName>
+                <default>false</default>
+                <label>Europese naamloze vennootschap (SE)</label>
+            </value>
+            <value>
+                <fullName>Europese naamloze vennootschap (SE) blijkens statuten structuurvennootschap</fullName>
+                <default>false</default>
+                <label>Europese naamloze vennootschap (SE) blijkens statuten structuurvennootschap</label>
+            </value>
+            <value>
+                <fullName>Coöperatie U.A. met gewone structuur</fullName>
+                <default>false</default>
+                <label>Coöperatie U.A. met gewone structuur</label>
+            </value>
+            <value>
+                <fullName>Coöperatie U.A. blijkens statuten structuurcoöperatie</fullName>
+                <default>false</default>
+                <label>Coöperatie U.A. blijkens statuten structuurcoöperatie</label>
+            </value>
+            <value>
+                <fullName>Coöperatie W.A. met gewone structuur</fullName>
+                <default>false</default>
+                <label>Coöperatie W.A. met gewone structuur</label>
+            </value>
+            <value>
+                <fullName>Coöperatie W.A. blijkens statuten structuurcoöperatie</fullName>
+                <default>false</default>
+                <label>Coöperatie W.A. blijkens statuten structuurcoöperatie</label>
+            </value>
+            <value>
+                <fullName>Coöperatie B.A. met gewone structuur</fullName>
+                <default>false</default>
+                <label>Coöperatie B.A. met gewone structuur</label>
+            </value>
+            <value>
+                <fullName>Coöperatie B.A. blijkens statuten structuurcoöperatie</fullName>
+                <default>false</default>
+                <label>Coöperatie B.A. blijkens statuten structuurcoöperatie</label>
+            </value>
+            <value>
+                <fullName>Vereniging van Eigenaars</fullName>
+                <default>false</default>
+                <label>Vereniging van Eigenaars</label>
+            </value>
+            <value>
+                <fullName>Vereniging met volledige rechtsbevoegdheid</fullName>
+                <default>false</default>
+                <label>Vereniging met volledige rechtsbevoegdheid</label>
+            </value>
+            <value>
+                <fullName>Vereniging met beperkte rechtsbevoegdheid</fullName>
+                <default>false</default>
+                <label>Vereniging met beperkte rechtsbevoegdheid</label>
+            </value>
+            <value>
+                <fullName>Kerkgenootschap</fullName>
+                <default>false</default>
+                <label>Kerkgenootschap</label>
+            </value>
+            <value>
+                <fullName>Stichting</fullName>
+                <default>false</default>
+                <label>Stichting</label>
+            </value>
+            <value>
+                <fullName>Onderlinge waarborgmaatschappij U.A. met gewone structuur</fullName>
+                <default>false</default>
+                <label>Onderlinge waarborgmaatschappij U.A. met gewone structuur</label>
+            </value>
+            <value>
+                <fullName>Onderlinge waarborgmaatschappij U.A. blijkens statuten structuuronderlinge</fullName>
+                <default>false</default>
+                <label>Onderlinge waarborgmaatschappij U.A. blijkens statuten structuuronderlinge</label>
+            </value>
+            <value>
+                <fullName>Onderlinge waarborgmaatschappij W.A. met gewone structuur</fullName>
+                <default>false</default>
+                <label>Onderlinge waarborgmaatschappij W.A. met gewone structuur</label>
+            </value>
+            <value>
+                <fullName>Onderlinge waarborgmaatschappij W.A. blijkens statuten structuuronderlinge</fullName>
+                <default>false</default>
+                <label>Onderlinge waarborgmaatschappij W.A. blijkens statuten structuuronderlinge</label>
+            </value>
+            <value>
+                <fullName>Onderlinge waarborgmaatschappij B.A. met gewone structuur</fullName>
+                <default>false</default>
+                <label>Onderlinge waarborgmaatschappij B.A. met gewone structuur</label>
+            </value>
+            <value>
+                <fullName>Onderlinge waarborgmaatschappij B.A. blijkens statuten structuuronderlinge</fullName>
+                <default>false</default>
+                <label>Onderlinge waarborgmaatschappij B.A. blijkens statuten structuuronderlinge</label>
+            </value>
+            <value>
+                <fullName>Publiekrechtelijke rechtspersoon</fullName>
+                <default>false</default>
+                <label>Publiekrechtelijke rechtspersoon</label>
+            </value>
+            <value>
+                <fullName>Privaatrechtelijke rechtspersoon</fullName>
+                <default>false</default>
+                <label>Privaatrechtelijke rechtspersoon</label>
+            </value>
+            <value>
+                <fullName>Buitenlandse rechtsvorm met hoofdvestiging in Nederland</fullName>
+                <default>false</default>
+                <label>Buitenlandse rechtsvorm met hoofdvestiging in Nederland</label>
+            </value>
+            <value>
+                <fullName>Nevenvestiging met hoofdvestiging in buitenland</fullName>
+                <default>false</default>
+                <label>Nevenvestiging met hoofdvestiging in buitenland</label>
+            </value>
+            <value>
+                <fullName>Europees Economisch Samenwerkingsverband</fullName>
+                <default>false</default>
+                <label>Europees Economisch Samenwerkingsverband</label>
+            </value>
+            <value>
+                <fullName>Buitenlandse EG-vennootschap met onderneming in Nederland</fullName>
+                <default>false</default>
+                <label>Buitenlandse EG-vennootschap met onderneming in Nederland</label>
+            </value>
+            <value>
+                <fullName>Buitenlandse EG-vennootschap met hoofdnederzetting in Nederland</fullName>
+                <default>false</default>
+                <label>Buitenlandse EG-vennootschap met hoofdnederzetting in Nederland</label>
+            </value>
+            <value>
+                <fullName>Buitenlandse op EG-vennootschap lijkende vennootschap met onderneming in Nederland</fullName>
+                <default>false</default>
+                <label>Buitenlandse op EG-vennootschap lijkende vennootschap met onderneming in Nederland</label>
+            </value>
+            <value>
+                <fullName>Buitenlandse op EG-vennootschap lijkende vennootschap met hoofdnederzetting in Nederland</fullName>
+                <default>false</default>
+                <label>Buitenlandse op EG-vennootschap lijkende vennootschap met hoofdnederzetting in Nederland</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

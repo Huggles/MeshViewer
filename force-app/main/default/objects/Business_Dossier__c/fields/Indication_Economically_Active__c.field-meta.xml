@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Indication_Economically_Active__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Boolean indicating if the business is economically active. This indication is determined by a formula developed by the ‘Vereninging Kamers van Koophandel’. This should not be interpreted as an indication of whether the business is currently still registered at the Chamber of Commerce: only currently registered businesses are available through our services.</description>
+    <externalId>false</externalId>
+    <label>Economically Active</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,14 @@
+.THIS {
+}
+.THIS .logoContainer {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 8em;
+}
+.THIS.spinnerHolder{
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}

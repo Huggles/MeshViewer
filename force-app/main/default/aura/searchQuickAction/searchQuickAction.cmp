@@ -1,0 +1,6 @@
+<aura:component implements="force:lightningQuickAction">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <!-- <c:dossierDetails /> -->
+</aura:component>	
+

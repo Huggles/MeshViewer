@@ -5,7 +5,9 @@
       "default": true
     }
   ],
-  "namespace": "",
+  "namespace": "cust_connect",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "44.0"
+  "sourceApiVersion": "45.0"
 }
+
+

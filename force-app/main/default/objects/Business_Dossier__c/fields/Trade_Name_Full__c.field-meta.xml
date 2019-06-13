@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Trade_Name_Full__c</fullName>
+    <description>Primary name under which the business engages in commercial activity.  This is the full name, up to 132 characters long.</description>
+    <externalId>false</externalId>
+    <label>Trade Name Full</label>
+    <length>132</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

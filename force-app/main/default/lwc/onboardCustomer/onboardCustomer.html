@@ -1,0 +1,35 @@
+<template>
+    <div class="slds-p-around_small">
+        <div class="slds-text-heading_medium">{label.Config_Credentials}</div>
+        <div if:false={onboarded} class="slds-p-bottom_small">{label.Config_Account_ActivateDescription}
+                {label.Config_Account_ActivateDescriptionRequest}.</div>
+        <div id="waiting" class="slds-text-align_center">
+            <lightning-layout>
+                <lightning-layout-item size="4"></lightning-layout-item>
+                <lightning-layout-item size="4">
+                    <div class='slds-p-around_medium cc_max_50 '>
+                        
+                        <lightning-input if:false={onboarded} label={label.Config_Account_ExistingUser} type="checkbox"
+                            checked={existingUser} onchange={toggleNewUser}></lightning-input>
+                        <lightning-input if:true={existingUser} label={label.Config_Account_ID} type="text"
+                            value={userId} disabled={newUser} onchange={changeUserId}></lightning-input>
+                        <lightning-input if:true={existingUser} label={label.Config_Account_Username} type="text"
+                            value={username} disabled={newUser} onchange={changeUsername}></lightning-input>
+                        <lightning-input label={label.Config_Account_Password} type="password" value={password}
+                            onchange={changePassword}></lightning-input>
+
+                        <div class="slds-clearfix slds-m-top_small">
+                            <div class="slds-float_right">
+                                <lightning-button if:false={existingUser} variant="brand"
+                                    label={label.Config_Account_CreateAccount} onclick={enableTrial}></lightning-button>
+                                <lightning-button if:true={existingUser} variant="brand"
+                                    label={label.Config_Account_Save} onclick={saveCredentials}></lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item size="4"></lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </div>
+</template>

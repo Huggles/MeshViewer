@@ -1,3 +1,8 @@
 .sfdx
 .vscode
+force-app/main/default/profiles/*
+force-app/main/default/settings/*
+force-app/main/default/applications/standard__LightningSales.app-meta.xml
+.DS_STORE
 .idea
+

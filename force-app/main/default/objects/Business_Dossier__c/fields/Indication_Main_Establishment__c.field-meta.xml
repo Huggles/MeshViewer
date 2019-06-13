@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Indication_Main_Establishment__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Boolean indicating if this is the main establishment of the business.</description>
+    <externalId>false</externalId>
+    <label>Main Establishment</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

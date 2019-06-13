@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Indication_Export__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indication of whether the company does export.  Optional.</description>
+    <externalId>false</externalId>
+    <label>Exports</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,21 @@
+<!-- @todo remove -->
+<apex:page>
+  <apex:includeLightning />
+  <div id="container">
+</div>
+
+<script>
+$Lightning.use('cust_connect:PackageConfigApp', function()
+{
+    $Lightning.createComponent(
+        'cust_connect:configApp',
+        {},
+        'container',
+        function(cmp)
+        {
+        console.log('component created');
+        }
+    );
+});
+</script>
+</apex:page>

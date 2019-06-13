@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Back_To_Search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Back_To_Search</shortDescription>
+        <value>Back to results</value>
+    </labels>
+    <labels>
+        <fullName>DBSCall_AccountDupCheck_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while checking for duplicates</value>
+    </labels>
+    <labels>
+        <fullName>DBSCall_AccountSave_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened creating the matching account</value>
+    </labels>
+    <labels>
+        <fullName>DBSCall_AccountSearch_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened searching for matching account</value>
+    </labels>
+    <labels>
+        <fullName>DBSCall_DossierSave_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while trying to save the dossier.</value>
+    </labels>
+    <labels>
+        <fullName>DBSCall_Unknown_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while working at the BusinessService level</value>
+    </labels>
+    <labels>
+        <fullName>DML_Manager_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BDS DML Manager Error</shortDescription>
+        <value>DMLManager ERROR:  An existing record could not be found for object with Id =</value>
+    </labels>
+    <labels>
+        <fullName>Details_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Details Help</shortDescription>
+        <value>The below details are synchronised from  Business Data.</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Account_Create</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier_Account_Create</shortDescription>
+        <value>Create Account</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Account_Create_Completed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier_Account_Create_Completed</shortDescription>
+        <value>Account Created</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Account_Update</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier_Account_Update</shortDescription>
+        <value>Update Account</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Threshold_Description</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Balance_Threshold_Description</shortDescription>
+        <value>The threshold slider determines the value your balance must drop to before you are notfied.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Updated</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Balance_Updated</shortDescription>
+        <value>Your balance has been updated.</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Account_Update_Completed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier_Account_Update_Completed</shortDescription>
+        <value>Account Updated</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Number</shortDescription>
+        <value>Chamber of Commerce Number</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Remove</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Remove</shortDescription>
+        <value>Remove Customer.connect data</value>
+    </labels>
+    <labels>
+        <fullName>VAT_Retrieve</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VAT_Retrieve</shortDescription>
+        <value>Get VAT information</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Removed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Removed</shortDescription>
+        <value>Customer.connect data Removed</value>
+    </labels>
+    <labels>
+        <fullName>Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>Error_Config</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_Config</shortDescription>
+        <value>Error 103 received from Customer.connect. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Incomplete</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_Incomplete</shortDescription>
+        <value>Error 101 received from Customer.connect. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Unknown</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Error Unknown</shortDescription>
+        <value>Error 102 received from Customer.connect. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Remove_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_Remove_Dossier</shortDescription>
+        <value>There was a problem removing the business data. Please ensure you have permission to carry out this action.</value>
+    </labels>
+    <labels>
+        <fullName>Establishment_Date</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Establishment Date</shortDescription>
+        <value>Establishment Date</value>
+    </labels>
+    <labels>
+        <fullName>Establishment_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Establishment Number</shortDescription>
+        <value>Establishment Number</value>
+    </labels>
+    <labels>
+        <fullName>Get_Dossier_Results_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Get_Dossier_Results_Help</shortDescription>
+        <value>Below is the detailed company dossier. Please press create account to proceed with account creation.</value>
+    </labels>
+    <labels>
+        <fullName>Matching_Companies</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Matching Companies</shortDescription>
+        <value>Matching Companies</value>
+    </labels>
+    <labels>
+        <fullName>NoAuthAppNotActive</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoAuthAppNotActive</shortDescription>
+        <value>No authentication data found. The app is not activated</value>
+    </labels>
+    <labels>
+        <fullName>Search_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Address</shortDescription>
+        <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>Search_City</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search City</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>Search_Company_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Company Details</shortDescription>
+        <value>Company Details</value>
+    </labels>
+    <labels>
+        <fullName>Search_Confirm</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Confirm</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Search_Country</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Country</shortDescription>
+        <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Search_Details</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Details</shortDescription>
+        <value>Details to Sync</value>
+    </labels>
+    <labels>
+        <fullName>Search_Details_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Details Dossier</shortDescription>
+        <value>Company Details</value>
+    </labels>
+    <labels>
+        <fullName>Search_Details_Legal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Details Legal</shortDescription>
+        <value>Legal Entity Details</value>
+    </labels>
+    <labels>
+        <fullName>Search_Domain</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Domain</shortDescription>
+        <value>Domain</value>
+    </labels>
+    <labels>
+        <fullName>Search_Dossier_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Dossier Number</shortDescription>
+        <value>Chamber of Commerce Number</value>
+    </labels>
+    <labels>
+        <fullName>Search_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Help</shortDescription>
+        <value>To sync information from Dutch Business you will need to match this account to a registered company. Use this search form to find a match.
+Note: If you know the chamber of commerce number please enter it here as it will bypass the search.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Match_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dutch Business Data Search Match Dossier</shortDescription>
+        <value>Find</value>
+    </labels>
+    <labels>
+        <fullName>New_Account_CC</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New_Account_CC</shortDescription>
+        <value>New Account with Customer.connect</value>
+    </labels>
+    <labels>
+        <fullName>Search_No_Results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search No Results</shortDescription>
+        <value>No results found</value>
+    </labels>
+    <labels>
+        <fullName>Search_Phone</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Phone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>Search_Postal_Code</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Postal Code</shortDescription>
+        <value>Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>Search_Province</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Province</shortDescription>
+        <value>Province</value>
+    </labels>
+    <labels>
+        <fullName>Search_Reset</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Reset</shortDescription>
+        <value>Search Again</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Confirm</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Results Confirm</shortDescription>
+        <value>Confirm</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Results Help</shortDescription>
+        <value>The following companies match your search results. Please select the correct match for this account.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Street</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Street</shortDescription>
+        <value>Street</value>
+    </labels>
+    <labels>
+        <fullName>Search_Trade_Name</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Search Trade Name</shortDescription>
+        <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>Sync</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Sync</shortDescription>
+        <value> Business Data Sync</value>
+    </labels>
+    <labels>
+        <fullName>Sync_Success</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription> Business Data Sync Success</shortDescription>
+        <value> Business Data sync was successful.</value>
+    </labels>
+    <labels>
+        <fullName>WSCall_ChangeBalance_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Something happened while working at the BusinessService level</value>
+    </labels>
+    <labels>
+        <fullName>WSCall_Generic_UI_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>Exception Happened, please contact your system administrator</value>
+    </labels>
+    <labels>
+        <fullName>WSCall_Unknown_Exception</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unknown_Exception</shortDescription>
+        <value>There was a problem</value>
+    </labels>
+    <labels>
+        <fullName>WSCall_Unsuccessful</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WSCall_Unsuccessfull</shortDescription>
+        <value>The call to the service was unsuccessful</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ActivateDescription</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ActivateDescription</shortDescription>
+        <value>Thank you for installing the Customer.connect app. To begin, enter your credentials or</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ActivateDescriptionRequest</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ActivateDescriptionRequest</shortDescription>
+        <value>request a trial</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_CreateAccount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_CreateAccount</shortDescription>
+        <value>Request a trial</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ExistingUser</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ExistingUser</shortDescription>
+        <value>I am an existing user</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_AwaitingActivation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_AwaitingActivation</shortDescription>
+        <value>Your account has not been activated yet. Please try again later. One of our Account Managers will be in touch once your account has been activated.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Password</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Password</shortDescription>
+        <value>Password</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Save</shortDescription>
+        <value>Save Credentials</value>
+    </labels>
+    <labels>
+        <fullName>Config_Credentials</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Credentials</shortDescription>
+        <value>Credentials</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Username</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Username</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ID</shortDescription>
+        <value>ID</value>
+    </labels>
+    <labels>
+        <fullName>Config_Add_Budget</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Add Budget</shortDescription>
+        <value>Add Budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Changed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Changed</shortDescription>
+        <value>The balance was changed</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Error</shortDescription>
+        <value>There was an error during org activation.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Management</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Management</shortDescription>
+        <value>Balance Management</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Management_Text</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Management Text</shortDescription>
+        <value>See your current budget, manage your threshold and buy additional budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Current_Budget</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Current Budget</shortDescription>
+        <value>Current Budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Current_Threshold</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Current Threshold</shortDescription>
+        <value>Current Threshold</value>
+    </labels>
+    <labels>
+        <fullName>Config_Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Loading</shortDescription>
+        <value>Loading...</value>
+    </labels>
+    <labels>
+        <fullName>Config_Page_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Page Title</shortDescription>
+        <value> Customer.connect configuration page</value>
+    </labels>
+    <labels>
+        <fullName>Config_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Title</shortDescription>
+        <value>Customer.connect Setup</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error when selecting a cross-object fieldsset is not allowed and attempted.</shortDescription>
+        <value>Cross-object fields not allowed and field &quot;{0}&quot; is a cross-object field.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_fieldset_wrong_sobject_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error when selecting a field set for a different sobject type.</shortDescription>
+        <value>Field set &quot;{0}&quot; is not for SObject type &quot;{1}&quot;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_recursive_subquery_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Presented when attempting to nest subqueries.</shortDescription>
+        <value>Invalid call to subselectQuery.  You may not add a subselect query to a subselect query.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_subquery_invalid_relationship</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Presented when attempting to create a subquery from an invalid relationship.</shortDescription>
+        <value>Invalid call to subselectQuery.  Invalid relationship for table.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_insertable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_insertable</shortDescription>
+        <value>You do not have permission to insert field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_readable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_readable</shortDescription>
+        <value>You do not have permission to read the field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_updateable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_updateable</shortDescription>
+        <value>You do not have permission to update the field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_deletable</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_deletable</shortDescription>
+        <value>You do not have permission to delete {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_insertable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_insertable</shortDescription>
+        <value>You do not have permission to insert {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_readable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_readable</shortDescription>
+        <value>You do not have permission to read {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_updateable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
+        <value>You do not have permission to update {0}</value>
+    </labels>
+</CustomLabels>

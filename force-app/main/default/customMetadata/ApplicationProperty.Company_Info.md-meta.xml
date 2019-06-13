@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Company.Info</label>
+    <protected>true</protected>
+    <values>
+        <field>Appsolutely_Contact_Email__c</field>
+        <value xsi:type="xsd:string">customer.connect.support@appsolutely.nl</value>
+    </values>
+    <values>
+        <field>DataProviderAdminPassword__c</field>
+        <value xsi:type="xsd:string">q{UfUzSJj7V,*Q$vw(Y_Sk2gyG,UVJG$</value>
+    </values>
+    <values>
+        <field>DataProviderAdminUsername__c</field>
+        <value xsi:type="xsd:string">appsolutelytest_Admin</value>
+    </values>
+    <values>
+        <field>DataProviderName__c</field>
+        <value xsi:type="xsd:string">Company.Info</value>
+    </values>
+    <values>
+        <field>Data_Provider_Account_Comment__c</field>
+        <value xsi:type="xsd:string">A user for reselling by Appsolutely. Registered through the Customer.connect application</value>
+    </values>
+    <values>
+        <field>Data_Provider_Account_Id__c</field>
+        <value xsi:type="xsd:string">13972</value>
+    </values>
+    <values>
+        <field>DefaultTrialBalance__c</field>
+        <value xsi:type="xsd:double">20.0</value>
+    </values>
+</CustomMetadata>
