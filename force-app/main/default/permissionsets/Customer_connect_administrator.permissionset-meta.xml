@@ -28,7 +28,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Business_Data_SBI__c.SBI_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Data_SBI__c.SBI_Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Data_SBI__c.SBI_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Business_Dossier__c.Annual_Financial_Statement_Summary__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Dossier__c.Assets__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -208,12 +228,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Business_Dossier__c.Number_Of_Subsidiaries__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Business_Dossier__c.Paid_Up_Share_Capital_Currency__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Business_Dossier__c.Paid_Up_Share_Capital__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Dossier__c.Parent_Chamber_Of_Commerce_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -249,6 +279,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Business_Dossier__c.Primary_Sbi_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Dossier__c.Profit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -313,7 +348,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Business_Dossier__c.Turnover__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Dossier__c.Ultimate_Parent_Chamber_Of_Commerce_Nr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Business_Dossier__c.VAT_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Business_Dossier__c.Year__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -360,6 +410,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Account</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Business_Data_SBI__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

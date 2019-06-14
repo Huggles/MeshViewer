@@ -54,10 +54,20 @@ public with sharing class DutchBusinessDto {
         @AuraEnabled public String paid_up_share_capital_currency;
         @AuraEnabled public Long issued_share_capital;
         @AuraEnabled public String issued_share_capital_currency;
-        @AuraEnabled public String annual_financial_statement_summary;
         @AuraEnabled public String insolvencies;
-        @AuraEnabled public String sbi_collection;
+
+        @AuraEnabled public List<Business_Data_SBI__c> sbi_collection;
+
         @AuraEnabled public String structure;
+        @AuraEnabled public String structure_parent;
+        @AuraEnabled public String structure_number_of_subsidiaries;
+        @AuraEnabled public String structure_ultimate_parent;
+
+        @AuraEnabled public String annual_financial_statement_summary;
+        @AuraEnabled public String annual_financial_statement_summary_year;
+        @AuraEnabled public String annual_financial_statement_summary_turnover;
+        @AuraEnabled public String annual_financial_statement_summary_profit;
+        @AuraEnabled public String annual_financial_statement_summary_assets;
 
         @AuraEnabled public String establishment_address_original_address;
         @AuraEnabled public String establishment_address_original_postcode;
