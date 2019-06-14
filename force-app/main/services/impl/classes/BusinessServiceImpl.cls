@@ -65,7 +65,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         try{
             list<String> existinAccountIds = new list<String>();
             Account acc = new Account();
-            acc.Name = dossier.trade_name_full;
+            
             if(accountId == null || AccountId == ''){ // create an account
                 existinAccountIds = checkForAccountDuplicates(acc);
                 system.debug('existinAccountIds = '+ existinAccountIds);
@@ -73,6 +73,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                     acc.Id = existinAccountIds.get(0);
                     unitOfWork.registerDirty(acc);
                 }else{ // new account
+                    acc.Name = dossier.trade_name_full;
                     unitOfWork.registerNew(acc);
                 }
             }else{// update an account
