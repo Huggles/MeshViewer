@@ -47,4 +47,8 @@ public with sharing class BusinessService {
     public static IBusinessService newInstance() {
         return (IBusinessService) Application.Service.newInstance(IBusinessService.class);
     }
+
+    public static Business_Dossier__c checkDossier(String dossierNumber, String establishmentNumber){
+        return newInstance().checkDossier(dossierNumber, establishmentNumber);
+    }
 }
