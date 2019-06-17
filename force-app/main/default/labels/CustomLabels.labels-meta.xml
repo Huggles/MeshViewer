@@ -8,6 +8,167 @@
         <value>Back to results</value>
     </labels>
     <labels>
+        <fullName>Business_Data_Exists</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Business Data Exists</shortDescription>
+        <value>The Business Data  record already exists.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ActivateDescription</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ActivateDescription</shortDescription>
+        <value>Thank you for installing the Customer.connect app. To begin, enter your credentials or</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ActivateDescriptionRequest</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ActivateDescriptionRequest</shortDescription>
+        <value>request a trial</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_AwaitingActivation</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_AwaitingActivation</shortDescription>
+        <value>Your account has not been activated yet. Please try again later. One of our Account Managers will be in touch once your account has been activated.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_CreateAccount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_CreateAccount</shortDescription>
+        <value>Request a trial</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ExistingUser</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ExistingUser</shortDescription>
+        <value>I am an existing user</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_ID</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_ID</shortDescription>
+        <value>ID</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Password</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Password</shortDescription>
+        <value>Password</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Save</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Save</shortDescription>
+        <value>Save Credentials</value>
+    </labels>
+    <labels>
+        <fullName>Config_Account_Username</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Account_Username</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>Config_Add_Budget</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Add Budget</shortDescription>
+        <value>Add Budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Changed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Changed</shortDescription>
+        <value>The balance was changed</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Error</shortDescription>
+        <value>There was an error during org activation.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Management</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Management</shortDescription>
+        <value>Balance Management</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Management_Text</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Balance Management Text</shortDescription>
+        <value>See your current budget, manage your threshold and buy additional budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Threshold_Description</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Balance_Threshold_Description</shortDescription>
+        <value>The threshold slider determines the value your balance must drop to before you are notfied.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Balance_Updated</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Balance_Updated</shortDescription>
+        <value>Your balance has been updated.</value>
+    </labels>
+    <labels>
+        <fullName>Config_Credentials</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Credentials</shortDescription>
+        <value>Credentials</value>
+    </labels>
+    <labels>
+        <fullName>Config_Current_Budget</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Current Budget</shortDescription>
+        <value>Current Budget</value>
+    </labels>
+    <labels>
+        <fullName>Config_Current_Threshold</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Current Threshold</shortDescription>
+        <value>Current Threshold</value>
+    </labels>
+    <labels>
+        <fullName>Config_Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Loading</shortDescription>
+        <value>Loading...</value>
+    </labels>
+    <labels>
+        <fullName>Config_Page_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config Page Title</shortDescription>
+        <value>Customer.connect configuration page</value>
+    </labels>
+    <labels>
+        <fullName>Config_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Config_Title</shortDescription>
+        <value>Customer.connect Setup</value>
+    </labels>
+    <labels>
         <fullName>DBSCall_AccountDupCheck_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -53,7 +214,7 @@
         <fullName>Details_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Details Help</shortDescription>
+        <shortDescription>Business Data Details Help</shortDescription>
         <value>The below details are synchronised from  Business Data.</value>
     </labels>
     <labels>
@@ -78,20 +239,6 @@
         <value>Update Account</value>
     </labels>
     <labels>
-        <fullName>Config_Balance_Threshold_Description</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Balance_Threshold_Description</shortDescription>
-        <value>The threshold slider determines the value your balance must drop to before you are notfied.</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Updated</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Balance_Updated</shortDescription>
-        <value>Your balance has been updated.</value>
-    </labels>
-    <labels>
         <fullName>Dossier_Account_Update_Completed</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -111,13 +258,6 @@
         <protected>true</protected>
         <shortDescription>Dossier Remove</shortDescription>
         <value>Remove Customer.connect data</value>
-    </labels>
-    <labels>
-        <fullName>VAT_Retrieve</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>VAT_Retrieve</shortDescription>
-        <value>Get VAT information</value>
     </labels>
     <labels>
         <fullName>Dossier_Removed</fullName>
@@ -148,18 +288,18 @@
         <value>Some required fields are missing.</value>
     </labels>
     <labels>
-        <fullName>Error_Unknown</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription> Business Data Error Unknown</shortDescription>
-        <value>Error 102 received from Customer.connect. Please contact support for assistance.</value>
-    </labels>
-    <labels>
         <fullName>Error_Remove_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error_Remove_Dossier</shortDescription>
         <value>There was a problem removing the business data. Please ensure you have permission to carry out this action.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Unknown</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Business Data Error Unknown</shortDescription>
+        <value>Error 102 received from Customer.connect. Please contact support for assistance.</value>
     </labels>
     <labels>
         <fullName>Establishment_Date</fullName>
@@ -186,8 +326,15 @@
         <fullName>Matching_Companies</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Matching Companies</shortDescription>
+        <shortDescription>Business Data Matching Companies</shortDescription>
         <value>Matching Companies</value>
+    </labels>
+    <labels>
+        <fullName>New_Account_CC</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New_Account_CC</shortDescription>
+        <value>New Account with Customer.connect</value>
     </labels>
     <labels>
         <fullName>NoAuthAppNotActive</fullName>
@@ -200,77 +347,77 @@
         <fullName>Search_Address</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Address</shortDescription>
+        <shortDescription>Business Data Search Address</shortDescription>
         <value>Address</value>
     </labels>
     <labels>
         <fullName>Search_City</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search City</shortDescription>
+        <shortDescription>Business Data Search City</shortDescription>
         <value>City</value>
     </labels>
     <labels>
         <fullName>Search_Company_Details</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Company Details</shortDescription>
+        <shortDescription>Business Data Search Company Details</shortDescription>
         <value>Company Details</value>
     </labels>
     <labels>
         <fullName>Search_Confirm</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Confirm</shortDescription>
+        <shortDescription>Business Data Search Confirm</shortDescription>
         <value>Search</value>
     </labels>
     <labels>
         <fullName>Search_Country</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Country</shortDescription>
+        <shortDescription>Business Data Search Country</shortDescription>
         <value>Country</value>
     </labels>
     <labels>
         <fullName>Search_Details</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Details</shortDescription>
+        <shortDescription>Business Data Search Details</shortDescription>
         <value>Details to Sync</value>
     </labels>
     <labels>
         <fullName>Search_Details_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Details Dossier</shortDescription>
+        <shortDescription>Business Data Search Details Dossier</shortDescription>
         <value>Company Details</value>
     </labels>
     <labels>
         <fullName>Search_Details_Legal</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Details Legal</shortDescription>
+        <shortDescription>Business Data Search Details Legal</shortDescription>
         <value>Legal Entity Details</value>
     </labels>
     <labels>
         <fullName>Search_Domain</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Domain</shortDescription>
+        <shortDescription>Business Data Search Domain</shortDescription>
         <value>Domain</value>
     </labels>
     <labels>
         <fullName>Search_Dossier_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Dossier Number</shortDescription>
+        <shortDescription>Business Data Search Dossier Number</shortDescription>
         <value>Chamber of Commerce Number</value>
     </labels>
     <labels>
         <fullName>Search_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Help</shortDescription>
+        <shortDescription>Business Data Search Help</shortDescription>
         <value>To sync information from Dutch Business you will need to match this account to a registered company. Use this search form to find a match.
 Note: If you know the chamber of commerce number please enter it here as it will bypass the search.</value>
     </labels>
@@ -282,95 +429,95 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>Find</value>
     </labels>
     <labels>
-        <fullName>New_Account_CC</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>New_Account_CC</shortDescription>
-        <value>New Account with Customer.connect</value>
-    </labels>
-    <labels>
         <fullName>Search_No_Results</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search No Results</shortDescription>
+        <shortDescription>Business Data Search No Results</shortDescription>
         <value>No results found</value>
     </labels>
     <labels>
         <fullName>Search_Phone</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Phone</shortDescription>
+        <shortDescription>Business Data Search Phone</shortDescription>
         <value>Phone</value>
     </labels>
     <labels>
         <fullName>Search_Postal_Code</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Postal Code</shortDescription>
+        <shortDescription>Business Data Search Postal Code</shortDescription>
         <value>Postal Code</value>
     </labels>
     <labels>
         <fullName>Search_Province</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Province</shortDescription>
+        <shortDescription>Business Data Search Province</shortDescription>
         <value>Province</value>
     </labels>
     <labels>
         <fullName>Search_Reset</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Reset</shortDescription>
+        <shortDescription>Business Data Search Reset</shortDescription>
         <value>Search Again</value>
     </labels>
     <labels>
         <fullName>Search_Results_Confirm</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Results Confirm</shortDescription>
+        <shortDescription>Business Data Search Results Confirm</shortDescription>
         <value>Confirm</value>
     </labels>
     <labels>
         <fullName>Search_Results_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Results Help</shortDescription>
+        <shortDescription>Business Data Search Results Help</shortDescription>
         <value>The following companies match your search results. Please select the correct match for this account.</value>
     </labels>
     <labels>
         <fullName>Search_Street</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Street</shortDescription>
+        <shortDescription>Business Data Search Street</shortDescription>
         <value>Street</value>
     </labels>
     <labels>
         <fullName>Search_Trade_Name</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Search Trade Name</shortDescription>
+        <shortDescription>Business Data Search Trade Name</shortDescription>
         <value>Trade Name</value>
     </labels>
     <labels>
         <fullName>Success</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Success</shortDescription>
+        <shortDescription>Business Data Success</shortDescription>
         <value>Success</value>
     </labels>
     <labels>
         <fullName>Sync</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Sync</shortDescription>
-        <value> Business Data Sync</value>
+        <shortDescription>Business Data Sync</shortDescription>
+        <value>Business Data Sync</value>
     </labels>
     <labels>
         <fullName>Sync_Success</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription> Business Data Sync Success</shortDescription>
-        <value> Business Data sync was successful.</value>
+        <shortDescription>Business Data Sync Success</shortDescription>
+        <value>Business Data sync was successful.</value>
+    </labels>
+    <labels>
+        <fullName>VAT_Retrieve</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VAT_Retrieve</shortDescription>
+        <value>Get VAT information</value>
     </labels>
     <labels>
         <fullName>WSCall_ChangeBalance_Exception</fullName>
@@ -399,146 +546,6 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <protected>true</protected>
         <shortDescription>WSCall_Unsuccessfull</shortDescription>
         <value>The call to the service was unsuccessful</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_ActivateDescription</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_ActivateDescription</shortDescription>
-        <value>Thank you for installing the Customer.connect app. To begin, enter your credentials or</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_ActivateDescriptionRequest</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_ActivateDescriptionRequest</shortDescription>
-        <value>request a trial</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_CreateAccount</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_CreateAccount</shortDescription>
-        <value>Request a trial</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_ExistingUser</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_ExistingUser</shortDescription>
-        <value>I am an existing user</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_AwaitingActivation</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_AwaitingActivation</shortDescription>
-        <value>Your account has not been activated yet. Please try again later. One of our Account Managers will be in touch once your account has been activated.</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_Password</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_Password</shortDescription>
-        <value>Password</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_Save</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_Save</shortDescription>
-        <value>Save Credentials</value>
-    </labels>
-    <labels>
-        <fullName>Config_Credentials</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Credentials</shortDescription>
-        <value>Credentials</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_Username</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_Username</shortDescription>
-        <value>Username</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_ID</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_ID</shortDescription>
-        <value>ID</value>
-    </labels>
-    <labels>
-        <fullName>Config_Add_Budget</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Add Budget</shortDescription>
-        <value>Add Budget</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Changed</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Balance Changed</shortDescription>
-        <value>The balance was changed</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Error</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Balance Error</shortDescription>
-        <value>There was an error during org activation.</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Management</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Balance Management</shortDescription>
-        <value>Balance Management</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Management_Text</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Balance Management Text</shortDescription>
-        <value>See your current budget, manage your threshold and buy additional budget</value>
-    </labels>
-    <labels>
-        <fullName>Config_Current_Budget</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Current Budget</shortDescription>
-        <value>Current Budget</value>
-    </labels>
-    <labels>
-        <fullName>Config_Current_Threshold</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Current Threshold</shortDescription>
-        <value>Current Threshold</value>
-    </labels>
-    <labels>
-        <fullName>Config_Loading</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Loading</shortDescription>
-        <value>Loading...</value>
-    </labels>
-    <labels>
-        <fullName>Config_Page_Title</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Page Title</shortDescription>
-        <value> Customer.connect configuration page</value>
-    </labels>
-    <labels>
-        <fullName>Config_Title</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Title</shortDescription>
-        <value>Customer.connect Setup</value>
     </labels>
     <labels>
         <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>

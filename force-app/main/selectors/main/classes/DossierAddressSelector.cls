@@ -19,7 +19,8 @@ public with sharing class DossierAddressSelector extends fflib_SObjectSelector i
                 Dossier_Address__c.Name,
                 Dossier_Address__c.Business_Data__c,
                 Dossier_Address__c.Business_Data__r.Id,
-                Dossier_Address__c.Business_Data__r.name
+                Dossier_Address__c.Business_Data__r.Name,
+                Dossier_Address__c.Type__c
         };
     }
 
@@ -32,7 +33,6 @@ public with sharing class DossierAddressSelector extends fflib_SObjectSelector i
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Dossier_Address__c> result = new list<Dossier_Address__c>();
         queryFactory.setEnforceFLS(true);
-        queryFactory.selectField('Type__c');
         queryFactory.setCondition('Business_Data__r.Dossier_Number__c IN :dossierNumSet');
         queryFactory.setLimit(20);
         result = Database.query(queryFactory.toSOQL());
@@ -43,9 +43,9 @@ public with sharing class DossierAddressSelector extends fflib_SObjectSelector i
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Dossier_Address__c> result = new list<Dossier_Address__c>();
         queryFactory.setEnforceFLS(true);
-        queryFactory.selectField('Type__c');
-        queryFactory.setCondition('Id IN :dossierIdSet');
+        queryFactory.setCondition('Business_Data__c IN :dossierIdSet');
         queryFactory.setLimit(20);
+        System.debug('SOQL selectByDossierid: ' + queryFactory.toSOQL());
         result = Database.query(queryFactory.toSOQL());
         return result;
     }
@@ -55,7 +55,7 @@ public with sharing class DossierAddressSelector extends fflib_SObjectSelector i
         List<Dossier_Address__c> result = new list<Dossier_Address__c>();
         queryFactory.setEnforceFLS(true);
         queryFactory.selectField('Type__c');
-        queryFactory.setCondition('Id IN :dosserIdSet');
+        queryFactory.setCondition('Business_Data__c IN :dosserIdSet');
         queryFactory.setLimit(20);
         result = Database.query(queryFactory.toSOQL());
         return result;

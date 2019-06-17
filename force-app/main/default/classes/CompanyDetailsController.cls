@@ -22,7 +22,7 @@ public with sharing class CompanyDetailsController {
     }
     @AuraEnabled
     public static Object createDossier(String dossierNumber, String establishmentNumber, Id accountId){
-        System.debug('getInfo');
+        System.debug('getInfo' + accountId);
         if(dossierNumber!=null){
             try{
                 DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber, establishmentNumber);
@@ -63,6 +63,17 @@ public with sharing class CompanyDetailsController {
     public static Object deleteDossier(Id recordId){
         try{
             Boolean result = BusinessService.deleteDossier(recordId);
+            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
+            return output;
+        }catch(Exception e){
+            return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
+        }
+    }
+
+    @AuraEnabled
+    public static Object checkDossier(String dossierNumber, String establishmentNumber, Id accountId){
+        try{
+            Business_Dossier__c result = BusinessService.checkDossier(dossierNumber,establishmentNumber);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
         }catch(Exception e){

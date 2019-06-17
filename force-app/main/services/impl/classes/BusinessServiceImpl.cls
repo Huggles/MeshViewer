@@ -113,17 +113,23 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
 
 
+    public static Business_Dossier__c checkDossier(String dossierNumber, String establishmentNumber) {
+        try{
+            list<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumbers(new set<String>{dossierNumber}, new set<String>{establishmentNumber});
+            return dbds.size() > 0 ? dbds[0] : null;
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+        }
+    }
 
     private static Business_Dossier__c saveBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork) {
         try{
-            boolean dossierExists = false;
+            // boolean dossierExists = false;
             // TODO: move to selector
             //List<Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
 
             list<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumbers(new set<String>{dossier.dossier_number}, new set<String>{dossier.establishment_number});
-            
-
-            Business_Dossier__c d;
 
             String trade_names = '';
             if (dossier.trade_names != null && dossier.trade_names.size() > 0) {
@@ -133,24 +139,22 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 }
 
             }
+            System.debug(dbds);
+            Boolean dossierExists = dbds.size() == 1 ? true : false;
+            Business_Dossier__c d = dossierExists ? (Business_Dossier__c)dbds[0] : new Business_Dossier__c();
 
-            if (dbds.size() < 1) { // no dossiers found
-                d = new Business_Dossier__c();
-                //d.Account__c = accountId; done inside uow
-            }
-            else { //Dossier found
-                d = dbds[0];
-                dossierExists = true;
-                /*if (d.Account__c !=  accountId) { // TODO: handle this somehow
-                    throw new AuraHandledException('Dossier is already allocated to another Account');
-                }*/
-            }
+//            if (dbds.size() < 1) { // no dossiers found
+//                d = new Business_Dossier__c();
+//                //d.Account__c = accountId; done inside uow
+//            }
+//            else { //Dossier found
+//                d = dbds[0];
+//                dossierExists = true;
+//                /*if (d.Account__c !=  accountId) { // TODO: handle this somehow
+//                    throw new AuraHandledException('Dossier is already allocated to another Account');
+//                }*/
+//            }
 
-            list<Dossier_Address__c> adds = DossierAddressSelector.newInstance().selectByDossierId(new set<Id>{d.Id});
-
-            // @todo add addresses and contact.
-            system.debug('VPROK tests dosier: ');
-            System.debug(JSON.serialize(dossier));
             // if we will need legal name on name field
             if(dossier.legal_name != null && dossier.legal_name != ''){
                 d.Name = dossier.legal_name;//dossier.legal_name;
@@ -230,8 +234,27 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             d.Parent_Chamber_Of_Commerce_Number__c = dossier.structure_parent;
             d.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dossier.structure_ultimate_parent;
 
+            if(dossierExists){
+                unitOfWork.registerDirty(d, Business_Dossier__c.Account__c, acc);
+            }else{
+                unitOfWork.registerNew(d, Business_Dossier__c.Account__c, acc);
+            }
+
+            // let's do the addresses
+            List<Dossier_Address__c> adds = DossierAddressSelector.newInstance().selectByDossierId(new set<Id>{d.Id});
+
             Dossier_Address__c establishmentAddress = new Dossier_Address__c();
-            establishmentAddress.Name = dossier.establishment_address_original_address;
+            Dossier_Address__c correspondenceAddress =  new Dossier_Address__c();
+            for (Dossier_Address__c dossierAddress : adds) {
+                if (dossierAddress.Type__c == 'Establishment') {
+                    establishmentAddress = dossierAddress;
+                } else
+                if (dossierAddress.Type__c == 'Correspondence') {
+                    correspondenceAddress = dossierAddress;
+                }
+            }
+
+            establishmentAddress.Name = dossier.establishment_address_original_postcode + ' ' + dossier.establishment_address_original_street; //dossier.establishment_address_original_address;
             establishmentAddress.Postcode__c = dossier.establishment_address_original_postcode;
             establishmentAddress.Street__c = dossier.establishment_address_original_street;
             establishmentAddress.City__c = dossier.establishment_address_original_city;
@@ -240,8 +263,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             establishmentAddress.Country__c = dossier.establishment_address_original_country;
             establishmentAddress.Type__c = 'Establishment';
 
-            Dossier_Address__c correspondenceAddress = new Dossier_Address__c();
-            correspondenceAddress.Name = dossier.correspondence_address_original_address;
+            correspondenceAddress.Name = dossier.correspondence_address_original_postcode + ' ' + dossier.correspondence_address_original_street; //dossier.correspondence_address_original_address;
             correspondenceAddress.Postcode__c = dossier.correspondence_address_original_postcode;
             correspondenceAddress.Street__c = dossier.correspondence_address_original_street;
             correspondenceAddress.City__c = dossier.correspondence_address_original_city;
@@ -251,22 +273,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             correspondenceAddress.Type__c = 'Correspondence';
 
 
-            if (adds != null) {
-                for (Dossier_Address__c a : adds) {
-                    if (a.Type__c == 'Correspondence') {
-                        correspondenceAddress.Id = a.Id;
-                    }
-                    else if (a.Type__c == 'Establishment') {
-                        establishmentAddress.Id = a.Id;
-                    }
-                }
-            }
 
-            if(dossierExists){
-                unitOfWork.registerDirty(d, Business_Dossier__c.Account__c, acc);
-            }else{
-                unitOfWork.registerNew(d, Business_Dossier__c.Account__c, acc);
-            }
             if(dossier.sbi_collection <> null) {
                 for (Integer i = 0; i < dossier.sbi_collection.size(); i++) {
                     //dossier.sbi_collection[i].Business_Dossier__c = d.Id;

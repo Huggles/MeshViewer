@@ -24,8 +24,15 @@
         if (component.get('v.recordId'))
             callParams.accountId = component.get('v.recordId');
         component.set('v.selected', params.DossierNumber);
-        helper.callServer(component, 'c.createDossier', callParams, function(response) {
-            helper.handleCompanyData(component, response);
+        helper.callServer(component, 'c.checkDossier', callParams, function (response) {
+            if (response == null) {
+                helper.callServer(component, 'c.createDossier', callParams, function(response) {
+                    helper.handleCompanyData(component, response);
+                })
+            } else {
+                helper.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Business_Data_Exists'), 'success');
+            }
+
         });
     },
     /**

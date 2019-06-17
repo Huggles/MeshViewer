@@ -12,4 +12,5 @@ public interface IBusinessService {
     DutchBusinessDto.DutchBusinessVatNumber requestVAT(String dossierNumber);
     //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
     //list<String> checkForAccountDuplicates(Account acc);
+    Business_Dossier__c checkDossier(String dossierNumber, String establishmentNumber);
 }
