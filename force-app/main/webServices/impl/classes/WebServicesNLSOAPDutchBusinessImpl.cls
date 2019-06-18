@@ -165,8 +165,8 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             return result;
 
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
 
     }
@@ -229,9 +229,6 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             result.numpages = response.paging.numpages;
             result.numresults = response.paging.numresults;
             result.maxresults = response.paging.maxresults;
-            system.debug(response);
-            system.debug(response.results);
-            system.debug(response.results.item);
             if(response.results != null){
                 
                 if(response.results.item != null) {
@@ -257,8 +254,8 @@ public WebServicesNLSOAPDutchBusinessImpl(){
         return result;
             
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
 
     }

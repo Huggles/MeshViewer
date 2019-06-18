@@ -11,20 +11,22 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         //super(); not applicable due to the need of running this service using admin credentials
         port = new Webservices_nlPort('Admin');
     }
+
+    //TODO: check why is this here and not in accounting interface
     public boolean userChangeBalance(DutchBusinessAccountingDto.userChangeBalanceRequestDto input){
 
         boolean result = false;
-        try{
+        try {
             userEditBalance(input.userId, input.balance);
             result = true;
-
-        }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_ChangeBalance_Exception);
-            return null; // never happens hence logging throws exceptions
+        } catch(Exception e){
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_ChangeBalance_Exception, e);
         }
 
         return result;
     }
+
     public userEditBalanceResponseType userEditBalance(Integer userid,Double balance) {
         userEditBalanceRequestType request_x = new userEditBalanceRequestType();
         request_x.userid = userid;
@@ -48,16 +50,18 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         return response_x;
     }
 
+    //TODO: check why is this here and not in accounting interface
     public DutchBusinessAccountingDto.userViewBalanceResponse userGetBalance(DutchBusinessAccountingDto.userViewBalanceRequest input){
         DutchBusinessAccountingDto.userViewBalanceResponse result = new DutchBusinessAccountingDto.userViewBalanceResponse();
         try{
             result.balance = userViewBalance(input.userId);
-        }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+        } catch(Exception e){
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
         return result;
     }
+
     public Double userViewBalance(Integer userid) {
         userViewBalanceRequestType request_x = new userViewBalanceRequestType();
         request_x.userid = userid;
@@ -80,7 +84,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         return response_x.balance;
     }
 
-
+    //TODO: check why is this here and not in accounting interface
     public DutchBusinessAccountingDto.userViewV2Response userCheckActive(DutchBusinessAccountingDto.userCheckActiveRequest input){
         DutchBusinessAccountingDto.userViewV2Response result = new DutchBusinessAccountingDto.userViewV2Response();
         System.debug('userId' + input.userId);
@@ -90,11 +94,12 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
             else result.active = false;
 
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
         return result;
     }
+
     public userViewV2ResponseType userGetDetails(Integer userid) {
         userCheckActiveRequestType request_x = new userCheckActiveRequestType();
         request_x.userid = userid;
@@ -120,7 +125,9 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
 
 
 
-// Main method to create a user. Utilises createUserV2 method. 
+// Main method to create a user. Utilises createUserV2 method.
+
+    //TODO: check why is this here and not in accounting interface
     public DutchBusinessAccountingDto.userCreateResponseDto userCreate(DutchBusinessAccountingDto.userCreateRequestDto input){
         
         intArray arr = new intArray();
@@ -144,8 +151,8 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
             result.password = response.password;
             return result;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
     }
 
