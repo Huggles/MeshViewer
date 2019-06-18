@@ -132,7 +132,8 @@ public with sharing class BusinessServiceImplTest {
         fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
         IBusinessDossierSelector selectorMockDossier = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
         IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
-        IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        // ISbiCodeSelector selectorMockSbiCode = (ISbiCodeSelector)mocks.mock(ISbiCodeSelector.class);
+        // IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
 
         mocks.startStubbing();
 
@@ -231,6 +232,8 @@ public with sharing class BusinessServiceImplTest {
         //Application.Selector.setMock(selectorMockAccount);
         Application.Selector.setMock(selectorMockDossier);
         Application.UnitOfWork.setMock(uowMock);
+        Application.Selector.setMock(selectorMockAccount);
+        // Application.Selector.setMock(selectorMockSbiCode);
 
         test.startTest();
         list<Object> results = BusinessService.upsertAccountAndDossier(InputDossier, null);

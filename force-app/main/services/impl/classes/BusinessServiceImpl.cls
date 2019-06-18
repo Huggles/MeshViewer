@@ -9,7 +9,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
         try{
             list<Object> result = new list<Object>();
-            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
+            // Jaap Branderhorst: removed DMLWithCrud since saving the data should run in system context, not in user context (enforcing CRUD and FLS).
+            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
             list<String> existinAccountIds;
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
             Business_Dossier__c d = saveBusinessDossierUow(dossier, acc, unitOfWork);
@@ -23,7 +24,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }catch(CCException ex){
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
             throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
@@ -65,7 +65,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         try{
             list<String> existinAccountIds = new list<String>();
             Account acc = new Account();
-            
+
             if(accountId == null || AccountId == ''){ // create an account
                 existinAccountIds = checkForAccountDuplicates(acc);
                 system.debug('existinAccountIds = '+ existinAccountIds);
@@ -249,9 +249,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 if (dossierAddress.Type__c == 'Establishment') {
                     establishmentAddress = dossierAddress;
                 } else
-                if (dossierAddress.Type__c == 'Correspondence') {
-                    correspondenceAddress = dossierAddress;
-                }
+                        if (dossierAddress.Type__c == 'Correspondence') {
+                            correspondenceAddress = dossierAddress;
+                        }
             }
 
             establishmentAddress.Name = dossier.establishment_address_original_postcode + ' ' + dossier.establishment_address_original_street; //dossier.establishment_address_original_address;
@@ -272,16 +272,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             correspondenceAddress.Country__c = dossier.correspondence_address_original_country;
             correspondenceAddress.Type__c = 'Correspondence';
 
-
-
-            if(dossier.sbi_collection <> null) {
-                for (Integer i = 0; i < dossier.sbi_collection.size(); i++) {
-                    //dossier.sbi_collection[i].Business_Dossier__c = d.Id;
-                    unitOfWork.registerNew(dossier.sbi_collection[i], Business_Data_SBI__c.Business_Dossier__c, d);
-                }
-                //insert dossier.sbi_collection;
-            }
-
             if(correspondenceAddress.Id != null){
                 unitOfWork.registerDirty(correspondenceAddress, Dossier_Address__c.Business_Data__c, d);
             }else{
@@ -294,9 +284,51 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, d);
             }
 
+            // now the sbi collections:
+            List<Business_Data_SBI__c> sbiCodesDB = SbiCodeSelector.newInstance().selectByDossierId(new set<Id>{d.Id});
+
+            // let's see if there are existing SBI collections
+            // create a map for easy search
+            if (sbiCodesDB.size() > 0 && dossier.sbi_collection != null) {
+                // handle new SBI codes
+                Map<String, Business_Data_SBI__c> sbiCodesByTypeAndCode = new Map<String, Business_Data_SBI__c>();
+                for (Business_Data_SBI__c businessDataSBI : sbiCodesDB) {
+                    sbiCodesByTypeAndCode.put(businessDataSBI.SBI_Code__c + businessDataSBI.SBI_Type__c, businessDataSBI);
+                }
+                List<Business_Data_SBI__c> newSbiCodes = new List<Business_Data_SBI__c>();
+                for (Integer i = 0; i < dossier.sbi_collection.size(); i++) {
+                    // if the code of the SBI collection is existing in the fetched info don't do anything with it
+                    if (sbiCodesByTypeAndCode.get(dossier.sbi_collection[i].SBI_Code__c + dossier.sbi_collection[i].SBI_Type__c) == null) {
+                        newSbiCodes.add(dossier.sbi_collection[i]);
+                    }
+                }
+                for (Business_Data_SBI__c businessDataSBI : newSbiCodes) {
+                    unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, d);
+                }
+
+                // handle deleted SBI codes
+                Map<String, Business_Data_SBI__c> sbiCodesFromDataVendorByTypeAndCode = new Map<String, Business_Data_SBI__c>();
+                for (Business_Data_SBI__c businessDataSBI : dossier.sbi_collection) {
+                    sbiCodesFromDataVendorByTypeAndCode.put(businessDataSBI.SBI_Code__c + businessDataSBI.SBI_Type__c, businessDataSBI);
+                }
+                List<Business_Data_SBI__c> sbiCodesToBeDeleted = new List<Business_Data_SBI__c>();
+                for (Integer i = 0; i < sbiCodesDB.size() ; i++) {
+                    if (sbiCodesFromDataVendorByTypeAndCode.get(sbiCodesDB[i].SBI_Code__c + sbiCodesDB[i].SBI_Type__c) == null) { // the sbi code is not present in what we got from the vendor
+                        sbiCodesToBeDeleted.add(sbiCodesDB[i]);
+                    }
+                }
+                unitOfWork.registerDeleted(sbiCodesToBeDeleted);
+            } else { // no existing SBI records
+                // just add all SBI records we got from the database
+                for (Business_Data_SBI__c businessDataSBI : dossier.sbi_collection) {
+                    unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, d);
+                }
+            }
+
             return d;
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            System.debug('Exception:' +  ex.getStackTraceString());
             throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
     }

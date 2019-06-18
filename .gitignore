@@ -5,4 +5,8 @@ force-app/main/default/settings/*
 force-app/main/default/applications/standard__LightningSales.app-meta.xml
 .DS_STORE
 .idea
+.idea/workspace.xml
+IlluminatedCloud
 
+.idea/workspace.xml
+CompanyInfoComponents.iml
