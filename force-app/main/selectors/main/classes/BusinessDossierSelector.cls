@@ -5,9 +5,9 @@ Author          : ValerijsProkudins
 public with sharing class BusinessDossierSelector extends fflib_SObjectSelector implements IBusinessDossierSelector  {
 
     public BusinessDossierSelector() {
-        super(false, // Do not include FieldSet fields
-                true,  // enforce Object level security
-                true); // enforce Field level security
+//        super(false, // Do not include FieldSet fields
+//                true,  // enforce Object level security
+//                true); // enforce Field level security
     }
 
     public static IBusinessDossierSelector newInstance() {
@@ -42,7 +42,7 @@ public with sharing class BusinessDossierSelector extends fflib_SObjectSelector 
     public List<Business_Dossier__c> selectByDossierNumbers(set<String> dossierNumSet, Set<String> establishmentNumSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Business_Dossier__c> result = new list<Business_Dossier__c>();
-        queryFactory.setEnforceFLS(true);
+        // queryFactory.setEnforceFLS(true);
         queryFactory.setCondition('Dossier_Number__c IN :dossierNumSet AND Establishment_Number__c IN :establishmentNumSet');
         //queryFactory.setCondition('Establishment_Number__c IN :establishmentNumSet');
         queryFactory.setLimit(20);
@@ -53,7 +53,7 @@ public with sharing class BusinessDossierSelector extends fflib_SObjectSelector 
     public List<Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Business_Dossier__c> result = new list<Business_Dossier__c>();
-        queryFactory.setEnforceFLS(true);
+        // queryFactory.setEnforceFLS(true);
         queryFactory.selectField('Dossier_Number__c');
         queryFactory.setCondition('Id IN :dosserIdSet');
         queryFactory.setLimit(20);

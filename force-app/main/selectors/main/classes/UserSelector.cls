@@ -5,9 +5,9 @@ TODO: update user search with SOSL
 ******************************************************************************************/
 public with sharing class UserSelector extends fflib_SObjectSelector implements IUserSelector {
     public UserSelector() {
-        super(false, // Do not include FieldSet fields
-                true,  // enforce Object level security
-                true); // enforce Field level security
+//        super(false, // Do not include FieldSet fields
+//                true,  // enforce Object level security
+//                true); // enforce Field level security
     }
 
     public static IUserSelector newInstance() {
@@ -33,7 +33,7 @@ public with sharing class UserSelector extends fflib_SObjectSelector implements 
      */
     public List<User> selectByNameLikeSearchKey(String searchKey, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
-        queryFactory.setEnforceFLS(true);
+        // queryFactory.setEnforceFLS(true);
         system.debug(searchKey + ' isblanc = '+ String.isBlank(searchKey));
         if(!String.isBlank(searchKey)){
             searchKey = '%' + searchKey + '%';
@@ -64,7 +64,7 @@ public with sharing class UserSelector extends fflib_SObjectSelector implements 
      */
     public List<User> selectByProfileLikeSearchKey(String searchKey, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
-        queryFactory.setEnforceFLS(true);
+        // queryFactory.setEnforceFLS(true);
         if(!String.isBlank(searchKey)){
             searchKey = '%' + searchKey + '%';
             queryFactory.setCondition('(Profile.name LIKE :searchKey) AND( NOT Name LIKE \'Automated Process\') AND (NOT Name LIKE \'Data.com Clean\')');

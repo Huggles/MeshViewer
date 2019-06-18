@@ -4,9 +4,9 @@ Author          : DanNicholson
 public with sharing class DossierAddressSelector extends fflib_SObjectSelector implements IDossierAddressSelector  {
 
     public DossierAddressSelector() {
-        super(false, // Do not include FieldSet fields
-                true,  // enforce Object level security
-                true); // enforce Field level security
+//        super(false, // Do not include FieldSet fields
+//                true,  // enforce Object level security
+//                true); // enforce Field level security
     }
 
     public static IDossierAddressSelector newInstance() {
@@ -32,7 +32,7 @@ public with sharing class DossierAddressSelector extends fflib_SObjectSelector i
     public List<Dossier_Address__c> selectByDossierNumber(set<String> dossierNumSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Dossier_Address__c> result = new list<Dossier_Address__c>();
-        queryFactory.setEnforceFLS(true);
+        // queryFactory.setEnforceFLS(true);
         queryFactory.setCondition('Business_Data__r.Dossier_Number__c IN :dossierNumSet');
         queryFactory.setLimit(20);
         result = Database.query(queryFactory.toSOQL());
@@ -42,7 +42,7 @@ public with sharing class DossierAddressSelector extends fflib_SObjectSelector i
     public List<Dossier_Address__c> selectByDossierId(set<Id> dossierIdSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Dossier_Address__c> result = new list<Dossier_Address__c>();
-        queryFactory.setEnforceFLS(true);
+        // queryFactory.setEnforceFLS(true);
         queryFactory.setCondition('Business_Data__c IN :dossierIdSet');
         queryFactory.setLimit(20);
         System.debug('SOQL selectByDossierid: ' + queryFactory.toSOQL());
@@ -53,7 +53,7 @@ public with sharing class DossierAddressSelector extends fflib_SObjectSelector i
     public List<Dossier_Address__c> selectById(set<Id> addressIdSet){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Dossier_Address__c> result = new list<Dossier_Address__c>();
-        queryFactory.setEnforceFLS(true);
+        // queryFactory.setEnforceFLS(true);
         queryFactory.selectField('Type__c');
         queryFactory.setCondition('Business_Data__c IN :dosserIdSet');
         queryFactory.setLimit(20);

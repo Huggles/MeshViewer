@@ -6,9 +6,9 @@ public with sharing class SbiCodeSelector extends fflib_SObjectSelector implemen
 
 
     public SbiCodeSelector() {
-        super(false,
-                true,
-                true);
+//        super(false,
+//                true,
+//                true);
     }
 
     public static ISbiCodeSelector newInstance() {
@@ -37,6 +37,7 @@ public with sharing class SbiCodeSelector extends fflib_SObjectSelector implemen
         queryFactory.setCondition('Business_Dossier__c IN :dossierIdSet');
         System.debug('SOQL selectByDossierid: ' + queryFactory.toSOQL());
         result = Database.query(queryFactory.toSOQL());
+        System.debug('found records: ' + result);
         return result;
     }
 
