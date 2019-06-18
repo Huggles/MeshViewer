@@ -23,8 +23,7 @@ public with sharing class Application {
                     Account.SObjectType,
                     Business_Dossier__c.SObjectType,
                     Business_Data_SBI__c.SObjectType,
-                    Dossier_Address__c.SObjectType,
-                    Business_Data_SBI__c.SObjectType
+                    Dossier_Address__c.SObjectType
             });
 
     // Configure and create the ServiceFactory for this Application
