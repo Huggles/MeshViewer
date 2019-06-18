@@ -1,8 +1,13 @@
 {
-    "orgName": "CompanyDataByAppsolutely Dev",
-    "edition": "Developer",
-    "language": "en_US",
-    "orgPreferences" : {
-        "enabled": ["S1DesktopEnabled", "Translation"]
-    }
+  "orgName": "CompanyDataByAppsolutely Dev",
+  "edition": "Developer",
+  "language": "en_US",
+  "features": [],
+  "orgPreferences": {
+    "enabled": [
+      "S1DesktopEnabled",
+      "Translation"
+    ],
+    "disabled": []
+  }
 }

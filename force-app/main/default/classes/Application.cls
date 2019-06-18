@@ -19,12 +19,13 @@ public with sharing class Application {
     public static final fflib_Application.UnitOfWorkFactory UnitOfWork =
         new fflib_Application.UnitOfWorkFactory(
             new List < SObjectType > {
-                User.SObjectType,
-                Account.SObjectType,
-                Business_Dossier__c.SObjectType,
-                Business_Data_SBI__c.SObjectType,
-                Dossier_Address__c.SObjectType
-                });
+                    User.SObjectType,
+                    Account.SObjectType,
+                    Business_Dossier__c.SObjectType,
+                    Business_Data_SBI__c.SObjectType,
+                    Dossier_Address__c.SObjectType,
+                    Business_Data_SBI__c.SObjectType
+            });
 
     // Configure and create the ServiceFactory for this Application
     public static final fflib_Application.ServiceFactory Service =
@@ -41,11 +42,12 @@ public with sharing class Application {
     public static final fflib_Application.SelectorFactory Selector =
         new fflib_Application.SelectorFactory(
             new Map < SObjectType, Type > {
-                User.SObjectType => UserSelector.class,
-                Account.SObjectType => AccountSelector.class,
-                Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
-                Dossier_Address__c.SObjectType => DossierAddressSelector.class
-                });
+                    User.SObjectType => UserSelector.class,
+                    Account.SObjectType => AccountSelector.class,
+                    Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
+                    Dossier_Address__c.SObjectType => DossierAddressSelector.class,
+                    Business_Data_SBI__c.SObjectType => SbiCodeSelector.class
+            });
 
 
 }

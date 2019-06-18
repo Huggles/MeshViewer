@@ -9,7 +9,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
         try{
             list<Object> result = new list<Object>();
-            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
+            // Jaap Branderhorst: removed DMLWithCrud since saving the data should run in system context, not in user context (enforcing CRUD and FLS).
+            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
             list<String> existinAccountIds;
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
             Business_Dossier__c d = saveBusinessDossierUow(dossier, acc, unitOfWork);
@@ -272,16 +273,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             correspondenceAddress.Country__c = dossier.correspondence_address_original_country;
             correspondenceAddress.Type__c = 'Correspondence';
 
-
-
-            if(dossier.sbi_collection <> null) {
-                for (Integer i = 0; i < dossier.sbi_collection.size(); i++) {
-                    //dossier.sbi_collection[i].Business_Dossier__c = d.Id;
-                    unitOfWork.registerNew(dossier.sbi_collection[i], Business_Data_SBI__c.Business_Dossier__c, d);
-                }
-                //insert dossier.sbi_collection;
-            }
-
             if(correspondenceAddress.Id != null){
                 unitOfWork.registerDirty(correspondenceAddress, Dossier_Address__c.Business_Data__c, d);
             }else{
@@ -292,6 +283,38 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 unitOfWork.registerDirty(establishmentAddress, Dossier_Address__c.Business_Data__c, d);
             }else{
                 unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, d);
+            }
+
+            // now the sbi collections:
+            List<Business_Data_SBI__c> sbiCodesDB = SbiCodeSelector.newInstance().selectByDossierId(new set<Id>{d.Id});
+
+            List<Business_Data_SBI__c> newSbiCodes = new List<Business_Data_SBI__c>();
+            List<Business_Data_SBI__c> SbiCodesToBeDeleted = new List<Business_Data_SBI__c>();
+
+            // let's see if there are existing SBI collections
+            if (sbiCodesDB.size() > 0) {
+                // create a map for easy search
+                Map<String, Business_Data_SBI__c> sbiCodesByTypeAndCode = new Map<String, Business_Data_SBI__c>();
+                for (Business_Data_SBI__c businessDataSBI : sbiCodesDB) {
+                    sbiCodesByTypeAndCode.put(businessDataSBI.SBI_Code__c + businessDataSBI.SBI_Type__c, businessDataSBI);
+                }
+                // now walk through the codes we got from the backend and see if
+
+
+            }
+
+            // if the code of the SBI collection is existing in the fetched info don't do anything with it
+
+            // if the code of the SBI collection does not exist any more in the fetched info, delete it
+
+
+
+            if(dossier.sbi_collection != null) {
+                for (Integer i = 0; i < dossier.sbi_collection.size(); i++) {
+                    //dossier.sbi_collection[i].Business_Dossier__c = d.Id;
+                    unitOfWork.registerNew(dossier.sbi_collection[i], Business_Data_SBI__c.Business_Dossier__c, d);
+                }
+                //insert dossier.sbi_collection;
             }
 
             return d;
