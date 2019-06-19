@@ -175,7 +175,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             try{
                 return Date.newInstance(dt.year, dt.month, dt.day);
             }catch(exception e){
-                ErrorLogUtil.logMessage(e);
+                ErrorLogUtil.logException(e);
                 return null; // we just log and let the process proceed
             }
         }
@@ -187,7 +187,7 @@ public WebServicesNLSOAPDutchBusinessImpl(){
             try{
             formattedMoney = String.valueOf(money.formatted);
             }catch(exception e){
-                ErrorLogUtil.logMessage(e);
+                ErrorLogUtil.logException(e);
                 formattedMoney = null;
             }
         }

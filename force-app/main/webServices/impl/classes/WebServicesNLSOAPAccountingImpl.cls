@@ -4,7 +4,8 @@ Description     : Company Connect Accounting integration implementation class. N
                   All original Company.Connect methods are wrapped into our methods to provide DTO wrapping for both request and response params.
                   This is done to completely isolate webservice layer from the service layer. This will allow to adapt to webservice changes/updates quickly and without too much effort.
 ******************************************************************************************/
-public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting{
+// TODO: remove the extension. This class doesn't use anything of the Types class (rightfully so)
+public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting {
 
     // constructor
     public WebServicesNLSOAPAccountingImpl(){
@@ -188,6 +189,22 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         );
         response_x = response_map_x.get('response_x');
         return response_x;
+    }
+
+    // This is really bad design since it checks for the faultcode and is specific to CI.
+    private static String formatError(String msg) {
+        // Format the error from the Company.info server if that's what it is. Otherwise just pass it through.
+        String actualError = msg;
+        if (actualError.contains('faultcode=')) {
+            List<String> parts = actualError.split(':');
+            if (parts.size() == 4) {
+                List<String> moreparts = parts[2].split('faultcode=');
+                if (moreparts.size() == 2) {
+                    actualError = moreparts[0];
+                }
+            }
+        }
+        return actualError;
     }
 
 

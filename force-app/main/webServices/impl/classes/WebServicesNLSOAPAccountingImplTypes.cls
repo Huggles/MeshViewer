@@ -2,6 +2,8 @@
 Author          : ValerijsProkudins
 Description     : Company info Accounting integration implementation Typer class. NB: it extends the Baseline implementation class!
 ******************************************************************************************/
+
+// TODO: remove the inheritance hierarchy. Bad OO design
 public abstract class WebServicesNLSOAPAccountingImplTypes extends WebservicesNlSOAPImpl{
    public class userCreateV2ResponseType {
         public Integer id;
