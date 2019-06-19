@@ -18,7 +18,8 @@ public with sharing class AuraResponseWrapper {
         this.state = 'SUCCESS';
         this.errorMsg = '';
     }
-    public AuraResponseWrapper(Exception response) {
+
+    public AuraResponseWrapper(Exception response) { // TODO: remove the dependency on CCException and make this generic
         if(response instanceof CCException){
             this.response = null;
             this.state = 'ERROR';
@@ -29,7 +30,8 @@ public with sharing class AuraResponseWrapper {
             this.errorMsg = System.Label.WSCall_Generic_UI_Exception;
         }
     }
-    public AuraResponseWrapper(Exception response, Object msg) {
+
+    public AuraResponseWrapper(Exception response, Object msg) { // TODO: remove the dependency on CCException and make this generic
         if(response instanceof CCException){
             this.response = null;
             this.state = 'ERROR';

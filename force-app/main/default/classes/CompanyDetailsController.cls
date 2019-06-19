@@ -118,9 +118,9 @@ public with sharing class CompanyDetailsController {
     }
 
     @AuraEnabled
-    public static Object checkDossier(String dossierNumber, String establishmentNumber, Id accountId){
+    public static Object checkDossier(String dossierNumber, String establishmentNumber){
         try{
-            Business_Dossier__c result = BusinessService.checkDossier(dossierNumber,establishmentNumber);
+            Boolean result = BusinessService.checkDossier(dossierNumber,establishmentNumber);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
         }catch (CCException e) {

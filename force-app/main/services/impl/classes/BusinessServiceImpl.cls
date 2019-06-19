@@ -112,14 +112,14 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return result;
     }
 
-
-    public static Business_Dossier__c checkDossier(String dossierNumber, String establishmentNumber) {
+    public static Boolean checkDossier(String dossierNumber, String establishmentNumber) {
         try{
-            list<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumbers(new set<String>{dossierNumber}, new set<String>{establishmentNumber});
-            return dbds.size() > 0 ? dbds[0] : null;
+            IBusinessDossierSelector selector = BusinessDossierSelector.newInstance();
+            List<Business_Dossier__c> dbds = selector.selectByDossierNumbers(new Set<String>{dossierNumber}, new Set<String>{establishmentNumber});
+            return dbds.size() > 0 ? true : false;
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
         }
     }
 
@@ -373,6 +373,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }
     }
 
+    // TODO: implement a proper DTO so the dependency on CI is removed
     public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
         // Handle valid postcodes that the web service does not like
         if (searchParams.postcode != null){ // fix for postal code

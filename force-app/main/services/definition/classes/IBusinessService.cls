@@ -12,5 +12,15 @@ public interface IBusinessService {
     DutchBusinessDto.DutchBusinessVatNumber requestVAT(String dossierNumber);
     //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
     //list<String> checkForAccountDuplicates(Account acc);
-    Business_Dossier__c checkDossier(String dossierNumber, String establishmentNumber);
+
+    /**
+     * Checks if the dossier with the given dossier number and establishment number exists in the org. Returns true if it exists.
+     * Does not take into account sharing to ensure no duplicates are created.
+     *
+     * @param dossierNumber
+     * @param establishmentNumber
+     *
+     * @return
+     */
+    Boolean checkDossier(String dossierNumber, String establishmentNumber);
 }
