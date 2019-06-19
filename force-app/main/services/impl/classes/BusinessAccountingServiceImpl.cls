@@ -3,13 +3,13 @@ Author          : ValerijsProkudins
 
 TODO: Move custom metadatas query to selector
 ******************************************************************************************/
-public with sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService{
+public with sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService {
 
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
     public static DutchBusinessAccountingDto.userCreateResponseDto onboardCustomer(String username, String password){
 
         List<ApplicationProperty__mdt> aps = [SELECT Appsolutely_Contact_Email__c, Data_Provider_Account_Id__c, Data_Provider_Account_Comment__c FROM ApplicationProperty__mdt LIMIT 1];
-        if (aps.size() < 0) throw new CCException(System.Label.Error_Config);
+        if (aps.size() == 0) throw new CCException(System.Label.Error_Config); // JB: checked on size < 0 ???
         ApplicationProperty__mdt ap = aps[0];
 
         Organization orgDetails = [SELECT Id, Address, Fax, Name, Phone FROM Organization WHERE Id = :UserInfo.getOrganizationId()];
@@ -40,8 +40,8 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
             upsert cs;
             return userResp;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
     }
 
@@ -65,38 +65,46 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
             DutchBusinessAccountingDto.userCreateResponseDto response = service.userCreate(input);
             return response;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
     } 
 
-    public static boolean addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
+    public static Boolean addTrialToCIUser(DutchBusinessAccountingDto.userCreateResponseDto userId){// to think about params here
         try{
             ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];  
             Double amount = configData.DefaultTrialBalance__c; 
             return addBudget(amount, userId.id);
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
     }
 
-    public static boolean addBudget(Double amount, Integer userId){
+    public static Boolean addBudget(Double amount, Integer userId){ // TODO: change the method signature to String instead of Integer. We don't calculate with ids...
         DutchBusinessAccountingDto.userChangeBalanceRequestDto input = new DutchBusinessAccountingDto.userChangeBalanceRequestDto();
         input.userId = userId;
         input.balance = amount;
-        IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
-        return service.userChangeBalance(input);
-
+        try {
+            IWebServicesNLSOAPAccounting service = WebServicesNLSOAPAccounting.newInstance();
+            Boolean result = service.userChangeBalance(input);
+            return result;
+        } catch(Exception e){
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
+        }
     }
-    public static boolean addBudget(Double amount){
+
+    // TODO: check if the companyconnectuser id also works for referral
+    public static Boolean addBudget(Double amount){
         DutchBusinessAccountingDto.userChangeBalanceRequestDto input = new DutchBusinessAccountingDto.userChangeBalanceRequestDto();
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            return addBudget(amount, (Integer)cs.CompanyConnectUserId__c);
-        }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            Boolean result = addBudget(amount, (Integer)cs.CompanyConnectUserId__c);
+            return result;
+        } catch(Exception e){
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
 
     }
@@ -110,8 +118,8 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
             DutchBusinessAccountingDto.userViewBalanceResponse result = service.userGetBalance(input);
             return result.balance;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
     }
 
@@ -124,8 +132,8 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
             DutchBusinessAccountingDto.userViewV2Response result = service.userCheckActive(input);
             return result.active;
         }catch(Exception e){
-            ErrorLogUtil.logException(e, System.Label.WSCall_Unknown_Exception);
-            return null; // never happens hence logging throws exceptions
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
         }
     }
 }

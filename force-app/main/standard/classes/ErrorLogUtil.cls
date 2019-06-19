@@ -2,136 +2,58 @@
 Author          : ValerijsProkudins
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
+
+// TODO: rewrite completely so a) it is not CC specific and b) it uses platform events to prevent error logs not being written to the db
 public with sharing class ErrorLogUtil {
 
-    @TestVisible
-    private static Boolean errorLogged = false;
-    private static list<Error_Log__c> logList ;
-
-    // without sharing since the errorLog should be saved always
-    public without sharing class SaveErrorLogQueable implements Queueable {
-
-        private list<Error_Log__c> errorLogs {get; set;}
-
-        public SaveErrorLogQueable(list <Error_Log__c> errorLogs) {
-            this.errorLogs = errorLogs;
-        }
-
-        public void execute(QueueableContext context) {
-            // runs deliberately in system context without FLS and CRUD check. Should always be inserted.
-            try {
-                insert errorLogs;
-            } catch (Exception e) {
-                System.debug(LoggingLevel.ERROR, e);
-                throw e;
-            }
-
-        }
-
-    }
-    private static list<Error_Log__c> getLogList(){
-        if(logList == null){
-            logList = new list<Error_Log__c>();
-        }
-        return loglist;
+    public with sharing virtual class ErrorLogException extends Exception {
     }
 
-    public static void commitLogs(){
-        //Application.rollback(); // perform database rollback
-        (new ErrorLogUtil()).doLog();
-    }
-
-    public static void logAndCommit(Exception e){
-        if(e instanceof CCException){
-            //throw e;
-        }else{
-            Error_Log__c log = new Error_Log__c();
-            log.Trace__c = '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
-                + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
-                getLogList().add(log);
-                //throw new CCException(msg+ex.getMessage(), ex);
-        }
-        
-        Application.rollback(); // perform database rollback
-        (new ErrorLogUtil()).doLog();
-    }
-    public static AuraResponseWrapper logAndCommitUI(Exception e, Object msg){
-        if(e instanceof CCException){
-            Application.rollback(); // perform database rollback
-            (new ErrorLogUtil()).doLog();
-            return new AuraResponseWrapper(e);
-        }else{
-            Error_Log__c log = new Error_Log__c();
-            log.Trace__c = JSON.serializePretty(msg) + '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
-                + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
-            getLogList().add(log);
-            Application.rollback(); // perform database rollback
-            (new ErrorLogUtil()).doLog();
-            return new AuraResponseWrapper(e, formatError(String.valueOf(msg)));
-        }
-
-    }
-    private static String formatError(String msg) {
-        // Format the error from the Company.info server if that's what it is. Otherwise just pass it through.
-        String actualError = msg;
-        if (actualError.contains('faultcode=')) {
-            List<String> parts = actualError.split(':');
-            if (parts.size() == 4) {
-                List<String> moreparts = parts[2].split('faultcode=');
-                if (moreparts.size() == 2) {
-                    actualError = moreparts[0];
-                }
-            }
-        }
-        return actualError;
-    }
-    public static void logException(Exception e, Object msg) {
-        system.debug('logging exception');
-        if(e instanceof CCException){
-            throw e;
-        }else{
-            Error_Log__c log = new Error_Log__c();
-            log.Trace__c = JSON.serializePretty(msg) + '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
-                    + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
-            getLogList().add(log);
-
-            
-
-            throw new CCException(msg + ':' + formatError(e.getMessage()));
-        }
-    }
-
+    /**
+     * Log an exception in the Error_log custom object.
+     *
+     * @param e
+     */
     public static void logException(Exception e) {
-        if(e instanceof CCException){
-            throw e;
-        }else{
-            Error_Log__c log = new Error_Log__c();
-            log.Trace__c = '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
+            String message = '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
                 + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
-            getLogList().add(log);
-            throw new CCException(e.getMessage());//System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            logMessage(message);
+        }
+
+
+    /**
+     * Log a message in the Error_log custom object
+     *
+     * @param message
+     */
+    public static void logMessage(String message) {
+        New_Error_Log__e event = new New_Error_Log__e(Message__c = message);
+        Database.SaveResult result = EventBus.publish(event);
+        if (!result.isSuccess()) { // we couldn't publish the event, something is really wrong
+            Database.Error[] errors = result.getErrors();
+            String errorsToString = '';
+            for (Database.Error error : errors) {
+                errorsToString += error;
+                errorsToString += '\n';
+            }
+            System.debug(LoggingLevel.ERROR, 'FATAL: cannot publish error log!\n' +
+                errorsToString); // todo: label
+            throw new ErrorLogException('FATAL: cannot publish error log!');
         }
     }
 
-    public static void logMessage(Object msg) {
-        Error_Log__c log = new Error_Log__c();
-        log.Trace__c = JSON.serializePretty(msg);
-        getLogList().add(log);
-
-    }
-    private void doLog() {
-        system.debug('DOIG LOGS **************');
-        if (Test.isRunningTest()) {
-            ErrorLogUtil.errorLogged = true;
+    /**
+     * Writes the log messages to the database. Called by the trigger that listens to New_Error_log platform events. Do not call directly!
+     *
+     * @param logEvents
+     */
+    public static void writeLogs(New_Error_Log__e[] logEvents) {
+        List<Error_Log__c> newLogs = new List<Error_Log__c>();
+        for (New_Error_Log__e newErrorLog : logEvents) {
+            newLogs.add(new Error_Log__c(Trace__c = newErrorLog.Message__c));
         }
-        // storing the log in a queable to ensure we don't run into issues with callouts
-        if ((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) >= 1) {
-            if (!Test.isRunningTest())
-                System.enqueueJob(new SaveErrorLogQueable(getLogList()));
-        }
-        //insert(getLogList());
+        insert newLogs; // todo: add proper error handling
     }
-
 
 
 }

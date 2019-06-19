@@ -49,7 +49,7 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
         }
         public HeaderLoginType getAuthentication(String scope){
             HeaderLoginType HeaderLogin;
-            system.debug(logginglevel.error, '*********** '+scope);
+            system.debug(logginglevel.error, '*********** '+scope); //TODO: see if this is indeed error level code
             if(scope == 'User'){
                 Credentials__c CS = Credentials__c.getOrgDefaults();
                 if(cs.Username__c != null && cs.Password__c != null){
@@ -59,7 +59,7 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
                 }
             }else{
                 ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
-                system.debug(logginglevel.error, '*********** '+configData);
+                system.debug(logginglevel.error, '*********** '+configData); //TODO: see if this is indeed error level code
                 HeaderLogin = new HeaderLoginType();
                 HeaderLogin.userName=configData.DataProviderAdminUsername__c;//'appsolutelytest_Admin';
                 HeaderLogin.passWord=configData.DataProviderAdminPassword__c;//'q{UfUzSJj7V,*Q$vw(Y_Sk2gyG,UVJG$';//         
@@ -75,8 +75,7 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
         }
     }
 
-
-
+    // TODO: add proper error handling
     public void ExecuteCallout(Webservices_nlPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray){
         try{
             WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
@@ -85,12 +84,15 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
                     response_map_x,
                     infoArray
             );
-        }catch(CalloutException e){
+            // TODO: we allready know if an error is happening here (since it is in the Error response) handle it here.
+            // see: https://webview.webservices.nl/documentation/files/interfaces/errorhandling-txt.html#Error_Handling
+        } catch (CalloutException e) {
             system.debug('*********** Using the fallback server port = '+ port);
             port.useFallback();
             infoArray.set(0, port.endpoint_x);
-system.debug('*********** Using the fallback server port222 = '+ port);
-            WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
+            system.debug('*********** Using the fallback server port222 = '+ port);
+            // TODO: check if the invoke handles exceptions because it doesn't happen over here. In case of fallback things go haywire
+            WebServiceCallout.invoke(   //Invocation is wrapped in method that supports fallback server in case of callout timeout
                     port,
                     request_x,
                     response_map_x,

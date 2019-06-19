@@ -4,18 +4,44 @@
 */
 
 public with sharing class CompanyDetailsController {
+
+    // This is really bad design since it checks for the faultcode and is specific to CI. Should be moved back to where the error originates
+    // TODO: move this
+    private static String formatError(String msg) {
+        // Format the error from the Company.info server if that's what it is. Otherwise just pass it through.
+        String actualError = msg;
+        if (actualError.contains('faultcode=')) {
+            List<String> parts = actualError.split(':');
+            if (parts.size() == 4) {
+                List<String> moreparts = parts[2].split('faultcode=');
+                if (moreparts.size() == 2) {
+                    actualError = moreparts[0];
+                }
+            }
+        }
+        return actualError;
+    }
+
     @AuraEnabled
     public static Object search(String searchParams){
         system.debug('searchParams = '+searchParams);
         if(searchParams!=null){
             try{
+                // TODO: remove the extreme strong relationship between the backend and the front end (the search params are created here in the format of the backend)
                 DutchBusinessDto.dutchBusinessSearchParametersRequest params = (DutchBusinessDto.dutchBusinessSearchParametersRequest)JSON.deserialize(searchParams, DutchBusinessDto.dutchBusinessSearchParametersRequest.class);
 
                 Object result = (Object) BusinessService.searchForDossiers(params);
                 AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
                 return output;
-            }catch(Exception e){
-                return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
+            } catch (CCException e) {
+                // TODO: remove the rollback and move it to the business service layer
+                Application.rollback(); // perform database rollback
+                return new AuraResponseWrapper(e);
+            } catch (Exception e) {
+                ErrorLogUtil.logException(e);
+                // TODO: remove the rollback and move it to the business service layer
+                Application.rollback();
+                return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
             }
         }
         return null;
@@ -28,8 +54,15 @@ public with sharing class CompanyDetailsController {
                 DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber, establishmentNumber);
                 AuraResponseWrapper output = new AuraResponseWrapper(createUpdateAccount(dossier, accountId));
                 return output;
-            }catch(Exception e){
-                return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
+            } catch (CCException e) {
+                // TODO: remove the rollback and move it to the business service layer
+                Application.rollback(); // perform database rollback
+                return new AuraResponseWrapper(e);
+            } catch (Exception e) {
+                ErrorLogUtil.logException(e);
+                // TODO: remove the rollback and move it to the business service layer
+                Application.rollback();
+                return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
             }
         }
         return null;
@@ -47,8 +80,15 @@ public with sharing class CompanyDetailsController {
             result = createUpdateAccount(dossier, accountId);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
-        }catch(Exception e){
-            return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
+        }catch (CCException e) {
+            // TODO: remove the rollback and move it to the business service layer
+            Application.rollback(); // perform database rollback
+            return new AuraResponseWrapper(e);
+        } catch (Exception e) {
+            ErrorLogUtil.logException(e);
+            // TODO: remove the rollback and move it to the business service layer
+            Application.rollback();
+            return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
         }
     }
     public static list<Object> createUpdateAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
@@ -65,8 +105,15 @@ public with sharing class CompanyDetailsController {
             Boolean result = BusinessService.deleteDossier(recordId);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
-        }catch(Exception e){
-            return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
+        }catch (CCException e) {
+            // TODO: remove the rollback and move it to the business service layer
+            Application.rollback(); // perform database rollback
+            return new AuraResponseWrapper(e);
+        } catch (Exception e) {
+            ErrorLogUtil.logException(e);
+            // TODO: remove the rollback and move it to the business service layer
+            Application.rollback();
+            return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
         }
     }
 
@@ -76,8 +123,15 @@ public with sharing class CompanyDetailsController {
             Business_Dossier__c result = BusinessService.checkDossier(dossierNumber,establishmentNumber);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
-        }catch(Exception e){
-            return ErrorLogUtil.logAndCommitUI(e, System.Label.WSCall_Generic_UI_Exception);
+        }catch (CCException e) {
+            // TODO: remove the rollback and move it to the business service layer
+            Application.rollback(); // perform database rollback
+            return new AuraResponseWrapper(e);
+        } catch (Exception e) {
+            ErrorLogUtil.logException(e);
+            // TODO: remove the rollback and move it to the business service layer
+            Application.rollback();
+            return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
         }
     }
 
@@ -94,9 +148,15 @@ public with sharing class CompanyDetailsController {
             BusinessService.upsertDossier(result);
             AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
             return output;
-        }catch(Exception e){
-            System.debug(e.getMessage());
-            return ErrorLogUtil.logAndCommitUI(e, e.getMessage());
+        } catch (CCException e) {
+            // TODO: remove the rollback and move it to the business service layer
+            Application.rollback(); // perform database rollback
+            return new AuraResponseWrapper(e);
+        } catch (Exception e) {
+            ErrorLogUtil.logException(e);
+            // TODO: remove the rollback and move it to the business service layer
+            Application.rollback();
+            return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
         }
     }
 
