@@ -1,5 +1,15 @@
 public interface IBusinessDossierSelector extends fflib_ISObjectSelector {
+
     List<Business_Dossier__c> selectByDossierNumber(set<String> dossierNumSet);
-    List<Business_Dossier__c> selectByDossierNumbers(set<String> dossierNumSet, set<String> establishmentNumSet);
+    // TODO: this goes wrong. Combination of dossierNumbers and establishmentNumbers is unique
+    /**
+     * Queries the database based on the given dossierQueryDTOs which combine the dossier number (chamber of commerce) and the establishment number
+     *
+     * @param dossierQueryDTOS
+     *
+     * @return
+     */
+    List<Business_Dossier__c> selectByDossierNumbers(Set<DossierQueryDTO> dossierQueryDTOS, Boolean enforceFLS);
     List<Business_Dossier__c> selectById(set<Id> dosserIdSet);
+//    List<Business_Dossier__c> selectByDossierNumbers(Set<String> dossierNumSet, Set<String> establishmentNumSet);
 }

@@ -5,9 +5,6 @@ Author          : ValerijsProkudins
 public with sharing class BusinessDossierSelector extends fflib_SObjectSelector implements IBusinessDossierSelector  {
 
     public BusinessDossierSelector() {
-//        super(false, // Do not include FieldSet fields
-//                true,  // enforce Object level security
-//                true); // enforce Field level security
     }
 
     public static IBusinessDossierSelector newInstance() {
@@ -39,27 +36,37 @@ public with sharing class BusinessDossierSelector extends fflib_SObjectSelector 
         return result;
     }
 
-    public List<Business_Dossier__c> selectByDossierNumbers(set<String> dossierNumSet, Set<String> establishmentNumSet){//, String sortedBy, String sortedDirection) {
+    public List<Business_Dossier__c> selectByDossierNumbers(Set<DossierQueryDTO> dossierQueryDTOS, Boolean enforceFLS){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Business_Dossier__c> result = new list<Business_Dossier__c>();
-        // queryFactory.setEnforceFLS(true);
-        queryFactory.setCondition('Dossier_Number__c IN :dossierNumSet AND Establishment_Number__c IN :establishmentNumSet');
-        //queryFactory.setCondition('Establishment_Number__c IN :establishmentNumSet');
-        queryFactory.setLimit(20);
-        result = Database.query(queryFactory.toSOQL());
+        queryFactory.setEnforceFLS(enforceFLS);
+        Set<String> dossierNumbers = new Set<String>();
+        Set<String> establishmentNumbers = new Set<String>();
+        Set<String> uniqueKeys = new Set<String>();
+        for (DossierQueryDTO dossierQueryDTO : dossierQueryDTOS) {
+            dossierNumbers.add(dossierQueryDTO.dossierNumber);
+            establishmentNumbers.add(dossierQueryDTO.establishmentNumber);
+            uniqueKeys.add(dossierQueryDTO.dossierNumber + dossierQueryDTO.establishmentNumber);
+        }
+        queryFactory.setCondition('Dossier_Number__c IN :dossierNumbers AND Establishment_Number__c IN :establishmentNumbers');
+        // queryFactory.setLimit(20); //TODO although this is a best practice it can result in limitations.
+        List<Business_Dossier__c> wideResult = Database.query(queryFactory.toSOQL());
+        // only select the combinations of dossierNumbers and establishmentNumbers we want from it
+        for (Business_Dossier__c businessDossier : wideResult) {
+            if (uniqueKeys.contains(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c)) {
+                result.add(businessDossier);
+            }
+        }
         return result;
     }
 
-    public List<Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) {
-        fflib_QueryFactory queryFactory = newQueryFactory();
-        List<Business_Dossier__c> result = new list<Business_Dossier__c>();
-        // queryFactory.setEnforceFLS(true);
-        queryFactory.selectField('Dossier_Number__c');
-        queryFactory.setCondition('Id IN :dosserIdSet');
-        queryFactory.setLimit(20);
-        result = Database.query(queryFactory.toSOQL());
-        return result;
+    public List<Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) { // ehhhh this is standard behavior
+        return (List<Business_Dossier__c>) selectSObjectsById(dosserIdSet);
     }
+
+//    public List<Business_Dossier__c> selectByDossierNumbers(Set<String> dossierNumSet, Set<String> establishmentNumSet) {
+//        return null;
+//    }
 
 
 

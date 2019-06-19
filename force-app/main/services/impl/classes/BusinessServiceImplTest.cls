@@ -8,7 +8,7 @@ public with sharing class BusinessServiceImplTest {
 
         mocks.startStubbing();
         mocks.when(mockDossierSelector.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
-        mocks.when(mockDossierSelector.selectByDossierNumbers(new Set<String>{'1234'}, new Set<String>{'1234'})).thenReturn(new List<Business_Dossier__c>());
+        mocks.when(mockDossierSelector.selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO('1234', '1234')}, false)).thenReturn(new List<Business_Dossier__c>());
         mocks.stopStubbing();
         Application.Selector.setMock(mockDossierSelector);
 
@@ -27,7 +27,7 @@ public with sharing class BusinessServiceImplTest {
         mocks.startStubbing();
         mocks.when(mockDossierSelector.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
         Business_Dossier__c dossier = new Business_Dossier__c(Id = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType));
-        mocks.when(mockDossierSelector.selectByDossierNumbers(new Set<String>{'1234'}, new Set<String>{'1234'})).thenReturn(new List<Business_Dossier__c>{dossier});
+        mocks.when(mockDossierSelector.selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO('1234', '1234')}, false)).thenReturn(new List<Business_Dossier__c>{dossier});
         mocks.stopStubbing();
         Application.Selector.setMock(mockDossierSelector);
 
@@ -261,7 +261,7 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.establishment_address_original_country = 'establishment_address.original.country';
 
         mocks.when(selectorMockDossier.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
-        mocks.when(selectorMockDossier.selectByDossierNumbers(new set<String>{InputDossier.dossier_number}, new set<String>{InputDossier.establishment_number})).thenReturn(new list<Business_Dossier__c>());
+        mocks.when(selectorMockDossier.selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO(InputDossier.dossier_number, InputDossier.establishment_number)}, false)).thenReturn(new list<Business_Dossier__c>());
         mocks.when(selectorMockAccount.sObjectType()).thenReturn(Account.SObjectType);
         //mocks.when(selectorMockAccount.selectById(new set<Id>{ExistingAccount.Id})).thenReturn();
 

@@ -5,19 +5,20 @@ Description     : Service layer for DutchBusiness webservice calls and data proc
 public with sharing class BusinessServiceImpl implements IBusinessService {
 
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
-    public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+    public static List<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
 
         try{
-            list<Object> result = new list<Object>();
+            List<Object> result = new List<Object>();
             // Jaap Branderhorst: removed DMLWithCrud since saving the data should run in system context, not in user context (enforcing CRUD and FLS).
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-            list<String> existinAccountIds;
+            List<String> existinAccountIds;
             Account acc = createAccountForDossier(accountId, dossier, unitOfWork);
             Business_Dossier__c d = saveBusinessDossierUow(dossier, acc, unitOfWork);
             //unitOfWork.registerRelationship(acc, Account.Business_Dossier__c, d);
             unitOfWork.commitWork();
             //unitOfWork.registerDirty(acc, Account.Business_Dossier__c, d); // to update a field on account level once dossier is inserted
             //unitOfWork.commitWork(); // need to wait until circullar references are releassed ion fflib. so far using another method link: https://github.com/financialforcedev/fflib-apex-common/pull/195
+            // TODO wtf....using a List for this? Use a DTO
             result.add(d);
             result.add(acc);
             return result;
@@ -32,14 +33,14 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     public static Account getDossierAccount(String dossierNum){
         try{
             //TODO: enhance with duplicate logic. mb account is there but has no dossier
-            list<Business_Dossier__c> dossList = new list<Business_Dossier__c>();
+            List<Business_Dossier__c> dossList = new List<Business_Dossier__c>();
 
             //set<Integer> dossNumSet = new set<Integer>();
             //dossNumSet.add(Integer.valueOf(dossierNum));
             dossList = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossierNum});
             //dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
             Account acc;
-            list<Account> accList = new list<Account>();
+            List<Account> accList = new List<Account>();
             if(dossList.size() >0){
                 set<Id> accIdSet=new set<Id>();
                 for(Business_Dossier__c dbd: dossList){
@@ -63,7 +64,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
     private static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         try{
-            list<String> existinAccountIds = new list<String>();
+            List<String> existinAccountIds = new List<String>();
             Account acc = new Account();
 
             if(accountId == null || AccountId == ''){ // create an account
@@ -88,10 +89,10 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }
     }
 
-    // checks for account duplicates. Return a list of IDs if duplicates exist.
-    private static list<String> checkForAccountDuplicates(Account acc){
-        list<String> result = new list<String>();
-        list<Account> accounts = new list<Account>();
+    // checks for account duplicates. Return a List of IDs if duplicates exist.
+    private static List<String> checkForAccountDuplicates(Account acc){
+        List<String> result = new List<String>();
+        List<Account> accounts = new List<Account>();
         accounts.add(acc);
         try{
             Datacloud.FindDuplicatesResult[] results = Datacloud.FindDuplicates.findDuplicates(accounts);
@@ -115,8 +116,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     public static Boolean checkDossier(String dossierNumber, String establishmentNumber) {
         try{
             IBusinessDossierSelector selector = BusinessDossierSelector.newInstance();
-            List<Business_Dossier__c> dbds = selector.selectByDossierNumbers(new Set<String>{dossierNumber}, new Set<String>{establishmentNumber});
-            return dbds.size() > 0 ? true : false;
+            List<Business_Dossier__c> dossiers = selector.selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO(dossierNumber, establishmentNumber)}, false);
+            return dossiers.size() > 0 ? true : false;
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
             throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
@@ -129,8 +130,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             // TODO: move to selector
             //List<Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
 
-            list<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumbers(new set<String>{dossier.dossier_number}, new set<String>{dossier.establishment_number});
-
+            List<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO(dossier.dossier_number, dossier.establishment_number)}, false);
             String trade_names = '';
             if (dossier.trade_names != null && dossier.trade_names.size() > 0) {
                 // Condense all trade names into single field, seperated by new lines.
@@ -418,8 +418,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     // was void before. not tyoo logical to return dossier Id from this method. Cut the corner to both get dossierId for  controller and Not research how to handle void methods  with this framework
     public static String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
         try{
-            list<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectByDossierNumbers(new set<String>{dossier.dossier_number}, new set<String>{dossier.establishment_number});//[SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
-            List<Account> accts = AccountSelector.newInstance().selectById(new set<Id>{dossierList.get(0).Account__c});//[SELECT Id, Business_Dossier__c FROM Account WHERE Id = :dossierList.get(0).Account__c];
+            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO(dossier.dossier_number, dossier.establishment_number)}, false);
+            List<Account> accts = AccountSelector.newInstance().selectById(new set<Id>{dossierList.get(0).Account__c});
             if (accts.size() == 1) {
                 accts[0].Business_Dossier__c = dossierList.get(0).Id;
                 update accts;
@@ -437,7 +437,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     public static Boolean deleteDossier(Id accountId) {
         try{
             Account acct = AccountSelector.newInstance().selectById(accountId);
-            list<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{acct.Business_Dossier__c});
+            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{acct.Business_Dossier__c});
             if (dossierList.size() == 1) {
                 delete dossierList[0];
                 return true;
@@ -453,7 +453,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
     public static Business_Dossier__c selectDossier(Id dossierId) {
         try{
-            list<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
+            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
             if (dossierList.size() == 1) {
                 return dossierList[0];
             }
@@ -473,10 +473,10 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return service.businessGetVatNumber(requestParams);
     }
 
-    public static list<Object> upsertDossier(Business_Dossier__c dossier){
+    public static List<Object> upsertDossier(Business_Dossier__c dossier){
 
         try{
-            list<Object> result = new list<Object>();
+            List<Object> result = new List<Object>();
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
             unitOfWork.registerDirty(dossier);
             unitOfWork.commitWork();
