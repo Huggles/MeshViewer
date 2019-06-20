@@ -1,6 +1,8 @@
 /****************************************************************************************
-Author          : ValerijsProkudins
-Description     : Service layer for DutchBusiness webservice calls and data processing
+Author          : Jaap Branderhorst
+Description     : Error log util class to log error messages to the ErrorLog SObject so even in batches you can review.
+
+CAREFULL: doesn't work when you rollback the transaction.
 ******************************************************************************************/
 
 public with sharing class ErrorLogUtil {
@@ -42,8 +44,14 @@ public with sharing class ErrorLogUtil {
      */
     public static void logMessage(String message) {
         if (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs() > 0) {
-            System.debug(message);
-            System.enqueueJob(new ErrorLogQueuable(message));
+            try {
+                System.enqueueJob(new ErrorLogQueuable(message));
+            } catch (Exception ex) {
+                System.debug(LoggingLevel.ERROR, 'FATAL: cannot enqueue job to log error');
+            }
+
+        } else {
+            System.debug(LoggingLevel.ERROR, 'FATAL: no queauable jobs available for logging errors');
         }
     }
 

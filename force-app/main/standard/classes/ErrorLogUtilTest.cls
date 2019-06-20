@@ -46,5 +46,4 @@ private class ErrorLogUtilTest {
         System.assert(logs[0].Trace__c.contains('test'));
     }
 
-
 }
