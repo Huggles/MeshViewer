@@ -4,6 +4,14 @@ Description     : Service layer for DutchBusiness webservice calls and data proc
 ******************************************************************************************/
 public with sharing class BusinessServiceImpl implements IBusinessService {
 
+    public List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS) {
+        List<Business_Dossier__c> returnList = new List<Business_Dossier__c>();
+        for (InsertDossierRequestDTO insertDossierRequestDTO : InsertDossierRequestDTOS) {
+            returnList.add(map());
+        }
+        return returnList;
+    }
+
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
     public static List<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
 

@@ -12,6 +12,10 @@ public with sharing class BusinessService {
         return newInstance().getDossier(dossierNumber, establishmentNumber);
     }
 
+    public static List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> insertDossierRequestDTOS) {
+        return newInstance().insertDossier(insertDossierRequestDTOS);
+    }
+
     public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
         return newInstance().upsertAccountAndDossier(dossier, accountId);
     }
