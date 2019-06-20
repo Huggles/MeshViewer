@@ -3,7 +3,7 @@
     <fullName>Secondary_Sbi_Code_2__c</fullName>
     <externalId>false</externalId>
     <label>Secondary SBI Code 2</label>
-    <length>5</length>
+    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
