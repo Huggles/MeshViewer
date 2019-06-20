@@ -5,6 +5,24 @@
 
 public with sharing class CompanyDetailsController {
 
+    public class CreateDossierResult {
+        @AuraEnabled
+        public Business_Dossier__c dossier {
+            get; set;
+        }
+
+        @AuraEnabled
+        public Boolean dossierExisting {
+            get; set;
+        }
+
+        public CreateDossierResult(Business_Dossier__c dossier, Boolean dossierExisting) {
+            this.dossier = dossier;
+            this.dossierExisting = dossierExisting;
+        }
+
+    }
+
 //    // This is really bad design since it checks for the faultcode and is specific to CI. Should be moved back to where the error originates
 //    // TODO: move this
 //    private static String formatError(String msg) {
@@ -21,6 +39,8 @@ public with sharing class CompanyDetailsController {
 //        }
 //        return actualError;
 //    }
+
+
 
     @AuraEnabled
     public static Object search(String searchParams){
@@ -49,7 +69,10 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object createDossier(String dossierNumber, String establishmentNumber, Id accountId){
 
-        if(!BusinessDuplicateService.checkDossier(dossierNumber, establishmentNumber)){ //dossier doesn't exist already
+        Business_Dossier__c dossierFromDB = BusinessDuplicateService.checkSingleDuplicateDossier(dossierNumber, establishmentNumber);
+        Boolean dossierExisting = dossierFromDB == null ? false : true;
+
+        if(dossierFromDB == null){ //dossier doesn't exist already
             try{
                 // TODO: wrap the three business service calls into one. This is functionality that should be defined on the serivce layer
                 // fetch the dossier from the backend
@@ -79,11 +102,12 @@ public with sharing class CompanyDetailsController {
                 Application.rollback();
                 return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
             }
-        } else { // respond with the dossier
-            // TODO: we should give a message the dossier allready exists
+        } else { // respond with the dossier and account?
+            // TODO: we should give a message the dossier already exists
 
         }
-        return null;
+        CreateDossierResult result = new CreateDossierResult(dossierFromDB, dossierExisting);
+        return new AuraResponseWrapper(result);
     }
 
     // JB: we don't use this so let's not maintain it...
@@ -139,23 +163,23 @@ public with sharing class CompanyDetailsController {
         }
     }
 
-    @AuraEnabled
-    public static Object checkDossier(String dossierNumber, String establishmentNumber){
-        try{
-            Boolean result = BusinessDuplicateService.checkDossier(dossierNumber,establishmentNumber);
-            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
-            return output;
-        }catch (CCException e) {
-            // TODO: remove the rollback and move it to the business service layer
-            Application.rollback(); // perform database rollback
-            return new AuraResponseWrapper(e);
-        } catch (Exception e) {
-            ErrorLogUtil.logException(e);
-            // TODO: remove the rollback and move it to the business service layer
-            Application.rollback();
-            return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
-        }
-    }
+//    @AuraEnabled
+//    public static Object checkDossier(String dossierNumber, String establishmentNumber){
+//        try{
+//            Boolean result = BusinessDuplicateService.checkDossier(dossierNumber,establishmentNumber);
+//            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
+//            return output;
+//        }catch (CCException e) {
+//            // TODO: remove the rollback and move it to the business service layer
+//            Application.rollback(); // perform database rollback
+//            return new AuraResponseWrapper(e);
+//        } catch (Exception e) {
+//            ErrorLogUtil.logException(e);
+//            // TODO: remove the rollback and move it to the business service layer
+//            Application.rollback();
+//            return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
+//        }
+//    }
 
     @AuraEnabled
     public static Object getVATDetails(String dossierId){

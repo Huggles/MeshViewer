@@ -112,19 +112,23 @@
     handleCompanyData : function(component, response) {
         component.set('v.step', '3');
 
-        if (component.get('v.recordId'))
-            component.find("recordHandler").reloadRecord(true);
-
-        this.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Sync_Success'), 'success');
-        // Close quick action if that is the origin.
+        // show the right toast
+        if (response.dossierExisting) {
+            this.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Business_Data_Exists'), 'success');
+        } else {
+            if (component.get('v.recordId')) // JB: @dan: why is this needed?
+                component.find("recordHandler").reloadRecord(true);
+            this.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Sync_Success'), 'success');
+        }
 
         var navEvt = $A.get("e.force:navigateToSObject");
         navEvt.setParams({
-            "recordId": response[1].Id,
+            "recordId": response.dossier.Account__c,
             "slideDevName": "related"
         });
         navEvt.fire();
 
+        // Close quick action if that is the origin.
         var dismissActionPanel = $A.get("e.force:closeQuickAction");
         dismissActionPanel.fire();
     }
