@@ -113,23 +113,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return result;
     }
 
-    public static Boolean checkDossier(String dossierNumber, String establishmentNumber) {
-        try{
-            IBusinessDossierSelector selector = BusinessDossierSelector.newInstance();
-            List<Business_Dossier__c> dossiers = selector.selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO(dossierNumber, establishmentNumber)}, false);
-            return dossiers.size() > 0 ? true : false;
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
-        }
-    }
-
     private static Business_Dossier__c saveBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork) {
         try{
-            // boolean dossierExists = false;
-            // TODO: move to selector
-            //List<Business_Dossier__c> dbds = [SELECT Id, Account__c FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossier.dossier_number)];
-
             List<Business_Dossier__c> dbds = BusinessDossierSelector.newInstance().selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO(dossier.dossier_number, dossier.establishment_number)}, false);
             String trade_names = '';
             if (dossier.trade_names != null && dossier.trade_names.size() > 0) {
@@ -142,18 +127,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             System.debug(dbds);
             Boolean dossierExists = dbds.size() == 1 ? true : false;
             Business_Dossier__c d = dossierExists ? (Business_Dossier__c)dbds[0] : new Business_Dossier__c();
-
-//            if (dbds.size() < 1) { // no dossiers found
-//                d = new Business_Dossier__c();
-//                //d.Account__c = accountId; done inside uow
-//            }
-//            else { //Dossier found
-//                d = dbds[0];
-//                dossierExists = true;
-//                /*if (d.Account__c !=  accountId) { // TODO: handle this somehow
-//                    throw new AuraHandledException('Dossier is already allocated to another Account');
-//                }*/
-//            }
 
             // if we will need legal name on name field
             if(dossier.legal_name != null && dossier.legal_name != ''){
@@ -411,9 +384,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
             throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
-
-
     }
+
     // TODO: rewrite properly, the method should notify if there were problems during update TODO: MOVE STUFF TO SELECTOR AND UOW
     // was void before. not tyoo logical to return dossier Id from this method. Cut the corner to both get dossierId for  controller and Not research how to handle void methods  with this framework
     public static String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
@@ -422,7 +394,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             List<Account> accts = AccountSelector.newInstance().selectById(new set<Id>{dossierList.get(0).Account__c});
             if (accts.size() == 1) {
                 accts[0].Business_Dossier__c = dossierList.get(0).Id;
-                update accts;
+                update accts; // TODO: move to UOW
             }
             return dossierList.get(0).Id;
         }catch(CCException ex){

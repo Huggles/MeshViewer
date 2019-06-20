@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-18.
  */
 
-public with sharing class SbiCodeSelector extends fflib_SObjectSelector implements ISbiCodeSelector {
+public inherited sharing class SbiCodeSelector extends fflib_SObjectSelector implements ISbiCodeSelector {
 
 
     public SbiCodeSelector() {

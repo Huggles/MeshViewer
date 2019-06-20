@@ -2,7 +2,7 @@
 /****************************************************************************************
 Author          : ValerijsProkudins
 ******************************************************************************************/
-public with sharing class BusinessDossierSelector extends fflib_SObjectSelector implements IBusinessDossierSelector  {
+public inherited sharing class BusinessDossierSelector extends fflib_SObjectSelector implements IBusinessDossierSelector  {
 
     public BusinessDossierSelector() {
     }
@@ -17,7 +17,7 @@ public with sharing class BusinessDossierSelector extends fflib_SObjectSelector 
                 Business_Dossier__c.Name,
                 Business_Dossier__c.Account__c,
                 Business_Dossier__c.Account__r.Id,
-                Business_Dossier__c.Account__r.name
+                Business_Dossier__c.Account__r.Name
         };
     }
 

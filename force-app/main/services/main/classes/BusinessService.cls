@@ -34,10 +34,6 @@ public with sharing class BusinessService {
         return newInstance().requestVat(dossierNumber);
     }
 
-    public static Boolean checkDossier(String dossierNumber, String establishmentNumber){
-        return newInstance().checkDossier(dossierNumber, establishmentNumber);
-    }
-
     /*
     public static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         return newInstance().createAccountForDossier(accountId, dossier, unitOfWork);

@@ -3,7 +3,7 @@ Author          : ValerijsProkudins
 
 TODO: update user search with SOSL
 ******************************************************************************************/
-public with sharing class UserSelector extends fflib_SObjectSelector implements IUserSelector {
+public inherited sharing class UserSelector extends fflib_SObjectSelector implements IUserSelector {
     public UserSelector() {
 //        super(false, // Do not include FieldSet fields
 //                true,  // enforce Object level security

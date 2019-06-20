@@ -1,7 +1,7 @@
 /****************************************************************************************
 Author          : DanNicholson
 ******************************************************************************************/
-public with sharing class DossierAddressSelector extends fflib_SObjectSelector implements IDossierAddressSelector  {
+public inherited sharing class DossierAddressSelector extends fflib_SObjectSelector implements IDossierAddressSelector  {
 
     public DossierAddressSelector() {
 //        super(false, // Do not include FieldSet fields

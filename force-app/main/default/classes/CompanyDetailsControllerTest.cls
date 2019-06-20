@@ -56,44 +56,45 @@ public with sharing class CompanyDetailsControllerTest {
         test.stopTest();
     }
 
-    @isTest
-    public static void createDossierTwoParamTest(){
-
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
-        
-        // preparing service input data
-        Account acc = new Account(Name = 'Test', Id=fflib_IDGenerator.generate(Account.SObjectType));
-        String dossierNumber = '123456';
-        String establishmentNumber = '123456';
-        Id accountId = acc.Id;
-        // preparing service output data
-        DutchBusinessDto.DutchBusinessGetDossierResponse serviceResponse = new DutchBusinessDto.DutchBusinessGetDossierResponse();
-        serviceResponse.dossier_number = dossierNumber;
-        //DutchBusinessDto.DutchBusinessGetDossierResponse outputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
-        AuraResponseWrapper output = new AuraResponseWrapper((Object)serviceResponse);
-                
-        mocks.startStubbing();
-        mocks.when(mockService.getDossier(dossierNumber, establishmentNumber)).thenReturn(serviceResponse);
-        mocks.when(mockService.upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId())).thenReturn(new list<object>());
-        mocks.when(mockService.updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject())).thenReturn('output');
-        mocks.when(mockService.getDossierAccount(dossierNumber)).thenReturn(new Account());
-        
-        mocks.stopStubbing();
-        Application.Service.setMock(IBusinessService.class, mockService);
-
-        test.startTest();
-        Object result = CompanyDetailsController.createDossier(dossierNumber, establishmentNumber);
-
-        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber, establishmentNumber);
-        ((IBusinessService)mocks.verify(mockService, 0)).getDossierAccount(dossierNumber);
-        // ((IBusinessService)mocks.verify(mockService, 1)).upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId());
-        // ((IBusinessService)mocks.verify(mockService, 1)).updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject());
-        
-        test.stopTest();
-
-
-    }
+    // JB: removed since we don't use the tested method
+//    @isTest
+//    public static void createDossierTwoParamTest(){
+//
+//        fflib_ApexMocks mocks = new fflib_ApexMocks();
+//        IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
+//
+//        // preparing service input data
+//        Account acc = new Account(Name = 'Test', Id=fflib_IDGenerator.generate(Account.SObjectType));
+//        String dossierNumber = '123456';
+//        String establishmentNumber = '123456';
+//        Id accountId = acc.Id;
+//        // preparing service output data
+//        DutchBusinessDto.DutchBusinessGetDossierResponse serviceResponse = new DutchBusinessDto.DutchBusinessGetDossierResponse();
+//        serviceResponse.dossier_number = dossierNumber;
+//        //DutchBusinessDto.DutchBusinessGetDossierResponse outputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
+//        AuraResponseWrapper output = new AuraResponseWrapper((Object)serviceResponse);
+//
+//        mocks.startStubbing();
+//        mocks.when(mockService.getDossier(dossierNumber, establishmentNumber)).thenReturn(serviceResponse);
+//        mocks.when(mockService.upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId())).thenReturn(new list<object>());
+//        mocks.when(mockService.updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject())).thenReturn('output');
+//        mocks.when(mockService.getDossierAccount(dossierNumber)).thenReturn(new Account());
+//
+//        mocks.stopStubbing();
+//        Application.Service.setMock(IBusinessService.class, mockService);
+//
+//        test.startTest();
+//        Object result = CompanyDetailsController.createDossier(dossierNumber, establishmentNumber);
+//
+//        ((IBusinessService)mocks.verify(mockService, 1)).getDossier(dossierNumber, establishmentNumber);
+//        ((IBusinessService)mocks.verify(mockService, 0)).getDossierAccount(dossierNumber);
+//        // ((IBusinessService)mocks.verify(mockService, 1)).upsertAccountAndDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), fflib_Match.anyId());
+//        // ((IBusinessService)mocks.verify(mockService, 1)).updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject());
+//
+//        test.stopTest();
+//
+//
+//    }
 
 
 
