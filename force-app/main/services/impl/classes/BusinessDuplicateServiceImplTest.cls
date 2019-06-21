@@ -17,7 +17,8 @@ private class BusinessDuplicateServiceImplTest {
 
         Boolean result = true;
         Test.startTest();
-        result = BusinessDuplicateService.checkDossier('1234', '1234');
+        Business_Dossier__c dossier2 = BusinessDuplicateService.checkSingleDuplicateDossier('1234', '1234');
+        result = dossier2 != null ? true : false;
         Test.stopTest();
         System.assert(!result);
     }
@@ -36,7 +37,8 @@ private class BusinessDuplicateServiceImplTest {
 
         Boolean result = false;
         Test.startTest();
-        result = BusinessDuplicateService.checkDossier('1234', '1234');
+        Business_Dossier__c dossier2 = BusinessDuplicateService.checkSingleDuplicateDossier('1234', '1234');
+        result = dossier2 != null ? true : false;
         Test.stopTest();
         System.assert(result);
     }
