@@ -18,15 +18,12 @@ public inherited sharing class BusinessDossierSelector extends fflib_SObjectSele
                 Business_Dossier__c.Dossier_Number__c,
                 Business_Dossier__c.Establishment_Number__c,
                 Business_Dossier__c.VAT_Number__c,
-                Business_Dossier__c.Account__c,
-                Business_Dossier__c.Account__r.Id,
-                Business_Dossier__c.Account__r.Name
-
+                Business_Dossier__c.Account__c
         };
     }
 
     public Schema.SObjectType getSObjectType() {
-        return Business_Dossier__c.sObjectType;
+        return Business_Dossier__c.SObjectType;
     }
 
     public List<Business_Dossier__c> selectByDossierNumber(Set<String> dossierNumSet, Boolean enforceFLS){//, String sortedBy, String sortedDirection) {
@@ -65,11 +62,5 @@ public inherited sharing class BusinessDossierSelector extends fflib_SObjectSele
     public List<Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) { // ehhhh this is standard behavior
         return (List<Business_Dossier__c>) selectSObjectsById(dosserIdSet);
     }
-
-//    public List<Business_Dossier__c> selectByDossierNumbers(Set<String> dossierNumSet, Set<String> establishmentNumSet) {
-//        return null;
-//    }
-
-
 
 }
