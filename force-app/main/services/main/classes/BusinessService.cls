@@ -16,12 +16,16 @@ public with sharing class BusinessService {
         return newInstance().insertDossier(insertDossierRequestDTOS);
     }
 
-    public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
-        return newInstance().upsertAccountAndDossier(dossier, accountId);
+    public static List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
+        return newInstance().insertAccount(dataVendorDossiers);
     }
-    public static Account getDossierAccount(String dossierNum){
-        return newInstance().getDossierAccount(dossierNum);
-    }
+
+//    public static List<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+//        return newInstance().upsertAccountAndDossier(dossier, accountId);
+//    }
+//    public static Account getDossierAccount(String dossierNum){
+//        return newInstance().getDossierAccount(dossierNum);
+//    }
     public static Boolean deleteDossier(Id accountId){
         return newInstance().deleteDossier(accountId);
     }

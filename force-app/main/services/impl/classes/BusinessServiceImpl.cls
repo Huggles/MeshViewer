@@ -4,12 +4,189 @@ Description     : Service layer for DutchBusiness webservice calls and data proc
 ******************************************************************************************/
 public with sharing class BusinessServiceImpl implements IBusinessService {
 
-    public List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS) {
+    public List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> insertDossierRequestDTOS) {
+        // demarkate the transaction
+        // no CRUD and FLS checks since this needs to be done in system mode. The customer has paid for the data fetched
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        List<Business_Dossier__c> dossiers = insertDossier(insertDossierRequestDTOS, unitOfWork);
+        unitOfWork.commitWork();
+        return dossiers;
+    }
+
+    public List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
+        // CRUD and FLS checks since the user might not be allowed to create accounts and the admin might have wrongly added the global action to the profile
+        fflib_SObjectUnitOfWork.IDML dml = new DMLWithCRUD();
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(dml);
+        List<InsertAccountResponseDTO> responses = insertAccount(dataVendorDossiers, unitOfWork);
+        try {
+            unitOfWork.commitWork();
+        } catch(DMLManager.CRUDException e) {
+            // TODO: improve the error message
+            throw new CCCrudException(e);
+        }
+        return responses;
+    }
+
+    private List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers, fflib_ISObjectUnitOfWork unitOfWork) {
+        List<InsertAccountResponseDTO> responses = new List<InsertAccountResponseDTO>();
+        for (DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier : dataVendorDossiers) {
+            Account account = mapDataVendorToAccount(dataVendorDossier, new Account());
+            List<Account> duplicateAccounts = BusinessDuplicateService.checkForAccountDuplicates(account);
+            if (duplicateAccounts.size() > 1) {
+                throw new CCDuplicateException(Label.Dossier_Multiple_Account_Duplicates_Found);
+            }
+            if (duplicateAccounts.size() == 1) {
+                account = duplicateAccounts.get(0);
+            }
+            InsertAccountResponseDTO response = new InsertAccountResponseDTO(dataVendorDossier, account);
+            responses.add(response);
+        }
+        return responses;
+    }
+
+    private Account mapDataVendorToAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Account account) {
+        account.Name = dataVendorDossier.trade_name_full;
+        return account;
+    }
+
+    private List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS, fflib_ISObjectUnitOfWork unitOfWork) {
         List<Business_Dossier__c> returnList = new List<Business_Dossier__c>();
         for (InsertDossierRequestDTO insertDossierRequestDTO : InsertDossierRequestDTOS) {
-            // returnList.add(map());
+            Business_Dossier__c dossier = mapDataVendorDataToDossier(insertDossierRequestDTO.dossier, new Business_Dossier__c());
+            unitOfWork.registerNew(dossier, Business_Dossier__c.Account__c, new Account(Id = insertDossierRequestDTO.accountId));
+            
+            Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
+            unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
+
+            Dossier_Address__c correspondenceAddress = mapDataVendorDataToCorrespondenceAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
+            unitOfWork.registerNew(correspondenceAddress, Dossier_Address__c.Business_Data__c, dossier);
+            
+            List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(insertDossierRequestDTO.dossier, new List<Business_Data_SBI__c>());
+            for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
+                unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, dossier);
+            }
+            returnList.add(dossier);
         }
         return returnList;
+    }
+
+    private Business_Dossier__c mapDataVendorDataToDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Business_Dossier__c dossierDB) {
+        String trade_names = '';
+        // TODO: move this to a list of tradelist (seperate sObject)
+        if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.size() > 0) {
+            // Condense all trade names into single field, seperated by new lines.
+            for (Integer i = 0; i < dataVendorDossier.trade_names.size(); i++) {
+                trade_names += dataVendorDossier.trade_names[i] + (i == dataVendorDossier.trade_names.size()-1 ? '' : ', ');
+            }
+            dossierDB.Trade_Names__c = trade_names;
+        }
+        if(dataVendorDossier.legal_name != null && dataVendorDossier.legal_name != ''){
+            dossierDB.Name = dataVendorDossier.legal_name;//dataVendorDossier.legal_name;
+        }else{
+            dossierDB.Name = dataVendorDossier.trade_name_full;//dataVendorDossier.legal_name;
+        }
+        dossierDB.Dossier_Number__c = dataVendorDossier.dossier_number;
+        dossierDB.Establishment_Number__c = dataVendorDossier.establishment_number;
+        dossierDB.Main_Establishment_Number__c = dataVendorDossier.main_establishment_number;
+        dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment; //convertToBoolean(dataVendorDossier.indication_main_establishment);
+        dossierDB.Rsin_Number__c = String.valueOf(dataVendorDossier.rsin_number);
+        dossierDB.Chamber_Number__c = convertToInteger(dataVendorDossier.chamber_number);
+        dossierDB.Legal_Form_Code__c = convertToInteger(dataVendorDossier.legal_form_code);
+        dossierDB.Legal_Form_Text__c = dataVendorDossier.legal_form_text;//;convertToString(dataVendorDossier.legal_form_text);
+        dossierDB.Indication_Organisation_Code__c = dataVendorDossier.indication_organisation_code;//convertToString(dataVendorDossier.indication_organisation_code);
+        dossierDB.Trade_Name_45__c = dataVendorDossier.trade_name_45;
+        dossierDB.Trade_Name_Full__c = dataVendorDossier.trade_name_full;
+        dossierDB.Trade_Names__c = trade_names;
+        dossierDB.Telephone_Number__c = dataVendorDossier.telephone_number;
+        dossierDB.Mobile_Number__c = dataVendorDossier.mobile_number;
+        dossierDB.Domain_Name__c = dataVendorDossier.domain_name;
+
+        dossierDB.Authorized_Share_Capital__c = dataVendorDossier.authorized_share_capital;
+        dossierDB.Authorized_Share_Capital_Currency__c = dataVendorDossier.authorized_share_capital_currency;
+        dossierDB.Class_Personnel__c = convertToString(dataVendorDossier.class_personnel);
+        dossierDB.Class_Personnel_Fulltime__c = convertToString(dataVendorDossier.class_personnel_fulltime);
+        dossierDB.Continuation_Date__c = validDate(dataVendorDossier.continuation_date);
+        dossierDB.Discontinuation_Date__c = validDate(dataVendorDossier.discontinuation_date);
+        dossierDB.Establishment_Date__c = validDate(dataVendorDossier.establishment_date);
+        dossierDB.Founding_Date__c = validDate(dataVendorDossier.founding_date);
+        dossierDB.Issued_Share_Capital__c = convertToInteger(dataVendorDossier.issued_share_capital);
+        dossierDB.Issued_Share_Capital_Currency__c = dataVendorDossier.issued_share_capital_currency;
+        dossierDB.Paid_Up_Share_Capital__c = convertToInteger(dataVendorDossier.paid_up_share_capital);
+        dossierDB.Paid_Up_Share_Capital_Currency__c = dataVendorDossier.paid_up_share_capital_currency;
+        dossierDB.Personnel__c = dataVendorDossier.personnel;
+        dossierDB.Personnel_Fulltime__c = dataVendorDossier.personnel_fulltime;
+        dossierDB.Personnel_Reference_Date__c = validDate(dataVendorDossier.personnel_reference_date);
+        dossierDB.Primary_Sbi_Code__c = dataVendorDossier.primary_sbi_code;
+        dossierDB.Primary_Sbi_Code_Text__c = dataVendorDossier.primary_sbi_code_text;
+        dossierDB.Secondary_Sbi_Code_1__c = dataVendorDossier.secondary_sbi_code1;
+        dossierDB.Secondary_Sbi_Code_1_Text__c = dataVendorDossier.secondary_sbi_code1_text;
+        dossierDB.Secondary_Sbi_Code_2__c = dataVendorDossier.secondary_sbi_code2;
+        dossierDB.Secondary_Sbi_Code_2_Text__c = dataVendorDossier.secondary_sbi_code2_text;
+
+        dossierDB.Chamber_Code__c = dataVendorDossier.chamber_number;
+        dossierDB.Status__c = determineStatus(dataVendorDossier);
+
+        dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary;
+        dossierDB.Year__c = dataVendorDossier.annual_financial_statement_summary_year;
+        dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary_profit;
+        dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary_turnover;
+        dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary_assets;
+
+        dossierDB.Personnel_CI__c = dataVendorDossier.personnel_ci;
+        dossierDB.Class_Personnel_CI__c = convertToString(dataVendorDossier.class_personnel_ci);
+        dossierDB.Personnel_CI_Reference_Date__c = validDate(dataVendorDossier.personnel_ci_reference_date);
+        dossierDB.Contact_Initials__c = dataVendorDossier.contact_initials;
+        dossierDB.Contact_Prefix__c = dataVendorDossier.contact_prefix;
+        dossierDB.Contact_Surname__c = dataVendorDossier.contact_surname;
+        dossierDB.Contact_Title1__c = dataVendorDossier.contact_title1;
+        dossierDB.Contact_Title2__c = dataVendorDossier.contact_title2;
+        dossierDB.Contact_Gender__c = dataVendorDossier.contact_gender;
+        if (dataVendorDossier.indication_bankruptcy != null) { dossierDB.Indication_Bankruptcy__c = dataVendorDossier.indication_bankruptcy;}
+        if (dataVendorDossier.indication_dip != null) { dossierDB.Indication_Dip__c = dataVendorDossier.indication_dip;}
+        if (dataVendorDossier.indication_economically_active != null) { dossierDB.Indication_Economically_Active__c = dataVendorDossier.indication_economically_active;}
+        if (dataVendorDossier.indication_export != null) { dossierDB.Indication_Export__c = dataVendorDossier.indication_export;}
+        if (dataVendorDossier.indication_import != null) { dossierDB.Indication_Import__c = dataVendorDossier.indication_import;}
+        if (dataVendorDossier.indication_main_establishment != null) { dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;}
+        if (dataVendorDossier.indication_non_mailing != null) { dossierDB.Indication_Non_Mailing__c = dataVendorDossier.indication_non_mailing;}
+        dossierDB.Insolvencies__c = dataVendorDossier.insolvencies;
+
+        //dossierDB.Sbi_Collection__c = dataVendorDossier.sbi_collection;
+
+        dossierDB.Structure__c = dataVendorDossier.structure;
+        dossierDB.Number_Of_Subsidiaries__c = dataVendorDossier.structure_number_of_subsidiaries;
+        dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure_parent;
+        dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dataVendorDossier.structure_ultimate_parent;
+        return dossierDB;
+    }
+
+    private Dossier_Address__c mapDataVendorDataToEstablishmentAddress(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Dossier_Address__c addressDB) {
+        addressDB.Name = dataVendorDossier.establishment_address_original_postcode + ' ' + dataVendorDossier.establishment_address_original_street; //dataVendorDossier.establishment_address_original_address;
+        addressDB.Postcode__c = dataVendorDossier.establishment_address_original_postcode;
+        addressDB.Street__c = dataVendorDossier.establishment_address_original_street;
+        addressDB.City__c = dataVendorDossier.establishment_address_original_city;
+        addressDB.House_Number__c = String.valueOf(dataVendorDossier.establishment_address_original_house_number);
+        addressDB.House_Number_Addition__c = dataVendorDossier.establishment_address_original_house_number_addition;
+        addressDB.Country__c = dataVendorDossier.establishment_address_original_country;
+        addressDB.Type__c = 'Establishment';
+        return addressDB;
+    }
+
+    private Dossier_Address__c mapDataVendorDataToCorrespondenceAddress(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Dossier_Address__c addressDB) {
+        addressDB.Name = dataVendorDossier.correspondence_address_original_postcode + ' ' + dataVendorDossier.correspondence_address_original_street; //dataVendorDossiercorrespondence_address_original_address;
+        addressDB.Postcode__c = dataVendorDossier.correspondence_address_original_postcode;
+        addressDB.Street__c = dataVendorDossier.correspondence_address_original_street;
+        addressDB.City__c = dataVendorDossier.correspondence_address_original_city;
+        addressDB.House_Number__c = String.valueOf(dataVendorDossier.correspondence_address_original_house_number);
+        addressDB.House_Number_Addition__c = dataVendorDossier.correspondence_address_original_house_number_addition;
+        addressDB.Country__c = dataVendorDossier.correspondence_address_original_country;
+        addressDB.Type__c = 'Correspondence';
+        return addressDB;
+    }
+
+    private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, List<Business_Data_SBI__c> sbiCodesDB) {
+        // currently just returns the sbi collection of the dataVendorDossie since we used the SObject as a DTO
+        sbiCodesDB = dataVendorDossier.sbi_collection;
+        return sbiCodesDB;
     }
 
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
@@ -72,14 +249,13 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
     private static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){
         try{
-            List<String> existinAccountIds = new List<String>();
+            List<Account> existinAccounts = new List<Account>();
             Account acc = new Account();
 
             if(accountId == null || AccountId == ''){ // create an account
-                existinAccountIds = checkForAccountDuplicates(acc);
-                system.debug('existinAccountIds = '+ existinAccountIds);
-                if(existinAccountIds.size()>0){ // dup found -> need to update
-                    acc.Id = existinAccountIds.get(0);
+                existinAccounts = BusinessDuplicateService.checkForAccountDuplicates(acc); // eh duh? this will allways return no ids
+                if(existinAccounts.size()>0){ // dup found -> need to update
+                    acc.Id = existinAccounts.get(0).Id;
                     unitOfWork.registerDirty(acc);
                 }else{ // new account
                     acc.Name = dossier.trade_name_full;
@@ -97,29 +273,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }
     }
 
-    // checks for account duplicates. Return a List of IDs if duplicates exist.
-    private static List<String> checkForAccountDuplicates(Account acc){
-        List<String> result = new List<String>();
-        List<Account> accounts = new List<Account>();
-        accounts.add(acc);
-        try{
-            Datacloud.FindDuplicatesResult[] results = Datacloud.FindDuplicates.findDuplicates(accounts);
-            for (Datacloud.FindDuplicatesResult dupeResult : results) {
-                for (Datacloud.DuplicateResult dupeRes : dupeResult.getDuplicateResults()) {
-                    for (Datacloud.MatchResult matchRes : dupeRes.getMatchResults()) {
-                        for (Datacloud.MatchRecord matchRec : matchRes.getMatchRecords()) {
-                            result.add((string)matchRec.getRecord().get('id'));
-                        }
-                    }
-                }
-            }
-        }catch(System.HandledException e){
-            system.debug('exception = '+e);
-            //return result;
-            //expected, no dup rules for account are active
-        }
-        return result;
-    }
+
 
     private static Business_Dossier__c saveBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork) {
         try{

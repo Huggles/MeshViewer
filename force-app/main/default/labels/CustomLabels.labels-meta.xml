@@ -246,6 +246,13 @@
         <value>Account Updated</value>
     </labels>
     <labels>
+        <fullName>Dossier_Multiple_Account_Duplicates_Found</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Multiple Account Duplicates Found</shortDescription>
+        <value>Multiple account duplicates have been found. No matching between business data and account possible. Please delete the account duplicates and try again.</value>
+    </labels>
+    <labels>
         <fullName>Dossier_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>

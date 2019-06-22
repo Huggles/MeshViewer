@@ -10,4 +10,9 @@ public with sharing class InsertDossierRequestDTO {
 
     public Id accountId { get; set; }
 
+    public InsertDossierRequestDTO(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Id accountId) {
+        this.dossier = dossier;
+        this.accountId = accountId;
+    }
+
 }

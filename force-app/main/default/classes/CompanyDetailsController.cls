@@ -72,39 +72,36 @@ public with sharing class CompanyDetailsController {
         Business_Dossier__c dossierFromDB = BusinessDuplicateService.checkSingleDuplicateDossier(dossierNumber, establishmentNumber);
         Boolean dossierExisting = dossierFromDB == null ? false : true;
 
-        if(dossierFromDB == null){ //dossier doesn't exist already
+        if(!dossierExisting){ //dossier doesn't exist already
+            Savepoint sp = Database.setSavepoint();
             try{
                 // TODO: wrap the three business service calls into one. This is functionality that should be defined on the serivce layer
                 // fetch the dossier from the backend
                 DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber, establishmentNumber);
-                // insert the dossier (and have the dossier be returned)
 
                 // create an account if the account id is null
-                if (accountId != null) {
-
+                if (accountId == null) {
+                    // TODO: add validation exception handling
+                    try {
+                        List<InsertAccountResponseDTO> accountResponseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dossier});
+                        accountId = accountResponseDTOS.get(0).account.Id;
+                    } catch (CCDuplicateException e) { // multiple duplicates have been found
+                        Database.rollback(sp);
+                        return new AuraResponseWrapper(e);
+                    }
                 }
-                //
-                // 2. insert the dossier (we already checked if the dossier is there)
-                // 3a. if no account Id, insert a new account
-                // 3b. else nothing
-                list<Object> result = new list<object>();
-                result = BusinessService.upsertAccountAndDossier(dossier, accountId);
-                BusinessService.updateAccountDossier(dossier);
-                AuraResponseWrapper output = new AuraResponseWrapper(result);
-                return output;
+
+                // insert the dossier (and have the dossier be returned)
+                List<Business_Dossier__c> dossierDBs = BusinessService.insertDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dossier, accountId)});
+                dossierFromDB = dossierDBs[0];
             } catch (CCException e) {
-                // TODO: remove the rollback and move it to the business service layer
-                Application.rollback(); // perform database rollback
+                Database.rollback(sp);
                 return new AuraResponseWrapper(e);
             } catch (Exception e) {
                 ErrorLogUtil.logException(e);
-                // TODO: remove the rollback and move it to the business service layer
-                Application.rollback();
+                Database.rollback(sp);
                 return new AuraResponseWrapper(e, System.Label.WSCall_Generic_UI_Exception);
             }
-        } else { // respond with the dossier and account?
-            // TODO: we should give a message the dossier already exists
-
         }
         CreateDossierResult result = new CreateDossierResult(dossierFromDB, dossierExisting);
         return new AuraResponseWrapper(result);

@@ -22,4 +22,13 @@ public interface IBusinessService {
 
     //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
     //list<String> checkForAccountDuplicates(Account acc);
+
+    /**
+     * Creates new accounts and inserts them into the DB based on the given dossiers coming from the datavendor. Returns the created accounts.
+     *
+     * @param dataVendorDossiers
+     *
+     * @return
+     */
+    List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers);
 }

@@ -15,4 +15,13 @@ public interface IBusinessDuplicateService {
      */
     Business_Dossier__c checkSingleDuplicateDossier(String dossierNumber, String establishmentNumber);
 
+    /**
+     * checks for account duplicates. Return a List with the duplicate accounts if duplicates for the given account exist.
+     *
+     * @param acc
+     *
+     * @return
+     */
+    List<Account> checkForAccountDuplicates(Account acc);
+
 }

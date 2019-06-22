@@ -53,7 +53,6 @@ public with sharing class DMLManager {
 
 
     // Pass-thru methods to raw DML operations.
-    // Don't really need insert as in momice at least as of now.
     public static void insertAsSystem(sObject obj){ insert obj; }
     public static void updateAsSystem(sObject obj){ update obj; }
     public static void upsertAsSystem(sObject obj){ upsert obj; }
