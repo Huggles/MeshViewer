@@ -23,6 +23,7 @@ public with sharing class CompanyDetailsControllerTest {
         test.stopTest();
 
     }
+    /**
     @isTest
     public static void createDossierOneParamTest(){
 
@@ -55,6 +56,7 @@ public with sharing class CompanyDetailsControllerTest {
         ((IBusinessService)mocks.verify(mockService, 1)).updateAccountDossier((DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject());
         test.stopTest();
     }
+    */
 
     // JB: removed since we don't use the tested method
 //    @isTest
