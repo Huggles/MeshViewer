@@ -312,8 +312,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
     public static Boolean deleteDossier(Id accountId) {
         try{
-            Account acct = AccountSelector.newInstance().selectById(accountId);
-            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{acct.Business_Dossier__c});
+            List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
+            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{accounts.get(0).Business_Dossier__c});
             if (dossierList.size() == 1) {
                 delete dossierList[0];
                 return true;
