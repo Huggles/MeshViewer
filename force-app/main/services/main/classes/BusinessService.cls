@@ -34,12 +34,12 @@ public with sharing class BusinessService {
         return newInstance().selectDossier(dossierId);
     }
 
-    public static List<Object> upsertDossier(Business_Dossier__c dossier){
-        return newInstance().upsertDossier(dossier);
+    public static List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS) {
+        return newInstance().updateDossiersWithDataVendorData(updateDossierRequestDTOS);
     }
 
-    public static DutchBusinessDto.DutchBusinessVatNumber requestVat(String dossierNumber){
-        return newInstance().requestVat(dossierNumber);
+    public static Business_Dossier__c setVatNumber(String dossierNumber){
+        return newInstance().setVatNumber(dossierNumber);
     }
 
     public static IBusinessService newInstance() {

@@ -15,9 +15,13 @@ public inherited sharing class BusinessDossierSelector extends fflib_SObjectSele
         return new List<Schema.SObjectField>{
                 Business_Dossier__c.Id,
                 Business_Dossier__c.Name,
+                Business_Dossier__c.Dossier_Number__c,
+                Business_Dossier__c.Establishment_Number__c,
+                Business_Dossier__c.VAT_Number__c,
                 Business_Dossier__c.Account__c,
                 Business_Dossier__c.Account__r.Id,
                 Business_Dossier__c.Account__r.Name
+
         };
     }
 
@@ -25,13 +29,11 @@ public inherited sharing class BusinessDossierSelector extends fflib_SObjectSele
         return Business_Dossier__c.sObjectType;
     }
 
-
-    public List<Business_Dossier__c> selectByDossierNumber(set<String> dossierNumSet){//, String sortedBy, String sortedDirection) {
+    public List<Business_Dossier__c> selectByDossierNumber(Set<String> dossierNumSet, Boolean enforceFLS){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
-        List<Business_Dossier__c> result = new list<Business_Dossier__c>();
-        queryFactory.setEnforceFLS(true);
+        List<Business_Dossier__c> result = new List<Business_Dossier__c>();
+        queryFactory.setEnforceFLS(enforceFLS);
         queryFactory.setCondition('Dossier_Number__c IN :dossierNumSet');
-        queryFactory.setLimit(20);
         result = Database.query(queryFactory.toSOQL());
         return result;
     }

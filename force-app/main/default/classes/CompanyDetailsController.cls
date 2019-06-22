@@ -181,17 +181,20 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object getVATDetails(String dossierId){
         try{
-            // 1. Get existing dossier from ID
-            // TODO: remove this. Can be replaced by simple new Dossier(Id = dossierId)
-            Business_Dossier__c result = BusinessService.selectDossier(dossierId);        
+
+            Business_Dossier__c dossier = BusinessService.setVatNumber(dossierId);
             // 2. WebService call to get VAT
-            DutchBusinessDto.DutchBusinessVatNumber vatResponse = BusinessService.requestVAT(result.Dossier_Number__c);
-            // 3. Add VAT number to dossier
-            result.VAT_Number__c = vatResponse.vat_number;
-            // 4. Save
-            BusinessService.upsertDossier(result);
-            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
-            return output;
+
+//            String vatNumber = BusinessService.requestVat(dossier.Dossier_Number__c);
+//            dossier.VAT_Number__c = vatNumber;
+//            BusinessService.(new List<UpdateDossierRequestDTO>{new UpdateDossierRequestDTO()})
+//
+//
+//            // 4. Save
+//            BusinessService.upsertDossier(result);
+//            AuraResponseWrapper output = new AuraResponseWrapper((Object)result);
+//            return output;
+            return new AuraResponseWrapper(dossier);
         } catch (CCException e) {
             // TODO: remove the rollback and move it to the business service layer
             Application.rollback(); // perform database rollback

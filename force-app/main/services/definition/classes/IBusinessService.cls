@@ -35,7 +35,6 @@ public interface IBusinessService {
      */
     Boolean deleteDossier(Id accountId);
 
-    // TODO: can potentially be removed
     /**
      * Retrieves the dossier from the backend using the Salesforce Id of the dossier
      *
@@ -45,26 +44,43 @@ public interface IBusinessService {
      */
     Business_Dossier__c selectDossier(Id dossierId);
 
+    /**
+     * Updates a given set of dossiers with the data from the backend. Used in the nightly update function
+     *
+     * @param updateDossierRequestDTOS
+     *
+     * @return
+     */
+    List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS);
+
     // TODO: replace by update (we already have insert and upserting is difficult with the fflib framework)
     /**
-     * Inserts a dossier in backend DTO format into the DB and returns the SOBject. Bulkified
+     * Upserts a dossier
      *
-     * @param InsertDossierRequestDTOS
+     * @param dossier
      *
      * @return
      */
     List<Object> upsertDossier(Business_Dossier__c dossier);
 
     /**
-     * Requests the VAT number
+     * Sets the vat number on the dossier with the given dossiernumber. Requests the vat number based on the dossier number. If a dossier in the database with the same dossier number but
+     * with a different establishment number already has a Vat number that number is returned. Otherwise the backend will
+     * be queried. If no vat number is found a CCNoVatException will be thrown. Else the vat number is set on the db and the record is updated.
      *
-     * @param dossierNumber
+     * @param dossierId
+     *
+     * @return the updated dossier
+     */
+     Business_Dossier__c setVatNumber(Id dossierId);
+
+    /**
+     * Inserts data coming from the data vendor as new dossiers into the db
+     *
+     * @param InsertDossierRequestDTOS
      *
      * @return
      */
-    DutchBusinessDto.DutchBusinessVatNumber requestVAT(String dossierNumber);
-
-
     List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS);
 
     //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
