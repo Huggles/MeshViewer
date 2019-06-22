@@ -40,95 +40,12 @@ public with sharing class BusinessServiceImplTest {
         mocks.when(mockWS.dutchBusinessSearchParameters((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenReturn(output);
         mocks.stopStubbing();
         Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
-
-
         List<DutchBusinessDto.DutchBusinessReference> results = BusinessService.searchForDossiers(searchParams);
-        system.debug(results);
         system.assertEquals(results.get(0).dossier_number, '199');
-
     }
 
 
-
-    // @isTest
-    // public static void upsertAccountAndDossierExistingAccountAndDossier(){
-    //     fflib_ApexMocks mocks = new fflib_ApexMocks();
-    //     fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-    //     IBusinessDossierSelector selectorMockDossier = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
-    //     IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
-    //     IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
-
-    //     mocks.startStubbing();
-
-    //     Account ExistingAccount = new Account(Id=fflib_IDGenerator.generate(Account.SObjectType), Name='Test');
-    //     Business_Dossier__c ExistingDossier = new Business_Dossier__c(Id=fflib_IDGenerator.generate(Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
-    //     DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
-    //     InputDossier.dossier_number = '123456';
-    //     InputDossier.legal_name = 'Test';
-    //     InputDossier.trade_name_full = 'Test';
-    //     InputDossier.trade_names = new list<String>{'Test', 'Test2', 'Test3'};
-
-
-
-    //     mocks.when(selectorMockDossier.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
-    //     mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Business_Dossier__c>{ExistingDossier});
-    //     mocks.when(selectorMockAccount.sObjectType()).thenReturn(Account.SObjectType);
-    //     mocks.when(selectorMockAccount.selectById(new set<Id>{ExistingAccount.Id})).thenReturn(new list<Account>{ExistingAccount});
-
-
-    //     mocks.stopStubbing();
-
-    //     Application.Selector.setMock(selectorMockAccount);
-    //     Application.Selector.setMock(selectorMockDossier);
-    //     Application.UnitOfWork.setMock(uowMock);
-
-    //     test.startTest();
-
-    //     list<Object> results = BusinessService.upsertAccountAndDossier(InputDossier, ExistingAccount.Id);
-    //     system.debug(results);
-    //     test.stopTest();
-
-    // }
-    // @isTest
-    // public static void upsertAccountAndDossierNewAccountAndDossier(){
-    //     fflib_ApexMocks mocks = new fflib_ApexMocks();
-    //     fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-    //     IBusinessDossierSelector selectorMockDossier = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
-    //     IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
-    //     IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
-
-    //     mocks.startStubbing();
-
-    //     //Account ExistingAccount = new Account(Id=fflib_IDGenerator.generate(Account.SObjectType), Name='Test'); 
-    //     //Business_Dossier__c ExistingDossier = new Business_Dossier__c(Id=fflib_IDGenerator.generate(Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
-    //     DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
-    //     InputDossier.dossier_number = '123456';
-    //     InputDossier.legal_name = 'Test';
-    //     InputDossier.trade_name_full = 'Test';
-    //     InputDossier.trade_names = new list<String>{'Test', 'Test2', 'Test3'};
-
-
-
-    //     mocks.when(selectorMockDossier.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
-    //     mocks.when(selectorMockDossier.selectByDossierNumber(new set<String>{InputDossier.dossier_number})).thenReturn(new list<Business_Dossier__c>());
-    //     mocks.when(selectorMockAccount.sObjectType()).thenReturn(Account.SObjectType);
-    //     //mocks.when(selectorMockAccount.selectById(new set<Id>{ExistingAccount.Id})).thenReturn();
-
-
-    //     mocks.stopStubbing();
-
-    //     //Application.Selector.setMock(selectorMockAccount);
-    //     Application.Selector.setMock(selectorMockDossier);
-    //     Application.UnitOfWork.setMock(uowMock);
-
-    //     test.startTest();
-
-    //     list<Object> results = BusinessService.upsertAccountAndDossier(InputDossier, null);
-    //     system.debug(results);
-    //     test.stopTest();
-
-    // }
-
+/*
     @isTest
     public static void testSaveBusinessDossierUow() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -332,6 +249,9 @@ public with sharing class BusinessServiceImplTest {
         // System.assertEquals(eAddress.House_Number__c, '2');
 
     }
+
+ */
+    
 /*
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
     public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){

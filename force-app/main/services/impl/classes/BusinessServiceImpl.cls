@@ -215,36 +215,36 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }
     }
 
-    public static Account getDossierAccount(String dossierNum){
-        try{
-            //TODO: enhance with duplicate logic. mb account is there but has no dossier
-            List<Business_Dossier__c> dossList = new List<Business_Dossier__c>();
-
-            //set<Integer> dossNumSet = new set<Integer>();
-            //dossNumSet.add(Integer.valueOf(dossierNum));
-            dossList = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossierNum});
-            //dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
-            Account acc;
-            List<Account> accList = new List<Account>();
-            if(dossList.size() >0){
-                set<Id> accIdSet=new set<Id>();
-                for(Business_Dossier__c dbd: dossList){
-                    accIdSet.add(dbd.Account__c);
-                }
-                accList = AccountSelector.newInstance().selectById(accIdSet);
-                return accList.get(0);
-            }
-            //if(dossList.size()>1){
-            //todo: log a warning  that one dossier per system allowed?
-            //}
-            return acc;
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
-    }
+//    public static Account getDossierAccount(String dossierNum){
+//        try{
+//            //TODO: enhance with duplicate logic. mb account is there but has no dossier
+//            List<Business_Dossier__c> dossList = new List<Business_Dossier__c>();
+//
+//            //set<Integer> dossNumSet = new set<Integer>();
+//            //dossNumSet.add(Integer.valueOf(dossierNum));
+//            dossList = BusinessDossierSelector.newInstance().selectByDossierNumber(new set<String>{dossierNum});
+//            //dossList =  [SELECT ID, Name, Account__r.name,  Account__r.Id FROM Business_Dossier__c WHERE Dossier_Number__c = :Integer.valueOf(dossierNum)];//TO DO: move to selector
+//            Account acc;
+//            List<Account> accList = new List<Account>();
+//            if(dossList.size() >0){
+//                set<Id> accIdSet=new set<Id>();
+//                for(Business_Dossier__c dbd: dossList){
+//                    accIdSet.add(dbd.Account__c);
+//                }
+//                accList = AccountSelector.newInstance().selectById(accIdSet);
+//                return accList.get(0);
+//            }
+//            //if(dossList.size()>1){
+//            //todo: log a warning  that one dossier per system allowed?
+//            //}
+//            return acc;
+//        }catch(CCException ex){
+//            throw ex; // we dont log bds exceptions, only throwing them further
+//        }catch(System.Exception ex){
+//            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+//            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+//        }
+//    }
 
 
     private static Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork){

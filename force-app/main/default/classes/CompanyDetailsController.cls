@@ -182,6 +182,7 @@ public with sharing class CompanyDetailsController {
     public static Object getVATDetails(String dossierId){
         try{
             // 1. Get existing dossier from ID
+            // TODO: remove this. Can be replaced by simple new Dossier(Id = dossierId)
             Business_Dossier__c result = BusinessService.selectDossier(dossierId);        
             // 2. WebService call to get VAT
             DutchBusinessDto.DutchBusinessVatNumber vatResponse = BusinessService.requestVAT(result.Dossier_Number__c);
