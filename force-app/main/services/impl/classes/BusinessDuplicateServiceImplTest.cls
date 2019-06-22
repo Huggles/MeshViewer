@@ -11,7 +11,7 @@ private class BusinessDuplicateServiceImplTest {
 
         mocks.startStubbing();
         mocks.when(mockDossierSelector.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
-        mocks.when(mockDossierSelector.selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO('1234', '1234')}, false)).thenReturn(new List<Business_Dossier__c>());
+        mocks.when(mockDossierSelector.selectByDossierNumbers((Set<DossierQueryDTO>)fflib_Match.anyObject(), (Boolean)fflib_Match.eq(false))).thenReturn(new List<Business_Dossier__c>());
         mocks.stopStubbing();
         Application.Selector.setMock(mockDossierSelector);
 
@@ -31,7 +31,7 @@ private class BusinessDuplicateServiceImplTest {
         mocks.startStubbing();
         mocks.when(mockDossierSelector.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
         Business_Dossier__c dossier = new Business_Dossier__c(Id = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType));
-        mocks.when(mockDossierSelector.selectByDossierNumbers(new Set<DossierQueryDTO>{new DossierQueryDTO('1234', '1234')}, false)).thenReturn(new List<Business_Dossier__c>{dossier});
+        mocks.when(mockDossierSelector.selectByDossierNumbers((Set<DossierQueryDTO>)fflib_Match.anyObject(), (Boolean)fflib_Match.eq(false))).thenReturn(new List<Business_Dossier__c>{dossier});
         mocks.stopStubbing();
         Application.Selector.setMock(mockDossierSelector);
 
