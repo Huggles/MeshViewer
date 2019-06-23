@@ -8,6 +8,10 @@ public without sharing class BusinessDuplicateService {
         return newInstance().checkSingleDuplicateDossier(dossierNumber, establishmentNumber);
     }
 
+    public static List<CheckDuplicateDossierResponse> checkForDuplicateDossiers(List<CheckDuplicateDossierRequest> requests) {
+        return newInstance().checkForDuplicateDossiers(requests);
+    }
+
     public static List<Account> checkForAccountDuplicates(Account acc) {
         return newInstance().checkForAccountDuplicates(acc);
     }

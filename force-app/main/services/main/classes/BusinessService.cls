@@ -4,10 +4,6 @@ public with sharing class BusinessService {
         return newInstance().searchForDossiers(searchParams);
     }
 
-//    public static String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier){ // was void before. not tyoo logical to return dossier Id from this method. Cut the corner to both get dossierId for  controller and Not research how to handle void methods  with this framework
-//        return newInstance().updateAccountDossier(dossier);
-//    }
-
     public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber){
         return newInstance().getDossier(dossierNumber, establishmentNumber);
     }
@@ -20,12 +16,6 @@ public with sharing class BusinessService {
         return newInstance().insertAccount(dataVendorDossiers);
     }
 
-//    public static List<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
-//        return newInstance().upsertAccountAndDossier(dossier, accountId);
-//    }
-//    public static Account getDossierAccount(String dossierNum){
-//        return newInstance().getDossierAccount(dossierNum);
-//    }
     public static Boolean deleteDossier(Id accountId){
         return newInstance().deleteDossier(accountId);
     }
@@ -40,6 +30,10 @@ public with sharing class BusinessService {
 
     public static Business_Dossier__c setVatNumber(String dossierNumber){
         return newInstance().setVatNumber(dossierNumber);
+    }
+
+    public static InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId) {
+        return newInstance().insertSingleDossierFromDataVendorData(dossierNumber, establishmentNumber, accountId);
     }
 
     public static IBusinessService newInstance() {

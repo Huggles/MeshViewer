@@ -8,15 +8,43 @@ public without sharing class BusinessDuplicateServiceImpl implements IBusinessDu
     public Business_Dossier__c checkSingleDuplicateDossier(String dossierNumber, String establishmentNumber) {
         try {
             IBusinessDossierSelector selector = BusinessDossierSelector.newInstance();
-            System.debug(selector);
             // query needs to run in system context (no FLS). All users should see all dossiers. Done through the permission set
             List<Business_Dossier__c> dossiers = selector.selectByDossierNumbers(new Set<DossierQueryDTO>{
                     new DossierQueryDTO(dossierNumber, establishmentNumber)
             }, false);
-            System.debug(dossiers);
             return dossiers.size() > 0 ? dossiers[0] : null;
         } catch (System.Exception ex) {
-            System.debug(ex);
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
+        }
+    }
+
+    public List<CheckDuplicateDossierResponse> checkForDuplicateDossiers(List<CheckDuplicateDossierRequest> requests) {
+        try {
+            // prep the query
+            Set<DossierQueryDTO> queryDTOS = new Set<DossierQueryDTO>();
+            for (CheckDuplicateDossierRequest checkDuplicateDossierRequest : requests) {
+                queryDTOS.add(new DossierQueryDTO(checkDuplicateDossierRequest.dossierNumber, checkDuplicateDossierRequest.establishmentNumber));
+            }
+            // execute the query
+            List<Business_Dossier__c> dossiers = BusinessDossierSelector.newInstance().selectByDossierNumbers(queryDTOS, false);
+
+            // map the found dossiers on the request params
+            Map<String, Business_Dossier__c> dossiersByDossierAndEstablishmentNumber = new Map<String, Business_Dossier__c>();
+            for (Business_Dossier__c businessDossier : dossiers) {
+                dossiersByDossierAndEstablishmentNumber.put(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c, businessDossier);
+            }
+            List<CheckDuplicateDossierResponse> result = new List<CheckDuplicateDossierResponse>();
+            for (CheckDuplicateDossierRequest checkDuplicateDossierRequest : requests) {
+                String key = checkDuplicateDossierRequest.dossierNumber + checkDuplicateDossierRequest.establishmentNumber;
+                result.add(new CheckDuplicateDossierResponse(
+                        checkDuplicateDossierRequest.dossierNumber,
+                        checkDuplicateDossierRequest.establishmentNumber,
+                        dossiersByDossierAndEstablishmentNumber.get(key))
+                );
+            }
+            return result;
+        } catch (Exception ex) {
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
             throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
         }

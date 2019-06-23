@@ -22,9 +22,6 @@
         var action = component.get(methodName);
         action.setParams(params);
 
-
-
-
         // Create a callback that is executed after
         // the server-side action returns
         action.setCallback(this, function(response) {
@@ -113,7 +110,7 @@
         component.set('v.step', '3');
 
         // show the right toast
-        if (response.dossierExisting) {
+        if (response.dossierExisted) {
             this.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Business_Data_Exists'), 'success');
         } else {
             if (component.get('v.recordId')) // JB: @dan: why is this needed?

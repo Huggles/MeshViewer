@@ -75,7 +75,7 @@ public interface IBusinessService {
      Business_Dossier__c setVatNumber(Id dossierId);
 
     /**
-     * Inserts data coming from the data vendor as new dossiers into the db
+     * Inserts data coming from the data vendor as new dossiers into the db.
      *
      * @param InsertDossierRequestDTOS
      *
@@ -94,4 +94,18 @@ public interface IBusinessService {
      * @return
      */
     List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers);
+
+    /**
+     * Inserts a single dossier + account into the DB found through the search function (so based on the dossier number and establishment number).
+     * If the dossier is already there, just returns the dossier with a flag it already existed. If the account already exists, just reuses it.
+     * If more than one duplicate account exist, throws a CCDuplicateException. This method is synchronous so only one dossier
+     * can be created since the datavendor only allows one fetch per call
+     *
+     * @param dossierNumber
+     * @param establishmentNumber
+     * @param accountId
+     *
+     * @return
+     */
+    InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId);
 }

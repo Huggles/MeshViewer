@@ -4,9 +4,9 @@ Description     : Wrapper for aura and lwc responses to handle log saving on exc
 ******************************************************************************************/
 public with sharing class AuraResponseWrapper {
  
-@AuraEnabled public Object response;
-@AuraEnabled public String state;
-@AuraEnabled public String errorMsg;
+@AuraEnabled public Object response { get; set; }
+@AuraEnabled public String state { get; set; }
+@AuraEnabled public String errorMsg { get; set; }
 
     public AuraResponseWrapper(Object response, String state, String errorMsg) {
         this.response = response;
@@ -19,27 +19,15 @@ public with sharing class AuraResponseWrapper {
         this.errorMsg = '';
     }
 
-    public AuraResponseWrapper(Exception response) { // TODO: remove the dependency on CCException and make this generic
-        if(response instanceof CCException){
-            this.response = null;
-            this.state = 'ERROR';
-            this.errorMsg = response.getMessage(); //= System.Label.WSCall_Generic_UI_Exception;    // todo handle known types for proper messaging
-        }else{
-            this.response = null;
-            this.state = 'ERROR';
-            this.errorMsg = System.Label.WSCall_Generic_UI_Exception;
-        }
+    public AuraResponseWrapper(Exception response) {
+        this.response = null;
+        this.state = 'ERROR';
+        this.errorMsg = response.getMessage();
     }
 
-    public AuraResponseWrapper(Exception response, Object msg) { // TODO: remove the dependency on CCException and make this generic
-        if(response instanceof CCException){
-            this.response = null;
-            this.state = 'ERROR';
-            this.errorMsg = response.getMessage(); //= System.Label.WSCall_Generic_UI_Exception;    // todo handle known types for proper messaging
-        }else{
-            this.response = null;
-            this.state = 'ERROR';
-            this.errorMsg = String.valueOf(msg);
-        }
+    public AuraResponseWrapper(Exception response, Object msg) {
+        this.response = null;
+        this.state = 'ERROR';
+        this.errorMsg = String.valueOf(msg);
     }
 }

@@ -19,6 +19,43 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         unitOfWork.commitWork();
         return dossiers;
     }
+    
+    public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId) {
+        InsertDossiersFromDataVendorResponseDTO response = null;
+
+        // first find any dossiers that are already existing
+        List<CheckDuplicateDossierResponse> duplicateDossierResponses = BusinessDuplicateService.checkForDuplicateDossiers(
+                new List<CheckDuplicateDossierRequest>{new CheckDuplicateDossierRequest(dossierNumber, establishmentNumber)}
+        );
+        if (duplicateDossierResponses != null && duplicateDossierResponses.size() == 1) { // duplicate found
+            Business_Dossier__c duplicateDossier = duplicateDossierResponses.get(0).dossierFound;
+            response = new InsertDossiersFromDataVendorResponseDTO(duplicateDossier, true);
+        } else { // no duplicate, we need to insert the dossier
+            // demarcate the transaction
+            Savepoint sp = Database.setSavepoint();
+            try {
+                // get the dossier from the datavendor
+                DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = BusinessService.getDossier(dossierNumber, establishmentNumber);
+
+                // create an account if the account id is null
+                if (accountId == null) {
+                    // TODO: add validation exception handling
+                    List<InsertAccountResponseDTO> accountResponseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+                    accountId = accountResponseDTOS.get(0).account.Id;
+                }
+                List<Business_Dossier__c> dossierDBs = BusinessService.insertDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, accountId)});
+                response = new InsertDossiersFromDataVendorResponseDTO(dossierDBs.get(0), false);
+            } catch (CCDuplicateException e) { // multiple duplicate accounts have been found
+                Database.rollback(sp);
+                throw e;
+            } catch (Exception e) {
+                Database.rollback(sp);
+                ErrorLogUtil.logException(e);
+                throw e;
+            }
+        }
+        return response;
+    }
 
     public List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
         // CRUD and FLS checks since the user might not be allowed to create accounts and the admin might have wrongly added the global action to the profile
