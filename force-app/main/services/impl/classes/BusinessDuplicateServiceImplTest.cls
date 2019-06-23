@@ -98,7 +98,7 @@ private class BusinessDuplicateServiceImplTest {
         Test.startTest();
         {
             try {
-                List<CheckDuplicateDossierResponse> responses = BusinessDuplicateService.checkForDuplicateDossiers(duplicateDossierRequests);
+                BusinessDuplicateService.checkForDuplicateDossiers(duplicateDossierRequests);
             } catch (CCException e) {
                 exceptionCaught = true;
             }

@@ -105,7 +105,6 @@ public with sharing class CompanyDetailsControllerTest {
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
 
         mocks.startStubbing();
-        InsertDossiersFromDataVendorResponseDTO responseDTO = new InsertDossiersFromDataVendorResponseDTO(new Business_Dossier__c(), false);
         mocks.when(mockService.insertSingleDossierFromDataVendorData('1234', '1234', null)).thenThrow(new CustomException('exception'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
