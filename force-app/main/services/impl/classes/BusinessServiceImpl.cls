@@ -353,7 +353,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
         }
     }
 

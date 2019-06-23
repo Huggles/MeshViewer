@@ -79,6 +79,94 @@ public with sharing class CompanyDetailsControllerTest {
     }
 
     @IsTest
+    public static void createDossierHappyTest() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
+
+        mocks.startStubbing();
+        InsertDossiersFromDataVendorResponseDTO responseDTO = new InsertDossiersFromDataVendorResponseDTO(new Business_Dossier__c(), false);
+        mocks.when(mockService.insertSingleDossierFromDataVendorData('1234', '1234', null)).thenReturn(responseDTO);
+        mocks.stopStubbing();
+        Application.Service.setMock(IBusinessService.class, mockService);
+
+        Test.startTest();
+        Object result = CompanyDetailsController.createDossier('1234', '1234', null);
+        Test.stopTest();
+
+        System.assert(result instanceof  AuraResponseWrapper);
+        AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
+        System.assert(wrapper.response instanceof InsertDossiersFromDataVendorResponseDTO);
+
+    }
+
+    @IsTest
+    public static void createDossierExceptionTest() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
+
+        mocks.startStubbing();
+        InsertDossiersFromDataVendorResponseDTO responseDTO = new InsertDossiersFromDataVendorResponseDTO(new Business_Dossier__c(), false);
+        mocks.when(mockService.insertSingleDossierFromDataVendorData('1234', '1234', null)).thenThrow(new CustomException('exception'));
+        mocks.stopStubbing();
+        Application.Service.setMock(IBusinessService.class, mockService);
+
+        Test.startTest();
+        Object result = CompanyDetailsController.createDossier('1234', '1234', null);
+        Test.stopTest();
+
+        System.assert(result instanceof  AuraResponseWrapper);
+        AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
+        System.assert(wrapper.errorMsg == 'exception');
+        System.assert(wrapper.state == 'ERROR');
+
+    }
+
+    @IsTest
+    public static void deleteDossierHappyTest() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
+        Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+
+        mocks.startStubbing();
+        mocks.when(mockService.deleteDossier(accountId)).thenReturn(true);
+        mocks.stopStubbing();
+        Application.Service.setMock(IBusinessService.class, mockService);
+
+        Test.startTest();
+        Object result = CompanyDetailsController.deleteDossier(accountId);
+        Test.stopTest();
+
+        System.assert(result instanceof  AuraResponseWrapper);
+        AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
+        System.assert(wrapper.response == true);
+
+    }
+
+    @IsTest
+    public static void deleteDossierExceptionTest() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
+        Id accountId = fflib_IDGenerator.generate(Account.SObjectType);
+
+        mocks.startStubbing();
+        mocks.when(mockService.deleteDossier(accountId)).thenThrow(new CCException('exception'));
+        mocks.stopStubbing();
+        Application.Service.setMock(IBusinessService.class, mockService);
+
+        Test.startTest();
+        Object result = CompanyDetailsController.deleteDossier(accountId);
+        Test.stopTest();
+
+        System.assert(result instanceof  AuraResponseWrapper);
+        AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
+        System.assert(wrapper.errorMsg == 'exception');
+        System.assert(wrapper.state == 'ERROR');
+
+    }
+
+
+
+    @IsTest
     public static void getVatHappyScenario() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockBusinessService = (IBusinessService)mocks.mock(IBusinessService.class);
