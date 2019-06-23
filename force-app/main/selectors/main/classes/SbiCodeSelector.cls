@@ -4,13 +4,6 @@
 
 public inherited sharing class SbiCodeSelector extends fflib_SObjectSelector implements ISbiCodeSelector {
 
-
-    public SbiCodeSelector() {
-//        super(false,
-//                true,
-//                true);
-    }
-
     public static ISbiCodeSelector newInstance() {
         return (ISbiCodeSelector) Application.Selector.newInstance(Business_Data_SBI__c.SObjectType);
     }

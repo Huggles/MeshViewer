@@ -85,6 +85,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             InsertAccountResponseDTO response = new InsertAccountResponseDTO(dataVendorDossier, account);
             responses.add(response);
         }
+        // TODO: FINISH THIS
         return responses;
     }
 
@@ -122,7 +123,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
             // *** handle addresses ***
             // delete the addresses
-            List<Dossier_Address__c> currentAddresses = ((IDossierAddressSelector)Application.Selector.newInstance(Dossier_Address__c.SObjectType)).selectByDossierId(new Set<Id>{dossier.Id});
+            List<Dossier_Address__c> currentAddresses = DossierAddressSelector.newInstance().selectByDossierId(new Set<Id>{dossier.Id});
             unitOfWork.registerDeleted(currentAddresses);
             // create new addresses
             Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(updateDossierRequestDTO.dataVendorDossier, new Dossier_Address__c());
@@ -132,7 +133,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
             // *** handle SBI codes ***
             // delete the SBI codes
-            List<Business_Data_SBI__c> currentSBICodes = ((ISbiCodeSelector)Application.Selector.newInstance(Business_Data_SBI__c.SObjectType)).selectByDossierId(new Set<Id>{dossier.Id});
+            List<Business_Data_SBI__c> currentSBICodes = SbiCodeSelector.newInstance().selectByDossierId(new Set<Id>{dossier.Id});
             unitOfWork.registerDeleted(currentSBICodes);
             // create new SBI codes
             List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(updateDossierRequestDTO.dataVendorDossier, new List<Business_Data_SBI__c>());
@@ -294,14 +295,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     private static String convertToString(Integer value){
         try{
             return String.valueOf(value);
-        }catch(Exception e){
-            return null;
-        }
-    }
-    // method to skip doing if for every value
-    private static Boolean convertToBoolean(String value){
-        try{
-            return Boolean.valueOf(value);
         }catch(Exception e){
             return null;
         }

@@ -20,7 +20,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
         input.password = password; // we can keep this empty so Company.info will generate a new password
         input.email = ap.Appsolutely_Contact_Email__c;
         input.companyname = orgDetails.Name;
-        input.address = orgDetails.Address.getStreet() + ', ' + orgDetails.Address.getPostalCode();
+        input.address = orgDetails.Address.Street + ', ' + orgDetails.Address.PostalCode;
         input.contactname = UserInfo.GetName();
         input.contactemail = UserInfo.GetUserEmail();
         input.telephone = orgDetails.Phone;

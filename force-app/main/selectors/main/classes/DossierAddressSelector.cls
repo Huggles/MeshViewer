@@ -3,12 +3,6 @@ Author          : DanNicholson
 ******************************************************************************************/
 public inherited sharing class DossierAddressSelector extends fflib_SObjectSelector implements IDossierAddressSelector  {
 
-    public DossierAddressSelector() {
-//        super(false, // Do not include FieldSet fields
-//                true,  // enforce Object level security
-//                true); // enforce Field level security
-    }
-
     public static IDossierAddressSelector newInstance() {
         return (IDossierAddressSelector) Application.Selector.newInstance(Dossier_Address__c.SObjectType);
     }

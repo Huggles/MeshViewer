@@ -20,10 +20,6 @@ public with sharing class BusinessService {
         return newInstance().deleteDossier(accountId);
     }
 
-    public static Business_Dossier__c selectDossier(Id dossierId){
-        return newInstance().selectDossier(dossierId);
-    }
-
     public static List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS) {
         return newInstance().updateDossiersWithDataVendorData(updateDossierRequestDTOS);
     }

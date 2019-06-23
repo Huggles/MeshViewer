@@ -4,11 +4,6 @@ Author          : ValerijsProkudins
 TODO: update user search with SOSL
 ******************************************************************************************/
 public inherited sharing class UserSelector extends fflib_SObjectSelector implements IUserSelector {
-    public UserSelector() {
-//        super(false, // Do not include FieldSet fields
-//                true,  // enforce Object level security
-//                true); // enforce Field level security
-    }
 
     public static IUserSelector newInstance() {
         return (IUserSelector) Application.Selector.newInstance(User.SObjectType);

@@ -2,11 +2,6 @@
 Author          : ValerijsProkudins
 ******************************************************************************************/
 public inherited sharing class AccountSelector extends fflib_SObjectSelector implements IAccountSelector{
-    public AccountSelector() {
-//        super(false, // Do not include FieldSet fields
-//                true,  // enforce Object level security
-//                true); // enforce Field level security
-    }
 
     public static IAccountSelector newInstance() {
         return (IAccountSelector) Application.Selector.newInstance(Account.SObjectType);

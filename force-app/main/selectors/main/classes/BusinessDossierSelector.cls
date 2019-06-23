@@ -4,9 +4,6 @@ Author          : ValerijsProkudins
 ******************************************************************************************/
 public inherited sharing class BusinessDossierSelector extends fflib_SObjectSelector implements IBusinessDossierSelector  {
 
-    public BusinessDossierSelector() {
-    }
-
     public static IBusinessDossierSelector newInstance() {
         return (IBusinessDossierSelector) Application.Selector.newInstance(Business_Dossier__c.SObjectType);
     }

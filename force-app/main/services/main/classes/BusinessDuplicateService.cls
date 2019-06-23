@@ -4,10 +4,6 @@
 
 public without sharing class BusinessDuplicateService {
 
-    public static Business_Dossier__c checkSingleDuplicateDossier(String dossierNumber, String establishmentNumber) {
-        return newInstance().checkSingleDuplicateDossier(dossierNumber, establishmentNumber);
-    }
-
     public static List<CheckDuplicateDossierResponse> checkForDuplicateDossiers(List<CheckDuplicateDossierRequest> requests) {
         return newInstance().checkForDuplicateDossiers(requests);
     }

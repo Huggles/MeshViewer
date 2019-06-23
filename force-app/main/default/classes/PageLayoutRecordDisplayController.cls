@@ -39,7 +39,6 @@ public with sharing class PageLayoutRecordDisplayController {
         }
         // Metadata.LayoutItem.field gives the local api name of the object(no namespace), so the map<localName, fullName> of all object fields is created for further usage
         public void populateFieldName2FieldFullNameMap(String sObjectName){
-            String result = '';
             map<string, Schema.sObjectField> fieldMap=Schema.getGlobalDescribe().get(sObjectName).getDescribe().fields.getMap();
             for(String fName: fieldMap.keySet()){
                 fieldName2fieldFullNameMap.put(fieldMap.get(fName).getDescribe().getLocalName(), fieldMap.get(fName).getDescribe().getName());
