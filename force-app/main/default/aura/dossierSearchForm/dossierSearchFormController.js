@@ -9,7 +9,7 @@
             name: '',
             phone: '',
             domain: ''
-        }
+        };
         cmp.set('v.searchFields', searchFields);
 
 
@@ -73,7 +73,7 @@
                 name: record.Name,
                 phone: record.Phone,
                 domain: record.Website
-            }
+            };
             component.set('v.searchFields', searchFields);
             
         } else if(eventParams.changeType === "CHANGED") {
@@ -85,4 +85,4 @@
         }
     }
     
-})
+});

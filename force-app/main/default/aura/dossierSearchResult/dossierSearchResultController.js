@@ -18,4 +18,4 @@
                 // Fire the event so all the components can hear it
                 updateEvent.fire();
         }
-})
+});

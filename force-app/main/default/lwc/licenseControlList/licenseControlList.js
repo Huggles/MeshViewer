@@ -24,7 +24,7 @@ export default class LicenseControlList extends LightningElement {
     @track sortedBy = 'Name';
     @track sortedDirection = 'asc';
 
-    @track searchParam = 'Name'; 
+    @track searchParam = 'Name';
 
     wiredUsersResult;
 
@@ -48,7 +48,9 @@ export default class LicenseControlList extends LightningElement {
         // eslint-disable-next-line @lwc/lwc/no-async-operation
         this.delayTimeout = setTimeout(() => {
             this.searchKey = searchKey;
-        }, DELAY);
+    },
+        DELAY
+    )
     }
     getSelectedName(event){
         this.selectedUserIds = event.target.selectedRows;
@@ -69,7 +71,7 @@ export default class LicenseControlList extends LightningElement {
         })
         .catch(error => {
             this.error = error;
-        });
+    })
     }
       // The method onsort event handler
     updateColumnSorting(event) { // to ask Dan

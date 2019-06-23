@@ -7,4 +7,4 @@
 		var sectionContainer = component.find('collapsibleSectionContainer');
 		$A.util.toggleClass(sectionContainer, "slds-is-open");
 	}
-})
+});
