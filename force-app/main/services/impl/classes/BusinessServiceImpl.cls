@@ -57,6 +57,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return response;
     }
 
+    // TODO: remove heavy dependency on backend (at least towards the frontend)
     public List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
         // CRUD and FLS checks since the user might not be allowed to create accounts and the admin might have wrongly added the global action to the profile
         fflib_SObjectUnitOfWork.IDML dml = new DMLWithCRUD();
@@ -75,17 +76,20 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         List<InsertAccountResponseDTO> responses = new List<InsertAccountResponseDTO>();
         for (DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier : dataVendorDossiers) {
             Account account = mapDataVendorToAccount(dataVendorDossier, new Account());
+            // TODO: make this bulkified and move it outside of the loop
             List<Account> duplicateAccounts = BusinessDuplicateService.checkForAccountDuplicates(account);
-            if (duplicateAccounts.size() > 1) {
+            System.debug(duplicateAccounts);
+            if (duplicateAccounts.size() > 1) { // too many duplicates found. Cannot map them.
                 throw new CCDuplicateException(Label.Dossier_Multiple_Account_Duplicates_Found);
-            }
-            if (duplicateAccounts.size() == 1) {
+            } else
+            if (duplicateAccounts.size() == 1) { // one duplicate found, let's reuse that one
                 account = duplicateAccounts.get(0);
+            } else { // no duplicates found, create a new account
+                unitOfWork.registerNew(account);
             }
             InsertAccountResponseDTO response = new InsertAccountResponseDTO(dataVendorDossier, account);
             responses.add(response);
         }
-        // TODO: FINISH THIS
         return responses;
     }
 

@@ -44,6 +44,226 @@ public with sharing class BusinessServiceImplTest {
         system.assertEquals(results.get(0).dossier_number, '199');
     }
 
+//    @IsTest
+//    public static void testInsertAccountHappyFlow() {
+//        fflib_ApexMocks mocks = new fflib_ApexMocks();
+//        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+//        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService)mocks.mock(IBusinessDuplicateService.class);
+//
+//        mocks.startStubbing();
+//        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+//        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+//        mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(new List<Account>());
+//        mocks.stopStubbing();
+//
+//        Test.startTest();
+//        {
+//            List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+//            System.assert(responseDTOS.size() == 1);
+//            for (InsertAccountResponseDTO insertAccountResponseDTO : responseDTOS) {
+//                System.assert(insertAccountResponseDTO.account != null);
+//                System.assert(insertAccountResponseDTO.account.Name == dataVendorDossier.trade_name_full);
+//            }
+//        }
+//        Test.stopTest();
+//    }
+
+    @IsTest
+    public static void testInsertAccountHappyFlow() {
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        Test.startTest();
+        {
+            List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+            System.assert(responseDTOS.size() == 1);
+            for (InsertAccountResponseDTO insertAccountResponseDTO : responseDTOS) {
+                System.assert(insertAccountResponseDTO.account != null);
+                System.assert(insertAccountResponseDTO.account.Name == dataVendorDossier.trade_name_full);
+            }
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void testInsertAccountCrudException() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+//        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+//        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService)mocks.mock(IBusinessDuplicateService.class);
+        fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
+
+        mocks.startStubbing();
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+//        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+//        mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(new List<Account>());
+        ((fflib_ISObjectUnitOfWork)mocks.doThrowWhen(new DMLManager.CRUDException(), unitOfWorkMock)).commitWork();
+        mocks.stopStubbing();
+
+        Application.UnitOfWork.setMock(unitOfWorkMock);
+
+        Test.startTest();
+        {
+            Boolean exceptionThrown = false;
+            try {
+                List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+            } catch (CCCrudException e) {
+                exceptionThrown = true;
+            }
+            System.assert(exceptionThrown);
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void testInsertAccountTwoAccounts() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        // IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService)mocks.mock(IBusinessDuplicateService.class);
+        fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
+
+        mocks.startStubbing();
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        List<Account> accounts = new List<Account>();
+        for (Integer i = 0; i < 5; i++) {
+            accounts.add(new Account(Name = 'test', Id = fflib_IDGenerator.generate(Account.SObjectType)));
+        }
+        // mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(accounts);
+       // mocks.when(unitOfWorkMock.commitWork()).thenThrow(new DMLManager.CRUDException());
+        // ((fflib_ISObjectUnitOfWork)mocks.doThrowWhen(new DMLManager.CRUDException(), unitOfWorkMock)).commitWork();
+        mocks.stopStubbing();
+
+        Application.UnitOfWork.setMock(unitOfWorkMock);
+        Application.Service.setMock(IBusinessDuplicateService.class, duplicateServiceMock);
+
+        Test.startTest();
+        {
+            Boolean exceptionThrown = false;
+            try {
+                List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+            } catch (CCDuplicateException e) {
+                exceptionThrown = true;
+            }
+            System.assert(exceptionThrown);
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void testInsertAccountOneDuplicateAccount() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        // IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService)mocks.mock(IBusinessDuplicateService.class);
+        fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
+
+        mocks.startStubbing();
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        List<Account> accounts = new List<Account>();
+        for (Integer i = 0; i < 1; i++) {
+            accounts.add(new Account(Name = 'test', Id = fflib_IDGenerator.generate(Account.SObjectType)));
+        }
+        // mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(accounts);
+        // mocks.when(unitOfWorkMock.commitWork()).thenThrow(new DMLManager.CRUDException());
+        // ((fflib_ISObjectUnitOfWork)mocks.doThrowWhen(new DMLManager.CRUDException(), unitOfWorkMock)).commitWork();
+        mocks.stopStubbing();
+
+        Application.UnitOfWork.setMock(unitOfWorkMock);
+        Application.Service.setMock(IBusinessDuplicateService.class, duplicateServiceMock);
+
+        Test.startTest();
+        {
+            List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+            System.assert(responseDTOS.size() == 1);
+            System.assert(responseDTOS.get(0).account == accounts.get(0));
+        }
+        Test.stopTest();
+    }
+
+
+
+    private static DutchBusinessDto.DutchBusinessGetDossierResponse getDataVendorMockDossier() {
+        DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
+
+        InputDossier.annual_financial_statement_summary = 'summary';
+        InputDossier.annual_financial_statement_summary_year = 'year';
+        InputDossier.annual_financial_statement_summary_profit = 'profit';
+        InputDossier.annual_financial_statement_summary_turnover = 'turnover';
+        InputDossier.annual_financial_statement_summary_assets = 'assets';
+        InputDossier.authorized_share_capital = 12;
+        InputDossier.authorized_share_capital_currency = 'authorized_share_capital_currency';
+        InputDossier.chamber_number = '1';
+        InputDossier.class_personnel_ci = 1;
+        InputDossier.class_personnel_fulltime = 1;
+        InputDossier.class_personnel = 1;
+        InputDossier.contact_gender = 'm';
+        InputDossier.contact_initials = 'initial';
+        InputDossier.contact_prefix = 'prefix';
+        InputDossier.contact_surname = 'surname';
+        InputDossier.contact_title1 = 'title1';
+        InputDossier.contact_title2 = 'title2';
+        InputDossier.continuation_date = Date.valueOf('2019-2-12');
+        InputDossier.discontinuation_date = Date.valueOf('2019-2-12');
+        InputDossier.domain_name = 'domain_name';
+        InputDossier.dossier_number = '123456';
+        InputDossier.establishment_date = Date.valueOf('2019-2-12');
+        InputDossier.establishment_number = '10';
+        InputDossier.founding_date = Date.valueOf('2019-2-12');
+        InputDossier.indication_bankruptcy = false;
+        InputDossier.indication_dip = false;
+        InputDossier.indication_economically_active = false;
+        InputDossier.indication_export = false;
+        InputDossier.indication_import = true;
+        InputDossier.indication_main_establishment = false;
+        InputDossier.indication_main_establishment = true;
+        InputDossier.indication_non_mailing = false;
+        InputDossier.insolvencies = 'insolvencies';
+        InputDossier.issued_share_capital_currency = 'issued_share_capital_currency';
+        InputDossier.issued_share_capital = 12334234;
+        InputDossier.legal_form_text = 'legal_form';
+        InputDossier.legal_name = 'legal_name';
+        InputDossier.mobile_number = '12334234';
+        InputDossier.paid_up_share_capital_currency = 'paid_up_share_capital_currency';
+        InputDossier.paid_up_share_capital = 12334234;
+        InputDossier.personnel = 1;
+        InputDossier.personnel_ci = 1;
+        InputDossier.personnel_ci_reference_date = Date.valueOf('2019-2-12');
+        InputDossier.personnel_fulltime = 1;
+        InputDossier.personnel_reference_date = Date.valueOf('2019-2-12');
+        InputDossier.primary_sbi_code = 'sbi_code';
+        InputDossier.primary_sbi_code_text = 'sbi_code_text';
+        Business_Data_SBI__c s1 = new Business_Data_SBI__c(SBI_Type__c = 'original', SBI_Description__c = 'desc', SBI_Code__c = '11');
+        InputDossier.sbi_collection = new List<Business_Data_SBI__c>{s1};
+        InputDossier.structure = 'structure';
+        InputDossier.structure_number_of_subsidiaries = '1';
+        InputDossier.structure_parent = '123';
+        InputDossier.structure_ultimate_parent = '1122';
+        InputDossier.telephone_number = '12334234';
+        InputDossier.trade_name_full = 'trade_name';
+        InputDossier.indication_organisation_code = '10';
+        InputDossier.legal_form_code = '11';
+        InputDossier.main_establishment_number = '12';
+        InputDossier.rsin_number = '13';
+        InputDossier.secondary_sbi_code1 = 'secondary_sbi_code1';
+        InputDossier.secondary_sbi_code1_text = 'secondary_sbi_code1_text';
+        InputDossier.secondary_sbi_code2 = 'secondary_sbi_code2';
+        InputDossier.secondary_sbi_code2_text = 'secondary_sbi_code2_text';
+        InputDossier.trade_name_45 = '14';
+        InputDossier.trade_names = new list<String>{'Test', 'Test2', 'Test3'};
+        InputDossier.correspondence_address_original_address = 'correspondence_address.original.address';
+        InputDossier.correspondence_address_original_postcode = 'correspondence_address.original.postcode';
+        InputDossier.correspondence_address_original_street = 'correspondence_address.original.street';
+        InputDossier.correspondence_address_original_house_number = 1;
+        InputDossier.correspondence_address_original_house_number_addition = 'correspondence_address.original.house_number_addition';
+        InputDossier.correspondence_address_original_city = 'correspondence_address.original.city';
+        InputDossier.correspondence_address_original_country = 'correspondence_address.original.country';
+        InputDossier.establishment_address_original_address = 'establishment_address.original.address';
+        InputDossier.establishment_address_original_postcode = 'establishment_address.original.postcode';
+        InputDossier.establishment_address_original_street = 'establishment_address.original.street';
+        InputDossier.establishment_address_original_house_number = 2;
+        InputDossier.establishment_address_original_house_number_addition = 'establishment_address.original.house_number_addition';
+        InputDossier.establishment_address_original_city = 'establishment_address.original.city';
+        InputDossier.establishment_address_original_country = 'establishment_address.original.country';
+        return InputDossier;
+    }
 
 /*
     @isTest
@@ -249,8 +469,8 @@ public with sharing class BusinessServiceImplTest {
         // System.assertEquals(eAddress.House_Number__c, '2');
 
     }
+    */
 
- */
 
 /*
     //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
