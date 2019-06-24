@@ -44,6 +44,68 @@ public with sharing class BusinessServiceImplTest {
         system.assertEquals(results.get(0).dossier_number, '199');
     }
 
+    @isTest
+    public static void testSearchForDossiersThrowCCException(){
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+
+        mocks.startStubbing();
+        DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams = new DutchBusinessDto.dutchBusinessSearchParametersRequest();
+        searchParams.postcode = '2274NA';
+        DutchBusinessDto.DutchBusinessSearchParametersResponse output = new DutchBusinessDto.DutchBusinessSearchParametersResponse();
+        output.items = new List<DutchBusinessDto.DutchBusinessReference>();
+        DutchBusinessDto.DutchBusinessReference dr = new DutchBusinessDto.DutchBusinessReference();
+        dr.dossier_number = '199';
+        output.items.add(dr);
+        mocks.when(mockWS.dutchBusinessSearchParameters((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CCException());
+        mocks.stopStubbing();
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
+        Test.startTest();
+        {
+            Boolean exceptionThrown = false;
+            try {
+                List<DutchBusinessDto.DutchBusinessReference> results = BusinessService.searchForDossiers(searchParams);
+            } catch (CCException e) {
+                exceptionThrown = true;
+            }
+            System.assert(exceptionThrown);
+        }
+        Test.stopTest();
+        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
+
+    }
+
+    @isTest
+    public static void testSearchForDossiersThrowException(){
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+
+        mocks.startStubbing();
+        DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams = new DutchBusinessDto.dutchBusinessSearchParametersRequest();
+        searchParams.postcode = '2274NA';
+        DutchBusinessDto.DutchBusinessSearchParametersResponse output = new DutchBusinessDto.DutchBusinessSearchParametersResponse();
+        output.items = new List<DutchBusinessDto.DutchBusinessReference>();
+        DutchBusinessDto.DutchBusinessReference dr = new DutchBusinessDto.DutchBusinessReference();
+        dr.dossier_number = '199';
+        output.items.add(dr);
+        mocks.when(mockWS.dutchBusinessSearchParameters((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CustomException());
+        mocks.stopStubbing();
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
+        Test.startTest();
+        {
+            Boolean exceptionThrown = false;
+            try {
+                List<DutchBusinessDto.DutchBusinessReference> results = BusinessService.searchForDossiers(searchParams);
+            } catch (CCException e) {
+                exceptionThrown = true;
+            }
+            System.assert(exceptionThrown);
+        }
+        Test.stopTest();
+        System.assert([SELECT Id FROM Error_Log__c].size() == 1);
+
+    }
+
 //    @IsTest
 //    public static void testInsertAccountHappyFlow() {
 //        fflib_ApexMocks mocks = new fflib_ApexMocks();

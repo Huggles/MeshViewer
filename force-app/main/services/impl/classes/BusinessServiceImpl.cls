@@ -4,13 +4,30 @@ Description     : Service layer for DutchBusiness webservice calls and data proc
 ******************************************************************************************/
 public with sharing class BusinessServiceImpl implements IBusinessService {
 
-//    private List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> insertDossierRequestDTOS) {
-//        // no CRUD and FLS checks since this needs to be done in system mode. The customer has paid for the data fetched
-//        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-//        List<Business_Dossier__c> dossiers = insertDossier(insertDossierRequestDTOS, unitOfWork);
-//        unitOfWork.commitWork();
-//        return dossiers;
-//    }
+    // TODO: implement a proper DTO so the dependency on CI is removed
+    public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
+        // Handle valid postcodes that the web service does not like
+        if (searchParams.postcode != null){ // fix for postal code
+            searchParams.postcode = searchParams.postcode.replaceAll('(\\s+)', '').toUpperCase();
+        }
+
+        IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
+        List<DutchBusinessDto.DutchBusinessReference> searchResults;
+        try{
+            DutchBusinessDto.DutchBusinessSearchParametersResponse returnedResults = service.dutchBusinessSearchParameters(searchParams);
+            if(returnedResults != null && returnedResults.items != null && returnedResults.items.size()>0){
+                searchResults=returnedResults.items;
+            }
+            //return parsed result
+            return searchResults;
+        }catch(CCException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
+        }
+    }
+
 
     public List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS) {
         // no CRUD and FLS checks since this needs to be done in system mode. The customer has paid for the data fetched
@@ -56,20 +73,76 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return response;
     }
 
-//    // TODO: remove heavy dependency on backend (at least towards the frontend)
-//    public List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
-//        // CRUD and FLS checks since the user might not be allowed to create accounts and the admin might have wrongly added the global action to the profile
-//        fflib_SObjectUnitOfWork.IDML dml = new DMLWithCRUD();
-//        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(dml);
-//        List<InsertAccountResponseDTO> responses = insertAccount(dataVendorDossiers, unitOfWork);
-//        try {
-//            unitOfWork.commitWork();
-//        } catch(DMLManager.CRUDException e) {
-//            // TODO: improve the error message
-//            throw new CCCrudException(e);
-//        }
-//        return responses;
-//    }
+    public static Boolean deleteDossier(Id accountId) {
+        try{
+            List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
+            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{accounts.get(0).Business_Dossier__c});
+            if (dossierList.size() == 1) {
+                delete dossierList[0];
+                return true;
+            }
+            return false;
+        }catch(CCException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
+        }
+    }
+
+    public static Business_Dossier__c selectDossier(Id dossierId) {
+        try{
+            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
+            if (dossierList.size() == 1) {
+                return dossierList[0];
+            }
+            return null;
+        }catch(CCException ex){
+            throw ex; // we dont log bds exceptions, only throwing them further
+        }catch(System.Exception ex){
+            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+        }
+    }
+
+    public Business_Dossier__c setVatNumber(Id dossierId) {
+        String vatNumber = '';
+        // TODO: move this to another 'without sharing' in between layer to ensure all VAT numbers are found
+        List<Business_Dossier__c> dossiersDB = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectById(new Set<Id>{dossierId});
+        Business_Dossier__c dossierDB = dossiersDB.get(0);
+        List<Business_Dossier__c> dossiersWithSameDossierNumber = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectByDossierNumber(new Set<String>{dossierDB.Dossier_Number__c}, false);
+        for (Business_Dossier__c businessDossier : dossiersWithSameDossierNumber) {
+            if (!String.isEmpty(businessDossier.VAT_Number__c)) {
+                vatNumber = businessDossier.VAT_Number__c;
+                break;
+            }
+        }
+
+        // if no vat number in the db, get it from the data vendor
+        if (String.isEmpty(vatNumber)) { // no VAT number for any other dossier in the database
+            DutchBusinessDto.DutchBusinessGetVatNumberRequest vatRequest = new DutchBusinessDto.DutchBusinessGetVatNumberRequest();
+            vatRequest.dossier_number = dossierDB.Dossier_Number__c;
+            DutchBusinessDto.DutchBusinessVatNumber vatResponse = WebServicesNLSOAPDutchBusiness.newInstance().businessGetVatNumber(vatRequest);
+            if (String.isEmpty(vatResponse.vat_number)) {
+                // TODO: need to add error message
+                throw new CCVatNotFoundException();
+            } else {
+                vatNumber = vatResponse.vat_number;
+            }
+        }
+
+        // update the dossier with the vatnumber
+        dossierDB.VAT_Number__c = vatNumber;
+        // without CRUD/FLS check since the user has paid for the data and has access to the original record
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        unitOfWork.registerDirty(dossierDB);
+        unitOfWork.commitWork();
+        return dossierDB;
+    }
+
+    /**************
+     * Implementation methods
+     **************/
 
     @TestVisible
     private List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers, fflib_ISObjectUnitOfWork unitOfWork) {
@@ -303,29 +376,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }
     }
 
-    // TODO: implement a proper DTO so the dependency on CI is removed
-    public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
-        // Handle valid postcodes that the web service does not like
-        if (searchParams.postcode != null){ // fix for postal code
-            searchParams.postcode = searchParams.postcode.replaceAll('(\\s+)', '').toUpperCase();
-        }
-
-        IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
-        List<DutchBusinessDto.DutchBusinessReference> searchResults;
-        try{
-            DutchBusinessDto.DutchBusinessSearchParametersResponse returnedResults = service.dutchBusinessSearchParameters(searchParams);
-            if(returnedResults != null && returnedResults.items != null && returnedResults.items.size()>0){
-                searchResults=returnedResults.items;
-            }
-            //return parsed result
-            return searchResults;
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
-    }
 
     @TestVisible
     private DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber) {
@@ -342,73 +392,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
             throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
         }
-    }
-
-    public static Boolean deleteDossier(Id accountId) {
-        try{
-            List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
-            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{accounts.get(0).Business_Dossier__c});
-            if (dossierList.size() == 1) {
-                delete dossierList[0];
-                return true;
-            }
-            return false;
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
-        }
-    }
-
-    public static Business_Dossier__c selectDossier(Id dossierId) {
-        try{
-            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
-            if (dossierList.size() == 1) {
-                return dossierList[0];
-            }
-            return null;
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
-    }
-
-    public Business_Dossier__c setVatNumber(Id dossierId) {
-        String vatNumber = '';
-        // TODO: move this to another 'without sharing' in between layer to ensure all VAT numbers are found
-        List<Business_Dossier__c> dossiersDB = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectById(new Set<Id>{dossierId});
-        Business_Dossier__c dossierDB = dossiersDB.get(0);
-        List<Business_Dossier__c> dossiersWithSameDossierNumber = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectByDossierNumber(new Set<String>{dossierDB.Dossier_Number__c}, false);
-        for (Business_Dossier__c businessDossier : dossiersWithSameDossierNumber) {
-            if (!String.isEmpty(businessDossier.VAT_Number__c)) {
-                vatNumber = businessDossier.VAT_Number__c;
-                break;
-            }
-        }
-
-        // if no vat number in the db, get it from the data vendor
-        if (String.isEmpty(vatNumber)) { // no VAT number for any other dossier in the database
-            DutchBusinessDto.DutchBusinessGetVatNumberRequest vatRequest = new DutchBusinessDto.DutchBusinessGetVatNumberRequest();
-            vatRequest.dossier_number = dossierDB.Dossier_Number__c;
-            DutchBusinessDto.DutchBusinessVatNumber vatResponse = WebServicesNLSOAPDutchBusiness.newInstance().businessGetVatNumber(vatRequest);
-            if (String.isEmpty(vatResponse.vat_number)) {
-                // TODO: need to add error message
-                throw new CCVatNotFoundException();
-            } else {
-                vatNumber = vatResponse.vat_number;
-            }
-        }
-
-        // update the dossier with the vatnumber
-        dossierDB.VAT_Number__c = vatNumber;
-        // without CRUD/FLS check since the user has paid for the data and has access to the original record
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        unitOfWork.registerDirty(dossierDB);
-        unitOfWork.commitWork();
-        return dossierDB;
     }
 
     private static List<Object> upsertDossier(Business_Dossier__c dossier){
