@@ -4,17 +4,13 @@ public with sharing class BusinessService {
         return newInstance().searchForDossiers(searchParams);
     }
 
-    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber){
-        return newInstance().getDossier(dossierNumber, establishmentNumber);
-    }
+//    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber){
+//        return newInstance().getDossier(dossierNumber, establishmentNumber);
+//    }
 
-    public static List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> insertDossierRequestDTOS) {
-        return newInstance().insertDossier(insertDossierRequestDTOS);
-    }
-
-    public static List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
-        return newInstance().insertAccount(dataVendorDossiers);
-    }
+//    public static List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
+//        return newInstance().insertAccount(dataVendorDossiers);
+//    }
 
     public static Boolean deleteDossier(Id accountId){
         return newInstance().deleteDossier(accountId);

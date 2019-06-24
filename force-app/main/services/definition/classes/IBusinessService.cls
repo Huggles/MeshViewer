@@ -13,15 +13,15 @@ public interface IBusinessService {
      */
     List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams);
 
-    /**
-     * Retrieves the requested dossier from the backend.
-     *
-     * @param dossierNumber
-     * @param establishmentNumber
-     *
-     * @return
-     */
-    DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber);
+//    /**
+//     * Retrieves the requested dossier from the backend.
+//     *
+//     * @param dossierNumber
+//     * @param establishmentNumber
+//     *
+//     * @return
+//     */
+//    DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber);
 
 //     String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier);
 //    List<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId);
@@ -53,15 +53,15 @@ public interface IBusinessService {
      */
     List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS);
 
-    // TODO: replace by update (we already have insert and upserting is difficult with the fflib framework)
-    /**
-     * Upserts a dossier
-     *
-     * @param dossier
-     *
-     * @return
-     */
-    List<Object> upsertDossier(Business_Dossier__c dossier);
+//    // TODO: replace by update (we already have insert and upserting is difficult with the fflib framework)
+//    /**
+//     * Upserts a dossier
+//     *
+//     * @param dossier
+//     *
+//     * @return
+//     */
+//    List<Object> upsertDossier(Business_Dossier__c dossier);
 
     /**
      * Sets the vat number on the dossier with the given dossiernumber. Requests the vat number based on the dossier number. If a dossier in the database with the same dossier number but
@@ -74,26 +74,17 @@ public interface IBusinessService {
      */
      Business_Dossier__c setVatNumber(Id dossierId);
 
-    /**
-     * Inserts data coming from the data vendor as new dossiers into the db.
-     *
-     * @param InsertDossierRequestDTOS
-     *
-     * @return
-     */
-    List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS);
-
     //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
     //list<String> checkForAccountDuplicates(Account acc);
 
-    /**
-     * Creates new accounts and inserts them into the DB based on the given dossiers coming from the datavendor. Returns the created accounts.
-     *
-     * @param dataVendorDossiers
-     *
-     * @return
-     */
-    List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers);
+//    /**
+//     * Creates new accounts and inserts them into the DB based on the given dossiers coming from the datavendor. Returns the created accounts.
+//     *
+//     * @param dataVendorDossiers
+//     *
+//     * @return
+//     */
+//    List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers);
 
     /**
      * Inserts a single dossier + account into the DB found through the search function (so based on the dossier number and establishment number).

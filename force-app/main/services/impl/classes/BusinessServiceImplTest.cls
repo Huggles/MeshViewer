@@ -20,7 +20,7 @@ public with sharing class BusinessServiceImplTest {
 
         test.startTest();
         string dossierNumber = '123';
-        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = BusinessService.getDossier(dossierNumber, null);
+        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = (new BusinessServiceImpl()).getDossier(dossierNumber, null);
         system.assertNotEquals(null, dossier);
         test.stopTest();
     }
@@ -70,44 +70,17 @@ public with sharing class BusinessServiceImplTest {
 
     @IsTest
     public static void testInsertAccountHappyFlow() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
         DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
         Test.startTest();
         {
-            List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+            List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWorkMock);
             System.assert(responseDTOS.size() == 1);
             for (InsertAccountResponseDTO insertAccountResponseDTO : responseDTOS) {
                 System.assert(insertAccountResponseDTO.account != null);
                 System.assert(insertAccountResponseDTO.account.Name == dataVendorDossier.trade_name_full);
             }
-        }
-        Test.stopTest();
-    }
-
-    @IsTest
-    public static void testInsertAccountCrudException() {
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-//        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
-//        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService)mocks.mock(IBusinessDuplicateService.class);
-        fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
-
-        mocks.startStubbing();
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
-//        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
-//        mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(new List<Account>());
-        ((fflib_ISObjectUnitOfWork)mocks.doThrowWhen(new DMLManager.CRUDException(), unitOfWorkMock)).commitWork();
-        mocks.stopStubbing();
-
-        Application.UnitOfWork.setMock(unitOfWorkMock);
-
-        Test.startTest();
-        {
-            Boolean exceptionThrown = false;
-            try {
-                List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
-            } catch (CCCrudException e) {
-                exceptionThrown = true;
-            }
-            System.assert(exceptionThrown);
         }
         Test.stopTest();
     }
@@ -138,7 +111,7 @@ public with sharing class BusinessServiceImplTest {
         {
             Boolean exceptionThrown = false;
             try {
-                List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+                List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWorkMock);
             } catch (CCDuplicateException e) {
                 exceptionThrown = true;
             }
@@ -171,7 +144,7 @@ public with sharing class BusinessServiceImplTest {
 
         Test.startTest();
         {
-            List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+            List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWorkMock);
             System.assert(responseDTOS.size() == 1);
             System.assert(responseDTOS.get(0).account == accounts.get(0));
         }

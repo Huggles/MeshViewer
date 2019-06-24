@@ -4,13 +4,13 @@ Description     : Service layer for DutchBusiness webservice calls and data proc
 ******************************************************************************************/
 public with sharing class BusinessServiceImpl implements IBusinessService {
 
-    public List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> insertDossierRequestDTOS) {
-        // no CRUD and FLS checks since this needs to be done in system mode. The customer has paid for the data fetched
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        List<Business_Dossier__c> dossiers = insertDossier(insertDossierRequestDTOS, unitOfWork);
-        unitOfWork.commitWork();
-        return dossiers;
-    }
+//    private List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> insertDossierRequestDTOS) {
+//        // no CRUD and FLS checks since this needs to be done in system mode. The customer has paid for the data fetched
+//        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+//        List<Business_Dossier__c> dossiers = insertDossier(insertDossierRequestDTOS, unitOfWork);
+//        unitOfWork.commitWork();
+//        return dossiers;
+//    }
 
     public List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS) {
         // no CRUD and FLS checks since this needs to be done in system mode. The customer has paid for the data fetched
@@ -21,6 +21,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
     
     public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId) {
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         InsertDossiersFromDataVendorResponseDTO response = null;
 
         // first find any dossiers that are already existing
@@ -31,54 +32,52 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             Business_Dossier__c duplicateDossier = duplicateDossierResponses.get(0).dossierFound;
             response = new InsertDossiersFromDataVendorResponseDTO(duplicateDossier, true);
         } else { // no duplicate, we need to insert the dossier
-            // demarcate the transaction
-            Savepoint sp = Database.setSavepoint();
             try {
                 // get the dossier from the datavendor
-                DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = BusinessService.getDossier(dossierNumber, establishmentNumber);
+                DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDossier(dossierNumber, establishmentNumber);
 
                 // create an account if the account id is null
                 if (accountId == null) {
                     // TODO: add validation exception handling
-                    List<InsertAccountResponseDTO> accountResponseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+                    List<InsertAccountResponseDTO> accountResponseDTOS = insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWork);
                     accountId = accountResponseDTOS.get(0).account.Id;
                 }
-                List<Business_Dossier__c> dossierDBs = BusinessService.insertDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, accountId)});
+                List<Business_Dossier__c> dossierDBs = insertDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, accountId)}, unitOfWork);
+
                 response = new InsertDossiersFromDataVendorResponseDTO(dossierDBs.get(0), false);
             } catch (CCDuplicateException e) { // multiple duplicate accounts have been found
-                Database.rollback(sp);
                 throw e;
             } catch (Exception e) {
-                Database.rollback(sp);
                 ErrorLogUtil.logException(e);
-                throw e;
+                throw new CCException(e);
             }
         }
+        unitOfWork.commitWork();
         return response;
     }
 
-    // TODO: remove heavy dependency on backend (at least towards the frontend)
-    public List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
-        // CRUD and FLS checks since the user might not be allowed to create accounts and the admin might have wrongly added the global action to the profile
-        fflib_SObjectUnitOfWork.IDML dml = new DMLWithCRUD();
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(dml);
-        List<InsertAccountResponseDTO> responses = insertAccount(dataVendorDossiers, unitOfWork);
-        try {
-            unitOfWork.commitWork();
-        } catch(DMLManager.CRUDException e) {
-            // TODO: improve the error message
-            throw new CCCrudException(e);
-        }
-        return responses;
-    }
+//    // TODO: remove heavy dependency on backend (at least towards the frontend)
+//    public List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers) {
+//        // CRUD and FLS checks since the user might not be allowed to create accounts and the admin might have wrongly added the global action to the profile
+//        fflib_SObjectUnitOfWork.IDML dml = new DMLWithCRUD();
+//        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(dml);
+//        List<InsertAccountResponseDTO> responses = insertAccount(dataVendorDossiers, unitOfWork);
+//        try {
+//            unitOfWork.commitWork();
+//        } catch(DMLManager.CRUDException e) {
+//            // TODO: improve the error message
+//            throw new CCCrudException(e);
+//        }
+//        return responses;
+//    }
 
+    @TestVisible
     private List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers, fflib_ISObjectUnitOfWork unitOfWork) {
         List<InsertAccountResponseDTO> responses = new List<InsertAccountResponseDTO>();
         for (DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier : dataVendorDossiers) {
             Account account = mapDataVendorToAccount(dataVendorDossier, new Account());
             // TODO: make this bulkified and move it outside of the loop
             List<Account> duplicateAccounts = BusinessDuplicateService.checkForAccountDuplicates(account);
-            System.debug(duplicateAccounts);
             if (duplicateAccounts.size() > 1) { // too many duplicates found. Cannot map them.
                 throw new CCDuplicateException(Label.Dossier_Multiple_Account_Duplicates_Found);
             } else
@@ -328,7 +327,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }
     }
 
-    public static DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber) {
+    @TestVisible
+    private DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber) {
         if (dossierNumber == null){ return null;}
         try{
             IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
@@ -411,7 +411,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return dossierDB;
     }
 
-    public static List<Object> upsertDossier(Business_Dossier__c dossier){
+    private static List<Object> upsertDossier(Business_Dossier__c dossier){
         try{
             List<Object> result = new List<Object>();
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
