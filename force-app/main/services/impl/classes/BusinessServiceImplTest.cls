@@ -178,6 +178,7 @@ public with sharing class BusinessServiceImplTest {
             }
             System.assert(exceptionThrown);
         }
+        Test.stopTest();
         System.assert([SELECT Id FROM Error_Log__c].size() == 1);
     }
 
