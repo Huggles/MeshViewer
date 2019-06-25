@@ -114,14 +114,101 @@ public with sharing class BusinessServiceImplTest {
 
         String dossierNumber = '1234';
         String establishmentNUmber = '1234';
-        Account acc = new Account(Name = 'test');
-        insert acc;
+        List<Account> accounts = new List<Account>();
+        for (Integer i = 0; i < 3; i++) {
+            accounts.add(new Account(Name = 'trade_name'));
+        }
+        insert accounts;
         DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest) fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest) fflib_Match.anyObject())).
+                thenReturn(dataVendorDossier);
+        mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.eq(new Account(Name = 'trade_name')))).
+                thenReturn(accounts);
+        mocks.when(duplicateServiceMock.checkForDuplicateDossiers((List<CheckDuplicateDossierRequest>)fflib_Match.anyObject())).
+                thenReturn(new List<CheckDuplicateDossierResponse>{new CheckDuplicateDossierResponse(dossierNumber, establishmentNUmber, null)});
         mocks.stopStubbing();
 
         Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IBusinessDuplicateService.class, duplicateServiceMock);
+
+        InsertDossiersFromDataVendorResponseDTO responseDTO = null;
+        Test.startTest();
+        {
+            Boolean exceptionThrown = false;
+            try {
+                responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, null);
+            } catch (CCDuplicateException e) {
+                exceptionThrown = true;
+            }
+            System.assert(exceptionThrown);
+
+        }
+    }
+
+    @IsTest
+    public static void testInsertSingleDossierFromDataVendorDataUnexpectedException() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness) mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService) mocks.mock(IBusinessDuplicateService.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest) fflib_Match.anyObject())).
+                thenReturn(dataVendorDossier);
+        mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.eq(new Account(Name = 'trade_name')))).
+                thenThrow(new CustomException());
+        mocks.when(duplicateServiceMock.checkForDuplicateDossiers((List<CheckDuplicateDossierRequest>)fflib_Match.anyObject())).
+                thenReturn(new List<CheckDuplicateDossierResponse>{new CheckDuplicateDossierResponse(dossierNumber, establishmentNUmber, null)});
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IBusinessDuplicateService.class, duplicateServiceMock);
+
+        InsertDossiersFromDataVendorResponseDTO responseDTO = null;
+        Test.startTest();
+        {
+            Boolean exceptionThrown = false;
+            try {
+                responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, null);
+            } catch (CustomException e) {
+                exceptionThrown = true;
+            }
+            System.assert(exceptionThrown);
+        }
+        System.assert([SELECT Id FROM Error_Log__c].size() == 1);
+    }
+
+    @IsTest
+    public static void testInsertSingleDossierFromDataVendorDataDossierAlreadyExists() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness) mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService) mocks.mock(IBusinessDuplicateService.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        Business_Dossier__c existingDossier = new Business_Dossier__c(Id = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType));
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest) fflib_Match.anyObject())).
+                thenReturn(dataVendorDossier);
+        mocks.when(duplicateServiceMock.checkForDuplicateDossiers((List<CheckDuplicateDossierRequest>)fflib_Match.anyObject())).
+                thenReturn(new List<CheckDuplicateDossierResponse>{new CheckDuplicateDossierResponse(dossierNumber, establishmentNUmber, existingDossier)});
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IBusinessDuplicateService.class, duplicateServiceMock);
+
+        InsertDossiersFromDataVendorResponseDTO responseDTO = null;
+        Test.startTest();
+        {
+            responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, null);
+            System.assert(responseDTO != null);
+            System.assert(responseDTO.dossierExisted);
+            System.assert(responseDTO.dossier == existingDossier);
+        }
     }
 
     @IsTest
