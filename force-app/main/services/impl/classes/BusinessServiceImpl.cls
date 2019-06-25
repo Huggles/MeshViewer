@@ -45,7 +45,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         List<CheckDuplicateDossierResponse> duplicateDossierResponses = BusinessDuplicateService.checkForDuplicateDossiers(
                 new List<CheckDuplicateDossierRequest>{new CheckDuplicateDossierRequest(dossierNumber, establishmentNumber)}
         );
-        if (duplicateDossierResponses != null && duplicateDossierResponses.size() == 1) { // duplicate found
+        if (duplicateDossierResponses.get(0).dossierFound != null) { // duplicate found
             Business_Dossier__c duplicateDossier = duplicateDossierResponses.get(0).dossierFound;
             response = new InsertDossiersFromDataVendorResponseDTO(duplicateDossier, true);
         } else { // no duplicate, we need to insert the dossier
@@ -54,12 +54,15 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDossier(dossierNumber, establishmentNumber);
 
                 // create an account if the account id is null
+                Account account = null;
                 if (accountId == null) {
                     // TODO: add validation exception handling
                     List<InsertAccountResponseDTO> accountResponseDTOS = insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWork);
-                    accountId = accountResponseDTOS.get(0).account.Id;
+                    account = accountResponseDTOS.get(0).account;
+                } else {
+                    account = new Account(Id = accountId);
                 }
-                List<Business_Dossier__c> dossierDBs = insertDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, accountId)}, unitOfWork);
+                List<Business_Dossier__c> dossierDBs = insertDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, account)}, unitOfWork);
 
                 response = new InsertDossiersFromDataVendorResponseDTO(dossierDBs.get(0), false);
             } catch (CCDuplicateException e) { // multiple duplicate accounts have been found
@@ -174,7 +177,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         List<Business_Dossier__c> returnList = new List<Business_Dossier__c>();
         for (InsertDossierRequestDTO insertDossierRequestDTO : InsertDossierRequestDTOS) {
             Business_Dossier__c dossier = mapDataVendorDataToDossier(insertDossierRequestDTO.dossier, new Business_Dossier__c());
-            unitOfWork.registerNew(dossier, Business_Dossier__c.Account__c, new Account(Id = insertDossierRequestDTO.accountId));
+            unitOfWork.registerNew(dossier, Business_Dossier__c.Account__c, insertDossierRequestDTO.account);
             
             Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
             unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
@@ -352,6 +355,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
 
     // method to skip doing if for every value
+    @TestVisible
     private static Integer convertToInteger(String value){
         try{
             return Integer.valueOf(value);
@@ -390,42 +394,35 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             throw ex; // we dont log bds exceptions, only throwing them further
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
         }
     }
 
-    private static List<Object> upsertDossier(Business_Dossier__c dossier){
-        try{
-            List<Object> result = new List<Object>();
-            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
-            unitOfWork.registerDirty(dossier);
-            unitOfWork.commitWork();
-            result.add(dossier);
-            return result;
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
-    }
+//    private static List<Object> upsertDossier(Business_Dossier__c dossier){
+//        try{
+//            List<Object> result = new List<Object>();
+//            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCrud());
+//            unitOfWork.registerDirty(dossier);
+//            unitOfWork.commitWork();
+//            result.add(dossier);
+//            return result;
+//        }catch(CCException ex){
+//            throw ex; // we dont log bds exceptions, only throwing them further
+//        }catch(System.Exception ex){
+//            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+//            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
+//        }
+//    }
 
     private static String determineStatus(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
-        try{
-            List<String> status = new List<String>();
-            if (dossier.indication_import != null && Boolean.valueOf(dossier.indication_import) == true) status.add('Import');
-            if (dossier.indication_export != null && Boolean.valueOf(dossier.indication_export) == true) status.add('Export');
-            if (dossier.indication_economically_active != null && Boolean.valueOf(dossier.indication_economically_active) == true) status.add('Economically Active');
-            if (dossier.indication_non_mailing != null && Boolean.valueOf(dossier.indication_non_mailing) == true) status.add('Non Mailing');
-            if (dossier.indication_bankruptcy != null && Boolean.valueOf(dossier.indication_bankruptcy) == true) status.add('Bankruptcy');
-            if (dossier.indication_dip != null && Boolean.valueOf(dossier.indication_dip) == true) status.add('DIP');
-            return String.join(status, ';');
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            throw new CCException(System.Label.WSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
+        List<String> status = new List<String>();
+        if (dossier.indication_import != null && Boolean.valueOf(dossier.indication_import) == true) status.add('Import');
+        if (dossier.indication_export != null && Boolean.valueOf(dossier.indication_export) == true) status.add('Export');
+        if (dossier.indication_economically_active != null && Boolean.valueOf(dossier.indication_economically_active) == true) status.add('Economically Active');
+        if (dossier.indication_non_mailing != null && Boolean.valueOf(dossier.indication_non_mailing) == true) status.add('Non Mailing');
+        if (dossier.indication_bankruptcy != null && Boolean.valueOf(dossier.indication_bankruptcy) == true) status.add('Bankruptcy');
+        if (dossier.indication_dip != null && Boolean.valueOf(dossier.indication_dip) == true) status.add('DIP');
+        return String.join(status, ';');
     }
 
 //    private static Business_Dossier__c saveBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork) {
