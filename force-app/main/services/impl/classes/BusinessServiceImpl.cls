@@ -40,6 +40,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         InsertDossiersFromDataVendorResponseDTO response = null;
+        Account account = null;
 
         // first find any dossiers that are already existing
         List<CheckDuplicateDossierResponse> duplicateDossierResponses = BusinessDuplicateService.checkForDuplicateDossiers(
@@ -54,17 +55,27 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDossier(dossierNumber, establishmentNumber);
 
                 // create an account if the account id is null
-                Account account = null;
                 if (accountId == null) {
-                    // TODO: add validation exception handling
                     List<InsertAccountResponseDTO> accountResponseDTOS = insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWork);
+                    // since somebody thought of let's have a circular relationship between dossier and account, we need to commit the work up until now
+                    // or we don't have an id on the account and cannot create the other side of the relationship when we insert the dossier
                     account = accountResponseDTOS.get(0).account;
                 } else {
-                    account = new Account(Id = accountId);
+                    List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
+                    account = accounts.get(0);
                 }
                 List<Business_Dossier__c> dossierDBs = insertDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, account)}, unitOfWork);
 
                 response = new InsertDossiersFromDataVendorResponseDTO(dossierDBs.get(0), false);
+                unitOfWork.commitWork();
+
+                // now update the account in a new round since only now we have the id of the dossier.
+                // Someone had the smart idea of creating a circular relationship in the database...
+                // Since the id of the account is not known before creation, registering a relationship doesn't work
+                unitOfWork = Application.UnitOfWork.newInstance();
+                unitOfWork.registerDirty(account, Schema.Account.Business_Dossier__c, dossierDBs.get(0));
+                unitOfWork.commitWork();
+
             } catch (CCDuplicateException e) { // multiple duplicate accounts have been found
                 throw e;
             } catch (Exception e) {
@@ -72,41 +83,39 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 throw new CCException(e);
             }
         }
-        unitOfWork.commitWork();
         return response;
     }
 
     public static Boolean deleteDossier(Id accountId) {
-        try{
+//        try{
             List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
             List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{accounts.get(0).Business_Dossier__c});
+            Boolean response = false;
             if (dossierList.size() == 1) {
-                delete dossierList[0];
-                return true;
+                fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+                unitOfWork.registerDeleted(dossierList[0]);
+                unitOfWork.commitWork();
+                response = true;
             }
-            return false;
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
-        }
+            return response;
+//        } catch(DmlException ex){
+//            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+//            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
+//        }
     }
 
-    public static Business_Dossier__c selectDossier(Id dossierId) {
-        try{
-            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
-            if (dossierList.size() == 1) {
-                return dossierList[0];
-            }
-            return null;
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
-        }
-    }
+//    public static Business_Dossier__c selectDossier(Id dossierId) {
+////        try{
+//            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
+//            if (dossierList.size() == 1) {
+//                return dossierList[0];
+//            }
+//            return null;
+////        } catch(System.Exception ex){
+////            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
+////            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
+////        }
+//    }
 
     public Business_Dossier__c setVatNumber(Id dossierId) {
         String vatNumber = '';
@@ -178,6 +187,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         for (InsertDossierRequestDTO insertDossierRequestDTO : InsertDossierRequestDTOS) {
             Business_Dossier__c dossier = mapDataVendorDataToDossier(insertDossierRequestDTO.dossier, new Business_Dossier__c());
             unitOfWork.registerNew(dossier, Business_Dossier__c.Account__c, insertDossierRequestDTO.account);
+
+            // unitOfWork.registerRelationship(insertDossierRequestDTO.account, Account.Business_Dossier__c, dossier);
             
             Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
             unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);

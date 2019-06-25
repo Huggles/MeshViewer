@@ -4,8 +4,8 @@
 
 public with sharing class UpdateDossierRequestDTO {
 
-    public DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier { get; set; }
-    public Business_Dossier__c dossierDB { get; set; }
+    public DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier { get; private set; }
+    public Business_Dossier__c dossierDB { get; private set; }
 
     public UpdateDossierRequestDTO(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Business_Dossier__c dossierDB) {
         this.dataVendorDossier = dataVendorDossier;

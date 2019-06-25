@@ -415,6 +415,34 @@ public with sharing class BusinessServiceImplTest {
 
 
     }
+
+    @IsTest
+    public static void testDeleteDossierHappyScenario() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        Id accountId = null;
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
+        Test.startTest();
+        {
+            System.assert([SELECT Id FROM Business_Dossier__c].size() == 1);
+            Boolean result = BusinessService.deleteDossier(responseDTO.dossier.Account__c);
+            System.assert(result);
+            System.assert([SELECT Id FROM Business_Dossier__c].size() == 0);
+        }
+        Test.stopTest();
+
+
+    }
     
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataNoAccountId() {

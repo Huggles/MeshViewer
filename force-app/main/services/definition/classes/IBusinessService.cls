@@ -35,14 +35,14 @@ public interface IBusinessService {
      */
     Boolean deleteDossier(Id accountId);
 
-    /**
-     * Retrieves the dossier from the backend using the Salesforce Id of the dossier
-     *
-     * @param dossierId
-     *
-     * @return
-     */
-    Business_Dossier__c selectDossier(Id dossierId);
+//    /**
+//     * Retrieves the dossier from the backend using the Salesforce Id of the dossier
+//     *
+//     * @param dossierId
+//     *
+//     * @return
+//     */
+//    Business_Dossier__c selectDossier(Id dossierId);
 
     /**
      * Updates a given set of dossiers with the data from the backend. Used in the nightly update function
