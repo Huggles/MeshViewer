@@ -8,11 +8,11 @@ public with sharing class InsertDossierRequestDTO {
         get; set;
     }
 
-    public Id accountId { get; set; }
+    public Account account { get; set; }
 
-    public InsertDossierRequestDTO(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Id accountId) {
+    public InsertDossierRequestDTO(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account account) {
         this.dossier = dossier;
-        this.accountId = accountId;
+        this.account = account;
     }
 
 }

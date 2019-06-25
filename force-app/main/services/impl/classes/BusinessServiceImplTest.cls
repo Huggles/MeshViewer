@@ -105,6 +105,228 @@ public with sharing class BusinessServiceImplTest {
         System.assert([SELECT Id FROM Error_Log__c].size() == 1);
 
     }
+
+    @IsTest
+    public static void testInsertSingleDossierFromDataVendorDataGotTwoDuplicateAccounts() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness) mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService) mocks.mock(IBusinessDuplicateService.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        Account acc = new Account(Name = 'test');
+        insert acc;
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest) fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+    }
+
+    @IsTest
+    public static void testInsertSingleDossierFromDataVendorDataGotAccount() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness) mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        Account acc = new Account(Name = 'test');
+        insert acc;
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+
+        InsertDossiersFromDataVendorResponseDTO responseDTO = null;
+        Test.startTest();
+        {
+            responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, acc.Id);
+        }
+        Test.stopTest();
+        System.assert(responseDTO != null);
+        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
+        Account accountDB = [SELECT Id, Name FROM Account];
+        System.assert(accountDB != null);
+        System.assert(accountDB.Name == acc.Name);
+        Business_Dossier__c dossierDB = [
+                SELECT
+                        CreatedById,
+                        CreatedDate,
+                        Account__c,
+                        Annual_Financial_Statement_Summary__c,
+                        Assets__c,
+                        Authorized_Share_Capital__c,
+                        Authorized_Share_Capital_Currency__c,
+                        Chamber_Code__c,
+                        Chamber_Number__c,
+                        Class_Personnel__c,
+                        Class_Personnel_CI__c,
+                        Class_Personnel_Fulltime__c,
+                        Contact_Gender__c,
+                        Contact_Initials__c,
+                        Contact_Prefix__c,
+                        Contact_Surname__c,
+                        Contact_Title1__c,
+                        Contact_Title2__c,
+                        Continuation_Date__c,
+                        Discontinuation_Date__c,
+                        Domain_Name__c,
+                        Dossier_Number__c,
+                        Establishment_Date__c,
+                        Establishment_Number__c,
+                        Founding_Date__c,
+                        Indication_Bankruptcy__c,
+                        Indication_Dip__c,
+                        Indication_Economically_Active__c,
+                        Indication_Export__c,
+                        Indication_Import__c,
+                        Indication_Main_Establishment__c,
+                        Indication_Non_Mailing__c,
+                        Indication_Organisation_Code__c,
+                        Insolvencies__c,
+                        Issued_Share_Capital__c,
+                        Issued_Share_Capital_Currency__c,
+                        Legal_Form_Code__c,
+                        Legal_Form_Text__c,
+                        Main_Establishment_Number__c,
+                        Mobile_Number__c,
+                        Number_Of_Subsidiaries__c,
+                        Paid_Up_Share_Capital__c,
+                        Paid_Up_Share_Capital_Currency__c,
+                        Parent_Chamber_Of_Commerce_Number__c,
+                        Personnel__c,
+                        Personnel_CI__c,
+                        Personnel_CI_Reference_Date__c,
+                        Personnel_Fulltime__c,
+                        Personnel_Reference_Date__c,
+                        Primary_Sbi_Code__c,
+                        Primary_Sbi_Code_Text__c,
+                        Profit__c,
+                        Rsin_Number__c,
+                        Sbi_Collection__c,
+                        Secondary_Sbi_Code_1__c,
+                        Secondary_Sbi_Code_1_Text__c,
+                        Secondary_Sbi_Code_2__c,
+                        Secondary_Sbi_Code_2_Text__c,
+                        Status__c,
+                        Structure__c,
+                        Telephone_Number__c,
+                        Trade_Name_45__c,
+                        Trade_Name_Full__c,
+                        Trade_Names__c,
+                        Turnover__c,
+                        Ultimate_Parent_Chamber_Of_Commerce_Nr__c,
+                        VAT_Number__c,
+                        Year__c,
+                        Id,
+                        IsDeleted,
+                        LastModifiedById,
+                        LastModifiedDate,
+                        LastReferencedDate,
+                        LastViewedDate,
+                        Name,
+                        OwnerId,
+                        SystemModstamp
+                FROM Business_Dossier__c];
+        System.assert(dossierDB != null);
+        System.assert(dossierDB.Account__c == accountDB.Id);
+
+        System.assertEquals(dossierDB.Year__c, 'year');
+        System.assertEquals(dossierDB.Profit__c, 'profit');
+        System.assertEquals(dossierDB.Assets__c, 'assets');
+        System.assertEquals(dossierDB.Turnover__c, 'turnover');
+        System.assertEquals(dossierDB.Authorized_Share_Capital__c, 12);
+        System.assertEquals(dossierDB.Authorized_Share_Capital_Currency__c, 'USD');
+        System.assertEquals(dossierDB.Chamber_Number__c , 1);
+        System.assertEquals(dossierDB.Class_Personnel__c , '1');
+        System.assertEquals(dossierDB.Class_Personnel_CI__c , '1');
+        System.assertEquals(dossierDB.Class_Personnel_Fulltime__c , '1');
+        System.assertEquals(dossierDB.Contact_Gender__c , 'm');
+        System.assertEquals(dossierDB.Contact_Initials__c , 'initial');
+        System.assertEquals(dossierDB.Contact_Prefix__c , 'prefix');
+        System.assertEquals(dossierDB.Contact_Surname__c , 'surname');
+        System.assertEquals(dossierDB.Contact_Title1__c , 'title1');
+        System.assertEquals(dossierDB.Contact_Title2__c , 'title2');
+        System.assertEquals(dossierDB.Continuation_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Discontinuation_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Domain_Name__c , 'domain_name');
+        System.assertEquals(dossierDB.Dossier_Number__c , '123456');
+        System.assertEquals(dossierDB.Establishment_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Establishment_Number__c , '10');
+        System.assertEquals(dossierDB.Founding_Date__c, Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Indication_Main_Establishment__c , true);
+        System.assertEquals(dossierDB.Indication_Organisation_Code__c , '10');
+        System.assertEquals(dossierDB.Insolvencies__c , 'insolvencies');
+        System.assertEquals(dossierDB.Issued_Share_Capital__c , 12334234);
+        System.assertEquals(dossierDB.Issued_Share_Capital_Currency__c , 'USD');
+        System.assertEquals(dossierDB.Legal_Form_Code__c , 11);
+        System.assertEquals(dossierDB.Legal_Form_Text__c , 'legal_form');
+        System.assertEquals(dossierDB.Main_Establishment_Number__c , '12');
+        System.assertEquals(dossierDB.Mobile_Number__c , '12334234');
+        System.assertEquals(dossierDB.Paid_Up_Share_Capital__c , 12334234);
+        System.assertEquals(dossierDB.Paid_Up_Share_Capital_Currency__c , 'USD');
+        System.assertEquals(dossierDB.Personnel__c , 1);
+        System.assertEquals(dossierDB.Personnel_CI__c , 1);
+        System.assertEquals(dossierDB.Personnel_CI_Reference_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Personnel_Fulltime__c , 1);
+        System.assertEquals(dossierDB.Personnel_Reference_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Primary_Sbi_Code__c , 'sbi');
+        System.assertEquals(dossierDB.Primary_Sbi_Code_Text__c , 'sbi_code_text');
+        System.assertEquals(dossierDB.Rsin_Number__c , '13');
+
+        List<Business_Data_SBI__c> sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :dossierDB.Id LIMIT 1];
+        System.assert(sbi.size() == 1);
+        if (sbi.size() > 0) {
+            System.assertEquals(sbi[0].SBI_Type__c, 'original');
+            System.assertEquals(sbi[0].SBI_Description__c, 'desc');
+            System.assertEquals(sbi[0].SBI_Code__c , '11');
+        }
+
+        System.assertEquals(dossierDB.Secondary_Sbi_Code_1__c , 'sbi');
+        System.assertEquals(dossierDB.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
+        System.assertEquals(dossierDB.Secondary_Sbi_Code_2__c, 'sbis2');
+        System.assertEquals(dossierDB.Secondary_Sbi_Code_2_Text__c , 'secondary_sbi_code2_text');
+        System.assertEquals(dossierDB.Status__c , 'Import');
+        System.assertEquals(dossierDB.Number_Of_Subsidiaries__c, '1');
+        System.assertEquals(dossierDB.Parent_Chamber_Of_Commerce_Number__c, '123');
+        System.assertEquals(dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c, '1122');
+        System.assertEquals(dossierDB.Telephone_Number__c , '12334234');
+        System.assertEquals(dossierDB.Trade_Name_45__c , '14');
+        System.assertEquals(dossierDB.Trade_Name_Full__c , 'trade_name');
+        System.assertNotEquals(dossierDB.Trade_Names__c , 'test test1');
+        System.assertEquals(dossierDB.Indication_Bankruptcy__c , false);
+        System.assertEquals(dossierDB.Indication_Dip__c , false);
+        System.assertEquals(dossierDB.Indication_Economically_Active__c , false);
+        System.assertEquals(dossierDB.Indication_Export__c , false);
+        System.assertEquals(dossierDB.Indication_Import__c, true);
+        System.assertEquals(dossierDB.Indication_Main_Establishment__c , true);
+        System.assertEquals(dossierDB.Indication_Non_Mailing__c , false);
+
+        Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Correspondence' LIMIT 1];
+
+        System.assertEquals(cAddress.Name, 'correspondence_address.original.postcode correspondence_address.original.street');
+        System.assertEquals(cAddress.Postcode__c, 'correspondence_address.original.postcode');
+        System.assertEquals(cAddress.Country__c, 'correspondence_address.original.country');
+        System.assertEquals(cAddress.City__c, 'correspondence_address.original.city');
+        System.assertEquals(cAddress.Street__c, 'correspondence_address.original.street');
+        System.assertEquals(cAddress.House_Number_Addition__c, 'correspondence_address.original.house_number_addition');
+        System.assertEquals(cAddress.House_Number__c, '1');
+
+        Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment' LIMIT 1];
+        System.debug(eAddress.Name);
+        System.assertEquals(eAddress.Name, 'establishment_address.original.postcode establishment_address.original.street');
+        System.assertEquals(eAddress.Postcode__c, 'establishment_address.original.postcode');
+        System.assertEquals(eAddress.Country__c, 'establishment_address.original.country');
+        System.assertEquals(eAddress.City__c, 'establishment_address.original.city');
+        System.assertEquals(eAddress.Street__c, 'establishment_address.original.street');
+        System.assertEquals(eAddress.House_Number_Addition__c, 'establishment_address.original.house_number_addition');
+        System.assertEquals(eAddress.House_Number__c, '2');
+
+
+    }
     
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataNoAccountId() {
