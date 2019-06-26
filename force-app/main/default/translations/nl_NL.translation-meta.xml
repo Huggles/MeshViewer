@@ -302,6 +302,10 @@ Opmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisati
         <name>Sync_Success</name>
     </customLabels>
     <customLabels>
+        <label>Sorry. Het BTW nummer voor deze organisatie is niet publiekelijk bekend. Contacteer de organisatie alstublieft en vraag om het BTW nummer.</label>
+        <name>VAT_Not_Found</name>
+    </customLabels>
+    <customLabels>
         <label><!-- VAT_Retrieve --></label>
         <name>VAT_Retrieve</name>
     </customLabels>

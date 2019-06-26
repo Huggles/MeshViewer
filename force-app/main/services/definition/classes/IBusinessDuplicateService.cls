@@ -24,4 +24,15 @@ public interface IBusinessDuplicateService {
      */
     List<Account> checkForAccountDuplicates(Account acc);
 
+    /**
+     * checks if there is a vat number related to dossiers with the given dossiernumber in the database. A dossier number
+     *
+     * @param dossierNumber
+     *
+     * @return
+     */
+    String checkForExistingVatNumberInDB(String dossierNumber);
+
+
+
 }

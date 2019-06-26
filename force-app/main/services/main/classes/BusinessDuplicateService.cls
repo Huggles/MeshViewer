@@ -12,6 +12,10 @@ public without sharing class BusinessDuplicateService {
         return newInstance().checkForAccountDuplicates(acc);
     }
 
+    public static String checkForExistingVatNumberInDB(String dossierNumber) {
+        return newInstance().checkForExistingVatNumberInDB(dossierNumber);
+    }
+
     public static IBusinessDuplicateService newInstance() {
         return (IBusinessDuplicateService) Application.Service.newInstance(IBusinessDuplicateService.class);
     }

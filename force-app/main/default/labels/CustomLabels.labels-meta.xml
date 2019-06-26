@@ -520,6 +520,13 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>Business Data sync was successful.</value>
     </labels>
     <labels>
+        <fullName>VAT_Not_Found</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>VAT Not Found</shortDescription>
+        <value>Sorry. No public VAT number is known for this organisation. Please contact the organisation and ask for their VAT number.</value>
+    </labels>
+    <labels>
         <fullName>VAT_Retrieve</fullName>
         <language>en_US</language>
         <protected>true</protected>

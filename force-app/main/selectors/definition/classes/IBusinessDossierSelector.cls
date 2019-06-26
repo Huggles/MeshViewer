@@ -9,6 +9,16 @@ public interface IBusinessDossierSelector extends fflib_ISObjectSelector {
      * @return
      */
     List<Business_Dossier__c> selectByDossierNumbers(Set<DossierQueryDTO> dossierQueryDTOS, Boolean enforceFLS);
+
+    /**
+     * Selects all dossiers with the same vat number
+     *
+     * @param vatNumber
+     *
+     * @return a list with the found dossiers (empty if none has been found)
+     */
+    List<Business_Dossier__c> selectByVatNumber(String vatNumber, Boolean enforceFLS);
+
     List<Business_Dossier__c> selectById(set<Id> dosserIdSet);
 
 }

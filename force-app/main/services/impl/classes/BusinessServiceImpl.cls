@@ -87,48 +87,34 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
 
     public static Boolean deleteDossier(Id accountId) {
-//        try{
-            List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
-            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{accounts.get(0).Business_Dossier__c});
-            Boolean response = false;
-            if (dossierList.size() == 1) {
-                fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-                unitOfWork.registerDeleted(dossierList[0]);
-                unitOfWork.commitWork();
-                response = true;
-            }
-            return response;
-//        } catch(DmlException ex){
-//            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-//            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
-//        }
+        List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{
+                accountId
+        });
+        List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{
+                accounts.get(0).Business_Dossier__c
+        });
+        Boolean response = false;
+        if (dossierList.size() == 1) {
+            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+            unitOfWork.registerDeleted(dossierList[0]);
+            unitOfWork.commitWork();
+            response = true;
+        }
+        return response;
     }
 
-//    public static Business_Dossier__c selectDossier(Id dossierId) {
-////        try{
-//            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new set<Id>{dossierId});
-//            if (dossierList.size() == 1) {
-//                return dossierList[0];
-//            }
-//            return null;
-////        } catch(System.Exception ex){
-////            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than BdsException type
-////            throw new CCException(System.Label.DBSCall_Unknown_Exception+ex.getMessage(), ex);
-////        }
-//    }
-
     public Business_Dossier__c setVatNumber(Id dossierId) {
-        String vatNumber = '';
-        // TODO: move this to another 'without sharing' in between layer to ensure all VAT numbers are found
-        List<Business_Dossier__c> dossiersDB = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectById(new Set<Id>{dossierId});
-        Business_Dossier__c dossierDB = dossiersDB.get(0);
-        List<Business_Dossier__c> dossiersWithSameDossierNumber = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectByDossierNumber(new Set<String>{dossierDB.Dossier_Number__c}, false);
-        for (Business_Dossier__c businessDossier : dossiersWithSameDossierNumber) {
-            if (!String.isEmpty(businessDossier.VAT_Number__c)) {
-                vatNumber = businessDossier.VAT_Number__c;
-                break;
-            }
+        if (dossierId == null) {
+            throw new CCException('DossierId must be filled when setting VAT number'); // shouldn't happen but let's check the input
         }
+
+        List<Business_Dossier__c> dossiersDB = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectById(new Set<Id>{dossierId});
+        if (dossiersDB.isEmpty()) {
+            throw new CCException('User doesn\'t have access to dossier with ID: ' + dossierId);
+        }
+
+        Business_Dossier__c dossierDB = dossiersDB.get(0);
+        String vatNumber = BusinessDuplicateService.checkForExistingVatNumberInDB(dossierDB.Dossier_Number__c);
 
         // if no vat number in the db, get it from the data vendor
         if (String.isEmpty(vatNumber)) { // no VAT number for any other dossier in the database
@@ -136,8 +122,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             vatRequest.dossier_number = dossierDB.Dossier_Number__c;
             DutchBusinessDto.DutchBusinessVatNumber vatResponse = WebServicesNLSOAPDutchBusiness.newInstance().businessGetVatNumber(vatRequest);
             if (String.isEmpty(vatResponse.vat_number)) {
-                // TODO: need to add error message
-                throw new CCVatNotFoundException();
+                throw new CCVatNotFoundException(Label.VAT_Not_Found);
             } else {
                 vatNumber = vatResponse.vat_number;
             }
@@ -351,10 +336,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
 
     private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, List<Business_Data_SBI__c> sbiCodesDB) {
-        // we misuse a SObject as DTO and that causes all kinds of problems. Amongst others the fact the Id can be set which will kill insert DML.
-        for (Business_Data_SBI__c businessDataSBI : dataVendorDossier.sbi_collection) {
-            businessDataSBI.Id = null;
-        }
         sbiCodesDB = dataVendorDossier.sbi_collection;
         return sbiCodesDB;
     }
@@ -387,11 +368,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
     // method to skip doing if for every value
     private static String convertToString(Integer value){
-        try{
-            return String.valueOf(value);
-        }catch(Exception e){
-            return null;
-        }
+        return String.valueOf(value);
     }
 
 

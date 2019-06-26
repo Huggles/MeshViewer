@@ -36,6 +36,27 @@ public without sharing class BusinessDuplicateServiceImpl implements IBusinessDu
     }
 
     /**
+     * checks if there is a vat number related to dossiers with the given dossiernumber in the database. A dossier number
+     *
+     * @param dossierNumber
+     *
+     * @return a vat number if one is found, otherwise an empty string
+     */
+    public String checkForExistingVatNumberInDB(String dossierNumber) {
+        // get the dossiers
+        List<Business_Dossier__c> dossiersWithSameDossierNumber = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectByDossierNumber(new Set<String>{dossierNumber}, false);
+        // loop through the dossiers
+        String vatNumber = '';
+        for (Business_Dossier__c businessDossier : dossiersWithSameDossierNumber) {
+            if (!String.isEmpty(businessDossier.VAT_Number__c)) {
+                vatNumber = businessDossier.VAT_Number__c;
+                break;
+            }
+        }
+        return vatNumber;
+    }
+
+    /**
      * checks for account duplicates. Return a List of IDs if duplicates for the given account exist.
      *
      * @param acc

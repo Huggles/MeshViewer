@@ -32,6 +32,23 @@ public inherited sharing class BusinessDossierSelector extends fflib_SObjectSele
         return result;
     }
 
+    /**
+     * Selects all dossiers with the same vat number
+     *
+     * @param vatNumber
+     *
+     * @return a list with the found dossiers (empty if none has been found)
+     */
+    public List<Business_Dossier__c> selectByVatNumber(String vatNumber, Boolean enforceFLS) {
+        fflib_QueryFactory queryFactory = newQueryFactory();
+        List<Business_Dossier__c> result = new List<Business_Dossier__c>();
+        queryFactory.setEnforceFLS(enforceFLS);
+        queryFactory.setCondition('VAT_Number__c = :vatNumber');
+        result = Database.query(queryFactory.toSOQL());
+        return result;
+    }
+
+
     public List<Business_Dossier__c> selectByDossierNumbers(Set<DossierQueryDTO> dossierQueryDTOS, Boolean enforceFLS){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Business_Dossier__c> result = new list<Business_Dossier__c>();

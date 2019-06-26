@@ -113,9 +113,9 @@ public with sharing class BusinessServiceImplTest {
         String dossierNumber = '1234';
         String establishmentNUmber = '1234';
         Id accountId = null;
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossierOriginal = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossierOriginal);
         mocks.stopStubbing();
 
         Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
@@ -125,6 +125,7 @@ public with sharing class BusinessServiceImplTest {
 
         Test.startTest();
         {
+            DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
             dataVendorDossier.trade_name_full = 'test'; // not going to change every field since I use a central mapping function also used by insert and thus we tested it already there
             List<Business_Dossier__c> businessDossiers = BusinessService.updateDossiersWithDataVendorData(
                     new List<UpdateDossierRequestDTO>{new UpdateDossierRequestDTO(dataVendorDossier, responseDTO.dossier)});
@@ -134,6 +135,39 @@ public with sharing class BusinessServiceImplTest {
         List<Business_Dossier__c> dossiersInDb = [SELECT Id, Trade_Name_Full__c FROM Business_Dossier__c];
         System.assert(dossiersInDb.size() == 1);
         System.assert(dossiersInDb.get(0).Trade_Name_Full__c == 'test');
+
+    }
+
+    @IsTest
+    public static void testSetVatNumberNoVatKnown() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        Id accountId = null;
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossierOriginal = getDataVendorMockDossier();
+        DutchBusinessDto.DutchBusinessVatNumber vatResponse = new DutchBusinessDto.DutchBusinessVatNumber();
+        vatResponse.dossier_number = '1234';
+        vatResponse.vat_number = '123456';
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossierOriginal);
+        mocks.when(webserviceMock.businessGetVatNumber((DutchBusinessDto.DutchBusinessGetVatNumberRequest)fflib_Match.anyObject())).thenReturn(vatResponse);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+
+        // create something we can update
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
+
+        Test.startTest();
+        {
+            Business_Dossier__c dossierReturned = BusinessService.setVatNumber(responseDTO.dossier.Id);
+        }
+        Test.stopTest();
+        List<Business_Dossier__c> dossiersInDb = [SELECT Id, VAT_Number__c FROM Business_Dossier__c];
+        System.assert(dossiersInDb.size() == 1);
+        System.assert(dossiersInDb.get(0).VAT_Number__c == vatResponse.vat_number);
 
     }
 
