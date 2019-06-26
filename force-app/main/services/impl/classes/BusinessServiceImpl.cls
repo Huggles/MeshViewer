@@ -351,7 +351,10 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
 
     private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, List<Business_Data_SBI__c> sbiCodesDB) {
-        // currently just returns the sbi collection of the dataVendorDossie since we used the SObject as a DTO
+        // we misuse a SObject as DTO and that causes all kinds of problems. Amongst others the fact the Id can be set which will kill insert DML.
+        for (Business_Data_SBI__c businessDataSBI : dataVendorDossier.sbi_collection) {
+            businessDataSBI.Id = null;
+        }
         sbiCodesDB = dataVendorDossier.sbi_collection;
         return sbiCodesDB;
     }

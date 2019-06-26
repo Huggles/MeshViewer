@@ -106,6 +106,37 @@ public with sharing class BusinessServiceImplTest {
 
     }
 
+    @IsTest static void testUpdateDossiersWithDataVendorDataHappyFlow() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        Id accountId = null;
+        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+
+        // create something we can update
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
+
+        Test.startTest();
+        {
+            dataVendorDossier.trade_name_full = 'test'; // not going to change every field since I use a central mapping function also used by insert and thus we tested it already there
+            List<Business_Dossier__c> businessDossiers = BusinessService.updateDossiersWithDataVendorData(
+                    new List<UpdateDossierRequestDTO>{new UpdateDossierRequestDTO(dataVendorDossier, responseDTO.dossier)});
+            System.assert(businessDossiers.size() == 1);
+        }
+        Test.stopTest();
+        List<Business_Dossier__c> dossiersInDb = [SELECT Id, Trade_Name_Full__c FROM Business_Dossier__c];
+        System.assert(dossiersInDb.size() == 1);
+        System.assert(dossiersInDb.get(0).Trade_Name_Full__c == 'test');
+
+    }
+
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataGotTwoDuplicateAccounts() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
