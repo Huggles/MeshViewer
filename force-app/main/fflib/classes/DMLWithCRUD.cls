@@ -15,8 +15,10 @@ public with sharing class DMLWithCRUD implements fflib_SObjectUnitOfWork.IDML {
     public void dmlDelete(List<SObject> objList) {
         DMLManager.deleteAsUser(objList);
     }
-    public void eventPublish(List<SObject> objList){
-        // does nothing, had to stub it because of fflib update
+
+    public void eventPublish(List<SObject> objList) {
+        EventBus.publish(objList);
     }
+
 
 }

@@ -51,7 +51,9 @@ public with sharing class DMLManager {
     /* Usually DML methods does not return DML result but enabled in few methods so that we can check failed values
     return DMl result, done for insertAsUser but can make similar methods if we'll need it in the future*/
 
-public static void insertAsSystem(sObject obj){ insert obj; }
+
+    // Pass-thru methods to raw DML operations.
+    public static void insertAsSystem(sObject obj){ insert obj; }
     public static void updateAsSystem(sObject obj){ update obj; }
     public static void upsertAsSystem(sObject obj){ upsert obj; }
 
@@ -174,7 +176,7 @@ public static void insertAsSystem(sObject obj){ insert obj; }
         }
 
         if(existingRecord == null){
-            throw new DMLManagerException('DMLManager ERROR:  An existing record could not be found for object with Id = ' + obj.Id);
+            throw new DMLManagerException( System.Label.DML_Manager_Error + obj.Id);
         }
 
         Map<String,Object> fieldsMap = getFieldMapFromExistingSObject(obj);

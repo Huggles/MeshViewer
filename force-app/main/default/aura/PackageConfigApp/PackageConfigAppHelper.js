@@ -2,4 +2,4 @@
     helperMethod : function() {
 
     }
-})
+});

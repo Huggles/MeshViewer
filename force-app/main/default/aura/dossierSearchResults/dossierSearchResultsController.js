@@ -31,4 +31,4 @@
         updateEvent.fire();
     }
 
-})
+});

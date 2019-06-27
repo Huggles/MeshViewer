@@ -54,7 +54,7 @@ label = {
     Error_Incomplete,
     Error_Config,
     Dossier_Account_Update_Completed
-}
+};
 
 isUserOnboarded;
 
@@ -116,7 +116,7 @@ enableTrial(event){
             variant: 'error'
         });
         this.dispatchEvent(evt);
-    });
+})
 }
 
 saveCredentials() {
@@ -154,7 +154,7 @@ saveCredentials() {
             variant: 'error'
         });
         this.dispatchEvent(evt);
-    });
+})
 }
 
 toggleNewUser(event) {

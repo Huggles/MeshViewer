@@ -17,4 +17,4 @@
             actionAPI.refresh(); // close quick action is called in dossierDetails component.
         }
     }
-})
+});

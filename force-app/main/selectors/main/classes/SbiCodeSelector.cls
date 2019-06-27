@@ -2,14 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-18.
  */
 
-public with sharing class SbiCodeSelector extends fflib_SObjectSelector implements ISbiCodeSelector {
-
-
-    public SbiCodeSelector() {
-//        super(false,
-//                true,
-//                true);
-    }
+public inherited sharing class SbiCodeSelector extends fflib_SObjectSelector implements ISbiCodeSelector {
 
     public static ISbiCodeSelector newInstance() {
         return (ISbiCodeSelector) Application.Selector.newInstance(Business_Data_SBI__c.SObjectType);
@@ -35,9 +28,8 @@ public with sharing class SbiCodeSelector extends fflib_SObjectSelector implemen
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<Business_Data_SBI__c> result = new List<Business_Data_SBI__c>();
         queryFactory.setCondition('Business_Dossier__c IN :dossierIdSet');
-        System.debug('SOQL selectByDossierid: ' + queryFactory.toSOQL());
         result = Database.query(queryFactory.toSOQL());
-        System.debug('found records: ' + result);
+        System.debug(result);
         return result;
     }
 

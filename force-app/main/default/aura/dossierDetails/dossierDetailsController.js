@@ -13,7 +13,7 @@
         });
     },
     /**
-     * Select dossier event triggered. Get dossier from API and save to sObject.
+     * Select dossier event triggered. Get dossier from API, check if the dossier already exists in the DB and if not save to sObject.
      * @param {*} component 
      * @param {*} event 
      * @param {*} helper 
@@ -21,19 +21,21 @@
     onSelect : function(component, event, helper) {
         var params = event.getParams();
         var callParams = {dossierNumber: params.DossierNumber, establishmentNumber: params.EstablishmentNumber};
-        if (component.get('v.recordId'))
-            callParams.accountId = component.get('v.recordId');
         component.set('v.selected', params.DossierNumber);
-        helper.callServer(component, 'c.checkDossier', callParams, function (response) {
-            if (response == null) {
-                helper.callServer(component, 'c.createDossier', callParams, function(response) {
-                    helper.handleCompanyData(component, response);
-                })
-            } else {
-                helper.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Business_Data_Exists'), 'success');
-            }
-
+        helper.callServer(component, 'c.createDossier', callParams, function(response) {
+            helper.handleCompanyData(component, response);
         });
+        // helper.callServer(component, 'c.checkDossier', callParams, function (response) {
+        //     if (!response.result) { // no dossier found
+        //         if (component.get('v.recordId'))
+        //             callParams.accountId = component.get('v.recordId');
+        //         helper.callServer(component, 'c.createDossier', callParams, function(response) {
+        //             helper.handleCompanyData(component, response);
+        //         })
+        //     } else {
+        //         helper.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Business_Data_Exists'), 'success');
+        //     }
+        // });
     },
     /**
      * Decrement step to allow another search to take place
@@ -86,4 +88,4 @@
         });
         
     }
-})
+});

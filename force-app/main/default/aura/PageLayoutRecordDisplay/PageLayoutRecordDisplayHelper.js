@@ -25,4 +25,4 @@
         
         $A.enqueueAction(action);
 	}
-})
+});

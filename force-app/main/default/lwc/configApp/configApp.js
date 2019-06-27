@@ -24,7 +24,7 @@ export default class configApp extends LightningElement {
         Config_Title,
         Config_Page_Title,
         Config_Loading
-    }
+    };
 
     @wire(getUserOnboarded)
     wiredUserOnboarded(result){

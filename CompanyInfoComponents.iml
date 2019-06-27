@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="IlluminatedCloud" name="Illuminated Cloud">
       <configuration>
-        <option name="connectionName" value="CompanyDataByAppsolutely_Dev2" />
+        <option name="connectionName" value="CompanyDataByAppsolutely_Dev" />
         <option name="connectionType" value="SFDX" />
         <option name="moduleContents">
           <ModuleContents>
@@ -20,7 +20,7 @@
       <sourceFolder url="file://$MODULE_DIR$/force-app" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/force-app" />
-    <orderEntry type="jdk" jdkName="IlluminatedCloud (Customer.connect/CompanyDataByAppsolutely_Dev2)" jdkType="IlluminatedCloud" />
+    <orderEntry type="jdk" jdkName="IlluminatedCloud (Customer.connect/CompanyDataByAppsolutely_Dev)" jdkType="IlluminatedCloud" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

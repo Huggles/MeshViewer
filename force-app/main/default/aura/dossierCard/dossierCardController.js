@@ -12,4 +12,4 @@
             console.log('toUpdateAccount firing ');
             createEvent.fire();
     }
-})
+});
