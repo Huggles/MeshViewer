@@ -22,9 +22,6 @@ public with sharing class ErrorLogUtil {
 
     }
 
-    public with sharing virtual class ErrorLogException extends Exception {
-    }
-
     /**
      * Log an exception in the Error_log custom object.
      *
