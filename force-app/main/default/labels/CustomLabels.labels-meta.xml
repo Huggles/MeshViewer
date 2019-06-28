@@ -281,6 +281,86 @@
         <value>Error</value>
     </labels>
     <labels>
+        <fullName>Error_Client_Authentication</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Authentication</shortDescription>
+        <value>The authentication for the data vendor has failed. You are not logged in and cannot retrieve data. Please contact your administrator and check the username, password and account id we provided.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Authentication_Password</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Authentication Password</shortDescription>
+        <value>Authentication for the data vendor failed due to an incorrect password.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Authentication_Username</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Authentication Username</shortDescription>
+        <value>Authentication for the data vendor failed due to an invalid username.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Authorization</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Authorization</shortDescription>
+        <value>You have been authenticated for the datavendor but do not have access to the requested functionality. Please contact your administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Hostrestriction</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Host Restriction</shortDescription>
+        <value>The authentication for the data vendor has failed due to a host access restriction. Please contact your administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Input</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Input</shortDescription>
+        <value>An error occurred due to a problem with your input. Please check your input and try again.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Input_Format_Incorrect</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Input Format Incorrect</shortDescription>
+        <value>The input is invalid because one of the parameters contains a syntax error or is in an incorrect format.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Input_Incomplete</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Input Incomplete</shortDescription>
+        <value>The input is invalid because one of the required parameters is missing or is incomplete.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Input_Invalid</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Input Invalid</shortDescription>
+        <value>The input is invalid because one of the parameters contains an invalid or disallowed value.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Client_Payment</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client Payment</shortDescription>
+        <value>The request can’t be processed, because the user (or its account) doesn’t have sufficient balance/credits.</value>
+    </labels>
+    <labels>
         <fullName>Error_Config</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -302,11 +382,91 @@
         <value>There was a problem removing the business data. Please ensure you have permission to carry out this action.</value>
     </labels>
     <labels>
+        <fullName>Error_Server_Data</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Server Data</shortDescription>
+        <value>An error occurred while retrieving requested data.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Server_Data_NotFound</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Server Data NotFound</shortDescription>
+        <value>The requested data isn’t available</value>
+    </labels>
+    <labels>
+        <fullName>Error_Server_Data_NotFound_Kadaster_NotDeliverable</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Server Data NotFound Kadaster NotDeliverable</shortDescription>
+        <value>The requested result is not deliverable.  (kadaster can not deliver person information due to legal reasons)</value>
+    </labels>
+    <labels>
+        <fullName>Error_Server_Data_NotFound_Nbwo_EstimateUnavailable</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Server Data NotFound Nbwo EstimateUnavailable</shortDescription>
+        <value>An accurate NBWO value can not be estimated for the specified address.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Server_Data_PageNotFound</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Server Data PageNotFound</shortDescription>
+        <value>The requested result page doesn’t exist.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Server_Unavailable</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Server Unavailable</shortDescription>
+        <value>An error occurred that causes the data vendor service to be unavailable.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Server_Unavailable_InternalError</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Server Unavailable InternalError</shortDescription>
+        <value>The service is unavailable due to an internal server error.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Server_Unavailable_Temporary</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Server Unavailable Temporary</shortDescription>
+        <value>The data vendor service is unavailable due to a temporary technical problem.</value>
+    </labels>
+    <labels>
         <fullName>Error_Unknown</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Data Error Unknown</shortDescription>
         <value>Error 102 received from Customer.connect. Please contact support for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Webservice_Client</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Client</shortDescription>
+        <value>We encountered an unknown exception. Please retry later or contact your administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Webservice_Server</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Webservice Server</shortDescription>
+        <value>The data vendor server threw an unknown exception. Please retry later or contact your administrator.</value>
     </labels>
     <labels>
         <fullName>Establishment_Date</fullName>

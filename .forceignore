@@ -3,3 +3,5 @@
 **/.eslintrc.json
 **/*.profile-meta.xml
 AppSwitcher.appMenu
+**/objects/Account/fields/**
+!**/objects/Accounts/fields/*__c.*

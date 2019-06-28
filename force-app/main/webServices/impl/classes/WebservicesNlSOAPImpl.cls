@@ -75,6 +75,81 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
         }
     }
 
+    @TestVisible
+    private CCWebserviceException newCCWebServiceException(CalloutException calloutException) {
+        String message = calloutException.getMessage();
+        String faultCode = getFaultCode(message);
+        String soapErrorMessage = getSoapErrorMessage(message);
+        switch on faultCode {
+            when 'Server' {
+                if (message.contains('Vat number for business not found')) {
+                    throw new CCVatNotFoundException(Label.VAT_Not_Found);
+                }
+                throw new CCClientWebserviceException(Label.)
+            }
+            when 'Client' {
+
+            }
+            when 'Server.Data' {
+
+            }
+            when 'Server.Data.NotFound' {
+
+            }
+            when 'Server.Data.NotFound.Nbwo.EstimateUnavailable' {
+
+            }
+            when 'Server.Data.NotFound.Kadaster.NotDeliverable' {
+
+            }
+            when 'Server.Data.PageNotFound' {
+
+            }
+            when 'Server.Unavailable' {
+
+            }
+            when 'Server.Unavailable.InternalError' {
+
+            }
+            when 'Server.Unavailable.Temporary' {
+
+            }
+        }
+
+
+        return null;
+    }
+
+    /**
+     * Returns the soap fault code as defined in https://webview.webservices.nl/documentation/files/interfaces/errorhandling-txt.html
+     *
+     * @param message
+     *
+     * @return
+     */
+    private String getFaultCode(String message) {
+        Integer faultCodeStart = message.lastIndexOf('SOAP-ENV:');
+        Integer faultCodeEnd = message.indexOf(' ', faultCodeStart);
+        String faultCode = message.substring(faultCodeStart, faultCodeEnd);
+        return faultCode;
+    }
+
+    /**
+     * Strips SOAP Fault: from the calloutException message and returns the human readable error message
+     *
+     * @param message
+     *
+     * @return
+     */
+    private String getSoapErrorMessage(String message) {
+        Integer errorMessageStart = message.lastIndexOf('SOAP Fault:');
+        Integer errorMessageEnd = message.indexOf('faultcode');
+        String errorMessage = message.substring(errorMessageStart, errorMessageEnd).normalizeSpace();
+        return errorMessage;
+    }
+
+
+
     // TODO: add proper error handling
     public void ExecuteCallout(Webservices_nlPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray){
         try{
@@ -87,17 +162,22 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
             // TODO: we allready know if an error is happening here (since it is in the Error response) handle it here.
             // see: https://webview.webservices.nl/documentation/files/interfaces/errorhandling-txt.html#Error_Handling
         } catch (CalloutException e) {
-            system.debug('*********** Using the fallback server port = '+ port);
-            port.useFallback();
-            infoArray.set(0, port.endpoint_x);
-            system.debug('*********** Using the fallback server port222 = '+ port);
-            // TODO: check if the invoke handles exceptions because it doesn't happen over here. In case of fallback things go haywire
-            WebServiceCallout.invoke(   //Invocation is wrapped in method that supports fallback server in case of callout timeout
-                    port,
-                    request_x,
-                    response_map_x,
-                    infoArray
-            );
+            throw newCCWebServiceException(e);
+//            System.debug('EXCEPTION Message:' + e.getMessage());
+//            System.debug('Cause: ' + e.getCause());
+//            System.debug('Typename: ' + e.getTypeName());
+//
+//            system.debug('*********** Using the fallback server port = '+ port);
+//            port.useFallback();
+//            infoArray.set(0, port.endpoint_x);
+//            system.debug('*********** Using the fallback server port222 = '+ port);
+//            // TODO: check if the invoke handles exceptions because it doesn't happen over here. In case of fallback things go haywire
+//            WebServiceCallout.invoke(   //Invocation is wrapped in method that supports fallback server in case of callout timeout
+//                    port,
+//                    request_x,
+//                    response_map_x,
+//                    infoArray
+//            );
         }// if fallback fails we roll up the callback exception???
     }
 
