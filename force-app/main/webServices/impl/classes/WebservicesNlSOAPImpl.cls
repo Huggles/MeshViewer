@@ -76,16 +76,16 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
     }
 
     @TestVisible
-    private CCWebserviceException newCCWebServiceException(CalloutException calloutException) {
+    private CCWsException newCCWebServiceException(CalloutException calloutException) {
         String message = calloutException.getMessage();
         String faultCode = getFaultCode(message);
         String soapErrorMessage = getSoapErrorMessage(message);
         switch on faultCode {
             when 'Server' {
                 if (message.contains('Vat number for business not found')) {
-                    throw new CCVatNotFoundException(Label.VAT_Not_Found);
+                    // throw new CCVatNotFoundException();
                 }
-                throw new CCClientWebserviceException(Label.)
+                // throw new CCWsClientException(Label.)
             }
             when 'Client' {
 
