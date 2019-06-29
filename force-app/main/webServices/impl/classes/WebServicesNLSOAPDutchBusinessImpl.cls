@@ -5,15 +5,6 @@ Description     : Company info DutchBusiness integration implementation class. N
 // TODO: extract types from super class and remove super class + dependencies
 public with sharing class WebServicesNLSOAPDutchBusinessImpl extends WebServicesNLSOAPDutchBusinessImplTypes implements IWebServicesNLSOAPDutchBusiness {
 
-    /**
-     * The port for the webservice call out
-     */
-    private WebservicesPort port { get; set; }
-
-    public WebServicesNLSOAPDutchBusinessImpl() {
-        port = new WebservicesPort(WebservicesPort.USER_SCOPE); // TODO: for testing replace by a IWebservicesPort
-    }
-
     public DutchBusinessDto.DutchBusinessGetDossierResponse dutchBusinessGetDossier(DutchBusinessDto.DutchBusinessGetDossierRequest params){
         DutchBusinessDossierV3 response;
         try{
@@ -203,7 +194,8 @@ public with sharing class WebServicesNLSOAPDutchBusinessImpl extends WebServices
         request_x.establishment_number = establishment_number;
         Map<String, dutchBusinessGetDossierV3ResponseType> response_map_x = new Map<String, dutchBusinessGetDossierV3ResponseType>();
         response_map_x.put('response_x', response_x);
-        port.executeCallout(
+        WebServicesPort.executeCallout(
+                WebServicesPort.USER_SCOPE,
                 request_x,
                 response_map_x,
                 new String[]{port.endpoint_x,
@@ -276,7 +268,8 @@ public with sharing class WebServicesNLSOAPDutchBusinessImpl extends WebServices
             request_x.page = page;
             Map<String, dutchBusinessSearchParametersV2ResponseType> response_map_x = new Map<String, dutchBusinessSearchParametersV2ResponseType>();
             response_map_x.put('response_x', response_x);
-            port.executeCallout(
+            WebServicesPort.executeCallout(
+                    WebServicesPort.USER_SCOPE,
                     request_x,
                     response_map_x,
                     new String[]{port.endpoint_x,
@@ -300,7 +293,8 @@ public with sharing class WebServicesNLSOAPDutchBusinessImpl extends WebServices
             request_x.dossier_number = params.dossier_number;
             Map<String, dutchBusinessGetVatNumberResponseType> response_map_x = new Map<String, dutchBusinessGetVatNumberResponseType>();
             response_map_x.put('response_x', response_x);
-            port.executeCallout(
+            WebServicesPort.executeCallout(
+                    WebServicesPort.USER_SCOPE,
                     request_x,
                     response_map_x,
                     new String[]{port.endpoint_x,

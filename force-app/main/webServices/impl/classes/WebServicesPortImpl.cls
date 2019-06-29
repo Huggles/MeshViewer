@@ -2,24 +2,53 @@
  * Created by jaapbranderhorst on 2019-06-29.
  */
 
-public with sharing class WebservicesPort {
+public with sharing class WebServicesPortImpl implements IWebServicesPort {
 
-    public static final String ADMIN_SCOPE = 'Admin';
-    public static final String USER_SCOPE = 'User';
     public static final String PRIMARY_ENDPOINT = 'https://ws1.webservices.nl:443/soap_doclit.php';
     public static final String SECONDARY_ENDPOINT = 'https://ws2.webservices.nl:443/soap_doclit.php';
 
     /**
      * Authentication scope
      */
-    private String scope { get; set; }
+    private String scope {
+        get;
+        set {
+            headerLogin = getAuthentication(scope);
+        }
+    }
 
     /**
      *
      */
-    private Boolean fallBackCall { get; set; }
+    private Boolean fallBackCall {
+        get;
+        set {
+            if (value) {
+                endpoint_x = SECONDARY_ENDPOINT;
+            } else {
+                endpoint_x = PRIMARY_ENDPOINT;
+            }
+        }
+    }
 
-    public String endpoint_x;// = 'https://ws1.webservices.nl:443/soap_doclit.php';
+    private String[] getInfoArray(String requestName, String responseName, String responseType) {
+        String[] infoArray = new String[7];
+        infoArray[0] = endpoint_x;
+        return infoArray;
+
+    }
+
+    /**
+     * Request namespace
+     */
+    private String requestNamespace {
+        get;
+        set;
+    }
+
+
+
+    public String endpoint_x = PRIMARY_ENDPOINT;
     public Map<String,String> inputHttpHeaders_x;
     public Map<String,String> outputHttpHeaders_x;
     public String clientCertName_x;
@@ -32,19 +61,14 @@ public with sharing class WebservicesPort {
     private String HeaderAuthenticate_hns = 'HeaderAuthenticate=http://www.webservices.nl/soap/';
     private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/','wwwWebservicesNlSoap'}; // wwwWebservicesNlSoap is from the old WS file name. Might need to change if something breaks
 
-    public WebservicesPort(String scope){ // scope is either user or admin
-        this.scope = scope;
-        headerLogin = getAuthentication(scope);
-        endpoint_x = PRIMARY_ENDPOINT; // TODO: move to CMT
+    public WebServicesPortImpl() {
+        this.fallBackCall = false;
     }
 
-    public  WebservicesPort(String scope, Boolean useFallBack) {
-        this(scope);
-        if (useFallBack) {
-            endpoint_x = SECONDARY_ENDPOINT;
-        } else {
-            endpoint_x = PRIMARY_ENDPOINT;
-        }
+    private WebServicesPortImpl(String scope, Boolean fallBackCall) {
+        this();
+        this.scope = scope;
+        this.fallBackCall = fallBackCall;
     }
 
     private HeaderLoginType getAuthentication(String scope){
@@ -156,7 +180,7 @@ public with sharing class WebservicesPort {
                 if (fallBackCall) {
                     throw new CCWsServerUnavailableException(Label.Error_Server_Unavailable);
                 } else {
-                    if (scope != ADMIN_SCOPE) { // only accounting services are being requested as an admin user
+                    if (scope != WebServicesPort.ADMIN_SCOPE) { // only accounting services are being requested as an admin user
                         doFallBackCall(request_x, response_map_x, infoArray);
                     } else { // fallback doesn't support accounting services
                         throw new CCWsServerUnavailableException(Label.Error_Server_Unavailable);
@@ -168,7 +192,7 @@ public with sharing class WebservicesPort {
                 if (fallBackCall) {
                     throw new CCWsServerUnavailableInternalException(Label.Error_Server_Unavailable_InternalError);
                 } else {
-                    if (scope != ADMIN_SCOPE) { // only accounting services are being requested as an admin user
+                    if (scope != WebServicesPort.ADMIN_SCOPE) { // only accounting services are being requested as an admin user
                         doFallBackCall(request_x, response_map_x, infoArray);
                     } else { // fallback doesn't support accounting services
                         throw new CCWsServerUnavailableInternalException(Label.Error_Server_Unavailable_InternalError);
@@ -180,7 +204,7 @@ public with sharing class WebservicesPort {
                 if (fallBackCall) {
                     throw new CCWsServerUnavailableTemporaryException(Label.Error_Server_Unavailable_Temporary);
                 } else {
-                    if (scope != ADMIN_SCOPE) { // only accounting services are being requested as an admin user
+                    if (scope != WebServicesPort.ADMIN_SCOPE) { // only accounting services are being requested as an admin user
                         doFallBackCall(request_x, response_map_x, infoArray);
                     } else { // fallback doesn't support accounting services
                         throw new CCWsServerUnavailableTemporaryException(Label.Error_Server_Unavailable_Temporary);
@@ -195,11 +219,11 @@ public with sharing class WebservicesPort {
     }
 
     private void doFallBackCall(Object request_x, Map<String,Object> response_map_x, list <String> infoArray) {
-        WebservicesPort port = new WebservicesPort(this.scope, true);
+        WebServicesPortImpl port = new WebServicesPortImpl(this.scope, true);
         infoArray.set(0, port.endpoint_x);
         try {
             WebServiceCallout.invoke(
-                    this,
+                    port,
                     request_x,
                     response_map_x,
                     infoArray
@@ -223,7 +247,8 @@ public with sharing class WebservicesPort {
         return faultCode;
     }
 
-    public void executeCallout(Object request_x, Map<String,Object> response_map_x, List<String> infoArray) {
+    public void executeCallout(String scope, Object request_x, Map<String,Object> response_map_x, List<String> infoArray) {
+        this.scope = scope;
         this.fallBackCall = false;
         try{
             WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
