@@ -2,7 +2,7 @@
 Author          : ValerijsProkudins
 Description     : CompanyConnect DutchBusiness integration implementation Type class. NB: it extends the Baseline implementation class!
 ******************************************************************************************/
-public abstract class WebServicesNLSOAPDutchBusinessImplTypes  extends WebservicesNlSOAPImpl implements IWebServicesNLSOAPDutchBusiness{
+public abstract class WebServicesNLSOAPDutchBusinessImplTypes implements IWebServicesNLSOAPDutchBusiness{
     public class dutchBusinessGetDossierV3RequestType {
         public String dossier_number;
         public String establishment_number;

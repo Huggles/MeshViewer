@@ -1,82 +1,89 @@
-/****************************************************************************************
-Author          : ValerijsProkudins
-Description     : Company info baseline integration implementation class. NB: it extends the baseline implementation type class!
-******************************************************************************************/
-public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSOAPImplTypes implements IWebservicesNlSOAP{
-    //public String endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; //TODO: mover to other place?
-    //public Map<String,String> inputHttpHeaders_x;
-    //public Map<String,String> outputHttpHeaders_x;
-    //public String clientCertName_x;
-    //public String clientCert_x;
-    //public String clientCertPasswd_x;
-    //public Integer timeout_x;
-    //public HeaderAuthenticateType HeaderAuthenticate;
-    //public HeaderLoginType HeaderLogin;
-    //private String HeaderAuthenticate_hns = 'HeaderAuthenticate=http://www.webservices.nl/soap/';
-   // private String HeaderLogin_hns = 'HeaderLogin=http://www.webservices.nl/soap/';
-    private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/','wwwWebservicesNlSoap'};
-    public Webservices_nlPort port;
+/**
+ * Created by jaapbranderhorst on 2019-06-29.
+ */
 
-    public WebservicesNlSOAPImpl(){
-        //port = new Webservices_nlPort('User');
-        //this.endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php';
-    }
-    public with sharing class Webservices_nlPort {
-        
-        private Boolean fallback { get; private set; }
+public with sharing class WebservicesPort {
 
-        public String endpoint_x;// = 'https://ws1.webservices.nl:443/soap_doclit.php';
-        public Map<String,String> inputHttpHeaders_x;
-        public Map<String,String> outputHttpHeaders_x;
-        public String clientCertName_x;
-        public String clientCert_x;
-        public String clientCertPasswd_x;
-        public Integer timeout_x;
-        public HeaderLoginType HeaderLogin;
-        private String HeaderLogin_hns = 'HeaderLogin=http://www.webservices.nl/soap/';
-        public HeaderAuthenticateType HeaderAuthenticate;
-        private String HeaderAuthenticate_hns = 'HeaderAuthenticate=http://www.webservices.nl/soap/';
-        private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/','wwwWebservicesNlSoap'}; // wwwWebservicesNlSoap is from the old WS file name. Might need to change if something breaks
-        
-        public Webservices_nlPort(String scope){ // scope is either user or admin
-            HeaderLogin = getAuthentication(scope);
-            endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; // TODO: move to CMT
-        }
-       
-        public void useFallback(){
-            fallback = true;
-            endpoint_x = 'https://ws2.webservices.nl:443/soap_doclit.php';
-        }
-        
-        public headerLoginType getAuthentication(String scope){
-            headerLoginType headerLogin;
-            if(scope == 'User'){
-                Credentials__c CS = Credentials__c.getOrgDefaults();
-                if(cs.Username__c != null && cs.Password__c != null){
-                    headerLogin = new headerLoginType();
-                    headerLogin.userName=cs.Username__c;
-                    headerLogin.passWord=cs.Password__c;
-                }
-            }else{ // admin apparently, maybe we should explicitly check...
-                ApplicationProperty__mdt configData = [SELECT DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
-                headerLogin = new headerLoginType();
-                headerLogin.userName=configData.DataProviderAdminUsername__c;
-                headerLogin.passWord=configData.DataProviderAdminPassword__c;        
-            }
-//            if(headerLogin == null){
-//                // TODO: find out how we ever could get here since we cannot
+    public static final String ADMIN_SCOPE = 'Admin';
+    public static final String USER_SCOPE = 'User';
+
+//    public class HeaderAuthenticateType {
+//        public String reactid;
+//        private String[] reactid_type_info = new String[]{'reactid','http://www.webservices.nl/soap/','string','1','1','false'};
+//        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+//        private String[] field_order_type_info = new String[]{'reactid'};
+//    }
 //
-//                CCException ex = new CCException(System.Label.NoAuthAppNotActive);//'No authentication data found. The app is not activated');
-//                ErrorLogUtil.logException(ex); 
-//                //throw new CCException(System.Label.NoAuthAppNotActive);//'No authentication data found. The app is not activated');
-//            }
-            return headerLogin;
-            
-        }
+//    public class HeaderLoginType {
+//        public String username;
+//        public String password;
+//        private String[] username_type_info = new String[]{'username','http://www.webservices.nl/soap/','string','1','1','false'};
+//        private String[] password_type_info = new String[]{'password','http://www.webservices.nl/soap/','string','1','1','false'};
+//        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+//        private String[] field_order_type_info = new String[]{'username','password'};
+//    }
+
+//    public class IntArray {
+//        public Integer[] item;
+//        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/','int','0','-1','false'};
+//        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+//        private String[] field_order_type_info = new String[]{'item'};
+//    }
+
+//    public class StringArray {
+//        public String[] item;
+//        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/','string','0','-1','false'};
+//        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+//        private String[] field_order_type_info = new String[]{'item'};
+//    }
+
+    private Boolean fallback { get; private set; }
+
+    public String endpoint_x;// = 'https://ws1.webservices.nl:443/soap_doclit.php';
+    public Map<String,String> inputHttpHeaders_x;
+    public Map<String,String> outputHttpHeaders_x;
+    public String clientCertName_x;
+    public String clientCert_x;
+    public String clientCertPasswd_x;
+    public Integer timeout_x;
+    public HeaderLoginType HeaderLogin;
+    private String HeaderLogin_hns = 'HeaderLogin=http://www.webservices.nl/soap/';
+    public HeaderAuthenticateType HeaderAuthenticate;
+    private String HeaderAuthenticate_hns = 'HeaderAuthenticate=http://www.webservices.nl/soap/';
+    private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/','wwwWebservicesNlSoap'}; // wwwWebservicesNlSoap is from the old WS file name. Might need to change if something breaks
+
+    public WebservicesPort(String scope){ // scope is either user or admin
+        HeaderLogin = getAuthentication(scope);
+        endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; // TODO: move to CMT
     }
+
+    public void useFallback(){
+        fallback = true;
+        endpoint_x = 'https://ws2.webservices.nl:443/soap_doclit.php';
+    }
+
+    public headerLoginType getAuthentication(String scope){
+        headerLoginType headerLogin;
+        if(scope == USER_SCOPE ){
+            Credentials__c CS = Credentials__c.getOrgDefaults();
+            if(cs.Username__c != null && cs.Password__c != null){
+                headerLogin = new headerLoginType();
+                headerLogin.userName=cs.Username__c;
+                headerLogin.passWord=cs.Password__c;
+            }
+        }else{ // admin apparently, maybe we should explicitly check...
+            ApplicationProperty__mdt configData = [SELECT DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
+            headerLogin = new headerLoginType();
+            headerLogin.userName=configData.DataProviderAdminUsername__c;
+            headerLogin.passWord=configData.DataProviderAdminPassword__c;
+        }
+        return headerLogin;
+
+    }
+
 
     @TestVisible
-    private void handleCallOutException(CalloutException calloutException, Webservices_nlPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray) {
+    private void handleCallOutException(CalloutException calloutException, WebservicesPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray) {
         String message = calloutException.getMessage();
         String faultCode = getFaultCode(message);
         String soapErrorMessage = getSoapErrorMessage(message);
@@ -161,8 +168,8 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
             }
         }
     }
-    
-    private void doFallBackCall(Webservices_nlPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray) {
+
+    private void doFallBackCall(WebservicesPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray) {
         port.useFallback();
         infoArray.set(0, port.endpoint_x);
         try {
@@ -175,7 +182,7 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
         } catch(CalloutException e) {
             handleCallOutException(e, port, request_x, response_map_x, infoArray);
         }
-        
+
     }
 
     /**
@@ -209,7 +216,7 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
 
 
     // TODO: add proper error handling
-    public void executeCallout(Webservices_nlPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray){
+    public void executeCallout(WebservicesPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray){
         port.fallback = false;
         try{
             WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
@@ -225,6 +232,4 @@ public with sharing abstract class WebservicesNlSOAPImpl extends WebservicesNlSO
         }
     }
 
-
 }
-

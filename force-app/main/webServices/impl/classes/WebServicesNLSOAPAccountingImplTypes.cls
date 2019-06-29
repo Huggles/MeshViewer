@@ -4,7 +4,7 @@ Description     : Company info Accounting integration implementation Typer class
 ******************************************************************************************/
 
 // TODO: remove the inheritance hierarchy. Bad OO design
-public abstract class WebServicesNLSOAPAccountingImplTypes extends WebservicesNlSOAPImpl{
+public abstract class WebServicesNLSOAPAccountingImplTypes {
    public class userCreateV2ResponseType {
         public Integer id;
         public String nickname;
