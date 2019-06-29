@@ -19,7 +19,6 @@ public with sharing class Application {
     public static final fflib_Application.ServiceFactory Service =
             new fflib_Application.ServiceFactory(
                     new Map<Type, Type>{
-                            IWebservicesNlSOAP.class => WebservicesNlSOAPImpl.class,
                             IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
                             IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class,
                             IBusinessAccountingService.class => BusinessAccountingServiceImpl.class,

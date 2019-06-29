@@ -6,38 +6,18 @@ public with sharing class WebservicesPort {
 
     public static final String ADMIN_SCOPE = 'Admin';
     public static final String USER_SCOPE = 'User';
+    public static final String PRIMARY_ENDPOINT = 'https://ws1.webservices.nl:443/soap_doclit.php';
+    public static final String SECONDARY_ENDPOINT = 'https://ws2.webservices.nl:443/soap_doclit.php';
 
-//    public class HeaderAuthenticateType {
-//        public String reactid;
-//        private String[] reactid_type_info = new String[]{'reactid','http://www.webservices.nl/soap/','string','1','1','false'};
-//        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
-//        private String[] field_order_type_info = new String[]{'reactid'};
-//    }
-//
-//    public class HeaderLoginType {
-//        public String username;
-//        public String password;
-//        private String[] username_type_info = new String[]{'username','http://www.webservices.nl/soap/','string','1','1','false'};
-//        private String[] password_type_info = new String[]{'password','http://www.webservices.nl/soap/','string','1','1','false'};
-//        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
-//        private String[] field_order_type_info = new String[]{'username','password'};
-//    }
+    /**
+     * Authentication scope
+     */
+    private String scope { get; set; }
 
-//    public class IntArray {
-//        public Integer[] item;
-//        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/','int','0','-1','false'};
-//        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
-//        private String[] field_order_type_info = new String[]{'item'};
-//    }
-
-//    public class StringArray {
-//        public String[] item;
-//        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/','string','0','-1','false'};
-//        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
-//        private String[] field_order_type_info = new String[]{'item'};
-//    }
-
-    private Boolean fallback { get; private set; }
+    /**
+     *
+     */
+    private Boolean fallBackCall { get; set; }
 
     public String endpoint_x;// = 'https://ws1.webservices.nl:443/soap_doclit.php';
     public Map<String,String> inputHttpHeaders_x;
@@ -46,47 +26,65 @@ public with sharing class WebservicesPort {
     public String clientCert_x;
     public String clientCertPasswd_x;
     public Integer timeout_x;
-    public HeaderLoginType HeaderLogin;
+    public HeaderLoginType headerLogin;
     private String HeaderLogin_hns = 'HeaderLogin=http://www.webservices.nl/soap/';
     public HeaderAuthenticateType HeaderAuthenticate;
     private String HeaderAuthenticate_hns = 'HeaderAuthenticate=http://www.webservices.nl/soap/';
     private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/','wwwWebservicesNlSoap'}; // wwwWebservicesNlSoap is from the old WS file name. Might need to change if something breaks
 
     public WebservicesPort(String scope){ // scope is either user or admin
-        HeaderLogin = getAuthentication(scope);
-        endpoint_x = 'https://ws1.webservices.nl:443/soap_doclit.php'; // TODO: move to CMT
+        this.scope = scope;
+        headerLogin = getAuthentication(scope);
+        endpoint_x = PRIMARY_ENDPOINT; // TODO: move to CMT
     }
 
-    public void useFallback(){
-        fallback = true;
-        endpoint_x = 'https://ws2.webservices.nl:443/soap_doclit.php';
+    public  WebservicesPort(String scope, Boolean useFallBack) {
+        this(scope);
+        if (useFallBack) {
+            endpoint_x = SECONDARY_ENDPOINT;
+        } else {
+            endpoint_x = PRIMARY_ENDPOINT;
+        }
     }
 
-    public headerLoginType getAuthentication(String scope){
-        headerLoginType headerLogin;
-        if(scope == USER_SCOPE ){
-            Credentials__c CS = Credentials__c.getOrgDefaults();
-            if(cs.Username__c != null && cs.Password__c != null){
-                headerLogin = new headerLoginType();
+    private HeaderLoginType getAuthentication(String scope){
+        HeaderLoginType headerLogin = new HeaderLoginType();
+        switch on scope {
+            when 'User' {
+                Credentials__c CS = Credentials__c.getOrgDefaults();
+                if (String.isEmpty(cs.Username__c)) {
+                    ErrorLogUtil.logMessage('No username found for Company Info data vendor data user');
+                    throw new CCWsException(Label.Error_Config);
+                }
+                if (String.isEmpty(cs.Password__c)) {
+                    ErrorLogUtil.logMessage('No password found for Company Info data vendor data user');
+                    throw new CCWsException(Label.Error_Config);
+                }
                 headerLogin.userName=cs.Username__c;
                 headerLogin.passWord=cs.Password__c;
             }
-        }else{ // admin apparently, maybe we should explicitly check...
-            ApplicationProperty__mdt configData = [SELECT DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
-            headerLogin = new headerLoginType();
-            headerLogin.userName=configData.DataProviderAdminUsername__c;
-            headerLogin.passWord=configData.DataProviderAdminPassword__c;
+            when 'Admin' {
+                ApplicationProperty__mdt configData = [SELECT DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
+                if (String.isEmpty(configData.DataProviderAdminUsername__c)) {
+                    ErrorLogUtil.logMessage('No username found for Company Info data vendor admin');
+                    throw new CCWsException(Label.Error_Config);
+                }
+                if (String.isEmpty(configData.DataProviderAdminPassword__c)) {
+                    ErrorLogUtil.logMessage('No password found for Company Info data vendor admin');
+                    throw new CCWsException(Label.Error_Config);
+                }
+                headerLogin.userName=configData.DataProviderAdminUsername__c;
+                headerLogin.passWord=configData.DataProviderAdminPassword__c;
+            }
         }
         return headerLogin;
-
     }
 
 
     @TestVisible
-    private void handleCallOutException(CalloutException calloutException, WebservicesPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray) {
+    private void handleCallOutException(CalloutException calloutException, Object request_x, Map<String,Object> response_map_x, List<String> infoArray) {
         String message = calloutException.getMessage();
         String faultCode = getFaultCode(message);
-        String soapErrorMessage = getSoapErrorMessage(message);
         switch on faultCode {
             when 'Client' {
                 ErrorLogUtil.logException(calloutException); // shouldn't happen because unexpected so we log.
@@ -155,34 +153,60 @@ public with sharing class WebservicesPort {
             }
             when 'Server.Unavailable' {
                 ErrorLogUtil.logException(calloutException); // unexpected unavailability of primary server
-                doFallBackCall(port, request_x, response_map_x, infoArray);
+                if (fallBackCall) {
+                    throw new CCWsServerUnavailableException(Label.Error_Server_Unavailable);
+                } else {
+                    if (scope != ADMIN_SCOPE) { // only accounting services are being requested as an admin user
+                        doFallBackCall(request_x, response_map_x, infoArray);
+                    } else { // fallback doesn't support accounting services
+                        throw new CCWsServerUnavailableException(Label.Error_Server_Unavailable);
+                    }
+                }
             }
             when 'Server.Unavailable.InternalError' {
-
+                ErrorLogUtil.logException(calloutException); // unexpected unavailability of primary server
+                if (fallBackCall) {
+                    throw new CCWsServerUnavailableInternalException(Label.Error_Server_Unavailable_InternalError);
+                } else {
+                    if (scope != ADMIN_SCOPE) { // only accounting services are being requested as an admin user
+                        doFallBackCall(request_x, response_map_x, infoArray);
+                    } else { // fallback doesn't support accounting services
+                        throw new CCWsServerUnavailableInternalException(Label.Error_Server_Unavailable_InternalError);
+                    }
+                }
             }
             when 'Server.Unavailable.Temporary' {
-
+                ErrorLogUtil.logException(calloutException); // unexpected unavailability of primary server
+                if (fallBackCall) {
+                    throw new CCWsServerUnavailableTemporaryException(Label.Error_Server_Unavailable_Temporary);
+                } else {
+                    if (scope != ADMIN_SCOPE) { // only accounting services are being requested as an admin user
+                        doFallBackCall(request_x, response_map_x, infoArray);
+                    } else { // fallback doesn't support accounting services
+                        throw new CCWsServerUnavailableTemporaryException(Label.Error_Server_Unavailable_Temporary);
+                    }
+                }
             }
             when else {
-
+                ErrorLogUtil.logException(calloutException); // ouch unknown exception
+                throw new CCWsException(Label.Error, calloutException);
             }
         }
     }
 
-    private void doFallBackCall(WebservicesPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray) {
-        port.useFallback();
+    private void doFallBackCall(Object request_x, Map<String,Object> response_map_x, list <String> infoArray) {
+        WebservicesPort port = new WebservicesPort(this.scope, true);
         infoArray.set(0, port.endpoint_x);
         try {
-            WebServiceCallout.invoke(   //Invocation is wrapped in method that supports fallback server in case of callout timeout
-                    port,
+            WebServiceCallout.invoke(
+                    this,
                     request_x,
                     response_map_x,
                     infoArray
             );
         } catch(CalloutException e) {
-            handleCallOutException(e, port, request_x, response_map_x, infoArray);
+            handleCallOutException(e, request_x, response_map_x, infoArray);
         }
-
     }
 
     /**
@@ -199,36 +223,17 @@ public with sharing class WebservicesPort {
         return faultCode;
     }
 
-    /**
-     * Strips SOAP Fault: from the calloutException message and returns the human readable error message
-     *
-     * @param message
-     *
-     * @return
-     */
-    private String getSoapErrorMessage(String message) {
-        Integer errorMessageStart = message.lastIndexOf('SOAP Fault:');
-        Integer errorMessageEnd = message.indexOf('faultcode');
-        String errorMessage = message.substring(errorMessageStart, errorMessageEnd).normalizeSpace();
-        return errorMessage;
-    }
-
-
-
-    // TODO: add proper error handling
-    public void executeCallout(WebservicesPort port, Object request_x, Map<String,Object> response_map_x, list <String> infoArray){
-        port.fallback = false;
+    public void executeCallout(Object request_x, Map<String,Object> response_map_x, List<String> infoArray) {
+        this.fallBackCall = false;
         try{
             WebServiceCallout.invoke(   //Invocxation is wrapped in method that supports fallback server in case of callout timeout
-                    port,
+                    this,
                     request_x,
                     response_map_x,
                     infoArray
             );
-            // TODO: we allready know if an error is happening here (since it is in the Error response) handle it here.
-            // see: https://webview.webservices.nl/documentation/files/interfaces/errorhandling-txt.html#Error_Handling
         } catch (CalloutException e) {
-            handleCallOutException(e, port, request_x, response_map_x, infoArray);
+            handleCallOutException(e, request_x, response_map_x, infoArray);
         }
     }
 

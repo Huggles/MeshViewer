@@ -8,6 +8,15 @@ Description     : Company Connect Accounting integration implementation class. N
 // TODO: extract types from super class and remove super class + dependencies
 public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLSOAPAccountingImplTypes implements IWebServicesNLSOAPAccounting {
 
+    /**
+     * The port for the webservice call out
+     */
+    private WebservicesPort port { get; set; }
+
+    public WebServicesNLSOAPAccountingImpl() {
+        port = new WebservicesPort(WebservicesPort.ADMIN_SCOPE); // TODO: for testing replace by a IWebservicesPort
+    }
+
     //TODO: check why is this here and not in accounting interface
     public boolean userChangeBalance(DutchBusinessAccountingDto.userChangeBalanceRequestDto input){
 
@@ -30,9 +39,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         userEditBalanceResponseType response_x;
         Map<String, userEditBalanceResponseType> response_map_x = new Map<String, userEditBalanceResponseType>();
         response_map_x.put('response_x', response_x);
-        WebservicesPort port = new WebservicesPort(WebservicesPort.ADMIN_SCOPE);
-        // TODO: remove port from callout signature
-        port.executeCallout(port,
+        port.executeCallout(
                 request_x,
                 response_map_x,
                 new String[]{port.endpoint_x,
@@ -65,9 +72,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         userViewBalanceResponseType response_x;
         Map<String, userViewBalanceResponseType> response_map_x = new Map<String, userViewBalanceResponseType>();
         response_map_x.put('response_x', response_x);
-        WebservicesPort port = new WebservicesPort(WebservicesPort.ADMIN_SCOPE);
-        // TODO: remove port from callout signature
-        port.executeCallout(port,
+        port.executeCallout(
                 request_x,
                 response_map_x,
                 new String[]{port.endpoint_x,
@@ -104,9 +109,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         userViewV2ResponseType response_x;
         Map<String, userViewV2ResponseType> response_map_x = new Map<String, userViewV2ResponseType>();
         response_map_x.put('response_x', response_x);
-        WebservicesPort port = new WebservicesPort(WebservicesPort.ADMIN_SCOPE);
-        // TODO: remove port from callout signature
-        port.executeCallout(port,
+        port.executeCallout(
                 request_x,
                 response_map_x,
                 new String[]{port.endpoint_x,
@@ -173,9 +176,7 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         userCreateV2ResponseType response_x;
         Map<String, userCreateV2ResponseType> response_map_x = new Map<String, userCreateV2ResponseType>();
         response_map_x.put('response_x', response_x);
-        WebservicesPort port = new WebservicesPort(WebservicesPort.ADMIN_SCOPE);
-        // TODO: remove port from callout signature
-        port.executeCallout(port,
+        port.executeCallout(
                 request_x,
                 response_map_x,
                 new String[]{port.endpoint_x,
@@ -189,5 +190,5 @@ public with sharing class WebServicesNLSOAPAccountingImpl extends WebServicesNLS
         response_x = response_map_x.get('response_x');
         return response_x;
     }
-    
+
 }

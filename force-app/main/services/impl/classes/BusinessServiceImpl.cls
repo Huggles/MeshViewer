@@ -120,12 +120,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         if (String.isEmpty(vatNumber)) { // no VAT number for any other dossier in the database
             DutchBusinessDto.DutchBusinessGetVatNumberRequest vatRequest = new DutchBusinessDto.DutchBusinessGetVatNumberRequest();
             vatRequest.dossier_number = dossierDB.Dossier_Number__c;
+            // if no vat number is known for this dossier, an CCWsException is thrown which can be handled by the user interface.
             DutchBusinessDto.DutchBusinessVatNumber vatResponse = WebServicesNLSOAPDutchBusiness.newInstance().businessGetVatNumber(vatRequest);
-            if (String.isEmpty(vatResponse.vat_number)) {
-                throw new CCVatNotFoundException(Label.VAT_Not_Found);
-            } else {
-                vatNumber = vatResponse.vat_number;
-            }
+            vatNumber = vatResponse.vat_number;
         }
 
         // update the dossier with the vatnumber
