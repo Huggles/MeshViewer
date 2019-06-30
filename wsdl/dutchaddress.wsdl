@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.webservices.nl/soap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.webservices.nl/soap/">
+<types>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.webservices.nl/soap/"
+>
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+ <xsd:complexType name="HeaderAuthenticateType">
+  <xsd:all>
+   <xsd:element name="reactid" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="HeaderLoginType">
+  <xsd:all>
+   <xsd:element name="username" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchAddressPostcodeRange">
+  <xsd:all>
+   <xsd:element name="house_number_from" type="xsd:int"/>
+   <xsd:element name="house_number_to" type="xsd:int"/>
+   <xsd:element name="neighborhood_code" type="xsd:string"/>
+   <xsd:element name="letter_combination" type="xsd:string"/>
+   <xsd:element name="range_indication" type="xsd:string"/>
+   <xsd:element name="street_name" type="xsd:string"/>
+   <xsd:element name="street_name_nen" type="xsd:string"/>
+   <xsd:element name="city" type="xsd:string"/>
+   <xsd:element name="municipality" type="xsd:string"/>
+   <xsd:element name="municipality_code" type="xsd:int"/>
+   <xsd:element name="cebuco_code" type="xsd:int"/>
+   <xsd:element name="province" type="xsd:string"/>
+   <xsd:element name="province_code" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="loginRequestType">
+  <xsd:all>
+   <xsd:element name="username" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="loginResponseType">
+  <xsd:all>
+   <xsd:element name="reactid" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="logoutRequestType"/>
+ <xsd:complexType name="logoutResponseType"/>
+ <xsd:complexType name="dutchAddressRangePostcodeSearchRequestType">
+  <xsd:all>
+   <xsd:element name="address" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="dutchAddressRangePostcodeSearchResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:DutchAddressPostcodeRange"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:element name="errorcode" type="xsd:string"/>
+ <xsd:element name="login" type="tns:loginRequestType"/>
+ <xsd:element name="loginResponse" type="tns:loginResponseType"/>
+ <xsd:element name="HeaderLogin" type="tns:HeaderLoginType"/>
+ <xsd:element name="HeaderAuthenticate" type="tns:HeaderAuthenticateType"/>
+ <xsd:element name="logout" type="tns:logoutRequestType"/>
+ <xsd:element name="logoutResponse" type="tns:logoutResponseType"/>
+ <xsd:element name="dutchAddressRangePostcodeSearch" type="tns:dutchAddressRangePostcodeSearchRequestType"/>
+ <xsd:element name="dutchAddressRangePostcodeSearchResponse" type="tns:dutchAddressRangePostcodeSearchResponseType"/>
+</xsd:schema>
+</types>
+<message name="loginRequest">
+  <part name="parameters" element="tns:login" /></message>
+<message name="loginResponse">
+  <part name="parameters" element="tns:loginResponse" /></message>
+<message name="Headers">
+  <part name="HeaderLogin" element="tns:HeaderLogin" />
+  <part name="HeaderAuthenticate" element="tns:HeaderAuthenticate" /></message>
+<message name="logoutRequest">
+  <part name="parameters" element="tns:logout" /></message>
+<message name="logoutResponse">
+  <part name="parameters" element="tns:logoutResponse" /></message>
+<message name="dutchAddressRangePostcodeSearchRequest">
+  <part name="parameters" element="tns:dutchAddressRangePostcodeSearch" /></message>
+<message name="dutchAddressRangePostcodeSearchResponse">
+  <part name="parameters" element="tns:dutchAddressRangePostcodeSearchResponse" /></message>
+<portType name="Webservices.nlPortType">
+  <operation name="login">
+    <documentation>Logs the user in using username and password, returns a reactid for authentication in further requests</documentation>
+    <input message="tns:loginRequest"/>
+    <output message="tns:loginResponse"/>
+  </operation>
+  <operation name="logout">
+    <documentation>Logs the user out, destroys the session associated with the reactid</documentation>
+    <input message="tns:logoutRequest"/>
+    <output message="tns:logoutResponse"/>
+  </operation>
+  <operation name="dutchAddressRangePostcodeSearch">
+    <documentation>Validate and complete an address based on postcode and house number.</documentation>
+    <input message="tns:dutchAddressRangePostcodeSearchRequest"/>
+    <output message="tns:dutchAddressRangePostcodeSearchResponse"/>
+  </operation>
+</portType>
+<binding name="Webservices.nlBinding" type="tns:Webservices.nlPortType">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="login">
+    <soap:operation soapAction="https://ws1.webservices.nl/dutchaddress/soap_doclit.php/login" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="logout">
+    <soap:operation soapAction="https://ws1.webservices.nl/dutchaddress/soap_doclit.php/logout" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="dutchAddressRangePostcodeSearch">
+    <soap:operation soapAction="https://ws1.webservices.nl/dutchaddress/soap_doclit.php/dutchAddressRangePostcodeSearch" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+</binding>
+<service name="Webservices.nl">
+  <port name="Webservices.nlPort" binding="tns:Webservices.nlBinding">
+    <soap:address location="https://ws1.webservices.nl:443/dutchaddress/soap_doclit.php"/>
+  </port>
+</service>
+</definitions>

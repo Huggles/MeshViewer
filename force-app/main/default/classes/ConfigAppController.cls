@@ -77,23 +77,19 @@ public static PermissionSet ps;
         try{
             boolean resp = BusinessAccountingService.addBudget(amount);
         }catch(CCException ex){
-            //throw ex; // we dont log bds exceptions, only throwing them further
-            //TODO: implement error callback and reporting
-           // return null;
+            throw ex;
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
-            //return output;
-            //return null;
+            throw ex;
         }
 
     }
 
     @AuraEnabled
+    // TODO: use the auraresponsewrapper. Remove the strange CCException handling
     public static boolean enableTrial(String password){
         try{
-            DutchBusinessAccountingDto.userCreateResponseDto resp = BusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId(), password);
-            system.debug(resp);
+            BusinessAccountingService.onboardCustomer(UserInfo.getOrganizationId(), password);
             return true;
         }catch(CCException ex){
             AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.

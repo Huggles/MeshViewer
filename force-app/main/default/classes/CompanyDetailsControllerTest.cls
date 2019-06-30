@@ -7,10 +7,10 @@ public with sharing class CompanyDetailsControllerTest {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
         String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA","country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
-        List<DutchBusinessDto.DutchBusinessReference> serviceResponse = new List<DutchBusinessDto.DutchBusinessReference>();
+        List<DutchBusinessWsdl.DutchBusinessReference> serviceResponse = new List<DutchBusinessWsdl.DutchBusinessReference>();
                 
         mocks.startStubbing();
-        mocks.when(mockService.searchForDossiers((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenReturn(serviceResponse);
+        mocks.when(mockService.searchForDossiers((DutchBusinessWsdl.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenReturn(serviceResponse);
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -33,7 +33,7 @@ public with sharing class CompanyDetailsControllerTest {
         String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA","country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
 
         mocks.startStubbing();
-        mocks.when(mockService.searchForDossiers((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CCException('test'));
+        mocks.when(mockService.searchForDossiers((DutchBusinessWsdl.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CCException('test'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -55,7 +55,7 @@ public with sharing class CompanyDetailsControllerTest {
         String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA","country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
 
         mocks.startStubbing();
-        mocks.when(mockService.searchForDossiers((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CustomException('test'));
+        mocks.when(mockService.searchForDossiers((DutchBusinessWsdl.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CustomException('test'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 

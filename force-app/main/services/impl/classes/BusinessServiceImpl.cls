@@ -218,7 +218,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.item.size() > 0) {
             // Condense all trade names into single field, seperated by new lines.
             for (Integer i = 0; i < dataVendorDossier.trade_names.item.size(); i++) {
-                trade_names += dataVendorDossier.trade_names[i] + (i == dataVendorDossier.trade_names.item.size()-1 ? '' : ', ');
+                trade_names += dataVendorDossier.trade_names.item[i] + (i == dataVendorDossier.trade_names.item.size()-1 ? '' : ', ');
             }
             dossierDB.Trade_Names__c = trade_names;
         }

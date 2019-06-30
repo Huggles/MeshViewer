@@ -19,12 +19,10 @@ public with sharing class Application {
     public static final fflib_Application.ServiceFactory Service =
             new fflib_Application.ServiceFactory(
                     new Map<Type, Type>{
-                            IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
-                            IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class,
+                            IWsAccounting.class => WsAccountingImpl.class,
                             IBusinessAccountingService.class => BusinessAccountingServiceImpl.class,
                             IBusinessService.class => BusinessServiceImpl.class,
-                            IBusinessDuplicateService.class => BusinessDuplicateServiceImpl.class,
-                            IWebServicesPort.class => WebServicesPortImpl.class
+                            IBusinessDuplicateService.class => BusinessDuplicateServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application
