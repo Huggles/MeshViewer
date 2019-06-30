@@ -57,8 +57,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 // create an account if the account id is null
                 if (accountId == null) {
                     List<InsertAccountResponseDTO> accountResponseDTOS = insertAccount(new List<DutchBusinessWsdl.DutchBusinessDossierV3>{dataVendorDossier}, unitOfWork);
-                    // since somebody thought of let's have a circular relationship between dossier and account, we need to commit the work up until now
-                    // or we don't have an id on the account and cannot create the other side of the relationship when we insert the dossier
                     account = accountResponseDTOS.get(0).account;
                 } else {
                     List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
@@ -227,19 +225,19 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             dossierDB.Trade_Names__c = trade_names;
         }
         if(dataVendorDossier.legal_name != null && dataVendorDossier.legal_name != ''){
-            dossierDB.Name = dataVendorDossier.legal_name;//dataVendorDossier.legal_name;
+            dossierDB.Name = dataVendorDossier.legal_name;
         }else{
-            dossierDB.Name = dataVendorDossier.trade_name_full;//dataVendorDossier.legal_name;
+            dossierDB.Name = dataVendorDossier.trade_name_full;
         }
         dossierDB.Dossier_Number__c = dataVendorDossier.dossier_number;
         dossierDB.Establishment_Number__c = dataVendorDossier.establishment_number;
         dossierDB.Main_Establishment_Number__c = dataVendorDossier.main_establishment_number;
-        dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment; //convertToBoolean(dataVendorDossier.indication_main_establishment);
+        dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;
         dossierDB.Rsin_Number__c = String.valueOf(dataVendorDossier.rsin_number);
         dossierDB.Chamber_Number__c = convertToInteger(dataVendorDossier.chamber_number);
         dossierDB.Legal_Form_Code__c = convertToInteger(dataVendorDossier.legal_form_code);
-        dossierDB.Legal_Form_Text__c = dataVendorDossier.legal_form_text;//;convertToString(dataVendorDossier.legal_form_text);
-        dossierDB.Indication_Organisation_Code__c = dataVendorDossier.indication_organisation_code;//convertToString(dataVendorDossier.indication_organisation_code);
+        dossierDB.Legal_Form_Text__c = dataVendorDossier.legal_form_text;
+        dossierDB.Indication_Organisation_Code__c = dataVendorDossier.indication_organisation_code;
         dossierDB.Trade_Name_45__c = dataVendorDossier.trade_name_45;
         dossierDB.Trade_Name_Full__c = dataVendorDossier.trade_name_full;
         dossierDB.Trade_Names__c = trade_names;
@@ -274,9 +272,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
         dossierDB.Year__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.year);
-        dossierDB.Profit__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.profit);
-        dossierDB.Turnover__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.turnover);
-        dossierDB.Assets__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.assets);
+        dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted;
+        dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted;
+        dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted;
 
         dossierDB.Personnel_CI__c = dataVendorDossier.personnel_ci;
         dossierDB.Class_Personnel_CI__c = convertToString(dataVendorDossier.class_personnel_ci);

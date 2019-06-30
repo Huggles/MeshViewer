@@ -51,7 +51,7 @@ public with sharing class CompanyDetailsControllerTest {
         String telephone_number = 'telephone_number';
         String domain_name = 'domain_name';
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CCException());
+        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CCException('test'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -61,6 +61,7 @@ public with sharing class CompanyDetailsControllerTest {
 
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
+        System.debug(wrapper);
         System.assert(wrapper.errorMsg == 'test');
         System.assert(wrapper.state == 'ERROR');
     }
@@ -82,7 +83,7 @@ public with sharing class CompanyDetailsControllerTest {
         String telephone_number = 'telephone_number';
         String domain_name = 'domain_name';
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CustomException());
+        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CustomException(Label.WSCall_Generic_UI_Exception));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -247,7 +248,7 @@ public with sharing class CompanyDetailsControllerTest {
         Test.stopTest();
         System.debug(wrapper);
 
-        System.assert(wrapper.errorMsg == System.Label.WSCall_Generic_UI_Exception);
+        System.assert(wrapper.errorMsg == System.Label.Error);
         System.assert(wrapper.state == 'ERROR');
     }
 
