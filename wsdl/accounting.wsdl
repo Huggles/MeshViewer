@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.webservices.nl/soap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.webservices.nl/soap/">
+<types>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.webservices.nl/soap/"
+>
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+ <xsd:complexType name="HeaderAuthenticateType">
+  <xsd:all>
+   <xsd:element name="reactid" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="HeaderLoginType">
+  <xsd:all>
+   <xsd:element name="username" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="UserGroup">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="name" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="ResultInfo">
+  <xsd:all>
+   <xsd:element name="curpage" type="xsd:int"/>
+   <xsd:element name="perpage" type="xsd:int"/>
+   <xsd:element name="numpages" type="xsd:int"/>
+   <xsd:element name="numresults" type="xsd:int"/>
+   <xsd:element name="maxresults" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="UserGroupArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:UserGroup" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="UserGroupPagedResult">
+  <xsd:all>
+   <xsd:element name="paging" type="tns:ResultInfo"/>
+   <xsd:element name="results" type="tns:UserGroupArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="User">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="nickname" type="xsd:string"/>
+   <xsd:element name="email" type="xsd:string"/>
+   <xsd:element name="companyname" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="contactemail" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+   <xsd:element name="fax" type="xsd:string"/>
+   <xsd:element name="credits" type="xsd:int"/>
+   <xsd:element name="clientcode" type="xsd:string"/>
+   <xsd:element name="comments" type="xsd:string"/>
+   <xsd:element name="creationtime" type="xsd:string"/>
+   <xsd:element name="lastmodified" type="xsd:string"/>
+   <xsd:element name="active" type="xsd:boolean"/>
+   <xsd:element name="account_id" type="xsd:int"/>
+   <xsd:element name="account_name" type="xsd:string"/>
+   <xsd:element name="usergroups" type="tns:UserGroupArray"/>
+   <xsd:element name="creditthreshold" type="xsd:int"/>
+   <xsd:element name="notificationrecipients" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="UserCredentials">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="username" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="UserV2">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="nickname" type="xsd:string"/>
+   <xsd:element name="email" type="xsd:string"/>
+   <xsd:element name="balance" type="xsd:float"/>
+   <xsd:element name="balancethreshold" type="xsd:float"/>
+   <xsd:element name="notificationrecipients" type="xsd:string"/>
+   <xsd:element name="companyname" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="contactemail" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+   <xsd:element name="fax" type="xsd:string"/>
+   <xsd:element name="clientcode" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="comments" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="creationtime" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="lastmodified" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="active" type="xsd:boolean"/>
+   <xsd:element name="account_id" type="xsd:int"/>
+   <xsd:element name="account_name" type="xsd:string"/>
+   <xsd:element name="usergroups" type="tns:UserGroupArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="UserV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:UserV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="UserV2PagedResult">
+  <xsd:all>
+   <xsd:element name="paging" type="tns:ResultInfo"/>
+   <xsd:element name="results" type="tns:UserV2Array"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="Account">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="environment" type="xsd:string"/>
+   <xsd:element name="reseller" type="xsd:boolean"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="contactemail" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+   <xsd:element name="fax" type="xsd:string"/>
+   <xsd:element name="description" type="xsd:string"/>
+   <xsd:element name="creationtime" type="xsd:string"/>
+   <xsd:element name="lastmodified" type="xsd:string"/>
+   <xsd:element name="credits" type="xsd:int"/>
+   <xsd:element name="clientcode" type="xsd:string"/>
+   <xsd:element name="comments" type="xsd:string"/>
+   <xsd:element name="usernameprefix" type="xsd:string"/>
+   <xsd:element name="creditthreshold" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="AccountArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:Account" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="AccountPagedResult">
+  <xsd:all>
+   <xsd:element name="paging" type="tns:ResultInfo"/>
+   <xsd:element name="results" type="tns:AccountArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="AccountV2">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="environment" type="xsd:string"/>
+   <xsd:element name="reseller" type="xsd:boolean"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="contactemail" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+   <xsd:element name="fax" type="xsd:string"/>
+   <xsd:element name="description" type="xsd:string"/>
+   <xsd:element name="creationtime" type="xsd:string"/>
+   <xsd:element name="lastmodified" type="xsd:string"/>
+   <xsd:element name="clientcode" type="xsd:string"/>
+   <xsd:element name="comments" type="xsd:string"/>
+   <xsd:element name="usernameprefix" type="xsd:string"/>
+   <xsd:element name="balance" type="xsd:float"/>
+   <xsd:element name="balancethreshold" type="xsd:float"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="AccountV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:AccountV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="AccountV2PagedResult">
+  <xsd:all>
+   <xsd:element name="paging" type="tns:ResultInfo"/>
+   <xsd:element name="results" type="tns:AccountV2Array"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="Session">
+  <xsd:all>
+   <xsd:element name="reactid" type="xsd:string"/>
+   <xsd:element name="user_id" type="xsd:int"/>
+   <xsd:element name="user_nickname" type="xsd:string"/>
+   <xsd:element name="creationtime" type="xsd:string"/>
+   <xsd:element name="lastvisit" type="xsd:string"/>
+   <xsd:element name="hits" type="xsd:int"/>
+   <xsd:element name="ip" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="SessionArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:Session" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="SessionPagedResult">
+  <xsd:all>
+   <xsd:element name="paging" type="tns:ResultInfo"/>
+   <xsd:element name="results" type="tns:SessionArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="intArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="xsd:int" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="AccountCreationToken">
+  <xsd:all>
+   <xsd:element name="token" type="xsd:string"/>
+   <xsd:element name="url" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="AccountOrderToken">
+  <xsd:all>
+   <xsd:element name="token" type="xsd:string"/>
+   <xsd:element name="url" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="loginRequestType">
+  <xsd:all>
+   <xsd:element name="username" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="loginResponseType">
+  <xsd:all>
+   <xsd:element name="reactid" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="logoutRequestType"/>
+ <xsd:complexType name="logoutResponseType"/>
+ <xsd:complexType name="accountGetCreationTokenRequestType">
+  <xsd:all>
+   <xsd:element name="return_url" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountGetCreationTokenResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:AccountCreationToken"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountGetCreationStatusRequestType">
+  <xsd:all>
+   <xsd:element name="token" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountGetCreationStatusResponseType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountGetOrderTokenRequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+   <xsd:element name="return_url" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountGetOrderTokenResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:AccountOrderToken"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userSessionRemoveRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="reactid" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userSessionRemoveResponseType"/>
+ <xsd:complexType name="userSessionListRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="page" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userSessionListResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:SessionPagedResult"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userViewBalanceRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userViewBalanceResponseType">
+  <xsd:all>
+   <xsd:element name="balance" type="xsd:float"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userEditBalanceRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="balance" type="xsd:float"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userEditBalanceResponseType"/>
+ <xsd:complexType name="accountViewBalanceRequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountViewBalanceResponseType">
+  <xsd:all>
+   <xsd:element name="balance" type="xsd:float"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userViewV2RequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userViewV2ResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:UserV2"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userEditV2RequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="email" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="contactemail" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+   <xsd:element name="fax" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userEditV2ResponseType"/>
+ <xsd:complexType name="userEditExtendedV2RequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="nickname" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+   <xsd:element name="email" type="xsd:string"/>
+   <xsd:element name="companyname" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="contactemail" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+   <xsd:element name="fax" type="xsd:string"/>
+   <xsd:element name="clientcode" type="xsd:string"/>
+   <xsd:element name="comments" type="xsd:string"/>
+   <xsd:element name="accountid" type="xsd:int"/>
+   <xsd:element name="balancethreshold" type="xsd:float"/>
+   <xsd:element name="notificationrecipients" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userEditExtendedV2ResponseType"/>
+ <xsd:complexType name="userCreateV2RequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+   <xsd:element name="nickname" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+   <xsd:element name="usergroups" type="tns:intArray"/>
+   <xsd:element name="email" type="xsd:string"/>
+   <xsd:element name="companyname" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="contactemail" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+   <xsd:element name="fax" type="xsd:string"/>
+   <xsd:element name="clientcode" type="xsd:string"/>
+   <xsd:element name="comments" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userCreateV2ResponseType">
+  <xsd:all>
+   <xsd:element name="id" type="xsd:int"/>
+   <xsd:element name="nickname" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="createTestUserRequestType">
+  <xsd:all>
+   <xsd:element name="application" type="xsd:string"/>
+   <xsd:element name="email" type="xsd:string"/>
+   <xsd:element name="companyname" type="xsd:string"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="createTestUserResponseType">
+  <xsd:all>
+   <xsd:element name="user_credentials" type="tns:UserCredentials"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userChangePasswordRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="old_password" type="xsd:string"/>
+   <xsd:element name="new_password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userChangePasswordResponseType"/>
+ <xsd:complexType name="userRemoveRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userRemoveResponseType"/>
+ <xsd:complexType name="userNotifyRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userNotifyResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userListAssignableGroupsRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="page" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userListAssignableGroupsResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:UserGroupPagedResult"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userAddGroupRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="usergroupid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userAddGroupResponseType"/>
+ <xsd:complexType name="userRemoveGroupRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="usergroupid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userRemoveGroupResponseType"/>
+ <xsd:complexType name="accountViewV2RequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountViewV2ResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:AccountV2"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountEditV2RequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="contactname" type="xsd:string"/>
+   <xsd:element name="contactemail" type="xsd:string"/>
+   <xsd:element name="telephone" type="xsd:string"/>
+   <xsd:element name="fax" type="xsd:string"/>
+   <xsd:element name="description" type="xsd:string"/>
+   <xsd:element name="balancethreshold" type="xsd:float"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountEditV2ResponseType"/>
+ <xsd:complexType name="accountUserListV2RequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+   <xsd:element name="page" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountUserListV2ResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:UserV2PagedResult"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountUserSearchV2RequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+   <xsd:element name="phrase" type="xsd:string"/>
+   <xsd:element name="page" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountUserSearchV2ResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:UserV2PagedResult"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountEditHostRestrictionsRequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+   <xsd:element name="restrictions" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountEditHostRestrictionsResponseType"/>
+ <xsd:complexType name="accountViewHostRestrictionsRequestType">
+  <xsd:all>
+   <xsd:element name="accountid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="accountViewHostRestrictionsResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userEditHostRestrictionsRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+   <xsd:element name="restrictions" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userEditHostRestrictionsResponseType"/>
+ <xsd:complexType name="userViewHostRestrictionsRequestType">
+  <xsd:all>
+   <xsd:element name="userid" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="userViewHostRestrictionsResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:element name="errorcode" type="xsd:string"/>
+ <xsd:element name="login" type="tns:loginRequestType"/>
+ <xsd:element name="loginResponse" type="tns:loginResponseType"/>
+ <xsd:element name="HeaderLogin" type="tns:HeaderLoginType"/>
+ <xsd:element name="HeaderAuthenticate" type="tns:HeaderAuthenticateType"/>
+ <xsd:element name="logout" type="tns:logoutRequestType"/>
+ <xsd:element name="logoutResponse" type="tns:logoutResponseType"/>
+ <xsd:element name="accountGetCreationToken" type="tns:accountGetCreationTokenRequestType"/>
+ <xsd:element name="accountGetCreationTokenResponse" type="tns:accountGetCreationTokenResponseType"/>
+ <xsd:element name="accountGetCreationStatus" type="tns:accountGetCreationStatusRequestType"/>
+ <xsd:element name="accountGetCreationStatusResponse" type="tns:accountGetCreationStatusResponseType"/>
+ <xsd:element name="accountGetOrderToken" type="tns:accountGetOrderTokenRequestType"/>
+ <xsd:element name="accountGetOrderTokenResponse" type="tns:accountGetOrderTokenResponseType"/>
+ <xsd:element name="userSessionRemove" type="tns:userSessionRemoveRequestType"/>
+ <xsd:element name="userSessionRemoveResponse" type="tns:userSessionRemoveResponseType"/>
+ <xsd:element name="userSessionList" type="tns:userSessionListRequestType"/>
+ <xsd:element name="userSessionListResponse" type="tns:userSessionListResponseType"/>
+ <xsd:element name="userViewBalance" type="tns:userViewBalanceRequestType"/>
+ <xsd:element name="userViewBalanceResponse" type="tns:userViewBalanceResponseType"/>
+ <xsd:element name="userEditBalance" type="tns:userEditBalanceRequestType"/>
+ <xsd:element name="userEditBalanceResponse" type="tns:userEditBalanceResponseType"/>
+ <xsd:element name="accountViewBalance" type="tns:accountViewBalanceRequestType"/>
+ <xsd:element name="accountViewBalanceResponse" type="tns:accountViewBalanceResponseType"/>
+ <xsd:element name="userViewV2" type="tns:userViewV2RequestType"/>
+ <xsd:element name="userViewV2Response" type="tns:userViewV2ResponseType"/>
+ <xsd:element name="userEditV2" type="tns:userEditV2RequestType"/>
+ <xsd:element name="userEditV2Response" type="tns:userEditV2ResponseType"/>
+ <xsd:element name="userEditExtendedV2" type="tns:userEditExtendedV2RequestType"/>
+ <xsd:element name="userEditExtendedV2Response" type="tns:userEditExtendedV2ResponseType"/>
+ <xsd:element name="userCreateV2" type="tns:userCreateV2RequestType"/>
+ <xsd:element name="userCreateV2Response" type="tns:userCreateV2ResponseType"/>
+ <xsd:element name="createTestUser" type="tns:createTestUserRequestType"/>
+ <xsd:element name="createTestUserResponse" type="tns:createTestUserResponseType"/>
+ <xsd:element name="userChangePassword" type="tns:userChangePasswordRequestType"/>
+ <xsd:element name="userChangePasswordResponse" type="tns:userChangePasswordResponseType"/>
+ <xsd:element name="userRemove" type="tns:userRemoveRequestType"/>
+ <xsd:element name="userRemoveResponse" type="tns:userRemoveResponseType"/>
+ <xsd:element name="userNotify" type="tns:userNotifyRequestType"/>
+ <xsd:element name="userNotifyResponse" type="tns:userNotifyResponseType"/>
+ <xsd:element name="userListAssignableGroups" type="tns:userListAssignableGroupsRequestType"/>
+ <xsd:element name="userListAssignableGroupsResponse" type="tns:userListAssignableGroupsResponseType"/>
+ <xsd:element name="userAddGroup" type="tns:userAddGroupRequestType"/>
+ <xsd:element name="userAddGroupResponse" type="tns:userAddGroupResponseType"/>
+ <xsd:element name="userRemoveGroup" type="tns:userRemoveGroupRequestType"/>
+ <xsd:element name="userRemoveGroupResponse" type="tns:userRemoveGroupResponseType"/>
+ <xsd:element name="accountViewV2" type="tns:accountViewV2RequestType"/>
+ <xsd:element name="accountViewV2Response" type="tns:accountViewV2ResponseType"/>
+ <xsd:element name="accountEditV2" type="tns:accountEditV2RequestType"/>
+ <xsd:element name="accountEditV2Response" type="tns:accountEditV2ResponseType"/>
+ <xsd:element name="accountUserListV2" type="tns:accountUserListV2RequestType"/>
+ <xsd:element name="accountUserListV2Response" type="tns:accountUserListV2ResponseType"/>
+ <xsd:element name="accountUserSearchV2" type="tns:accountUserSearchV2RequestType"/>
+ <xsd:element name="accountUserSearchV2Response" type="tns:accountUserSearchV2ResponseType"/>
+ <xsd:element name="accountEditHostRestrictions" type="tns:accountEditHostRestrictionsRequestType"/>
+ <xsd:element name="accountEditHostRestrictionsResponse" type="tns:accountEditHostRestrictionsResponseType"/>
+ <xsd:element name="accountViewHostRestrictions" type="tns:accountViewHostRestrictionsRequestType"/>
+ <xsd:element name="accountViewHostRestrictionsResponse" type="tns:accountViewHostRestrictionsResponseType"/>
+ <xsd:element name="userEditHostRestrictions" type="tns:userEditHostRestrictionsRequestType"/>
+ <xsd:element name="userEditHostRestrictionsResponse" type="tns:userEditHostRestrictionsResponseType"/>
+ <xsd:element name="userViewHostRestrictions" type="tns:userViewHostRestrictionsRequestType"/>
+ <xsd:element name="userViewHostRestrictionsResponse" type="tns:userViewHostRestrictionsResponseType"/>
+</xsd:schema>
+</types>
+<message name="loginRequest">
+  <part name="parameters" element="tns:login" /></message>
+<message name="loginResponse">
+  <part name="parameters" element="tns:loginResponse" /></message>
+<message name="Headers">
+  <part name="HeaderLogin" element="tns:HeaderLogin" />
+  <part name="HeaderAuthenticate" element="tns:HeaderAuthenticate" /></message>
+<message name="logoutRequest">
+  <part name="parameters" element="tns:logout" /></message>
+<message name="logoutResponse">
+  <part name="parameters" element="tns:logoutResponse" /></message>
+<message name="accountGetCreationTokenRequest">
+  <part name="parameters" element="tns:accountGetCreationToken" /></message>
+<message name="accountGetCreationTokenResponse">
+  <part name="parameters" element="tns:accountGetCreationTokenResponse" /></message>
+<message name="accountGetCreationStatusRequest">
+  <part name="parameters" element="tns:accountGetCreationStatus" /></message>
+<message name="accountGetCreationStatusResponse">
+  <part name="parameters" element="tns:accountGetCreationStatusResponse" /></message>
+<message name="accountGetOrderTokenRequest">
+  <part name="parameters" element="tns:accountGetOrderToken" /></message>
+<message name="accountGetOrderTokenResponse">
+  <part name="parameters" element="tns:accountGetOrderTokenResponse" /></message>
+<message name="userSessionRemoveRequest">
+  <part name="parameters" element="tns:userSessionRemove" /></message>
+<message name="userSessionRemoveResponse">
+  <part name="parameters" element="tns:userSessionRemoveResponse" /></message>
+<message name="userSessionListRequest">
+  <part name="parameters" element="tns:userSessionList" /></message>
+<message name="userSessionListResponse">
+  <part name="parameters" element="tns:userSessionListResponse" /></message>
+<message name="userViewBalanceRequest">
+  <part name="parameters" element="tns:userViewBalance" /></message>
+<message name="userViewBalanceResponse">
+  <part name="parameters" element="tns:userViewBalanceResponse" /></message>
+<message name="userEditBalanceRequest">
+  <part name="parameters" element="tns:userEditBalance" /></message>
+<message name="userEditBalanceResponse">
+  <part name="parameters" element="tns:userEditBalanceResponse" /></message>
+<message name="accountViewBalanceRequest">
+  <part name="parameters" element="tns:accountViewBalance" /></message>
+<message name="accountViewBalanceResponse">
+  <part name="parameters" element="tns:accountViewBalanceResponse" /></message>
+<message name="userViewV2Request">
+  <part name="parameters" element="tns:userViewV2" /></message>
+<message name="userViewV2Response">
+  <part name="parameters" element="tns:userViewV2Response" /></message>
+<message name="userEditV2Request">
+  <part name="parameters" element="tns:userEditV2" /></message>
+<message name="userEditV2Response">
+  <part name="parameters" element="tns:userEditV2Response" /></message>
+<message name="userEditExtendedV2Request">
+  <part name="parameters" element="tns:userEditExtendedV2" /></message>
+<message name="userEditExtendedV2Response">
+  <part name="parameters" element="tns:userEditExtendedV2Response" /></message>
+<message name="userCreateV2Request">
+  <part name="parameters" element="tns:userCreateV2" /></message>
+<message name="userCreateV2Response">
+  <part name="parameters" element="tns:userCreateV2Response" /></message>
+<message name="createTestUserRequest">
+  <part name="parameters" element="tns:createTestUser" /></message>
+<message name="createTestUserResponse">
+  <part name="parameters" element="tns:createTestUserResponse" /></message>
+<message name="userChangePasswordRequest">
+  <part name="parameters" element="tns:userChangePassword" /></message>
+<message name="userChangePasswordResponse">
+  <part name="parameters" element="tns:userChangePasswordResponse" /></message>
+<message name="userRemoveRequest">
+  <part name="parameters" element="tns:userRemove" /></message>
+<message name="userRemoveResponse">
+  <part name="parameters" element="tns:userRemoveResponse" /></message>
+<message name="userNotifyRequest">
+  <part name="parameters" element="tns:userNotify" /></message>
+<message name="userNotifyResponse">
+  <part name="parameters" element="tns:userNotifyResponse" /></message>
+<message name="userListAssignableGroupsRequest">
+  <part name="parameters" element="tns:userListAssignableGroups" /></message>
+<message name="userListAssignableGroupsResponse">
+  <part name="parameters" element="tns:userListAssignableGroupsResponse" /></message>
+<message name="userAddGroupRequest">
+  <part name="parameters" element="tns:userAddGroup" /></message>
+<message name="userAddGroupResponse">
+  <part name="parameters" element="tns:userAddGroupResponse" /></message>
+<message name="userRemoveGroupRequest">
+  <part name="parameters" element="tns:userRemoveGroup" /></message>
+<message name="userRemoveGroupResponse">
+  <part name="parameters" element="tns:userRemoveGroupResponse" /></message>
+<message name="accountViewV2Request">
+  <part name="parameters" element="tns:accountViewV2" /></message>
+<message name="accountViewV2Response">
+  <part name="parameters" element="tns:accountViewV2Response" /></message>
+<message name="accountEditV2Request">
+  <part name="parameters" element="tns:accountEditV2" /></message>
+<message name="accountEditV2Response">
+  <part name="parameters" element="tns:accountEditV2Response" /></message>
+<message name="accountUserListV2Request">
+  <part name="parameters" element="tns:accountUserListV2" /></message>
+<message name="accountUserListV2Response">
+  <part name="parameters" element="tns:accountUserListV2Response" /></message>
+<message name="accountUserSearchV2Request">
+  <part name="parameters" element="tns:accountUserSearchV2" /></message>
+<message name="accountUserSearchV2Response">
+  <part name="parameters" element="tns:accountUserSearchV2Response" /></message>
+<message name="accountEditHostRestrictionsRequest">
+  <part name="parameters" element="tns:accountEditHostRestrictions" /></message>
+<message name="accountEditHostRestrictionsResponse">
+  <part name="parameters" element="tns:accountEditHostRestrictionsResponse" /></message>
+<message name="accountViewHostRestrictionsRequest">
+  <part name="parameters" element="tns:accountViewHostRestrictions" /></message>
+<message name="accountViewHostRestrictionsResponse">
+  <part name="parameters" element="tns:accountViewHostRestrictionsResponse" /></message>
+<message name="userEditHostRestrictionsRequest">
+  <part name="parameters" element="tns:userEditHostRestrictions" /></message>
+<message name="userEditHostRestrictionsResponse">
+  <part name="parameters" element="tns:userEditHostRestrictionsResponse" /></message>
+<message name="userViewHostRestrictionsRequest">
+  <part name="parameters" element="tns:userViewHostRestrictions" /></message>
+<message name="userViewHostRestrictionsResponse">
+  <part name="parameters" element="tns:userViewHostRestrictionsResponse" /></message>
+<portType name="Webservices.nlPortType">
+  <operation name="login">
+    <documentation>Logs the user in using username and password, returns a reactid for authentication in further requests</documentation>
+    <input message="tns:loginRequest"/>
+    <output message="tns:loginResponse"/>
+  </operation>
+  <operation name="logout">
+    <documentation>Logs the user out, destroys the session associated with the reactid</documentation>
+    <input message="tns:logoutRequest"/>
+    <output message="tns:logoutResponse"/>
+  </operation>
+  <operation name="accountGetCreationToken">
+    <documentation>Retrieve a token with which a new account may be created via the Webview</documentation>
+    <input message="tns:accountGetCreationTokenRequest"/>
+    <output message="tns:accountGetCreationTokenResponse"/>
+  </operation>
+  <operation name="accountGetCreationStatus">
+    <documentation>Get the id of an account created with a token retrieved using accountGetCreationToken</documentation>
+    <input message="tns:accountGetCreationStatusRequest"/>
+    <output message="tns:accountGetCreationStatusResponse"/>
+  </operation>
+  <operation name="accountGetOrderToken">
+    <documentation>Retrieve a token that can be used order account balance via the &lt;Webview Interface&gt;</documentation>
+    <input message="tns:accountGetOrderTokenRequest"/>
+    <output message="tns:accountGetOrderTokenResponse"/>
+  </operation>
+  <operation name="userSessionRemove">
+    <documentation>Removes all sessions of a user, or just a single session if reactid is not 0</documentation>
+    <input message="tns:userSessionRemoveRequest"/>
+    <output message="tns:userSessionRemoveResponse"/>
+  </operation>
+  <operation name="userSessionList">
+    <documentation>Lists all the current sessions of a user</documentation>
+    <input message="tns:userSessionListRequest"/>
+    <output message="tns:userSessionListResponse"/>
+  </operation>
+  <operation name="userViewBalance">
+    <documentation>Returns the users balance</documentation>
+    <input message="tns:userViewBalanceRequest"/>
+    <output message="tns:userViewBalanceResponse"/>
+  </operation>
+  <operation name="userEditBalance">
+    <documentation>Change the user's balance</documentation>
+    <input message="tns:userEditBalanceRequest"/>
+    <output message="tns:userEditBalanceResponse"/>
+  </operation>
+  <operation name="accountViewBalance">
+    <documentation>Returns the accounts balance</documentation>
+    <input message="tns:accountViewBalanceRequest"/>
+    <output message="tns:accountViewBalanceResponse"/>
+  </operation>
+  <operation name="userViewV2">
+    <documentation>View users details</documentation>
+    <input message="tns:userViewV2Request"/>
+    <output message="tns:userViewV2Response"/>
+  </operation>
+  <operation name="userEditV2">
+    <documentation>Edit a users details, the users current password is required</documentation>
+    <input message="tns:userEditV2Request"/>
+    <output message="tns:userEditV2Response"/>
+  </operation>
+  <operation name="userEditExtendedV2">
+    <documentation>Edit details only an admin may change, such as a users nickname and password.notificationrecipients must have one of the following values: accountcontact, user, 
+                    accountcontact_and_user. Otherwise it will default to accountcontact.</documentation>
+    <input message="tns:userEditExtendedV2Request"/>
+    <output message="tns:userEditExtendedV2Response"/>
+  </operation>
+  <operation name="userCreateV2">
+    <documentation>Create and notify a new user</documentation>
+    <input message="tns:userCreateV2Request"/>
+    <output message="tns:userCreateV2Response"/>
+  </operation>
+  <operation name="createTestUser">
+    <documentation>Create a WebservicesNl test user</documentation>
+    <input message="tns:createTestUserRequest"/>
+    <output message="tns:createTestUserResponse"/>
+  </operation>
+  <operation name="userChangePassword">
+    <documentation>Change a users password</documentation>
+    <input message="tns:userChangePasswordRequest"/>
+    <output message="tns:userChangePasswordResponse"/>
+  </operation>
+  <operation name="userRemove">
+    <documentation>Deletes a user</documentation>
+    <input message="tns:userRemoveRequest"/>
+    <output message="tns:userRemoveResponse"/>
+  </operation>
+  <operation name="userNotify">
+    <documentation>Activates the user and sends user login information to users email address</documentation>
+    <input message="tns:userNotifyRequest"/>
+    <output message="tns:userNotifyResponse"/>
+  </operation>
+  <operation name="userListAssignableGroups">
+    <documentation>Returns a list of all groups the user may assign to other users</documentation>
+    <input message="tns:userListAssignableGroupsRequest"/>
+    <output message="tns:userListAssignableGroupsResponse"/>
+  </operation>
+  <operation name="userAddGroup">
+    <documentation>Add a user to a group</documentation>
+    <input message="tns:userAddGroupRequest"/>
+    <output message="tns:userAddGroupResponse"/>
+  </operation>
+  <operation name="userRemoveGroup">
+    <documentation>Remove a user from a group</documentation>
+    <input message="tns:userRemoveGroupRequest"/>
+    <output message="tns:userRemoveGroupResponse"/>
+  </operation>
+  <operation name="accountViewV2">
+    <documentation>View the account details</documentation>
+    <input message="tns:accountViewV2Request"/>
+    <output message="tns:accountViewV2Response"/>
+  </operation>
+  <operation name="accountEditV2">
+    <documentation>Edit an accounts details</documentation>
+    <input message="tns:accountEditV2Request"/>
+    <output message="tns:accountEditV2Response"/>
+  </operation>
+  <operation name="accountUserListV2">
+    <documentation>Returns a list of all users in the account</documentation>
+    <input message="tns:accountUserListV2Request"/>
+    <output message="tns:accountUserListV2Response"/>
+  </operation>
+  <operation name="accountUserSearchV2">
+    <documentation>Returns a list of users that are in the account and match the search phrase</documentation>
+    <input message="tns:accountUserSearchV2Request"/>
+    <output message="tns:accountUserSearchV2Response"/>
+  </operation>
+  <operation name="accountEditHostRestrictions">
+    <documentation>Sets host restrictions for the account</documentation>
+    <input message="tns:accountEditHostRestrictionsRequest"/>
+    <output message="tns:accountEditHostRestrictionsResponse"/>
+  </operation>
+  <operation name="accountViewHostRestrictions">
+    <documentation>Gets host restrictions for the account</documentation>
+    <input message="tns:accountViewHostRestrictionsRequest"/>
+    <output message="tns:accountViewHostRestrictionsResponse"/>
+  </operation>
+  <operation name="userEditHostRestrictions">
+    <documentation>Edit host restrictions for this user</documentation>
+    <input message="tns:userEditHostRestrictionsRequest"/>
+    <output message="tns:userEditHostRestrictionsResponse"/>
+  </operation>
+  <operation name="userViewHostRestrictions">
+    <documentation>View host restrictions for this user</documentation>
+    <input message="tns:userViewHostRestrictionsRequest"/>
+    <output message="tns:userViewHostRestrictionsResponse"/>
+  </operation>
+</portType>
+<binding name="Webservices.nlBinding" type="tns:Webservices.nlPortType">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="login">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/login" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="logout">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/logout" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountGetCreationToken">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetCreationToken" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountGetCreationStatus">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetCreationStatus" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountGetOrderToken">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetOrderToken" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userSessionRemove">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userSessionRemove" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userSessionList">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userSessionList" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userViewBalance">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userViewBalance" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userEditBalance">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userEditBalance" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountViewBalance">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewBalance" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userViewV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userViewV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userEditV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userEditV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userEditExtendedV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userEditExtendedV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userCreateV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userCreateV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="createTestUser">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/createTestUser" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userChangePassword">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userChangePassword" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userRemove">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userRemove" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userNotify">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userNotify" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userListAssignableGroups">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userListAssignableGroups" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userAddGroup">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userAddGroup" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userRemoveGroup">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userRemoveGroup" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountViewV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountEditV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountEditV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountUserListV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountUserListV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountUserSearchV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountUserSearchV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountEditHostRestrictions">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountEditHostRestrictions" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="accountViewHostRestrictions">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewHostRestrictions" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userEditHostRestrictions">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userEditHostRestrictions" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="userViewHostRestrictions">
+    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userViewHostRestrictions" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+</binding>
+<service name="Webservices.nl">
+  <port name="Webservices.nlPort" binding="tns:Webservices.nlBinding">
+    <soap:address location="https://ws1.webservices.nl:443/accounting/soap_doclit.php"/>
+  </port>
+</service>
+</definitions>
