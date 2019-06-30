@@ -1,6 +1,6 @@
 public with sharing class BusinessService {
 
-    public static List<DutchBusinessWsdl.DutchBusinessReference> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+    public static List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         return newInstance().searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search);
     }
 

@@ -10,7 +10,16 @@ public with sharing class CompanyDetailsControllerTest {
         List<DutchBusinessWsdl.DutchBusinessReference> serviceResponse = new List<DutchBusinessWsdl.DutchBusinessReference>();
                 
         mocks.startStubbing();
-        mocks.when(mockService.searchForDossiers((DutchBusinessWsdl.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenReturn(serviceResponse);
+        String trade_name = 'trade_name';
+        String city = 'VOORBURG';
+        String street = 'Utrecht, Van Alphenstraat 222, 2268NA';
+        String postcode = '2274NA';
+        Integer house_number = 1;
+        String house_number_addition = 'house_number_addition';
+        String telephone_number = 'telephone_number';
+        String domain_name = 'domain_name';
+        // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenReturn(serviceResponse);
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -33,7 +42,16 @@ public with sharing class CompanyDetailsControllerTest {
         String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA","country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
 
         mocks.startStubbing();
-        mocks.when(mockService.searchForDossiers((DutchBusinessWsdl.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CCException('test'));
+        String trade_name = 'trade_name';
+        String city = 'VOORBURG';
+        String street = 'Utrecht, Van Alphenstraat 222, 2268NA';
+        String postcode = '2274NA';
+        Integer house_number = 1;
+        String house_number_addition = 'house_number_addition';
+        String telephone_number = 'telephone_number';
+        String domain_name = 'domain_name';
+        // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CCException());
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -55,7 +73,16 @@ public with sharing class CompanyDetailsControllerTest {
         String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA","country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
 
         mocks.startStubbing();
-        mocks.when(mockService.searchForDossiers((DutchBusinessWsdl.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CustomException('test'));
+        String trade_name = 'trade_name';
+        String city = 'VOORBURG';
+        String street = 'Utrecht, Van Alphenstraat 222, 2268NA';
+        String postcode = '2274NA';
+        Integer house_number = 1;
+        String house_number_addition = 'house_number_addition';
+        String telephone_number = 'telephone_number';
+        String domain_name = 'domain_name';
+        // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CustomException());
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -192,7 +219,7 @@ public with sharing class CompanyDetailsControllerTest {
         Id dossierId = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType);
 
         mocks.startStubbing();
-        mocks.when(mockBusinessService.setVatNumber(dossierId)).thenThrow(new CCVatNotFoundException('test'));
+        mocks.when(mockBusinessService.setVatNumber(dossierId)).thenThrow(new CCWsServerDataNotFoundVatException('test'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockBusinessService);
 

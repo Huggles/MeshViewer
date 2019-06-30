@@ -11,7 +11,7 @@ public interface IBusinessService {
      *
      * @return
      */
-    List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search);
+    List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search);
 
 //    /**
 //     * Retrieves the requested dossier from the backend.

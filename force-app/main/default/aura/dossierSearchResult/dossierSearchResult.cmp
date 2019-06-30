@@ -5,19 +5,6 @@
     <aura:attribute name="icon" type="string" default="action:record" access="public"/>
     <aura:registerEvent name="dossierSelectedEvent" type="c:dossierSelectedEvent"/>
 
-    <!-- <lightning:tile class="slds-tile_board" label="{!v.result.name + ' (' + v.result.dossier_number + ')'}" onclick="{!c.onClick}" >
-        <aura:set attribute="media">
-            <lightning:icon iconName="standard:account"/>
-        </aura:set>
-        <div class="slds-tile__detail">
-            <div>{!v.result.establishment_street + ', ' + v.result.establishment_city}</div>
-            <dl class="slds-dl_inline">
-                <dt class="slds-dl_inline__label" title="Establishment Number:">Establishment #</dt>
-                <dd class="slds-dl_inline__detail" title="{!v.result.establishment_number}">{!v.result.establishment_number}</dd>
-            </dl>
-        </div>
-    </lightning:tile> -->
-
     <article aura:id="{!v.result.dossier_number}" class="{!v.style}" onclick="{!c.onClick}" style="cursor:pointer" >
         <div class="slds-media__figure">
             <lightning:icon iconName="{!v.icon}" variant="{!v.variant}" size="x-small"/>
@@ -27,10 +14,6 @@
             <div class="slds-tile__detail">
                 <div>{!v.result.dossier_number}</div>
                 <div>{!v.result.establishment_street + ', ' + v.result.establishment_city}</div>
-                <!-- <dl class="slds-list_horizontal slds-wrap">
-                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Establishment #">Establishment #:</dt>
-                    <dd class="slds-item_detail slds-truncate" title="{!v.result.establishment_number}">{!v.result.establishment_number}</dd>
-                </dl> -->
             </div>
         </div>
     </article>

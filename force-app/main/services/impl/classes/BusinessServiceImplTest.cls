@@ -43,7 +43,7 @@ public with sharing class BusinessServiceImplTest {
         mocks.stopStubbing();
 
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
-        List<DutchBusinessWsdl.DutchBusinessReference> results = BusinessService.searchForDossiers(null, null, null, postCode,null, null, null, null, false);
+        List<SearchForDossiersResultDto> results = BusinessService.searchForDossiers(null, null, null, postCode,null, null, null, null, false);
         system.assertEquals(results.get(0).dossier_number, '199');
     }
 
@@ -865,6 +865,7 @@ public with sharing class BusinessServiceImplTest {
         DutchBusinessWsdl.DutchBusinessSBICode returnValue = new DutchBusinessWsdl.DutchBusinessSBICode();
         returnValue.sbi_code = code;
         returnValue.description = description;
+        return returnValue;
     }
 
     private static DutchBusinessWsdl.DutchBusinessFormattedAddress newFormattedAddress(String address, String city, String country, String street, Integer houseNumber, String postCode, String houseNumberAddition) {

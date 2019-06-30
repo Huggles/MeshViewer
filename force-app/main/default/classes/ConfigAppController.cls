@@ -34,10 +34,6 @@ public static PermissionSet ps;
                 uw.Name = usr.name;
                 uw.isActive = usr.isActive;
                 try{uw.ProfileName = profileMap.get(usr.ProfileId).name;}catch(exception e){}
-                system.debug('************* usr.Id = '+ usr.Id);
-                
-                system.debug('************* enabledBusinessUserIds = '+ enabledBusinessUserIds);
-                system.debug('************* enabledBusinessUserIds.contains(usr.Id) = '+ enabledBusinessUserIds.contains(usr.Id));
                 if(enabledBusinessUserIds.contains(usr.Id)){
                     uw.BusinessActive = true;
                 }
@@ -75,7 +71,7 @@ public static PermissionSet ps;
     @AuraEnabled
     public static void addBudget(Double Amount){
         try{
-            boolean resp = BusinessAccountingService.addBudget(amount);
+            BusinessAccountingService.addBudget(amount);
         }catch(CCException ex){
             throw ex;
         }catch(System.Exception ex){

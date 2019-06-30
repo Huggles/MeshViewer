@@ -6,8 +6,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
 
-    // TODO: implement a proper DTO so the dependency on CI is removed
-    public static List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+
+    public static List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         // Handle valid postcodes that the web service does not like
         if (postcode != null){ // fix for postal code
             postcode = postcode.replaceAll('(\\s+)', '').toUpperCase();
@@ -21,7 +21,11 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, i);
             searchResults.addAll(returnedResults.results.item);
         }
-        return searchResults;
+        List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
+        for (DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2 : searchResults) {
+            returnValue.add(new SearchForDossiersResultDto(dutchBusinessReferenceV2));
+        }
+        return returnValue;
     }
 
 
