@@ -25,9 +25,9 @@ public with sharing class AuraResponseWrapper {
         this.errorMsg = response.getMessage();
     }
 
-    public AuraResponseWrapper(Exception response, Object msg) {
+    public AuraResponseWrapper(Exception response, String msg) {
         this.response = null;
         this.state = 'ERROR';
-        this.errorMsg = String.valueOf(msg);
+        this.errorMsg = msg;
     }
 }

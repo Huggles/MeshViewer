@@ -80,8 +80,12 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
     }
 
     public static Boolean userCheckActive(){
+        Boolean returnValue = false;
         Credentials__c cs = Credentials__c.getOrgDefaults();
-        AccountingWsdl.UserV2 user = WsAccounting.userViewV2(Integer.valueOf(cs.CompanyConnectUserId__c));
-        return user.active;
+        if (cs != null && cs.CompanyConnectUserId__c != null) {
+            AccountingWsdl.UserV2 user = WsAccounting.userViewV2(Integer.valueOf(cs.CompanyConnectUserId__c));
+            returnValue = user.active;
+        }
+        return returnValue;
     }
 }

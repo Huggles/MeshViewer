@@ -6,18 +6,20 @@ public with sharing class CompanyDetailsControllerTest {
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
-        String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA","country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
+        String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA", "house_number": 1, "country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
         List<SearchForDossiersResultDto> serviceResponse = new List<SearchForDossiersResultDto>();
-                
+
+        Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
+        String trade_name = (String)jsonDeserialized.get('name');
+        String city = (String)jsonDeserialized.get('city');
+        String street = (String)jsonDeserialized.get('street');
+        String postcode = (String)jsonDeserialized.get('postcode');
+        Integer house_number = (Integer)jsonDeserialized.get('house_number');
+        String house_number_addition = (String)jsonDeserialized.get('house_number_addition');
+        String telephone_number = (String)jsonDeserialized.get('phone');
+        String domain_name = (String)jsonDeserialized.get('domain_name');
+
         mocks.startStubbing();
-        String trade_name = 'trade_name';
-        String city = 'VOORBURG';
-        String street = 'Utrecht, Van Alphenstraat 222, 2268NA';
-        String postcode = '2274NA';
-        Integer house_number = 1;
-        String house_number_addition = 'house_number_addition';
-        String telephone_number = 'telephone_number';
-        String domain_name = 'domain_name';
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenReturn(serviceResponse);
         mocks.stopStubbing();
@@ -40,18 +42,19 @@ public with sharing class CompanyDetailsControllerTest {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
         String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA","country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
+        Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
+        String trade_name = (String)jsonDeserialized.get('name');
+        String city = (String)jsonDeserialized.get('city');
+        String street = (String)jsonDeserialized.get('street');
+        String postcode = (String)jsonDeserialized.get('postcode');
+        Integer house_number = (Integer)jsonDeserialized.get('house_number');
+        String house_number_addition = (String)jsonDeserialized.get('house_number_addition');
+        String telephone_number = (String)jsonDeserialized.get('phone');
+        String domain_name = (String)jsonDeserialized.get('domain_name');
 
         mocks.startStubbing();
-//        String trade_name = 'Appsolutely';
-//        String city = 'VOORBURG';
-//        String street = 'Utrecht, Van Alphenstraat 222, 2268NA';
-//        String postcode = '2274NA';
-//        Integer house_number = null; // wow the search page is really bad...we don't really search for this.
-//        String house_number_addition = null;
-//        String telephone_number = '+31613341224';
-//        String domain_name = null;
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyInteger(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyBoolean())).thenThrow(new CCException('test'));
+        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CCException('test'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -72,16 +75,17 @@ public with sharing class CompanyDetailsControllerTest {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
         String searchParams = '{"street":"Utrecht, Van Alphenstraat 222, 2268NA","city":"VOORBURG","postcode":"2274NA","country":"Netherlands","province":"","name":"Appsolutely ","phone":"+31613341224","domain":"","dossier_number":"67511325"}';
+        Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
+        String trade_name = (String)jsonDeserialized.get('name');
+        String city = (String)jsonDeserialized.get('city');
+        String street = (String)jsonDeserialized.get('street');
+        String postcode = (String)jsonDeserialized.get('postcode');
+        Integer house_number = (Integer)jsonDeserialized.get('house_number');
+        String house_number_addition = (String)jsonDeserialized.get('house_number_addition');
+        String telephone_number = (String)jsonDeserialized.get('phone');
+        String domain_name = (String)jsonDeserialized.get('domain_name');
 
         mocks.startStubbing();
-        String trade_name = 'trade_name';
-        String city = 'VOORBURG';
-        String street = 'Utrecht, Van Alphenstraat 222, 2268NA';
-        String postcode = '2274NA';
-        Integer house_number = 1;
-        String house_number_addition = 'house_number_addition';
-        String telephone_number = 'telephone_number';
-        String domain_name = 'domain_name';
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CustomException(Label.WSCall_Generic_UI_Exception));
         mocks.stopStubbing();
@@ -93,7 +97,7 @@ public with sharing class CompanyDetailsControllerTest {
 
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
-        System.assert(wrapper.errorMsg == System.Label.WSCall_Generic_UI_Exception);
+        System.assert(wrapper.errorMsg == System.Label.Error);
         System.assert(wrapper.state == 'ERROR');
     }
 

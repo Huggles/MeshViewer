@@ -120,12 +120,12 @@ public static PermissionSet ps;
     }
 
     @AuraEnabled
-    public static boolean saveCredentials(String username, String password, String userId){
+    public static boolean saveCredentials(String username, String password, String accountId){
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
             cs.Username__c = username;
             cs.Password__c = password;
-            cs.CompanyConnectUserId__c = Decimal.valueOf(userId);
+            cs.CompanyConnectUserId__c = Decimal.valueOf(accountId); // should be the auto generated user Id
             upsert cs;
             return true;
         }catch(CCException ex){

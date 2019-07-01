@@ -77,6 +77,7 @@ wiredGetCredentials(result){
         if (result && result.data) {
             this.userId = result.data.cust_connect__CompanyConnectUserId__c;
             this.username = result.data.cust_connect__Username__c;
+            this.password = result.data.cust_connect__Password__c;
             this.newUser = result.data.cust_connect__CompanyConnectUserId__c === undefined;
             this.error = undefined;
         }
@@ -135,7 +136,7 @@ saveCredentials() {
             message: this.label.Dossier_Account_Update_Completed,
             variant: 'success'
         });
-        this.password = '';
+        // this.password = '';
         this.dispatchEvent(evt);
         const event = new CustomEvent('useronboarded', {
             // detail contains only primitives

@@ -20,16 +20,7 @@ public with sharing class CompanyDetailsController {
                 String house_number_addition = (String)jsonDeserialized.get('house_number_addition');
                 String telephone_number = (String)jsonDeserialized.get('phone');
                 String domain_name = (String)jsonDeserialized.get('domain_name');
-                System.debug('searchparams: ' + searchParams);
-                System.debug('jsonDeserialized: ' + jsonDeserialized);
-                System.debug('trade_name: ' + trade_name);
-                System.debug('city: ' + city);
-                System.debug('street' + street);
-                System.debug('postcode: ' + postcode);
-                System.debug('house_number ' + house_number);
-                System.debug('addition: ' + house_number_addition);
-                System.debug('telephone: ' + telephone_number);
-                System.debug('domain_name: ' + domain_name);
+                // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
                 List<SearchForDossiersResultDto> searchResults = BusinessService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false);
                 return new AuraResponseWrapper(searchResults);
             } catch (CCException e) {

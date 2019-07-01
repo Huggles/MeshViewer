@@ -54,7 +54,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config_Account_ID</shortDescription>
-        <value>ID</value>
+        <value>Account ID</value>
     </labels>
     <labels>
         <fullName>Config_Account_Password</fullName>

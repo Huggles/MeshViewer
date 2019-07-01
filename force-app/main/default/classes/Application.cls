@@ -20,6 +20,7 @@ public with sharing class Application {
             new fflib_Application.ServiceFactory(
                     new Map<Type, Type>{
                             IWsAccounting.class => WsAccountingImpl.class,
+                            IWsDutchBusiness.class => WsDutchBusinessImpl.class,
                             IBusinessAccountingService.class => BusinessAccountingServiceImpl.class,
                             IBusinessService.class => BusinessServiceImpl.class,
                             IBusinessDuplicateService.class => BusinessDuplicateServiceImpl.class
