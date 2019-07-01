@@ -10,6 +10,9 @@ public with sharing class CallOutHelper {
         String faultCode = getFaultCode(message);
         switch on faultCode {
             when 'Client' {
+                if (message.contains('Invalid authentication (You are not logged in)')) {
+                    throw new CCWsClientAuthenticationException(Label.Error_Client_Authentication);
+                }
                 ErrorLogUtil.logException(calloutException); // shouldn't happen because unexpected so we log.
                 throw new CCWsClientException(Label.Error_Webservice_Client); // TODO: rename label
             }
@@ -91,7 +94,7 @@ public with sharing class CallOutHelper {
             }
             when else {
                 ErrorLogUtil.logException(calloutException); // ouch unknown exception
-                throw new CCWsException(Label.Error, calloutException);
+                throw new CCWsException(getErrorMessage(message), calloutException); // TODO: fix the message.
             }
         }
     }
@@ -104,10 +107,21 @@ public with sharing class CallOutHelper {
      * @return
      */
     private static String getFaultCode(String message) {
-        Integer faultCodeStart = message.lastIndexOf('SOAP-ENV:');
+        System.debug(message);
+        Integer faultCodeStart = message.lastIndexOf('SOAP-ENV:') + 'SOAP-ENV:'.length();
+        System.debug(faultCodeStart);
         Integer faultCodeEnd = message.indexOf(' ', faultCodeStart);
+        System.debug(faultCodeEnd);
         String faultCode = message.substring(faultCodeStart, faultCodeEnd);
+        System.debug(faultCode);
         return faultCode;
+    }
+
+    private static String getErrorMessage(String message) {
+        String returnValue = '';
+        returnValue = message.removeStart('Web service callout failed: WebService returned a SOAP Fault: ');
+        returnValue = message.substring(0, message.indexOf(' faultcode'));
+        return returnValue;
     }
 
 }
