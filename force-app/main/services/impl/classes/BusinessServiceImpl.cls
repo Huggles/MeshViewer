@@ -272,9 +272,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
         if (dataVendorDossier.annual_financial_statement_summary != null) {
             dossierDB.Year__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.year);
-            dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted;
-            dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted;
-            dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted;
+            if (dataVendorDossier.annual_financial_statement_summary.profit != null) { dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted;}
+            if (dataVendorDossier.annual_financial_statement_summary.turnover != null) { dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted; }
+            if (dataVendorDossier.annual_financial_statement_summary.assets != null) { dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted; }
         }
 
         dossierDB.Personnel_CI__c = dataVendorDossier.personnel_ci;
