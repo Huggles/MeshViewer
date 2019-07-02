@@ -19,7 +19,7 @@ public with sharing class BusinessAccountingServiceImplTest {
 
     @isTest
     public static void testGetUserOnboardedFail(){
-        system.assert(!BusinessAccountingServiceImpl.GetUserOnboarded());
+        system.assert(!BusinessAccountingService.GetUserOnboarded());
 
     }
 
@@ -29,7 +29,7 @@ public with sharing class BusinessAccountingServiceImplTest {
         cs.Username__c = 'mock';
         cs.Password__c = 'mock';
         insert cs;
-        system.assert(BusinessAccountingServiceImpl.GetUserOnboarded());
+        system.assert(BusinessAccountingService.GetUserOnboarded());
 
     }
 
