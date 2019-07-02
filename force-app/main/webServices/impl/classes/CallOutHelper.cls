@@ -70,7 +70,7 @@ public with sharing class CallOutHelper {
             }
             when 'Server.Data' {
                 ErrorLogUtil.logException(calloutException);
-                throw new CCWsClientException(Label.Error_Server_Data);
+                throw new CCWsServerDataException(Label.Error_Server_Data);
             }
             when 'Server.Data.NotFound' {
                 throw new CCWsServerDataNotFoundException(Label.Error_Server_Data_NotFound);
