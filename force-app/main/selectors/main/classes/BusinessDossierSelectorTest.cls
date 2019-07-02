@@ -62,5 +62,18 @@ public with sharing class BusinessDossierSelectorTest {
         System.assert(dossiers.size() == 40);
     }
 
+    @IsTest
+    static void testSelectByVatNumber() {
+
+        List<Business_Dossier__c> dossiers = null;
+        Test.startTest();
+        {
+            dossiers = BusinessDossierSelector.newInstance().selectByVatNumber('vat' + 1, false);
+        }
+        Test.stopTest();
+        System.assert(dossiers.size() == 2);
+
+    }
+
 
 }

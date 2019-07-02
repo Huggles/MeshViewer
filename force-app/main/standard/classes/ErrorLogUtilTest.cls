@@ -16,7 +16,6 @@ private class ErrorLogUtilTest {
         Test.stopTest();
         Error_Log__c[] logs = [SELECT Id, Trace__c FROM Error_Log__c];
         System.assert(logs.size() == 1);
-        System.debug(logs);
         System.assert(logs[0].Trace__c == 'test');
     }
 

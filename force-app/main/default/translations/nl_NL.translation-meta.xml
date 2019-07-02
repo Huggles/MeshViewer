@@ -165,6 +165,46 @@
         <name>Error</name>
     </customLabels>
     <customLabels>
+        <label>De authenticatie met de databron is niet gelukt. U bent niet ingelogd en kunt geen data benaderen. Neem contact op met uw systeembeheerder en laat hem controleren of de ingevoerde gebruikersnaam, paswoord en account id correct zijn.</label>
+        <name>Error_Client_Authentication</name>
+    </customLabels>
+    <customLabels>
+        <label>Vanwege een verkeerd wachtwoord is de authenticatie voor de databron mislukt.</label>
+        <name>Error_Client_Authentication_Password</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Client Authentication Username --></label>
+        <name>Error_Client_Authentication_Username</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Client Authorization --></label>
+        <name>Error_Client_Authorization</name>
+    </customLabels>
+    <customLabels>
+        <label>De authenticatie voor de databron is mislukt door een toegangsrestrictie bij de databron. Neem contact op met uw systeembeheerder.</label>
+        <name>Error_Client_Hostrestriction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Client Input --></label>
+        <name>Error_Client_Input</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Client Input Format Incorrect --></label>
+        <name>Error_Client_Input_Format_Incorrect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Client Input Incomplete --></label>
+        <name>Error_Client_Input_Incomplete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Client Input Invalid --></label>
+        <name>Error_Client_Input_Invalid</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Client Payment --></label>
+        <name>Error_Client_Payment</name>
+    </customLabels>
+    <customLabels>
         <label>Fout 103 ontvangen van Customer.connect. Neem contact op met support.</label>
         <name>Error_Config</name>
     </customLabels>
@@ -177,8 +217,52 @@
         <name>Error_Remove_Dossier</name>
     </customLabels>
     <customLabels>
+        <label><!-- Error Server Data --></label>
+        <name>Error_Server_Data</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Server Data NotFound --></label>
+        <name>Error_Server_Data_NotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Server Data NotFound Kadaster NotDeliverable --></label>
+        <name>Error_Server_Data_NotFound_Kadaster_NotDeliverable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Server Data NotFound Nbwo EstimateUnavailable --></label>
+        <name>Error_Server_Data_NotFound_Nbwo_EstimateUnavailable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Server Data PageNotFound --></label>
+        <name>Error_Server_Data_PageNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Server Unavailable --></label>
+        <name>Error_Server_Unavailable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Server Unavailable InternalError --></label>
+        <name>Error_Server_Unavailable_InternalError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Server Unavailable Temporary --></label>
+        <name>Error_Server_Unavailable_Temporary</name>
+    </customLabels>
+    <customLabels>
         <label>Fout 102 ontvangen van Customer.connect. Neem contact op met support.</label>
         <name>Error_Unknown</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error Client --></label>
+        <name>Error_Webservice_Client</name>
+    </customLabels>
+    <customLabels>
+        <label>De databron geeft een onbekende uitzondering. Probeer het later nogmaals of contacteer uw systeembeheerder.</label>
+        <name>Error_Webservice_Server</name>
+    </customLabels>
+    <customLabels>
+        <label>De gebruiker bestaat niet. Controleer alstublieft de gebruikersnaam en het paswoord.</label>
+        <name>Error_user_not_found</name>
     </customLabels>
     <customLabels>
         <label>Vestigingsdatum</label>

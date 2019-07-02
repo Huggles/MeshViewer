@@ -4,10 +4,10 @@
 
 public with sharing class InsertAccountResponseDTO {
 
-    public DutchBusinessDto.DutchBusinessGetDossierResponse dossier { get; set; }
+    public DutchBusinessWsdl.DutchBusinessDossierV3 dossier { get; set; }
     public Account account { get; set;}
 
-    public InsertAccountResponseDTO(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account account) {
+    public InsertAccountResponseDTO(DutchBusinessWsdl.DutchBusinessDossierV3 dossier, Account account) {
         this.account = account;
         this.dossier = dossier;
     }

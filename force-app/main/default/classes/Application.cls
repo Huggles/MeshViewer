@@ -19,9 +19,8 @@ public with sharing class Application {
     public static final fflib_Application.ServiceFactory Service =
             new fflib_Application.ServiceFactory(
                     new Map<Type, Type>{
-                            IWebservicesNlSOAP.class => WebservicesNlSOAPImpl.class,
-                            IWebServicesNLSOAPAccounting.class => WebServicesNLSOAPAccountingImpl.class,
-                            IWebServicesNLSOAPDutchBusiness.class => WebServicesNLSOAPDutchBusinessImpl.class,
+                            IWsAccounting.class => WsAccountingImpl.class,
+                            IWsDutchBusiness.class => WsDutchBusinessImpl.class,
                             IBusinessAccountingService.class => BusinessAccountingServiceImpl.class,
                             IBusinessService.class => BusinessServiceImpl.class,
                             IBusinessDuplicateService.class => BusinessDuplicateServiceImpl.class
@@ -31,7 +30,6 @@ public with sharing class Application {
     public static final fflib_Application.SelectorFactory Selector =
         new fflib_Application.SelectorFactory(
             new Map < SObjectType, Type > {
-                    User.SObjectType => UserSelector.class,
                     Account.SObjectType => AccountSelector.class,
                     Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
                     Dossier_Address__c.SObjectType => DossierAddressSelector.class,

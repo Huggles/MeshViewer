@@ -1,7 +1,7 @@
 import { LightningElement, track, wire } from 'lwc';
 import getUserOnboarded from '@salesforce/apex/ConfigAppController.getUserOnboarded';
 import enableTrial from '@salesforce/apex/ConfigAppController.enableTrial';
-import saveCredentials from '@salesforce/apex/ConfigAppController.saveCredentials';
+import saveDataUserCredentials from '@salesforce/apex/ConfigAppController.saveDataUserCredentials';
 import getCredentials from '@salesforce/apex/ConfigAppController.getCredentials';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -30,75 +30,76 @@ export default class onboardCustomer extends LightningElement {
 
 @track newUser = true;
 
-get existingUser() {
-    return !this.newUser;
-}
+    get existingUser() {
+        return !this.newUser;
+    }
 
-@track userId = '';
-username = '';
-password = '';
+@track accountId = '';
+    username = '';
+    password = '';
 
-label = {
-    Config_Credentials,
-    Config_Account_ActivateDescription,
-    Config_Account_ActivateDescriptionRequest,
-    Config_Account_ID,
-    Config_Account_Username,
-    Config_Account_Password,
-    Config_Account_Save,
-    Config_Title,
-    Config_Account_ExistingUser,
-    Config_Account_CreateAccount,
-    Success,
-    Error,
-    Error_Incomplete,
-    Error_Config,
-    Dossier_Account_Update_Completed
-};
+    label = {
+        Config_Credentials,
+        Config_Account_ActivateDescription,
+        Config_Account_ActivateDescriptionRequest,
+        Config_Account_ID,
+        Config_Account_Username,
+        Config_Account_Password,
+        Config_Account_Save,
+        Config_Title,
+        Config_Account_ExistingUser,
+        Config_Account_CreateAccount,
+        Success,
+        Error,
+        Error_Incomplete,
+        Error_Config,
+        Dossier_Account_Update_Completed
+    };
 
-isUserOnboarded;
+    isUserOnboarded;
 
 @wire(getUserOnboarded)
-wiredUserOnboarded(result){
-    this.isUserOnboarded = result;
-    if(result.error){
-        this.error = result.error;
-    }else{
-        this.onboarded = result.data;
-        this.error = undefined;
-    }
-}
-
-@wire(getCredentials)
-wiredGetCredentials(result){
-    if(result.error){
-        this.error = result.error;
-    }else{
-        if (result && result.data) {
-            this.userId = result.data.cust_connect__CompanyConnectUserId__c;
-            this.username = result.data.cust_connect__Username__c;
-            this.newUser = result.data.cust_connect__CompanyConnectUserId__c === undefined;
+    wiredUserOnboarded(result){
+        this.isUserOnboarded = result;
+        if(result.error){
+            this.error = result.error;
+        }else{
+            this.onboarded = result.data;
             this.error = undefined;
         }
     }
-}
 
-enableTrial(event){
-    if (this.password === '') {
-        const evt = new ShowToastEvent({
-            title: this.label.Error,
-            message: this.label.Error_Incomplete,
-            variant: 'error'
-        });
-        this.dispatchEvent(evt);
-        return;
+@wire(getCredentials)
+    wiredGetCredentials(result){
+        if(result.error){
+            this.error = result.error;
+        }else{
+            if (result && result.data) {
+                this.accountId = result.data.cust_connect__CompanyConnectUserId__c;
+                this.username = result.data.cust_connect__Username__c;
+                this.password = result.data.cust_connect__Password__c;
+                this.newUser = result.data.cust_connect__CompanyConnectUserId__c === undefined;
+                this.error = undefined;
+            }
+        }
     }
-    enableTrial({password: this.password}).then(result => {
-        const evt = new ShowToastEvent({
-            title: this.label.Success,
-            message:  this.label.Dossier_Account_Update_Completed,
-            variant: 'success'
-        });
+
+    enableTrial(event){
+        if (this.password === '') {
+            const evt = new ShowToastEvent({
+                title: this.label.Error,
+                message: this.label.Error_Incomplete,
+                variant: 'error'
+            });
+            this.dispatchEvent(evt);
+            return;
+        }
+        enableTrial({password: this.password}).then(result => {
+            const evt = new ShowToastEvent({
+                title: this.label.Success,
+                message:  this.label.Dossier_Account_Update_Completed,
+                variant: 'success'
+            });
         this.dispatchEvent(evt);
         const event = new CustomEvent('useronboarded', {
             // detail contains only primitives
@@ -109,67 +110,67 @@ enableTrial(event){
         return refreshApex(this.isUserOnboarded);
     })
     .catch(error => {
-        this.error = error;
+            this.error = error;
         const evt = new ShowToastEvent({
             title: this.label.Error,
-            message: this.label.Error_Config,
+            message: this.error.body.message,
             variant: 'error'
         });
         this.dispatchEvent(evt);
-})
-}
-
-saveCredentials() {
-    if (this.username === '' || this.password === '' || this.userId === '') {
-        const evt = new ShowToastEvent({
-            title: this.label.Error,
-            message: this.label.Error_Incomplete,
-            variant: 'error'
-        });
-        this.dispatchEvent(evt);
-        return;
-    }
-    saveCredentials({username:this.username, password: this.password, userId: this.userId}).then(result => {
-        const evt = new ShowToastEvent({
-            title: this.label.Success,
-            message: this.label.Dossier_Account_Update_Completed,
-            variant: 'success'
-        });
-        this.password = '';
-        this.dispatchEvent(evt);
-        const event = new CustomEvent('useronboarded', {
-            // detail contains only primitives
-            //detail: this.product.fields.Id.value
-        });
-        // Fire the event from c-tile
-        this.dispatchEvent(event);
-        return refreshApex(this.isUserOnboarded);
     })
-    .catch(error => {
-        this.error = error;
-        console.log(this.error);
-        const evt = new ShowToastEvent({
-            title: this.label.Error,
-            message: this.label.Error_Config,
-            variant: 'error'
-        });
-        this.dispatchEvent(evt);
-})
-}
+    }
 
-toggleNewUser(event) {
-    this.newUser = !this.newUser;
-}
+    saveDataUserCredentials() {
+        if (this.username === '' || this.password === '') {
+            const evt = new ShowToastEvent({
+                title: this.label.Error,
+                message: this.label.Error_Incomplete,
+                variant: 'error'
+            });
+            this.dispatchEvent(evt);
+            return;
+        }
+        saveDataUserCredentials({username:this.username, password: this.password}).then(result => {
+                const evt = new ShowToastEvent({
+                    title: this.label.Success,
+                    message: this.label.Dossier_Account_Update_Completed,
+                    variant: 'success'
+                });
+                this.error = undefined;
+                // this.password = '';
+                this.dispatchEvent(evt);
+                const event = new CustomEvent('useronboarded', {
+                    // detail contains only primitives
+                    //detail: this.product.fields.Id.value
+                });
+                // Fire the event from c-tile
+                this.dispatchEvent(event);
+                return refreshApex(this.isUserOnboarded);
+            })
+            .catch(error => {
+                this.error = error;
+                const evt = new ShowToastEvent({
+                    title: this.label.Error,
+                    message: error.body.message,
+                    variant: 'error'
+                });
+                this.dispatchEvent(evt);
+            });
+    }
 
-changeUserId(event) {
-    this.userId = event.target.value;
-}
+    toggleNewUser(event) {
+        this.newUser = !this.newUser;
+    }
 
-changeUsername(event) {
-    this.username = event.target.value;
-}
-changePassword(event) {
-    this.password = event.target.value;
-}
- 
+    changeAccountId(event) {
+        this.accountId = event.target.value;
+    }
+
+    changeUsername(event) {
+        this.username = event.target.value;
+    }
+    changePassword(event) {
+        this.password = event.target.value;
+    }
+
 }

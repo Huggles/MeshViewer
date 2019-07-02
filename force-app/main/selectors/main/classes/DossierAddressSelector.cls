@@ -32,7 +32,6 @@ public inherited sharing class DossierAddressSelector extends fflib_SObjectSelec
         // queryFactory.setEnforceFLS(true);
         queryFactory.setCondition('Business_Data__c IN :dossierIdSet');
         queryFactory.setLimit(20);
-        System.debug('SOQL selectByDossierid: ' + queryFactory.toSOQL());
         result = Database.query(queryFactory.toSOQL());
         return result;
     }

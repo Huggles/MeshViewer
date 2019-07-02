@@ -13,7 +13,6 @@ $Lightning.use('cust_connect:PackageConfigApp', function()
         'container',
         function(cmp)
         {
-        console.log('component created');
         }
     );
 });

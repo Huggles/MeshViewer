@@ -7,20 +7,21 @@ public with sharing class BusinessServiceImplTest {
     @isTest
     public static void testGetDossier(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
         mocks.startStubbing();
-        //DutchBusinessDto.DutchBusinessGetDossierRequest requestParams = new DutchBusinessDto.DutchBusinessGetDossierRequest();// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
-        DutchBusinessDto.DutchBusinessGetDossierResponse output = new DutchBusinessDto.DutchBusinessGetDossierResponse();
+        //DutchBusinessWsdl.DutchBusinessGetDossierRequest requestParams = new DutchBusinessWsdl.DutchBusinessGetDossierRequest();// = new DutchBusinessWsdl.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
+        DutchBusinessWsdl.DutchBusinessDossierV3 output = new DutchBusinessWsdl.DutchBusinessDossierV3();
 
-        mocks.when(mockWS.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(output);
+        string dossierNumber = '123';
+        mocks.when(mockWS.dutchBusinessGetDossierV3(dossierNumber, null)).thenReturn(output);
 
         mocks.stopStubbing();
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
+        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
         test.startTest();
-        string dossierNumber = '123';
-        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = (new BusinessServiceImpl()).getDossier(dossierNumber, null);
+
+        DutchBusinessWsdl.DutchBusinessDossierV3 dossier = (new BusinessServiceImpl()).getDossier(dossierNumber, null);
         system.assertNotEquals(null, dossier);
         test.stopTest();
     }
@@ -28,104 +29,61 @@ public with sharing class BusinessServiceImplTest {
     @isTest
     public static void testSearchForDossiers(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
-        mocks.startStubbing();
-        DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams = new DutchBusinessDto.dutchBusinessSearchParametersRequest();
-        searchParams.postcode = '2274NA';
-        DutchBusinessDto.DutchBusinessSearchParametersResponse output = new DutchBusinessDto.DutchBusinessSearchParametersResponse();
-        output.items = new List<DutchBusinessDto.DutchBusinessReference>();
-        DutchBusinessDto.DutchBusinessReference dr = new DutchBusinessDto.DutchBusinessReference();
-        dr.dossier_number = '199';
-        output.items.add(dr);
-        mocks.when(mockWS.dutchBusinessSearchParameters((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenReturn(output);
-        mocks.stopStubbing();
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
-        List<DutchBusinessDto.DutchBusinessReference> results = BusinessService.searchForDossiers(searchParams);
-        system.assertEquals(results.get(0).dossier_number, '199');
-    }
-
-    @isTest
-    public static void testSearchForDossiersThrowCCException(){
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
         mocks.startStubbing();
-        DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams = new DutchBusinessDto.dutchBusinessSearchParametersRequest();
-        searchParams.postcode = '2274NA';
-        DutchBusinessDto.DutchBusinessSearchParametersResponse output = new DutchBusinessDto.DutchBusinessSearchParametersResponse();
-        output.items = new List<DutchBusinessDto.DutchBusinessReference>();
-        DutchBusinessDto.DutchBusinessReference dr = new DutchBusinessDto.DutchBusinessReference();
-        dr.dossier_number = '199';
-        output.items.add(dr);
-        mocks.when(mockWS.dutchBusinessSearchParameters((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CCException());
-        mocks.stopStubbing();
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
-        Test.startTest();
-        {
-            Boolean exceptionThrown = false;
-            try {
-                List<DutchBusinessDto.DutchBusinessReference> results = BusinessService.searchForDossiers(searchParams);
-            } catch (CCException e) {
-                exceptionThrown = true;
-            }
-            System.assert(exceptionThrown);
+        String postCode = '2274NA';
+        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult output1 = new DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult();
+        output1.results = new DutchBusinessWsdl.DutchBusinessReferenceV2Array();
+        output1.results.item = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
+        output1.paging = new DutchBusinessWsdl.ResultInfo();
+        output1.paging.numpages = 2; // to ensure we also hit the paging mechanism
+        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult output2 = new DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult();
+        output2.results = new DutchBusinessWsdl.DutchBusinessReferenceV2Array();
+        output2.results.item = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
+        output2.paging = new DutchBusinessWsdl.ResultInfo();
+        output2.paging.numpages = 2;
+
+        for (Integer i = 0; i < 10; i++) {
+            DutchBusinessWsdl.DutchBusinessReferenceV2 dr1 = new DutchBusinessWsdl.DutchBusinessReferenceV2();
+            dr1.dossier_number = '' + i;
+            output1.results.item.add(dr1);
+            DutchBusinessWsdl.DutchBusinessReferenceV2 dr2 = new DutchBusinessWsdl.DutchBusinessReferenceV2();
+            dr2.dossier_number = '' + i;
+            output2.results.item.add(dr2);
         }
-        Test.stopTest();
-        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
-
-    }
-
-    @isTest
-    public static void testSearchForDossiersThrowException(){
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
-
-        mocks.startStubbing();
-        DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams = new DutchBusinessDto.dutchBusinessSearchParametersRequest();
-        searchParams.postcode = '2274NA';
-        DutchBusinessDto.DutchBusinessSearchParametersResponse output = new DutchBusinessDto.DutchBusinessSearchParametersResponse();
-        output.items = new List<DutchBusinessDto.DutchBusinessReference>();
-        DutchBusinessDto.DutchBusinessReference dr = new DutchBusinessDto.DutchBusinessReference();
-        dr.dossier_number = '199';
-        output.items.add(dr);
-        mocks.when(mockWS.dutchBusinessSearchParameters((DutchBusinessDto.dutchBusinessSearchParametersRequest)fflib_Match.anyObject())).thenThrow(new CustomException());
+        DutchBusinessWsdl.DutchBusinessReferenceV2 dr = new DutchBusinessWsdl.DutchBusinessReferenceV2();
+        mocks.when(mockWS.dutchBusinessSearchParametersV2(null, null, null, postCode,null, null, null, null, false, 1)).thenReturn(output1);
+        mocks.when(mockWS.dutchBusinessSearchParametersV2(null, null, null, postCode,null, null, null, null, false, 2)).thenReturn(output2);
         mocks.stopStubbing();
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
-        Test.startTest();
-        {
-            Boolean exceptionThrown = false;
-            try {
-                List<DutchBusinessDto.DutchBusinessReference> results = BusinessService.searchForDossiers(searchParams);
-            } catch (CCException e) {
-                exceptionThrown = true;
-            }
-            System.assert(exceptionThrown);
-        }
-        Test.stopTest();
-        System.assert([SELECT Id FROM Error_Log__c].size() == 1);
 
+        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
+        List<SearchForDossiersResultDto> results = BusinessService.searchForDossiers(null, null, null, postCode,null, null, null, null, false);
+        System.assertEquals(20, results.size());
     }
 
-    @IsTest static void testUpdateDossiersWithDataVendorDataHappyFlow() {
+
+    @IsTest
+    public static void testUpdateDossiersWithDataVendorDataHappyFlow() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
         String dossierNumber = '1234';
         String establishmentNUmber = '1234';
         Id accountId = null;
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossierOriginal = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossierOriginal = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossierOriginal);
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossierOriginal);
         mocks.stopStubbing();
 
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         // create something we can update
         InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
 
         Test.startTest();
         {
-            DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+            DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
             dataVendorDossier.trade_name_full = 'test'; // not going to change every field since I use a central mapping function also used by insert and thus we tested it already there
             List<Business_Dossier__c> businessDossiers = BusinessService.updateDossiersWithDataVendorData(
                     new List<UpdateDossierRequestDTO>{new UpdateDossierRequestDTO(dataVendorDossier, responseDTO.dossier)});
@@ -141,24 +99,22 @@ public with sharing class BusinessServiceImplTest {
     @IsTest
     public static void testSetVatNumberNoVatKnown() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
-        String dossierNumber = '1234';
-        String establishmentNUmber = '1234';
         Id accountId = null;
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossierOriginal = getDataVendorMockDossier();
-        DutchBusinessDto.DutchBusinessVatNumber vatResponse = new DutchBusinessDto.DutchBusinessVatNumber();
-        vatResponse.dossier_number = '1234';
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossierOriginal = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = new DutchBusinessWsdl.DutchBusinessVatNumber();
+        vatResponse.dossier_number = dataVendorDossierOriginal.dossier_number;
         vatResponse.vat_number = '123456';
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossierOriginal);
-        mocks.when(webserviceMock.businessGetVatNumber((DutchBusinessDto.DutchBusinessGetVatNumberRequest)fflib_Match.anyObject())).thenReturn(vatResponse);
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dataVendorDossierOriginal.dossier_number, dataVendorDossierOriginal.establishment_number)).thenReturn(dataVendorDossierOriginal);
+        mocks.when(webserviceMock.dutchBusinessGetVatNumber(dataVendorDossierOriginal.dossier_number)).thenReturn(vatResponse);
         mocks.stopStubbing();
 
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         // create something we can update
-        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dataVendorDossierOriginal.dossier_number, dataVendorDossierOriginal.establishment_number, accountId);
 
         Test.startTest();
         {
@@ -174,7 +130,7 @@ public with sharing class BusinessServiceImplTest {
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataGotTwoDuplicateAccounts() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness) mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness) mocks.mock(IWsDutchBusiness.class);
         IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService) mocks.mock(IBusinessDuplicateService.class);
 
         String dossierNumber = '1234';
@@ -184,17 +140,16 @@ public with sharing class BusinessServiceImplTest {
             accounts.add(new Account(Name = 'trade_name'));
         }
         insert accounts;
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest) fflib_Match.anyObject())).
-                thenReturn(dataVendorDossier);
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossier);
         mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.eq(new Account(Name = 'trade_name')))).
                 thenReturn(accounts);
         mocks.when(duplicateServiceMock.checkForDuplicateDossiers((List<CheckDuplicateDossierRequest>)fflib_Match.anyObject())).
                 thenReturn(new List<CheckDuplicateDossierResponse>{new CheckDuplicateDossierResponse(dossierNumber, establishmentNUmber, null)});
         mocks.stopStubbing();
 
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
         Application.Service.setMock(IBusinessDuplicateService.class, duplicateServiceMock);
 
         InsertDossiersFromDataVendorResponseDTO responseDTO = null;
@@ -214,22 +169,21 @@ public with sharing class BusinessServiceImplTest {
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataUnexpectedException() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness) mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness) mocks.mock(IWsDutchBusiness.class);
         IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService) mocks.mock(IBusinessDuplicateService.class);
 
         String dossierNumber = '1234';
         String establishmentNUmber = '1234';
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest) fflib_Match.anyObject())).
-                thenReturn(dataVendorDossier);
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossier);
         mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.eq(new Account(Name = 'trade_name')))).
                 thenThrow(new CustomException());
         mocks.when(duplicateServiceMock.checkForDuplicateDossiers((List<CheckDuplicateDossierRequest>)fflib_Match.anyObject())).
                 thenReturn(new List<CheckDuplicateDossierResponse>{new CheckDuplicateDossierResponse(dossierNumber, establishmentNUmber, null)});
         mocks.stopStubbing();
 
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
         Application.Service.setMock(IBusinessDuplicateService.class, duplicateServiceMock);
 
         InsertDossiersFromDataVendorResponseDTO responseDTO = null;
@@ -250,21 +204,20 @@ public with sharing class BusinessServiceImplTest {
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataDossierAlreadyExists() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness) mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness) mocks.mock(IWsDutchBusiness.class);
         IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService) mocks.mock(IBusinessDuplicateService.class);
 
         String dossierNumber = '1234';
         String establishmentNUmber = '1234';
         Business_Dossier__c existingDossier = new Business_Dossier__c(Id = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType));
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest) fflib_Match.anyObject())).
-                thenReturn(dataVendorDossier);
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossier);
         mocks.when(duplicateServiceMock.checkForDuplicateDossiers((List<CheckDuplicateDossierRequest>)fflib_Match.anyObject())).
                 thenReturn(new List<CheckDuplicateDossierResponse>{new CheckDuplicateDossierResponse(dossierNumber, establishmentNUmber, existingDossier)});
         mocks.stopStubbing();
 
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
         Application.Service.setMock(IBusinessDuplicateService.class, duplicateServiceMock);
 
         InsertDossiersFromDataVendorResponseDTO responseDTO = null;
@@ -280,18 +233,18 @@ public with sharing class BusinessServiceImplTest {
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataGotAccount() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness) mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness) mocks.mock(IWsDutchBusiness.class);
 
         String dossierNumber = '1234';
         String establishmentNUmber = '1234';
         Account acc = new Account(Name = 'test');
         insert acc;
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossier);
         mocks.stopStubbing();
 
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         InsertDossiersFromDataVendorResponseDTO responseDTO = null;
         Test.startTest();
@@ -387,10 +340,10 @@ public with sharing class BusinessServiceImplTest {
         System.assert(dossierDB != null);
         System.assert(dossierDB.Account__c == accountDB.Id);
 
-        System.assertEquals(dossierDB.Year__c, 'year');
-        System.assertEquals(dossierDB.Profit__c, 'profit');
-        System.assertEquals(dossierDB.Assets__c, 'assets');
-        System.assertEquals(dossierDB.Turnover__c, 'turnover');
+        System.assertEquals(dossierDB.Year__c, '1900');
+        System.assertEquals(dossierDB.Profit__c, 'EUR 20000');
+        System.assertEquals(dossierDB.Assets__c, 'EUR 200000');
+        System.assertEquals(dossierDB.Turnover__c, 'EUR 1000');
         System.assertEquals(dossierDB.Authorized_Share_Capital__c, 12);
         System.assertEquals(dossierDB.Authorized_Share_Capital_Currency__c, 'USD');
         System.assertEquals(dossierDB.Chamber_Number__c , 1);
@@ -403,16 +356,16 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Contact_Surname__c , 'surname');
         System.assertEquals(dossierDB.Contact_Title1__c , 'title1');
         System.assertEquals(dossierDB.Contact_Title2__c , 'title2');
-        System.assertEquals(dossierDB.Continuation_Date__c , Date.valueOf('2019-2-12'));
-        System.assertEquals(dossierDB.Discontinuation_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Continuation_Date__c , Date.valueOf('2019-2-2'));
+        System.assertEquals(dossierDB.Discontinuation_Date__c , Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Domain_Name__c , 'domain_name');
         System.assertEquals(dossierDB.Dossier_Number__c , '123456');
-        System.assertEquals(dossierDB.Establishment_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Establishment_Date__c , Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Establishment_Number__c , '10');
-        System.assertEquals(dossierDB.Founding_Date__c, Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Founding_Date__c, Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Indication_Main_Establishment__c , true);
         System.assertEquals(dossierDB.Indication_Organisation_Code__c , '10');
-        System.assertEquals(dossierDB.Insolvencies__c , 'insolvencies');
+        //System.assertEquals(dossierDB.Insolvencies__c , 'insolvencies');
         System.assertEquals(dossierDB.Issued_Share_Capital__c , 12334234);
         System.assertEquals(dossierDB.Issued_Share_Capital_Currency__c , 'USD');
         System.assertEquals(dossierDB.Legal_Form_Code__c , 11);
@@ -423,20 +376,23 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Paid_Up_Share_Capital_Currency__c , 'USD');
         System.assertEquals(dossierDB.Personnel__c , 1);
         System.assertEquals(dossierDB.Personnel_CI__c , 1);
-        System.assertEquals(dossierDB.Personnel_CI_Reference_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Personnel_CI_Reference_Date__c , Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Personnel_Fulltime__c , 1);
-        System.assertEquals(dossierDB.Personnel_Reference_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Personnel_Reference_Date__c , Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Primary_Sbi_Code__c , 'sbi');
         System.assertEquals(dossierDB.Primary_Sbi_Code_Text__c , 'sbi_code_text');
         System.assertEquals(dossierDB.Rsin_Number__c , '13');
 
-        List<Business_Data_SBI__c> sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :dossierDB.Id LIMIT 1];
-        System.assert(sbi.size() == 1);
-        if (sbi.size() > 0) {
-            System.assertEquals(sbi[0].SBI_Type__c, 'original');
-            System.assertEquals(sbi[0].SBI_Description__c, 'desc');
-            System.assertEquals(sbi[0].SBI_Code__c , '11');
-        }
+        List<Business_Data_SBI__c> sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :dossierDB.Id];
+        System.assert(sbi.size() == 10);
+//        for (Business_Data_SBI__c businessDataSBI : sbi) {
+//            System.assert(businessDataSBI.);
+//        }
+//        if (sbi.size() > 0) {
+//            System.assertEquals(sbi[0].SBI_Type__c, 'original');
+//            System.assertEquals(sbi[0].SBI_Description__c, 'o0');
+//            System.assertEquals(sbi[0].SBI_Code__c , 'o0');
+//        }
 
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1__c , 'sbi');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
@@ -458,43 +414,41 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Indication_Main_Establishment__c , true);
         System.assertEquals(dossierDB.Indication_Non_Mailing__c , false);
 
-        Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Correspondence' LIMIT 1];
+        Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Correspondence'];
 
-        System.assertEquals(cAddress.Name, 'correspondence_address.original.postcode correspondence_address.original.street');
-        System.assertEquals(cAddress.Postcode__c, 'correspondence_address.original.postcode');
-        System.assertEquals(cAddress.Country__c, 'correspondence_address.original.country');
-        System.assertEquals(cAddress.City__c, 'correspondence_address.original.city');
-        System.assertEquals(cAddress.Street__c, 'correspondence_address.original.street');
-        System.assertEquals(cAddress.House_Number_Addition__c, 'correspondence_address.original.house_number_addition');
-        System.assertEquals(cAddress.House_Number__c, '1');
+        System.assertEquals(cAddress.Name, '3533AX street');
+        System.assertEquals(cAddress.Postcode__c, '3533AX');
+        System.assertEquals(cAddress.Country__c, 'NL');
+        System.assertEquals(cAddress.City__c, 'city');
+        System.assertEquals(cAddress.Street__c, 'street');
+        System.assertEquals(cAddress.House_Number_Addition__c, 'a');
+        System.assertEquals(cAddress.House_Number__c, '10');
 
-        Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment' LIMIT 1];
-        System.debug(eAddress.Name);
-        System.assertEquals(eAddress.Name, 'establishment_address.original.postcode establishment_address.original.street');
-        System.assertEquals(eAddress.Postcode__c, 'establishment_address.original.postcode');
-        System.assertEquals(eAddress.Country__c, 'establishment_address.original.country');
-        System.assertEquals(eAddress.City__c, 'establishment_address.original.city');
-        System.assertEquals(eAddress.Street__c, 'establishment_address.original.street');
-        System.assertEquals(eAddress.House_Number_Addition__c, 'establishment_address.original.house_number_addition');
-        System.assertEquals(eAddress.House_Number__c, '2');
-
+        Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment'];
+        System.assertEquals(eAddress.Name, '3533AX street');
+        System.assertEquals(eAddress.Postcode__c, '3533AX');
+        System.assertEquals(eAddress.Country__c, 'NL');
+        System.assertEquals(eAddress.City__c, 'city');
+        System.assertEquals(eAddress.Street__c, 'street');
+        System.assertEquals(eAddress.House_Number_Addition__c, 'a');
+        System.assertEquals(eAddress.House_Number__c, '10');
 
     }
 
     @IsTest
     public static void testDeleteDossierHappyScenario() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
         String dossierNumber = '1234';
         String establishmentNUmber = '1234';
         Id accountId = null;
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossier);
         mocks.stopStubbing();
 
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
         Test.startTest();
@@ -512,17 +466,17 @@ public with sharing class BusinessServiceImplTest {
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataNoAccountId() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
         String dossierNumber = '1234';
         String establishmentNUmber = '1234';
         Id accountId = null;
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossier);
         mocks.stopStubbing();
 
-        Application.Service.setMock(IWebServicesNLSOAPDutchBusiness.class, webserviceMock);
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         InsertDossiersFromDataVendorResponseDTO responseDTO = null;
         Test.startTest();
@@ -617,10 +571,10 @@ public with sharing class BusinessServiceImplTest {
         System.assert(dossierDB != null);
         System.assert(dossierDB.Account__c == accountDB.Id);
 
-        System.assertEquals(dossierDB.Year__c, 'year');
-        System.assertEquals(dossierDB.Profit__c, 'profit');
-        System.assertEquals(dossierDB.Assets__c, 'assets');
-        System.assertEquals(dossierDB.Turnover__c, 'turnover');
+        System.assertEquals(dossierDB.Year__c, '1900');
+        System.assertEquals(dossierDB.Profit__c, 'EUR 20000');
+        System.assertEquals(dossierDB.Assets__c, 'EUR 200000');
+        System.assertEquals(dossierDB.Turnover__c, 'EUR 1000');
         System.assertEquals(dossierDB.Authorized_Share_Capital__c, 12);
         System.assertEquals(dossierDB.Authorized_Share_Capital_Currency__c, 'USD');
         System.assertEquals(dossierDB.Chamber_Number__c , 1);
@@ -633,16 +587,16 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Contact_Surname__c , 'surname');
         System.assertEquals(dossierDB.Contact_Title1__c , 'title1');
         System.assertEquals(dossierDB.Contact_Title2__c , 'title2');
-        System.assertEquals(dossierDB.Continuation_Date__c , Date.valueOf('2019-2-12'));
-        System.assertEquals(dossierDB.Discontinuation_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Continuation_Date__c , Date.valueOf('2019-2-2'));
+        System.assertEquals(dossierDB.Discontinuation_Date__c , Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Domain_Name__c , 'domain_name');
         System.assertEquals(dossierDB.Dossier_Number__c , '123456');
-        System.assertEquals(dossierDB.Establishment_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Establishment_Date__c , Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Establishment_Number__c , '10');
-        System.assertEquals(dossierDB.Founding_Date__c, Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Founding_Date__c, Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Indication_Main_Establishment__c , true);
         System.assertEquals(dossierDB.Indication_Organisation_Code__c , '10');
-        System.assertEquals(dossierDB.Insolvencies__c , 'insolvencies');
+        //System.assertEquals(dossierDB.Insolvencies__c , 'insolvencies');
         System.assertEquals(dossierDB.Issued_Share_Capital__c , 12334234);
         System.assertEquals(dossierDB.Issued_Share_Capital_Currency__c , 'USD');
         System.assertEquals(dossierDB.Legal_Form_Code__c , 11);
@@ -653,20 +607,23 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Paid_Up_Share_Capital_Currency__c , 'USD');
         System.assertEquals(dossierDB.Personnel__c , 1);
         System.assertEquals(dossierDB.Personnel_CI__c , 1);
-        System.assertEquals(dossierDB.Personnel_CI_Reference_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Personnel_CI_Reference_Date__c , Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Personnel_Fulltime__c , 1);
-        System.assertEquals(dossierDB.Personnel_Reference_Date__c , Date.valueOf('2019-2-12'));
+        System.assertEquals(dossierDB.Personnel_Reference_Date__c , Date.valueOf('2019-2-2'));
         System.assertEquals(dossierDB.Primary_Sbi_Code__c , 'sbi');
         System.assertEquals(dossierDB.Primary_Sbi_Code_Text__c , 'sbi_code_text');
         System.assertEquals(dossierDB.Rsin_Number__c , '13');
 
-        List<Business_Data_SBI__c> sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :dossierDB.Id LIMIT 1];
-        System.assert(sbi.size() == 1);
-        if (sbi.size() > 0) {
-            System.assertEquals(sbi[0].SBI_Type__c, 'original');
-            System.assertEquals(sbi[0].SBI_Description__c, 'desc');
-            System.assertEquals(sbi[0].SBI_Code__c , '11');
-        }
+        List<Business_Data_SBI__c> sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :dossierDB.Id];
+        System.assert(sbi.size() == 10);
+//        for (Business_Data_SBI__c businessDataSBI : sbi) {
+//            System.assert(businessDataSBI.);
+//        }
+//        if (sbi.size() > 0) {
+//            System.assertEquals(sbi[0].SBI_Type__c, 'original');
+//            System.assertEquals(sbi[0].SBI_Description__c, 'o0');
+//            System.assertEquals(sbi[0].SBI_Code__c , 'o0');
+//        }
 
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1__c , 'sbi');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
@@ -688,43 +645,42 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Indication_Main_Establishment__c , true);
         System.assertEquals(dossierDB.Indication_Non_Mailing__c , false);
 
-         Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Correspondence' LIMIT 1];
+         Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Correspondence'];
+        
+         System.assertEquals(cAddress.Name, '3533AX street');
+         System.assertEquals(cAddress.Postcode__c, '3533AX');
+         System.assertEquals(cAddress.Country__c, 'NL');
+         System.assertEquals(cAddress.City__c, 'city');
+         System.assertEquals(cAddress.Street__c, 'street');
+         System.assertEquals(cAddress.House_Number_Addition__c, 'a');
+         System.assertEquals(cAddress.House_Number__c, '10');
 
-         System.assertEquals(cAddress.Name, 'correspondence_address.original.postcode correspondence_address.original.street');
-         System.assertEquals(cAddress.Postcode__c, 'correspondence_address.original.postcode');
-         System.assertEquals(cAddress.Country__c, 'correspondence_address.original.country');
-         System.assertEquals(cAddress.City__c, 'correspondence_address.original.city');
-         System.assertEquals(cAddress.Street__c, 'correspondence_address.original.street');
-         System.assertEquals(cAddress.House_Number_Addition__c, 'correspondence_address.original.house_number_addition');
-         System.assertEquals(cAddress.House_Number__c, '1');
-
-         Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment' LIMIT 1];
-        System.debug(eAddress.Name);
-        System.assertEquals(eAddress.Name, 'establishment_address.original.postcode establishment_address.original.street');
-         System.assertEquals(eAddress.Postcode__c, 'establishment_address.original.postcode');
-         System.assertEquals(eAddress.Country__c, 'establishment_address.original.country');
-         System.assertEquals(eAddress.City__c, 'establishment_address.original.city');
-         System.assertEquals(eAddress.Street__c, 'establishment_address.original.street');
-         System.assertEquals(eAddress.House_Number_Addition__c, 'establishment_address.original.house_number_addition');
-         System.assertEquals(eAddress.House_Number__c, '2');
+         Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment'];
+        System.assertEquals(eAddress.Name, '3533AX street');
+        System.assertEquals(eAddress.Postcode__c, '3533AX');
+        System.assertEquals(eAddress.Country__c, 'NL');
+        System.assertEquals(eAddress.City__c, 'city');
+        System.assertEquals(eAddress.Street__c, 'street');
+        System.assertEquals(eAddress.House_Number_Addition__c, 'a');
+        System.assertEquals(eAddress.House_Number__c, '10');
         
     }
 
 //    @IsTest
 //    public static void testInsertAccountHappyFlow() {
 //        fflib_ApexMocks mocks = new fflib_ApexMocks();
-//        IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+//        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 //        IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService)mocks.mock(IBusinessDuplicateService.class);
 //
 //        mocks.startStubbing();
-//        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
-//        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+//        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
+//        mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessWsdl.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
 //        mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(new List<Account>());
 //        mocks.stopStubbing();
 //
 //        Test.startTest();
 //        {
-//            List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier});
+//            List<InsertAccountResponseDTO> responseDTOS = BusinessService.insertAccount(new List<DutchBusinessWsdl.DutchBusinessDossierV3>{dataVendorDossier});
 //            System.assert(responseDTOS.size() == 1);
 //            for (InsertAccountResponseDTO insertAccountResponseDTO : responseDTOS) {
 //                System.assert(insertAccountResponseDTO.account != null);
@@ -738,10 +694,10 @@ public with sharing class BusinessServiceImplTest {
     public static void testInsertAccountHappyFlow() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         Test.startTest();
         {
-            List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWorkMock);
+            List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessWsdl.DutchBusinessDossierV3>{dataVendorDossier}, unitOfWorkMock);
             System.assert(responseDTOS.size() == 1);
             for (InsertAccountResponseDTO insertAccountResponseDTO : responseDTOS) {
                 System.assert(insertAccountResponseDTO.account != null);
@@ -754,17 +710,17 @@ public with sharing class BusinessServiceImplTest {
     @IsTest
     public static void testInsertAccountTwoAccounts() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        // IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        // IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
         IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService)mocks.mock(IBusinessDuplicateService.class);
         fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
 
         mocks.startStubbing();
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         List<Account> accounts = new List<Account>();
         for (Integer i = 0; i < 5; i++) {
             accounts.add(new Account(Name = 'test', Id = fflib_IDGenerator.generate(Account.SObjectType)));
         }
-        // mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        // mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessWsdl.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
         mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(accounts);
        // mocks.when(unitOfWorkMock.commitWork()).thenThrow(new DMLManager.CRUDException());
         // ((fflib_ISObjectUnitOfWork)mocks.doThrowWhen(new DMLManager.CRUDException(), unitOfWorkMock)).commitWork();
@@ -777,7 +733,7 @@ public with sharing class BusinessServiceImplTest {
         {
             Boolean exceptionThrown = false;
             try {
-                List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWorkMock);
+                List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessWsdl.DutchBusinessDossierV3>{dataVendorDossier}, unitOfWorkMock);
             } catch (CCDuplicateException e) {
                 exceptionThrown = true;
             }
@@ -789,17 +745,17 @@ public with sharing class BusinessServiceImplTest {
     @IsTest
     public static void testInsertAccountOneDuplicateAccount() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        // IWebServicesNLSOAPDutchBusiness webserviceMock = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        // IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
         IBusinessDuplicateService duplicateServiceMock = (IBusinessDuplicateService)mocks.mock(IBusinessDuplicateService.class);
         fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
 
         mocks.startStubbing();
-        DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
         List<Account> accounts = new List<Account>();
         for (Integer i = 0; i < 1; i++) {
             accounts.add(new Account(Name = 'test', Id = fflib_IDGenerator.generate(Account.SObjectType)));
         }
-        // mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessDto.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
+        // mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessWsdl.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
         mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(accounts);
         // mocks.when(unitOfWorkMock.commitWork()).thenThrow(new DMLManager.CRUDException());
         // ((fflib_ISObjectUnitOfWork)mocks.doThrowWhen(new DMLManager.CRUDException(), unitOfWorkMock)).commitWork();
@@ -810,7 +766,7 @@ public with sharing class BusinessServiceImplTest {
 
         Test.startTest();
         {
-            List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWorkMock);
+            List<InsertAccountResponseDTO> responseDTOS = (new BusinessServiceImpl()).insertAccount(new List<DutchBusinessWsdl.DutchBusinessDossierV3>{dataVendorDossier}, unitOfWorkMock);
             System.assert(responseDTOS.size() == 1);
             System.assert(responseDTOS.get(0).account == accounts.get(0));
         }
@@ -819,14 +775,14 @@ public with sharing class BusinessServiceImplTest {
 
 
 
-    private static DutchBusinessDto.DutchBusinessGetDossierResponse getDataVendorMockDossier() {
-        DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
+    private static DutchBusinessWsdl.DutchBusinessDossierV3 getDataVendorMockDossier() {
+        DutchBusinessWsdl.DutchBusinessDossierV3 InputDossier = new DutchBusinessWsdl.DutchBusinessDossierV3();
 
-        InputDossier.annual_financial_statement_summary = 'summary';
-        InputDossier.annual_financial_statement_summary_year = 'year';
-        InputDossier.annual_financial_statement_summary_profit = 'profit';
-        InputDossier.annual_financial_statement_summary_turnover = 'turnover';
-        InputDossier.annual_financial_statement_summary_assets = 'assets';
+        InputDossier.annual_financial_statement_summary = new DutchBusinessWsdl.DutchBusinessAnnualFinancialStatementSummary();
+        InputDossier.annual_financial_statement_summary.year = 1900;
+        InputDossier.annual_financial_statement_summary.profit = newMoneyInstance(20000, 'EUR');
+        InputDossier.annual_financial_statement_summary.turnover = newMoneyInstance(1000, 'EUR');
+        InputDossier.annual_financial_statement_summary.assets =  newMoneyInstance(200000, 'EUR');
         InputDossier.authorized_share_capital = 12;
         InputDossier.authorized_share_capital_currency = 'USD';
         InputDossier.chamber_number = '01';
@@ -839,13 +795,14 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.contact_surname = 'surname';
         InputDossier.contact_title1 = 'title1';
         InputDossier.contact_title2 = 'title2';
-        InputDossier.continuation_date = Date.valueOf('2019-2-12');
-        InputDossier.discontinuation_date = Date.valueOf('2019-2-12');
+
+        InputDossier.continuation_date = newDateInstance(2019, 2, 2);
+        InputDossier.discontinuation_date = newDateInstance(2019,2,2);
         InputDossier.domain_name = 'domain_name';
         InputDossier.dossier_number = '123456';
-        InputDossier.establishment_date = Date.valueOf('2019-2-12');
+        InputDossier.establishment_date = newDateInstance(2019, 2, 2);
         InputDossier.establishment_number = '10';
-        InputDossier.founding_date = Date.valueOf('2019-2-12');
+        InputDossier.founding_date = newDateInstance(2019, 2, 2);
         InputDossier.indication_bankruptcy = false;
         InputDossier.indication_dip = false;
         InputDossier.indication_economically_active = false;
@@ -854,7 +811,8 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.indication_main_establishment = false;
         InputDossier.indication_main_establishment = true;
         InputDossier.indication_non_mailing = false;
-        InputDossier.insolvencies = 'insolvencies';
+        // TODO: setup insolvencies
+        // InputDossier.insolvencies = 'insolvencies';
         InputDossier.issued_share_capital_currency = 'USD';
         InputDossier.issued_share_capital = 12334234;
         InputDossier.legal_form_text = 'legal_form';
@@ -864,17 +822,26 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.paid_up_share_capital = 12334234;
         InputDossier.personnel = 1;
         InputDossier.personnel_ci = 1;
-        InputDossier.personnel_ci_reference_date = Date.valueOf('2019-2-12');
+        InputDossier.personnel_ci_reference_date = newDateInstance(2019, 2, 2);
         InputDossier.personnel_fulltime = 1;
-        InputDossier.personnel_reference_date = Date.valueOf('2019-2-12');
+        InputDossier.personnel_reference_date = newDateInstance(2019, 2, 2);
         InputDossier.primary_sbi_code = 'sbi';
         InputDossier.primary_sbi_code_text = 'sbi_code_text';
-        Business_Data_SBI__c s1 = new Business_Data_SBI__c(SBI_Type__c = 'original', SBI_Description__c = 'desc', SBI_Code__c = '11');
-        InputDossier.sbi_collection = new List<Business_Data_SBI__c>{s1};
-        InputDossier.structure = 'structure';
-        InputDossier.structure_number_of_subsidiaries = '1';
-        InputDossier.structure_parent = '123';
-        InputDossier.structure_ultimate_parent = '1122';
+
+        InputDossier.sbi_collection = new DutchBusinessWsdl.DutchBusinessSBICollection();
+        InputDossier.sbi_collection.original = new DutchBusinessWsdl.DutchBusinessSBICodeArray();
+        InputDossier.sbi_collection.company_info = new DutchBusinessWsdl.DutchBusinessSBICodeArray();
+        InputDossier.sbi_collection.original.item = new List<DutchBusinessWsdl.DutchBusinessSBICode>();
+        InputDossier.sbi_collection.company_info.item = new List<DutchBusinessWsdl.DutchBusinessSBICode>();
+        for (Integer i = 0; i < 5; i++) {
+            InputDossier.sbi_collection.original.item.add(newSBICodeInstance('o' + i, 'o' + i));
+            InputDossier.sbi_collection.original.item.add(newSBICodeInstance('c' + i, 'c' + i));
+        }
+
+        InputDossier.structure = new DutchBusinessWsdl.DutchBusinessStructure();
+        InputDossier.structure.number_of_subsidiaries = 1;
+        InputDossier.structure.parent = '123';
+        InputDossier.structure.ultimate_parent = '1122';
         InputDossier.telephone_number = '12334234';
         InputDossier.trade_name_full = 'trade_name';
         InputDossier.indication_organisation_code = '10';
@@ -886,23 +853,69 @@ public with sharing class BusinessServiceImplTest {
         InputDossier.secondary_sbi_code2 = 'sbis2';
         InputDossier.secondary_sbi_code2_text = 'secondary_sbi_code2_text';
         InputDossier.trade_name_45 = '14';
-        InputDossier.trade_names = new list<String>{'Test', 'Test2', 'Test3'};
-        InputDossier.correspondence_address_original_address = 'correspondence_address.original.address';
-        InputDossier.correspondence_address_original_postcode = 'correspondence_address.original.postcode';
-        InputDossier.correspondence_address_original_street = 'correspondence_address.original.street';
-        InputDossier.correspondence_address_original_house_number = 1;
-        InputDossier.correspondence_address_original_house_number_addition = 'correspondence_address.original.house_number_addition';
-        InputDossier.correspondence_address_original_city = 'correspondence_address.original.city';
-        InputDossier.correspondence_address_original_country = 'correspondence_address.original.country';
-        InputDossier.establishment_address_original_address = 'establishment_address.original.address';
-        InputDossier.establishment_address_original_postcode = 'establishment_address.original.postcode';
-        InputDossier.establishment_address_original_street = 'establishment_address.original.street';
-        InputDossier.establishment_address_original_house_number = 2;
-        InputDossier.establishment_address_original_house_number_addition = 'establishment_address.original.house_number_addition';
-        InputDossier.establishment_address_original_city = 'establishment_address.original.city';
-        InputDossier.establishment_address_original_country = 'establishment_address.original.country';
+        InputDossier.trade_names = new DutchBusinessWsdl.stringArray();
+        InputDossier.trade_names.item = new List<String>();
+        InputDossier.trade_names.item.add('trade1');
+        InputDossier.trade_names.item.add('trade2');
+        InputDossier.correspondence_address = newFormattedAddress('address', 'city', 'NL', 'street', 10, '3533AX', 'a');
+        InputDossier.establishment_address = newFormattedAddress('address', 'city', 'NL', 'street', 10, '3533AX', 'a');
         return InputDossier;
     }
+
+    private static DutchBusinessWsdl.DutchBusinessMoneyV2 newMoneyInstance(Integer amount, String currencyCode) {
+        DutchBusinessWsdl.DutchBusinessMoneyV2 returnValue = new DutchBusinessWsdl.DutchBusinessMoneyV2();
+        returnValue.amount = amount;
+        returnValue.currency_x = currencyCode;
+        returnValue.formatted = currencyCode + ' ' + amount;
+        return returnValue;
+    }
+
+    private static DutchBusinessWsdl.DutchBusinessDateV3 newDateInstance(Integer year, Integer month, Integer day) {
+        DutchBusinessWsdl.DutchBusinessDateV3 returnValue = new DutchBusinessWsdl.DutchBusinessDateV3();
+        returnValue.day = day;
+        returnValue.month = month;
+        returnValue.year = year;
+        return returnValue;
+    }
+
+    private static DutchBusinessWsdl.DutchBusinessSBICode newSBICodeInstance(String code, String description) {
+        DutchBusinessWsdl.DutchBusinessSBICode returnValue = new DutchBusinessWsdl.DutchBusinessSBICode();
+        returnValue.sbi_code = code;
+        returnValue.description = description;
+        return returnValue;
+    }
+
+    private static DutchBusinessWsdl.DutchBusinessFormattedAddress newFormattedAddress(String address, String city, String country, String street, Integer houseNumber, String postCode, String houseNumberAddition) {
+        DutchBusinessWsdl.DutchBusinessFormattedAddress returnValue = new DutchBusinessWsdl.DutchBusinessFormattedAddress();
+        returnValue.original = new DutchBusinessWsdl.DutchBusinessAddressV3();
+        returnValue.formatted = new DutchBusinessWsdl.DutchBusinessAddressV3();
+        returnValue.official = new DutchBusinessWsdl.DutchBusinessAddressV3();
+        returnValue.original.address = address;
+        returnValue.formatted.address = address;
+        returnValue.official.address = address;
+        returnValue.original.city = city;
+        returnValue.formatted.city = city;
+        returnValue.official.city = city;
+        returnValue.original.country = country;
+        returnValue.formatted.country = country;
+        returnValue.official.country = country;
+        returnValue.original.street = street;
+        returnValue.official.street = street;
+        returnValue.formatted.street = street;
+        returnValue.original.house_number = houseNumber;
+        returnValue.official.house_number = houseNumber;
+        returnValue.formatted.house_number = houseNumber;
+        returnValue.original.house_number_addition = houseNumberAddition;
+        returnValue.official.house_number_addition = houseNumberAddition;
+        returnValue.formatted.house_number_addition = houseNumberAddition;
+        returnValue.original.postcode = postCode;
+        returnValue.official.postcode = postCode;
+        returnValue.formatted.postcode = postCode;
+        return returnValue;
+    }
+
+
+
 
 /*
     @isTest
@@ -912,13 +925,13 @@ public with sharing class BusinessServiceImplTest {
         IBusinessDossierSelector selectorMockDossier = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
         IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
         // ISbiCodeSelector selectorMockSbiCode = (ISbiCodeSelector)mocks.mock(ISbiCodeSelector.class);
-        // IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        // IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
         mocks.startStubbing();
 
         //Account ExistingAccount = new Account(Id=fflib_IDGenerator.generate(Account.SObjectType), Name='Test');
         //Business_Dossier__c ExistingDossier = new Business_Dossier__c(Id=fflib_IDGenerator.generate(Business_Dossier__c.SObjectType), Name='Test', Dossier_Number__c='123456');
-        DutchBusinessDto.DutchBusinessGetDossierResponse InputDossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
+        DutchBusinessWsdl.DutchBusinessDossierV3 InputDossier = new DutchBusinessWsdl.DutchBusinessDossierV3();
 
         InputDossier.annual_financial_statement_summary = 'summary';
         InputDossier.annual_financial_statement_summary_year = 'year';
@@ -1112,8 +1125,8 @@ public with sharing class BusinessServiceImplTest {
 
 
 /*
-    //DutchBusinessDto.DutchBusinessGetDossierResponse dossier
-    public static list<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId){
+    //DutchBusinessWsdl.DutchBusinessDossierV3 dossier
+    public static list<Object> upsertAccountAndDossier(DutchBusinessWsdl.DutchBusinessDossierV3 dossier, String accountId){
         
         try{
             list<Object> result = new list<Object>();
@@ -1150,7 +1163,7 @@ public with sharing class BusinessServiceImplTest {
     // public static void testGetDossierAccount(){
     //     fflib_ApexMocks mocks = new fflib_ApexMocks();
     //     //fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-    //     //IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+    //     //IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
     //     IBusinessDossierSelector selectorMockDossier = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
     //     IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
     //     // Given
@@ -1177,7 +1190,7 @@ public with sharing class BusinessServiceImplTest {
     //     //Application.UnitOfWork.setMock(uowMock);
     //     Application.Selector.setMock(selectorMockAccount);
     //     Application.Selector.setMock(selectorMockDossier);
-    //     //Application.service.setMock(IWebServicesNLSOAPDutchBusiness.class, mockWS);
+    //     //Application.service.setMock(IWsDutchBusiness.class, mockWS);
     //     test.startTest();
     //     //IBusinessService service = BusinessService.newInstance();
     //     Account result = BusinessService.getDossierAccount(String.valueOf(dossierNumber));
@@ -1190,13 +1203,13 @@ public with sharing class BusinessServiceImplTest {
     public static void testCreateAccountForDossierNewAccountNoDups(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-        //IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        //IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
         IBusinessDossierSelector selectorMockDossier = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
         IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
     // Given
         mocks.startStubbing();
-        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dossier = new DutchBusinessWsdl.DutchBusinessDossierV3();
         dossier.trade_name_full = 'test';
         String accountId = '';
         list<String> output = new list<String>();
@@ -1204,7 +1217,7 @@ public with sharing class BusinessServiceImplTest {
         acc.Name = dossier.trade_name_full;
         
         //mocks.when(mockService.checkForAccountDuplicates((Account)fflib_Match.anyObject())).thenReturn(output);
-        //mocks.when(mockService.createAccountForDossier(accountId, (DutchBusinessDto.DutchBusinessGetDossierResponse)fflib_Match.anyObject(), uowMock)).thenCallRealMethod();
+        //mocks.when(mockService.createAccountForDossier(accountId, (DutchBusinessWsdl.DutchBusinessDossierV3)fflib_Match.anyObject(), uowMock)).thenCallRealMethod();
 
         mocks.stopStubbing();
         Application.service.setMock(IBusinessService.class, mockService);
@@ -1212,8 +1225,8 @@ public with sharing class BusinessServiceImplTest {
 
 
         Account result = BusinessService.createAccountForDossier(accountId, dossier, uowMock);
-        system.debug('result = ' + result);
-        system.debug('acc = ' + acc);
+
+
         test.stopTest();
         system.assertEquals(result.name, acc.Name);
     }
@@ -1221,13 +1234,13 @@ public with sharing class BusinessServiceImplTest {
     public static void testCreateAccountForDossierNewAccountWithDuplist(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         fflib_ISObjectUnitOfWork uowMock = new fflib_SObjectMocks.SObjectUnitOfWork(mocks);
-        //IWebServicesNLSOAPDutchBusiness mockWS = (IWebServicesNLSOAPDutchBusiness)mocks.mock(IWebServicesNLSOAPDutchBusiness.class);
+        //IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
         IBusinessDossierSelector selectorMockDossier = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);// new Mocks.DutchBusinessDossierSelector(mocks);
         IAccountSelector selectorMockAccount = (IAccountSelector)mocks.mock(IAccountSelector.class); //new Mocks.DutchBusinessDossierSelector(mocks);
     // Given
         mocks.startStubbing();
-        DutchBusinessDto.DutchBusinessGetDossierResponse dossier = new DutchBusinessDto.DutchBusinessGetDossierResponse();
+        DutchBusinessWsdl.DutchBusinessDossierV3 dossier = new DutchBusinessWsdl.DutchBusinessDossierV3();
         dossier.trade_name_full = 'test';
         String accountId = '';
         list<String> output = new list<String>();

@@ -1,31 +1,30 @@
 /****************************************************************************************
-Author          : ValerijsProkudins
+Author          : Jaap Branderhorst
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
 public with sharing class BusinessServiceImpl implements IBusinessService {
 
-    // TODO: implement a proper DTO so the dependency on CI is removed
-    public static List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams){
+    public static final Integer MAX_SEARCH_RESULTS = 1000;
+
+    public static List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         // Handle valid postcodes that the web service does not like
-        if (searchParams.postcode != null){ // fix for postal code
-            searchParams.postcode = searchParams.postcode.replaceAll('(\\s+)', '').toUpperCase();
+        if (postcode != null){ // fix for postal code
+            postcode = postcode.replaceAll('(\\s+)', '').toUpperCase();
         }
 
-        IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
-        List<DutchBusinessDto.DutchBusinessReference> searchResults;
-        try{
-            DutchBusinessDto.DutchBusinessSearchParametersResponse returnedResults = service.dutchBusinessSearchParameters(searchParams);
-            if(returnedResults != null && returnedResults.items != null && returnedResults.items.size()>0){
-                searchResults=returnedResults.items;
-            }
-            //return parsed result
-            return searchResults;
-        }catch(CCException ex){
-            throw ex; // we dont log bds exceptions, only throwing them further
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            throw new CCException(System.Label.DBSCall_Unknown_Exception, ex);
+        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
+        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, 1);
+        searchResults.addAll(returnedResults.results.item);
+        Integer numPages = returnedResults.paging.numpages;
+        for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
+            returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, i);
+            searchResults.addAll(returnedResults.results.item);
         }
+        List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
+        for (DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2 : searchResults) {
+            returnValue.add(new SearchForDossiersResultDto(dutchBusinessReferenceV2));
+        }
+        return returnValue;
     }
 
 
@@ -52,13 +51,11 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         } else { // no duplicate, we need to insert the dossier
             try {
                 // get the dossier from the datavendor
-                DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier = getDossier(dossierNumber, establishmentNumber);
+                DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDossier(dossierNumber, establishmentNumber);
 
                 // create an account if the account id is null
                 if (accountId == null) {
-                    List<InsertAccountResponseDTO> accountResponseDTOS = insertAccount(new List<DutchBusinessDto.DutchBusinessGetDossierResponse>{dataVendorDossier}, unitOfWork);
-                    // since somebody thought of let's have a circular relationship between dossier and account, we need to commit the work up until now
-                    // or we don't have an id on the account and cannot create the other side of the relationship when we insert the dossier
+                    List<InsertAccountResponseDTO> accountResponseDTOS = insertAccount(new List<DutchBusinessWsdl.DutchBusinessDossierV3>{dataVendorDossier}, unitOfWork);
                     account = accountResponseDTOS.get(0).account;
                 } else {
                     List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
@@ -118,14 +115,8 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
         // if no vat number in the db, get it from the data vendor
         if (String.isEmpty(vatNumber)) { // no VAT number for any other dossier in the database
-            DutchBusinessDto.DutchBusinessGetVatNumberRequest vatRequest = new DutchBusinessDto.DutchBusinessGetVatNumberRequest();
-            vatRequest.dossier_number = dossierDB.Dossier_Number__c;
-            DutchBusinessDto.DutchBusinessVatNumber vatResponse = WebServicesNLSOAPDutchBusiness.newInstance().businessGetVatNumber(vatRequest);
-            if (String.isEmpty(vatResponse.vat_number)) {
-                throw new CCVatNotFoundException(Label.VAT_Not_Found);
-            } else {
-                vatNumber = vatResponse.vat_number;
-            }
+            DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = WsDutchBusiness.dutchBusinessGetVatNumber(dossierDB.Dossier_Number__c);
+            vatNumber = vatResponse.vat_number;
         }
 
         // update the dossier with the vatnumber
@@ -142,9 +133,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
      **************/
 
     @TestVisible
-    private List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers, fflib_ISObjectUnitOfWork unitOfWork) {
+    private List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessWsdl.DutchBusinessDossierV3> dataVendorDossiers, fflib_ISObjectUnitOfWork unitOfWork) {
         List<InsertAccountResponseDTO> responses = new List<InsertAccountResponseDTO>();
-        for (DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier : dataVendorDossiers) {
+        for (DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier : dataVendorDossiers) {
             Account account = mapDataVendorToAccount(dataVendorDossier, new Account());
             // TODO: make this bulkified and move it outside of the loop
             List<Account> duplicateAccounts = BusinessDuplicateService.checkForAccountDuplicates(account);
@@ -162,7 +153,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return responses;
     }
 
-    private Account mapDataVendorToAccount(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Account account) {
+    private Account mapDataVendorToAccount(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Account account) {
         account.Name = dataVendorDossier.trade_name_full;
         return account;
     }
@@ -222,30 +213,30 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
     }
 
-    private Business_Dossier__c mapDataVendorDataToDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Business_Dossier__c dossierDB) {
+    private Business_Dossier__c mapDataVendorDataToDossier(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Business_Dossier__c dossierDB) {
         String trade_names = '';
         // TODO: move this to a list of tradelist (seperate sObject)
-        if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.size() > 0) {
+        if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.item != null && dataVendorDossier.trade_names.item.size() > 0) {
             // Condense all trade names into single field, seperated by new lines.
-            for (Integer i = 0; i < dataVendorDossier.trade_names.size(); i++) {
-                trade_names += dataVendorDossier.trade_names[i] + (i == dataVendorDossier.trade_names.size()-1 ? '' : ', ');
+            for (Integer i = 0; i < dataVendorDossier.trade_names.item.size(); i++) {
+                trade_names += dataVendorDossier.trade_names.item[i] + (i == dataVendorDossier.trade_names.item.size()-1 ? '' : ', ');
             }
             dossierDB.Trade_Names__c = trade_names;
         }
         if(dataVendorDossier.legal_name != null && dataVendorDossier.legal_name != ''){
-            dossierDB.Name = dataVendorDossier.legal_name;//dataVendorDossier.legal_name;
+            dossierDB.Name = dataVendorDossier.legal_name;
         }else{
-            dossierDB.Name = dataVendorDossier.trade_name_full;//dataVendorDossier.legal_name;
+            dossierDB.Name = dataVendorDossier.trade_name_full;
         }
         dossierDB.Dossier_Number__c = dataVendorDossier.dossier_number;
         dossierDB.Establishment_Number__c = dataVendorDossier.establishment_number;
         dossierDB.Main_Establishment_Number__c = dataVendorDossier.main_establishment_number;
-        dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment; //convertToBoolean(dataVendorDossier.indication_main_establishment);
+        dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;
         dossierDB.Rsin_Number__c = String.valueOf(dataVendorDossier.rsin_number);
         dossierDB.Chamber_Number__c = convertToInteger(dataVendorDossier.chamber_number);
         dossierDB.Legal_Form_Code__c = convertToInteger(dataVendorDossier.legal_form_code);
-        dossierDB.Legal_Form_Text__c = dataVendorDossier.legal_form_text;//;convertToString(dataVendorDossier.legal_form_text);
-        dossierDB.Indication_Organisation_Code__c = dataVendorDossier.indication_organisation_code;//convertToString(dataVendorDossier.indication_organisation_code);
+        dossierDB.Legal_Form_Text__c = dataVendorDossier.legal_form_text;
+        dossierDB.Indication_Organisation_Code__c = dataVendorDossier.indication_organisation_code;
         dossierDB.Trade_Name_45__c = dataVendorDossier.trade_name_45;
         dossierDB.Trade_Name_Full__c = dataVendorDossier.trade_name_full;
         dossierDB.Trade_Names__c = trade_names;
@@ -257,17 +248,17 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Authorized_Share_Capital_Currency__c = dataVendorDossier.authorized_share_capital_currency;
         dossierDB.Class_Personnel__c = convertToString(dataVendorDossier.class_personnel);
         dossierDB.Class_Personnel_Fulltime__c = convertToString(dataVendorDossier.class_personnel_fulltime);
-        dossierDB.Continuation_Date__c = validDate(dataVendorDossier.continuation_date);
-        dossierDB.Discontinuation_Date__c = validDate(dataVendorDossier.discontinuation_date);
-        dossierDB.Establishment_Date__c = validDate(dataVendorDossier.establishment_date);
-        dossierDB.Founding_Date__c = validDate(dataVendorDossier.founding_date);
+        dossierDB.Continuation_Date__c = convertToDate(dataVendorDossier.continuation_date);
+        dossierDB.Discontinuation_Date__c = convertToDate(dataVendorDossier.discontinuation_date);
+        dossierDB.Establishment_Date__c = convertToDate(dataVendorDossier.establishment_date);
+        dossierDB.Founding_Date__c = convertToDate(dataVendorDossier.founding_date);
         dossierDB.Issued_Share_Capital__c = convertToInteger(dataVendorDossier.issued_share_capital);
         dossierDB.Issued_Share_Capital_Currency__c = dataVendorDossier.issued_share_capital_currency;
         dossierDB.Paid_Up_Share_Capital__c = convertToInteger(dataVendorDossier.paid_up_share_capital);
         dossierDB.Paid_Up_Share_Capital_Currency__c = dataVendorDossier.paid_up_share_capital_currency;
         dossierDB.Personnel__c = dataVendorDossier.personnel;
         dossierDB.Personnel_Fulltime__c = dataVendorDossier.personnel_fulltime;
-        dossierDB.Personnel_Reference_Date__c = validDate(dataVendorDossier.personnel_reference_date);
+        dossierDB.Personnel_Reference_Date__c = convertToDate(dataVendorDossier.personnel_reference_date);
         dossierDB.Primary_Sbi_Code__c = dataVendorDossier.primary_sbi_code;
         dossierDB.Primary_Sbi_Code_Text__c = dataVendorDossier.primary_sbi_code_text;
         dossierDB.Secondary_Sbi_Code_1__c = dataVendorDossier.secondary_sbi_code1;
@@ -278,15 +269,17 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Chamber_Code__c = dataVendorDossier.chamber_number;
         dossierDB.Status__c = determineStatus(dataVendorDossier);
 
-        dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary;
-        dossierDB.Year__c = dataVendorDossier.annual_financial_statement_summary_year;
-        dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary_profit;
-        dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary_turnover;
-        dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary_assets;
+        // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
+        if (dataVendorDossier.annual_financial_statement_summary != null) {
+            dossierDB.Year__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.year);
+            if (dataVendorDossier.annual_financial_statement_summary.profit != null) { dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted;}
+            if (dataVendorDossier.annual_financial_statement_summary.turnover != null) { dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted; }
+            if (dataVendorDossier.annual_financial_statement_summary.assets != null) { dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted; }
+        }
 
         dossierDB.Personnel_CI__c = dataVendorDossier.personnel_ci;
         dossierDB.Class_Personnel_CI__c = convertToString(dataVendorDossier.class_personnel_ci);
-        dossierDB.Personnel_CI_Reference_Date__c = validDate(dataVendorDossier.personnel_ci_reference_date);
+        dossierDB.Personnel_CI_Reference_Date__c = convertToDate(dataVendorDossier.personnel_ci_reference_date);
         dossierDB.Contact_Initials__c = dataVendorDossier.contact_initials;
         dossierDB.Contact_Prefix__c = dataVendorDossier.contact_prefix;
         dossierDB.Contact_Surname__c = dataVendorDossier.contact_surname;
@@ -300,53 +293,98 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         if (dataVendorDossier.indication_import != null) { dossierDB.Indication_Import__c = dataVendorDossier.indication_import;}
         if (dataVendorDossier.indication_main_establishment != null) { dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;}
         if (dataVendorDossier.indication_non_mailing != null) { dossierDB.Indication_Non_Mailing__c = dataVendorDossier.indication_non_mailing;}
-        dossierDB.Insolvencies__c = dataVendorDossier.insolvencies;
+        // TODO: implement proper mapping of insolvencies
+//        if (dataVendorDossier.insolvencies != null) {
+//            for (Object obj :dataVendorDossier.insolvencies.item) {
+//
+//            }
+//        }
+//        dossierDB.Insolvencies__c = dataVendorDossier.insolvencies;
+        
 
-        //dossierDB.Sbi_Collection__c = dataVendorDossier.sbi_collection;
-
-        dossierDB.Structure__c = dataVendorDossier.structure;
-        dossierDB.Number_Of_Subsidiaries__c = dataVendorDossier.structure_number_of_subsidiaries;
-        dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure_parent;
-        dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dataVendorDossier.structure_ultimate_parent;
+        if (dataVendorDossier.structure != null) {
+            dossierDB.Number_Of_Subsidiaries__c = String.valueOf(dataVendorDossier.structure.number_of_subsidiaries);
+            dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure.parent;
+            dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dataVendorDossier.structure.ultimate_parent;
+        }
         return dossierDB;
     }
 
-    private Dossier_Address__c mapDataVendorDataToEstablishmentAddress(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Dossier_Address__c addressDB) {
-        addressDB.Name = dataVendorDossier.establishment_address_original_postcode + ' ' + dataVendorDossier.establishment_address_original_street; //dataVendorDossier.establishment_address_original_address;
-        addressDB.Postcode__c = dataVendorDossier.establishment_address_original_postcode;
-        addressDB.Street__c = dataVendorDossier.establishment_address_original_street;
-        addressDB.City__c = dataVendorDossier.establishment_address_original_city;
-        addressDB.House_Number__c = String.valueOf(dataVendorDossier.establishment_address_original_house_number);
-        addressDB.House_Number_Addition__c = dataVendorDossier.establishment_address_original_house_number_addition;
-        addressDB.Country__c = dataVendorDossier.establishment_address_original_country;
-        addressDB.Type__c = 'Establishment';
+    private Dossier_Address__c mapDataVendorDataToEstablishmentAddress(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Dossier_Address__c addressDB) {
+        if (dataVendorDossier.establishment_address != null && dataVendorDossier.establishment_address.original != null) {
+            addressDB.Name = dataVendorDossier.establishment_address.original.postcode + ' ' + dataVendorDossier.establishment_address.original.street; //dataVendorDossier.establishment_address.original.address;
+            addressDB.Postcode__c = dataVendorDossier.establishment_address.original.postcode;
+            addressDB.Street__c = dataVendorDossier.establishment_address.original.street;
+            addressDB.City__c = dataVendorDossier.establishment_address.original.city;
+            addressDB.House_Number__c = String.valueOf(dataVendorDossier.establishment_address.original.house_number);
+            addressDB.House_Number_Addition__c = dataVendorDossier.establishment_address.original.house_number_addition;
+            addressDB.Country__c = dataVendorDossier.establishment_address.original.country;
+            addressDB.Type__c = 'Establishment';
+        }
         return addressDB;
     }
 
-    private Dossier_Address__c mapDataVendorDataToCorrespondenceAddress(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, Dossier_Address__c addressDB) {
-        addressDB.Name = dataVendorDossier.correspondence_address_original_postcode + ' ' + dataVendorDossier.correspondence_address_original_street; //dataVendorDossiercorrespondence_address_original_address;
-        addressDB.Postcode__c = dataVendorDossier.correspondence_address_original_postcode;
-        addressDB.Street__c = dataVendorDossier.correspondence_address_original_street;
-        addressDB.City__c = dataVendorDossier.correspondence_address_original_city;
-        addressDB.House_Number__c = String.valueOf(dataVendorDossier.correspondence_address_original_house_number);
-        addressDB.House_Number_Addition__c = dataVendorDossier.correspondence_address_original_house_number_addition;
-        addressDB.Country__c = dataVendorDossier.correspondence_address_original_country;
-        addressDB.Type__c = 'Correspondence';
+    private Dossier_Address__c mapDataVendorDataToCorrespondenceAddress(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Dossier_Address__c addressDB) {
+        if (dataVendorDossier.correspondence_address != null && dataVendorDossier.correspondence_address.original != null) {
+            addressDB.Name = dataVendorDossier.correspondence_address.original.postcode + ' ' + dataVendorDossier.correspondence_address.original.street; //dataVendorDossiercorrespondence_address_original_address;
+            addressDB.Postcode__c = dataVendorDossier.correspondence_address.original.postcode;
+            addressDB.Street__c = dataVendorDossier.correspondence_address.original.street;
+            addressDB.City__c = dataVendorDossier.correspondence_address.original.city;
+            addressDB.House_Number__c = String.valueOf(dataVendorDossier.correspondence_address.original.house_number);
+            addressDB.House_Number_Addition__c = dataVendorDossier.correspondence_address.original.house_number_addition;
+            addressDB.Country__c = dataVendorDossier.correspondence_address.original.country;
+            addressDB.Type__c = 'Correspondence';
+        }
         return addressDB;
     }
 
-    private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessDto.DutchBusinessGetDossierResponse dataVendorDossier, List<Business_Data_SBI__c> sbiCodesDB) {
-        sbiCodesDB = dataVendorDossier.sbi_collection;
+    private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, List<Business_Data_SBI__c> sbiCodesDB) {
+        if (sbiCodesDB == null) {
+            sbiCodesDB = new List<Business_Data_SBI__c>();
+        }
+        Map<String, Business_Data_SBI__c> sbiCodeRecordsOriginaBySbiCode = new Map<String, Business_Data_SBI__c>();
+        Map<String, Business_Data_SBI__c> sbiCodeRecordsCompanyInfoBySbiCode = new Map<String, Business_Data_SBI__c>();
+        for (Business_Data_SBI__c businessDataSBI : sbiCodesDB) {
+            if (businessDataSBI.SBI_Type__c == 'original') {
+                sbiCodeRecordsOriginaBySbiCode.put(businessDataSBI.SBI_Code__c, businessDataSBI);
+            } else {
+                sbiCodeRecordsCompanyInfoBySbiCode.put(businessDataSBI.SBI_Code__c, businessDataSBI);
+            }
+        }
+        if (dataVendorDossier.sbi_collection != null) {
+            if (dataVendorDossier.sbi_collection.original != null) {
+                if (dataVendorDossier.sbi_collection.original.item != null) {
+                    for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeOriginal : dataVendorDossier.sbi_collection.original.item) {
+                        if (sbiCodeRecordsOriginaBySbiCode.get(sbiCodeOriginal.sbi_code) == null) {
+                            sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeOriginal.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeOriginal.description));
+                        }
+                    }
+                }
+            }
+            if (dataVendorDossier.sbi_collection.company_info != null) {
+                if (dataVendorDossier.sbi_collection.company_info.item != null) {
+                    for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeCompanyInfo : dataVendorDossier.sbi_collection.company_info.item) {
+                        if (sbiCodeRecordsCompanyInfoBySbiCode.get(sbiCodeCompanyInfo.sbi_code) == null) {
+                            sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeCompanyInfo.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeCompanyInfo.description));
+                        }
+                    }
+                }
+            }
+        }
         return sbiCodesDB;
     }
 
 
 
-    private static Date validDate(Date theDate) {
-        if (theDate == null) return null;
-        Date d = Date.valueOf(theDate);
-        if (d.year() < 1000) return null;
-        return d;
+    private static Date convertToDate(DutchBusinessWsdl.DutchBusinessDateV3 theDate) {
+        Date returnDate = null;
+        if (theDate == null) {
+            return null;
+        }
+        if (theDate != null && theDate.year != null && theDate.month != null && theDate.day != null && theDate.year >= 1700) {
+            returnDate= Date.newInstance(theDate.year, theDate.month, theDate.day);
+        }
+        return returnDate;
     }
 
     // method to skip doing if for every value
@@ -368,21 +406,17 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
     // method to skip doing if for every value
     private static String convertToString(Integer value){
-        return String.valueOf(value);
+        return value != null ? String.valueOf(value) : null;
     }
 
 
     @TestVisible
-    private DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber) {
+    private DutchBusinessWsdl.DutchBusinessDossierV3 getDossier(String dossierNumber, String establishmentNumber) {
         if (dossierNumber == null){ return null;}
-        IWebServicesNLSOAPDutchBusiness service = WebServicesNLSOAPDutchBusiness.newInstance();
-        DutchBusinessDto.DutchBusinessGetDossierRequest requestParams = new DutchBusinessDto.DutchBusinessGetDossierRequest();// = new DutchBusinessDto.DutchBusinessGetDossierRequest(dossier_number = dossierNumber, establishment_number = null);
-        requestParams.dossier_number = dossierNumber;
-        requestParams.establishment_number = establishmentNumber;
-        return service.dutchBusinessGetDossier(requestParams);
+        return WsDutchBusiness.dutchBusinessGetDossierV3(dossierNumber, establishmentNumber);
     }
 
-    private static String determineStatus(DutchBusinessDto.DutchBusinessGetDossierResponse dossier) {
+    private static String determineStatus(DutchBusinessWsdl.DutchBusinessDossierV3 dossier) {
         List<String> status = new List<String>();
         if (dossier.indication_import != null && Boolean.valueOf(dossier.indication_import) == true) status.add('Import');
         if (dossier.indication_export != null && Boolean.valueOf(dossier.indication_export) == true) status.add('Export');

@@ -16,6 +16,29 @@ private class BusinessDuplicateServiceImplTest {
     }
 
     @IsTest
+    public static void testCheckForExistingVatNumberInDBExistingVAT() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IBusinessDossierSelector selector = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);
+
+        List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
+        businessDossiers.add(new Business_Dossier__c(Dossier_Number__c = '1234', Establishment_Number__c = '1',  VAT_Number__c = '123'));
+        businessDossiers.add(new Business_Dossier__c(Dossier_Number__c = '1234', Establishment_Number__c = '2'));
+
+        mocks.startStubbing();
+        mocks.when(selector.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
+        mocks.when(selector.selectByDossierNumber((Set<String>)fflib_Match.anyObject(), fflib_Match.eqBoolean(false))).thenReturn(businessDossiers);
+        mocks.stopStubbing();
+
+        Application.Selector.setMock(selector);
+
+        Test.startTest();
+        {
+            System.assert(BusinessDuplicateService.checkForExistingVatNumberInDB('1234') == '123');
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
     public static void testCheckForDuplicateDossiersNoDuplicates() {
         List<CheckDuplicateDossierRequest> requests = new List<CheckDuplicateDossierRequest>();
         for (Integer i = 0; i < 10; i++) {
@@ -24,7 +47,6 @@ private class BusinessDuplicateServiceImplTest {
         Test.startTest();
         {
             List<CheckDuplicateDossierResponse> responses = BusinessDuplicateService.checkForDuplicateDossiers(requests);
-            System.debug(responses);
             System.assert(responses.size() == 10);
             for (CheckDuplicateDossierResponse checkDuplicateDossierResponse : responses) {
                 System.assert(checkDuplicateDossierResponse.dossierFound == null);

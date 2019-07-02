@@ -28,7 +28,6 @@
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
-    
     <actionOverrides>
         <actionName>ListClean</actionName>
         <type>Default</type>
@@ -52,6 +51,14 @@
     <actionOverrides>
         <actionName>Tab</actionName>
         <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Account_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>ViewCustomerPortalUser</actionName>

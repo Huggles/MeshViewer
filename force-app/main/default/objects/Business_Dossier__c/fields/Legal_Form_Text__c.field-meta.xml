@@ -3,7 +3,7 @@
     <fullName>Legal_Form_Text__c</fullName>
     <description>Description of the legal form (in Dutch).</description>
     <externalId>false</externalId>
-    <label>Legal Form Text</label>
+    <label>Legal Form</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>

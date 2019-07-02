@@ -1,7 +1,7 @@
 public interface IBusinessService {
     // Account getDossierAccount(String dossierNum);
-    //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
-    //Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork);
+    //Account createAccountForDossier(String accountId, DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
+    //Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork);
 
     // TODO: move the searchparams to its own DTO to remove the dependency between the datavendor and the frontend
     /**
@@ -11,7 +11,7 @@ public interface IBusinessService {
      *
      * @return
      */
-    List<DutchBusinessDto.DutchBusinessReference> searchForDossiers(DutchBusinessDto.dutchBusinessSearchParametersRequest searchParams);
+    List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search);
 
 //    /**
 //     * Retrieves the requested dossier from the backend.
@@ -21,10 +21,10 @@ public interface IBusinessService {
 //     *
 //     * @return
 //     */
-//    DutchBusinessDto.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber);
+//    DutchBusinessWsdl.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber);
 
-//     String updateAccountDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier);
-//    List<Object> upsertAccountAndDossier(DutchBusinessDto.DutchBusinessGetDossierResponse dossier, String accountId);
+//     String updateAccountDossier(DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier);
+//    List<Object> upsertAccountAndDossier(DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier, String accountId);
 
     /**
      * Deletes the dossier related to the given account id
@@ -74,7 +74,7 @@ public interface IBusinessService {
      */
      Business_Dossier__c setVatNumber(Id dossierId);
 
-    //Account createAccountForDossier(String accountId, DutchBusinessDto.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
+    //Account createAccountForDossier(String accountId, DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
     //list<String> checkForAccountDuplicates(Account acc);
 
 //    /**
@@ -84,7 +84,7 @@ public interface IBusinessService {
 //     *
 //     * @return
 //     */
-//    List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessDto.DutchBusinessGetDossierResponse> dataVendorDossiers);
+//    List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessWsdl.DutchBusinessGetDossierResponse> dataVendorDossiers);
 
     /**
      * Inserts a single dossier + account into the DB found through the search function (so based on the dossier number and establishment number).
