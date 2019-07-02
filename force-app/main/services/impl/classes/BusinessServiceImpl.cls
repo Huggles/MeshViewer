@@ -351,14 +351,24 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 sbiCodeRecordsCompanyInfoBySbiCode.put(businessDataSBI.SBI_Code__c, businessDataSBI);
             }
         }
-        for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeOriginal : dataVendorDossier.sbi_collection.original.item) {
-            if (sbiCodeRecordsOriginaBySbiCode.get(sbiCodeOriginal.sbi_code) == null) {
-                sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeOriginal.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeOriginal.description));
+        if (dataVendorDossier.sbi_collection != null) {
+            if (dataVendorDossier.sbi_collection.original != null) {
+                if (dataVendorDossier.sbi_collection.original.item != null) {
+                    for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeOriginal : dataVendorDossier.sbi_collection.original.item) {
+                        if (sbiCodeRecordsOriginaBySbiCode.get(sbiCodeOriginal.sbi_code) == null) {
+                            sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeOriginal.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeOriginal.description));
+                        }
+                    }
+                }
             }
-        }
-        for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeCompanyInfo : dataVendorDossier.sbi_collection.company_info.item) {
-            if (sbiCodeRecordsCompanyInfoBySbiCode.get(sbiCodeCompanyInfo.sbi_code) == null) {
-                sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeCompanyInfo.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeCompanyInfo.description));
+            if (dataVendorDossier.sbi_collection.company_info != null) {
+                if (dataVendorDossier.sbi_collection.company_info.item != null) {
+                    for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeCompanyInfo : dataVendorDossier.sbi_collection.company_info.item) {
+                        if (sbiCodeRecordsCompanyInfoBySbiCode.get(sbiCodeCompanyInfo.sbi_code) == null) {
+                            sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeCompanyInfo.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeCompanyInfo.description));
+                        }
+                    }
+                }
             }
         }
         return sbiCodesDB;
@@ -371,7 +381,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         if (theDate == null) {
             return null;
         }
-        if (theDate != null && theDate.year >= 1700) {
+        if (theDate != null && theDate.year != null && theDate.month != null && theDate.day != null && theDate.year >= 1700) {
             returnDate= Date.newInstance(theDate.year, theDate.month, theDate.day);
         }
         return returnDate;
@@ -396,7 +406,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
     // method to skip doing if for every value
     private static String convertToString(Integer value){
-        return String.valueOf(value);
+        return value != null ? String.valueOf(value) : null;
     }
 
 
