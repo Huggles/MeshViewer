@@ -1,52 +1,52 @@
 public with sharing class ConfigAppController {
 public static PermissionSet ps;
 
-    @AuraEnabled(cacheable=true)
-    public static List<UserWrapper> getUserList(String searchKey, String searchParam, String sortedBy, String sortedDirection) {
-        try{
-            fflib_SecurityUtils.checkRead(Profile.SObjectType, new List<String>{'Id','Name'});
-
-            list<String> enabledBusinessUserIds = getBusinessUserIds();
-            list<UserWrapper> uwList = new list<UserWrapper>();
-            list<User> userList;
-            if(sortedby == null){sortedby = 'Name';}
-            if(sortedDirection == null){sortedDirection = 'asc';}
-            if(searchParam == 'Name'){
-                userList = UserSelector.newInstance().selectByNameLikeSearchKey(searchKey, sortedBy, sortedDirection);
-            }else if(searchParam == 'ProfileName'){
-                userList = UserSelector.newInstance().selectByProfileLikeSearchKey(searchKey, sortedBy, sortedDirection);
-            }
-
-            set<Id> profileIdSet = new set<Id>();
-            for(User usr: userList){
-                profileIdSet.add(usr.profileId);
-            }
-            map<Id, Profile> profileMap = new map<Id, Profile>();
-            profileMap = new map<Id, Profile>([SELECT Name From Profile WHERE Id IN :profileIdSet]);
-
-            for(User usr: userList){
-                UserWrapper uw = new UserWrapper();
-                uw.Id = usr.id;
-                uw.Name = usr.name;
-                uw.isActive = usr.isActive;
-                try{uw.ProfileName = profileMap.get(usr.ProfileId).name;}catch(exception e){}
-                if(enabledBusinessUserIds.contains(usr.Id)){
-                    uw.BusinessActive = true;
-                }
-                uwList.add(uw);
-            }
-            return uwList;
-        }catch(CCException ex){
-            //throw ex; // we dont log bds exceptions, only throwing them further
-            //TODO: implement error callback and reporting
-            return null;
-        }catch(System.Exception ex){
-            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
-            //return output;
-            return null;
-        }
-    }
+//    @AuraEnabled(cacheable=true)
+//    public static List<UserWrapper> getUserList(String searchKey, String searchParam, String sortedBy, String sortedDirection) {
+//        try{
+//            fflib_SecurityUtils.checkRead(Profile.SObjectType, new List<String>{'Id','Name'});
+//
+//            List<String> enabledBusinessUserIds = getBusinessUserIds();
+//            List<UserWrapper> uwList = new List<UserWrapper>();
+//            List<User> userList;
+//            if(sortedby == null){sortedby = 'Name';}
+//            if(sortedDirection == null){sortedDirection = 'asc';}
+//            if(searchParam == 'Name'){
+//                userList = UserSelector.newInstance().selectByNameLikeSearchKey(searchKey, sortedBy, sortedDirection);
+//            }else if(searchParam == 'ProfileName'){
+//                userList = UserSelector.newInstance().selectByProfileLikeSearchKey(searchKey, sortedBy, sortedDirection);
+//            }
+//
+//            set<Id> profileIdSet = new set<Id>();
+//            for(User usr: userList){
+//                profileIdSet.add(usr.profileId);
+//            }
+//            Map<Id, Profile> profileMap = new Map<Id, Profile>();
+//            profileMap = new Map<Id, Profile>([SELECT Name From Profile WHERE Id IN :profileIdSet]);
+//
+//            for(User usr: userList){
+//                UserWrapper uw = new UserWrapper();
+//                uw.Id = usr.id;
+//                uw.Name = usr.name;
+//                uw.isActive = usr.isActive;
+//                try{uw.ProfileName = profileMap.get(usr.ProfileId).name;}catch(exception e){}
+//                if(enabledBusinessUserIds.contains(usr.Id)){
+//                    uw.BusinessActive = true;
+//                }
+//                uwList.add(uw);
+//            }
+//            return uwList;
+//        }catch(CCException ex){
+//            //throw ex; // we dont log bds exceptions, only throwing them further
+//            //TODO: implement error callback and reporting
+//            return null;
+//        }catch(System.Exception ex){
+//            ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
+//            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
+//            //return output;
+//            return null;
+//        }
+//    }
     @AuraEnabled(cacheable=true)
     public static boolean getUserOnboarded(){
        try{
@@ -146,9 +146,9 @@ public static PermissionSet ps;
         fflib_SecurityUtils.checkUpdate(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
         fflib_SecurityUtils.checkInsert(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
-        list<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
-        list<String> enabledBusinessUserIds = getBusinessUserIds();
-        list<String> psaToDelete = new list<String>();
+        List<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
+        List<String> enabledBusinessUserIds = getBusinessUserIds();
+        List<String> psaToDelete = new List<String>();
         
         for(String usrId: UserIdList){
             if(!enabledBusinessUserIds.contains(usrId)){
@@ -166,13 +166,13 @@ public static PermissionSet ps;
         }
     }
 
-    private static list<String> getBusinessUserIds(){
+    private static List<String> getBusinessUserIds(){
         fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
         fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
-        list <PermissionSetAssignment> psaList = new list <PermissionSetAssignment>();
+        List <PermissionSetAssignment> psaList = new List <PermissionSetAssignment>();
         psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];
-        list<String> result = new list<String>();
+        List<String> result = new List<String>();
         for(PermissionSetAssignment psa: psaList){
             result.add(psa.assigneeId);
         }

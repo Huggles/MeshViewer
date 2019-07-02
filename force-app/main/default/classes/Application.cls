@@ -30,7 +30,6 @@ public with sharing class Application {
     public static final fflib_Application.SelectorFactory Selector =
         new fflib_Application.SelectorFactory(
             new Map < SObjectType, Type > {
-                    User.SObjectType => UserSelector.class,
                     Account.SObjectType => AccountSelector.class,
                     Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
                     Dossier_Address__c.SObjectType => DossierAddressSelector.class,
