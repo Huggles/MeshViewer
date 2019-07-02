@@ -261,6 +261,10 @@
         <name>Error_Webservice_Server</name>
     </customLabels>
     <customLabels>
+        <label>De gebruiker bestaat niet. Controleer alstublieft de gebruikersnaam en het paswoord.</label>
+        <name>Error_user_not_found</name>
+    </customLabels>
+    <customLabels>
         <label>Vestigingsdatum</label>
         <name>Establishment_Date</name>
     </customLabels>

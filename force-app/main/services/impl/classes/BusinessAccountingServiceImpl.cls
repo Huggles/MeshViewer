@@ -5,8 +5,28 @@ TODO: Move custom metadatas query to selector
 ******************************************************************************************/
 public with sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService {
 
+    public void saveDataUserCredentials(String username, String password) {
+        Credentials__c cs = Credentials__c.getOrgDefaults();
+        cs.Username__c = username;
+        cs.Password__c = password;
+        // TODO: cover referral
+        ApplicationProperty__mdt applicationProperty = [SELECT Data_Provider_Account_Id__c FROM ApplicationProperty__mdt LIMIT 1];
+        AccountingWsdl.UserV2PagedResult userSearchResult = WsAccounting.accountUserSearchV2(Integer.valueOf(applicationProperty.Data_Provider_Account_Id__c), username, 1);
+        System.debug(JSON.serializePretty(userSearchResult));
+        if (userSearchResult.results.item != null && userSearchResult.results.item.size() ==1) {
+            AccountingWsdl.UserV2 user = userSearchResult.results.item[0];
+            cs.CompanyConnectUserId__c = user.id;
+            upsert cs;
+        } else {
+            throw new CCUserNotFoundException(Label.Error_user_not_found);
+        }
+
+
+    }
+
+
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
-    public static void onboardCustomer(String username, String password){
+    public void onboardCustomer(String username, String password){
 
         // get the config
         List<ApplicationProperty__mdt> aps = [SELECT Appsolutely_Contact_Email__c, Data_Provider_Account_Id__c, Data_Provider_Account_Comment__c, DefaultTrialBalance__c FROM ApplicationProperty__mdt LIMIT 1];
@@ -26,12 +46,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
                 UserInfo.getName(), UserInfo.getUserEmail(), orgDetails.Phone, orgDetails.Fax, '', '');
 
         // upsert the new user credentials
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        cs.Username__c = response.nickname;
-        cs.Password__c = response.password;
-        cs.CompanyConnectUserId__c = response.id;
-        // we don't check for fls/crud since that always needs to happen
-        upsert cs;
+        saveDataUserCredentials(username, password); // TODO: create a separate method so we can pass the userid we already have
 
         // set the trial budget, this might throw an exception if things go really bad
         WsAccounting.userEditBalance(response.id, Integer.valueOf(applicationProperties.DefaultTrialBalance__c));
@@ -39,14 +54,16 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
     }
 
     
-    public static boolean getUserOnboarded(){
+    public boolean getUserOnboarded(){
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            if(cs.Username__c != null && cs.Username__c != '' && cs.Password__c != null && cs.Password__c != ''){
+            System.debug(cs);
+            if(cs != null && cs.Username__c != null && cs.Username__c != '' && cs.Password__c != null && cs.Password__c != ''){
                 return true;
             }else{
                 return false;}
         }catch(exception e){
+            ErrorLogUtil.logException(e);
             return false;
         }
     }
@@ -63,7 +80,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
 //    }
 
     // TODO: check if the companyconnectuser id also works for referral
-    public static void addBudget(Double amount){
+    public void addBudget(Double amount){
         // get the user
         Credentials__c cs = Credentials__c.getOrgDefaults();
         // conversion might throw an exception. We don't catch it here but handle it at the UI since this is a real exception
@@ -73,18 +90,23 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
         WsAccounting.userEditBalance(Integer.valueOf(cs.CompanyConnectUserId__c), currentBalance + amount);
     }
 
-    public static Double getBalance(){
+    public Double getBalance(){
         Credentials__c cs = Credentials__c.getOrgDefaults();
         Double currentBalance = WsAccounting.userViewBalance(Integer.valueOf(cs.CompanyConnectUserId__c));
         return currentBalance;
     }
 
-    public static Boolean userCheckActive(){
+    public Boolean userCheckActive(){
         Boolean returnValue = false;
         Credentials__c cs = Credentials__c.getOrgDefaults();
         if (cs != null && cs.CompanyConnectUserId__c != null) {
-            AccountingWsdl.UserV2 user = WsAccounting.userViewV2(Integer.valueOf(cs.CompanyConnectUserId__c));
-            returnValue = user.active;
+            try {
+                AccountingWsdl.UserV2 user = WsAccounting.userViewV2(Integer.valueOf(cs.CompanyConnectUserId__c));
+                returnValue = user.active;
+            } catch(Exception ex) {
+                ErrorLogUtil.logException(ex);
+                throw ex;
+            }
         }
         return returnValue;
     }

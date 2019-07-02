@@ -120,23 +120,15 @@ public static PermissionSet ps;
     }
 
     @AuraEnabled
-    public static boolean saveCredentials(String username, String password, String accountId){
+    public static AuraResponseWrapper saveDataUserCredentials(String username, String password){
         try{
-            Credentials__c cs = Credentials__c.getOrgDefaults();
-            cs.Username__c = username;
-            cs.Password__c = password;
-            cs.CompanyConnectUserId__c = Decimal.valueOf(accountId); // should be the auto generated user Id
-            upsert cs;
-            return true;
+            BusinessAccountingService.saveDataUserCredentials(username, password);
+            return new AuraResponseWrapper(true);
         }catch(CCException ex){
-            AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
-            //return output;
-            return false;
+           throw ex;
         }catch(System.Exception ex){
             ErrorLogUtil.logException(ex); // logging whenever we catch any exception other than CCException type
-            //AuraResponseWrapper output = new AuraResponseWrapper(null, 'ERROR', System.Label.WSCall_Generic_UI_Exception); // move the msg to label.
-            //return output;
-            return false;
+            throw ex;
         }
     }
 

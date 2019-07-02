@@ -1,11 +1,10 @@
 /****************************************************************************************
-Author          : ValerijsProkudins
+Author          : Jaap Branderhorst
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
 public with sharing class BusinessServiceImpl implements IBusinessService {
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
-
 
     public static List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         // Handle valid postcodes that the web service does not like

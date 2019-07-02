@@ -4,20 +4,6 @@
 
 public with sharing class CallOutHelper {
 
-
-    /**
-     * Creates a header login foruser actions
-     *
-     * @return
-     */
-    public static AccountingWsdl.HeaderLoginType getDataUserHeaderLogin() {
-        AccountingWsdl.HeaderLoginType returnValue = new AccountingWsdl.HeaderLoginType();
-        Credentials__c credentials = Credentials__c.getOrgDefaults();
-        returnValue.username = credentials.Username__c;
-        returnValue.password = credentials.Password__c;
-        return returnValue;
-    }
-
     /**
      * Handles a callout exception that can occur when calling the data vendor.
      *

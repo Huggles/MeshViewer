@@ -40,6 +40,7 @@ public with sharing class ErrorLogUtil {
      * @param message
      */
     public static void logMessage(String message) {
+        System.debug(LoggingLevel.ERROR, 'ERROR: ' + message);
         if (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs() > 0) {
             try {
                 System.enqueueJob(new ErrorLogQueuable(message));

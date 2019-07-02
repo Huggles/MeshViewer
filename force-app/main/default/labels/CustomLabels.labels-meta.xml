@@ -469,6 +469,14 @@
         <value>The data vendor server threw an unknown exception. Please retry later or contact your administrator.</value>
     </labels>
     <labels>
+        <fullName>Error_user_not_found</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error user not found</shortDescription>
+        <value>User does not exist. Please check the username and password.</value>
+    </labels>
+    <labels>
         <fullName>Establishment_Date</fullName>
         <language>en_US</language>
         <protected>true</protected>

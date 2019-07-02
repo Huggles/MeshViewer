@@ -11,6 +11,14 @@ public interface IBusinessAccountingService {
     boolean getUserOnboarded();
 
     /**
+     * Saves the credentials of the data user and retrieves + saves the userid for the given user
+     *
+     * @param username
+     * @param password
+     */
+    void saveDataUserCredentials(String username, String password);
+
+    /**
      * Adds budget to the Company info user. TODO: research if this should also be added to the account if it is a referall account
      *
      * @param amount

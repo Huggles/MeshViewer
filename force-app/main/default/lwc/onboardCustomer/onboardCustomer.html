@@ -11,8 +11,8 @@
                         
                         <lightning-input if:false={onboarded} label={label.Config_Account_ExistingUser} type="checkbox"
                             checked={existingUser} onchange={toggleNewUser}></lightning-input>
-                        <lightning-input if:true={existingUser} label={label.Config_Account_ID} type="text"
-                            value={userId} disabled={newUser} onchange={changeUserId} required={existingUser}></lightning-input>
+           <!--             <lightning-input if:true={existingUser} label={label.Config_Account_ID} type="text"
+                            value={accountId} disabled={newUser} onchange={changeAccountId} required={existingUser}></lightning-input> -->
                         <lightning-input if:true={existingUser} label={label.Config_Account_Username} type="text"
                             value={username} disabled={newUser} required={existingUser} onchange={changeUsername}></lightning-input>
                         <lightning-input label={label.Config_Account_Password} required type="password" value={password}
@@ -23,7 +23,7 @@
                                 <lightning-button if:false={existingUser} variant="brand"
                                     label={label.Config_Account_CreateAccount} onclick={enableTrial}></lightning-button>
                                 <lightning-button if:true={existingUser} variant="brand"
-                                    label={label.Config_Account_Save} onclick={saveCredentials}></lightning-button>
+                                    label={label.Config_Account_Save} onclick={saveDataUserCredentials}></lightning-button>
                             </div>
                         </div>
                     </div>
