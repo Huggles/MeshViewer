@@ -9,7 +9,6 @@
             // Getting the event
             var createEvent = component.getEvent("toUpdateAccountEvent");
             // Fire the event so all the components can hear it
-            console.log('toUpdateAccount firing ');
             createEvent.fire();
     }
 });

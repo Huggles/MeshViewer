@@ -62,8 +62,6 @@ export default class onboardCustomer extends LightningElement {
     wiredUserOnboarded(result){
         this.isUserOnboarded = result;
         if(result.error){
-            console.log('error in getUserOnboarded');
-            console.log(result.error);
             this.error = result.error;
         }else{
             this.onboarded = result.data;
@@ -132,9 +130,7 @@ export default class onboardCustomer extends LightningElement {
             this.dispatchEvent(evt);
             return;
         }
-        console.log('In SaveDatauserCredentials');
         saveDataUserCredentials({username:this.username, password: this.password}).then(result => {
-                console.log('in success');
                 const evt = new ShowToastEvent({
                     title: this.label.Success,
                     message: this.label.Dossier_Account_Update_Completed,
@@ -152,9 +148,7 @@ export default class onboardCustomer extends LightningElement {
                 return refreshApex(this.isUserOnboarded);
             })
             .catch(error => {
-                console.log('in error');
                 this.error = error;
-                console.log(error);
                 const evt = new ShowToastEvent({
                     title: this.label.Error,
                     message: error.body.message,

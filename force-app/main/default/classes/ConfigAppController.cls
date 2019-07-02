@@ -9,11 +9,8 @@ public static PermissionSet ps;
             list<String> enabledBusinessUserIds = getBusinessUserIds();
             list<UserWrapper> uwList = new list<UserWrapper>();
             list<User> userList;
-            system.debug(searchParam);
             if(sortedby == null){sortedby = 'Name';}
             if(sortedDirection == null){sortedDirection = 'asc';}
-            system.debug('sortedBy = ' + sortedby);
-            system.debug('sortedDirection = ' + sortedDirection);
             if(searchParam == 'Name'){
                 userList = UserSelector.newInstance().selectByNameLikeSearchKey(searchKey, sortedBy, sortedDirection);
             }else if(searchParam == 'ProfileName'){
@@ -24,7 +21,6 @@ public static PermissionSet ps;
             for(User usr: userList){
                 profileIdSet.add(usr.profileId);
             }
-            system.debug('profileIdSet'+profileIdSet);
             map<Id, Profile> profileMap = new map<Id, Profile>();
             profileMap = new map<Id, Profile>([SELECT Name From Profile WHERE Id IN :profileIdSet]);
 
@@ -39,7 +35,6 @@ public static PermissionSet ps;
                 }
                 uwList.add(uw);
             }
-            system.debug('************* uwList= '+ uwList);
             return uwList;
         }catch(CCException ex){
             //throw ex; // we dont log bds exceptions, only throwing them further
@@ -102,9 +97,7 @@ public static PermissionSet ps;
     @AuraEnabled(cacheable=true)
     public static Credentials__c getCredentials(){
         try{
-            System.debug('credentials');
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            System.debug(cs);
             return cs;
 
         }catch(CCException ex){
@@ -135,7 +128,6 @@ public static PermissionSet ps;
     @AuraEnabled(cacheable=true)
     public static Decimal getUserBalance(){
         Decimal balance = BusinessAccountingService.getBalance();
-        system.debug('balance is '+ balance);
         return balance;
     }
 
@@ -154,7 +146,6 @@ public static PermissionSet ps;
         fflib_SecurityUtils.checkUpdate(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
         fflib_SecurityUtils.checkInsert(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
-        system.debug('pspspspspspspspspspspspsps = '+ps);
         list<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
         list<String> enabledBusinessUserIds = getBusinessUserIds();
         list<String> psaToDelete = new list<String>();
@@ -173,18 +164,15 @@ public static PermissionSet ps;
         if(psaToDelete.size()>0){
             delete([SELECT ID FROM PermissionSetAssignment WHERE AssigneeId IN :psaToDelete AND PermissionSetId = :ps.Id]);
         }
-        system.debug(logginglevel.error,'Users = '+UserIdList);
     }
 
     private static list<String> getBusinessUserIds(){
         fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
         fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
         ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
-        system.debug('************* ps = '+ ps);
         list <PermissionSetAssignment> psaList = new list <PermissionSetAssignment>();
         psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];
         list<String> result = new list<String>();
-        system.debug('************* psalist = '+ psaList);
         for(PermissionSetAssignment psa: psaList){
             result.add(psa.assigneeId);
         }

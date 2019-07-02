@@ -334,7 +334,6 @@ private class fflib_QueryFactoryTest {
 		List<fflib_QueryFactory> queries = qf.getSubselectQueries();
 		System.assert(queries != null);
 		String soql = qf.toSOQL();
-		System.debug(soql);
 		List<Contact> contacts = Database.query(soql);
 		System.assert(contacts != null && contacts.size() == 1);
 		System.assert(contacts[0].Tasks.size() == 1);

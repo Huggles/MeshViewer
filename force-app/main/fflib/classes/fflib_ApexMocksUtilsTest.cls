@@ -32,7 +32,6 @@ public class fflib_ApexMocksUtilsTest
 		{
 			for (Schema.FieldSet fs : objectType.getDescribe().FieldSets.getMap().values())
 			{
-				System.debug('test');
 				return fs;
 			}
 		}

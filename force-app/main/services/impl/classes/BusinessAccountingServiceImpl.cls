@@ -12,7 +12,6 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
         // TODO: cover referral
         ApplicationProperty__mdt applicationProperty = [SELECT Data_Provider_Account_Id__c FROM ApplicationProperty__mdt LIMIT 1];
         AccountingWsdl.UserV2PagedResult userSearchResult = WsAccounting.accountUserSearchV2(Integer.valueOf(applicationProperty.Data_Provider_Account_Id__c), username, 1);
-        System.debug(JSON.serializePretty(userSearchResult));
         if (userSearchResult.results.item != null && userSearchResult.results.item.size() ==1) {
             AccountingWsdl.UserV2 user = userSearchResult.results.item[0];
             cs.CompanyConnectUserId__c = user.id;
@@ -57,7 +56,6 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
     public boolean getUserOnboarded(){
         try{
             Credentials__c cs = Credentials__c.getOrgDefaults();
-            System.debug(cs);
             if(cs != null && cs.Username__c != null && cs.Username__c != '' && cs.Password__c != null && cs.Password__c != ''){
                 return true;
             }else{

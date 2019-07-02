@@ -29,7 +29,6 @@ public inherited sharing class UserSelector extends fflib_SObjectSelector implem
     public List<User> selectByNameLikeSearchKey(String searchKey, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         // queryFactory.setEnforceFLS(true);
-        system.debug(searchKey + ' isblanc = '+ String.isBlank(searchKey));
         if(!String.isBlank(searchKey)){
             searchKey = '%' + searchKey + '%';
 
@@ -39,9 +38,7 @@ public inherited sharing class UserSelector extends fflib_SObjectSelector implem
             queryFactory.setCondition('(NOT Name LIKE \'Automated Process\') AND( NOT Name LIKE \'Data.com Clean\')');
             queryFactory.setLimit(20);
         }
-       
-        system.debug('sortedDirection' + sortedBy);
-        system.debug('sortedDirection' + sortedDirection);
+
         if(sortedBy == 'ProfileName'){sortedBy = 'Profile.name';}
         if(sortedDirection == 'asc'){
             

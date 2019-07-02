@@ -29,7 +29,6 @@ public inherited sharing class SbiCodeSelector extends fflib_SObjectSelector imp
         List<Business_Data_SBI__c> result = new List<Business_Data_SBI__c>();
         queryFactory.setCondition('Business_Dossier__c IN :dossierIdSet');
         result = Database.query(queryFactory.toSOQL());
-        System.debug(result);
         return result;
     }
 

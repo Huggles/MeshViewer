@@ -114,13 +114,9 @@ public with sharing class CallOutHelper {
      * @return
      */
     private static String getFaultCode(String message) {
-        System.debug(message);
         Integer faultCodeStart = message.lastIndexOf('SOAP-ENV:') + 'SOAP-ENV:'.length();
-        System.debug(faultCodeStart);
         Integer faultCodeEnd = message.indexOf(' ', faultCodeStart);
-        System.debug(faultCodeEnd);
         String faultCode = message.substring(faultCodeStart, faultCodeEnd);
-        System.debug(faultCode);
         return faultCode;
     }
 

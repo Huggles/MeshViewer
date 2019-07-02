@@ -85,11 +85,9 @@ public with sharing class PageLayoutRecordDisplayController {
     public class PageLayoutField { //vprok modified
         @AuraEnabled
         public String APIName { get; set; }
-        
+
         public PageLayoutField(Metadata.LayoutItem item, map<String,String> fieldName2fieldFullNameMap) {
-            system.debug('APIName beforeis ' + item.field);
             APIName = fieldName2fieldFullNameMap.get(item.field);
-            system.debug('APIName is ' + APIName);
         }
     }
 

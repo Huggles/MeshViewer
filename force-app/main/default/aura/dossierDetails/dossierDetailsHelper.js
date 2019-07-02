@@ -11,7 +11,6 @@
 
         // @todo remove after development
         if (stubResponse) {
-            console.log('stubbing');
             callback(stubResponse);
             return;
         }

@@ -65,7 +65,6 @@ export default class LicenseControlList extends LightningElement {
         assignUsers({UserIdList:this.selectedUserIds})
         .then(result => {
            // .then(() => {
-            console.log('SUCCESS123');
 
             return refreshApex(this.wiredUsersResult);
         })
@@ -75,24 +74,16 @@ export default class LicenseControlList extends LightningElement {
     }
       // The method onsort event handler
     updateColumnSorting(event) { // to ask Dan
-        console.log('test');
         const fieldName = event.detail.fieldName;
         const sortDir = event.detail.sortDirection;
 
-        console.log(event.detail.fieldName);
-        console.log(event.detail.sortDirection);
-        //console.log(event.target.sorted-direction);
-        //console.log(event.sorted-direction);
         // assign the latest attribute with the sorted column fieldName and sorted direction
         this.sortedBy = fieldName;
         this.sortedDirection = sortDir; //sortDirection;
-        console.log(this.sortedBy);
-        console.log(this.sortedDirection);
         //this.data = this.sortData(fieldName, sortDirection);*/
    } //as
 
    handleUpdateSearchParam(event){
-    console.log('testing');
         this.searchParam = event.detail;
    }
 

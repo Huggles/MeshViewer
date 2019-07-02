@@ -24,7 +24,6 @@ private class BusinessDuplicateServiceImplTest {
         Test.startTest();
         {
             List<CheckDuplicateDossierResponse> responses = BusinessDuplicateService.checkForDuplicateDossiers(requests);
-            System.debug(responses);
             System.assert(responses.size() == 10);
             for (CheckDuplicateDossierResponse checkDuplicateDossierResponse : responses) {
                 System.assert(checkDuplicateDossierResponse.dossierFound == null);

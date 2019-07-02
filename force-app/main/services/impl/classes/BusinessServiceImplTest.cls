@@ -425,7 +425,6 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(cAddress.House_Number__c, '10');
 
         Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment'];
-        System.debug(eAddress.Name);
         System.assertEquals(eAddress.Name, '3533AX street');
         System.assertEquals(eAddress.Postcode__c, '3533AX');
         System.assertEquals(eAddress.Country__c, 'NL');
@@ -657,7 +656,6 @@ public with sharing class BusinessServiceImplTest {
          System.assertEquals(cAddress.House_Number__c, '10');
 
          Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment'];
-        System.debug(eAddress.Name);
         System.assertEquals(eAddress.Name, '3533AX street');
         System.assertEquals(eAddress.Postcode__c, '3533AX');
         System.assertEquals(eAddress.Country__c, 'NL');
@@ -1227,8 +1225,8 @@ public with sharing class BusinessServiceImplTest {
 
 
         Account result = BusinessService.createAccountForDossier(accountId, dossier, uowMock);
-        system.debug('result = ' + result);
-        system.debug('acc = ' + acc);
+
+
         test.stopTest();
         system.assertEquals(result.name, acc.Name);
     }

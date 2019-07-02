@@ -31,7 +31,6 @@ public with sharing class CompanyDetailsControllerTest {
 
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
-        System.debug(wrapper);
         System.assert(wrapper.state == 'SUCCESS');
         System.assert(wrapper.response == serviceResponse);
     }
@@ -64,7 +63,6 @@ public with sharing class CompanyDetailsControllerTest {
 
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
-        System.debug(wrapper);
         System.assert(wrapper.errorMsg == 'test');
         System.assert(wrapper.state == 'ERROR');
     }
@@ -250,7 +248,6 @@ public with sharing class CompanyDetailsControllerTest {
         Test.startTest();
         AuraResponseWrapper wrapper = (AuraResponseWrapper)CompanyDetailsController.getVATDetails(dossierId);
         Test.stopTest();
-        System.debug(wrapper);
 
         System.assert(wrapper.errorMsg == System.Label.Error);
         System.assert(wrapper.state == 'ERROR');
