@@ -83,11 +83,11 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
     public void addBudget(Double amount){
         // get the user
         Credentials__c cs = Credentials__c.getOrgDefaults();
-        // conversion might throw an exception. We don't catch it here but handle it at the UI since this is a real exception
-        Double currentBalance = WsAccounting.userViewBalance(Integer.valueOf(cs.CompanyConnectUserId__c));
 
         // add the budget. conversion might throw an exception. We don't catch it here but handle it at the UI since this is a real exception
-        WsAccounting.userEditBalance(Integer.valueOf(cs.CompanyConnectUserId__c), currentBalance + amount);
+        // editBalance actually adds or substracts (if negative) the amount from the balance.
+        WsAccounting.userEditBalance(Integer.valueOf(cs.CompanyConnectUserId__c), amount);
+        // TODO: ensure we get an order in our PBO !!!
     }
 
     public Double getBalance(){
