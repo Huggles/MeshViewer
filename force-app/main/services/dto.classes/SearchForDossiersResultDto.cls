@@ -3,15 +3,15 @@
  */
 
 public with sharing class SearchForDossiersResultDto {
-    public String dossier_number { get; set; }
-    public String establishment_number { get; set; }
-    public String name { get; set; }
-    public String match_type { get; set; }
-    public String establishment_city { get; set; }
-    public String establishment_street { get; set; }
-    public String correspondence_city { get; set; }
-    public String correspondence_street { get; set; }
-    public Boolean indication_economically_active { get; set; }
+    @AuraEnabled public String dossier_number { get; set; }
+    @AuraEnabled public String establishment_number { get; set; }
+    @AuraEnabled public String name { get; set; }
+    @AuraEnabled public String match_type { get; set; }
+    @AuraEnabled public String establishment_city { get; set; }
+    @AuraEnabled public String establishment_street { get; set; }
+    @AuraEnabled public String correspondence_city { get; set; }
+    @AuraEnabled public String correspondence_street { get; set; }
+    @AuraEnabled public Boolean indication_economically_active { get; set; }
     
     public SearchForDossiersResultDto(DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2) {
         dossier_number = dutchBusinessReferenceV2.dossier_number;
