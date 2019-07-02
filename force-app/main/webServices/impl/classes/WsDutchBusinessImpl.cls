@@ -4,7 +4,15 @@
 
 public with sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
 
-    private DutchBusinessWsdl.Webservices_nlPort port = new DutchBusinessWsdl.Webservices_nlPort();
+    private DutchBusinessWsdl.Webservices_nlPort port { get; set; }
+
+    public WsDutchBusinessImpl() {
+        port = new DutchBusinessWsdl.Webservices_nlPort();
+        port.HeaderLogin = new DutchBusinessWsdl.HeaderLoginType();
+        Credentials__c credentials = Credentials__c.getOrgDefaults();
+        port.HeaderLogin.username = credentials.Username__c;
+        port.HeaderLogin.password = credentials.Password__c;
+    }
 
     public DutchBusinessWsdl.DutchBusinessVatNumber dutchBusinessGetVatNumber(String dossier_number) {
         DutchBusinessWsdl.DutchBusinessVatNumber returnValue = null;

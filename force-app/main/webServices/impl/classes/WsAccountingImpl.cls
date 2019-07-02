@@ -4,7 +4,21 @@
 
 public with sharing class WsAccountingImpl implements IWsAccounting {
 
-    private AccountingWsdl.Webservices_nlPort port = new AccountingWsdl.Webservices_nlPort();
+    private AccountingWsdl.Webservices_nlPort port { get; set; }
+
+    public WsAccountingImpl() {
+        port =  new AccountingWsdl.Webservices_nlPort();
+        port.HeaderLogin = new AccountingWsdl.HeaderLoginType();
+        // TODO:  referral customers are stored as separate record in the mdt. The current query returns all records.
+        ApplicationProperty__mdt applicationProperty = [
+                SELECT
+                        DataProviderAdminPassword__c,
+                        DataProviderAdminUsername__c
+                FROM ApplicationProperty__mdt];
+        port.HeaderLogin.username = applicationProperty.DataProviderAdminUsername__c;
+        port.HeaderLogin.password = applicationProperty.DataProviderAdminPassword__c;
+
+    }
 
     public String login(String username, String password) {
         String returnValue = null;
@@ -73,7 +87,6 @@ public with sharing class WsAccountingImpl implements IWsAccounting {
     public AccountingWsdl.UserV2 userViewV2(Integer userid) {
         AccountingWsdl.UserV2 returnValue = null;
         try {
-            port.HeaderLogin = getHeaderLogin();
             returnValue = port.userViewV2(userid);
         } catch(CalloutException calloutException) {
             Boolean fallBack = CallOutHelper.handleCallOutException(calloutException);
@@ -620,21 +633,6 @@ public with sharing class WsAccountingImpl implements IWsAccounting {
             }
         }
     }
-
-    private AccountingWsdl.HeaderLoginType getHeaderLogin() {
-        AccountingWsdl.HeaderLoginType returnValue = new AccountingWsdl.HeaderLoginType();
-        ApplicationProperty__mdt applicationProperty = [
-                SELECT
-                        DataProviderAdminPassword__c,
-                        DataProviderAdminUsername__c
-                FROM ApplicationProperty__mdt];
-        returnValue = new AccountingWsdl.HeaderLoginType();
-        returnValue.username = applicationProperty.DataProviderAdminUsername__c;
-        returnValue.password = applicationProperty.DataProviderAdminPassword__c;
-        return returnValue;
-    }
-
-
 
 
 }
