@@ -270,10 +270,10 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Status__c = determineStatus(dataVendorDossier);
 
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
-        dossierDB.Year__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.year);
-        dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted;
-        dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted;
-        dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted;
+        if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Year__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.year); }
+        if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted; }
+        if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted; }
+        if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted; }
 
         dossierDB.Personnel_CI__c = dataVendorDossier.personnel_ci;
         dossierDB.Class_Personnel_CI__c = convertToString(dataVendorDossier.class_personnel_ci);
@@ -300,9 +300,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 //        dossierDB.Insolvencies__c = dataVendorDossier.insolvencies;
         
 
-        dossierDB.Number_Of_Subsidiaries__c = String.valueOf(dataVendorDossier.structure.number_of_subsidiaries);
-        dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure.parent;
-        dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dataVendorDossier.structure.ultimate_parent;
+        if (dataVendorDossier.structure != null) { dossierDB.Number_Of_Subsidiaries__c = convertToString(dataVendorDossier.structure.number_of_subsidiaries); }
+        if (dataVendorDossier.structure != null) { dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure.parent; }
+        if (dataVendorDossier.structure != null) { dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dataVendorDossier.structure.ultimate_parent; }
         return dossierDB;
     }
 
@@ -343,14 +343,24 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                 sbiCodeRecordsCompanyInfoBySbiCode.put(businessDataSBI.SBI_Code__c, businessDataSBI);
             }
         }
-        for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeOriginal : dataVendorDossier.sbi_collection.original.item) {
-            if (sbiCodeRecordsOriginaBySbiCode.get(sbiCodeOriginal.sbi_code) == null) {
-                sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeOriginal.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeOriginal.description));
+        if (dataVendorDossier.sbi_collection != null) {
+            if (dataVendorDossier.sbi_collection.original != null) {
+                if (dataVendorDossier.sbi_collection.original.item != null) {
+                    for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeOriginal : dataVendorDossier.sbi_collection.original.item) {
+                        if (sbiCodeRecordsOriginaBySbiCode.get(sbiCodeOriginal.sbi_code) == null) {
+                            sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeOriginal.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeOriginal.description));
+                        }
+                    }
+                }
             }
-        }
-        for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeCompanyInfo : dataVendorDossier.sbi_collection.company_info.item) {
-            if (sbiCodeRecordsCompanyInfoBySbiCode.get(sbiCodeCompanyInfo.sbi_code) == null) {
-                sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeCompanyInfo.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeCompanyInfo.description));
+            if (dataVendorDossier.sbi_collection.company_info != null) {
+                if (dataVendorDossier.sbi_collection.company_info.item != null) {
+                    for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeCompanyInfo : dataVendorDossier.sbi_collection.company_info.item) {
+                        if (sbiCodeRecordsCompanyInfoBySbiCode.get(sbiCodeCompanyInfo.sbi_code) == null) {
+                            sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeCompanyInfo.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeCompanyInfo.description));
+                        }
+                    }
+                }
             }
         }
         return sbiCodesDB;
@@ -363,7 +373,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         if (theDate == null) {
             return null;
         }
-        if (theDate != null && theDate.year >= 1700) {
+        if (theDate != null && theDate.year != null && theDate.month != null && theDate.day != null && theDate.year >= 1700) {
             returnDate= Date.newInstance(theDate.year, theDate.month, theDate.day);
         }
         return returnDate;
@@ -388,7 +398,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
     // method to skip doing if for every value
     private static String convertToString(Integer value){
-        return String.valueOf(value);
+        return value != null ? String.valueOf(value) : null;
     }
 
 
