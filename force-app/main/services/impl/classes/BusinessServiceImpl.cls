@@ -270,10 +270,12 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Status__c = determineStatus(dataVendorDossier);
 
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
-        if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Year__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.year); }
-        if (dataVendorDossier.annual_financial_statement_summary != null && dataVendorDossier.annual_financial_statement_summary.profit != null) { dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted; }
-        if (dataVendorDossier.annual_financial_statement_summary != null && dataVendorDossier.annual_financial_statement_summary.turnover != null) { dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted; }
-        if (dataVendorDossier.annual_financial_statement_summary != null && dataVendorDossier.annual_financial_statement_summary.assets != null) { dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted; }
+        if (dataVendorDossier.annual_financial_statement_summary != null) {
+            dossierDB.Year__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.year);
+            if (dataVendorDossier.annual_financial_statement_summary.profit != null) { dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted;}
+            if (dataVendorDossier.annual_financial_statement_summary.turnover != null) { dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted; }
+            if (dataVendorDossier.annual_financial_statement_summary.assets != null) { dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted; }
+        }
 
         dossierDB.Personnel_CI__c = dataVendorDossier.personnel_ci;
         dossierDB.Class_Personnel_CI__c = convertToString(dataVendorDossier.class_personnel_ci);
@@ -300,33 +302,39 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 //        dossierDB.Insolvencies__c = dataVendorDossier.insolvencies;
         
 
-        if (dataVendorDossier.structure != null) { dossierDB.Number_Of_Subsidiaries__c = convertToString(dataVendorDossier.structure.number_of_subsidiaries); }
-        if (dataVendorDossier.structure != null) { dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure.parent; }
-        if (dataVendorDossier.structure != null) { dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dataVendorDossier.structure.ultimate_parent; }
+        if (dataVendorDossier.structure != null) {
+            dossierDB.Number_Of_Subsidiaries__c = String.valueOf(dataVendorDossier.structure.number_of_subsidiaries);
+            dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure.parent;
+            dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dataVendorDossier.structure.ultimate_parent;
+        }
         return dossierDB;
     }
 
     private Dossier_Address__c mapDataVendorDataToEstablishmentAddress(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Dossier_Address__c addressDB) {
-        addressDB.Name = dataVendorDossier.establishment_address.original.postcode + ' ' + dataVendorDossier.establishment_address.original.street; //dataVendorDossier.establishment_address.original.address;
-        addressDB.Postcode__c = dataVendorDossier.establishment_address.original.postcode;
-        addressDB.Street__c = dataVendorDossier.establishment_address.original.street;
-        addressDB.City__c = dataVendorDossier.establishment_address.original.city;
-        addressDB.House_Number__c = String.valueOf(dataVendorDossier.establishment_address.original.house_number);
-        addressDB.House_Number_Addition__c = dataVendorDossier.establishment_address.original.house_number_addition;
-        addressDB.Country__c = dataVendorDossier.establishment_address.original.country;
-        addressDB.Type__c = 'Establishment';
+        if (dataVendorDossier.establishment_address != null && dataVendorDossier.establishment_address.original != null) {
+            addressDB.Name = dataVendorDossier.establishment_address.original.postcode + ' ' + dataVendorDossier.establishment_address.original.street; //dataVendorDossier.establishment_address.original.address;
+            addressDB.Postcode__c = dataVendorDossier.establishment_address.original.postcode;
+            addressDB.Street__c = dataVendorDossier.establishment_address.original.street;
+            addressDB.City__c = dataVendorDossier.establishment_address.original.city;
+            addressDB.House_Number__c = String.valueOf(dataVendorDossier.establishment_address.original.house_number);
+            addressDB.House_Number_Addition__c = dataVendorDossier.establishment_address.original.house_number_addition;
+            addressDB.Country__c = dataVendorDossier.establishment_address.original.country;
+            addressDB.Type__c = 'Establishment';
+        }
         return addressDB;
     }
 
     private Dossier_Address__c mapDataVendorDataToCorrespondenceAddress(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Dossier_Address__c addressDB) {
-        addressDB.Name = dataVendorDossier.correspondence_address.original.postcode + ' ' + dataVendorDossier.correspondence_address.original.street; //dataVendorDossiercorrespondence_address_original_address;
-        addressDB.Postcode__c = dataVendorDossier.correspondence_address.original.postcode;
-        addressDB.Street__c = dataVendorDossier.correspondence_address.original.street;
-        addressDB.City__c = dataVendorDossier.correspondence_address.original.city;
-        addressDB.House_Number__c = String.valueOf(dataVendorDossier.correspondence_address.original.house_number);
-        addressDB.House_Number_Addition__c = dataVendorDossier.correspondence_address.original.house_number_addition;
-        addressDB.Country__c = dataVendorDossier.correspondence_address.original.country;
-        addressDB.Type__c = 'Correspondence';
+        if (dataVendorDossier.correspondence_address != null && dataVendorDossier.correspondence_address.original != null) {
+            addressDB.Name = dataVendorDossier.correspondence_address.original.postcode + ' ' + dataVendorDossier.correspondence_address.original.street; //dataVendorDossiercorrespondence_address_original_address;
+            addressDB.Postcode__c = dataVendorDossier.correspondence_address.original.postcode;
+            addressDB.Street__c = dataVendorDossier.correspondence_address.original.street;
+            addressDB.City__c = dataVendorDossier.correspondence_address.original.city;
+            addressDB.House_Number__c = String.valueOf(dataVendorDossier.correspondence_address.original.house_number);
+            addressDB.House_Number_Addition__c = dataVendorDossier.correspondence_address.original.house_number_addition;
+            addressDB.Country__c = dataVendorDossier.correspondence_address.original.country;
+            addressDB.Type__c = 'Correspondence';
+        }
         return addressDB;
     }
 
