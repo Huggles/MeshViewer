@@ -216,7 +216,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     private Business_Dossier__c mapDataVendorDataToDossier(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Business_Dossier__c dossierDB) {
         String trade_names = '';
         // TODO: move this to a list of tradelist (seperate sObject)
-        if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.item.size() > 0) {
+        if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.item != null && dataVendorDossier.trade_names.item.size() > 0) {
             // Condense all trade names into single field, seperated by new lines.
             for (Integer i = 0; i < dataVendorDossier.trade_names.item.size(); i++) {
                 trade_names += dataVendorDossier.trade_names.item[i] + (i == dataVendorDossier.trade_names.item.size()-1 ? '' : ', ');
@@ -271,9 +271,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
         if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Year__c = String.valueOf(dataVendorDossier.annual_financial_statement_summary.year); }
-        if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted; }
-        if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted; }
-        if (dataVendorDossier.annual_financial_statement_summary != null) { dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted; }
+        if (dataVendorDossier.annual_financial_statement_summary != null && dataVendorDossier.annual_financial_statement_summary.profit != null) { dossierDB.Profit__c = dataVendorDossier.annual_financial_statement_summary.profit.formatted; }
+        if (dataVendorDossier.annual_financial_statement_summary != null && dataVendorDossier.annual_financial_statement_summary.turnover != null) { dossierDB.Turnover__c = dataVendorDossier.annual_financial_statement_summary.turnover.formatted; }
+        if (dataVendorDossier.annual_financial_statement_summary != null && dataVendorDossier.annual_financial_statement_summary.assets != null) { dossierDB.Assets__c = dataVendorDossier.annual_financial_statement_summary.assets.formatted; }
 
         dossierDB.Personnel_CI__c = dataVendorDossier.personnel_ci;
         dossierDB.Class_Personnel_CI__c = convertToString(dataVendorDossier.class_personnel_ci);
