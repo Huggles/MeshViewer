@@ -14,7 +14,7 @@ public with sharing class WsAccountingImpl implements IWsAccounting {
                 SELECT
                         DataProviderAdminPassword__c,
                         DataProviderAdminUsername__c
-                FROM ApplicationProperty__mdt];
+                FROM ApplicationProperty__mdt LIMIT 1];
         port.HeaderLogin.username = applicationProperty.DataProviderAdminUsername__c;
         port.HeaderLogin.password = applicationProperty.DataProviderAdminPassword__c;
 
