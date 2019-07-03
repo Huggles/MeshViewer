@@ -2,13 +2,14 @@
     doInit: function (cmp, event, helper) {
         var searchFields = {
             street: '',
+            house_number: '',
+            house_number_addition: '',
             city: '',
-            postcode: '',
-            country: '',
-            province: '',
+            postal_code: '',
             name: '',
             phone: '',
-            domain: ''
+            domain: '',
+            dossier_number: ''
         };
         cmp.set('v.searchFields', searchFields);
 
@@ -65,11 +66,8 @@
            // record is loaded (render other component which needs record data value)
             var record = component.get('v.simpleRecord');
             var searchFields = {
-                street: record.BillingStreet,
                 city: record.BillingCity,
-                postcode: record.BillingPostalCode,
-                country: record.BillingCountry,
-                province: record.BillingState,
+                postal_code: record.BillingPostalCode,
                 name: record.Name,
                 phone: record.Phone,
                 domain: record.Website
