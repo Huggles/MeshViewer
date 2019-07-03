@@ -1,13 +1,12 @@
 <aura:component implements="force:hasRecordId" >
     <aura:attribute name="searchFields" type="object" default="{}" />
-    <aura:attribute name="simpleRecord" type="object" />
     <aura:attribute name="disableSearch" type="Boolean" default="false" />
     <aura:attribute name="error" type="string" />
+    <aura:attribute name="searchForm" type="string" access="private" default="NL"/>
+    <!-- TODO: make this multi-lingual -->
+    <aura:attribute name="options" type="List" default="[{'label':'Netherlands','value':'NL'},{'label':'Belgium','value':'BE'},{'label':'United Kingdom','value':'UK'},{'label':'France','value':'FR'},{'label':'Germany','value':'GER'},{'label':'Ireland','value':'IE'},{'label':'Sweden','value':'SW'}]"
+    />
 
-    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" targetFields="{!v.simpleRecord}" targetError="{!v.error}"
-        recordUpdated="{!c.handleRecordUpdated}" layoutType="FULL" />
-    
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:registerEvent name="dossierSearchSubmitEvent" type="c:dossierSearchSubmitEvent" />
     <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent"/>
     
@@ -23,53 +22,20 @@
         </aura:set>
         <div class="slds-text-color_error">{!v.error}</div>
 
+
+        <lightning:combobox label="Country to Search" aura:id="countrySearch" options="{!v.options}" value="NL" placeholder="Select an Option" dropdownAlignment="left" variant="standard" onchange="{!c.onCountrySearchChange}"/>
+
         <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.Search_Help}</div>
 
-        <!-- TODO: make it multi lingual-->
-        <!-- TODO: fix the layout issue -->
-        <!-- TODO: add searching in multiple countries -->
-        <div class="slds-form slds-form_stacked">
-            <lightning:layout class="slds-wrap" multipleRows="true">
-                <lightning:layoutItem size="12">
-                    <lightning:layout>
-                        <lightning:layoutItem size="12">
-                            <lightning:input label="Name" value="{!v.searchFields.name}" type="text" variant="standard"/>
-                        </lightning:layoutItem>
-                    </lightning:layout>
-                    <lightning:layout class="slds-wrap" multipleRows="true">
-                        <lightning:layoutItem flexibility="grow">
-                            <lightning:input class="slds-p-around_large slds-align_absolute-center" label="{!$Label.c.Search_Domain}" value="{!v.searchFields.domain}" type="text" variant="standard"/>
-                            <!-- TODO: decide if we keep the dossier number or make it really clean (only use the DutchBusinessSearchV3-->
-     <!--                       <lightning:input label="{!$Label.c.Search_Dossier_Number}" value="{!v.searchFields.dossier_number}" type="text" variant="standard"/> -->
-                        </lightning:layoutItem>
-                    </lightning:layout>
-                    <lightning:layout>
-                        <lightning:layoutItem size="6">
-                            <lightning:input label="{!$Label.c.Search_Street}" value="{!v.searchFields.street}" type="text" variant="standard"/>
-                        </lightning:layoutItem>
-                        <lightning:layoutItem size="3">
-                            <lightning:input label="House Nr" value="{!v.searchFields.house_number}" type="text" variant="standard"/>
-                        </lightning:layoutItem>
-                        <lightning:layoutItem size="3">
-                            <lightning:input label="Addition" value="{!v.searchFields.house_number_addition}" type="text" variant="standard"/>
-                        </lightning:layoutItem>
-                    </lightning:layout>
-                    <lightning:layout>
-                        <lightning:layoutItem size="4">
-                            <lightning:input label="{!$Label.c.Search_Postal_Code}" value="{!v.searchFields.postal_code}" type="text" variant="standard"/>
-                        </lightning:layoutItem>
-                        <lightning:layoutItem size="8">
-                            <lightning:input label="{!$Label.c.Search_City}" value="{!v.searchFields.city}" type="text" variant="standard"/>
-                        </lightning:layoutItem>
-                    </lightning:layout>
-                    <lightning:layout>
-                        <lightning:layoutItem size="12">
-                            <lightning:input label="Phone" value="{!v.searchFields.phone}" type="text" variant="standard"/>
-                        </lightning:layoutItem>
-                    </lightning:layout>
-                </lightning:layoutItem>
-            </lightning:layout>
-        </div>
+        <aura:if isTrue="{!v.searchForm == 'NL'}">
+            <c:DutchBusinessDossierSearchForm error="{!v.error}" searchFields="{!v.searchFields}"/>
+            <aura:set attribute="else">
+                False <!-- TODO: add credit safe search form -->
+            </aura:set>
+        </aura:if>
+
+
+
 
         <!--
         <div class="slds-form slds-form_horizontal">
