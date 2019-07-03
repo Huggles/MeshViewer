@@ -2599,42 +2599,42 @@ public class CreditsafeWsdl {
 //            response_x = response_map_x.get('response_x');
 //            return response_x.out;
 //        }
-        public CreditsafeWsdl.CreditsafeCompanyPagedResult creditsafeSearch(String country,String id,String registration_number,String status,String office_type,String name,String name_match_type,String address,String address_match_type,String street,String house_number,String city,String postal_code,String province,String phone_number,Integer page_x) {
-            CreditsafeWsdl.creditsafeSearchRequestType request_x = new CreditsafeWsdl.creditsafeSearchRequestType();
-            request_x.country = country;
-            request_x.id = id;
-            request_x.registration_number = registration_number;
-            request_x.status = status;
-            request_x.office_type = office_type;
-            request_x.name = name;
-            request_x.name_match_type = name_match_type;
-            request_x.address = address;
-            request_x.address_match_type = address_match_type;
-            request_x.street = street;
-            request_x.house_number = house_number;
-            request_x.city = city;
-            request_x.postal_code = postal_code;
-            request_x.province = province;
-            request_x.phone_number = phone_number;
-            request_x.page_x = page_x;
-            CreditsafeWsdl.creditsafeSearchResponseType response_x;
-            Map<String, CreditsafeWsdl.creditsafeSearchResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeSearchResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch',
-              'http://www.webservices.nl/soap/',
-              'creditsafeSearch',
-              'http://www.webservices.nl/soap/',
-              'creditsafeSearchResponse',
-              'CreditsafeWsdl.creditsafeSearchResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
+//        public CreditsafeWsdl.CreditsafeCompanyPagedResult creditsafeSearch(String country,String id,String registration_number,String status,String office_type,String name,String name_match_type,String address,String address_match_type,String street,String house_number,String city,String postal_code,String province,String phone_number,Integer page_x) {
+//            CreditsafeWsdl.creditsafeSearchRequestType request_x = new CreditsafeWsdl.creditsafeSearchRequestType();
+//            request_x.country = country;
+//            request_x.id = id;
+//            request_x.registration_number = registration_number;
+//            request_x.status = status;
+//            request_x.office_type = office_type;
+//            request_x.name = name;
+//            request_x.name_match_type = name_match_type;
+//            request_x.address = address;
+//            request_x.address_match_type = address_match_type;
+//            request_x.street = street;
+//            request_x.house_number = house_number;
+//            request_x.city = city;
+//            request_x.postal_code = postal_code;
+//            request_x.province = province;
+//            request_x.phone_number = phone_number;
+//            request_x.page_x = page_x;
+//            CreditsafeWsdl.creditsafeSearchResponseType response_x;
+//            Map<String, CreditsafeWsdl.creditsafeSearchResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeSearchResponseType>();
+//            response_map_x.put('response_x', response_x);
+//            WebServiceCallout.invoke(
+//              this,
+//              request_x,
+//              response_map_x,
+//              new String[]{endpoint_x,
+//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch',
+//              'http://www.webservices.nl/soap/',
+//              'creditsafeSearch',
+//              'http://www.webservices.nl/soap/',
+//              'creditsafeSearchResponse',
+//              'CreditsafeWsdl.creditsafeSearchResponseType'}
+//            );
+//            response_x = response_map_x.get('response_x');
+//            return response_x.out;
+//        }
 //        public void creditsafeMonitorAddCompany(String company_id) {
 //            CreditsafeWsdl.creditsafeMonitorAddCompanyRequestType request_x = new CreditsafeWsdl.creditsafeMonitorAddCompanyRequestType();
 //            request_x.company_id = company_id;
