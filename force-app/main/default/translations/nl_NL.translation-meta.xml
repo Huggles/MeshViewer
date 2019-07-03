@@ -213,6 +213,10 @@
         <name>Error_Incomplete</name>
     </customLabels>
     <customLabels>
+        <label>Incorrecte invoer. Controleer uw invoer en probeer opnieuw.</label>
+        <name>Error_Input_Incorrect</name>
+    </customLabels>
+    <customLabels>
         <label>Er was een probleem met het verwijderen van de Customer.connect gegevens. Controleer of u toestemming heeft Customer.connect gegevens te verwijderen.</label>
         <name>Error_Remove_Dossier</name>
     </customLabels>

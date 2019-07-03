@@ -24,7 +24,8 @@ public with sharing class Application {
                             IBusinessAccountingService.class => BusinessAccountingServiceImpl.class,
                             IBusinessService.class => BusinessServiceImpl.class,
                             IBusinessDuplicateService.class => BusinessDuplicateServiceImpl.class,
-                            IWsCreditsafe.class => WsCreditsafeImpl.class
+                            IWsCreditsafe.class => WsCreditsafeImpl.class,
+                            ICreditSafeService.class => CreditSafeServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application
