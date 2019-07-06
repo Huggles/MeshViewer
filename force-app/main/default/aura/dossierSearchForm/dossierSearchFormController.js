@@ -26,7 +26,8 @@
             for (var i = 0; i < components.length; i++) {
                 var searchFormComponent = components[i];
                 var searchFields = searchFormComponent.get('v.searchFields');
-                if (searchFields.country === component.get('v.countryToSearch')) {
+                var selected = searchFormComponent.get('v.selected');
+                if (selected) {
                     for (var key in searchFields) {
                         if (searchFields.hasOwnProperty(key)) {
                             if (key != 'country' && searchFields[key] && searchFields != "") {
@@ -49,8 +50,9 @@
             if(components) {
                 for (var i = 0; i < components.length; i++) {
                     var searchFormComponent = components[i];
-                    var searchFields = searchFormComponent.get('v.searchFields');
-                    if (searchFields.country === component.get('v.countryToSearch')) {
+                    var selected = searchFormComponent.get('v.selected');
+                    if (selected) {
+                        searchFields = searchFormComponent.get('v.searchFields');
                         break;
                     }
                 }

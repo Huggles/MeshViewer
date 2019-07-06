@@ -34,32 +34,10 @@
 
 
         <div class="{!v.countryToSearch == 'NL' ? '' : 'slds-hide'}">
-            <c:DutchBusinessDossierSearchForm aura:id="searchForm"/>
+            <c:DutchBusinessDossierSearchForm aura:id="searchForm" selected="{!v.countryToSearch == 'NL'}"/>
         </div>
         <div class="{!v.countryToSearch != 'NL' ? '' : 'slds-hide'}">
-            <c:CreditSafeSearchForm aura:id="searchForm"/>
+            <c:CreditSafeSearchForm aura:id="searchForm" selected="{!v.countryToSearch != 'NL'}"/>
         </div>
-
-
-
-
-        <!--
-        <div class="slds-form slds-form_horizontal">
-            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Search_Trade_Name}"
-                type="text" variant="standard" value="{!v.searchFields.name}" disabled="{!v.disableSearch}"/>
-            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Search_Dossier_Number}"
-                type="text" variant="standard" value="{!v.searchFields.dossier_number}" onchange="{!c.populateDossier}"/>
-            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Search_Phone}"
-                type="text" variant="standard" value="{!v.searchFields.phone}" disabled="{!v.disableSearch}"/>
-            <lightning:input class="slds-p-right_none slds-p-left_none" label="{!$Label.c.Search_Domain}"
-                type="text" variant="standard" value="{!v.searchFields.domain}" disabled="{!v.disableSearch}"/>
-            <lightning:inputAddress aura:id="Address"
-                addressLabel="{!$Label.c.Search_Address}" streetLabel="{!$Label.c.Search_Street}"
-                cityLabel="{!$Label.c.Search_City}" provinceLabel="{!$Label.c.Search_Province}"
-                postalCodeLabel="{!$Label.c.Search_Postal_Code}" countryLabel="{!$Label.c.Search_Country}"
-                country="{!v.searchFields.country}" street="{!v.searchFields.street}" city="{!v.searchFields.city}"
-                postalCode="{!v.searchFields.postcode}" province="{!v.searchFields.province}" disabled="{!v.disableSearch}"/>
-
-        </div>-->
     </lightning:card>
 </aura:component>
