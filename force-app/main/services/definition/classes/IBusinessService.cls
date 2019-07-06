@@ -1,18 +1,24 @@
 public interface IBusinessService {
-    // Account getDossierAccount(String dossierNum);
-    //Account createAccountForDossier(String accountId, DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
-    //Business_Dossier__c saveDutchBusinessDossierUow(DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier, Account acc, fflib_ISObjectUnitOfWork unitOfWork);
 
-    // TODO: move the searchparams to its own DTO to remove the dependency between the datavendor and the frontend
     /**
-     * Searches for dossiers based on the given params.
+     * Searches for dossiers with the given params
      *
-     * @param searchParams
+     * @param country the country in ISO notation. Currently supports NL, GB, IE, DE, FR, SE, BE
+     * @param trade_name the name of the company we are searching for
+     * @param registration_number the number under which the company has been registered. Chamber of commerce number in the Netherlands
+     * @param vat_number the vat number we search for
+     * @param city
+     * @param street
+     * @param postcode
+     * @param house_number
+     * @param house_number_addition
+     * @param province
+     * @param telephone_number
+     * @param domain_name
      *
      * @return
      */
-    List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search);
-
+    List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name);
 //    /**
 //     * Retrieves the requested dossier from the backend.
 //     *

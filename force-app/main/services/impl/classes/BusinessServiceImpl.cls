@@ -6,24 +6,79 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
 
-
-
-
-
-    public List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+    public List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name) {
         // Handle valid postcodes that the web service does not like
         if (postcode != null){ // fix for postal code
             postcode = postcode.replaceAll('(\\s+)', '').toUpperCase();
         }
-
-        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
-        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, 1);
-        searchResults.addAll(returnedResults.results.item);
-        Integer numPages = returnedResults.paging.numpages;
-        for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
-            returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, i);
-            searchResults.addAll(returnedResults.results.item);
+        List<SearchForDossiersResultDto> resultValue = new List<SearchForDossiersResultDto>();
+        if (country == CreditSafe.Country.NL.name()) {
+            resultValue = searchForDutchDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
+        } else {
+            resultValue = searchForCreditSafeDossiers(country, null, null, registration_number, null, vat_number, province, city, street, postcode, trade_name);
         }
+        return resultValue;
+    }
+
+    /**
+     * Searches for credit safe dossiers.
+     *
+     * @param country
+     * @param id
+     * @param status
+     * @param registration_number
+     * @param registration_type
+     * @param vat_number
+     * @param province
+     * @param city
+     * @param street
+     * @param postal_code
+     * @param name
+     *
+     * @return
+     */
+    private List<SearchForDossiersResultDto> searchForCreditSafeDossiers(String country, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+        List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
+        CreditsafeWsdl.stringArray countries = new CreditsafeWsdl.stringArray();
+        countries.item = new List<String>();
+        countries.item.add(country);
+        System.debug(JSON.serializePretty(countries));
+        CreditsafeWsdl.CreditsafeSearchResultV2 searchResult = WsCreditsafe.creditsafeSearchV2(countries, id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name);
+        if (searchResult.companies != null && searchResult.companies.item != null) {
+            for (CreditsafeWsdl.CreditsafeCompanyV2 company : searchResult.companies.item) {
+                returnValue.add(new SearchForDossiersResultDto(company));
+            }
+        }
+        return returnValue;
+
+    }
+
+    /**
+     * Searches for dutch business dossiers in Company.info backend (Dutch Business service)
+     *
+     * @param trade_name
+     * @param city
+     * @param street
+     * @param postcode
+     * @param house_number
+     * @param house_number_addition
+     * @param telephone_number
+     * @param domain_name
+     *
+     * @return
+     */
+    private List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
+        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
+        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, 1);
+        if (returnedResults.results != null && returnedResults.results.item != null) {
+            searchResults.addAll(returnedResults.results.item);
+            Integer numPages = returnedResults.paging.numpages;
+            for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
+                returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, i);
+                searchResults.addAll(returnedResults.results.item);
+            }
+        }
+
         List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
         for (DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2 : searchResults) {
             returnValue.add(new SearchForDossiersResultDto(dutchBusinessReferenceV2));

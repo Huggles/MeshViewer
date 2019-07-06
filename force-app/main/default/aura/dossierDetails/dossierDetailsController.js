@@ -7,8 +7,10 @@
      */
 	onSubmit : function(component, event, helper) {
         var params = event.getParam("params");
+        console.log('in search onsubmit ' + params);
 
         helper.callServer(component, 'c.search', {searchParams: JSON.stringify(params)}, function(response) {
+            console.log('returned from search call');
             helper.handleSearchResults(component, response);
         });
     },
@@ -86,6 +88,20 @@
             }
             component.find('recordHandler').reloadRecord(true);
         });
-        
+    },
+    /**
+     * Handles a change of the error attribute. If the error attribute is not empty shows a toast with the error message.
+     * When setting the error message take into account multi-linguality!
+     * @param component
+     * @param event
+     * @param helper
+     */
+    onErrorChange : function (component, event, helper) {
+        console.log('in on error change');
+        var error = component.get('v.error');
+        console.log('error');
+        if (error && error != '') {
+            helper.showToast(component, $A.get('$Label.c.Error'), error);
+        }
     }
 });

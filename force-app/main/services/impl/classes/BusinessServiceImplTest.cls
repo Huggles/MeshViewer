@@ -58,7 +58,7 @@ public with sharing class BusinessServiceImplTest {
         mocks.stopStubbing();
 
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
-        List<SearchForDossiersResultDto> results = BusinessService.searchForDossiers(null, null, null, postCode,null, null, null, null, false);
+        List<SearchForDossiersResultDto> results = BusinessService.searchForDossiers(null, null, null, null, null, null, postCode,null, null, null, null, null);
         System.assertEquals(20, results.size());
     }
 

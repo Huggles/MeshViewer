@@ -1,10 +1,9 @@
 /**
- * Created by jaapbranderhorst on 2019-07-03.
+ * Created by jaapbranderhorst on 2019-07-04.
  */
 
 ({
     doInit: function (component, event, helper) {
-        debugger;
         var searchFields = component.get('v.searchFields');
         if (!searchFields) {
             searchFields = {};
@@ -12,12 +11,11 @@
         searchFields.street = '';
         searchFields.city = '';
         searchFields.house_number = '';
-        searchFields.house_number_addition = '';
-        searchFields.postal_code = '';
+        searchFields.registration_number = '';
+        searchFields.vat_number = '';
         searchFields.name = '';
-        searchFields.phone = '';
-        searchFields.domain = '';
-        searchFields.dossier_number = '';
+        searchFields.province = '';
+        searchFields.postal_code = '';
         component.set('v.searchFields', searchFields);
     },
     handleChangedAccount: function (component, event, helper) {
@@ -30,8 +28,6 @@
             }
             searchFields.city = account.BillingCity;
             searchFields.postal_code = account.BillingPostalCode;
-            searchFields.domain = account.Website;
-            searchFields.phone = account.Phone;
             component.set('v.searchFields', searchFields);
         }
     }

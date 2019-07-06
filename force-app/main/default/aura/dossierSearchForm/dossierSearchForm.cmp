@@ -1,14 +1,19 @@
 <aura:component implements="force:hasRecordId" >
-    <aura:attribute name="searchFields" type="object" default="{}" />
     <aura:attribute name="disableSearch" type="Boolean" default="false" />
     <aura:attribute name="error" type="string" />
-    <aura:attribute name="searchForm" type="string" access="private" default="NL"/>
+    <aura:attribute name="countryToSearch" type="string" access="private" default="NL"/>
+    <aura:attribute name="simpleRecord" type="object" description="account"/>
     <!-- TODO: make this multi-lingual -->
     <aura:attribute name="options" type="List" default="[{'label':'Netherlands','value':'NL'},{'label':'Belgium','value':'BE'},{'label':'United Kingdom','value':'UK'},{'label':'France','value':'FR'},{'label':'Germany','value':'GER'},{'label':'Ireland','value':'IE'},{'label':'Sweden','value':'SW'}]"
     />
 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
     <aura:registerEvent name="dossierSearchSubmitEvent" type="c:dossierSearchSubmitEvent" />
     <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent"/>
+
+    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" targetFields="{!v.simpleRecord}" targetError="{!v.error}"
+                      recordUpdated="{!c.handleRecordUpdated}" layoutType="FULL" />
     
     <lightning:card variant="Narrow" title="Search" >
             <aura:set attribute="title">
@@ -27,12 +32,13 @@
 
         <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.Search_Help}</div>
 
-        <aura:if isTrue="{!v.searchForm == 'NL'}">
-            <c:DutchBusinessDossierSearchForm error="{!v.error}" searchFields="{!v.searchFields}"/>
-            <aura:set attribute="else">
-                False <!-- TODO: add credit safe search form -->
-            </aura:set>
-        </aura:if>
+
+        <div class="{!v.countryToSearch == 'NL' ? '' : 'slds-hide'}">
+            <c:DutchBusinessDossierSearchForm aura:id="searchForm"/>
+        </div>
+        <div class="{!v.countryToSearch != 'NL' ? '' : 'slds-hide'}">
+            <c:CreditSafeSearchForm aura:id="searchForm"/>
+        </div>
 
 
 

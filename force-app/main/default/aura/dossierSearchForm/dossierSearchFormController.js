@@ -19,9 +19,47 @@
      * @param {*} helper 
      */
     onSearchSubmit: function( component, event, helper ) {
-        var updateEvent = component.getEvent("dossierSearchSubmitEvent");
-        updateEvent.setParams({ "params": component.get('v.searchFields')});
-        updateEvent.fire();
+        // check the input
+        debugger;
+        var empty = true;
+        var components = component.find('searchForm');
+        if(components) {
+            for (var i = 0; i < components.length; i++) {
+                var searchFormComponent = components[i];
+                var searchFields = searchFormComponent.get('v.searchFields');
+                if (searchFields.country === component.get('v.countryToSearch')) {
+                    for (var key in searchFields) {
+                        if (searchFields.hasOwnProperty(key)) {
+                            if (key != 'country' && searchFields[key] && searchFields != "") {
+                                empty = false;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        if (empty) {
+            // TODO: replace by firing an event so a proper error message can be shown
+            component.set('v.error', $A.get('$Label.c.Error_Incomplete'));
+        } else {
+            debugger;
+            var updateEvent = component.getEvent("dossierSearchSubmitEvent");
+            var searchFields = {};
+            var components = component.find('searchForm');
+            if(components) {
+                for (var i = 0; i < components.length; i++) {
+                    var searchFormComponent = components[i];
+                    var searchFields = searchFormComponent.get('v.searchFields');
+                    if (searchFields.country === component.get('v.countryToSearch')) {
+                        break;
+                    }
+                }
+            }
+            updateEvent.setParams({ "params": searchFields});
+            updateEvent.fire();
+        }
     },
     /**
      * Bypass search and attempt retrieve. Fire dossier number to dossierDetails component.
@@ -38,11 +76,84 @@
         // Fire the event so all the components can hear it
         updateEvent.fire();
     },
+    /**
+     * Sets the country in the search params
+     * @param component
+     * @param event
+     * @param helper
+     */
     onCountrySearchChange: function(component, event, helper) {
         // Get the string of the "value" attribute on the selected option
-        var selectedOptionValue = event.getParam("value");
-        component.set('v.searchForm', selectedOptionValue);
-    }
+        var country = event.getParam("value");
+        // set the search country field
+        var components = component.find('searchForm');
+        if(components) {
+            for (var i = 0; i < components.length; i++) {
+                var searchFormComponent = components[i];
+                var searchFields = searchFormComponent.get('v.searchFields');
+                if (!searchFields) {
+                    searchFields = {};
+                }
+                searchFields.country = country;
+                searchFormComponent.set('v.searchFields', searchFields);
+            }
+        }
+        component.set('v.countryToSearch', country);
+    },
+    /**
+     * Populate search fields with data from current Account record.
+     * @param {*} component
+     * @param {*} event
+     * @param {*} helper
+     */
+    handleRecordUpdated: function(component, event, helper) {
+        var eventParams = event.getParams();
+        if(eventParams.changeType === "LOADED") {
+            // record is loaded (render other component which needs record data value)
+            var record = component.get('v.simpleRecord');
+            // set the searchFields on the searchFormComponents
+            var components = component.find('searchForm');
+            if(components) {
+                for (var i = 0; i < components.length; i++) {
+                    var searchFormComponent = components[i];
+                    var searchFields = searchFormComponent.get('v.searchFields');
+                    searchFields.Name = record.Name;
+                    searchFormComponent.set('v.searchFields', searchFields);
+                    searchFormComponent.handleChangedAccount(record);
+                }
+            }
+            // var searchFields = {
+            //     city: record.BillingCity,
+            //     postal_code: record.BillingPostalCode,
+            //     name: record.Name,
+            //     province: record.BillingProvince
+            // };
+            // component.set('v.searchFields', searchFields);
+
+        } else if(eventParams.changeType === "CHANGED") {
+            // record is changed
+        } else if(eventParams.changeType === "REMOVED") {
+            // record is deleted
+        } else if(eventParams.changeType === "ERROR") {
+            // there’s an error while loading, saving, or deleting the record
+        }
+    },
+    doInit: function (component, event, helper) {
+        debugger;
+        var country = component.find('countrySearch').get('v.value');
+        var components = component.find('searchForm');
+        if(components) {
+            for (var i = 0; i < components.length; i++) {
+                var searchFormComponent = components[i];
+                var searchFields = searchFormComponent.get('v.searchFields');
+                if (!searchFields) {
+                    searchFields = {};
+                }
+                searchFields.country = country;
+                searchFormComponent.set('v.searchFields', searchFields);
+            }
+        }
+    },
 
     
 });

@@ -20,8 +20,9 @@ public with sharing class CompanyDetailsControllerTest {
         String domain_name = (String)jsonDeserialized.get('domain');
 
         mocks.startStubbing();
-        // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenReturn(serviceResponse);
+//        List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name);
+
+        mocks.when(mockService.searchForDossiers('NL', trade_name, null, null, city, street, postcode, house_number, house_number_addition, null, telephone_number, domain_name)).thenReturn(serviceResponse);
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -53,7 +54,8 @@ public with sharing class CompanyDetailsControllerTest {
 
         mocks.startStubbing();
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CCException('test'));
+ //       mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CCException('test'));
+        mocks.when(mockService.searchForDossiers('NL', trade_name, null, null, city, street, postcode, house_number, house_number_addition, null, telephone_number, domain_name)).thenThrow(new CCException('test'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -85,7 +87,7 @@ public with sharing class CompanyDetailsControllerTest {
 
         mocks.startStubbing();
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CustomException(Label.WSCall_Generic_UI_Exception));
+        mocks.when(mockService.searchForDossiers('NL', trade_name, null, null, city, street, postcode, house_number, house_number_addition, null, telephone_number, domain_name)).thenThrow(new CustomException(Label.WSCall_Generic_UI_Exception));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 

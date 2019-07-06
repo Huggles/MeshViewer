@@ -1,0 +1,50 @@
+<!--
+ - Created by jaapbranderhorst on 2019-07-04.
+ -->
+
+<aura:component description="CreditSafeSearchForm" implements="c:ISearchForm">
+    <aura:attribute name="searchFields" type="Object" description="The search fields to be filled"/>
+    <aura:attribute name="account" type="Account" description="the account that is used to prefill the search fields"/>
+
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-form slds-form_stacked">
+        <lightning:layout class="slds-wrap" multipleRows="true">
+            <lightning:layoutItem size="12">
+                <lightning:layout>
+                    <lightning:layoutItem size="12">
+                        <lightning:input label="Name" type="text" value="{!v.searchFields.name}" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout class="slds-wrap" multipleRows="true">
+                    <lightning:layoutItem flexibility="grow">
+                        <lightning:input label="Registration Number" type="text" value="{!v.searchFields.registration_number}" variant="standard"/>
+                        <lightning:input label="VAT Number" type="text" value="{!v.searchFields.vat_number}" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem size="9">
+                        <lightning:input label="Street" type="text" value="{!v.searchFields.street}" variant="standard"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3">
+                        <lightning:input label="House Nr" type="number" value="{!v.searchFields.house_number}" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem size="4">
+                        <lightning:input label="Postal Code" type="text" value="{!v.searchFields.postal_code}" variant="standard"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="8">
+                        <lightning:input label="City" type="text" value="{!v.searchFields.city}" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem size="12">
+                        <lightning:input label="Province" type="text" value="{!v.searchFields.province}" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+
+</aura:component>
