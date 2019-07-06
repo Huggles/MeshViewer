@@ -4,7 +4,7 @@
     <aura:attribute name="countryToSearch" type="string" access="private" default="NL"/>
     <aura:attribute name="simpleRecord" type="object" description="account"/>
     <!-- TODO: make this multi-lingual -->
-    <aura:attribute name="options" type="List" default="[{'label':'Netherlands','value':'NL'},{'label':'Belgium','value':'BE'},{'label':'United Kingdom','value':'UK'},{'label':'France','value':'FR'},{'label':'Germany','value':'GER'},{'label':'Ireland','value':'IE'},{'label':'Sweden','value':'SW'}]"
+    <aura:attribute name="options" type="List" default="[]"
     />
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
@@ -28,7 +28,7 @@
         <div class="slds-text-color_error">{!v.error}</div>
 
 
-        <lightning:combobox label="Country to Search" aura:id="countrySearch" options="{!v.options}" value="NL" placeholder="Select an Option" dropdownAlignment="left" variant="standard" onchange="{!c.onCountrySearchChange}"/>
+        <lightning:combobox label="{!$Label.c.Country_to_Search}" aura:id="countrySearch" options="{!v.options}" value="NL" placeholder="Select an Option" dropdownAlignment="left" variant="standard" onchange="{!c.onCountrySearchChange}"/>
 
         <div class="slds-m-vertical_medium slds-text-title">{!$Label.c.Search_Help}</div>
 

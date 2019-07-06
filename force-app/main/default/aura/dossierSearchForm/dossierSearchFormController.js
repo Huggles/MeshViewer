@@ -122,14 +122,6 @@
                     searchFormComponent.handleChangedAccount(record);
                 }
             }
-            // var searchFields = {
-            //     city: record.BillingCity,
-            //     postal_code: record.BillingPostalCode,
-            //     name: record.Name,
-            //     province: record.BillingProvince
-            // };
-            // component.set('v.searchFields', searchFields);
-
         } else if(eventParams.changeType === "CHANGED") {
             // record is changed
         } else if(eventParams.changeType === "REMOVED") {
@@ -139,7 +131,19 @@
         }
     },
     doInit: function (component, event, helper) {
-        debugger;
+        // set the default values in the country picklist
+        var options = [
+            { value: "NL", label: $A.get("$Label.c.Country_Netherlands") },
+            { value: "BE", label: $A.get("$Label.c.Country_Belgium") },
+            { value: "SE", label: $A.get("$Label.c.Country_Sweden") },
+            { value: "IE", label: $A.get("$Label.c.Country_Ireland") },
+            { value: "GB", label: $A.get("$Label.c.Country_United_Kingdom") },
+            { value: "DE", label: $A.get("$Label.c.Country_Germany") },
+            { value: "FR", label: $A.get("$Label.c.Country_France") }
+        ];
+        component.set("v.options", options);
+
+        // set the country field on the search fields
         var country = component.find('countrySearch').get('v.value');
         var components = component.find('searchForm');
         if(components) {
@@ -153,6 +157,7 @@
                 searchFormComponent.set('v.searchFields', searchFields);
             }
         }
+
     },
 
     

@@ -13,14 +13,12 @@
             <lightning:layoutItem size="12">
                 <lightning:layout>
                     <lightning:layoutItem size="12">
-                        <lightning:input label="Name" value="{!v.searchFields.name}" type="text" variant="standard"/>
+                        <lightning:input label="{!$Label.c.Search_Trade_Name}" value="{!v.searchFields.name}" type="text" variant="standard"/>
                     </lightning:layoutItem>
                 </lightning:layout>
                 <lightning:layout class="slds-wrap" multipleRows="true">
                     <lightning:layoutItem flexibility="grow">
                         <lightning:input class="slds-p-around_large slds-align_absolute-center" label="{!$Label.c.Search_Domain}" value="{!v.searchFields.domain}" type="text" variant="standard"/>
-                        <!-- TODO: decide if we keep the dossier number or make it really clean (only use the DutchBusinessSearchV3-->
-                        <!--                       <lightning:input label="{!$Label.c.Search_Dossier_Number}" value="{!v.searchFields.dossier_number}" type="text" variant="standard"/> -->
                     </lightning:layoutItem>
                 </lightning:layout>
                 <lightning:layout>
@@ -28,7 +26,7 @@
                         <lightning:input label="{!$Label.c.Search_Street}" value="{!v.searchFields.street}" type="text" variant="standard"/>
                     </lightning:layoutItem>
                     <lightning:layoutItem size="3">
-                        <lightning:input label="House Nr" value="{!v.searchFields.house_number}" type="text" variant="standard"/>
+                        <lightning:input label="{!$Label.c.Search_House_Nr}" value="{!v.searchFields.house_number}" type="text" variant="standard"/>
                     </lightning:layoutItem>
                     <lightning:layoutItem size="3">
                         <lightning:input label="Addition" value="{!v.searchFields.house_number_addition}" type="text" variant="standard"/>
@@ -44,7 +42,7 @@
                 </lightning:layout>
                 <lightning:layout>
                     <lightning:layoutItem size="12">
-                        <lightning:input label="Phone" value="{!v.searchFields.phone}" type="text" variant="standard"/>
+                        <lightning:input label="{!$Label.c.Search_Phone}" value="{!v.searchFields.phone}" type="text" variant="standard"/>
                     </lightning:layoutItem>
                 </lightning:layout>
             </lightning:layoutItem>

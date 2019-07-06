@@ -101,6 +101,38 @@
         <name>Config_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Country Belgium --></label>
+        <name>Country_Belgium</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country France --></label>
+        <name>Country_France</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country Germany --></label>
+        <name>Country_Germany</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country Ireland --></label>
+        <name>Country_Ireland</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country Netherlands --></label>
+        <name>Country_Netherlands</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country Sweden --></label>
+        <name>Country_Sweden</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country United Kingdom --></label>
+        <name>Country_United_Kingdom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Country to Search --></label>
+        <name>Country_to_Search</name>
+    </customLabels>
+    <customLabels>
         <label><!-- WSCall_Unknown_Exception --></label>
         <name>DBSCall_AccountDupCheck_Exception</name>
     </customLabels>
@@ -333,9 +365,16 @@
         <name>Search_Dossier_Number</name>
     </customLabels>
     <customLabels>
-        <label>Om informatie van een Nederlandse organisatie te vinden, moet u dit account relateren aan gegevens van een organisatie bekend in het KvK.
-Opmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisatie, zoek dan hier op.</label>
+        <label>Vul alstublieft de zoekvelden in om de organisatie te vinden waar u naar zoekt.</label>
         <name>Search_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search House Nr --></label>
+        <name>Search_House_Nr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search House Nr Addition --></label>
+        <name>Search_House_Nr_Addition</name>
     </customLabels>
     <customLabels>
         <label>Zoek</label>
@@ -358,6 +397,10 @@ Opmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisati
         <name>Search_Province</name>
     </customLabels>
     <customLabels>
+        <label><!-- Search Registration Number --></label>
+        <name>Search_Registration_Number</name>
+    </customLabels>
+    <customLabels>
         <label>Zoek nogmaals</label>
         <name>Search_Reset</name>
     </customLabels>
@@ -376,6 +419,10 @@ Opmerking: als u het Kamer van Koophandel nummer kent van de gezochte organisati
     <customLabels>
         <label>Handelsnaam</label>
         <name>Search_Trade_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search VAT Number --></label>
+        <name>Search_VAT_Number</name>
     </customLabels>
     <customLabels>
         <label>Gelukt</label>
