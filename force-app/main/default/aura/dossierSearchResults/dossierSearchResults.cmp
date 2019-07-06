@@ -3,6 +3,8 @@
     <aura:attribute name="searchText" type="String" default="" />
     <aura:attribute name="selected" type="String" />
     <aura:attribute name="selectedEstablishment" type="String" />
+    <aura:attribute name="selectedDataVendor" type="String" />
+
     <aura:handler name="dossierSelectedEvent" event="c:dossierSelectedEvent" action="{!c.onSelect}" />
     <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent" />
     <aura:if isTrue='{!v.wrapperList.length > 0}'>

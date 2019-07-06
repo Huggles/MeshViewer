@@ -7,8 +7,11 @@
      */
     onSelect : function(component, event, helper) {
         var params = event.getParams();
+        debugger;
+        console.log(JSON.stringify(params));
         component.set('v.selected', params.DossierNumber);
         component.set('v.selectedEstablishment', params.EstablishmentNumber);
+        component.set('v.selectedDataVendor', params.selectedDataVendor);
         var results = component.find('searchResult');
         for (var i = 0; i < results.length; i++) {
             if (results[i].get('v.result').dossier_number !== params.DossierNumber || results[i].get('v.result').establishment_number !== params.EstablishmentNumber) {
@@ -26,7 +29,7 @@
         // Getting the event
         var updateEvent = component.getEvent("dossierSelectionConfirmedEvent");
         // Setting the param on the event 
-        updateEvent.setParams({ "DossierNumber": component.get('v.selected'), "EstablishmentNumber": component.get('v.selectedEstablishment') });
+        updateEvent.setParams({ "DossierNumber": component.get('v.selected'), "EstablishmentNumber": component.get('v.selectedEstablishment'), "selectedDataVendor": component.get('v.selectedDataVendor') });
         // Fire the event so all the components can hear it
         updateEvent.fire();
     }

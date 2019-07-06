@@ -3,7 +3,7 @@
  */
 
 public with sharing class SearchForDossiersResultDto {
-    @AuraEnabled public CustomerConnect.DataVendor vendor { get; set; }
+    @AuraEnabled public String vendor { get; set; }
     @AuraEnabled public String creditSafeCountry {get; set; }
     @AuraEnabled public String dossier_number { get; set; } // chamber of commerce number
     @AuraEnabled public String establishment_number { get; set; }
@@ -23,7 +23,7 @@ public with sharing class SearchForDossiersResultDto {
     @AuraEnabled public String office_type { get; set; }
     
     public SearchForDossiersResultDto(DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2) {
-        vendor = CustomerConnect.DataVendor.COMPANY_INFO;
+        vendor = CustomerConnect.DataVendor.COMPANY_INFO.name();
         dossier_number = dutchBusinessReferenceV2.dossier_number;
         establishment_number = dutchBusinessReferenceV2.establishment_number;
         name = dutchBusinessReferenceV2.name;
@@ -36,8 +36,7 @@ public with sharing class SearchForDossiersResultDto {
     }
 
     public SearchForDossiersResultDto(CreditsafeWsdl.CreditsafeCompanyV2 creditsafeCompanyV2) {
-        System.debug(JSON.serializePretty(creditsafeCompanyV2));
-        vendor = CustomerConnect.DataVendor.CREDIT_SAFE;
+        vendor = CustomerConnect.DataVendor.CREDIT_SAFE.name();
         dossier_number = creditsafeCompanyV2.registration_number;
         name = creditsafeCompanyV2.name;
         creditSafeCountry = creditsafeCompanyV2.country;
@@ -58,6 +57,7 @@ public with sharing class SearchForDossiersResultDto {
                 trade_names.add(str);
             }
         }
+        JSON.serializePretty(this);
 
     }
 }
