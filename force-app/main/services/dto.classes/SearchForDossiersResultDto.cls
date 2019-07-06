@@ -36,6 +36,7 @@ public with sharing class SearchForDossiersResultDto {
     }
 
     public SearchForDossiersResultDto(CreditsafeWsdl.CreditsafeCompanyV2 creditsafeCompanyV2) {
+        System.debug(JSON.serializePretty(creditsafeCompanyV2));
         vendor = CustomerConnect.DataVendor.CREDIT_SAFE;
         dossier_number = creditsafeCompanyV2.registration_number;
         name = creditsafeCompanyV2.name;
@@ -52,8 +53,11 @@ public with sharing class SearchForDossiersResultDto {
         date_last_account = creditsafeCompanyV2.date_last_account;
         office_type = creditsafeCompanyV2.office_type;
         trade_names = new List<String>();
-        for (String str : creditsafeCompanyV2.trade_names.item) {
-            trade_names.add(str);
+        if (creditsafeCompanyV2.trade_names != null && creditsafeCompanyV2.trade_names.item != null) {
+            for (String str : creditsafeCompanyV2.trade_names.item) {
+                trade_names.add(str);
+            }
         }
+
     }
 }

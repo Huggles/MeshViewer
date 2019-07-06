@@ -2516,7 +2516,6 @@ public class CreditsafeWsdl {
             request_x.postal_code = postal_code;
             request_x.name = name;
             CreditsafeWsdl.creditsafeSearchV2ResponseType response_x;
-            System.debug(JSON.serializePretty(request_x));
             Map<String, CreditsafeWsdl.creditsafeSearchV2ResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeSearchV2ResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
@@ -2531,7 +2530,6 @@ public class CreditsafeWsdl {
               'creditsafeSearchV2Response',
               'CreditsafeWsdl.creditsafeSearchV2ResponseType'}
             );
-            System.debug(JSON.serializePretty(response_map_x));
             response_x = response_map_x.get('response_x');
             return response_x.out;
         }

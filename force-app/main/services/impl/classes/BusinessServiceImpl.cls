@@ -47,7 +47,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         CreditsafeWsdl.stringArray countries = new CreditsafeWsdl.stringArray();
         countries.item = new List<String>();
         countries.item.add(country);
-        System.debug(JSON.serializePretty(countries));
         CreditsafeWsdl.CreditsafeSearchResultV2 searchResult = WsCreditsafe.creditsafeSearchV2(countries, id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name);
         if (searchResult.companies != null && searchResult.companies.item != null) {
             for (CreditsafeWsdl.CreditsafeCompanyV2 company : searchResult.companies.item) {

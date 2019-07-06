@@ -63,7 +63,6 @@ public with sharing class CompanyDetailsControllerTest {
         Test.startTest();
         Object result = CompanyDetailsController.search(searchParams);
         Test.stopTest();
-        System.debug(JSON.serializePretty(result));
 
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
