@@ -8,7 +8,7 @@ public with sharing class CompanyDetailsControllerTest {
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
         List<SearchForDossiersResultDto> serviceResponse = new List<SearchForDossiersResultDto>();
 
-        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"Netherlands","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
+        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"NL","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
         Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
         String trade_name = (String)jsonDeserialized.get('name');
         String city = (String)jsonDeserialized.get('city');
@@ -33,6 +33,7 @@ public with sharing class CompanyDetailsControllerTest {
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
         System.assert(wrapper.state == 'SUCCESS');
+        System.debug(JSON.serializePretty(result));
         System.assert(wrapper.response == serviceResponse);
     }
 
@@ -41,7 +42,7 @@ public with sharing class CompanyDetailsControllerTest {
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
-        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"Netherlands","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
+        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"NL","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
         Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
         String trade_name = (String)jsonDeserialized.get('name');
         String city = (String)jsonDeserialized.get('city');
@@ -62,6 +63,7 @@ public with sharing class CompanyDetailsControllerTest {
         Test.startTest();
         Object result = CompanyDetailsController.search(searchParams);
         Test.stopTest();
+        System.debug(JSON.serializePretty(result));
 
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
@@ -74,7 +76,7 @@ public with sharing class CompanyDetailsControllerTest {
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
-        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"Netherlands","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
+        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"NL","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
         Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
         String trade_name = (String)jsonDeserialized.get('name');
         String city = (String)jsonDeserialized.get('city');

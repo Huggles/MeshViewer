@@ -27,7 +27,7 @@ public with sharing class BusinessServiceImplTest {
     }
 
     @isTest
-    public static void testSearchForDossiers(){
+    public static void testSearchForDutchDossiers(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
@@ -58,7 +58,7 @@ public with sharing class BusinessServiceImplTest {
         mocks.stopStubbing();
 
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
-        List<SearchForDossiersResultDto> results = BusinessService.searchForDossiers(null, null, null, null, null, null, postCode,null, null, null, null, null);
+        List<SearchForDossiersResultDto> results = BusinessService.searchForDossiers('NL', null, null, null, null, null, postCode,null, null, null, null, null);
         System.assertEquals(20, results.size());
     }
 

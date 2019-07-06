@@ -11,6 +11,11 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         if (postcode != null){ // fix for postal code
             postcode = postcode.replaceAll('(\\s+)', '').toUpperCase();
         }
+        if (String.isEmpty(country)) {
+            Exception ex = new CCInputException('Country must be filled when searching for dossiers');
+            ErrorLogUtil.logException(ex);
+            throw ex;
+        }
         List<SearchForDossiersResultDto> resultValue = new List<SearchForDossiersResultDto>();
         if (country == CreditSafe.Country.NL.name()) {
             resultValue = searchForDutchDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
