@@ -20,7 +20,6 @@
      */
     onSearchSubmit: function( component, event, helper ) {
         // check the input
-        debugger;
         var empty = true;
         var components = component.find('searchForm');
         if(components) {
@@ -44,7 +43,6 @@
             // TODO: replace by firing an event so a proper error message can be shown
             component.set('v.error', $A.get('$Label.c.Error_Incomplete'));
         } else {
-            debugger;
             var updateEvent = component.getEvent("dossierSearchSubmitEvent");
             var searchFields = {};
             var components = component.find('searchForm');
@@ -117,7 +115,7 @@
                 for (var i = 0; i < components.length; i++) {
                     var searchFormComponent = components[i];
                     var searchFields = searchFormComponent.get('v.searchFields');
-                    searchFields.Name = record.Name;
+                    searchFields.name = record.Name;
                     searchFormComponent.set('v.searchFields', searchFields);
                     searchFormComponent.handleChangedAccount(record);
                 }

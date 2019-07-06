@@ -4,7 +4,6 @@
 
 ({
     doInit: function (component, event, helper) {
-        debugger;
         var searchFields = component.get('v.searchFields');
         if (!searchFields) {
             searchFields = {};
@@ -21,18 +20,20 @@
         component.set('v.searchFields', searchFields);
     },
     handleChangedAccount: function (component, event, helper) {
-        var params = event.getParams();
+        var params = event.getParam('arguments');
         if (params) {
             var account = params.account;
-            var searchFields = component.get('v.searchFields');
-            if (!searchFields) {
-                searchFields = {};
+            if (account) {
+                var searchFields = component.get('v.searchFields');
+                if (!searchFields) {
+                    searchFields = {};
+                }
+                searchFields.city = account.BillingCity;
+                searchFields.postal_code = account.BillingPostalCode;
+                searchFields.domain = account.Website;
+                searchFields.phone = account.Phone;
+                component.set('v.searchFields', searchFields);
             }
-            searchFields.city = account.BillingCity;
-            searchFields.postal_code = account.BillingPostalCode;
-            searchFields.domain = account.Website;
-            searchFields.phone = account.Phone;
-            component.set('v.searchFields', searchFields);
         }
     }
 });
