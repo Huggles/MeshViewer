@@ -85,20 +85,29 @@
     onCountrySearchChange: function(component, event, helper) {
         // Get the string of the "value" attribute on the selected option
         var country = event.getParam("value");
+        component.set('v.countryToSearch', country);
         // set the search country field
         var components = component.find('searchForm');
+        // works only with two search forms. If we need to add Graydon etc. this needs to be changed
+        var oldSelectedComponent = null;
+        var newSelectedComponent = null;
         if(components) {
             for (var i = 0; i < components.length; i++) {
                 var searchFormComponent = components[i];
-                var searchFields = searchFormComponent.get('v.searchFields');
-                if (!searchFields) {
-                    searchFields = {};
+                var selected = searchFormComponent.get('v.selected');
+                if (selected) {
+                    newSelectedComponent = searchFormComponent;
+                } else {
+                    oldSelectedComponent = searchFormComponent;
                 }
-                searchFields.country = country;
-                searchFormComponent.set('v.searchFields', searchFields);
             }
         }
-        component.set('v.countryToSearch', country);
+        var searchFields = oldSelectedComponent.get('v.searchFields');
+        if (!searchFields) {
+            searchFields = {};
+        }
+        searchFields.country = country;
+        newSelectedComponent.set('v.searchFields', searchFields);
     },
     /**
      * Populate search fields with data from current Account record.
