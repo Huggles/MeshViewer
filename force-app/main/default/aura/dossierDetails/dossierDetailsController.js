@@ -21,8 +21,9 @@
     onSelect : function(component, event, helper) {
         var params = event.getParams();
         // TODO: check why the account Id is missing from the params
-        var callParams = {dossierNumber: params.DossierNumber, establishmentNumber: params.EstablishmentNumber, selectedDataVendor: params.selectedDataVendor, creditSafeId: params.creditSafeNumber};
+        var callParams = {dossierNumber: params.DossierNumber, establishmentNumber: params.EstablishmentNumber, selectedDataVendor: params.selectedDataVendor, creditSafeId: params.creditSafeId};
         // TODO: does this work with CreditSafe?
+        // and is it necessary even?
         component.set('v.selected', params.DossierNumber);
         helper.callServer(component, 'c.createDossier', callParams, function(response) {
             helper.handleCompanyData(component, response);

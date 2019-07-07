@@ -45,7 +45,14 @@
                     </aura:set>
                 </lightning:card>
             </div>
+            <div class="slds-box slds-theme_default">
+                <aura:if isTrue="{!v.simpleRecord.cust_connect__Business_Dossier__c }">
+                    <force:recordView recordId="{!v.simpleRecord.cust_connect__Business_Dossier__c}" />
+                </aura:if>
+            </div>
+            <!--
             <c:PageLayoutRecordDisplay RecordId="{!v.simpleRecord.cust_connect__Business_Dossier__c}" PageLayoutName="Business_Dossier__c-Dutch Business Dossier Layout" objectApiName="cust_connect__Business_Dossier__c" />
+            -->
         </div>
     </div>
 </aura:component>

@@ -17,7 +17,7 @@ public with sharing class SearchForDossiersResultDto {
     @AuraEnabled public String phone { get; set; }
     @AuraEnabled public String creditSafeStatus {get; set;}
     @AuraEnabled public List<String> trade_names { get; set; }
-    @AuraEnabled public String creditSafeNumber { get; set; }
+    @AuraEnabled public String creditSafeId { get; set; }
     @AuraEnabled public Datetime date_last_account { get; set; }
     @AuraEnabled public Datetime date_last_change { get; set; }
     @AuraEnabled public String office_type { get; set; }
@@ -54,7 +54,7 @@ public with sharing class SearchForDossiersResultDto {
             phone = address.telephone;
         }
         creditSafeStatus = creditsafeCompanyV2.status;
-        creditSafeNumber = creditsafeCompanyV2.id;
+        creditSafeId = creditsafeCompanyV2.id;
         date_last_change = creditsafeCompanyV2.date_last_change;
         date_last_account = creditsafeCompanyV2.date_last_account;
         office_type = creditsafeCompanyV2.office_type;
