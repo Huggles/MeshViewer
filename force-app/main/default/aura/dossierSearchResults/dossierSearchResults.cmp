@@ -4,6 +4,7 @@
     <aura:attribute name="selected" type="String" />
     <aura:attribute name="selectedEstablishment" type="String" />
     <aura:attribute name="selectedDataVendor" type="String" />
+    <aura:attribute name="selectedCreditSafeId" type="String" />
 
     <aura:handler name="dossierSelectedEvent" event="c:dossierSelectedEvent" action="{!c.onSelect}" />
     <aura:registerEvent name="dossierSelectionConfirmedEvent" type="c:dossierSelectionConfirmedEvent" />

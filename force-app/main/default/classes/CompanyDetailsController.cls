@@ -42,13 +42,14 @@ public with sharing class CompanyDetailsController {
     }
 
     @AuraEnabled
-    public static Object createDossier(String dossierNumber, String establishmentNumber, String vendor, Id accountId){
+    public static Object createDossier(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor, Id accountId){
+        System.debug('credtSafeId: ' + creditSafeId);
         System.debug('dossierNumber: ' + dossierNumber);
         System.debug('estab nr: ' + establishmentNumber);
         System.debug('vendor ' + vendor);
         System.debug('account id ' + accountId);
         try {
-            InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNumber, accountId);
+            InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(creditSafeId, dossierNumber, establishmentNumber, vendor, accountId);
             return new AuraResponseWrapper(responseDTO);
         } catch (Exception ex) {
             return new AuraResponseWrapper(ex);

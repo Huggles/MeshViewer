@@ -98,11 +98,12 @@ public interface IBusinessService {
      * If more than one duplicate account exist, throws a CCDuplicateException. This method is synchronous so only one dossier
      * can be created since the datavendor only allows one fetch per call
      *
-     * @param dossierNumber
-     * @param establishmentNumber
-     * @param accountId
+     * @param creditSafeId The unique id of the record in credit safe
+     * @param dossierNumber The Chamber of Commerce number in the Netherlands. Used for Company INfo
+     * @param establishmentNumber The establishment number used for Company.info. Unique combined with dossier number
+     * @param accountId The id of the account this should be related to
      *
      * @return
      */
-    InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId);
+    InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor, Id accountId);
 }

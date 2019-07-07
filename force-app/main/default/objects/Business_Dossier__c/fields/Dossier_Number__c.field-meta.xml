@@ -3,8 +3,9 @@
     <fullName>Dossier_Number__c</fullName>
     <description>The Chamber of Commerce number, consisting of 8 numbers (e.g., 00123456).  This number is unique and will not change as long as the organisation exists.  Subsidiaries (‘Nevenvestigingen’) of the organisation are registered using the same dossier number.</description>
     <externalId>true</externalId>
-    <label>Chamber of Commerce Number</label>
-    <length>8</length>
+    <inlineHelpText>The registration number under which the organisation is registered in the company&#39;s country. For the Netherlands the Chamber of Commerce Number.</inlineHelpText>
+    <label>Registration Number</label>
+    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

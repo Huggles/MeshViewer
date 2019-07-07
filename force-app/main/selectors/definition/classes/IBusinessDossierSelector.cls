@@ -15,9 +15,18 @@ public interface IBusinessDossierSelector extends fflib_ISObjectSelector {
      *
      * @param vatNumber
      *
-     * @return a list with the found dossiers (empty if none has been found)
+     * @return a list with the found dossiers (empty if none have been found)
      */
     List<Business_Dossier__c> selectByVatNumber(String vatNumber, Boolean enforceFLS);
+
+    /**
+     * Selects all dossiers with the same credit safe id
+     *
+     * @param creditSafeId
+     *
+     * @return a list with the found dossiers (empty if none have been found)
+     */
+    List<Business_Dossier__c> selectByCreditSafeId(String creditSafeId, Boolean enforceFLS);
 
     List<Business_Dossier__c> selectById(set<Id> dosserIdSet);
 

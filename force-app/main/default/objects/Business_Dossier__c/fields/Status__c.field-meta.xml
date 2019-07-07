@@ -14,39 +14,7 @@ DIP:	Boolean indicating if the business is currently registered as Debtor-in-Pos
     <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Import</fullName>
-                <default>false</default>
-                <label>Import</label>
-            </value>
-            <value>
-                <fullName>Export</fullName>
-                <default>false</default>
-                <label>Export</label>
-            </value>
-            <value>
-                <fullName>Economically Active</fullName>
-                <default>false</default>
-                <label>Economically Active</label>
-            </value>
-            <value>
-                <fullName>Non Mailing</fullName>
-                <default>false</default>
-                <label>Non Mailing</label>
-            </value>
-            <value>
-                <fullName>Bankruptcy</fullName>
-                <default>false</default>
-                <label>Bankruptcy</label>
-            </value>
-            <value>
-                <fullName>DIP</fullName>
-                <default>false</default>
-                <label>DIP</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>Organisation_Status</valueSetName>
     </valueSet>
     <visibleLines>4</visibleLines>
 </CustomField>

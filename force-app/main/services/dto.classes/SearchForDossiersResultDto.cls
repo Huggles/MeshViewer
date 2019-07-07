@@ -21,7 +21,11 @@ public with sharing class SearchForDossiersResultDto {
     @AuraEnabled public Datetime date_last_account { get; set; }
     @AuraEnabled public Datetime date_last_change { get; set; }
     @AuraEnabled public String office_type { get; set; }
-    
+    @AuraEnabled public String establishment_full_address { get; set; }
+    @AuraEnabled public String establishment_house_nr { get; set; }
+    @AuraEnabled public String establishment_postal_code { get; set; }
+
+
     public SearchForDossiersResultDto(DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2) {
         vendor = CustomerConnect.DataVendor.COMPANY_INFO.name();
         dossier_number = dutchBusinessReferenceV2.dossier_number;
@@ -42,8 +46,11 @@ public with sharing class SearchForDossiersResultDto {
         creditSafeCountry = creditsafeCompanyV2.country;
         CreditsafeWsdl.CreditsafeAddressV2 address = creditsafeCompanyV2.address;
         if (address != null) {
-            establishment_street = address.street;
             establishment_city = address.city;
+            establishment_full_address = address.full_address;
+            establishment_house_nr = address.house_number;
+            establishment_postal_code = address.postal_code;
+            establishment_street = address.street;
             phone = address.telephone;
         }
         creditSafeStatus = creditsafeCompanyV2.status;
@@ -57,7 +64,6 @@ public with sharing class SearchForDossiersResultDto {
                 trade_names.add(str);
             }
         }
-        JSON.serializePretty(this);
 
     }
 }

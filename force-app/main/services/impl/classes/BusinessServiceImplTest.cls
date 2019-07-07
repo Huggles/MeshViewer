@@ -79,7 +79,7 @@ public with sharing class BusinessServiceImplTest {
         Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         // create something we can update
-        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dossierNumber, establishmentNUmber, CustomerConnect.DataVendor.COMPANY_INFO.name(), accountId);
 
         Test.startTest();
         {
@@ -114,7 +114,7 @@ public with sharing class BusinessServiceImplTest {
         Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         // create something we can update
-        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dataVendorDossierOriginal.dossier_number, dataVendorDossierOriginal.establishment_number, accountId);
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dataVendorDossierOriginal.dossier_number, dataVendorDossierOriginal.establishment_number, CustomerConnect.DataVendor.COMPANY_INFO.name(), accountId);
 
         Test.startTest();
         {
@@ -157,7 +157,7 @@ public with sharing class BusinessServiceImplTest {
         {
             Boolean exceptionThrown = false;
             try {
-                responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, null);
+                responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dossierNumber, establishmentNUmber, CustomerConnect.DataVendor.COMPANY_INFO.name(), null);
             } catch (CCDuplicateException e) {
                 exceptionThrown = true;
             }
@@ -191,7 +191,7 @@ public with sharing class BusinessServiceImplTest {
         {
             Boolean exceptionThrown = false;
             try {
-                responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, null);
+                responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dossierNumber, establishmentNUmber, CustomerConnect.DataVendor.COMPANY_INFO.name(), null);
             } catch (CustomException e) {
                 exceptionThrown = true;
             }
@@ -223,7 +223,7 @@ public with sharing class BusinessServiceImplTest {
         InsertDossiersFromDataVendorResponseDTO responseDTO = null;
         Test.startTest();
         {
-            responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, null);
+            responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dossierNumber, establishmentNUmber, CustomerConnect.DataVendor.COMPANY_INFO.name(), null);
             System.assert(responseDTO != null);
             System.assert(responseDTO.dossierExisted);
             System.assert(responseDTO.dossier == existingDossier);
@@ -249,7 +249,7 @@ public with sharing class BusinessServiceImplTest {
         InsertDossiersFromDataVendorResponseDTO responseDTO = null;
         Test.startTest();
         {
-            responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, acc.Id);
+            responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dossierNumber, establishmentNUmber, CustomerConnect.DataVendor.COMPANY_INFO.name(), acc.Id);
         }
         Test.stopTest();
         System.assert(responseDTO != null);
@@ -450,7 +450,7 @@ public with sharing class BusinessServiceImplTest {
 
         Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
-        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dossierNumber, establishmentNUmber, CustomerConnect.DataVendor.COMPANY_INFO.name(), accountId);
         Test.startTest();
         {
             System.assert([SELECT Id FROM Business_Dossier__c].size() == 1);
@@ -481,7 +481,7 @@ public with sharing class BusinessServiceImplTest {
         InsertDossiersFromDataVendorResponseDTO responseDTO = null;
         Test.startTest();
         {
-            responseDTO = BusinessService.insertSingleDossierFromDataVendorData(dossierNumber, establishmentNUmber, accountId);
+            responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dossierNumber, establishmentNUmber, CustomerConnect.DataVendor.COMPANY_INFO.name(), accountId);
         }
         Test.stopTest();
         System.assert(responseDTO != null);

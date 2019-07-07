@@ -118,12 +118,12 @@ public with sharing class CompanyDetailsControllerTest {
 
         mocks.startStubbing();
         InsertDossiersFromDataVendorResponseDTO responseDTO = new InsertDossiersFromDataVendorResponseDTO(new Business_Dossier__c(), false);
-        mocks.when(mockService.insertSingleDossierFromDataVendorData('1234', '1234', null)).thenReturn(responseDTO);
+        mocks.when(mockService.insertSingleDossierFromDataVendorData(null, '1234', '1234', CustomerConnect.DataVendor.COMPANY_INFO.name(), null)).thenReturn(responseDTO);
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
         Test.startTest();
-        Object result = CompanyDetailsController.createDossier('1234', '1234', null);
+        Object result = CompanyDetailsController.createDossier(null, '1234', '1234', CustomerConnect.DataVendor.COMPANY_INFO.name(), null);
         Test.stopTest();
 
         System.assert(result instanceof  AuraResponseWrapper);
@@ -138,12 +138,12 @@ public with sharing class CompanyDetailsControllerTest {
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
 
         mocks.startStubbing();
-        mocks.when(mockService.insertSingleDossierFromDataVendorData('1234', '1234', null)).thenThrow(new CustomException('exception'));
+        mocks.when(mockService.insertSingleDossierFromDataVendorData(null, '1234', '1234', CustomerConnect.DataVendor.COMPANY_INFO.name(), null)).thenThrow(new CustomException('exception'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
         Test.startTest();
-        Object result = CompanyDetailsController.createDossier('1234', '1234', null);
+        Object result = CompanyDetailsController.createDossier(null, '1234', '1234', CustomerConnect.DataVendor.COMPANY_INFO.name(), null);
         Test.stopTest();
 
         System.assert(result instanceof  AuraResponseWrapper);

@@ -7,7 +7,7 @@
          */
         onClick : function(component, event, helper) {
                 var record = component.get("v.result");
-                debugger;'cred'
+                debugger;
                 // component.set('v.style', 'slds-tile slds-media selected');
                 // component.set('v.variant', 'inverse');
                 component.set('v.icon', 'action:approval');
@@ -17,6 +17,7 @@
                 updateEvent.setParams({ "selectedDataVendor": record.vendor});
                 updateEvent.setParams({ "DossierNumber": record.dossier_number });
                 updateEvent.setParams({ "EstablishmentNumber": record.establishment_number });
+                updateEvent.setParams({ "creditSafeId": record.creditSafeNumber});
                 // Fire the event so all the components can hear it
                 updateEvent.fire();
         }

@@ -16,8 +16,8 @@ public with sharing class BusinessService {
         return newInstance().setVatNumber(dossierNumber);
     }
 
-    public static InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId) {
-        return newInstance().insertSingleDossierFromDataVendorData(dossierNumber, establishmentNumber, accountId);
+    public static InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor,  Id accountId) {
+        return newInstance().insertSingleDossierFromDataVendorData(creditSafeId, dossierNumber, establishmentNumber, vendor, accountId);
     }
 
     public static IBusinessService newInstance() {
