@@ -58,6 +58,16 @@
         $A.enqueueAction(action);
     },
     handleSuccessFulLoad: function(component, response) {
+        for (var i = 0; i < response.length; i++) {
+            if (!response.cust_connect__Type__c) response.cust_connect__Type__c = '';
+            if (!response.cust_connect__Street__c) response.cust_connect__Street__c = '';
+            if (!response.cust_connect__House_Number__c) response.cust_connect__House_Number__c = '';
+            if (!response.cust_connect__House_Number_Addition__c) response.cust_connect__House_Number_Addition__c = '';
+            if (!response.cust_connect__Postcode__c) response.cust_connect__Postcode__c = '';
+            if (!response.cust_connect__City__c) response.cust_connect__City__c = '';
+            if (!response.cust_connect__Country__c) response.cust_connect__Country__c = '';
+
+        }
         component.set('v.data', response);
     },
     formattedToast : function(component, msg) {

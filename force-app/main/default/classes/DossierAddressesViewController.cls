@@ -4,7 +4,8 @@
 
 public with sharing class DossierAddressesViewController {
 
-    public AuraResponseWrapper getAddresses(Id dossierId) {
+    @AuraEnabled
+    public static Object getAddresses(String dossierId) {
         AuraResponseWrapper wrapper = new AuraResponseWrapper(DossierAddressSelector.newInstance().selectByDossierId(new Set<Id>{dossierId}));
         return wrapper;
     }

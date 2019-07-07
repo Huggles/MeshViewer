@@ -4,16 +4,17 @@
 
 ({
     onInit: function (component, event, helper) {
-        cmp.set('v.columns', [
-            {label: 'Type', fieldName: 'Type__c', type: 'text'},
-            {label: 'Street', fieldName: 'Street__c', type: 'text'},
-            {label: 'House Number', fieldName: 'House_Number__c', type: 'text'},
-            {label: 'House Nr. Addition', fieldName: 'House_Number_Addition__c', type: 'text'},
-            {label: 'Postal Code', fieldName: 'Postcode__c', type: 'text', },
-            {label: 'City', fieldName: 'City__c', type: 'text'},
-            {label: 'Country', fieldName: 'Country__c', type: 'text'},
+        component.set('v.columns', [
+            {label: 'Type', fieldName: 'cust_connect__Type__c', type: 'text'},
+            {label: 'Street', fieldName: 'cust_connect__Street__c', type: 'text'},
+            {label: 'House Number', fieldName: 'cust_connect__House_Number__c', type: 'text'},
+            {label: 'House Nr. Addition', fieldName: 'cust_connect__House_Number_Addition__c', type: 'text'},
+            {label: 'Postal Code', fieldName: 'cust_connect__Postcode__c', type: 'text', },
+            {label: 'City', fieldName: 'cust_connect__City__c', type: 'text'},
+            {label: 'Country', fieldName: 'cust_connect__Country__c', type: 'text'},
         ]);
-        callServer(component, 'c.getAddresses', {dossierId: component.get('dossierId')}, function(response) {
+        var dossierId = component.get('v.dossierId');
+        helper.callServer(component, 'c.getAddresses', {dossierId: dossierId}, function(response) {
             helper.handleSuccessFulLoad(component, response);
         });
     }

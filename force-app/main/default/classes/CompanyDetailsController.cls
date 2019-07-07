@@ -7,7 +7,6 @@ public with sharing class CompanyDetailsController {
 
     @AuraEnabled
     public static Object search(String searchParams){
-        System.debug(searchParams);
         if(searchParams!=null){
             try{
                 // List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search);
