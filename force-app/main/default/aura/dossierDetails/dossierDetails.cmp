@@ -48,6 +48,7 @@
             <div class="slds-box slds-theme_default">
                 <aura:if isTrue="{!v.simpleRecord.cust_connect__Business_Dossier__c }">
                     <force:recordView recordId="{!v.simpleRecord.cust_connect__Business_Dossier__c}" />
+                    <c:DossierAddressesView dossierId="{!v.simpleRecord.cust_connect__Business_Dossier__c}"/>
                 </aura:if>
             </div>
             <!--

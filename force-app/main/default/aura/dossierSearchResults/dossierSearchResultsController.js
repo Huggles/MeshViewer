@@ -27,7 +27,7 @@
     onConfirm : function(component, event, helper) {
         // Getting the event
         var updateEvent = component.getEvent("dossierSelectionConfirmedEvent");
-        // Setting the param on the event 
+        // Setting the param on the event
         updateEvent.setParams({ "DossierNumber": component.get('v.selected'), "EstablishmentNumber": component.get('v.selectedEstablishment'), "selectedDataVendor": component.get('v.selectedDataVendor') , "creditSafeId": component.get('v.selectedCreditSafeId') });
         // Fire the event so all the components can hear it
         updateEvent.fire();
