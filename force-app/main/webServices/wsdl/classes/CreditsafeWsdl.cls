@@ -2480,28 +2480,28 @@ public class CreditsafeWsdl {
         private String HeaderAuthenticate_hns = 'HeaderAuthenticate=http://www.webservices.nl/soap/';
         private String HeaderLogin_hns = 'HeaderLogin=http://www.webservices.nl/soap/';
         private String[] ns_map_type_info = new String[]{'http://www.webservices.nl/soap/', 'CreditsafeWsdl'};
-//        public CreditsafeWsdl.CreditsafeCompanyUpdatePagedResult creditsafeMonitorGetUpdatedCompanies(Date changed_since,Integer page_x) {
-//            CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesRequestType request_x = new CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesRequestType();
-//            request_x.changed_since = changed_since;
-//            request_x.page_x = page_x;
-//            CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesResponseType response_x;
-//            Map<String, CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorGetUpdatedCompanies',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeMonitorGetUpdatedCompanies',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeMonitorGetUpdatedCompaniesResponse',
-//              'CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//            return response_x.out;
-//        }
+        public CreditsafeWsdl.CreditsafeCompanyUpdatePagedResult creditsafeMonitorGetUpdatedCompanies(Date changed_since,Integer page_x) {
+            CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesRequestType request_x = new CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesRequestType();
+            request_x.changed_since = changed_since;
+            request_x.page_x = page_x;
+            CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesResponseType response_x;
+            Map<String, CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorGetUpdatedCompanies',
+              'http://www.webservices.nl/soap/',
+              'creditsafeMonitorGetUpdatedCompanies',
+              'http://www.webservices.nl/soap/',
+              'creditsafeMonitorGetUpdatedCompaniesResponse',
+              'CreditsafeWsdl.creditsafeMonitorGetUpdatedCompaniesResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
         public CreditsafeWsdl.CreditsafeSearchResultV2 creditsafeSearchV2(CreditsafeWsdl.stringArray countries,String id,String status,String registration_number,String registration_type,String vat_number,String province,String city,String street,String postal_code,String name) {
             CreditsafeWsdl.creditsafeSearchV2RequestType request_x = new CreditsafeWsdl.creditsafeSearchV2RequestType();
             request_x.countries = countries;
@@ -2533,190 +2533,190 @@ public class CreditsafeWsdl {
             response_x = response_map_x.get('response_x');
             return response_x.out;
         }
-//        public CreditsafeWsdl.CreditsafeSearchCriteria creditsafeSearchCriteria(CreditsafeWsdl.stringArray countries) {
-//            CreditsafeWsdl.creditsafeSearchCriteriaRequestType request_x = new CreditsafeWsdl.creditsafeSearchCriteriaRequestType();
-//            request_x.countries = countries;
-//            CreditsafeWsdl.creditsafeSearchCriteriaResponseType response_x;
-//            Map<String, CreditsafeWsdl.creditsafeSearchCriteriaResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeSearchCriteriaResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchCriteria',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeSearchCriteria',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeSearchCriteriaResponse',
-//              'CreditsafeWsdl.creditsafeSearchCriteriaResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//            return response_x.out;
-//        }
-//        public String login(String username,String password) {
-//            CreditsafeWsdl.loginRequestType request_x = new CreditsafeWsdl.loginRequestType();
-//            request_x.username = username;
-//            request_x.password = password;
-//            CreditsafeWsdl.loginResponseType response_x;
-//            Map<String, CreditsafeWsdl.loginResponseType> response_map_x = new Map<String, CreditsafeWsdl.loginResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/login',
-//              'http://www.webservices.nl/soap/',
-//              'login',
-//              'http://www.webservices.nl/soap/',
-//              'loginResponse',
-//              'CreditsafeWsdl.loginResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//            return response_x.reactid;
-//        }
-//        public CreditsafeWsdl.CreditsafeCompanyReportFullV2 creditsafeGetReportFullV2(String company_id,String language,String reason) {
-//            CreditsafeWsdl.creditsafeGetReportFullV2RequestType request_x = new CreditsafeWsdl.creditsafeGetReportFullV2RequestType();
-//            request_x.company_id = company_id;
-//            request_x.language = language;
-//            request_x.reason = reason;
-//            CreditsafeWsdl.creditsafeGetReportFullV2ResponseType response_x;
-//            Map<String, CreditsafeWsdl.creditsafeGetReportFullV2ResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeGetReportFullV2ResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeGetReportFullV2',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeGetReportFullV2Response',
-//              'CreditsafeWsdl.creditsafeGetReportFullV2ResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//            return response_x.out;
-//        }
-//        public CreditsafeWsdl.CreditsafeCompanyPagedResult creditsafeSearch(String country,String id,String registration_number,String status,String office_type,String name,String name_match_type,String address,String address_match_type,String street,String house_number,String city,String postal_code,String province,String phone_number,Integer page_x) {
-//            CreditsafeWsdl.creditsafeSearchRequestType request_x = new CreditsafeWsdl.creditsafeSearchRequestType();
-//            request_x.country = country;
-//            request_x.id = id;
-//            request_x.registration_number = registration_number;
-//            request_x.status = status;
-//            request_x.office_type = office_type;
-//            request_x.name = name;
-//            request_x.name_match_type = name_match_type;
-//            request_x.address = address;
-//            request_x.address_match_type = address_match_type;
-//            request_x.street = street;
-//            request_x.house_number = house_number;
-//            request_x.city = city;
-//            request_x.postal_code = postal_code;
-//            request_x.province = province;
-//            request_x.phone_number = phone_number;
-//            request_x.page_x = page_x;
-//            CreditsafeWsdl.creditsafeSearchResponseType response_x;
-//            Map<String, CreditsafeWsdl.creditsafeSearchResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeSearchResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeSearch',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeSearchResponse',
-//              'CreditsafeWsdl.creditsafeSearchResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//            return response_x.out;
-//        }
-//        public void creditsafeMonitorAddCompany(String company_id) {
-//            CreditsafeWsdl.creditsafeMonitorAddCompanyRequestType request_x = new CreditsafeWsdl.creditsafeMonitorAddCompanyRequestType();
-//            request_x.company_id = company_id;
-//            CreditsafeWsdl.creditsafeMonitorAddCompanyResponseType response_x;
-//            Map<String, CreditsafeWsdl.creditsafeMonitorAddCompanyResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeMonitorAddCompanyResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorAddCompany',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeMonitorAddCompany',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeMonitorAddCompanyResponse',
-//              'CreditsafeWsdl.creditsafeMonitorAddCompanyResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//        }
-//        public void logout() {
-//            CreditsafeWsdl.logoutRequestType request_x = new CreditsafeWsdl.logoutRequestType();
-//            CreditsafeWsdl.logoutResponseType response_x;
-//            Map<String, CreditsafeWsdl.logoutResponseType> response_map_x = new Map<String, CreditsafeWsdl.logoutResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/logout',
-//              'http://www.webservices.nl/soap/',
-//              'logout',
-//              'http://www.webservices.nl/soap/',
-//              'logoutResponse',
-//              'CreditsafeWsdl.logoutResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//        }
-//        public CreditsafeWsdl.CreditsafeCompanyReportFull creditsafeGetReportFull(String company_id,String language,String document) {
-//            CreditsafeWsdl.creditsafeGetReportFullRequestType request_x = new CreditsafeWsdl.creditsafeGetReportFullRequestType();
-//            request_x.company_id = company_id;
-//            request_x.language = language;
-//            request_x.document = document;
-//            CreditsafeWsdl.creditsafeGetReportFullResponseType response_x;
-//            Map<String, CreditsafeWsdl.creditsafeGetReportFullResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeGetReportFullResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFull',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeGetReportFull',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeGetReportFullResponse',
-//              'CreditsafeWsdl.creditsafeGetReportFullResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//            return response_x.out;
-//        }
-//        public void creditsafeMonitorRemoveCompany(String company_id) {
-//            CreditsafeWsdl.creditsafeMonitorRemoveCompanyRequestType request_x = new CreditsafeWsdl.creditsafeMonitorRemoveCompanyRequestType();
-//            request_x.company_id = company_id;
-//            CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType response_x;
-//            Map<String, CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType>();
-//            response_map_x.put('response_x', response_x);
-//            WebServiceCallout.invoke(
-//              this,
-//              request_x,
-//              response_map_x,
-//              new String[]{endpoint_x,
-//              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorRemoveCompany',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeMonitorRemoveCompany',
-//              'http://www.webservices.nl/soap/',
-//              'creditsafeMonitorRemoveCompanyResponse',
-//              'CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType'}
-//            );
-//            response_x = response_map_x.get('response_x');
-//        }
+        public CreditsafeWsdl.CreditsafeSearchCriteria creditsafeSearchCriteria(CreditsafeWsdl.stringArray countries) {
+            CreditsafeWsdl.creditsafeSearchCriteriaRequestType request_x = new CreditsafeWsdl.creditsafeSearchCriteriaRequestType();
+            request_x.countries = countries;
+            CreditsafeWsdl.creditsafeSearchCriteriaResponseType response_x;
+            Map<String, CreditsafeWsdl.creditsafeSearchCriteriaResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeSearchCriteriaResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchCriteria',
+              'http://www.webservices.nl/soap/',
+              'creditsafeSearchCriteria',
+              'http://www.webservices.nl/soap/',
+              'creditsafeSearchCriteriaResponse',
+              'CreditsafeWsdl.creditsafeSearchCriteriaResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public String login(String username,String password) {
+            CreditsafeWsdl.loginRequestType request_x = new CreditsafeWsdl.loginRequestType();
+            request_x.username = username;
+            request_x.password = password;
+            CreditsafeWsdl.loginResponseType response_x;
+            Map<String, CreditsafeWsdl.loginResponseType> response_map_x = new Map<String, CreditsafeWsdl.loginResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/login',
+              'http://www.webservices.nl/soap/',
+              'login',
+              'http://www.webservices.nl/soap/',
+              'loginResponse',
+              'CreditsafeWsdl.loginResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.reactid;
+        }
+        public CreditsafeWsdl.CreditsafeCompanyReportFullV2 creditsafeGetReportFullV2(String company_id,String language,String reason) {
+            CreditsafeWsdl.creditsafeGetReportFullV2RequestType request_x = new CreditsafeWsdl.creditsafeGetReportFullV2RequestType();
+            request_x.company_id = company_id;
+            request_x.language = language;
+            request_x.reason = reason;
+            CreditsafeWsdl.creditsafeGetReportFullV2ResponseType response_x;
+            Map<String, CreditsafeWsdl.creditsafeGetReportFullV2ResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeGetReportFullV2ResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2',
+              'http://www.webservices.nl/soap/',
+              'creditsafeGetReportFullV2',
+              'http://www.webservices.nl/soap/',
+              'creditsafeGetReportFullV2Response',
+              'CreditsafeWsdl.creditsafeGetReportFullV2ResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public CreditsafeWsdl.CreditsafeCompanyPagedResult creditsafeSearch(String country,String id,String registration_number,String status,String office_type,String name,String name_match_type,String address,String address_match_type,String street,String house_number,String city,String postal_code,String province,String phone_number,Integer page_x) {
+            CreditsafeWsdl.creditsafeSearchRequestType request_x = new CreditsafeWsdl.creditsafeSearchRequestType();
+            request_x.country = country;
+            request_x.id = id;
+            request_x.registration_number = registration_number;
+            request_x.status = status;
+            request_x.office_type = office_type;
+            request_x.name = name;
+            request_x.name_match_type = name_match_type;
+            request_x.address = address;
+            request_x.address_match_type = address_match_type;
+            request_x.street = street;
+            request_x.house_number = house_number;
+            request_x.city = city;
+            request_x.postal_code = postal_code;
+            request_x.province = province;
+            request_x.phone_number = phone_number;
+            request_x.page_x = page_x;
+            CreditsafeWsdl.creditsafeSearchResponseType response_x;
+            Map<String, CreditsafeWsdl.creditsafeSearchResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeSearchResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch',
+              'http://www.webservices.nl/soap/',
+              'creditsafeSearch',
+              'http://www.webservices.nl/soap/',
+              'creditsafeSearchResponse',
+              'CreditsafeWsdl.creditsafeSearchResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public void creditsafeMonitorAddCompany(String company_id) {
+            CreditsafeWsdl.creditsafeMonitorAddCompanyRequestType request_x = new CreditsafeWsdl.creditsafeMonitorAddCompanyRequestType();
+            request_x.company_id = company_id;
+            CreditsafeWsdl.creditsafeMonitorAddCompanyResponseType response_x;
+            Map<String, CreditsafeWsdl.creditsafeMonitorAddCompanyResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeMonitorAddCompanyResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorAddCompany',
+              'http://www.webservices.nl/soap/',
+              'creditsafeMonitorAddCompany',
+              'http://www.webservices.nl/soap/',
+              'creditsafeMonitorAddCompanyResponse',
+              'CreditsafeWsdl.creditsafeMonitorAddCompanyResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+        }
+        public void logout() {
+            CreditsafeWsdl.logoutRequestType request_x = new CreditsafeWsdl.logoutRequestType();
+            CreditsafeWsdl.logoutResponseType response_x;
+            Map<String, CreditsafeWsdl.logoutResponseType> response_map_x = new Map<String, CreditsafeWsdl.logoutResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/logout',
+              'http://www.webservices.nl/soap/',
+              'logout',
+              'http://www.webservices.nl/soap/',
+              'logoutResponse',
+              'CreditsafeWsdl.logoutResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+        }
+        public CreditsafeWsdl.CreditsafeCompanyReportFull creditsafeGetReportFull(String company_id,String language,String document) {
+            CreditsafeWsdl.creditsafeGetReportFullRequestType request_x = new CreditsafeWsdl.creditsafeGetReportFullRequestType();
+            request_x.company_id = company_id;
+            request_x.language = language;
+            request_x.document = document;
+            CreditsafeWsdl.creditsafeGetReportFullResponseType response_x;
+            Map<String, CreditsafeWsdl.creditsafeGetReportFullResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeGetReportFullResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFull',
+              'http://www.webservices.nl/soap/',
+              'creditsafeGetReportFull',
+              'http://www.webservices.nl/soap/',
+              'creditsafeGetReportFullResponse',
+              'CreditsafeWsdl.creditsafeGetReportFullResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public void creditsafeMonitorRemoveCompany(String company_id) {
+            CreditsafeWsdl.creditsafeMonitorRemoveCompanyRequestType request_x = new CreditsafeWsdl.creditsafeMonitorRemoveCompanyRequestType();
+            request_x.company_id = company_id;
+            CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType response_x;
+            Map<String, CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorRemoveCompany',
+              'http://www.webservices.nl/soap/',
+              'creditsafeMonitorRemoveCompany',
+              'http://www.webservices.nl/soap/',
+              'creditsafeMonitorRemoveCompanyResponse',
+              'CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+        }
         /***** METHODS NEEDED IN IMPL */
 
         /**
