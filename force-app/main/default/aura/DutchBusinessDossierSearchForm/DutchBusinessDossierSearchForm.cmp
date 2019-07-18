@@ -1,0 +1,52 @@
+<!--
+ - Created by jaapbranderhorst on 2019-07-03.
+ -->
+
+<aura:component description="DutchBusinessDossierSearchForm" implements="c:ISearchForm">
+    <aura:attribute name="searchFields" type="Object" description="The search fields to be filled"/>
+    <aura:attribute name="account" type="Account" description="the account that is used to prefill the search fields"/>
+    <aura:attribute name="selected" type="Boolean" description="true if a country has been selected for which the implementing component is the search form"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-form slds-form_stacked">
+        <lightning:layout class="slds-wrap" multipleRows="true">
+            <lightning:layoutItem size="12">
+                <lightning:layout>
+                    <lightning:layoutItem size="12">
+                        <lightning:input label="{!$Label.c.Search_Trade_Name}" value="{!v.searchFields.name}" type="text" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout class="slds-wrap" multipleRows="true">
+                    <lightning:layoutItem flexibility="grow">
+                        <lightning:input class="slds-p-around_large slds-align_absolute-center" label="{!$Label.c.Search_Domain}" value="{!v.searchFields.domain}" type="text" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem size="6">
+                        <lightning:input label="{!$Label.c.Search_Street}" value="{!v.searchFields.street}" type="text" variant="standard"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3">
+                        <lightning:input label="{!$Label.c.Search_House_Nr}" value="{!v.searchFields.house_number}" type="text" variant="standard"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="3">
+                        <lightning:input label="Addition" value="{!v.searchFields.house_number_addition}" type="text" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem size="4">
+                        <lightning:input label="{!$Label.c.Search_Postal_Code}" value="{!v.searchFields.postal_code}" type="text" variant="standard"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="8">
+                        <lightning:input label="{!$Label.c.Search_City}" value="{!v.searchFields.city}" type="text" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout>
+                    <lightning:layoutItem size="12">
+                        <lightning:input label="{!$Label.c.Search_Phone}" value="{!v.searchFields.phone}" type="text" variant="standard"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

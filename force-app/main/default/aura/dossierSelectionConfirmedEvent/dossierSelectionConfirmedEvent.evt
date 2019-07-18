@@ -1,4 +1,6 @@
 <aura:event type="Component" description="Event template">
     <aura:attribute name="DossierNumber" type="Object"/> 
-    <aura:attribute name="EstablishmentNumber" type="Object"/>    
+    <aura:attribute name="EstablishmentNumber" type="Object"/>
+    <aura:attribute name="selectedDataVendor" type="String" />
+    <aura:attribute name="creditSafeId" type="String"/>
 </aura:event>

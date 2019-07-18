@@ -8,7 +8,7 @@ public with sharing class CompanyDetailsControllerTest {
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
         List<SearchForDossiersResultDto> serviceResponse = new List<SearchForDossiersResultDto>();
 
-        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"Netherlands","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
+        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"NL","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
         Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
         String trade_name = (String)jsonDeserialized.get('name');
         String city = (String)jsonDeserialized.get('city');
@@ -20,8 +20,9 @@ public with sharing class CompanyDetailsControllerTest {
         String domain_name = (String)jsonDeserialized.get('domain');
 
         mocks.startStubbing();
-        // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenReturn(serviceResponse);
+//        List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name);
+
+        mocks.when(mockService.searchForDossiers('NL', trade_name, null, null, city, street, postcode, house_number, house_number_addition, null, telephone_number, domain_name)).thenReturn(serviceResponse);
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -32,6 +33,7 @@ public with sharing class CompanyDetailsControllerTest {
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
         System.assert(wrapper.state == 'SUCCESS');
+        System.debug(JSON.serializePretty(result));
         System.assert(wrapper.response == serviceResponse);
     }
 
@@ -40,7 +42,7 @@ public with sharing class CompanyDetailsControllerTest {
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
-        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"Netherlands","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
+        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"NL","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
         Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
         String trade_name = (String)jsonDeserialized.get('name');
         String city = (String)jsonDeserialized.get('city');
@@ -53,7 +55,8 @@ public with sharing class CompanyDetailsControllerTest {
 
         mocks.startStubbing();
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CCException('test'));
+ //       mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CCException('test'));
+        mocks.when(mockService.searchForDossiers('NL', trade_name, null, null, city, street, postcode, house_number, house_number_addition, null, telephone_number, domain_name)).thenThrow(new CCException('test'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -72,7 +75,7 @@ public with sharing class CompanyDetailsControllerTest {
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
-        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"Netherlands","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
+        String searchParams = '{"street":"Mendelssohnstraat","city":"Utrecht","postal_code":"3533XG","country":"NL","name":"Appsolutely ","phone":"+31613341224","domain":"appsolutely.nl", "house_number": "1", "house_number_addition": "a"}';
         Map<String, Object> jsonDeserialized = (Map<String, Object>)JSON.deserializeUntyped(searchParams);
         String trade_name = (String)jsonDeserialized.get('name');
         String city = (String)jsonDeserialized.get('city');
@@ -85,7 +88,7 @@ public with sharing class CompanyDetailsControllerTest {
 
         mocks.startStubbing();
         // (String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
-        mocks.when(mockService.searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false)).thenThrow(new CustomException(Label.WSCall_Generic_UI_Exception));
+        mocks.when(mockService.searchForDossiers('NL', trade_name, null, null, city, street, postcode, house_number, house_number_addition, null, telephone_number, domain_name)).thenThrow(new CustomException(Label.WSCall_Generic_UI_Exception));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
@@ -115,12 +118,12 @@ public with sharing class CompanyDetailsControllerTest {
 
         mocks.startStubbing();
         InsertDossiersFromDataVendorResponseDTO responseDTO = new InsertDossiersFromDataVendorResponseDTO(new Business_Dossier__c(), false);
-        mocks.when(mockService.insertSingleDossierFromDataVendorData('1234', '1234', null)).thenReturn(responseDTO);
+        mocks.when(mockService.insertSingleDossierFromDataVendorData(null, '1234', '1234', CustomerConnect.DataVendor.COMPANY_INFO.name(), null)).thenReturn(responseDTO);
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
         Test.startTest();
-        Object result = CompanyDetailsController.createDossier('1234', '1234', null);
+        Object result = CompanyDetailsController.createDossier(null, '1234', '1234', CustomerConnect.DataVendor.COMPANY_INFO.name(), null);
         Test.stopTest();
 
         System.assert(result instanceof  AuraResponseWrapper);
@@ -135,12 +138,12 @@ public with sharing class CompanyDetailsControllerTest {
         IBusinessService mockService = (IBusinessService)mocks.mock(IBusinessService.class);
 
         mocks.startStubbing();
-        mocks.when(mockService.insertSingleDossierFromDataVendorData('1234', '1234', null)).thenThrow(new CustomException('exception'));
+        mocks.when(mockService.insertSingleDossierFromDataVendorData(null, '1234', '1234', CustomerConnect.DataVendor.COMPANY_INFO.name(), null)).thenThrow(new CustomException('exception'));
         mocks.stopStubbing();
         Application.Service.setMock(IBusinessService.class, mockService);
 
         Test.startTest();
-        Object result = CompanyDetailsController.createDossier('1234', '1234', null);
+        Object result = CompanyDetailsController.createDossier(null, '1234', '1234', CustomerConnect.DataVendor.COMPANY_INFO.name(), null);
         Test.stopTest();
 
         System.assert(result instanceof  AuraResponseWrapper);

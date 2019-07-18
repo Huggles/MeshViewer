@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Creditsafe_Id__c</fullName>
+    <caseSensitive>true</caseSensitive>
+    <description>The unique credit safe Id. Only filled for records retrieved through Credit Safe.</description>
+    <externalId>true</externalId>
+    <label>Creditsafe Id</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

@@ -169,6 +169,62 @@
         <value>Customer.connect Setup</value>
     </labels>
     <labels>
+        <fullName>Country_Belgium</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Belgium</shortDescription>
+        <value>Belgium</value>
+    </labels>
+    <labels>
+        <fullName>Country_France</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country France</shortDescription>
+        <value>France</value>
+    </labels>
+    <labels>
+        <fullName>Country_Germany</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Germany</shortDescription>
+        <value>Germany</value>
+    </labels>
+    <labels>
+        <fullName>Country_Ireland</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Ireland</shortDescription>
+        <value>Ireland</value>
+    </labels>
+    <labels>
+        <fullName>Country_Netherlands</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Netherlands</shortDescription>
+        <value>The Netherlands</value>
+    </labels>
+    <labels>
+        <fullName>Country_Sweden</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Sweden</shortDescription>
+        <value>Sweden</value>
+    </labels>
+    <labels>
+        <fullName>Country_United_Kingdom</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country United Kingdom</shortDescription>
+        <value>United Kingdom</value>
+    </labels>
+    <labels>
+        <fullName>Country_to_Search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country to Search</shortDescription>
+        <value>Country to Search</value>
+    </labels>
+    <labels>
         <fullName>DBSCall_AccountDupCheck_Exception</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -373,6 +429,14 @@
         <protected>true</protected>
         <shortDescription>Error_Incomplete</shortDescription>
         <value>Some required fields are missing.</value>
+    </labels>
+    <labels>
+        <fullName>Error_Input_Incorrect</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error Input Incorrect</shortDescription>
+        <value>Incorrect input. Please correct your input and try again.</value>
     </labels>
     <labels>
         <fullName>Error_Remove_Dossier</fullName>
@@ -593,8 +657,21 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Data Search Help</shortDescription>
-        <value>To sync information from Dutch Business you will need to match this account to a registered company. Use this search form to find a match.
-Note: If you know the chamber of commerce number please enter it here as it will bypass the search.</value>
+        <value>Please fill the search fields to find the organisation you are searching for.</value>
+    </labels>
+    <labels>
+        <fullName>Search_House_Nr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search House Nr</shortDescription>
+        <value>House Nr</value>
+    </labels>
+    <labels>
+        <fullName>Search_House_Nr_Addition</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search House Nr Addition</shortDescription>
+        <value>Addition</value>
     </labels>
     <labels>
         <fullName>Search_Match_Dossier</fullName>
@@ -632,6 +709,13 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <value>Province</value>
     </labels>
     <labels>
+        <fullName>Search_Registration_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Registration Number</shortDescription>
+        <value>Registration Number</value>
+    </labels>
+    <labels>
         <fullName>Search_Reset</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -665,6 +749,13 @@ Note: If you know the chamber of commerce number please enter it here as it will
         <protected>true</protected>
         <shortDescription>Business Data Search Trade Name</shortDescription>
         <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>Search_VAT_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search VAT Number</shortDescription>
+        <value>VAT Number</value>
     </labels>
     <labels>
         <fullName>Success</fullName>
