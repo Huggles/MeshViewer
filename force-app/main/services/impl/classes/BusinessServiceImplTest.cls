@@ -398,7 +398,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2__c, 'sbis2');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2_Text__c , 'secondary_sbi_code2_text');
-        System.assertEquals(dossierDB.Status__c , 'Import');
+         System.assertEquals(dossierDB.Status__c , 'Import');
         System.assertEquals(dossierDB.Number_Of_Subsidiaries__c, '1');
         System.assertEquals(dossierDB.Parent_Chamber_Of_Commerce_Number__c, '123');
         System.assertEquals(dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c, '1122');
@@ -548,7 +548,7 @@ public with sharing class BusinessServiceImplTest {
                         Secondary_Sbi_Code_1_Text__c,
                         Secondary_Sbi_Code_2__c,
                         Secondary_Sbi_Code_2_Text__c,
-                        Status__c,
+                         Status__c,
                         Structure__c,
                         Telephone_Number__c,
                         Trade_Name_45__c,
@@ -629,7 +629,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2__c, 'sbis2');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2_Text__c , 'secondary_sbi_code2_text');
-        System.assertEquals(dossierDB.Status__c , 'Import');
+         System.assertEquals(dossierDB.Status__c , 'Import');
         System.assertEquals(dossierDB.Number_Of_Subsidiaries__c, '1');
         System.assertEquals(dossierDB.Parent_Chamber_Of_Commerce_Number__c, '123');
         System.assertEquals(dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c, '1122');

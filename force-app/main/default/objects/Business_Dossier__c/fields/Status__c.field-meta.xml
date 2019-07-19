@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Status__c</fullName>
-    <description>Import; Indication of whether the company does import..
-Export: Indication of whether the company does export.
-Economically Active: Boolean indicating if the business is economically active.  This indication is determined by a formula developed by the ‘Vereninging Kamers van Koophandel’.  This should not be interpreted as an indication of whether the business is currently still registered at the Chamber of Commerce: only currently registered businesses are available through our services.
-Non Mailing: Indicating if the business has specified that the ‘Vereniging Kamers van Koophandel’ and the ‘de kamers van koophandel’ may not supply the business’ information to third parties for direct marketing purposes.
-Bankruptcy: Boolean indicating if the business is currently registered as bankrupt (Dutch: ‘Faillissement’).
-DIP:	Boolean indicating if the business is currently registered as Debtor-in-Possession (Dutch: ‘in Surseance’).</description>
     <externalId>false</externalId>
     <label>Status</label>
     <required>false</required>
@@ -14,7 +8,54 @@ DIP:	Boolean indicating if the business is currently registered as Debtor-in-Pos
     <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>Organisation_Status</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Import</fullName>
+                <default>false</default>
+                <label>Import</label>
+            </value>
+            <value>
+                <fullName>Export</fullName>
+                <default>false</default>
+                <label>Export</label>
+            </value>
+            <value>
+                <fullName>Economically Active</fullName>
+                <default>false</default>
+                <label>Economically Active</label>
+            </value>
+            <value>
+                <fullName>Non Mailing</fullName>
+                <default>false</default>
+                <label>Non Mailing</label>
+            </value>
+            <value>
+                <fullName>Bankruptcy</fullName>
+                <default>false</default>
+                <label>Bankruptcy</label>
+            </value>
+            <value>
+                <fullName>DIP</fullName>
+                <default>false</default>
+                <label>DIP</label>
+            </value>
+            <value>
+                <fullName>Active</fullName>
+                <default>false</default>
+                <label>Active</label>
+            </value>
+            <value>
+                <fullName>Active, NonActive</fullName>
+                <default>false</default>
+                <label>Active, NonActive</label>
+            </value>
+            <value>
+                <fullName>NonActive</fullName>
+                <default>false</default>
+                <label>NonActive</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>
 </CustomField>
