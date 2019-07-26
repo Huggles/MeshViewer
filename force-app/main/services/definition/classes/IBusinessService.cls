@@ -99,4 +99,14 @@ public interface IBusinessService {
      * @return
      */
     InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId);
+
+
+    /**
+     * Retrieves the requested dossiers that needs update from the company.info server. This method is called from a batch class.
+     *
+     * @param pageNr
+     *
+     * @return UpdateDossierReferenceDTO
+     */
+    List<UpdateDossierReferenceDTO> getChangedDossiers(Integer pageNr);
 }

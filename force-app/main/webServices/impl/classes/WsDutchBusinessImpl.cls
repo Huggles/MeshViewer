@@ -80,4 +80,46 @@ public with sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
         return returnValue;
     }
 
+    public DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetChangedDossiers(Date changed_since, DutchBusinessWsdl.stringArray update_types, Integer page_x) {
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult returnValue = null;
+        try {
+            returnValue = port.dutchBusinessUpdateGetChangedDossiers(changed_since, update_types, page_x);
+        } catch (CalloutException calloutException) {
+            Boolean fallBack = CallOutHelper.handleCallOutException(calloutException);
+            if (fallBack) {
+                port.doFallBack();
+                try {
+                    returnValue = port.dutchBusinessUpdateGetChangedDossiers(changed_since, update_types, page_x);
+                } catch (CalloutException calloutException2) {
+                    Boolean serverUnavailable = CallOutHelper.handleCallOutException(calloutException2);
+                    if (serverUnavailable) {
+                        ErrorLogUtil.logException(calloutException2);
+                        throw new CCWsServerUnavailableException(Label.Error_Server_Unavailable);
+                    }
+                }
+            }
+        }
+        return returnValue;
+    }
+
+    public void dutchBusinessUpdateRemoveDossier(String dossier_number,String establishment_number) {
+        try {
+            port.dutchBusinessUpdateRemoveDossier(dossier_number, establishment_number);
+        } catch (CalloutException calloutException) {
+            Boolean fallBack = CallOutHelper.handleCallOutException(calloutException);
+            if (fallBack) {
+                port.doFallBack();
+                try {
+                    port.dutchBusinessUpdateRemoveDossier(dossier_number, establishment_number);
+                } catch (CalloutException calloutException2) {
+                    Boolean serverUnavailable = CallOutHelper.handleCallOutException(calloutException2);
+                    if (serverUnavailable) {
+                        ErrorLogUtil.logException(calloutException2);
+                        throw new CCWsServerUnavailableException(Label.Error_Server_Unavailable);
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -4,9 +4,9 @@ public with sharing class BusinessService {
         return newInstance().searchForDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search);
     }
 
-//    public static DutchBusinessWsdl.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber){
-//        return newInstance().getDossier(dossierNumber, establishmentNumber);
-//    }
+    public static List<UpdateDossierReferenceDTO> getChangedDossiers(Integer pageNr){
+        return newInstance().getChangedDossiers(pageNr);
+    }
 
 //    public static List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessWsdl.DutchBusinessGetDossierResponse> dataVendorDossiers) {
 //        return newInstance().insertAccount(dataVendorDossiers);

@@ -96,7 +96,11 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             unitOfWork.registerDeleted(dossierList[0]);
             unitOfWork.commitWork();
             response = true;
+
+            //if dossier is deleted, then remove it from the update list of dossiers on the company.info server
+            WsDutchBusiness.dutchBusinessUpdateRemoveDossier(dossierList[0].Dossier_Number__c, dossierList[0].Establishment_Number__c);
         }
+
         return response;
     }
 
@@ -126,6 +130,38 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         unitOfWork.registerDirty(dossierDB);
         unitOfWork.commitWork();
         return dossierDB;
+    }
+
+    public List<UpdateDossierReferenceDTO> getChangedDossiers(Integer pageNr) {
+        Date changed_since = Date.newInstance(2019, 07, 19);
+        if (pageNr == null || pageNr == 0) {
+            pageNr = 1;
+        }
+        List<String> updateTypes= new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress', 'Contact',
+                                                    'Activity', 'Personnel', 'FinancialStatus', 'Status', 'Branch', 'ImportExport', 'ContactPerson', 'Capital',
+                                                    'SubscriptionDates', 'Removed', 'New', 'Establishment', 'RSIN', 'Tradenames'};//, 'Subsidiaries'
+
+        //converting the list type to DutchBusinessWsdl.stringArray type
+        DutchBusinessWsdl.stringArray updateTypesArray = new DutchBusinessWsdl.stringArray();
+        updateTypesArray.item = new List<String>();
+        for (String s :updateTypes) {
+            updateTypesArray.item.add(s);
+        }
+
+        //callout to get the list of dossiers with updates
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult response = WsDutchBusiness.dutchBusinessUpdateGetChangedDossiers(changed_since, updateTypesArray, pageNr);
+        Integer numPages = response.paging.numpages;
+
+        //collect list of dossiers that needs to be updated
+        List<UpdateDossierReferenceDTO> updateDossiersList = new List<UpdateDossierReferenceDTO>();
+        for (DutchBusinessWsdl.DutchBusinessUpdateReference updatedDossier : response.results.item) {
+            //ignore the dossiers which are marked as Removed
+            if(! updatedDossier.update_types.item.contains('Removed') ) {
+                updateDossiersList.add( new UpdateDossierReferenceDTO(updatedDossier, numPages));
+            }
+        }
+
+        return updateDossiersList;
     }
 
     /**************
@@ -411,7 +447,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
 
     @TestVisible
-    private DutchBusinessWsdl.DutchBusinessDossierV3 getDossier(String dossierNumber, String establishmentNumber) {
+    public DutchBusinessWsdl.DutchBusinessDossierV3 getDossier(String dossierNumber, String establishmentNumber) {
         if (dossierNumber == null){ return null;}
         return WsDutchBusiness.dutchBusinessGetDossierV3(dossierNumber, establishmentNumber);
     }
