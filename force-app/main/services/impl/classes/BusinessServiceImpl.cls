@@ -35,7 +35,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         unitOfWork.commitWork();
         return dossiers;
     }
-    
+
     public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         InsertDossiersFromDataVendorResponseDTO response = null;
@@ -133,7 +133,15 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
 
     public List<UpdateDossierReferenceDTO> getChangedDossiers(Integer pageNr) {
-        Date changed_since = Date.newInstance(2019, 07, 19);
+        Credentials__c cs = Credentials__c.getOrgDefaults();
+        Date changed_since;
+        if (cs != null && cs.Last_Executed_Batch__c != null) {
+            changed_since = Date.newInstance(cs.Last_Executed_Batch__c.year(), cs.Last_Executed_Batch__c.month(), cs.Last_Executed_Batch__c.day());
+        }
+        else {
+            changed_since = Date.today();
+        }
+
         if (pageNr == null || pageNr == 0) {
             pageNr = 1;
         }
@@ -178,11 +186,11 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             if (duplicateAccounts.size() > 1) { // too many duplicates found. Cannot map them.
                 throw new CCDuplicateException(Label.Dossier_Multiple_Account_Duplicates_Found);
             } else
-            if (duplicateAccounts.size() == 1) { // one duplicate found, let's reuse that one
-                account = duplicateAccounts.get(0);
-            } else { // no duplicates found, create a new account
-                unitOfWork.registerNew(account);
-            }
+                    if (duplicateAccounts.size() == 1) { // one duplicate found, let's reuse that one
+                        account = duplicateAccounts.get(0);
+                    } else { // no duplicates found, create a new account
+                        unitOfWork.registerNew(account);
+                    }
             InsertAccountResponseDTO response = new InsertAccountResponseDTO(dataVendorDossier, account);
             responses.add(response);
         }
@@ -201,13 +209,13 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             unitOfWork.registerNew(dossier, Business_Dossier__c.Account__c, insertDossierRequestDTO.account);
 
             // unitOfWork.registerRelationship(insertDossierRequestDTO.account, Account.Business_Dossier__c, dossier);
-            
+
             Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
             unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
 
             Dossier_Address__c correspondenceAddress = mapDataVendorDataToCorrespondenceAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
             unitOfWork.registerNew(correspondenceAddress, Dossier_Address__c.Business_Data__c, dossier);
-            
+
             List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(insertDossierRequestDTO.dossier, new List<Business_Data_SBI__c>());
             for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
                 unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, dossier);
@@ -336,7 +344,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 //            }
 //        }
 //        dossierDB.Insolvencies__c = dataVendorDossier.insolvencies;
-        
+
 
         if (dataVendorDossier.structure != null) {
             dossierDB.Number_Of_Subsidiaries__c = String.valueOf(dataVendorDossier.structure.number_of_subsidiaries);

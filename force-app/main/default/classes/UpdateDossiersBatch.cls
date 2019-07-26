@@ -43,7 +43,7 @@ public with sharing class UpdateDossiersBatch implements Database.Batchable<Busi
         }
 
         //update the dossiers
-        List<Business_Dossier__c> businessDossiers = BusinessService.updateDossiersWithDataVendorData(updateDossierRequestDTOS);
+        List<Business_Dossier__c> businessDossiers1 = BusinessService.updateDossiersWithDataVendorData(updateDossierRequestDTOS);
     }
 
     public void finish(Database.BatchableContext BC){
@@ -55,6 +55,13 @@ public with sharing class UpdateDossiersBatch implements Database.Batchable<Busi
         if (updateDossiersBatch.pageNr <= updateDossiersBatch.numPages) {
             //batch size of 50 or less is preferred, as we do a fallback call when 1st call to server fails and will not hit callout limit
             Database.executeBatch(updateDossiersBatch, 50);
+        }
+        else {
+            //once all pages are retrieved then update the Last_Executed_Batch__c with current time
+            Credentials__c cs = Credentials__c.getOrgDefaults();
+            cs.Last_Executed_Batch__c = Datetime.now();
+
+            update cs;
         }
     }
 }
