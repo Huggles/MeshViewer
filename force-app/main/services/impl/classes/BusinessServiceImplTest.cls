@@ -1,8 +1,16 @@
 @isTest
 public with sharing class BusinessServiceImplTest {
+    @TestSetup
+    private static void setupData() {
+        Credentials__c c = new Credentials__c();
+        c.Username__c = 'test';
+        c.Password__c = 'pas';
+        c.CompanyInfo_Account_Id__c = '1';
+        c.CompanyConnectUserId__c = 11;
+        c.Last_Executed_Batch__c = Datetime.newInstance(2019, 7, 28);
 
-
-
+        insert c;
+    }
 
     @isTest
     public static void testGetDossier(){
@@ -62,6 +70,42 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(20, results.size());
     }
 
+    @IsTest
+    public static void testGetChangedDossiers() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+        Integer pageNR = 1;
+        List<String> updateTypesResponse = new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'};
+
+        mocks.startStubbing();
+        DutchBusinessWsdl.stringArray updateTypesArrayResponse = new DutchBusinessWsdl.stringArray();
+        updateTypesArrayResponse.item = new List<String>();
+        for (String s : updateTypesResponse) {
+            updateTypesArrayResponse.item.add(s);
+        }
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
+        output.paging = new DutchBusinessWsdl.ResultInfo();
+        output.paging.numpages = 3;
+        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
+        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
+        DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
+        a1.dossier_number = '1';
+        a1.establishment_number = '2';
+        a1.update_types = updateTypesArrayResponse;
+        output.results.item.add(a1);
+        Credentials__c c = Credentials__c.getOrgDefaults();
+
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
+
+        mocks.stopStubbing();
+        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
+
+        test.startTest();
+
+        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = (new BusinessServiceImpl()).getChangedDossiers(pageNR);
+        system.assertNotEquals(null, updateDossierReferenceDTOS);
+        test.stopTest();
+    }
 
     @IsTest
     public static void testUpdateDossiersWithDataVendorDataHappyFlow() {
@@ -666,7 +710,7 @@ public with sharing class BusinessServiceImplTest {
         
     }
 
-//    @IsTest
+/*    @IsTest
 //    public static void testInsertAccountHappyFlow() {
 //        fflib_ApexMocks mocks = new fflib_ApexMocks();
 //        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
@@ -688,7 +732,7 @@ public with sharing class BusinessServiceImplTest {
 //            }
 //        }
 //        Test.stopTest();
-//    }
+//    } */
 
     @IsTest
     public static void testInsertAccountHappyFlow() {
@@ -772,7 +816,6 @@ public with sharing class BusinessServiceImplTest {
         }
         Test.stopTest();
     }
-
 
 
     private static DutchBusinessWsdl.DutchBusinessDossierV3 getDataVendorMockDossier() {

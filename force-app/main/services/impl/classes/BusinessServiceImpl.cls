@@ -5,6 +5,24 @@ Description     : Service layer for DutchBusiness webservice calls and data proc
 public with sharing class BusinessServiceImpl implements IBusinessService {
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
+    public static DutchBusinessWsdl.stringArray updateTypesArray {
+        get {
+            if (updateTypesArray == null) {
+                List<String> updateTypes= new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress', 'Contact',
+                        'Activity', 'Personnel', 'FinancialStatus', 'Status', 'Branch', 'ImportExport', 'ContactPerson', 'Capital',
+                        'SubscriptionDates', 'Removed', 'New', 'Establishment', 'RSIN', 'Tradenames'};//, 'Subsidiaries'
+
+                //converting the list type to DutchBusinessWsdl.stringArray type
+                updateTypesArray = new DutchBusinessWsdl.stringArray();
+                updateTypesArray.item = new List<String>();
+                for (String s :updateTypes) {
+                    updateTypesArray.item.add(s);
+                }
+            }
+            return updateTypesArray;
+        }
+        set;
+    }
 
     public static List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         // Handle valid postcodes that the web service does not like
@@ -16,6 +34,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, 1);
         searchResults.addAll(returnedResults.results.item);
         Integer numPages = returnedResults.paging.numpages;
+        System.debug('numPages  ' +numPages + ' size '+ returnedResults.results.item.size());
         for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
             returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, i);
             searchResults.addAll(returnedResults.results.item);
@@ -24,9 +43,9 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         for (DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2 : searchResults) {
             returnValue.add(new SearchForDossiersResultDto(dutchBusinessReferenceV2));
         }
+        System.debug('size'+returnValue.size());
         return returnValue;
     }
-
 
     public List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS) {
         // no CRUD and FLS checks since this needs to be done in system mode. The customer has paid for the data fetched
@@ -136,7 +155,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         Credentials__c cs = Credentials__c.getOrgDefaults();
         Date changed_since;
         if (cs != null && cs.Last_Executed_Batch__c != null) {
-            changed_since = Date.newInstance(cs.Last_Executed_Batch__c.year(), cs.Last_Executed_Batch__c.month(), cs.Last_Executed_Batch__c.day());
+            changed_since = cs.Last_Executed_Batch__c.date();
         }
         else {
             changed_since = Date.today();
@@ -145,28 +164,17 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         if (pageNr == null || pageNr == 0) {
             pageNr = 1;
         }
-        List<String> updateTypes= new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress', 'Contact',
-                                                    'Activity', 'Personnel', 'FinancialStatus', 'Status', 'Branch', 'ImportExport', 'ContactPerson', 'Capital',
-                                                    'SubscriptionDates', 'Removed', 'New', 'Establishment', 'RSIN', 'Tradenames'};//, 'Subsidiaries'
-
-        //converting the list type to DutchBusinessWsdl.stringArray type
-        DutchBusinessWsdl.stringArray updateTypesArray = new DutchBusinessWsdl.stringArray();
-        updateTypesArray.item = new List<String>();
-        for (String s :updateTypes) {
-            updateTypesArray.item.add(s);
-        }
 
         //callout to get the list of dossiers with updates
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult response = WsDutchBusiness.dutchBusinessUpdateGetChangedDossiers(changed_since, updateTypesArray, pageNr);
+        System.debug(response);
         Integer numPages = response.paging.numpages;
 
         //collect list of dossiers that needs to be updated
         List<UpdateDossierReferenceDTO> updateDossiersList = new List<UpdateDossierReferenceDTO>();
+
         for (DutchBusinessWsdl.DutchBusinessUpdateReference updatedDossier : response.results.item) {
-            //ignore the dossiers which are marked as Removed
-            if(! updatedDossier.update_types.item.contains('Removed') ) {
-                updateDossiersList.add( new UpdateDossierReferenceDTO(updatedDossier, numPages));
-            }
+            updateDossiersList.add(new UpdateDossierReferenceDTO(updatedDossier, numPages));
         }
 
         return updateDossiersList;
