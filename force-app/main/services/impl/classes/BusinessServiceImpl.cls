@@ -167,7 +167,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
         //callout to get the list of dossiers with updates
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult response = WsDutchBusiness.dutchBusinessUpdateGetChangedDossiers(changed_since, updateTypesArray, pageNr);
-        System.debug(response);
         Integer numPages = response.paging.numpages;
 
         //collect list of dossiers that needs to be updated
@@ -283,7 +282,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Dossier_Number__c = dataVendorDossier.dossier_number;
         dossierDB.Establishment_Number__c = dataVendorDossier.establishment_number;
         dossierDB.Main_Establishment_Number__c = dataVendorDossier.main_establishment_number;
-        dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;
         dossierDB.Rsin_Number__c = String.valueOf(dataVendorDossier.rsin_number);
         dossierDB.Chamber_Number__c = convertToInteger(dataVendorDossier.chamber_number);
         dossierDB.Legal_Form_Code__c = convertToInteger(dataVendorDossier.legal_form_code);

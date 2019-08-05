@@ -103,7 +103,7 @@ public with sharing class BusinessServiceImplTest {
         test.startTest();
 
         List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = (new BusinessServiceImpl()).getChangedDossiers(pageNR);
-        system.assertNotEquals(null, updateDossierReferenceDTOS);
+        system.assertEquals(1, updateDossierReferenceDTOS.size());
         test.stopTest();
     }
 
