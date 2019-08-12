@@ -48,6 +48,22 @@ public inherited sharing class BusinessDossierSelector extends fflib_SObjectSele
         return result;
     }
 
+    /**
+     * Selects all dossiers with the same credit safe id
+     *
+     * @param creditSafeId
+     *
+     * @return a list with the found dossiers (empty if none have been found)
+     */
+    public List<Business_Dossier__c> selectByCreditSafeId(String creditSafeId, Boolean enforceFLS) {
+        fflib_QueryFactory queryFactory = newQueryFactory();
+        List<Business_Dossier__c> result = new List<Business_Dossier__c>();
+        queryFactory.setEnforceFLS(enforceFLS);
+        queryFactory.setCondition('Creditsafe_Id__c = :creditSafeId');
+        result = Database.query(queryFactory.toSOQL());
+        return result;
+    }
+
 
     public List<Business_Dossier__c> selectByDossierNumbers(Set<DossierQueryDTO> dossierQueryDTOS, Boolean enforceFLS){//, String sortedBy, String sortedDirection) {
         fflib_QueryFactory queryFactory = newQueryFactory();

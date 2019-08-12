@@ -1,0 +1,1838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.webservices.nl/soap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.webservices.nl/soap/">
+<types>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.webservices.nl/soap/"
+>
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+ <xsd:complexType name="HeaderAuthenticateType">
+  <xsd:all>
+   <xsd:element name="reactid" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="HeaderLoginType">
+  <xsd:all>
+   <xsd:element name="username" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompany">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="registration_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="office_type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="address" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="available_report_types" type="tns:stringArray"/>
+   <xsd:element name="available_languages" type="tns:stringArray"/>
+   <xsd:element name="id" type="xsd:string"/>
+   <xsd:element name="country" type="xsd:string"/>
+   <xsd:element name="online_reports" type="xsd:boolean"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="ResultInfo">
+  <xsd:all>
+   <xsd:element name="curpage" type="xsd:int"/>
+   <xsd:element name="perpage" type="xsd:int"/>
+   <xsd:element name="numpages" type="xsd:int"/>
+   <xsd:element name="numresults" type="xsd:int"/>
+   <xsd:element name="maxresults" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompany" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyPagedResult">
+  <xsd:all>
+   <xsd:element name="paging" type="tns:ResultInfo"/>
+   <xsd:element name="results" type="tns:CreditsafeCompanyArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyReportFull">
+  <xsd:all>
+   <xsd:element name="company_id" type="xsd:string"/>
+   <xsd:element name="order_number" type="xsd:unsignedLong"/>
+   <xsd:element name="language" type="xsd:string"/>
+   <xsd:element name="company_summary" type="tns:CreditsafeLtdCompanySummary"/>
+   <xsd:element name="company_identification" type="tns:CreditsafeLtdCompanyIdentification"/>
+   <xsd:element name="credit_score" type="tns:CreditsafeLtdCreditScore"/>
+   <xsd:element name="contact_information" type="tns:CreditsafeLtdContactInformation"/>
+   <xsd:element name="share_capital_structure" type="tns:CreditsafeLtdShareCapitalStructure"/>
+   <xsd:element name="directors" type="tns:CreditsafeLtdDirectors"/>
+   <xsd:element name="other_information" type="tns:CreditsafeLtdOtherInformation"/>
+   <xsd:element name="group_structure" type="tns:CreditsafeLtdGroupStructure" minOccurs="0"/>
+   <xsd:element name="financial_statements" type="tns:CreditsafeLtdFinancialStatementArray" minOccurs="0"/>
+   <xsd:element name="additional_information" type="tns:CreditsafeAdditionalInformation" minOccurs="0"/>
+   <xsd:element name="document" type="xsd:base64Binary" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyV2">
+  <xsd:all>
+   <xsd:element name="address" type="tns:CreditsafeAddressV2" minOccurs="0"/>
+   <xsd:element name="creditsafe_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_last_account" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="date_last_change" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="trade_names" type="tns:stringArray" minOccurs="0"/>
+   <xsd:element name="vat_numbers" type="tns:stringArray" minOccurs="0"/>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="registration_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="id" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="office_type" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdCompanySummary">
+  <xsd:all>
+   <xsd:element name="business_name" type="xsd:string"/>
+   <xsd:element name="country" type="xsd:string"/>
+   <xsd:element name="number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_registration_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="main_activity" type="tns:CreditsafeCompanyActivity" minOccurs="0"/>
+   <xsd:element name="company_status" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="latest_turnover_figure" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="latest_shareholders_equity_figure" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="credit_rating" type="xsd:string"/>
+   <xsd:element name="credit_limit" type="xsd:string"/>
+   <xsd:element name="rating_description" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdCompanyIdentification">
+  <xsd:all>
+   <xsd:element name="basic_information" type="tns:CreditsafeLtdCompanyBasicInformation"/>
+   <xsd:element name="activities" type="tns:CreditsafeCompanyActivityArray" minOccurs="0"/>
+   <xsd:element name="previous_names" type="tns:CreditsafeChangedStringArray" minOccurs="0"/>
+   <xsd:element name="previous_legal_forms" type="tns:CreditsafeChangedStringArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeChangedString">
+  <xsd:all>
+   <xsd:element name="value" type="xsd:string"/>
+   <xsd:element name="date_changed" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeChangedStringArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeChangedString" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdCreditScore">
+  <xsd:all>
+   <xsd:element name="current_credit_rating" type="xsd:string"/>
+   <xsd:element name="current_rating_description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="current_credit_limit" type="xsd:string"/>
+   <xsd:element name="current_contract_limit" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="previous_credit_limit" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="previous_credit_rating" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="previous_rating_description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_of_latest_rating_change" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdContactInformation">
+  <xsd:all>
+   <xsd:element name="main_address" type="tns:CreditsafeStreetAddressWithTelephone"/>
+   <xsd:element name="other_addresses" type="tns:CreditsafeStreetAddressWithTelephoneArray" minOccurs="0"/>
+   <xsd:element name="previous_addresses" type="tns:CreditsafeStreetAddressArray" minOccurs="0"/>
+   <xsd:element name="email_addresses" type="tns:stringArray" minOccurs="0"/>
+   <xsd:element name="websites" type="tns:stringArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdShareCapitalStructure">
+  <xsd:all>
+   <xsd:element name="nominal_share_capital" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="issued_share_capital" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="share_holders" type="tns:CreditsafeShareHolderArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdDirectors">
+  <xsd:all>
+   <xsd:element name="current_directors" type="tns:CreditsafeDirectorArray" minOccurs="0"/>
+   <xsd:element name="previous_directors" type="tns:CreditsafePreviousDirectorArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdOtherInformation">
+  <xsd:all>
+   <xsd:element name="bankers" type="tns:CreditsafeBankerArray" minOccurs="0"/>
+   <xsd:element name="advisors" type="tns:CreditsafeAdvisorArray" minOccurs="0"/>
+   <xsd:element name="employees_information" type="tns:CreditsafeEmployeeInformationArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdGroupStructure">
+  <xsd:all>
+   <xsd:element name="ultimate_parent" type="tns:CreditsafeCompanyListEntry" minOccurs="0"/>
+   <xsd:element name="immediate_parent" type="tns:CreditsafeCompanyListEntry" minOccurs="0"/>
+   <xsd:element name="subsidiary_companies" type="tns:CreditsafeCompanyListEntryArray" minOccurs="0"/>
+   <xsd:element name="affiliated_companies" type="tns:CreditsafeCompanyListEntryArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdCompanyBasicInformation">
+  <xsd:all>
+   <xsd:element name="business_name" type="xsd:string"/>
+   <xsd:element name="registered_company_name" type="xsd:string"/>
+   <xsd:element name="company_registration_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="country" type="xsd:string"/>
+   <xsd:element name="vat_registration_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="vat_registration_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="dateof_company_registration" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="dateof_starting_operations" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="commercial_court" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="legal_form" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="typeof_ownership" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_status" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="report_currency" type="xsd:string"/>
+   <xsd:element name="principal_activity" type="tns:CreditsafeCompanyActivity" minOccurs="0"/>
+   <xsd:element name="contact_address" type="xsd:string"/>
+   <xsd:element name="contact_telephone_number" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeStreetAddressWithTelephone">
+  <xsd:all>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="telephone" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeStreetAddressWithTelephoneArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeStreetAddressWithTelephone" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyListEntry">
+  <xsd:all>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_name" type="xsd:string"/>
+   <xsd:element name="company_id" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="number" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyListEntryArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyListEntry" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdFinancialStatement">
+  <xsd:all>
+   <xsd:element name="profit_and_loss" type="tns:CreditsafeProfitAndLossFigures" minOccurs="0"/>
+   <xsd:element name="balance_sheet" type="tns:CreditsafeBalanceSheet" minOccurs="0"/>
+   <xsd:element name="other_financials" type="tns:CreditsafeOtherFinancials" minOccurs="0"/>
+   <xsd:element name="ratios" type="tns:CreditsafeFinancialRatios" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeLtdFinancialStatementArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeLtdFinancialStatement" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyActivity">
+  <xsd:all>
+   <xsd:element name="activity_code" type="xsd:string"/>
+   <xsd:element name="activity_description" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyActivityArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyActivity" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeStreetAddress">
+  <xsd:all>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeStreetAddressArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeStreetAddress" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeShareHolder">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="share_percent" type="xsd:double" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeShareHolderArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeShareHolder" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeDirector">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="gender" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="appointment_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="date_of_birth" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="position" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeDirectorArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeDirector" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePreviousDirector">
+  <xsd:all>
+   <xsd:element name="director" type="tns:CreditsafeDirector"/>
+   <xsd:element name="resignation_date" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePreviousDirectorArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafePreviousDirector" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBanker">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="bank_code" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBankerArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeBanker" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeAdvisor">
+  <xsd:all>
+   <xsd:element name="auditor_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="solicitor_name" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeAdvisorArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeAdvisor" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeEmployeeInformation">
+  <xsd:all>
+   <xsd:element name="year" type="xsd:unsignedShort" minOccurs="0"/>
+   <xsd:element name="number_of_employees" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeEmployeeInformationArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeEmployeeInformation" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeProfitAndLossFigures">
+  <xsd:all>
+   <xsd:element name="year_end_date" type="xsd:dateTime"/>
+   <xsd:element name="number_of_weeks" type="xsd:unsignedInt"/>
+   <xsd:element name="currency" type="xsd:string"/>
+   <xsd:element name="consolidated_accounts" type="xsd:boolean" minOccurs="0"/>
+   <xsd:element name="revenue" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="operating_costs" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="operating_profit" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="wages_and_salaries" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="pension_costs" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="depreciation" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="amortisation" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="financial_income" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="financial_expenses" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="extraordinary_income" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="extraordinary_costs" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="profit_before_tax" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="tax" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="profit_after_tax" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="dividends" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="minority_interests" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_appropriations" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="retained_profit" type="xsd:decimal" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBalanceSheet">
+  <xsd:all>
+   <xsd:element name="year_end_date" type="xsd:dateTime"/>
+   <xsd:element name="number_of_weeks" type="xsd:unsignedInt"/>
+   <xsd:element name="currency" type="xsd:string"/>
+   <xsd:element name="consolidated_accounts" type="xsd:boolean" minOccurs="0"/>
+   <xsd:element name="land_and_buildings" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="plant_and_machinery" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_tangible_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_tangible_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="goodwill" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_intangible_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_intangible_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="investments" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="loans_to_group" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_loans" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="miscellaneous_fixed_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_other_fixed_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_fixed_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="raw_materials" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="work_in_progress" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="finished_goods" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_inventories" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_inventories" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="trade_receivables" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="group_receivables" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="receivables_due_after1year" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="miscellaneous_receivables" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_receivables" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="cash" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_current_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_current_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_assets" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="trade_payables" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="bank_liabilities" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_loans_or_finance" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="group_payables" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="miscellaneous_liabilities" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_current_liabilities" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="trade_payables_due_after1year" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="bank_liabilities_due_after1year" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_loans_or_finance_due_after1year" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="group_payables_due_after1year" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="miscellaneous_liabilities_due_after1year" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_long_term_liabilities" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_liabilities" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="called_up_share_capital" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="share_premium" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="revenue_reserves" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="other_reserves" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_shareholders_equity" type="xsd:decimal" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeOtherFinancials">
+  <xsd:all>
+   <xsd:element name="contingent_liabilities" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="working_capital" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="net_worth" type="xsd:decimal" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeFinancialRatios">
+  <xsd:all>
+   <xsd:element name="pre_tax_profit_margin" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="return_on_capital_employed" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="return_on_total_assets_employed" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="return_on_net_assets_employed" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="sales_or_net_working_capital" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="stock_turnover_ratio" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="debtor_days" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="creditor_days" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="current_ratio" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="liquidity_ratio_or_acid_test" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="current_debt_ratio" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="gearing" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="equity_in_percentage" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="total_debt_ratio" type="xsd:decimal" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="stringArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyUpdate">
+  <xsd:all>
+   <xsd:element name="company_id" type="xsd:string"/>
+   <xsd:element name="changes" type="tns:stringArray"/>
+   <xsd:element name="date_last_update" type="xsd:date"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyUpdateArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyUpdate" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyUpdatePagedResult">
+  <xsd:all>
+   <xsd:element name="paging" type="tns:ResultInfo"/>
+   <xsd:element name="results" type="tns:CreditsafeCompanyUpdateArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeAdditionalInformation">
+  <xsd:all>
+   <xsd:element name="nl" type="tns:CreditsafeNlAdditionalInformation" minOccurs="0"/>
+   <xsd:element name="be" type="tns:CreditsafeBeAdditionalInformation" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlAdditionalInformation">
+  <xsd:all>
+   <xsd:element name="negative_information" type="tns:CreditsafeNlNegativeInformation" minOccurs="0"/>
+   <xsd:element name="misc" type="tns:CreditsafeNlMisc" minOccurs="0"/>
+   <xsd:element name="industry_quartile_analysis" type="tns:CreditsafeIndustryQuartilyAnalysis" minOccurs="0"/>
+   <xsd:element name="payment_expectations_summary" type="tns:CreditsafeNlPaymentExpectationsSummary" minOccurs="0"/>
+   <xsd:element name="letters_of_liability_information_403" type="tns:CreditsafeNlLettersOfLiabilityInformation403" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlNegativeInformation">
+  <xsd:all>
+   <xsd:element name="court_data" type="tns:CreditsafeNlCourtData" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlCourtData">
+  <xsd:all>
+   <xsd:element name="facts" type="tns:CreditsafeNlCourtDataFacts" minOccurs="0"/>
+   <xsd:element name="receiver_details" type="tns:CreditsafeNlCourtDataReceiver" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlCourtDataFacts">
+  <xsd:all>
+   <xsd:element name="court_action" type="xsd:boolean" minOccurs="0"/>
+   <xsd:element name="date_of_bankruptcy" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="details" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlCourtDataReceiver">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="address" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlMisc">
+  <xsd:all>
+   <xsd:element name="ceased_trading_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="exporter" type="xsd:boolean" minOccurs="0"/>
+   <xsd:element name="importer" type="xsd:boolean" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeIndustryQuartilyAnalysis">
+  <xsd:all>
+   <xsd:element name="payment_expectation_days" type="tns:CreditsafeQuartiles" minOccurs="0"/>
+   <xsd:element name="day_sales_outstanding" type="tns:CreditsafeQuartiles" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeQuartiles">
+  <xsd:all>
+   <xsd:element name="lower" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="median" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="upper" type="xsd:decimal" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlPaymentExpectationsSummary">
+  <xsd:all>
+   <xsd:element name="suspension_of_payments_mora" type="xsd:boolean" minOccurs="0"/>
+   <xsd:element name="payment_expectation_days" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="day_sales_outstanding" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="industry_average_payment_expectation_days" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="industry_average_day_sales_outstanding" type="xsd:decimal" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlLettersOfLiabilityInformation403">
+  <xsd:all>
+   <xsd:element name="financial_year" type="xsd:unsignedInt" minOccurs="0"/>
+   <xsd:element name="company_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_number" type="xsd:unsignedInt" minOccurs="0"/>
+   <xsd:element name="date_submitted" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letters_of_liability" type="tns:CreditsafeNlLettersOfLiabilityArray" minOccurs="0"/>
+   <xsd:element name="letters_of_liability_2nd_parent" type="tns:CreditsafeNlLettersOfLiabilityArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlLettersOfLiability">
+  <xsd:all>
+   <xsd:element name="start_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="submitted_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="removal_submitted_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="removal_date" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeNlLettersOfLiabilityArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeNlLettersOfLiability" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeAdditionalInformation">
+  <xsd:all>
+   <xsd:element name="negative_information" type="tns:CreditsafeBeNegativeInformation" minOccurs="0"/>
+   <xsd:element name="misc" type="tns:CreditsafeBeMisc" minOccurs="0"/>
+   <xsd:element name="industry_quartile_analysis" type="tns:CreditsafeIndustryQuartilyAnalysis" minOccurs="0"/>
+   <xsd:element name="payment_expectations_summary" type="tns:CreditsafeBePaymentExpectationsSummary" minOccurs="0"/>
+   <xsd:element name="industry_comparison" type="tns:CreditsafeBeIndustryComparison" minOccurs="0"/>
+   <xsd:element name="registered_contractors" type="tns:CreditsafeBeRegisteredContractorArray" minOccurs="0"/>
+   <xsd:element name="events" type="tns:CreditsafeBeEventArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeNegativeInformation">
+  <xsd:all>
+   <xsd:element name="nsso_details" type="tns:CreditsafeBeNSSODetailArray" minOccurs="0"/>
+   <xsd:element name="protested_bills" type="tns:CreditsafeBeProtestedBillArray" minOccurs="0"/>
+   <xsd:element name="bankruptcy_events" type="tns:CreditsafeBeBankruptcyEventArray" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeNSSODetail">
+  <xsd:all>
+   <xsd:element name="business_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="name_of_defendant" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="legal_form_of_defendant" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_of_summons" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="labour_court" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeNSSODetailArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeBeNSSODetail" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeProtestedBill">
+  <xsd:all>
+   <xsd:element name="drawee_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="drawee_address" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="bill_amount" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="bill_currency" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="maturity_of_bill_in_months" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="payment_date" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="name_of_drawer" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="city_of_drawer" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeProtestedBillArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeBeProtestedBill" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeBankruptcyEvent">
+  <xsd:all>
+   <xsd:element name="bankruptcy_type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="street_of_registered_office" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="city_of_registered_office" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="postcode_of_registered_office" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="nace_bel_code" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="nace_bel_description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="commercial_court" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="source_date" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="source" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_of_decreee_of_bankruptcy" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="closing_date_of_summons" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="name_of_trustee" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="street_of_trustee" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="city_of_trustee" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="postcode_of_trustee" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeBankruptcyEventArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeBeBankruptcyEvent" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeMisc">
+  <xsd:all>
+   <xsd:element name="fax_number" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBePaymentExpectationsSummary">
+  <xsd:all>
+   <xsd:element name="payment_expectation_days" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="day_sales_outstanding" type="xsd:decimal" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeIndustryComparison">
+  <xsd:all>
+   <xsd:element name="activity_code" type="xsd:unsignedInt" minOccurs="0"/>
+   <xsd:element name="activity_description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="industry_average_payment_expectation_days" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="industry_average_day_sales_outstanding" type="xsd:decimal" minOccurs="0"/>
+   <xsd:element name="industry_average_credit_rating" type="xsd:decimal" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeRegisteredContractor">
+  <xsd:all>
+   <xsd:element name="registration_number" type="xsd:unsignedInt" minOccurs="0"/>
+   <xsd:element name="contractor_description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="striking_off_date" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeRegisteredContractorArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeBeRegisteredContractor" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeEvent">
+  <xsd:all>
+   <xsd:element name="serial_number" type="xsd:unsignedInt" minOccurs="0"/>
+   <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeBeEventArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeBeEvent" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeSearchResultV2">
+  <xsd:all>
+   <xsd:element name="companies" type="tns:CreditsafeCompanyV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeAddressV2">
+  <xsd:all>
+   <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="full_address" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="house_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="postal_code" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="street" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="telephone" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeAddressV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeAddressV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeSearchCriteria">
+  <xsd:all>
+   <xsd:element name="countries" type="tns:stringArray" minOccurs="1"/>
+   <xsd:element name="languages" type="tns:stringArray" minOccurs="1"/>
+   <xsd:element name="combinations" type="tns:CreditsafeSearchCriteriaCombinationArray" minOccurs="1"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeSearchCriteriaCombination">
+  <xsd:all>
+   <xsd:element name="params" type="tns:CreditsafeSearchCriteriaParamArray" minOccurs="1"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeSearchCriteriaCombinationArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeSearchCriteriaCombination" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeSearchCriteriaParam">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string" minOccurs="1"/>
+   <xsd:element name="min_length" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="max_length" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="validation_regexp" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="allowed_values" type="tns:stringArray" minOccurs="0"/>
+   <xsd:element name="is_required" type="xsd:boolean" minOccurs="1"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeSearchCriteriaParamArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeSearchCriteriaParam" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyReportFullV2">
+  <xsd:all>
+   <xsd:element name="additional_information" type="tns:CreditsafeCompanyAdditionalInformationV2" minOccurs="0"/>
+   <xsd:element name="company_identification" type="tns:CreditsafeCompanyIdentificationV2" minOccurs="0"/>
+   <xsd:element name="company_summary" type="tns:CreditsafeCompanySummaryV2" minOccurs="0"/>
+   <xsd:element name="contact_information" type="tns:CreditsafeCompanyContactInformationV2" minOccurs="0"/>
+   <xsd:element name="credit_score" type="tns:CreditsafeCompanyCreditScoreV2" minOccurs="0"/>
+   <xsd:element name="directors" type="tns:CreditsafePersonDirectorsV2" minOccurs="0"/>
+   <xsd:element name="financial_statements" type="tns:CreditsafeCompanyFinancialStatementV2Array" minOccurs="0"/>
+   <xsd:element name="group_structure" type="tns:CreditsafeCompanyGroupStructureV2" minOccurs="0"/>
+   <xsd:element name="local_financial_statements" type="tns:CreditsafeCompanyFinancialStatementV2Array" minOccurs="0"/>
+   <xsd:element name="negative_information" type="tns:CreditsafeCompanyNegativeInformationV2" minOccurs="0"/>
+   <xsd:element name="order_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="other_information" type="tns:CreditsafeCompanyOtherInformationV2" minOccurs="0"/>
+   <xsd:element name="share_capital_structure" type="tns:CreditsafeCompanyShareCapitalStructureV2" minOccurs="0"/>
+   <xsd:element name="payment_data" type="tns:CreditsafeCompanyPaymentDataV2" minOccurs="0"/>
+   <xsd:element name="company_id" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="language" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyReportFullV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyReportFullV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyPaymentDataV2">
+  <xsd:all>
+   <xsd:element name="generic" type="tns:CreditsafeCompanyKeyValueV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyPaymentDataV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyPaymentDataV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyShareCapitalStructureV2">
+  <xsd:all>
+   <xsd:element name="issued_share_capital" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="nominal_share_capital" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="share_holders" type="tns:CreditsafeCompanyShareHolderV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyShareCapitalStructureV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyShareCapitalStructureV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyShareHolderV2">
+  <xsd:all>
+   <xsd:element name="address" type="tns:CreditsafeAddressV2" minOccurs="0"/>
+   <xsd:element name="share_percent" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyShareHolderV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyShareHolderV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyOtherInformationV2">
+  <xsd:all>
+   <xsd:element name="bankers" type="tns:CreditsafeCompanyBankerV2Array" minOccurs="0"/>
+   <xsd:element name="advisors" type="tns:CreditsafeCompanyAdvisorV2Array" minOccurs="0"/>
+   <xsd:element name="employees_information" type="tns:CreditsafeCompanyEmployeeInformationV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyOtherInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyOtherInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyEmployeeInformationV2">
+  <xsd:all>
+   <xsd:element name="number_of_employees" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="year" type="xsd:integer" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyEmployeeInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyEmployeeInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdvisorV2">
+  <xsd:all>
+   <xsd:element name="auditor_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="solicitor_name" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdvisorV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdvisorV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyBankerV2">
+  <xsd:all>
+   <xsd:element name="address" type="tns:CreditsafeAddressV2" minOccurs="0"/>
+   <xsd:element name="bank_code" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyBankerV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyBankerV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationV2">
+  <xsd:all>
+   <xsd:element name="nl" type="tns:CreditsafeCompanyNegativeInformationNLV2" minOccurs="0"/>
+   <xsd:element name="de" type="tns:CreditsafeCompanyNegativeInformationDEV2" minOccurs="0"/>
+   <xsd:element name="generic" type="tns:CreditsafeCompanyKeyValueV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEV2">
+  <xsd:all>
+   <xsd:element name="bankruptcy" type="tns:CreditsafeCompanyNegativeInformationDEBankruptcyV2" minOccurs="0"/>
+   <xsd:element name="insolvency_information" type="tns:CreditsafeCompanyNegativeInformationDEInsolvencyInformationV2" minOccurs="0"/>
+   <xsd:element name="director_events" type="tns:CreditsafeCompanyNegativeInformationDEDirectorEventV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationDEV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEDirectorEventV2">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="code" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEDirectorEventV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationDEDirectorEventV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEInsolvencyInformationV2">
+  <xsd:all>
+   <xsd:element name="insolvency_events" type="tns:CreditsafeCompanyNegativeInformationDEInsolvencyEventV2Array" minOccurs="0"/>
+   <xsd:element name="dateof_insolvency" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="trustee" type="tns:CreditsafeCompanyNegativeInformationDETrusteeV2" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEInsolvencyInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationDEInsolvencyInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDETrusteeV2">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="title" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="first_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="last_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="code" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="telephone_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="fax_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="email_address" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDETrusteeV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationDETrusteeV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEInsolvencyEventV2">
+  <xsd:all>
+   <xsd:element name="reference_number_court" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="created_at" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEInsolvencyEventV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationDEInsolvencyEventV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEBankruptcyV2">
+  <xsd:all>
+   <xsd:element name="has_bankruptcy" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationDEBankruptcyV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationDEBankruptcyV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationNLV2">
+  <xsd:all>
+   <xsd:element name="court_items" type="tns:CreditsafeCompanyNegativeInformationNLCourtItemV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationNLV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationNLV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationNLCourtItemV2">
+  <xsd:all>
+   <xsd:element name="court_action" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_of_bankruptcy" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="address" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyNegativeInformationNLCourtItemV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyNegativeInformationNLCourtItemV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyGroupStructureV2">
+  <xsd:all>
+   <xsd:element name="ultimate_parent" type="tns:CreditsafeCompanyCompanyV2" minOccurs="0"/>
+   <xsd:element name="immediate_parent" type="tns:CreditsafeCompanyCompanyV2" minOccurs="0"/>
+   <xsd:element name="subsidiary_companies" type="tns:CreditsafeCompanyCompanyV2Array" minOccurs="0"/>
+   <xsd:element name="affiliated_companies" type="tns:CreditsafeCompanyCompanyV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyGroupStructureV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyGroupStructureV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyCompanyV2">
+  <xsd:all>
+   <xsd:element name="address" type="tns:CreditsafeAddressV2" minOccurs="0"/>
+   <xsd:element name="creditsafe_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_last_account" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="date_last_change" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="trade_names" type="tns:stringArray" minOccurs="0"/>
+   <xsd:element name="vat_numbers" type="tns:stringArray" minOccurs="0"/>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="registration_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="id" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="office_type" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyCompanyV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyCompanyV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyFinancialStatementV2">
+  <xsd:all>
+   <xsd:element name="balance_sheet" type="tns:CreditsafeCompanyBalanceSheetV2" minOccurs="0"/>
+   <xsd:element name="consolidated_accounts" type="xsd:boolean" minOccurs="0"/>
+   <xsd:element name="currency" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="number_of_weeks" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="other_financials" type="tns:CreditsafeCompanyOtherFinancialsV2" minOccurs="0"/>
+   <xsd:element name="profit_and_loss" type="tns:CreditsafeCompanyProfitAndLossV2" minOccurs="0"/>
+   <xsd:element name="ratios" type="tns:CreditsafeCompanyRatiosV2" minOccurs="0"/>
+   <xsd:element name="type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="year_end_date" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyFinancialStatementV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyFinancialStatementV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyRatiosV2">
+  <xsd:all>
+   <xsd:element name="creditor_days" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="current_debt_ratio" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="current_ratio" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="debtor_days" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="equity_in_percentage" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="gearing" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="liquidity_ratio_or_acid_test" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="pre_tax_profit_margin" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="return_on_capital_employed" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="return_on_net_assets_employed" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="return_on_total_assets_employed" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="sales_or_net_working_capital" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="stock_turnover_ratio" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="total_debt_ratio" type="xsd:float" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyRatiosV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyRatiosV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyProfitAndLossV2">
+  <xsd:all>
+   <xsd:element name="depreciation" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="dividends" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="financial_expenses" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="financial_income" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="operating_costs" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="operating_profit" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_appropriations" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="pension_costs" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="profit_after_tax" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="profit_before_tax" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="retained_profit" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="revenue" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="tax" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="wages_and_salaries" type="xsd:int" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyProfitAndLossV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyProfitAndLossV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyOtherFinancialsV2">
+  <xsd:all>
+   <xsd:element name="net_worth" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="working_capital" type="xsd:integer" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyOtherFinancialsV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyOtherFinancialsV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyBalanceSheetV2">
+  <xsd:all>
+   <xsd:element name="bank_liabilities" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="bank_liabilities_due_after1year" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="called_up_share_capital" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="cash" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="consolidated_accounts" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="finished_goods" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="goodwill" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="group_payables" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="group_payables_due_after1year" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="group_receivables" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="investments" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="land_and_buildings" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="loans_to_group" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="miscellaneous_fixed_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="miscellaneous_liabilities" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="miscellaneous_liabilities_due_after1_year" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="miscellaneous_receivables" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_current_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_intangible_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_inventories" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_loans" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_loans_or_finance" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_loans_or_finance_due_after1_year" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_reserves" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="other_tangible_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="plant_and_machinery" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="raw_materials" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="receivables_due_after1year" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="revenue_reserves" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="share_premium" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_current_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_current_liabilities" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_fixed_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_intangible_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_inventories" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_liabilities" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_long_term_liabilities" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_other_fixed_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_receivables" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_shareholders_equity" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="total_tangible_assets" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="trade_payables" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="trade_payables_due_after1year" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="trade_receivables" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="work_in_progress" type="xsd:int" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyBalanceSheetV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyBalanceSheetV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePersonDirectorsV2">
+  <xsd:all>
+   <xsd:element name="current_directors" type="tns:CreditsafePersonDirectorV2Array" minOccurs="0"/>
+   <xsd:element name="previous_directors" type="tns:CreditsafePersonPreviousDirectorV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePersonDirectorsV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafePersonDirectorsV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePersonPreviousDirectorV2">
+  <xsd:all>
+   <xsd:element name="resignation_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="address" type="tns:CreditsafeAddressV2" minOccurs="0"/>
+   <xsd:element name="director_type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="id" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="positions" type="tns:CreditsafePersonPositionV2Array" minOccurs="0"/>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_of_birth" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="gender" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePersonPreviousDirectorV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafePersonPreviousDirectorV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePersonDirectorV2">
+  <xsd:all>
+   <xsd:element name="address" type="tns:CreditsafeAddressV2" minOccurs="0"/>
+   <xsd:element name="director_type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="id" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="positions" type="tns:CreditsafePersonPositionV2Array" minOccurs="0"/>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_of_birth" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="gender" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePersonDirectorV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafePersonDirectorV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePersonPositionV2">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_appointed" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafePersonPositionV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafePersonPositionV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyCreditScoreV2">
+  <xsd:all>
+   <xsd:element name="current_credit_rating" type="tns:CreditsafeCompanyCreditRatingV2" minOccurs="0"/>
+   <xsd:element name="previous_credit_rating" type="tns:CreditsafeCompanyCreditRatingV2" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyCreditScoreV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyCreditScoreV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyContactInformationV2">
+  <xsd:all>
+   <xsd:element name="main_address" type="tns:CreditsafeAddressV2" minOccurs="0"/>
+   <xsd:element name="other_addresses" type="tns:CreditsafeAddressV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyContactInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyContactInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanySummaryV2">
+  <xsd:all>
+   <xsd:element name="company_status" type="tns:CreditsafeCompanyStatusV2" minOccurs="0"/>
+   <xsd:element name="credit_rating" type="tns:CreditsafeCompanyCreditRatingV2" minOccurs="0"/>
+   <xsd:element name="latest_shareholders_equity_figure" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="latest_turnover_figure" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="main_activity" type="tns:CreditsafeCompanyActivityV2" minOccurs="0"/>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_registration_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="business_name" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanySummaryV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanySummaryV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyCreditRatingV2">
+  <xsd:all>
+   <xsd:element name="common_description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="common_value" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="credit_limit" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="provider_description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="provider_value" type="tns:CreditsafeValueV2" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyCreditRatingV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyCreditRatingV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyIdentificationV2">
+  <xsd:all>
+   <xsd:element name="basic_information" type="tns:CreditsafeCompanyBasicInformationV2" minOccurs="0"/>
+   <xsd:element name="activity_classifications" type="tns:CreditsafeCompanyActivityClassificationV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyIdentificationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyIdentificationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyActivityClassificationV2">
+  <xsd:all>
+   <xsd:element name="activities" type="tns:CreditsafeCompanyActivityV2Array" minOccurs="0"/>
+   <xsd:element name="classification" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyActivityClassificationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyActivityClassificationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyActivityV2">
+  <xsd:all>
+   <xsd:element name="classification" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="activity_code" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="activity_description" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyActivityV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyActivityV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyBasicInformationV2">
+  <xsd:all>
+   <xsd:element name="company_status" type="tns:CreditsafeCompanyStatusV2" minOccurs="0"/>
+   <xsd:element name="contact_address" type="tns:CreditsafeAddressV2" minOccurs="0"/>
+   <xsd:element name="legal_form" type="tns:CreditsafeDescriptionV2" minOccurs="0"/>
+   <xsd:element name="principal_activity" type="tns:CreditsafeDescriptionV2" minOccurs="0"/>
+   <xsd:element name="business_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_registration_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="dateof_company_registration" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="dateof_starting_operations" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="registered_company_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="vat_registration_number" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyBasicInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyBasicInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeDescriptionV2">
+  <xsd:all>
+   <xsd:element name="code" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeDescriptionV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeDescriptionV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyStatusV2">
+  <xsd:all>
+   <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyStatusV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyStatusV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationV2">
+  <xsd:all>
+   <xsd:element name="de" type="tns:CreditsafeCompanyAdditionalInformationDEAdditionalInformationV2" minOccurs="0"/>
+   <xsd:element name="nl" type="tns:CreditsafeCompanyAdditionalInformationNLAdditionalInformationV2" minOccurs="0"/>
+   <xsd:element name="generic" type="tns:CreditsafeCompanyKeyValueV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyKeyValueV2">
+  <xsd:all>
+   <xsd:element name="key" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyKeyValueV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyKeyValueV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLAdditionalInformationV2">
+  <xsd:all>
+   <xsd:element name="payment_expectations_summary" type="tns:CreditsafeCompanyAdditionalInformationNLPaymentExpectationsSummaryV2" minOccurs="0"/>
+   <xsd:element name="miscellaneous" type="tns:CreditsafeCompanyAdditionalInformationNLMiscellaneousV2" minOccurs="0"/>
+   <xsd:element name="industy_comparison" type="tns:CreditsafeCompanyAdditionalInformationNLIndustryComparisonV2" minOccurs="0"/>
+   <xsd:element name="industry_quartile_analysis" type="tns:CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisV2" minOccurs="0"/>
+   <xsd:element name="financial_items" type="tns:CreditsafeCompanyAdditionalInformationNLFinancialItemV2Array" minOccurs="0"/>
+   <xsd:element name="kvk_filings" type="tns:CreditsafeCompanyAdditionalInformationNLKvkFilingV2Array" minOccurs="0"/>
+   <xsd:element name="letters_of_liablility_information403" type="tns:CreditsafeCompanyAdditionalInformationNLLetterOfLiabilityInformation403V2Array" minOccurs="0"/>
+   <xsd:element name="comments" type="tns:CreditsafeCompanyAdditionalInformationCommentV2Array" minOccurs="0"/>
+   <xsd:element name="historical_events" type="tns:CreditsafeCompanyAdditionalInformationHistoricalEventV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLAdditionalInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLAdditionalInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLLetterOfLiabilityInformation403V2">
+  <xsd:all>
+   <xsd:element name="financial_year" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="company_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="date_submitted" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability1_start_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability1_submitted_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability1_removal_submitted" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability1_removal_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability2_start_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability2_submitted_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability2_removal_submitted" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability2_removal_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability1_start_date_parent2" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability1_submitted_date_parent2" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability1_removal_submitted_parent2" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability1_removal_date_parent2" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability2_start_date_parent2" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability2_submitted_date_parent2" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability2_removal_submitted_parent2" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="letter_of_liability2_removal_date_parent2" type="xsd:dateTime" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLLetterOfLiabilityInformation403V2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLLetterOfLiabilityInformation403V2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLKvkFilingV2">
+  <xsd:all>
+   <xsd:element name="date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="event" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLKvkFilingV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLKvkFilingV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLFinancialItemV2">
+  <xsd:all>
+   <xsd:element name="date_year_end" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="judgement" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="consolidated_subsidiaries" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLFinancialItemV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLFinancialItemV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisV2">
+  <xsd:all>
+   <xsd:element name="payment_expectation_days" type="tns:CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisDayV2" minOccurs="0"/>
+   <xsd:element name="day_sales_outstanding" type="tns:CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisDayV2" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisDayV2">
+  <xsd:all>
+   <xsd:element name="lower" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="median" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="upper" type="xsd:float" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisDayV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLIndustryQuartileAnalysisDayV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLIndustryComparisonV2">
+  <xsd:all>
+   <xsd:element name="industry_average_credit_rating" type="xsd:float" minOccurs="0"/>
+   <xsd:element name="industry_average_credit_limit" type="xsd:float" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLIndustryComparisonV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLIndustryComparisonV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLMiscellaneousV2">
+  <xsd:all>
+   <xsd:element name="date_of_legal_form" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="date_of_cessation_trading" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="exporter" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="importer" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="rsin_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="branch_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="negative_rating" type="xsd:integer" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLMiscellaneousV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLMiscellaneousV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLPaymentExpectationsSummaryV2">
+  <xsd:all>
+   <xsd:element name="suspension_of_payments_mora" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="payment_expectation_days" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="day_sales_outstanding" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="industry_average_payment_expectation_days" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="industry_average_day_sales_outstanding" type="xsd:integer" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationNLPaymentExpectationsSummaryV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationNLPaymentExpectationsSummaryV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDEAdditionalInformationV2">
+  <xsd:all>
+   <xsd:element name="miscellaneous" type="tns:CreditsafeCompanyAdditionalInformationDEMiscellaneousV2" minOccurs="0"/>
+   <xsd:element name="image_accounts" type="tns:CreditsafeCompanyAdditionalInformationDEImageAccountV2" minOccurs="0"/>
+   <xsd:element name="beneficiary_owners" type="tns:CreditsafeCompanyAdditionalInformationDEOwnerV2" minOccurs="0"/>
+   <xsd:element name="turnover_ranges" type="tns:CreditsafeCompanyAdditionalInformationDETurnoverRangeV2" minOccurs="0"/>
+   <xsd:element name="comments" type="tns:CreditsafeCompanyAdditionalInformationCommentV2Array" minOccurs="0"/>
+   <xsd:element name="historical_events" type="tns:CreditsafeCompanyAdditionalInformationHistoricalEventV2Array" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDEAdditionalInformationV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationDEAdditionalInformationV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationHistoricalEventV2">
+  <xsd:all>
+   <xsd:element name="date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="previous_value" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="current_value" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationHistoricalEventV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationHistoricalEventV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationCommentV2">
+  <xsd:all>
+   <xsd:element name="text" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="sentiment" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationCommentV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationCommentV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDETurnoverRangeV2">
+  <xsd:all>
+   <xsd:element name="year" type="xsd:integer" minOccurs="0"/>
+   <xsd:element name="range" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDETurnoverRangeV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationDETurnoverRangeV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDEOwnerV2">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="city" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="postal_code" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="country" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="share_percent" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDEOwnerV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationDEOwnerV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDEImageAccountV2">
+  <xsd:all>
+   <xsd:element name="serial_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="start_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="end_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="published_date" type="xsd:dateTime" minOccurs="0"/>
+   <xsd:element name="document_type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="financials_type" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDEImageAccountV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationDEImageAccountV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDEMiscellaneousV2">
+  <xsd:all>
+   <xsd:element name="turnover_range" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="commercial_register_city" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="commercial_register_zip" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="financials_quality" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="current_rating" type="tns:CreditsafeValueV2" minOccurs="0"/>
+   <xsd:element name="previous_rating" type="tns:CreditsafeValueV2" minOccurs="0"/>
+   <xsd:element name="premise_type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="small_office" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="fax_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="company_type" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="negative_rating" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="complementary_company" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="business_purpose" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeCompanyAdditionalInformationDEMiscellaneousV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeCompanyAdditionalInformationDEMiscellaneousV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeValueV2">
+  <xsd:all>
+   <xsd:element name="max_value" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="min_value" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="CreditsafeValueV2Array">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:CreditsafeValueV2" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="loginRequestType">
+  <xsd:all>
+   <xsd:element name="username" type="xsd:string"/>
+   <xsd:element name="password" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="loginResponseType">
+  <xsd:all>
+   <xsd:element name="reactid" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="logoutRequestType"/>
+ <xsd:complexType name="logoutResponseType"/>
+ <xsd:complexType name="creditsafeGetReportFullRequestType">
+  <xsd:all>
+   <xsd:element name="company_id" type="xsd:string"/>
+   <xsd:element name="language" type="xsd:string"/>
+   <xsd:element name="document" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeGetReportFullResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:CreditsafeCompanyReportFull"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeSearchRequestType">
+  <xsd:all>
+   <xsd:element name="country" type="xsd:string"/>
+   <xsd:element name="id" type="xsd:string"/>
+   <xsd:element name="registration_number" type="xsd:string"/>
+   <xsd:element name="status" type="xsd:string"/>
+   <xsd:element name="office_type" type="xsd:string"/>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="name_match_type" type="xsd:string"/>
+   <xsd:element name="address" type="xsd:string"/>
+   <xsd:element name="address_match_type" type="xsd:string"/>
+   <xsd:element name="street" type="xsd:string"/>
+   <xsd:element name="house_number" type="xsd:string"/>
+   <xsd:element name="city" type="xsd:string"/>
+   <xsd:element name="postal_code" type="xsd:string"/>
+   <xsd:element name="province" type="xsd:string"/>
+   <xsd:element name="phone_number" type="xsd:string"/>
+   <xsd:element name="page" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeSearchResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:CreditsafeCompanyPagedResult"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeSearchV2RequestType">
+  <xsd:all>
+   <xsd:element name="countries" type="tns:stringArray"/>
+   <xsd:element name="id" type="xsd:string"/>
+   <xsd:element name="status" type="xsd:string"/>
+   <xsd:element name="registration_number" type="xsd:string"/>
+   <xsd:element name="registration_type" type="xsd:string"/>
+   <xsd:element name="vat_number" type="xsd:string"/>
+   <xsd:element name="province" type="xsd:string"/>
+   <xsd:element name="city" type="xsd:string"/>
+   <xsd:element name="street" type="xsd:string"/>
+   <xsd:element name="postal_code" type="xsd:string"/>
+   <xsd:element name="name" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeSearchV2ResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:CreditsafeSearchResultV2"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeGetReportFullV2RequestType">
+  <xsd:all>
+   <xsd:element name="company_id" type="xsd:string"/>
+   <xsd:element name="language" type="xsd:string"/>
+   <xsd:element name="reason" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeGetReportFullV2ResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:CreditsafeCompanyReportFullV2"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeSearchCriteriaRequestType">
+  <xsd:all>
+   <xsd:element name="countries" type="tns:stringArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeSearchCriteriaResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:CreditsafeSearchCriteria"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeMonitorAddCompanyRequestType">
+  <xsd:all>
+   <xsd:element name="company_id" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeMonitorAddCompanyResponseType"/>
+ <xsd:complexType name="creditsafeMonitorRemoveCompanyRequestType">
+  <xsd:all>
+   <xsd:element name="company_id" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeMonitorRemoveCompanyResponseType"/>
+ <xsd:complexType name="creditsafeMonitorGetUpdatedCompaniesRequestType">
+  <xsd:all>
+   <xsd:element name="changed_since" type="xsd:date"/>
+   <xsd:element name="page" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="creditsafeMonitorGetUpdatedCompaniesResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:CreditsafeCompanyUpdatePagedResult"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:element name="errorcode" type="xsd:string"/>
+ <xsd:element name="login" type="tns:loginRequestType"/>
+ <xsd:element name="loginResponse" type="tns:loginResponseType"/>
+ <xsd:element name="HeaderLogin" type="tns:HeaderLoginType"/>
+ <xsd:element name="HeaderAuthenticate" type="tns:HeaderAuthenticateType"/>
+ <xsd:element name="logout" type="tns:logoutRequestType"/>
+ <xsd:element name="logoutResponse" type="tns:logoutResponseType"/>
+ <xsd:element name="creditsafeGetReportFull" type="tns:creditsafeGetReportFullRequestType"/>
+ <xsd:element name="creditsafeGetReportFullResponse" type="tns:creditsafeGetReportFullResponseType"/>
+ <xsd:element name="creditsafeSearch" type="tns:creditsafeSearchRequestType"/>
+ <xsd:element name="creditsafeSearchResponse" type="tns:creditsafeSearchResponseType"/>
+ <xsd:element name="creditsafeSearchV2" type="tns:creditsafeSearchV2RequestType"/>
+ <xsd:element name="creditsafeSearchV2Response" type="tns:creditsafeSearchV2ResponseType"/>
+ <xsd:element name="creditsafeGetReportFullV2" type="tns:creditsafeGetReportFullV2RequestType"/>
+ <xsd:element name="creditsafeGetReportFullV2Response" type="tns:creditsafeGetReportFullV2ResponseType"/>
+ <xsd:element name="creditsafeSearchCriteria" type="tns:creditsafeSearchCriteriaRequestType"/>
+ <xsd:element name="creditsafeSearchCriteriaResponse" type="tns:creditsafeSearchCriteriaResponseType"/>
+ <xsd:element name="creditsafeMonitorAddCompany" type="tns:creditsafeMonitorAddCompanyRequestType"/>
+ <xsd:element name="creditsafeMonitorAddCompanyResponse" type="tns:creditsafeMonitorAddCompanyResponseType"/>
+ <xsd:element name="creditsafeMonitorRemoveCompany" type="tns:creditsafeMonitorRemoveCompanyRequestType"/>
+ <xsd:element name="creditsafeMonitorRemoveCompanyResponse" type="tns:creditsafeMonitorRemoveCompanyResponseType"/>
+ <xsd:element name="creditsafeMonitorGetUpdatedCompanies" type="tns:creditsafeMonitorGetUpdatedCompaniesRequestType"/>
+ <xsd:element name="creditsafeMonitorGetUpdatedCompaniesResponse" type="tns:creditsafeMonitorGetUpdatedCompaniesResponseType"/>
+</xsd:schema>
+</types>
+<message name="loginRequest">
+  <part name="parameters" element="tns:login" /></message>
+<message name="loginResponse">
+  <part name="parameters" element="tns:loginResponse" /></message>
+<message name="Headers">
+  <part name="HeaderLogin" element="tns:HeaderLogin" />
+  <part name="HeaderAuthenticate" element="tns:HeaderAuthenticate" /></message>
+<message name="logoutRequest">
+  <part name="parameters" element="tns:logout" /></message>
+<message name="logoutResponse">
+  <part name="parameters" element="tns:logoutResponse" /></message>
+<message name="creditsafeGetReportFullRequest">
+  <part name="parameters" element="tns:creditsafeGetReportFull" /></message>
+<message name="creditsafeGetReportFullResponse">
+  <part name="parameters" element="tns:creditsafeGetReportFullResponse" /></message>
+<message name="creditsafeSearchRequest">
+  <part name="parameters" element="tns:creditsafeSearch" /></message>
+<message name="creditsafeSearchResponse">
+  <part name="parameters" element="tns:creditsafeSearchResponse" /></message>
+<message name="creditsafeSearchV2Request">
+  <part name="parameters" element="tns:creditsafeSearchV2" /></message>
+<message name="creditsafeSearchV2Response">
+  <part name="parameters" element="tns:creditsafeSearchV2Response" /></message>
+<message name="creditsafeGetReportFullV2Request">
+  <part name="parameters" element="tns:creditsafeGetReportFullV2" /></message>
+<message name="creditsafeGetReportFullV2Response">
+  <part name="parameters" element="tns:creditsafeGetReportFullV2Response" /></message>
+<message name="creditsafeSearchCriteriaRequest">
+  <part name="parameters" element="tns:creditsafeSearchCriteria" /></message>
+<message name="creditsafeSearchCriteriaResponse">
+  <part name="parameters" element="tns:creditsafeSearchCriteriaResponse" /></message>
+<message name="creditsafeMonitorAddCompanyRequest">
+  <part name="parameters" element="tns:creditsafeMonitorAddCompany" /></message>
+<message name="creditsafeMonitorAddCompanyResponse">
+  <part name="parameters" element="tns:creditsafeMonitorAddCompanyResponse" /></message>
+<message name="creditsafeMonitorRemoveCompanyRequest">
+  <part name="parameters" element="tns:creditsafeMonitorRemoveCompany" /></message>
+<message name="creditsafeMonitorRemoveCompanyResponse">
+  <part name="parameters" element="tns:creditsafeMonitorRemoveCompanyResponse" /></message>
+<message name="creditsafeMonitorGetUpdatedCompaniesRequest">
+  <part name="parameters" element="tns:creditsafeMonitorGetUpdatedCompanies" /></message>
+<message name="creditsafeMonitorGetUpdatedCompaniesResponse">
+  <part name="parameters" element="tns:creditsafeMonitorGetUpdatedCompaniesResponse" /></message>
+<portType name="Webservices.nlPortType">
+  <operation name="login">
+    <documentation>Logs the user in using username and password, returns a reactid for authentication in further requests</documentation>
+    <input message="tns:loginRequest"/>
+    <output message="tns:loginResponse"/>
+  </operation>
+  <operation name="logout">
+    <documentation>Logs the user out, destroys the session associated with the reactid</documentation>
+    <input message="tns:logoutRequest"/>
+    <output message="tns:logoutResponse"/>
+  </operation>
+  <operation name="creditsafeGetReportFull">
+    <input message="tns:creditsafeGetReportFullRequest"/>
+    <output message="tns:creditsafeGetReportFullResponse"/>
+  </operation>
+  <operation name="creditsafeSearch">
+    <input message="tns:creditsafeSearchRequest"/>
+    <output message="tns:creditsafeSearchResponse"/>
+  </operation>
+  <operation name="creditsafeSearchV2">
+    <input message="tns:creditsafeSearchV2Request"/>
+    <output message="tns:creditsafeSearchV2Response"/>
+  </operation>
+  <operation name="creditsafeGetReportFullV2">
+    <input message="tns:creditsafeGetReportFullV2Request"/>
+    <output message="tns:creditsafeGetReportFullV2Response"/>
+  </operation>
+  <operation name="creditsafeSearchCriteria">
+    <input message="tns:creditsafeSearchCriteriaRequest"/>
+    <output message="tns:creditsafeSearchCriteriaResponse"/>
+  </operation>
+  <operation name="creditsafeMonitorAddCompany">
+    <input message="tns:creditsafeMonitorAddCompanyRequest"/>
+    <output message="tns:creditsafeMonitorAddCompanyResponse"/>
+  </operation>
+  <operation name="creditsafeMonitorRemoveCompany">
+    <input message="tns:creditsafeMonitorRemoveCompanyRequest"/>
+    <output message="tns:creditsafeMonitorRemoveCompanyResponse"/>
+  </operation>
+  <operation name="creditsafeMonitorGetUpdatedCompanies">
+    <input message="tns:creditsafeMonitorGetUpdatedCompaniesRequest"/>
+    <output message="tns:creditsafeMonitorGetUpdatedCompaniesResponse"/>
+  </operation>
+</portType>
+<binding name="Webservices.nlBinding" type="tns:Webservices.nlPortType">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="login">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/login" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="logout">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/logout" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="creditsafeGetReportFull">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFull" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="creditsafeSearch">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="creditsafeSearchV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="creditsafeGetReportFullV2">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="creditsafeSearchCriteria">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchCriteria" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="creditsafeMonitorAddCompany">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorAddCompany" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="creditsafeMonitorRemoveCompany">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorRemoveCompany" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="creditsafeMonitorGetUpdatedCompanies">
+    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorGetUpdatedCompanies" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+</binding>
+<service name="Webservices.nl">
+  <port name="Webservices.nlPort" binding="tns:Webservices.nlBinding">
+    <soap:address location="https://ws1.webservices.nl:443/creditsafe/soap_doclit.php"/>
+  </port>
+</service>
+</definitions>

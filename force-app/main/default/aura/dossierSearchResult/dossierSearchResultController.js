@@ -13,8 +13,10 @@
                 // Getting the event
                 var updateEvent = component.getEvent("dossierSelectedEvent");
                 // Setting the param on the event 
+                updateEvent.setParams({ "selectedDataVendor": record.vendor});
                 updateEvent.setParams({ "DossierNumber": record.dossier_number });
                 updateEvent.setParams({ "EstablishmentNumber": record.establishment_number });
+                updateEvent.setParams({ "creditSafeId": record.creditSafeId});
                 // Fire the event so all the components can hear it
                 updateEvent.fire();
         }

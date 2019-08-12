@@ -1,0 +1,14 @@
+<!--
+ - Created by jaapbranderhorst on 2019-07-05.
+ -->
+
+<aura:interface description="ISearchForm">
+    <aura:attribute name="searchFields" type="Object" description="The search fields to be filled"/>
+    <aura:attribute name="account" type="Account" description="the account that is used to prefill the search fields"/>
+    <aura:attribute name="selected" type="Boolean" description="true if a country has been selected for which the implementing component is the search form"/>
+
+    <aura:method name="handleChangedAccount" access="public" description="called when the account is updated in the dossierSearchComponent" action="{!c.handleChangedAccount}">
+        <aura:attribute name="account" type="Account" description="the updated account"/>
+    </aura:method>
+
+</aura:interface>

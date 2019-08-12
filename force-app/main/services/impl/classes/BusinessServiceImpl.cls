@@ -24,26 +24,89 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         set;
     }
 
-    public static List<SearchForDossiersResultDto> searchForDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+    public List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name) {
         // Handle valid postcodes that the web service does not like
         if (postcode != null){ // fix for postal code
             postcode = postcode.replaceAll('(\\s+)', '').toUpperCase();
         }
-
-        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
-        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, 1);
-        searchResults.addAll(returnedResults.results.item);
-        Integer numPages = returnedResults.paging.numpages;
-        System.debug('numPages  ' +numPages + ' size '+ returnedResults.results.item.size());
-        for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
-            returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, i);
-            searchResults.addAll(returnedResults.results.item);
+        if (String.isEmpty(country)) {
+            Exception ex = new CCInputException('Country must be filled when searching for dossiers');
+            ErrorLogUtil.logException(ex);
+            throw ex;
         }
+        List<SearchForDossiersResultDto> resultValue = new List<SearchForDossiersResultDto>();
+        if (country == CreditSafe.Country.NL.name()) {
+            resultValue = searchForDutchDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
+        } else {
+            resultValue = searchForCreditSafeDossiers(new List<String>{country}, null, null, registration_number, null, vat_number, province, city, street, postcode, trade_name);
+        }
+        return resultValue;
+    }
+
+    /**
+     * Searches for credit safe dossiers.
+     *
+     * @param country
+     * @param id
+     * @param status
+     * @param registration_number
+     * @param registration_type
+     * @param vat_number
+     * @param province
+     * @param city
+     * @param street
+     * @param postal_code
+     * @param name
+     *
+     * @return
+     */
+    private List<SearchForDossiersResultDto> searchForCreditSafeDossiers(List<String> countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+        List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
+        CreditsafeWsdl.stringArray creditSafeCountries = new CreditsafeWsdl.stringArray();
+        creditSafeCountries.item = new List<String>();
+        for (String country : countries) {
+            creditSafeCountries.item.add(country);
+        }
+        CreditsafeWsdl.CreditsafeSearchResultV2 searchResult = WsCreditsafe.creditsafeSearchV2(creditSafeCountries, id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name);
+        if (searchResult.companies != null && searchResult.companies.item != null) {
+            for (CreditsafeWsdl.CreditsafeCompanyV2 company : searchResult.companies.item) {
+                returnValue.add(new SearchForDossiersResultDto(company));
+            }
+        }
+        return returnValue;
+
+    }
+
+    /**
+     * Searches for dutch business dossiers in Company.info backend (Dutch Business service)
+     *
+     * @param trade_name
+     * @param city
+     * @param street
+     * @param postcode
+     * @param house_number
+     * @param house_number_addition
+     * @param telephone_number
+     * @param domain_name
+     *
+     * @return
+     */
+    private List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
+        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
+        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, 1);
+        if (returnedResults.results != null && returnedResults.results.item != null) {
+            searchResults.addAll(returnedResults.results.item);
+            Integer numPages = returnedResults.paging.numpages;
+            for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
+                returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, i);
+                searchResults.addAll(returnedResults.results.item);
+            }
+        }
+
         List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
         for (DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2 : searchResults) {
             returnValue.add(new SearchForDossiersResultDto(dutchBusinessReferenceV2));
         }
-        System.debug('size'+returnValue.size());
         return returnValue;
     }
 
@@ -55,8 +118,149 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return dossiers;
     }
 
-    public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String dossierNumber, String establishmentNumber, Id accountId) {
+
+    public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor, Id accountId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        InsertDossiersFromDataVendorResponseDTO response = null;
+        if (vendor == CustomerConnect.DataVendor.COMPANY_INFO.name()) {
+            response = insertSingleDossierFromCompanyInfo(dossierNumber, establishmentNumber, accountId, unitOfWork);
+        } else { // no checks on input but should be ok
+            response = insertSingleDossierFromCreditSafe(creditSafeId, accountId, unitOfWork);
+
+        }
+        return response;
+    }
+
+    private InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromCreditSafe(String creditSafeId, Id accountId,  fflib_ISObjectUnitOfWork unitOfWork) {
+        InsertDossiersFromDataVendorResponseDTO response = null;
+        // we don't want double dossiers so let's first check it
+        List<Business_Dossier__c> existingDossiers = BusinessDossierSelector.newInstance().selectByCreditSafeId(creditSafeId, false);
+        if (existingDossiers != null && existingDossiers.size() > 0) {
+            response = new InsertDossiersFromDataVendorResponseDTO(existingDossiers.get(0), true);
+        } else { // no duplicate, we need to create a new dossier
+            try {
+                CreditsafeWsdl.stringArray countries = new CreditsafeWsdl.stringArray();
+                countries.item = new List<String>();
+                for (CreditSafe.Country country : CreditSafe.Country.values()) {
+                    countries.item.add(country.name());
+                }
+                CreditsafeWsdl.CreditsafeSearchResultV2 searchResult = WsCreditsafe.creditsafeSearchV2(countries, creditSafeId, null, null, null, null, null, null, null, null, null);
+                CreditsafeWsdl.CreditsafeCompanyV2Array companies = searchResult.companies;
+                if (companies != null && companies.item != null) {
+                    CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier = companies.item.get(0);
+                    Account account = null;
+                    if (accountId == null) {
+                        account = insertAccount(dataVendorDossier, unitOfWork);
+                    } else {
+                        List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
+                        account = accounts.get(0);
+                    }
+                    Business_Dossier__c dossierDB = insertCreditSafeDossier(dataVendorDossier, account, unitOfWork);
+                    response = new InsertDossiersFromDataVendorResponseDTO(dossierDB, false);
+                    unitOfWork.commitWork();
+
+                    // now update the account in a new round since only now we have the id of the dossier.
+                    // Someone had the smart idea of creating a circular relationship in the database...
+                    // Since the id of the account is not known before creation, registering a relationship doesn't work
+                    unitOfWork = Application.UnitOfWork.newInstance();
+                    unitOfWork.registerDirty(account, Schema.Account.Business_Dossier__c, dossierDB);
+                    unitOfWork.commitWork();
+                }
+            } catch (CCDuplicateException e) { // multiple duplicate accounts have been found
+                throw e;
+            } catch (Exception e) {
+                ErrorLogUtil.logException(e);
+                throw new CCException(e);
+            }
+        }
+        return response;
+
+    }
+
+    private Business_Dossier__c insertCreditSafeDossier(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Account account, fflib_ISObjectUnitOfWork unitOfWork) {
+        Business_Dossier__c dossierDB = new Business_Dossier__c();
+        dossierDB = mapCreditSafeDataToDossier(dataVendorDossier, dossierDB);
+        unitOfWork.registerNew(dossierDB, Business_Dossier__c.Account__c, account);
+
+        Dossier_Address__c addressDB = mapCreditSafeAddress(dataVendorDossier, new Dossier_Address__c());
+        unitOfWork.registerNew(addressDB, Dossier_Address__c.Business_Data__c, dossierDB);
+
+        return dossierDB;
+    }
+
+    private Dossier_Address__c mapCreditSafeAddress(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Dossier_Address__c addressDB) {
+        if (dataVendorDossier.address != null) {
+            addressDB = new Dossier_Address__c();
+            addressDB.Name = dataVendorDossier.address.full_address;
+            addressDB.Postcode__c = dataVendorDossier.address.postal_code;
+            addressDB.Street__c = dataVendorDossier.address.street;
+            addressDB.City__c = dataVendorDossier.address.city;
+            addressDB.House_Number__c = dataVendorDossier.address.house_number;
+            addressDB.House_Number_Addition__c = null;
+            addressDB.Country__c = dataVendorDossier.address.country;
+            addressDB.Type__c = 'Creditsafe';
+        }
+        return addressDB;
+    }
+
+    private Business_Dossier__c mapCreditSafeDataToDossier(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Business_Dossier__c dossierDB) {
+        Id recordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName()
+                .get('Creditsafe').getRecordTypeId();
+        dossierDB.RecordTypeId = recordTypeId;
+        dossierDB.Dossier_Number__c = dataVendorDossier.registration_number;
+        dossierDB.Name = dataVendorDossier.name;
+        if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.item != null) {
+            if (dataVendorDossier.trade_names.item.size() > 0) {
+                dossierDB.Trade_Name_Full__c = dataVendorDossier.trade_names.item.get(0);
+            }
+            String trade_names = '';
+            for (Integer i = 0; i < dataVendorDossier.trade_names.item.size(); i++) {
+                trade_names += dataVendorDossier.trade_names.item[i] + (i == dataVendorDossier.trade_names.item.size()-1 ? '' : ', ');
+            }
+            dossierDB.Trade_Names__c = trade_names;
+        }
+
+        dossierDB.Registration_Country__c = dataVendorDossier.country;
+        dossierDB.Creditsafe_Id__c = dataVendorDossier.creditsafe_number;
+        dossierDB.Date_of_Last_Account__c = dataVendorDossier.date_last_account;
+        dossierDB.Date_of_Last_Change__c = dataVendorDossier.date_last_change;
+        dossierDB.Status__c = dataVendorDossier.status;
+
+        if (dataVendorDossier.vat_numbers != null && dataVendorDossier.vat_numbers.item != null && dataVendorDossier.vat_numbers.item.size() > 0) {
+            // TODO: handle multiple VAT numbers
+            dossierDB.VAT_Number__c = dataVendorDossier.vat_numbers.item.get(0);
+        }
+        dossierDB.Office_Type__c = dataVendorDossier.office_type;
+        dossierDB.Type__c = dataVendorDossier.type_x;
+
+        return dossierDB;
+    }
+
+
+
+    private Account insertAccount(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, fflib_ISObjectUnitOfWork unitOfWork) {
+        Account account = mapDataVendorToAccount(dataVendorDossier, new Account());
+
+        List<Account> duplicateAccounts = BusinessDuplicateService.checkForAccountDuplicates(account);
+        if (duplicateAccounts.size() > 1) { // too many duplicates found. Cannot map them.
+            throw new CCDuplicateException(Label.Dossier_Multiple_Account_Duplicates_Found);
+        } else {
+            if (duplicateAccounts.size() == 1) { // one duplicate found, let's reuse that one
+                account = duplicateAccounts.get(0);
+            } else { // no duplicates found, create a new account
+                unitOfWork.registerNew(account);
+            }
+        }
+
+        return  account;
+    }
+
+    private Account mapDataVendorToAccount(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Account account) {
+        account.Name = dataVendorDossier.name;
+        return account;
+    }
+
+    private InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromCompanyInfo(String dossierNumber, String establishmentNumber, Id accountId, fflib_ISObjectUnitOfWork unitOfWork ) {
         InsertDossiersFromDataVendorResponseDTO response = null;
         Account account = null;
 
@@ -80,7 +284,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
                     List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
                     account = accounts.get(0);
                 }
-                List<Business_Dossier__c> dossierDBs = insertDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, account)}, unitOfWork);
+                List<Business_Dossier__c> dossierDBs = insertCompanyInfoDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, account)}, unitOfWork);
 
                 response = new InsertDossiersFromDataVendorResponseDTO(dossierDBs.get(0), false);
                 unitOfWork.commitWork();
@@ -209,7 +413,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return account;
     }
 
-    private List<Business_Dossier__c> insertDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS, fflib_ISObjectUnitOfWork unitOfWork) {
+    private List<Business_Dossier__c> insertCompanyInfoDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS, fflib_ISObjectUnitOfWork unitOfWork) {
         List<Business_Dossier__c> returnList = new List<Business_Dossier__c>();
         for (InsertDossierRequestDTO insertDossierRequestDTO : InsertDossierRequestDTOS) {
             Business_Dossier__c dossier = mapDataVendorDataToDossier(insertDossierRequestDTO.dossier, new Business_Dossier__c());
@@ -265,6 +469,10 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     }
 
     private Business_Dossier__c mapDataVendorDataToDossier(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Business_Dossier__c dossierDB) {
+        Id recordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName()
+                .get('Dutch_Business').getRecordTypeId();
+        dossierDB.RecordTypeId = recordTypeId;
+        dossierDB.Registration_Country__c = 'NL';
         String trade_names = '';
         // TODO: move this to a list of tradelist (seperate sObject)
         if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.item != null && dataVendorDossier.trade_names.item.size() > 0) {
@@ -279,6 +487,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         }else{
             dossierDB.Name = dataVendorDossier.trade_name_full;
         }
+        dossierDB.Registration_Country__c = 'NL';
         dossierDB.Dossier_Number__c = dataVendorDossier.dossier_number;
         dossierDB.Establishment_Number__c = dataVendorDossier.establishment_number;
         dossierDB.Main_Establishment_Number__c = dataVendorDossier.main_establishment_number;
@@ -343,14 +552,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         if (dataVendorDossier.indication_import != null) { dossierDB.Indication_Import__c = dataVendorDossier.indication_import;}
         if (dataVendorDossier.indication_main_establishment != null) { dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;}
         if (dataVendorDossier.indication_non_mailing != null) { dossierDB.Indication_Non_Mailing__c = dataVendorDossier.indication_non_mailing;}
-        // TODO: implement proper mapping of insolvencies
-//        if (dataVendorDossier.insolvencies != null) {
-//            for (Object obj :dataVendorDossier.insolvencies.item) {
-//
-//            }
-//        }
-//        dossierDB.Insolvencies__c = dataVendorDossier.insolvencies;
-
 
         if (dataVendorDossier.structure != null) {
             dossierDB.Number_Of_Subsidiaries__c = String.valueOf(dataVendorDossier.structure.number_of_subsidiaries);
