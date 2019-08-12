@@ -1,9 +1,9 @@
 /**
- * Created by tejaswinidandi on 2019-08-01.
+ * Created by tejaswinidandi on 2019-08-12.
  */
 
 @IsTest
-public class UpdateDossiersBatchTest {
+private class UpdateDossierBatchSchedulerTest {
 
     @TestSetup
     private static void setupData() {
@@ -13,35 +13,11 @@ public class UpdateDossiersBatchTest {
         c.CompanyInfo_Account_Id__c = '1';
         c.CompanyConnectUserId__c = 11;
         c.Last_Executed_Batch__c = Datetime.newInstance(2019, 7, 28);
-
-        Business_Dossier__c d = new Business_Dossier__c();
-        d.Dossier_Number__c = '1';
-        d.Establishment_Number__c = '2';
-        d.Indication_Main_Establishment__c = false;
-        d.Name = 't1';
-
-        Business_Dossier__c d1 = new Business_Dossier__c();
-        d1.Dossier_Number__c = '11';
-        d1.Establishment_Number__c = '12';
-        d1.Name = 't11';
-
-        Account a1 = new Account();
-        a1.Name = 'aa';
-        Account a2 = new Account();
-        a2.Name = 'aa2';
-
-        insert a1;
-        insert a2;
         insert c;
-        d.Account__c = a1.Id;
-        d1.Account__c = a2.Id;
-        insert d;
-        insert d1;
     }
 
-
     @IsTest
-    static void testBatch() {
+    static void testBehavior() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
         Integer pageNR = 1;
@@ -56,13 +32,13 @@ public class UpdateDossiersBatchTest {
         DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
         a1.dossier_number = '1';
         a1.establishment_number = '2';
-        a1.update_types = stringArray(new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'});
+        a1.update_types = UpdateDossiersBatchTest.stringArray(new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'});
         output.results.item.add(a1);
 
         DutchBusinessWsdl.DutchBusinessUpdateReference a2 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
         a2.dossier_number = '11';
         a2.establishment_number = '12';
-        a2.update_types = stringArray(new List<String>{'Removed'});
+        a2.update_types = UpdateDossiersBatchTest.stringArray(new List<String>{'Removed'});
         output.results.item.add(a2);
         Credentials__c c = Credentials__c.getOrgDefaults();
 
@@ -75,24 +51,14 @@ public class UpdateDossiersBatchTest {
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
         test.startTest();
-        UpdateDossiersBatch o = new UpdateDossiersBatch();
-        Database.executeBatch(o);
+        String CRON_EXP = '0 0 0 3 9 ? 2022';
+        UpdateDossierBatchScheduler sch = new UpdateDossierBatchScheduler();
+        String jobId = System.schedule('Example Batch Schedule job', CRON_EXP, sch);
+        CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime FROM CronTrigger WHERE id = :jobId];
+        // Verify the job has not run
+        System.assertEquals(0, ct.TimesTriggered);
+        // Verify the next time the job will run
+        System.assertEquals('2022-09-03 00:00:00', String.valueOf(ct.NextFireTime));
         test.stopTest();
-
-        List<Business_Dossier__c> bd = [SELECT Id, Is_Removed__c, Dossier_Number__c FROM Business_Dossier__c WHERE Dossier_Number__c = '11' LIMIT 1];
-        System.debug(bd[0]);
-        System.assertEquals(bd[0].Is_Removed__c, true);
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        System.assertEquals(cs.Last_Executed_Batch__c, Datetime.now());
-    }
-
-    public static DutchBusinessWsdl.stringArray stringArray (List<String> types) {
-        DutchBusinessWsdl.stringArray updateTypesArrayResponse = new DutchBusinessWsdl.stringArray();
-        updateTypesArrayResponse.item = new List<String>();
-        for (String s : types) {
-            updateTypesArrayResponse.item.add(s);
-        }
-
-        return updateTypesArrayResponse;
     }
 }
