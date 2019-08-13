@@ -24,6 +24,30 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         set;
     }
 
+    public static CreditsafeWsdl.stringArray countries {
+        get {
+            if (countries == null) {
+                countries = new CreditsafeWsdl.stringArray();
+                countries.item = new List<String>();
+                for (CreditSafe.Country country : CreditSafe.Country.values()) {
+                    countries.item.add(country.name());
+                }
+            }
+            return countries;
+        }
+        set;
+    }
+
+    public static CreditsafeWsdl.stringArray creditSafeCountries {
+        get {
+            if (creditSafeCountries == null) {
+                creditSafeCountries = new CreditsafeWsdl.stringArray();
+            }
+            return creditSafeCountries;
+        }
+        set;
+    }
+
     public List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name) {
         // Handle valid postcodes that the web service does not like
         if (postcode != null){ // fix for postal code
@@ -62,7 +86,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
      */
     private List<SearchForDossiersResultDto> searchForCreditSafeDossiers(List<String> countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
         List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
-        CreditsafeWsdl.stringArray creditSafeCountries = new CreditsafeWsdl.stringArray();
         creditSafeCountries.item = new List<String>();
         for (String country : countries) {
             creditSafeCountries.item.add(country);
@@ -122,6 +145,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
     public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor, Id accountId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         InsertDossiersFromDataVendorResponseDTO response = null;
+        System.debug(CustomerConnect.DataVendor.COMPANY_INFO.name() + '  ' + vendor);
         if (vendor == CustomerConnect.DataVendor.COMPANY_INFO.name()) {
             response = insertSingleDossierFromCompanyInfo(dossierNumber, establishmentNumber, accountId, unitOfWork);
         } else { // no checks on input but should be ok
@@ -139,11 +163,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             response = new InsertDossiersFromDataVendorResponseDTO(existingDossiers.get(0), true);
         } else { // no duplicate, we need to create a new dossier
             try {
-                CreditsafeWsdl.stringArray countries = new CreditsafeWsdl.stringArray();
-                countries.item = new List<String>();
-                for (CreditSafe.Country country : CreditSafe.Country.values()) {
-                    countries.item.add(country.name());
-                }
                 CreditsafeWsdl.CreditsafeSearchResultV2 searchResult = WsCreditsafe.creditsafeSearchV2(countries, creditSafeId, null, null, null, null, null, null, null, null, null);
                 CreditsafeWsdl.CreditsafeCompanyV2Array companies = searchResult.companies;
                 if (companies != null && companies.item != null) {
