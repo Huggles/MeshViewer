@@ -30,8 +30,7 @@ public with sharing class BusinessAccountingServiceImplTest {
         Application.Service.setMock(IWsAccounting.class, mockWS);
 
         test.startTest();
-        BusinessAccountingServiceImpl b = new BusinessAccountingServiceImpl();
-        b.saveDataUserCredentials('test', 'pas');
+        BusinessAccountingService.saveDataUserCredentials('test', 'pas');
         test.stopTest();
 
         Credentials__c c = Credentials__c.getOrgDefaults();
@@ -51,10 +50,9 @@ public with sharing class BusinessAccountingServiceImplTest {
         mocks.stopStubbing();
         Application.Service.setMock(IWsAccounting.class, mockWS);
 
-        BusinessAccountingServiceImpl b = new BusinessAccountingServiceImpl();
         try {
             test.startTest();
-            b.saveDataUserCredentials('test', 'pas');
+            BusinessAccountingService.saveDataUserCredentials('test', 'pas');
             test.stopTest();
         } catch(Exception e)
         {
@@ -88,9 +86,8 @@ public with sharing class BusinessAccountingServiceImplTest {
         mocks.stopStubbing();
         Application.Service.setMock(IWsAccounting.class, mockWS);
 
-        BusinessAccountingServiceImpl b = new BusinessAccountingServiceImpl();
         test.startTest();
-        b.onboardCustomer(username, password);
+        BusinessAccountingService.onboardCustomer(username, password);
         test.stopTest();
         System.assertEquals(output.id, 1);
 
