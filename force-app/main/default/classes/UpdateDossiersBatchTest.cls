@@ -83,7 +83,8 @@ public class UpdateDossiersBatchTest {
         System.debug(bd[0]);
         System.assertEquals(bd[0].Is_Removed__c, true);
         Credentials__c cs = Credentials__c.getOrgDefaults();
-        System.assertEquals(cs.Last_Executed_Batch__c, Datetime.now());
+        Date d = cs.Last_Executed_Batch__c.Date();
+        System.assertEquals(d, Datetime.now().Date());
     }
 
     public static DutchBusinessWsdl.stringArray stringArray (List<String> types) {
