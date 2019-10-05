@@ -33,7 +33,6 @@ public with sharing class CompanyDetailsControllerTest {
         System.assert(result instanceof  AuraResponseWrapper);
         AuraResponseWrapper wrapper = (AuraResponseWrapper)result;
         System.assert(wrapper.state == 'SUCCESS');
-        System.debug(JSON.serializePretty(result));
         System.assert(wrapper.response == serviceResponse);
     }
 

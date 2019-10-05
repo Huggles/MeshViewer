@@ -44,7 +44,7 @@ public without sharing class PostInstallScript implements InstallHandler {
             ActionExecutor upgradeExecutor = new ActionExecutor(upgradeActionsByVersions, context);
             upgradeExecutor.execute();
         } else {
-            ActionExecutor installExecutor = new ActionExecutor(upgradeActionsByVersions, context);
+            ActionExecutor installExecutor = new ActionExecutor(installActionsByVersions, context);
             installExecutor.execute();
         }
 
