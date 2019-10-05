@@ -2,16 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0faa720d-2e4e-4142-bfe3-896400424c4f" name="Default Changelist" comment="Added the record type + mapping for CreditSafe dossiers. Added the wiring so - after testing and probably fixing - a CreditSafe dossier can be created. Still have to test it, write unit tests and ensure that no strange buttons pop up in the DossierDetails component (like Get VAT for a credit safe)">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/IInstallAction.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/IInstallAction.cls-meta.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/PostInstallActionExecutor.cls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/force-app/main/default/classes/PostInstallActionExecutor.cls-meta.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CompanyInfoComponents.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CompanyInfoComponents.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/CompanyDetailsController.cls" beforeDir="false" afterPath="$PROJECT_DIR$/force-app/main/default/classes/CompanyDetailsController.cls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/CompanyDetailsControllerTest.cls" beforeDir="false" afterPath="$PROJECT_DIR$/force-app/main/default/classes/CompanyDetailsControllerTest.cls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/Hack.cls" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/Hack.cls-meta.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/HackTest.cls" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/HackTest.cls-meta.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/PostInstallScript.cls" beforeDir="false" afterPath="$PROJECT_DIR$/force-app/main/default/classes/PostInstallScript.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/PostInstallScriptTest.cls" beforeDir="false" afterPath="$PROJECT_DIR$/force-app/main/default/classes/PostInstallScriptTest.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/force-app/main/default/classes/v20upgradeScript.cls" beforeDir="false" afterPath="$PROJECT_DIR$/force-app/main/default/classes/v20upgradeScript.cls" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,9 +33,9 @@
         <option value="Lightning Controller" />
         <option value="Lightning Helper" />
         <option value="Lightning Component" />
+        <option value="Apex Unit Test Class" />
         <option value="Apex Interface" />
         <option value="Apex Class" />
-        <option value="Apex Unit Test Class" />
         <option value="Apex Metadata" />
       </list>
     </option>
@@ -149,7 +147,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Apex Unit Tests.All">
+  <component name="RunManager" selected="Apex Unit Tests.cust_connect.PostInstallScriptTest">
     <configuration name="All" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" show_console_on_std_err="false" show_console_on_std_out="false">
       <option name="allTests" value="true" />
       <option name="allowRunningInParallel" value="false" />
@@ -226,6 +224,40 @@
             <value>
               <set>
                 <option value="cust_connect.DutchBusinessWsdlTest" />
+              </set>
+            </value>
+          </entry>
+        </map>
+      </option>
+      <option name="nbaLogLevel" value="INFO" />
+      <option name="profilingLogLevel" value="INFO" />
+      <option name="systemLogLevel" value="DEBUG" />
+      <option name="testClassToTestMethodNames">
+        <map />
+      </option>
+      <option name="testSuiteName" />
+      <option name="validationLogLevel" value="INFO" />
+      <option name="visualforceLogLevel" value="INFO" />
+      <option name="waveLogLevel" value="INFO" />
+      <option name="workflowLogLevel" value="INFO" />
+      <method v="2" />
+    </configuration>
+    <configuration name="cust_connect.PostInstallScriptTest" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <option name="allTests" value="false" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="apexLogLevel" value="DEBUG" />
+      <option name="calloutsLogLevel" value="INFO" />
+      <option name="connectionName" value="CompanyDataByAppsolutely_Dev" />
+      <option name="connectionType" value="SFDX" />
+      <option name="contextConfiguration" value="true" />
+      <option name="databaseLogLevel" value="INFO" />
+      <option name="logLevelsInitialized" value="false" />
+      <option name="moduleToTestClassNames">
+        <map>
+          <entry key="CompanyInfoComponents">
+            <value>
+              <set>
+                <option value="cust_connect.PostInstallScriptTest" />
               </set>
             </value>
           </entry>
@@ -328,55 +360,21 @@
       <option name="workflowLogLevel" value="ERROR" />
       <method v="2" />
     </configuration>
-    <configuration name="cust_connect.VatWsdlTest" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
-      <option name="allTests" value="false" />
-      <option name="allowRunningInParallel" value="false" />
-      <option name="apexLogLevel" value="DEBUG" />
-      <option name="calloutsLogLevel" value="INFO" />
-      <option name="connectionName" value="CompanyDataByAppsolutely_Dev" />
-      <option name="connectionType" value="SFDX" />
-      <option name="contextConfiguration" value="true" />
-      <option name="databaseLogLevel" value="INFO" />
-      <option name="logLevelsInitialized" value="false" />
-      <option name="moduleToTestClassNames">
-        <map>
-          <entry key="CompanyInfoComponents">
-            <value>
-              <set>
-                <option value="cust_connect.VatWsdlTest" />
-              </set>
-            </value>
-          </entry>
-        </map>
-      </option>
-      <option name="nbaLogLevel" value="INFO" />
-      <option name="profilingLogLevel" value="INFO" />
-      <option name="systemLogLevel" value="DEBUG" />
-      <option name="testClassToTestMethodNames">
-        <map />
-      </option>
-      <option name="testSuiteName" />
-      <option name="validationLogLevel" value="INFO" />
-      <option name="visualforceLogLevel" value="INFO" />
-      <option name="waveLogLevel" value="INFO" />
-      <option name="workflowLogLevel" value="INFO" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Apex Unit Tests.All" />
-      <item itemvalue="Apex Unit Tests.cust_connect.VatWsdlTest" />
       <item itemvalue="Apex Unit Tests.cust_connect.DutchBusinessWsdlTest" />
       <item itemvalue="Apex Unit Tests.cust_connect.SimpleSetFieldBatchTest.testBehavior" />
       <item itemvalue="Apex Unit Tests.cust_connect.PostInstallScriptTest.testV20Upgrade" />
       <item itemvalue="Apex Unit Tests.cust_connect.CompanyDetailsControllerTest" />
+      <item itemvalue="Apex Unit Tests.cust_connect.PostInstallScriptTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Apex Unit Tests.cust_connect.PostInstallScriptTest" />
         <item itemvalue="Apex Unit Tests.cust_connect.CompanyDetailsControllerTest" />
         <item itemvalue="Apex Unit Tests.cust_connect.PostInstallScriptTest.testV20Upgrade" />
         <item itemvalue="Apex Unit Tests.cust_connect.SimpleSetFieldBatchTest.testBehavior" />
         <item itemvalue="Apex Unit Tests.cust_connect.DutchBusinessWsdlTest" />
-        <item itemvalue="Apex Unit Tests.cust_connect.VatWsdlTest" />
       </list>
     </recent_temporary>
   </component>
@@ -422,7 +420,7 @@
       <workItem from="1570262312124" duration="22654000" />
       <workItem from="1570285144705" duration="231000" />
       <workItem from="1570285501548" duration="314000" />
-      <workItem from="1570285819233" duration="173000" />
+      <workItem from="1570285819233" duration="2559000" />
     </task>
     <task id="LOCAL-00001" summary="Added Components,Mock Class etc.">
       <created>1544699334875</created>
@@ -770,6 +768,6 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Customer_connect$All.null" NAME="CompanyDataByAppsolutely_Dev Coverage Results" MODIFIED="1569341802833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Customer.connect" CONNECTION_NAME="CompanyDataByAppsolutely_Dev" CONNECTION_TYPE="SFDX" />
+    <SUITE FILE_PATH="coverage/Customer_connect$cust_connect_PostInstallScriptTest.null" NAME="CompanyDataByAppsolutely_Dev Coverage Results" MODIFIED="1570290441957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="Customer.connect" CONNECTION_NAME="CompanyDataByAppsolutely_Dev" CONNECTION_TYPE="SFDX" />
   </component>
 </project>
