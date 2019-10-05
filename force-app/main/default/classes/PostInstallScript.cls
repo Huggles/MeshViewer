@@ -17,13 +17,13 @@ public without sharing class PostInstallScript implements InstallHandler {
     private Map<Version, IInstallAction> installActionsByVersions = new Map<Version, IInstallAction>();
 
     public void onInstall(InstallContext context) {
+        PostInstallActionExecutor executor = null;
         if (context.isUpgrade()) {
-            PostInstallActionExecutor upgradeExecutor = new PostInstallActionExecutor(upgradeActionsByVersions, context);
-            upgradeExecutor.execute();
+             executor = new PostInstallActionExecutor(upgradeActionsByVersions, context);
         } else {
-            PostInstallActionExecutor installExecutor = new PostInstallActionExecutor(installActionsByVersions, context);
-            installExecutor.execute();
+             executor = new PostInstallActionExecutor(installActionsByVersions, context);
         }
+        executor.execute();
 
     }
 
