@@ -2,7 +2,7 @@
 Author          : Jaap Branderhorst
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
-public with sharing class BusinessServiceImpl implements IBusinessService {
+public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
 

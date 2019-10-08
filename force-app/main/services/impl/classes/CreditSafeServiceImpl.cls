@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-07-03.
  */
 
-public with sharing class CreditSafeServiceImpl implements ICreditSafeService {
+public inherited sharing class CreditSafeServiceImpl implements ICreditSafeService {
 
 
 

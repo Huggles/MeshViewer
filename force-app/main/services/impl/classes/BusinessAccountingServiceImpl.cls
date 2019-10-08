@@ -3,7 +3,7 @@ Author          : ValerijsProkudins
 
 TODO: Move custom metadatas query to selector
 ******************************************************************************************/
-public with sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService {
+public inherited sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService {
 
     public void saveDataUserCredentials(String username, String password) {
         Credentials__c cs = Credentials__c.getOrgDefaults();

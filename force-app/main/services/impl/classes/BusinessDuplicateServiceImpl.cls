@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-19.
  */
 
-public without sharing class BusinessDuplicateServiceImpl implements IBusinessDuplicateService {
+public inherited sharing class BusinessDuplicateServiceImpl implements IBusinessDuplicateService {
 
     public List<CheckDuplicateDossierResponse> checkForDuplicateDossiers(List<CheckDuplicateDossierRequest> requests) {
         try {

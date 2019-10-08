@@ -4,7 +4,7 @@
  * Sets a constant to the given field for all records in the where clause. Handy to quickly update recordtype ids for example.
  */
 
-public with sharing class SimpleSetFieldBatch implements Database.Batchable<SObject> {
+public without sharing class SimpleSetFieldBatch implements Database.Batchable<SObject> {
 
     private String whereClause { get; set; }
 
