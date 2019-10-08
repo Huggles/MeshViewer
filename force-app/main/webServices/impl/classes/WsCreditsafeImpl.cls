@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-07-03.
  */
 
-public with sharing class WsCreditsafeImpl implements IWsCreditsafe {
+public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
 
 
 

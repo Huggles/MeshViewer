@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-29.
  */
 
-public with sharing class WsDutchBusiness implements IWsDutchBusiness{
+public inherited sharing class WsDutchBusiness implements IWsDutchBusiness{
 
     public static DutchBusinessWsdl.DutchBusinessVatNumber dutchBusinessGetVatNumber(String dossier_number) {
         return newInstance().dutchBusinessGetVatNumber(dossier_number);

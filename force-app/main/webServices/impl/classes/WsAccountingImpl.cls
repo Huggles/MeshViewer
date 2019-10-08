@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-29.
  */
 
-public with sharing class WsAccountingImpl implements IWsAccounting {
+public inherited sharing class WsAccountingImpl implements IWsAccounting {
 
     private class AccountingMethodCallOut extends MethodCallout {
 
