@@ -7,7 +7,7 @@
  *	A place holder for mock, the method that was called and the arguments that were passed.
  *	@group Core
  */
-public with sharing class fflib_InvocationOnMock
+public inherited sharing class fflib_InvocationOnMock
 {
 	private fflib_QualifiedMethod qm;
 	private fflib_MethodArgValues methodArg;

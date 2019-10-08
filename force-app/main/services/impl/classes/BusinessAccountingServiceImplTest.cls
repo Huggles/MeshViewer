@@ -3,21 +3,6 @@ public with sharing class BusinessAccountingServiceImplTest {
 
 
     @isTest
-    public static void onboardCustomer(){
-
-
-
-
-    }
-
-
-    @isTest
-    public static void testCreateCIUser(){
-
-
-    }
-
-    @isTest
     public static void testGetUserOnboardedFail(){
         system.assert(!BusinessAccountingService.GetUserOnboarded());
 
@@ -32,17 +17,6 @@ public with sharing class BusinessAccountingServiceImplTest {
         system.assert(BusinessAccountingService.GetUserOnboarded());
 
     }
-
-    @isTest
-    public static void testAddBudget(){
-
-
-    }
-    @isTest
-    public static void testGetBalance(){
-
-    }
-
 
 
 }

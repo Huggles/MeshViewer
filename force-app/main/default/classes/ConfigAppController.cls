@@ -138,54 +138,54 @@ public static PermissionSet ps;
 
     
 
-    @AuraEnabled
-    public static void assignUsers(List<String> UserIdList){
-        fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
-        fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
-        fflib_SecurityUtils.checkObjectIsDeletable(PermissionSetAssignment.SObjectType);
-        fflib_SecurityUtils.checkUpdate(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
-        fflib_SecurityUtils.checkInsert(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
-        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
-        List<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
-        List<String> enabledBusinessUserIds = getBusinessUserIds();
-        List<String> psaToDelete = new List<String>();
-        
-        for(String usrId: UserIdList){
-            if(!enabledBusinessUserIds.contains(usrId)){
-                PermissionSetAssignment psa = new PermissionSetAssignment();
-                psa.AssigneeId = usrId;
-                psa.PermissionSetId = ps.Id;
-                psaList.add(psa);
-            }else{
-                psaToDelete.add(usrId);
-            }
-        }
-        upsert psaList;
-        if(psaToDelete.size()>0){
-            delete([SELECT ID FROM PermissionSetAssignment WHERE AssigneeId IN :psaToDelete AND PermissionSetId = :ps.Id]);
-        }
-    }
+//    @AuraEnabled
+//    public static void assignUsers(List<String> UserIdList){
+//        fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
+//        fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
+//        fflib_SecurityUtils.checkObjectIsDeletable(PermissionSetAssignment.SObjectType);
+//        fflib_SecurityUtils.checkUpdate(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
+//        fflib_SecurityUtils.checkInsert(PermissionSetAssignment.SObjectType, new List<String>{'AssigneeId','PermissionSetId'});
+//        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
+//        List<PermissionSetAssignment> psaList = new List<PermissionSetAssignment>();
+//        List<String> enabledBusinessUserIds = getBusinessUserIds();
+//        List<String> psaToDelete = new List<String>();
+//
+//        for(String usrId: UserIdList){
+//            if(!enabledBusinessUserIds.contains(usrId)){
+//                PermissionSetAssignment psa = new PermissionSetAssignment();
+//                psa.AssigneeId = usrId;
+//                psa.PermissionSetId = ps.Id;
+//                psaList.add(psa);
+//            }else{
+//                psaToDelete.add(usrId);
+//            }
+//        }
+//        upsert psaList;
+//        if(psaToDelete.size()>0){
+//            delete([SELECT ID FROM PermissionSetAssignment WHERE AssigneeId IN :psaToDelete AND PermissionSetId = :ps.Id]);
+//        }
+//    }
 
-    private static List<String> getBusinessUserIds(){
-        fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
-        fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
-        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
-        List <PermissionSetAssignment> psaList = new List <PermissionSetAssignment>();
-        psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];
-        List<String> result = new List<String>();
-        for(PermissionSetAssignment psa: psaList){
-            result.add(psa.assigneeId);
-        }
-        return result;
+//    private static List<String> getBusinessUserIds(){
+//        fflib_SecurityUtils.checkRead(PermissionSet.SObjectType, new List<String>{'Id','Name'});
+//        fflib_SecurityUtils.checkRead(PermissionSetAssignment.SObjectType, new List<String>{'Id','AssigneeId','PermissionSetId'});
+//        ps = [SELECT Id FROM PermissionSet WHERE Name = 'Customer_connect_user'];
+//        List <PermissionSetAssignment> psaList = new List <PermissionSetAssignment>();
+//        psaList = [SELECT Id, AssigneeId From PermissionSetAssignment WHERE PermissionSetId = :ps.Id];
+//        List<String> result = new List<String>();
+//        for(PermissionSetAssignment psa: psaList){
+//            result.add(psa.assigneeId);
+//        }
+//        return result;
+//
+//    }
 
-    }
-
-    public class UserWrapper{
-        @AuraEnabled public String Id;
-        @AuraEnabled public String Name;
-        @AuraEnabled public boolean isActive;
-        @AuraEnabled public String ProfileName;
-        @AuraEnabled public boolean BusinessActive = false;
-    }
+//    public with sharing class  UserWrapper{
+//        @AuraEnabled public String Id;
+//        @AuraEnabled public String Name;
+//        @AuraEnabled public boolean isActive;
+//        @AuraEnabled public String ProfileName;
+//        @AuraEnabled public boolean BusinessActive = false;
+//    }
 }
 

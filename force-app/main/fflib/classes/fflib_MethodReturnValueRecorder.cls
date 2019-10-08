@@ -27,7 +27,7 @@
 /**
  * @group Core
  */
-public with sharing class fflib_MethodReturnValueRecorder
+public inherited sharing class fflib_MethodReturnValueRecorder
 {
 	public Boolean Stubbing { get; set; }
 

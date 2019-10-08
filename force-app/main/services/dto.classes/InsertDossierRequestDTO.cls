@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-20.
  */
 
-public with sharing class InsertDossierRequestDTO {
+public inherited sharing class InsertDossierRequestDTO {
 
     public DutchBusinessWsdl.DutchBusinessDossierV3 dossier {
         get; set;

@@ -36,7 +36,7 @@
  * This allows both upgrading old code to APIv29 by making use of these as a nearly drop in replacement, as well as keeping
  * namespace detection logic encapsulated.
 **/
-public class fflib_SObjectDescribe {
+public inherited sharing class fflib_SObjectDescribe {
 	//internal implementation details
 	private Schema.SObjectType token;
 	private Schema.SObjectField nameField;

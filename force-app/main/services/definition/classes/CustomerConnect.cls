@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-07-03.
  */
 
-public class CustomerConnect {
+public inherited sharing class CustomerConnect {
 
     public enum DataVendor {
         COMPANY_INFO,

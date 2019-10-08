@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-30.
  */
 
-public with sharing class SearchForDossiersResultDto {
+public inherited sharing class SearchForDossiersResultDto {
     @AuraEnabled public String vendor { get; set; }
     @AuraEnabled public String creditSafeCountry {get; set; }
     @AuraEnabled public String dossier_number { get; set; } // chamber of commerce number

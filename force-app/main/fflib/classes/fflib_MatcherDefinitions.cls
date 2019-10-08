@@ -30,7 +30,7 @@
  * to construct the matcher, register the matcher and return an object of the correct type to be called in your unit test.
  * E.g. Don't construct Eq(Object toMatch), instead call fflib_Match.eq(Object toMatch).
  */
-public with sharing class fflib_MatcherDefinitions
+public inherited sharing class fflib_MatcherDefinitions
 {
 	/**
 	 * Connective - Enum representing the possible operators for the Combined matcher. Possible values: ALL, AT_LEAST_ONE, NONE

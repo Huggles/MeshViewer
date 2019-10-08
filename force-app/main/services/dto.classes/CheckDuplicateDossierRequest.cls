@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-23.
  */
 
-public with sharing class CheckDuplicateDossierRequest {
+public inherited sharing class CheckDuplicateDossierRequest {
 
     public String dossierNumber { get; private set; }
     public String establishmentNumber {get; private set;}

@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-23.
  */
 
-public with sharing class InsertDossiersFromDataVendorResponseDTO {
+public inherited sharing class InsertDossiersFromDataVendorResponseDTO {
 
     @AuraEnabled
     public Business_Dossier__c dossier { get; private set; }
