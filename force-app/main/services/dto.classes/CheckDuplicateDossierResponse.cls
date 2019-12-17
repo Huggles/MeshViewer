@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-23.
  */
 
-public with sharing class CheckDuplicateDossierResponse {
+public inherited sharing class CheckDuplicateDossierResponse {
 
     public String dossierAndEstablishmentNumber { get; set; }
     public Business_Dossier__c dossierFound { get; set;}

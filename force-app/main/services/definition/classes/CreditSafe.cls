@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-07-03.
  */
 
-public class CreditSafe {
+public inherited sharing class CreditSafe {
 
     public enum Country {
         NL,

@@ -2,7 +2,7 @@
 Author          : Jaap Branderhorst
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
-public with sharing class BusinessServiceImpl implements IBusinessService {
+public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
     public static DutchBusinessWsdl.stringArray updateTypesArray {
@@ -243,7 +243,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Creditsafe_Id__c = dataVendorDossier.creditsafe_number;
         dossierDB.Date_of_Last_Account__c = dataVendorDossier.date_last_account;
         dossierDB.Date_of_Last_Change__c = dataVendorDossier.date_last_change;
-        dossierDB.Status__c = dataVendorDossier.status;
+         dossierDB.Status__c = dataVendorDossier.status;
 
         if (dataVendorDossier.vat_numbers != null && dataVendorDossier.vat_numbers.item != null && dataVendorDossier.vat_numbers.item.size() > 0) {
             // TODO: handle multiple VAT numbers
@@ -545,7 +545,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Secondary_Sbi_Code_2_Text__c = dataVendorDossier.secondary_sbi_code2_text;
 
         dossierDB.Chamber_Code__c = dataVendorDossier.chamber_number;
-        dossierDB.Status__c = determineStatus(dataVendorDossier);
+         dossierDB.Status__c = determineStatus(dataVendorDossier);
 
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
         if (dataVendorDossier.annual_financial_statement_summary != null) {

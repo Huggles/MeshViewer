@@ -4,7 +4,7 @@
  */
 
 @IsTest
-public class TestUtils {
+public inherited sharing class TestUtils {
 
     private static final Integer SIZE = 900000000;
 

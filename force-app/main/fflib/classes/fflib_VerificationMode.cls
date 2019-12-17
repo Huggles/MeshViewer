@@ -7,7 +7,7 @@
  *	It can be used in the classic verify and in the ordered verify.
  *	@group Core
  */
-public with sharing class fflib_VerificationMode
+public inherited sharing class fflib_VerificationMode
 {
 	public Integer VerifyMin {get; set;}
 	public Integer VerifyMax {get; set;}

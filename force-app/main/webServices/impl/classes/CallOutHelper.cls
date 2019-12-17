@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-29.
  */
 
-public with sharing class CallOutHelper {
+public inherited sharing class CallOutHelper {
 
     /**
      * Handles a callout exception that can occur when calling the data vendor.

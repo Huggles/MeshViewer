@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-29.
  */
 
-public with sharing class WsAccounting {
+public inherited sharing class WsAccounting {
     public static String login(String username, String password) {
         return newInstance().login(username, password);
     }

@@ -5,7 +5,7 @@
  * 'Template' class to quickly migrate data from one field to another in the same object.
  */
 
-public inherited sharing class SimpleDataMigrationBatch implements Database.Batchable<SObject> {
+public without sharing class SimpleDataMigrationBatch implements Database.Batchable<SObject> {
 
     private Map<String, String> oldToNew { get; set; }
 

@@ -6,7 +6,7 @@
  * @nodoc
  */
 @isTest
-public with sharing class fflib_MyList implements IList
+public inherited sharing class fflib_MyList implements IList
 {
 	public interface IList
 	{

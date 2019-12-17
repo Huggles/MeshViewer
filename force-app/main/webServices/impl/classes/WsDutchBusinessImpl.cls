@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-06-30.
  */
 
-public with sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
+public inherited sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
 
     private class DutchBusinessMethodCallOut extends MethodCallout {
 

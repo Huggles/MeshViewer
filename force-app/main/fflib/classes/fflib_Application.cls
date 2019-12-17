@@ -29,7 +29,7 @@
  * of the Apex Enterprise Patterns, Service, Unit Of Work, Selector and Domain.
  *   See the sample applications Application.cls file for an example
  **/
-public class fflib_Application 
+public inherited sharing class fflib_Application
 {
 	/**
 	 * Class implements a Unit of Work factory

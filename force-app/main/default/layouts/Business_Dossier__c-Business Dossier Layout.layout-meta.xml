@@ -15,10 +15,6 @@
                 <field>Account__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Status__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Dossier_Number__c</field>
             </layoutItems>
@@ -45,6 +41,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_Removed__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Status__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
