@@ -12,7 +12,7 @@ public with sharing class UpdateDossiersBatch implements Database.Batchable<Busi
         List<UpdateDossierReferenceDTO> updateDossiersRemovedList = new List<UpdateDossierReferenceDTO>();
 
         //call to company.info server to get list of dossiers with update
-        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = BusinessService.getChangedDossiers(pageNr);
+        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = new BusinessServiceImpl().getChangedDossiers(pageNr);
         Set<String> dossierNrs = new Set<String>();
         Set<String> establishmentNrs = new Set<String>();
 
@@ -80,7 +80,7 @@ public with sharing class UpdateDossiersBatch implements Database.Batchable<Busi
         UpdateDossiersBatch updateDossiersBatch = new UpdateDossiersBatch();
         updateDossiersBatch.pageNr = pageNr+1;
         updateDossiersBatch.numPages = this.numPages;
-
+        
         if (updateDossiersBatch.pageNr <= updateDossiersBatch.numPages) {
             //batch size of 50 or less is preferred, as we do a fallback call when 1st call to server fails and will not hit callout limit
             Database.executeBatch(updateDossiersBatch, 50);
@@ -93,4 +93,5 @@ public with sharing class UpdateDossiersBatch implements Database.Batchable<Busi
             update cs;
         }
     }
+
 }
