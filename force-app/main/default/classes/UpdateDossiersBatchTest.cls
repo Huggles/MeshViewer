@@ -80,8 +80,86 @@ public class UpdateDossiersBatchTest {
         test.stopTest();
 
         List<Business_Dossier__c> bd = [SELECT Id, Is_Removed__c, Dossier_Number__c FROM Business_Dossier__c WHERE Dossier_Number__c = '11' LIMIT 1];
-        System.debug(bd[0]);
         System.assertEquals(bd[0].Is_Removed__c, true);
+        Credentials__c cs = Credentials__c.getOrgDefaults();
+        Date d = cs.Last_Executed_Batch__c.Date();
+        System.assertEquals(d, Datetime.now().Date());
+    }
+
+    @IsTest
+    static void testBatchWithMorePages() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+        Integer pageNR = 1;
+
+        mocks.startStubbing();
+
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
+        output.paging = new DutchBusinessWsdl.ResultInfo();
+        output.paging.numpages = 5;
+        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
+        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
+        DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
+        a1.dossier_number = '1';
+        a1.establishment_number = '2';
+        a1.update_types = stringArray(new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'});
+        output.results.item.add(a1);
+
+        DutchBusinessWsdl.DutchBusinessUpdateReference a2 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
+        a2.dossier_number = '11';
+        a2.establishment_number = '12';
+        a2.update_types = stringArray(new List<String>{'Removed'});
+        output.results.item.add(a2);
+        Credentials__c c = Credentials__c.getOrgDefaults();
+
+        DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
+
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
+        mocks.when(mockWS.dutchBusinessGetDossierV3(a1.dossier_number, a1.establishment_number)).thenReturn(output1);
+
+        mocks.stopStubbing();
+        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
+
+        test.startTest();
+        UpdateDossiersBatch o = new UpdateDossiersBatch();
+        Database.executeBatch(o);
+        test.stopTest();
+
+        List<Business_Dossier__c> bd = [SELECT Id, Is_Removed__c, Dossier_Number__c FROM Business_Dossier__c WHERE Dossier_Number__c = '11' LIMIT 1];
+        System.assertEquals(bd[0].Is_Removed__c, true);
+    }
+
+    @IsTest
+    static void testBatchWithNoUpdates() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+        Integer pageNR = 1;
+
+        mocks.startStubbing();
+
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
+        output.paging = new DutchBusinessWsdl.ResultInfo();
+        output.paging.numpages = 1;
+        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
+        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
+
+        Credentials__c c = Credentials__c.getOrgDefaults();
+
+        DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
+
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
+        mocks.when(mockWS.dutchBusinessGetDossierV3('', '')).thenReturn(output1);
+
+        mocks.stopStubbing();
+        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
+
+        test.startTest();
+        UpdateDossiersBatch o = new UpdateDossiersBatch();
+        Database.executeBatch(o);
+        test.stopTest();
+
+        List<Business_Dossier__c> bd = [SELECT Id, Is_Removed__c, Dossier_Number__c FROM Business_Dossier__c WHERE Dossier_Number__c = '11' LIMIT 1];
+        System.assertEquals(bd[0].Is_Removed__c, false);
         Credentials__c cs = Credentials__c.getOrgDefaults();
         Date d = cs.Last_Executed_Batch__c.Date();
         System.assertEquals(d, Datetime.now().Date());

@@ -80,10 +80,12 @@ public with sharing class UpdateDossiersBatch implements Database.Batchable<Busi
         UpdateDossiersBatch updateDossiersBatch = new UpdateDossiersBatch();
         updateDossiersBatch.pageNr = pageNr+1;
         updateDossiersBatch.numPages = this.numPages;
-        
+
         if (updateDossiersBatch.pageNr <= updateDossiersBatch.numPages) {
             //batch size of 50 or less is preferred, as we do a fallback call when 1st call to server fails and will not hit callout limit
-            Database.executeBatch(updateDossiersBatch, 50);
+            if (!Test.isRunningTest()) {
+                Database.executeBatch(updateDossiersBatch, 50);
+            }
         }
         else {
             //once all pages are retrieved then update the Last_Executed_Batch__c with current time
