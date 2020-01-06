@@ -357,6 +357,9 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         }
 
         Business_Dossier__c dossierDB = dossiersDB.get(0);
+        if (String.isEmpty(dossierDB.Dossier_Number__c)) {//cannot get the VAT number if Registration Number is not filled, the callout fails
+            throw new CCException('Could not fetch the VAT number as Registration Number is missing');
+        }
         String vatNumber = BusinessDuplicateService.checkForExistingVatNumberInDB(dossierDB.Dossier_Number__c);
 
         // if no vat number in the db, get it from the data vendor
