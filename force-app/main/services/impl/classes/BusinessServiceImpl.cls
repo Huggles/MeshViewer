@@ -243,7 +243,8 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Creditsafe_Id__c = dataVendorDossier.creditsafe_number;
         dossierDB.Date_of_Last_Account__c = dataVendorDossier.date_last_account;
         dossierDB.Date_of_Last_Change__c = dataVendorDossier.date_last_change;
-         dossierDB.Status__c = dataVendorDossier.status;
+        dossierDB.Status__c = dataVendorDossier.status;
+        dossierDB.Company_Id__c = dataVendorDossier.id;
 
         if (dataVendorDossier.vat_numbers != null && dataVendorDossier.vat_numbers.item != null && dataVendorDossier.vat_numbers.item.size() > 0) {
             // TODO: handle multiple VAT numbers
@@ -254,8 +255,6 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
         return dossierDB;
     }
-
-
 
     private Account insertAccount(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, fflib_ISObjectUnitOfWork unitOfWork) {
         Account account = mapDataVendorToAccount(dataVendorDossier, new Account());
@@ -646,8 +645,6 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         }
         return sbiCodesDB;
     }
-
-
 
     private static Date convertToDate(DutchBusinessWsdl.DutchBusinessDateV3 theDate) {
         Date returnDate = null;
