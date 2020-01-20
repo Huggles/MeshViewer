@@ -4,8 +4,6 @@
 
 public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
 
-
-
     private class CreditSafeMethodCallOut extends MethodCallout {
 
         public Object call(String methodName, Map<String, Object> arguments) {
@@ -24,6 +22,14 @@ public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
                             (String)arguments.get('street'),
                             (String)arguments.get('postal_code'),
                             (String)arguments.get('name')
+                    );
+
+                }
+                when 'creditsafeGetReportFullV2' {
+                    return port.creditsafeGetReportFullV2(
+                            (String)arguments.get('company_id'),
+                            (String)arguments.get('language'),
+                            (String)arguments.get('reason')
                     );
 
                 }
@@ -67,6 +73,35 @@ public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
                 'postal_code' => postal_code,
                 'name' => name
         });
+    }
+
+    public CreditsafeWsdl.CreditsafeCompanyReportFullV2 creditsafeGetReportFullV2(String company_id, String language, String reason) {
+        return (CreditsafeWsdl.CreditsafeCompanyReportFullV2)methodCallOut.callOut('creditsafeGetReportFullV2', new Map<String, Object>{
+                'company_id' => company_id,
+                'language' => language,
+                'reason' => reason
+        });
+//        CreditsafeWsdl.creditsafeGetReportFullV2RequestType request_x = new CreditsafeWsdl.creditsafeGetReportFullV2RequestType();
+//        request_x.company_id = company_id;
+//        request_x.language = language;
+//        request_x.reason = reason;
+//        CreditsafeWsdl.creditsafeGetReportFullV2ResponseType response_x;
+//        Map<String, CreditsafeWsdl.creditsafeGetReportFullV2ResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeGetReportFullV2ResponseType>();
+//        response_map_x.put('response_x', response_x);
+//        WebServiceCallout.invoke(
+//                this,
+//                request_x,
+//                response_map_x,
+//                new String[]{endpoint_x,
+//                        'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2',
+//                        'http://www.webservices.nl/soap/',
+//                        'creditsafeGetReportFullV2',
+//                        'http://www.webservices.nl/soap/',
+//                        'creditsafeGetReportFullV2Response',
+//                        'CreditsafeWsdl.creditsafeGetReportFullV2ResponseType'}
+//        );
+//        response_x = response_map_x.get('response_x');
+//        return response_x.out;
     }
 
 }

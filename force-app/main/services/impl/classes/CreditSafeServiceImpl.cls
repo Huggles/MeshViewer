@@ -29,4 +29,16 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         return resultValue;
     }
 
+    public CreditSafeCompanyReportDTO getCreditsafeReportFullV2(String company_id, String language, String reason) {
+        //check input
+        if (String.isEmpty(company_id) || String.isEmpty(language)) {
+            throw new CCInputException(Label.Error_Input_Incorrect);
+        }
+
+        CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2 = WsCreditsafe.creditsafeGetReportFullV2(company_id, language, reason);
+        System.debug('============='+ reportFullV2);
+        return new CreditSafeCompanyReportDTO(reportFullV2);
+
+    }
+
 }
