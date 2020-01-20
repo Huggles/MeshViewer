@@ -4,7 +4,7 @@
 
 public inherited sharing class WsAccountingImpl implements IWsAccounting {
 
-    private class AccountingMethodCallOut extends MethodCallout {
+    private inherited sharing class AccountingMethodCallOut extends MethodCallout {
 
         public Object call(String methodName, Map<String,Object> arguments) {
             AccountingWsdl.Webservices_nlPort port = (AccountingWsdl.Webservices_nlPort)this.port;

@@ -4,6 +4,11 @@ public inherited sharing class BusinessService {
         return newInstance().searchForDossiers(country, trade_name, registration_number, vat_number, city, street, postcode, house_number, house_number_addition, province, telephone_number, domain_name);
     }
 
+
+    public static List<UpdateDossierReferenceDTO> getChangedDossiers(Integer pageNr){
+        return newInstance().getChangedDossiers(pageNr);
+    }
+
     public static Boolean deleteDossier(Id accountId){
         return newInstance().deleteDossier(accountId);
     }

@@ -37,11 +37,11 @@ public interface IWsDutchBusiness {
 //    DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchDossierNumber(String dossier_number,String establishment_number,String rsin_number,Integer page_x);
 //    DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchParameters(String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page_x);
 //    DutchBusinessWsdl.DutchBusinessUBOInvestigationStatus dutchBusinessUBOCheckInvestigation(String token);
-//    void dutchBusinessUpdateRemoveDossier(String dossier_number,String establishment_number);
+    void dutchBusinessUpdateRemoveDossier(String dossier_number,String establishment_number);
 //    DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult dutchBusinessSearch(String dossier_number,String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page_x);
 //    void dutchBusinessUpdateAddDossier(String dossier_number,String establishment_number);
 //    DutchBusinessWsdl.DutchBusinessGetLeiResult dutchBusinessGetLei(String dossier_number);
-//    DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetChangedDossiers(Date changed_since,DutchBusinessWsdl.stringArray update_types,Integer page_x);
+    DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetChangedDossiers(Date changed_since,DutchBusinessWsdl.stringArray update_types,Integer page_x);
 //    DutchBusinessWsdl.DutchBusinessUBOClassificationResult dutchBusinessUBOClassifyInvestigation(String token,String scenario);
 //    DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchSelectionSimple(DutchBusinessWsdl.stringArray city,DutchBusinessWsdl.stringArray postcode,DutchBusinessWsdl.stringArray sbi,Boolean primary_sbi_only,DutchBusinessWsdl.intArray legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,DutchBusinessWsdl.stringArray provinces);
 //    DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetLegalExtractDocumentDataV3(String dossier_number,Boolean include_source);

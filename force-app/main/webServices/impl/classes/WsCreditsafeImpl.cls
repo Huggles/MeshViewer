@@ -4,9 +4,7 @@
 
 public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
 
-
-
-    private class CreditSafeMethodCallOut extends MethodCallout {
+    private inherited sharing class CreditSafeMethodCallOut extends MethodCallout {
 
         public Object call(String methodName, Map<String, Object> arguments) {
             CreditsafeWsdl.Webservices_nlPort port = (CreditsafeWsdl.Webservices_nlPort) this.port;
