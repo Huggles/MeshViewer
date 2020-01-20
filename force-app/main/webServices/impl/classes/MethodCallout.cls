@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 2019-07-11.
  */
 
-public with sharing abstract class MethodCallout implements Callable {
+public inherited sharing abstract class MethodCallout implements Callable {
 
     protected WebServicePort port{
         get; set;

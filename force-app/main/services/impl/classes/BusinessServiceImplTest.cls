@@ -1,8 +1,16 @@
 @isTest
 public with sharing class BusinessServiceImplTest {
+    @TestSetup
+    private static void setupData() {
+        Credentials__c c = new Credentials__c();
+        c.Username__c = 'test';
+        c.Password__c = 'pas';
+        c.CompanyInfo_Account_Id__c = '1';
+        c.CompanyConnectUserId__c = 11;
+        c.Last_Executed_Batch__c = Datetime.newInstance(2019, 7, 28);
 
-
-
+        insert c;
+    }
 
     @isTest
     public static void testGetDossier(){
@@ -62,6 +70,90 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(20, results.size());
     }
 
+    @IsTest
+    public static void testSearchForDossiersNoCountryException() {
+        Test.startTest();
+        try {
+            BusinessService.searchForDossiers(null, null, null, null, null, null, null, null, null, null, null, null);
+        }catch (Exception e) {
+            System.assert(e instanceof CCInputException);
+            System.assertEquals(e.getMessage(), 'Country must be filled when searching for dossiers');
+        }
+        Test.stopTest();
+        List<Error_Log__c> errorLogs = [SELECT Id FROM Error_Log__c];
+        System.assertEquals(errorLogs.size(), 1);
+    }
+
+    @IsTest
+    public static void testSearchForCreditSafeDossiers(){
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsCreditsafe mockWS = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
+
+        mocks.startStubbing();
+        CreditsafeWsdl.stringArray trade_names = new CreditsafeWsdl.stringArray();
+        trade_names.item = new List<String>();
+        trade_names.item.add('trade names');
+        CreditsafeWsdl.stringArray vat_numbers = new CreditsafeWsdl.stringArray();
+        vat_numbers.item = new List<String>();
+        vat_numbers.item.add('123');
+        CreditsafeWsdl.CreditsafeAddressV2 address = new CreditsafeWsdl.CreditsafeAddressV2();
+        address.city = 'city1';
+        CreditsafeWsdl.CreditsafeSearchResultV2 output = new CreditsafeWsdl.CreditsafeSearchResultV2();
+        output.companies = new CreditsafeWsdl.CreditsafeCompanyV2Array();
+        output.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
+        CreditsafeWsdl.CreditsafeCompanyV2 item1 = new CreditsafeWsdl.CreditsafeCompanyV2();
+        item1.id = '1';
+        item1.creditsafe_number = '1';
+        item1.name = 'test';
+        item1.address = address;
+        item1.trade_names = trade_names;
+        item1.vat_numbers = vat_numbers;
+        output.companies.item.add(item1);
+
+        mocks.when(mockWS.creditsafeSearchV2(BusinessServiceImpl.creditSafeCountries, null, null, null, null, null, null, null, null, null, null)).thenReturn(output);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsCreditsafe.class, mockWS);
+        List<SearchForDossiersResultDto> returnValue = BusinessService.searchForDossiers('BE',null, null, null, null, null, null, null, null, null, null, null);
+        System.assertEquals(1, returnValue.size());
+    }
+
+    @IsTest
+    public static void testGetChangedDossiers() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+        Integer pageNR = 1;
+        List<String> updateTypesResponse = new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'};
+
+        mocks.startStubbing();
+        DutchBusinessWsdl.stringArray updateTypesArrayResponse = new DutchBusinessWsdl.stringArray();
+        updateTypesArrayResponse.item = new List<String>();
+        for (String s : updateTypesResponse) {
+            updateTypesArrayResponse.item.add(s);
+        }
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
+        output.paging = new DutchBusinessWsdl.ResultInfo();
+        output.paging.numpages = 3;
+        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
+        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
+        DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
+        a1.dossier_number = '1';
+        a1.establishment_number = '2';
+        a1.update_types = updateTypesArrayResponse;
+        output.results.item.add(a1);
+        Credentials__c c = Credentials__c.getOrgDefaults();
+
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
+
+        mocks.stopStubbing();
+        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
+
+        test.startTest();
+
+        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = (new BusinessServiceImpl()).getChangedDossiers(pageNR);
+        system.assertEquals(1, updateDossierReferenceDTOS.size());
+        test.stopTest();
+    }
 
     @IsTest
     public static void testUpdateDossiersWithDataVendorDataHappyFlow() {
@@ -93,6 +185,105 @@ public with sharing class BusinessServiceImplTest {
         List<Business_Dossier__c> dossiersInDb = [SELECT Id, Trade_Name_Full__c FROM Business_Dossier__c];
         System.assert(dossiersInDb.size() == 1);
         System.assert(dossiersInDb.get(0).Trade_Name_Full__c == 'test');
+
+    }
+
+    @IsTest
+    public static void testinsertSingleDossierFromCreditSafeNoAccountHappyFlow() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsCreditsafe webserviceMock = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
+
+        Id accountId = null;
+        CreditsafeWsdl.stringArray trade_names = new CreditsafeWsdl.stringArray();
+        trade_names.item = new List<String>();
+        trade_names.item.add('trade names');
+        CreditsafeWsdl.stringArray vat_numbers = new CreditsafeWsdl.stringArray();
+        vat_numbers.item = new List<String>();
+        vat_numbers.item.add('123');
+        CreditsafeWsdl.CreditsafeAddressV2 address = new CreditsafeWsdl.CreditsafeAddressV2();
+        address.city = 'city1';
+        CreditsafeWsdl.CreditsafeSearchResultV2 output = new CreditsafeWsdl.CreditsafeSearchResultV2();
+        output.companies = new CreditsafeWsdl.CreditsafeCompanyV2Array();
+        output.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
+        CreditsafeWsdl.CreditsafeCompanyV2 item1 = new CreditsafeWsdl.CreditsafeCompanyV2();
+        item1.id = '1';
+        item1.creditsafe_number = '1';
+        item1.name = 'test';
+        item1.address = address;
+        item1.trade_names = trade_names;
+        item1.vat_numbers = vat_numbers;
+        output.companies.item.add(item1);
+        mocks.startStubbing();
+        mocks.when(webserviceMock.creditsafeSearchV2(BusinessServiceImpl.countries, '1', null, null, null, null, null, null, null, null, null)).thenReturn(output);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsCreditsafe.class, webserviceMock);
+
+        Test.startTest();
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData('1', null, null, CustomerConnect.DataVendor.CREDIT_SAFE.name(), accountId);
+        Test.stopTest();
+        List<Business_Dossier__c> dossiersInDb = [SELECT Id, Creditsafe_Id__c, Trade_Name_Full__c, VAT_Number__c FROM Business_Dossier__c];
+        List<Dossier_Address__c> dossierAddresses = [SELECT Id, Business_Data__c FROM Dossier_Address__c];
+        System.assert(dossiersInDb.size() == 1);
+        System.assertEquals(dossierAddresses.size(), 1);
+        System.assertEquals(dossierAddresses[0].Business_Data__c, dossiersInDb.get(0).Id);
+        System.assert(dossiersInDb.get(0).Creditsafe_Id__c == '1');
+        System.assert(dossiersInDb.get(0).Trade_Name_Full__c == 'trade names');
+        System.assert(dossiersInDb.get(0).VAT_Number__c == '123');
+
+    }
+
+    @IsTest
+    public static void testinsertSingleDossierFromCreditSafeOneAccountHappyFlow() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsCreditsafe webserviceMock = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
+
+        Account acc = new Account(Name = 'test');
+        insert acc;
+        CreditsafeWsdl.CreditsafeSearchResultV2 output = new CreditsafeWsdl.CreditsafeSearchResultV2();
+        output.companies = new CreditsafeWsdl.CreditsafeCompanyV2Array();
+        output.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
+        CreditsafeWsdl.CreditsafeCompanyV2 item1 = new CreditsafeWsdl.CreditsafeCompanyV2();
+        item1.id = '1';
+        item1.creditsafe_number = '1';
+        item1.name = 'test';
+        output.companies.item.add(item1);
+        mocks.startStubbing();
+        mocks.when(webserviceMock.creditsafeSearchV2(BusinessServiceImpl.countries, '1', null, null, null, null, null, null, null, null, null)).thenReturn(output);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsCreditsafe.class, webserviceMock);
+
+        Test.startTest();
+        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData('1', null, null, CustomerConnect.DataVendor.CREDIT_SAFE.name(), acc.Id);
+        Test.stopTest();
+        List<Business_Dossier__c> dossiersInDb = [SELECT Id, Creditsafe_Id__c, Trade_Name_Full__c, Account__c FROM Business_Dossier__c];
+        System.assert(dossiersInDb.size() == 1);
+        System.assert(dossiersInDb.get(0).Creditsafe_Id__c == '1');
+        System.assertEquals(dossiersInDb.get(0).Account__c, acc.Id);
+
+    }
+
+    @IsTest
+    public static void testinsertSingleDossierFromCreditSafeException() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsCreditsafe webserviceMock = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
+
+        mocks.startStubbing();
+        mocks.when(webserviceMock.creditsafeSearchV2(BusinessServiceImpl.countries, '1', null, null, null, null, null, null, null, null, null)).thenThrow(new CCDuplicateException());
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsCreditsafe.class, webserviceMock);
+
+        Test.startTest();
+        Boolean exceptionThrown = false;
+        try {
+            InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData('1', null, null, CustomerConnect.DataVendor.CREDIT_SAFE.name(), null);
+        } catch (CCDuplicateException e) {
+            exceptionThrown = true;
+        }
+        Test.stopTest();
+        System.assert(exceptionThrown);
 
     }
 
@@ -398,7 +589,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2__c, 'sbis2');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2_Text__c , 'secondary_sbi_code2_text');
-        System.assertEquals(dossierDB.Status__c , 'Import');
+         System.assertEquals(dossierDB.Status__c , 'Import');
         System.assertEquals(dossierDB.Number_Of_Subsidiaries__c, '1');
         System.assertEquals(dossierDB.Parent_Chamber_Of_Commerce_Number__c, '123');
         System.assertEquals(dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c, '1122');
@@ -462,7 +653,7 @@ public with sharing class BusinessServiceImplTest {
 
 
     }
-    
+
     @IsTest
     public static void testInsertSingleDossierFromDataVendorDataNoAccountId() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -548,7 +739,7 @@ public with sharing class BusinessServiceImplTest {
                         Secondary_Sbi_Code_1_Text__c,
                         Secondary_Sbi_Code_2__c,
                         Secondary_Sbi_Code_2_Text__c,
-                        Status__c,
+                         Status__c,
                         Structure__c,
                         Telephone_Number__c,
                         Trade_Name_45__c,
@@ -629,7 +820,7 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2__c, 'sbis2');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2_Text__c , 'secondary_sbi_code2_text');
-        System.assertEquals(dossierDB.Status__c , 'Import');
+         System.assertEquals(dossierDB.Status__c , 'Import');
         System.assertEquals(dossierDB.Number_Of_Subsidiaries__c, '1');
         System.assertEquals(dossierDB.Parent_Chamber_Of_Commerce_Number__c, '123');
         System.assertEquals(dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c, '1122');
@@ -645,17 +836,17 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(dossierDB.Indication_Main_Establishment__c , true);
         System.assertEquals(dossierDB.Indication_Non_Mailing__c , false);
 
-         Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Correspondence'];
-        
-         System.assertEquals(cAddress.Name, '3533AX street');
-         System.assertEquals(cAddress.Postcode__c, '3533AX');
-         System.assertEquals(cAddress.Country__c, 'NL');
-         System.assertEquals(cAddress.City__c, 'city');
-         System.assertEquals(cAddress.Street__c, 'street');
-         System.assertEquals(cAddress.House_Number_Addition__c, 'a');
-         System.assertEquals(cAddress.House_Number__c, '10');
+        Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Correspondence'];
 
-         Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment'];
+        System.assertEquals(cAddress.Name, '3533AX street');
+        System.assertEquals(cAddress.Postcode__c, '3533AX');
+        System.assertEquals(cAddress.Country__c, 'NL');
+        System.assertEquals(cAddress.City__c, 'city');
+        System.assertEquals(cAddress.Street__c, 'street');
+        System.assertEquals(cAddress.House_Number_Addition__c, 'a');
+        System.assertEquals(cAddress.House_Number__c, '10');
+
+        Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment'];
         System.assertEquals(eAddress.Name, '3533AX street');
         System.assertEquals(eAddress.Postcode__c, '3533AX');
         System.assertEquals(eAddress.Country__c, 'NL');
@@ -663,10 +854,10 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(eAddress.Street__c, 'street');
         System.assertEquals(eAddress.House_Number_Addition__c, 'a');
         System.assertEquals(eAddress.House_Number__c, '10');
-        
+
     }
 
-//    @IsTest
+/*    @IsTest
 //    public static void testInsertAccountHappyFlow() {
 //        fflib_ApexMocks mocks = new fflib_ApexMocks();
 //        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
@@ -688,7 +879,7 @@ public with sharing class BusinessServiceImplTest {
 //            }
 //        }
 //        Test.stopTest();
-//    }
+//    } */
 
     @IsTest
     public static void testInsertAccountHappyFlow() {
@@ -722,7 +913,7 @@ public with sharing class BusinessServiceImplTest {
         }
         // mocks.when(webserviceMock.dutchBusinessGetDossier((DutchBusinessWsdl.DutchBusinessGetDossierRequest)fflib_Match.anyObject())).thenReturn(dataVendorDossier);
         mocks.when(duplicateServiceMock.checkForAccountDuplicates((Account)fflib_Match.anySObject())).thenReturn(accounts);
-       // mocks.when(unitOfWorkMock.commitWork()).thenThrow(new DMLManager.CRUDException());
+        // mocks.when(unitOfWorkMock.commitWork()).thenThrow(new DMLManager.CRUDException());
         // ((fflib_ISObjectUnitOfWork)mocks.doThrowWhen(new DMLManager.CRUDException(), unitOfWorkMock)).commitWork();
         mocks.stopStubbing();
 
@@ -772,7 +963,6 @@ public with sharing class BusinessServiceImplTest {
         }
         Test.stopTest();
     }
-
 
 
     private static DutchBusinessWsdl.DutchBusinessDossierV3 getDataVendorMockDossier() {

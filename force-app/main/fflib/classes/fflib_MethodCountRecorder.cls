@@ -5,7 +5,7 @@
 /**
  * @group Core
  */
-public with sharing class fflib_MethodCountRecorder
+public inherited sharing class fflib_MethodCountRecorder
 {
 	/*
 	 * Map of method arguments by type name.

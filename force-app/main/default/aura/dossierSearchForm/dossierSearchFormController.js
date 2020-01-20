@@ -1,9 +1,9 @@
 ({
     /**
-     * Ignore search params if dossier number populated. 
-     * @param {*} component 
-     * @param {*} event 
-     * @param {*} helper 
+     * Ignore search params if dossier number populated.
+     * @param {*} component
+     * @param {*} event
+     * @param {*} helper
      */
     populateDossier: function (component, event, helper) {
         var fields = component.get('v.searchFields');
@@ -14,9 +14,9 @@
     },
     /**
      * Fire search event to dossierDetails component
-     * @param {*} component 
-     * @param {*} event 
-     * @param {*} helper 
+     * @param {*} component
+     * @param {*} event
+     * @param {*} helper
      */
     onSearchSubmit: function( component, event, helper ) {
         // check the input
@@ -41,8 +41,15 @@
             }
         }
         if (empty) {
-            // TODO: replace by firing an event so a proper error message can be shown
-            component.set('v.error', $A.get('$Label.c.Error_Incomplete'));
+            //component.set('v.error', $A.get('$Label.c.Error_Incomplete'));
+            var toastEvent = $A.get("e.force:showToast");
+            toastEvent.setParams({
+                "title": "Error",
+                "mode": 'error',
+                "message": $A.get('$Label.c.Error_Incomplete'),
+                "type": "ERROR"
+            });
+            toastEvent.fire();
         } else {
             var updateEvent = component.getEvent("dossierSearchSubmitEvent");
             var searchFields = {};
@@ -63,9 +70,9 @@
     },
     /**
      * Bypass search and attempt retrieve. Fire dossier number to dossierDetails component.
-     * @param {*} component 
-     * @param {*} event 
-     * @param {*} helper 
+     * @param {*} component
+     * @param {*} event
+     * @param {*} helper
      */
     onMatchDossier: function( component, event, helper ) {
         // Getting the event
@@ -169,5 +176,5 @@
 
     },
 
-    
+
 });

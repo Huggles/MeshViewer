@@ -302,6 +302,20 @@
         <value>Account Updated</value>
     </labels>
     <labels>
+        <fullName>Dossier_ID_Access</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier ID Access</shortDescription>
+        <value>User doesn&#39;t have access to dossier with ID:</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_ID_Missing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier ID Missing</shortDescription>
+        <value>DossierId must be filled when setting VAT number</value>
+    </labels>
+    <labels>
         <fullName>Dossier_Multiple_Account_Duplicates_Found</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -314,6 +328,13 @@
         <protected>true</protected>
         <shortDescription>Dossier Number</shortDescription>
         <value>Chamber of Commerce Number</value>
+    </labels>
+    <labels>
+        <fullName>Dossier_Number_Missing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dossier Number Missing</shortDescription>
+        <value>Could not fetch the VAT number as Registration Number is missing</value>
     </labels>
     <labels>
         <fullName>Dossier_Remove</fullName>

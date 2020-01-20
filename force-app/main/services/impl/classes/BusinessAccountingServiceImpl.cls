@@ -3,7 +3,19 @@ Author          : ValerijsProkudins
 
 TODO: Move custom metadatas query to selector
 ******************************************************************************************/
-public with sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService {
+public inherited sharing class BusinessAccountingServiceImpl implements IBusinessAccountingService {
+
+    public static AccountingWsdl.intArray usergroups {
+        get {
+            if (usergroups == null) {
+                usergroups = new AccountingWsdl.intArray();
+                usergroups.item = new List<Integer>();
+                usergroups.item.add(23);
+            }
+            return usergroups;
+        }
+        set;
+    }
 
     public void saveDataUserCredentials(String username, String password) {
         Credentials__c cs = Credentials__c.getOrgDefaults();
@@ -20,9 +32,7 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
             throw new CCUserNotFoundException(Label.Error_user_not_found);
         }
 
-
     }
-
 
     // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
     public void onboardCustomer(String username, String password){
@@ -36,13 +46,10 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
 
         // create the user,throws CC exception if something goes wrong, handled by the frontend.
         // userCreateV2(Integer accountid, String nickname, String password, AccountingWsdl.intArray usergroups, String email, String companyname, String address, String contactname, String contactemail, String telephone, String fax, String clientcode, String comments)
-        AccountingWsdl.intArray usergroups = new AccountingWsdl.intArray();
-        usergroups.item = new List<Integer>();
-        usergroups.item.add(23);
         AccountingWsdl.userCreateV2ResponseType response = WsAccounting.userCreateV2(Integer.valueOf(applicationProperties.Data_Provider_Account_Id__c),
-                username, password, usergroups, applicationProperties.Appsolutely_Contact_Email__c,
-                orgDetails.Name, orgDetails.Address.getStreet() + ', ' + orgDetails.Address.getPostalCode(), // getStreet is a trick so we don't need to query for the Address.Street
-                UserInfo.getName(), UserInfo.getUserEmail(), orgDetails.Phone, orgDetails.Fax, '', '');
+                                                                                    username, password, usergroups, applicationProperties.Appsolutely_Contact_Email__c,
+                                                                                    orgDetails.Name, orgDetails.Address.getStreet() + ', ' + orgDetails.Address.getPostalCode(), // getStreet is a trick so we don't need to query for the Address.Street
+                                                                                    UserInfo.getName(), UserInfo.getUserEmail(), orgDetails.Phone, orgDetails.Fax, '', '');
 
         // upsert the new user credentials
         saveDataUserCredentials(username, password); // TODO: create a separate method so we can pass the userid we already have
@@ -59,23 +66,24 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
             if(cs != null && cs.Username__c != null && cs.Username__c != '' && cs.Password__c != null && cs.Password__c != ''){
                 return true;
             }else{
-                return false;}
+                return false;
+            }
         }catch(exception e){
             ErrorLogUtil.logException(e);
             return false;
         }
     }
 
-//    public static Boolean addTrialToCIUser(AccountingWsdl.userCreateResponseDto userId){// to think about params here
-//        try{
-//            ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
-//            Double amount = configData.DefaultTrialBalance__c;
-//            return addBudget(amount, userId.id);
-//        }catch(Exception e){
-//            ErrorLogUtil.logException(e);
-//            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
-//        }
-//    }
+    /*public static Boolean addTrialToCIUser(AccountingWsdl.userCreateResponseDto userId){// to think about params here
+        try{
+            ApplicationProperty__mdt configData = [SELECT DataProviderName__c, DefaultTrialBalance__c, DataProviderAdminUsername__c, DataProviderAdminPassword__c FROM ApplicationProperty__mdt WHERE DataProviderName__c = 'Company.Info' LIMIT 1];
+            Double amount = configData.DefaultTrialBalance__c;
+            return addBudget(amount, userId.id);
+        }catch(Exception e){
+            ErrorLogUtil.logException(e);
+            throw new CCException(System.Label.WSCall_Unknown_Exception, e);
+        }
+    }*/
 
     // TODO: check if the companyconnectuser id also works for referral
     public void addBudget(Double amount){
@@ -90,7 +98,10 @@ public with sharing class BusinessAccountingServiceImpl implements IBusinessAcco
 
     public Double getBalance(){
         Credentials__c cs = Credentials__c.getOrgDefaults();
-        Double currentBalance = WsAccounting.userViewBalance(Integer.valueOf(cs.CompanyConnectUserId__c));
+        Double currentBalance;
+        if (cs != null && cs.CompanyConnectUserId__c != null) {
+            currentBalance = WsAccounting.userViewBalance(Integer.valueOf(cs.CompanyConnectUserId__c));
+        }
         return currentBalance;
     }
 

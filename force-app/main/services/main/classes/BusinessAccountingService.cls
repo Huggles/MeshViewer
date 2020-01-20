@@ -1,4 +1,4 @@
-public with sharing class BusinessAccountingService {
+public inherited sharing class BusinessAccountingService {
     
     
     public static void onboardCustomer(String username, String password){

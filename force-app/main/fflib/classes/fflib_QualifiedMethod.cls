@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2016-2017 FinancialForce.com, inc.  All rights reserved.
  */
-public with sharing class fflib_QualifiedMethod
+public inherited sharing class fflib_QualifiedMethod
 {
 	private Object mockInstance;
 	private String typeName;

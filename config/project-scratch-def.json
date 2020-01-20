@@ -3,11 +3,12 @@
   "edition": "Developer",
   "language": "en_US",
   "features": [],
-  "orgPreferences": {
-    "enabled": [
-      "S1DesktopEnabled",
-      "Translation"
-    ],
-    "disabled": []
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "languageSettings": {
+      "enableTranslationWorkbench": true
+    }
   }
 }

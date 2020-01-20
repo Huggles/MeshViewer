@@ -2,9 +2,51 @@
 Author          : Jaap Branderhorst
 Description     : Service layer for DutchBusiness webservice calls and data processing
 ******************************************************************************************/
-public with sharing class BusinessServiceImpl implements IBusinessService {
+public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
+    public static DutchBusinessWsdl.stringArray updateTypesArray {
+        get {
+            if (updateTypesArray == null) {
+                List<String> updateTypes= new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress', 'Contact',
+                        'Activity', 'Personnel', 'FinancialStatus', 'Status', 'Branch', 'ImportExport', 'ContactPerson', 'Capital',
+                        'SubscriptionDates', 'Removed', 'New', 'Establishment', 'RSIN', 'Tradenames'};//, 'Subsidiaries'
+
+                //converting the list type to DutchBusinessWsdl.stringArray type
+                updateTypesArray = new DutchBusinessWsdl.stringArray();
+                updateTypesArray.item = new List<String>();
+                for (String s :updateTypes) {
+                    updateTypesArray.item.add(s);
+                }
+            }
+            return updateTypesArray;
+        }
+        set;
+    }
+
+    public static CreditsafeWsdl.stringArray countries {
+        get {
+            if (countries == null) {
+                countries = new CreditsafeWsdl.stringArray();
+                countries.item = new List<String>();
+                for (CreditSafe.Country country : CreditSafe.Country.values()) {
+                    countries.item.add(country.name());
+                }
+            }
+            return countries;
+        }
+        set;
+    }
+
+    public static CreditsafeWsdl.stringArray creditSafeCountries {
+        get {
+            if (creditSafeCountries == null) {
+                creditSafeCountries = new CreditsafeWsdl.stringArray();
+            }
+            return creditSafeCountries;
+        }
+        set;
+    }
 
     public List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name) {
         // Handle valid postcodes that the web service does not like
@@ -44,7 +86,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
      */
     private List<SearchForDossiersResultDto> searchForCreditSafeDossiers(List<String> countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
         List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
-        CreditsafeWsdl.stringArray creditSafeCountries = new CreditsafeWsdl.stringArray();
         creditSafeCountries.item = new List<String>();
         for (String country : countries) {
             creditSafeCountries.item.add(country);
@@ -92,7 +133,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return returnValue;
     }
 
-
     public List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS) {
         // no CRUD and FLS checks since this needs to be done in system mode. The customer has paid for the data fetched
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
@@ -100,10 +140,12 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         unitOfWork.commitWork();
         return dossiers;
     }
-    
+
+
     public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor, Id accountId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         InsertDossiersFromDataVendorResponseDTO response = null;
+        System.debug(CustomerConnect.DataVendor.COMPANY_INFO.name() + '  ' + vendor);
         if (vendor == CustomerConnect.DataVendor.COMPANY_INFO.name()) {
             response = insertSingleDossierFromCompanyInfo(dossierNumber, establishmentNumber, accountId, unitOfWork);
         } else { // no checks on input but should be ok
@@ -121,11 +163,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             response = new InsertDossiersFromDataVendorResponseDTO(existingDossiers.get(0), true);
         } else { // no duplicate, we need to create a new dossier
             try {
-                CreditsafeWsdl.stringArray countries = new CreditsafeWsdl.stringArray();
-                countries.item = new List<String>();
-                for (CreditSafe.Country country : CreditSafe.Country.values()) {
-                    countries.item.add(country.name());
-                }
                 CreditsafeWsdl.CreditsafeSearchResultV2 searchResult = WsCreditsafe.creditsafeSearchV2(countries, creditSafeId, null, null, null, null, null, null, null, null, null);
                 CreditsafeWsdl.CreditsafeCompanyV2Array companies = searchResult.companies;
                 if (companies != null && companies.item != null) {
@@ -206,7 +243,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Creditsafe_Id__c = dataVendorDossier.creditsafe_number;
         dossierDB.Date_of_Last_Account__c = dataVendorDossier.date_last_account;
         dossierDB.Date_of_Last_Change__c = dataVendorDossier.date_last_change;
-        dossierDB.Status__c = dataVendorDossier.status;
+         dossierDB.Status__c = dataVendorDossier.status;
 
         if (dataVendorDossier.vat_numbers != null && dataVendorDossier.vat_numbers.item != null && dataVendorDossier.vat_numbers.item.size() > 0) {
             // TODO: handle multiple VAT numbers
@@ -301,21 +338,28 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             unitOfWork.registerDeleted(dossierList[0]);
             unitOfWork.commitWork();
             response = true;
+
+            //if dossier is deleted, then remove it from the update list of dossiers on the company.info server
+            WsDutchBusiness.dutchBusinessUpdateRemoveDossier(dossierList[0].Dossier_Number__c, dossierList[0].Establishment_Number__c);
         }
+
         return response;
     }
 
     public Business_Dossier__c setVatNumber(Id dossierId) {
         if (dossierId == null) {
-            throw new CCException('DossierId must be filled when setting VAT number'); // shouldn't happen but let's check the input
+            throw new CCException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input
         }
 
         List<Business_Dossier__c> dossiersDB = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectById(new Set<Id>{dossierId});
         if (dossiersDB.isEmpty()) {
-            throw new CCException('User doesn\'t have access to dossier with ID: ' + dossierId);
+            throw new CCException(System.Label.Dossier_ID_Access + dossierId);
         }
 
         Business_Dossier__c dossierDB = dossiersDB.get(0);
+        if (String.isEmpty(dossierDB.Dossier_Number__c)) {//cannot get the VAT number if Registration Number is not filled, the callout fails
+            throw new CCException(System.Label.Dossier_Number_Missing);
+        }
         String vatNumber = BusinessDuplicateService.checkForExistingVatNumberInDB(dossierDB.Dossier_Number__c);
 
         // if no vat number in the db, get it from the data vendor
@@ -333,6 +377,34 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         return dossierDB;
     }
 
+    public List<UpdateDossierReferenceDTO> getChangedDossiers(Integer pageNr) {
+        Credentials__c cs = Credentials__c.getOrgDefaults();
+        Date changed_since;
+        if (cs != null && cs.Last_Executed_Batch__c != null) {
+            changed_since = cs.Last_Executed_Batch__c.date();
+        }
+        else {
+            changed_since = Date.today();
+        }
+
+        if (pageNr == null || pageNr == 0) {
+            pageNr = 1;
+        }
+
+        //callout to get the list of dossiers with updates
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult response = WsDutchBusiness.dutchBusinessUpdateGetChangedDossiers(changed_since, updateTypesArray, pageNr);
+        Integer numPages = response.paging.numpages;
+
+        //collect list of dossiers that needs to be updated
+        List<UpdateDossierReferenceDTO> updateDossiersList = new List<UpdateDossierReferenceDTO>();
+
+        for (DutchBusinessWsdl.DutchBusinessUpdateReference updatedDossier : response.results.item) {
+            updateDossiersList.add(new UpdateDossierReferenceDTO(updatedDossier, numPages));
+        }
+
+        return updateDossiersList;
+    }
+
     /**************
      * Implementation methods
      **************/
@@ -347,11 +419,11 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             if (duplicateAccounts.size() > 1) { // too many duplicates found. Cannot map them.
                 throw new CCDuplicateException(Label.Dossier_Multiple_Account_Duplicates_Found);
             } else
-            if (duplicateAccounts.size() == 1) { // one duplicate found, let's reuse that one
-                account = duplicateAccounts.get(0);
-            } else { // no duplicates found, create a new account
-                unitOfWork.registerNew(account);
-            }
+                    if (duplicateAccounts.size() == 1) { // one duplicate found, let's reuse that one
+                        account = duplicateAccounts.get(0);
+                    } else { // no duplicates found, create a new account
+                        unitOfWork.registerNew(account);
+                    }
             InsertAccountResponseDTO response = new InsertAccountResponseDTO(dataVendorDossier, account);
             responses.add(response);
         }
@@ -370,13 +442,13 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
             unitOfWork.registerNew(dossier, Business_Dossier__c.Account__c, insertDossierRequestDTO.account);
 
             // unitOfWork.registerRelationship(insertDossierRequestDTO.account, Account.Business_Dossier__c, dossier);
-            
+
             Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
             unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
 
             Dossier_Address__c correspondenceAddress = mapDataVendorDataToCorrespondenceAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
             unitOfWork.registerNew(correspondenceAddress, Dossier_Address__c.Business_Data__c, dossier);
-            
+
             List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(insertDossierRequestDTO.dossier, new List<Business_Data_SBI__c>());
             for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
                 unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, dossier);
@@ -441,7 +513,6 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Dossier_Number__c = dataVendorDossier.dossier_number;
         dossierDB.Establishment_Number__c = dataVendorDossier.establishment_number;
         dossierDB.Main_Establishment_Number__c = dataVendorDossier.main_establishment_number;
-        dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;
         dossierDB.Rsin_Number__c = String.valueOf(dataVendorDossier.rsin_number);
         dossierDB.Chamber_Number__c = convertToInteger(dataVendorDossier.chamber_number);
         dossierDB.Legal_Form_Code__c = convertToInteger(dataVendorDossier.legal_form_code);
@@ -477,7 +548,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Secondary_Sbi_Code_2_Text__c = dataVendorDossier.secondary_sbi_code2_text;
 
         dossierDB.Chamber_Code__c = dataVendorDossier.chamber_number;
-        dossierDB.Status__c = determineStatus(dataVendorDossier);
+         dossierDB.Status__c = determineStatus(dataVendorDossier);
 
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
         if (dataVendorDossier.annual_financial_statement_summary != null) {
@@ -613,7 +684,7 @@ public with sharing class BusinessServiceImpl implements IBusinessService {
 
 
     @TestVisible
-    private DutchBusinessWsdl.DutchBusinessDossierV3 getDossier(String dossierNumber, String establishmentNumber) {
+    public DutchBusinessWsdl.DutchBusinessDossierV3 getDossier(String dossierNumber, String establishmentNumber) {
         if (dossierNumber == null){ return null;}
         return WsDutchBusiness.dutchBusinessGetDossierV3(dossierNumber, establishmentNumber);
     }

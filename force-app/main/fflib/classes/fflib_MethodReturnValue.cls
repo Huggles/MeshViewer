@@ -29,7 +29,7 @@
  * Class defining a method return value.
  */
 @isTest
-public with sharing class fflib_MethodReturnValue
+public inherited sharing class fflib_MethodReturnValue
 {
 	private StandardAnswer basicAnswer = new StandardAnswer();
 

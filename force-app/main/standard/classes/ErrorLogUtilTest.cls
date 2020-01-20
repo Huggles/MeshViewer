@@ -5,7 +5,7 @@
 @IsTest
 private class ErrorLogUtilTest {
 
-    private class TestException extends Exception {
+    private without sharing class TestException extends Exception {
 
     }
 
