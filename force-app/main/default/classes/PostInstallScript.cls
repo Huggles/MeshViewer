@@ -28,9 +28,9 @@ public without sharing class PostInstallScript implements InstallHandler {
         //schedule an Update dossier scheduler, check if there is an existing scheduled job, else create one
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression
         FROM CronTrigger
-        WHERE CronJobDetail.Name = 'Update dossiers'];
+        WHERE CronJobDetail.Name = 'Update dossiers' LIMIT 1];
         if (! (cronTriggers.size() > 0)) {
-            List<Schedule_Update_Dossier__mdt> scheduleUpdateDossiers = [SELECT cust_connect__Hour__c, Label, MasterLabel, DeveloperName from cust_connect__Schedule_Update_Dossier__mdt];
+            List<Schedule_Update_Dossier__mdt> scheduleUpdateDossiers = [SELECT cust_connect__Hour__c, Label, MasterLabel, DeveloperName from cust_connect__Schedule_Update_Dossier__mdt LIMIT 1];
             if (scheduleUpdateDossiers.size() > 0) {
                 String hour = String.valueOf(scheduleUpdateDossiers[0].Hour__c).substringBefore('.').substringBefore(',');
                 String cronexpression = '0 0 '+ hour +' * * ?';
