@@ -46,7 +46,6 @@
     <description>Logs errors fired throughout the application. Purely to ease the maintenance. No access needed for users of the app or admins.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>true</enableReports>

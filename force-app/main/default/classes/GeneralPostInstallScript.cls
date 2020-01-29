@@ -16,11 +16,11 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger
             WHERE CronJobDetail.Name =: UPDATE_DOSSIER_SCHEDULE_NAME LIMIT 1];
         if (! (cronTriggers.size() > 0)) {
-            List<Schedule_Update_Dossier__mdt> scheduleUpdateDossiers = [SELECT cust_connect__Hour__c, Label, MasterLabel, DeveloperName from cust_connect__Schedule_Update_Dossier__mdt LIMIT 1];
+            List<Schedule_Update_Dossier__mdt> scheduleUpdateDossiers = [SELECT Hour__c, Label, MasterLabel, DeveloperName from Schedule_Update_Dossier__mdt LIMIT 1];
             if (scheduleUpdateDossiers.size() > 0) {
                 String hour = String.valueOf(scheduleUpdateDossiers[0].Hour__c).substringBefore('.').substringBefore(',');
                 String cronexpression = '0 0 '+ hour +' * * ?';
-                System.Schedule(UPDATE_DOSSIER_SCHEDULE_NAME, cronexpression, new cust_connect.UpdateDossierBatchScheduler());
+                System.Schedule(UPDATE_DOSSIER_SCHEDULE_NAME, cronexpression, new UpdateDossierBatchScheduler());
             }
         }
     }
