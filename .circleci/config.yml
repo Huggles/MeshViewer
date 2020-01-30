@@ -58,6 +58,7 @@ jobs:
           when: always
           command: |
             sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
+  
   deploy_to_packaging1_org:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
@@ -96,6 +97,7 @@ jobs:
           name: deploy the metadata to the packaging org
           command: |
             sfdx force:mdapi:deploy --deploydir mdapi_output_dir --targetusername $PACKAGING_2_SFDC_USER --wait 5
+  
   build_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
@@ -106,6 +108,7 @@ jobs:
           name: create beta package version
           command: |
             sfdx force:package:version:create -x --package << pipeline.parameters.packageid >> --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
+  
   install_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
@@ -131,21 +134,12 @@ jobs:
           when: always
           command: |
             sfdx force:org:delete -u test_circle_build_$CIRCLE_BUILD_NUM -p
-
-
-  #      - run:
-  #          name: create scratch org
-  #          command:
-  #            sfdx force:org:create -s -f config/project-scratch-def.json -a $PACKAGE_VERSION_NAME
-  #      - run:
-  #          name: install beta managed package
-  #          # using source so the install.sh script can use the env variables set in the build environment and this script
-  #          command: |
-  #
+  
   upgrade_to_managed:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     steps:
+      - checkout
       - log_into_devhub
       - run:
           name: get latest package version and upgrade to managed package
@@ -172,6 +166,7 @@ workflows:
           filters:
             branches:
               only: /feature\/.*/
+  
   deploy_test_develop:
     jobs:
       - run_apex_tests:
@@ -180,17 +175,18 @@ workflows:
             branches:
               only: 
                 - develop
+  
   deploy_test_build_package_test_package_release:
     jobs:
-#       - run_apex_tests:
-#           context: org-global
-#           filters:
-#             branches:
-#               only: /release\/.*/
-#       - deploy_to_packaging1_org:
-#           context: org-global
-#           requires:
-#             - run_apex_tests
+      - run_apex_tests:
+          context: org-global
+          filters:
+            branches:
+              only: /release\/.*/
+      - deploy_to_packaging1_org:
+          context: org-global
+          requires:
+            - run_apex_tests
       - build_packaging2_beta:
           context: org-global
           filters:
@@ -210,51 +206,3 @@ workflows:
             - approve_upgrade_to_managed
 
 
-#  apex_tests-beta_package-release:
-#    jobs:
-#      - run_apex_tests:
-#          context: org-global
-#      - deploy_to_packaging1_org:
-#          context: org-global
-#          requires:
-#            - run_apex_tests
-#          filters:
-#            branches:
-#              only: /release\/.*/
-#      - build_packaging2_beta:
-#          context: org-global
-#          requires:
-#            - run_apex_tests
-#          filters:
-#            branches:
-#              only: /release\/.*/
-#      - install_packaging2_beta:
-#          context: org-global
-#          requires:
-#            - build_packaging2_beta
-#          filters:
-#            branches:
-#              only: /release\/.*/
-#      - hold_before_build_managed:
-#          context: org-global
-#          type: approval
-#          requires:
-#            - install_packaging2_beta
-#          filters:
-#            branches:
-#              only:
-#                - /release\/.*/
-#            tags:
-#              only:
-#                - /v[0-9]+(\.[0-9]+)+/
-#      - create_managed_package:
-#          context: org-global
-#          requires:
-#            - hold_before_build_managed
-#          filters:
-#            branches:
-#              only:
-#                - /release\/.*/
-#            tags:
-#              only:
-#                - /v[0-9]+(\.[0-9]+)+/
