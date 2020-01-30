@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Creditsafe_Company_Additional_Info_NL__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>CreditsafeCompanyAdditionalInformationNLAdditionalInformationV2</description>
+    <externalId>false</externalId>
+    <label>Creditsafe Company Additional Info NL</label>
+    <referenceTo>Creditsafe_Company_Additional_Info_NL__c</referenceTo>
+    <relationshipLabel>Additional Information Historical  Event</relationshipLabel>
+    <relationshipName>Additional_Information_Historical_Event</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
