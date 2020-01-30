@@ -20,6 +20,10 @@ parameters:
     description: "the package version’s tag"
     type: string
     default: ""
+  packaging_scratch_org_definition_file:
+    description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
+    type: string
+    default: "config/project-scratch-def.json"
 
 
 
@@ -106,43 +110,63 @@ jobs:
       - run:
           name: create beta package version
           command: |
-            sfdx force:package:version:create -p "<< pipeline.parameters.package >>" -x
-  #      - run:
-  #          name: login into packaging org
-  #          command: |
-  #            mkdir keyspackaging
-  #            echo $PACKAGING_2_SERVER_KEY_HEX | xxd -r -ps >> keyspackaging/packaging.key
-  #            openssl rsa -in keyspackaging/packaging.key -check -noout
-  #            sfdx force:auth:jwt:grant --clientid $PACKAGING_2_CONSUMER_KEY --jwtkeyfile keyspackaging/packaging.key --username $PACKAGING_2_SFDC_USER -a packaging_org
-  #      - run:
-  #          name: build beta package
-  #          command: |
-  #            sfdx force:package1:version:create --packageid $PACKAGE_2_ID --name "$PACKAGE_VERSION_NAME" --targetusername $PACKAGING_2_SFDC_USER --version $PACKAGE_2_MAJOR_VERSION.$PACKAGE_2_MINOR_VERSION --wait 5
+          # create the package version and store the package version creation request in createrequestid
+            createrequestid=$(sfdx force:package:version:create -p "<< pipeline.parameters.package >>" -x -f "<< pipeline.parameters.packaging_scratch_org_definition_file >>" --json | jq .result.Id)
+          # strip the trailing and leading quotes
+            createrequestid="${createrequestid%\"}"
+            createrequestid="${createrequestid#\"}"
+          # wait until the creation of the package version is done
+            status=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].Status)
+            echo $status
+            while [ $status != "Success" ] && [ $status != "Error" ]
+            do
+              sleep 5
+              status=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].Status)
+              echo $status
+            done
+          # if an error occurred fail the build.
+            if [ $status == "Error" ]
+            then
+              sfdx force:package:version:create:report -i $createrequestid
+              exit 1
+            fi
+#      - run:
+#          name: update beta package with current build tag
+#          command: |
+#          # update the newly created package version with a tag with the branch name and circleci build number. This makes it easy to find the package version in the install test
+#            # get the package version id
+#            packageversionid=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].SubscriberPackageVersionId)
+#            # strip the leading and trailing quotes
+#            packageversionid="${packageversionid%\"}"
+#            packageversionid="${packageversionid#\"}"
+#            # set the tag
+#            sfdx force:package:version:update -p $packageversionid -t $CIRCLE_BRANCH.build:CIRCLE_BUILD_NUM
+
   install_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
+    environment:
+      BASH_ENV: ~/.env
     steps:
       - checkout
       - log_into_devhub
       - run:
-          name: login into packaging org
-          command: |
-            mkdir keyspackaging
-            echo $PACKAGING_2_SERVER_KEY_HEX | xxd -r -ps >> keyspackaging/packaging.key
-            openssl rsa -in keyspackaging/packaging.key -check -noout
-            sfdx force:auth:jwt:grant --clientid $PACKAGING_2_CONSUMER_KEY --jwtkeyfile keyspackaging/packaging.key --username $PACKAGING_2_SFDC_USER -a packaging_org
-      - run:
-          name: get latest package version
-          command: |
-            export PACKAGE_VERSION_ID=$(sfdx force:package1:version:list --packageid $PACKAGE_ID --targetusername $PACKAGING_2_SFDC_USER --json | jq '.result[-1].MetadataPackageVersionId' -r)
-      - run:
           name: create scratch org
-          command:
-            sfdx force:org:create -s -f config/project-scratch-def.json -a test_circle_build_$CIRCLE_BUILD_NUM
+          command: |
+            sfdx force:org:create -s -f << pipeline.parameters.packaging_scratch_org_definition_file >> -a test_circle_build_$CIRCLE_BUILD_NUM
       - run:
-          name: deploy to scratch org
-          command:
-            sfdx force:package:install -i $PACKAGE_VERSION_ID -r -p 5 -u test_circle_build_$CIRCLE_BUILD_NUM -w 5
+          name: get latest package version and install
+          command: |
+            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "Company.info for Sales" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
+            packageversionid="${packageversionid%\"}"
+            packageversionid="${packageversionid#\"}"
+            status=$(sfdx force:package:install --package packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM --json | jq
+
+      - run:
+          name: delete scratch org
+          when: always
+          command: |
+            sfdx force:org:delete -u test_circle_build_$CIRCLE_BUILD_NUM -p
 
 
   #      - run:
