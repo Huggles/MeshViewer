@@ -29,8 +29,6 @@ parameters:
     type: integer
     default: 20
 
-
-
 jobs:
   run_apex_tests:
     docker:
@@ -65,13 +63,6 @@ jobs:
       - image: appsolutely/sfdx_circleci_container:latest
     steps:
       - checkout
-#      - run:
-#          name: login into devhub
-#          command: |
-#            mkdir keys
-#            echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
-#            openssl rsa -in keys/hub.key -check -noout
-#            sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
       - run:
           name: convert to mdapi format
           command: |
@@ -115,38 +106,6 @@ jobs:
           name: create beta package version
           command: |
             sfdx force:package:version:create -p "<< pipeline.parameters.package >>" -x -f << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
-#          # create the package version and store the package version creation request in createrequestid
-#            createrequestid=$(sfdx force:package:version:create -p "<< pipeline.parameters.package >>" -x -f << pipeline.parameters.packaging_scratch_org_definition_file >> --branch $CIRCLE_BRANCH --tag "commit $CIRCLE_SHA1" --json | jq .result.Id)
-#          # strip the trailing and leading quotes
-#            createrequestid="${createrequestid%\"}"
-#            createrequestid="${createrequestid#\"}"
-#          # wait until the creation of the package version is done
-#            status=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].Status)
-#            echo $status
-#            while [ $status != "Success" ] && [ $status != "Error" ]
-#            do
-#              sleep 5
-#              status=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].Status)
-#              echo $status
-#            done
-#          # if an error occurred fail the build.
-#            if [ $status == "Error" ]
-#            then
-#              sfdx force:package:version:create:report -i $createrequestid
-#              exit 1
-#            fi
-#      - run:
-#          name: update beta package with current build tag
-#          command: |
-#          # update the newly created package version with a tag with the branch name and circleci build number. This makes it easy to find the package version in the install test
-#            # get the package version id
-#            packageversionid=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].SubscriberPackageVersionId)
-#            # strip the leading and trailing quotes
-#            packageversionid="${packageversionid%\"}"
-#            packageversionid="${packageversionid#\"}"
-#            # set the tag
-#            sfdx force:package:version:update -p $packageversionid -t $CIRCLE_BRANCH.build:CIRCLE_BUILD_NUM
-
   install_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
@@ -182,78 +141,119 @@ jobs:
   #          # using source so the install.sh script can use the env variables set in the build environment and this script
   #          command: |
   #
-  create_managed_package:
+  upgrade_to_managed:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     steps:
       - log_into_devhub
       - run:
-          name: login into packaging org
+          name: get latest package version and upgrade to managed package
           command: |
-            mkdir keyspackaging
-            echo $PACKAGING_2_SERVER_KEY_HEX | xxd -r -ps >> keyspackaging/packaging.key
-            openssl rsa -in keyspackaging/packaging.key -check -noout
-            sfdx force:auth:jwt:grant --clientid $PACKAGING_2_CONSUMER_KEY --jwtkeyfile keyspackaging/packaging.key --username $PACKAGING_2_SFDC_USER -a packaging_org
-      - run:
-          name: build managed package
-          command: |
-            sfdx force:package1:version:create --packageid $PACKAGE_2_ID --name "$PACKAGE_VERSION_NAME" --targetusername $PACKAGING_2_SFDC_USER --version $PACKAGE_2_MAJOR_VERSION.PACKAGE_2_MINOR_VERSION --managedreleased --wait 5
-      - run:
-          name: merge into master
-          command: |
-            git checkout master
-            git merge $CIRCLE_BRANCH
-            git push origin master
-            git tag -a v$PACKAGE_MAJOR_VERSION.$CIRCLE_BUILD_NUM -m "$PACKAGE_VERSION_NAME v$PACKAGE_MAJOR_VERSION.$CIRCLE_BUILD_NUM"
-            git push origin --tags
+            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.package >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
+            packageversionid="${packageversionid%\"}"
+            packageversionid="${packageversionid#\"}"
+            sfdx force:package:version:promote --package $packageversionid
+#      - run:
+#          name: merge into master
+#          command: |
+#            git checkout master
+#            git merge $CIRCLE_BRANCH
+#            git push origin master
+#            git tag -a v$PACKAGE_MAJOR_VERSION.$CIRCLE_BUILD_NUM -m "$PACKAGE_VERSION_NAME v$PACKAGE_MAJOR_VERSION.$CIRCLE_BUILD_NUM"
+#            git push origin --tags
 
 workflows:
   version: 2
-  apex_tests-beta_package-release:
+  deploy_test_feature:
     jobs:
       - run_apex_tests:
           context: org-global
+          filters:
+            branches:
+              only: /feature\/.*/
+
+  deploy_test_develop:
+    jobs:
+      - run_apex_tests:
+          context: org-global
+          filters:
+            branches:
+              only: /develop\/.*/
+
+  deploy_test_build_package_test_package_release:
+    jobs:
+      - run_apex_tests:
+          context: org-global
+          filters:
+            branches:
+              only: /release\/.*/
       - deploy_to_packaging1_org:
           context: org-global
           requires:
             - run_apex_tests
-          filters:
-            branches:
-              only: /release\/.*/
       - build_packaging2_beta:
           context: org-global
           requires:
             - run_apex_tests
-          filters:
-            branches:
-              only: /release\/.*/
       - install_packaging2_beta:
           context: org-global
           requires:
             - build_packaging2_beta
-          filters:
-            branches:
-              only: /release\/.*/
-      - hold_before_build_managed:
-          context: org-global
+      - approve_upgrade_to_managed:
           type: approval
           requires:
             - install_packaging2_beta
-          filters:
-            branches:
-              only:
-                - /release\/.*/
-            tags:
-              only:
-                - /v[0-9]+(\.[0-9]+)+/
-      - create_managed_package:
+      - upgrade_to_managed:
           context: org-global
           requires:
-            - hold_before_build_managed
-          filters:
-            branches:
-              only:
-                - /release\/.*/
-            tags:
-              only:
-                - /v[0-9]+(\.[0-9]+)+/
+            - approve_upgrade_to_managed
+
+
+#  apex_tests-beta_package-release:
+#    jobs:
+#      - run_apex_tests:
+#          context: org-global
+#      - deploy_to_packaging1_org:
+#          context: org-global
+#          requires:
+#            - run_apex_tests
+#          filters:
+#            branches:
+#              only: /release\/.*/
+#      - build_packaging2_beta:
+#          context: org-global
+#          requires:
+#            - run_apex_tests
+#          filters:
+#            branches:
+#              only: /release\/.*/
+#      - install_packaging2_beta:
+#          context: org-global
+#          requires:
+#            - build_packaging2_beta
+#          filters:
+#            branches:
+#              only: /release\/.*/
+#      - hold_before_build_managed:
+#          context: org-global
+#          type: approval
+#          requires:
+#            - install_packaging2_beta
+#          filters:
+#            branches:
+#              only:
+#                - /release\/.*/
+#            tags:
+#              only:
+#                - /v[0-9]+(\.[0-9]+)+/
+#      - create_managed_package:
+#          context: org-global
+#          requires:
+#            - hold_before_build_managed
+#          filters:
+#            branches:
+#              only:
+#                - /release\/.*/
+#            tags:
+#              only:
+#                - /v[0-9]+(\.[0-9]+)+/
