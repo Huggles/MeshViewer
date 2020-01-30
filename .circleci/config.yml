@@ -149,7 +149,7 @@ jobs:
       - run:
           name: get latest package version and upgrade to managed package
           command: |
-            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.package >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
+            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.packageid >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
             sfdx force:package:version:promote --package $packageversionid
