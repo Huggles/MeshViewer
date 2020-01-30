@@ -24,6 +24,10 @@ parameters:
     description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
     type: string
     default: "config/project-scratch-def.json"
+  build_wait:
+    description: "the time in minutes the version create command waits until to return"
+    type: integer
+    default: 20
 
 
 
@@ -110,26 +114,27 @@ jobs:
       - run:
           name: create beta package version
           command: |
-          # create the package version and store the package version creation request in createrequestid
-            createrequestid=$(sfdx force:package:version:create -p "<< pipeline.parameters.package >>" -x -f "<< pipeline.parameters.packaging_scratch_org_definition_file >>" --json | jq .result.Id)
-          # strip the trailing and leading quotes
-            createrequestid="${createrequestid%\"}"
-            createrequestid="${createrequestid#\"}"
-          # wait until the creation of the package version is done
-            status=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].Status)
-            echo $status
-            while [ $status != "Success" ] && [ $status != "Error" ]
-            do
-              sleep 5
-              status=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].Status)
-              echo $status
-            done
-          # if an error occurred fail the build.
-            if [ $status == "Error" ]
-            then
-              sfdx force:package:version:create:report -i $createrequestid
-              exit 1
-            fi
+            sfdx force:package:version:create -p "<< pipeline.parameters.package >>" -x -f << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
+#          # create the package version and store the package version creation request in createrequestid
+#            createrequestid=$(sfdx force:package:version:create -p "<< pipeline.parameters.package >>" -x -f << pipeline.parameters.packaging_scratch_org_definition_file >> --branch $CIRCLE_BRANCH --tag "commit $CIRCLE_SHA1" --json | jq .result.Id)
+#          # strip the trailing and leading quotes
+#            createrequestid="${createrequestid%\"}"
+#            createrequestid="${createrequestid#\"}"
+#          # wait until the creation of the package version is done
+#            status=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].Status)
+#            echo $status
+#            while [ $status != "Success" ] && [ $status != "Error" ]
+#            do
+#              sleep 5
+#              status=$(sfdx force:package:version:create:report -i $createrequestid --json | jq .result[0].Status)
+#              echo $status
+#            done
+#          # if an error occurred fail the build.
+#            if [ $status == "Error" ]
+#            then
+#              sfdx force:package:version:create:report -i $createrequestid
+#              exit 1
+#            fi
 #      - run:
 #          name: update beta package with current build tag
 #          command: |
@@ -157,11 +162,10 @@ jobs:
       - run:
           name: get latest package version and install
           command: |
-            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "Company.info for Sales" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
+            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.package >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
-            status=$(sfdx force:package:install --package packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM --json | jq
-
+            sfdx force:package:install --package packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM
       - run:
           name: delete scratch org
           when: always

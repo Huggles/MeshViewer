@@ -12,6 +12,8 @@
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "47.0",
     "packageAliases": {
-        "Company.info for Sales": "0Ho0J0000004C9wSAE"
+        "Company.info for Sales": "0Ho0J0000004C9wSAE",
+        "Company.info for Sales@0.1.0-2-release/v2.0": "04t0J000000M9MUQA0",
+        "Company.info for Sales@0.1.0-3-release/v2.0": "04t0J000000M9MZQA0"
     }
 }
