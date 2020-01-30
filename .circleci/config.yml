@@ -147,7 +147,7 @@ jobs:
             packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.packageid >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
-            sfdx force:package:version:promote --package $packageversionid
+            sfdx force:package:version:promote --package $packageversionid --noprompt
 #      - run:
 #          name: merge into master
 #          command: |
