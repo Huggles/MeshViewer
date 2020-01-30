@@ -178,7 +178,7 @@ workflows:
           context: org-global
           filters:
             branches:
-              only: /develop\/.*/
+              only: /develop
 
   deploy_test_build_package_test_package_release:
     jobs:
