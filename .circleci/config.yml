@@ -189,9 +189,8 @@ workflows:
             - run_apex_tests
       - build_packaging2_beta:
           context: org-global
-          filters:
-            branches:
-              only: /release\/.*/
+          requires:
+            - run_apex_tests
       - install_packaging2_beta:
           context: org-global
           requires:
