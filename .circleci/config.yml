@@ -124,7 +124,8 @@ jobs:
             packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.packageid >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
-            sfdx force:package:install --package packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM
+            echo $packageversionid
+            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM
       - run:
           name: delete scratch org
           when: always
