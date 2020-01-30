@@ -50,6 +50,7 @@ private class CreditSafeServiceImplTest {
             company.date_last_account = Datetime.now();
             company.date_last_change = Datetime.now();
             company.office_type = 'Headoffice';
+            company.creditsafe_number = '' + i;
             searchResultV2.companies.item.add(company);
         }
 

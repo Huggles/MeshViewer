@@ -3,7 +3,7 @@
  */
 
 public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
-    
+
     private inherited sharing class CreditSafeMethodCallOut extends MethodCallout {
 
 

@@ -189,7 +189,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
                 throw e;
             } catch (Exception e) {
                 ErrorLogUtil.logException(e);
-                throw new CCException(e);
+                throw new CCException(e + e.getStackTraceString());
             }
         }
         return response;
@@ -217,7 +217,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             addressDB.House_Number__c = dataVendorDossier.address.house_number;
             addressDB.House_Number_Addition__c = null;
             addressDB.Country__c = dataVendorDossier.address.country;
-            addressDB.Type__c = 'Creditsafe';
+            //addressDB.Type__c = 'Creditsafe'; todo: change this
         }
         return addressDB;
     }
