@@ -12,10 +12,10 @@ commands:
             sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
 
 parameters:
-  package:
-    description: "The package id (starts with 0Ho) or package alias of the package. Copy it from the sfdx-project.json."
+  packageid:
+    description: "The package id (starts with 0Ho). Copy it from the sfdx-project.json."
     type: string
-    default: "Company.info for Sales"
+    default: "0Ho0J0000004C9wSAE"
   package_version_tag:
     description: "the package version’s tag"
     type: string
@@ -105,7 +105,7 @@ jobs:
       - run:
           name: create beta package version
           command: |
-            sfdx force:package:version:create --package "<< pipeline.parameters.package >>" --installationkeybypass --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
+            sfdx force:package:version:create --package << pipeline.parameters.packageid >> --installationkeybypass --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
   install_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
@@ -181,19 +181,20 @@ workflows:
                 - develop
   deploy_test_build_package_test_package_release:
     jobs:
-      - run_apex_tests:
+#       - run_apex_tests:
+#           context: org-global
+#           filters:
+#             branches:
+#               only: /release\/.*/
+#       - deploy_to_packaging1_org:
+#           context: org-global
+#           requires:
+#             - run_apex_tests
+      - build_packaging2_beta:
           context: org-global
           filters:
             branches:
               only: /release\/.*/
-      - deploy_to_packaging1_org:
-          context: org-global
-          requires:
-            - run_apex_tests
-      - build_packaging2_beta:
-          context: org-global
-          requires:
-            - run_apex_tests
       - install_packaging2_beta:
           context: org-global
           requires:
