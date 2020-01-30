@@ -5,9 +5,9 @@ Description     : Error log util class to log error messages to the ErrorLog SOb
 CAREFULL: doesn't work when you rollback the transaction.
 ******************************************************************************************/
 
-public with sharing class ErrorLogUtil {
+public inherited sharing class ErrorLogUtil {
 
-    public with sharing class ErrorLogQueuable implements Queueable {
+    public inherited sharing class ErrorLogQueuable implements Queueable {
 
         private String message { get; set; }
 

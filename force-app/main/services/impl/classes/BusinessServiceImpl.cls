@@ -347,17 +347,17 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
     public Business_Dossier__c setVatNumber(Id dossierId) {
         if (dossierId == null) {
-            throw new CCException('DossierId must be filled when setting VAT number'); // shouldn't happen but let's check the input
+            throw new CCException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input
         }
 
         List<Business_Dossier__c> dossiersDB = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectById(new Set<Id>{dossierId});
         if (dossiersDB.isEmpty()) {
-            throw new CCException('User doesn\'t have access to dossier with ID: ' + dossierId);
+            throw new CCException(System.Label.Dossier_ID_Access + dossierId);
         }
 
         Business_Dossier__c dossierDB = dossiersDB.get(0);
         if (String.isEmpty(dossierDB.Dossier_Number__c)) {//cannot get the VAT number if Registration Number is not filled, the callout fails
-            throw new CCException('Could not fetch the VAT number as Registration Number is missing');
+            throw new CCException(System.Label.Dossier_Number_Missing);
         }
         String vatNumber = BusinessDuplicateService.checkForExistingVatNumberInDB(dossierDB.Dossier_Number__c);
 
