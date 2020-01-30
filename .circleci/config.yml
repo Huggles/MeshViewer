@@ -171,15 +171,14 @@ workflows:
           filters:
             branches:
               only: /feature\/.*/
-
   deploy_test_develop:
     jobs:
       - run_apex_tests:
           context: org-global
           filters:
             branches:
-              only: /develop
-
+              only: 
+                - develop
   deploy_test_build_package_test_package_release:
     jobs:
       - run_apex_tests:
