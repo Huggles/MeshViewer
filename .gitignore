@@ -5,4 +5,5 @@ force-app/main/default/applications/standard__LightningSales.app-meta.xml
 .DS_STORE
 .idea/workspace.xml
 .idea/shelf
+out
 IlluminatedCloud

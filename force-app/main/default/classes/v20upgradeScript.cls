@@ -5,7 +5,6 @@
 public without sharing class v20upgradeScript implements IInstallAction  {
 
     public void execute(InstallContext context) {
-        System.debug('in v20upgrade');
         Database.executeBatch(new SimpleSetFieldBatch(new Map<String, Object>{
                 'RecordTypeId' => Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByName().get('Dutch Business').getRecordTypeId()
         },
