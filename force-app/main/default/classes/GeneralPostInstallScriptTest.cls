@@ -50,8 +50,8 @@ public with sharing class GeneralPostInstallScriptTest {
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
         test.startTest();
-        GeneralPostInstallScript generalPostInstallScript = new GeneralPostInstallScript();
-        generalPostInstallScript.execute(null);
+            GeneralPostInstallScript generalPostInstallScript = new GeneralPostInstallScript();
+            generalPostInstallScript.execute(null);
         test.stopTest();
         CronTrigger ct = [SELECT Id, CronExpression, TimesTriggered, NextFireTime, CronJobDetail.Name FROM CronTrigger WHERE CronJobDetail.Name = 'Update dossiers' LIMIT 1];
         System.assertNotEquals(ct, null);
