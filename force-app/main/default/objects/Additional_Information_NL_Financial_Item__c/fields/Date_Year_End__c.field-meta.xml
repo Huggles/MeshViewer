@@ -4,9 +4,7 @@
     <description>The end date of the financial period that the accounts relate to.</description>
     <externalId>false</externalId>
     <label>Date Year End</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Date</type>
 </CustomField>
