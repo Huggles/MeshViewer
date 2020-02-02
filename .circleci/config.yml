@@ -107,7 +107,7 @@ jobs:
       - run:
           name: create beta package version
           command: |
-            sfdx force:package:version:create -x --package << pipeline.parameters.packageid >> --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
+            sfdx force:package:version:create -x --codecoverage --package << pipeline.parameters.packageid >> --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
   
   install_packaging2_beta:
     docker:
