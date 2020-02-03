@@ -109,11 +109,9 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
         // delete the old SBI codes and the old addresses
         Map<Id, Business_Dossier__c> dossiersByIds = new Map<Id, Business_Dossier__c>(dossiersToUpdate);
-        // TODO: move to a selector
-        List<Business_Data_SBI__c> oldSbiCodes = [SELECT Id FROM Business_Data_SBI__c WHERE Business_Dossier__c IN: dossiersByIds.keySet()];
+        List<Business_Data_SBI__c> oldSbiCodes = ((ISbiCodeSelector)Application.Selector.newInstance(Business_Data_SBI__c.SObjectType)).selectByDossierId(dossiersByIds.keySet());
         unitOfWork.registerDeleted(oldSbiCodes);
-        // TODO: move to a selector
-        List<Dossier_Address__c> oldAddresses = [SELECT Id FROM Dossier_Address__c WHERE Business_Data__c IN: dossiersByIds.keySet()];
+        List<Dossier_Address__c> oldAddresses = ((IDossierAddressSelector)Application.Selector.newInstance(Dossier_Address__c.SObjectType)).selectByDossierId(dossiersByIds.keySet());
         unitOfWork.registerDeleted(oldAddresses);
 
         // update the records or create new ones
