@@ -68,8 +68,8 @@ private class PostInstallScriptTest {
         // Test.testInstall(new PostInstallScript(), new Version(1,0)); // simulate an installed version since this is an upgrade test.
         Test.startTest();
         {
-            Test.testInstall(new PostInstallScript(), null);
-            Test.testInstall(new PostInstallScript(), new Version(1, 7));
+            Test.testInstall(new PostInstallScript(PostInstallScript.CUST_CONNECT_NAMESPACE_PREFIX), null);
+            Test.testInstall(new PostInstallScript(PostInstallScript.CUST_CONNECT_NAMESPACE_PREFIX), new Version(1, 7));
         }
         Test.stopTest();
         dossiers = [SELECT Id FROM Business_Dossier__c WHERE RecordTypeId = :Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByName().get('Dutch Business').getRecordTypeId()];
