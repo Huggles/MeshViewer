@@ -119,13 +119,65 @@ public with sharing class BusinessServiceImplTest {
     }
 
     @IsTest
-    public static void testGetChangedDossiers() {
+    public static void testGetDutchBusinessUpdatedDossiersSinceWrongInput() {
+        // testing no changed date
+        Boolean errorOccurred = false;
+        try {
+            BusinessService.getDutchBusinessUpdatedDossiersSince(1, new List<String>{'test'}, null);
+        } catch (CCInputException e) {
+            errorOccurred = true;
+        }
+        System.assert(errorOccurred);
+        // changed date after today
+        errorOccurred = false;
+        try {
+            BusinessService.getDutchBusinessUpdatedDossiersSince(1, new List<String>{'test'}, Date.today() + 1);
+        } catch (CCInputException e) {
+            errorOccurred = true;
+        }
+        System.assert(errorOccurred);
+        // no pagenr
+        errorOccurred = false;
+        try {
+            BusinessService.getDutchBusinessUpdatedDossiersSince(null, new List<String>{'test'}, Date.today());
+        } catch (CCInputException e) {
+            errorOccurred = true;
+        }
+        System.assert(errorOccurred);
+        // pagenr negative
+        errorOccurred = false;
+        try {
+            BusinessService.getDutchBusinessUpdatedDossiersSince(-1, new List<String>{'test'}, Date.today());
+        } catch (CCInputException e) {
+            errorOccurred = true;
+        }
+        System.assert(errorOccurred);
+        // no update list
+        errorOccurred = false;
+        try {
+            BusinessService.getDutchBusinessUpdatedDossiersSince(1, null, Date.today());
+        } catch (CCInputException e) {
+            errorOccurred = true;
+        }
+        System.assert(errorOccurred);
+        // at least one update type should be provided
+        errorOccurred = false;
+        try {
+            BusinessService.getDutchBusinessUpdatedDossiersSince(1, new List<String>(), Date.today());
+        } catch (CCInputException e) {
+            errorOccurred = true;
+        }
+        System.assert(errorOccurred);
+    }
+
+    @IsTest
+    public static void testGetDutchBusinessUpdatedDossiersHappyFlow() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
-        Integer pageNR = 1;
+
+        Integer pageNr = 1;
         List<String> updateTypesResponse = new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'};
 
-        mocks.startStubbing();
         DutchBusinessWsdl.stringArray updateTypesArrayResponse = new DutchBusinessWsdl.stringArray();
         updateTypesArrayResponse.item = new List<String>();
         for (String s : updateTypesResponse) {
@@ -141,50 +193,72 @@ public with sharing class BusinessServiceImplTest {
         a1.establishment_number = '2';
         a1.update_types = updateTypesArrayResponse;
         output.results.item.add(a1);
-        Credentials__c c = Credentials__c.getOrgDefaults();
 
-        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
-
+        mocks.startStubbing();
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray)fflib_Match.anyObject(), fflib_Match.anyInteger())).thenReturn(output);
         mocks.stopStubbing();
+
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
         test.startTest();
-
-        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = (new BusinessServiceImpl()).getChangedDossiers(pageNR);
-        system.assertEquals(1, updateDossierReferenceDTOS.size());
+        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = BusinessService.getDutchBusinessUpdatedDossiersSince(pageNr, updateTypesResponse, date.today());
         test.stopTest();
+
+        system.assertEquals(1, updateDossierReferenceDTOS.size());
+
     }
 
     @IsTest
-    public static void testUpdateDossiersWithDataVendorDataHappyFlow() {
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+    public static void testUpdateDossiersWithVendorDataNotEnoughCallouts() {
+        // given
+        // nr of update dossiers really big
+        List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
+        for (Integer i = 0; i < 200; i++) {
+            dossiers.add(new Business_Dossier__c(Name = '' + i));
+        }
 
-        String dossierNumber = '1234';
-        String establishmentNUmber = '1234';
-        Id accountId = null;
-        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossierOriginal = getDataVendorMockDossier();
-        mocks.startStubbing();
-        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossierOriginal);
-        mocks.stopStubbing();
-
-        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
-
-        // create something we can update
-        InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData(null, dossierNumber, establishmentNUmber, CustomerConnect.DataVendor.COMPANY_INFO.name(), accountId);
-
+        // when
+        Boolean errorThrown = false;
         Test.startTest();
-        {
-            DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
-            dataVendorDossier.trade_name_full = 'test'; // not going to change every field since I use a central mapping function also used by insert and thus we tested it already there
-            List<Business_Dossier__c> businessDossiers = BusinessService.updateDossiersWithDataVendorData(
-                    new List<UpdateDossierRequestDTO>{new UpdateDossierRequestDTO(dataVendorDossier, responseDTO.dossier)});
-            System.assert(businessDossiers.size() == 1);
+        try {
+            BusinessService.updateDossiersWithVendorData(dossiers);
+        } catch (CCInputException e){
+            errorThrown = true;
         }
         Test.stopTest();
-        List<Business_Dossier__c> dossiersInDb = [SELECT Id, Trade_Name_Full__c FROM Business_Dossier__c];
-        System.assert(dossiersInDb.size() == 1);
-        System.assert(dossiersInDb.get(0).Trade_Name_Full__c == 'test');
+
+        // then
+        System.assert(errorThrown);
+        // an error should be thrown
+    }
+
+    @IsTest
+    public static void testUpdateDossiersHappyFlow() {
+        // given
+        // a dossier to be updated
+        Business_Dossier__c dossierToBeUpdated = (new BusinessServiceImpl()).mapDataVendorDataToDossier(getDataVendorMockDossier(), new Business_Dossier__c());
+        dossierToBeUpdated.Name = 'I need to be updated';
+        Account account = new Account(Name = 'testAccount');
+        insert Account;
+        dossierToBeUpdated.Account__c = account.Id;
+        insert dossierToBeUpdated;
+        // a mock dossier from the webservice
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness wsDutchBusinessMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+        mocks.startStubbing();
+        mocks.when(wsDutchBusinessMock.dutchBusinessGetDossierV3('123456', '10')).thenReturn(getDataVendorMockDossier());
+        mocks.stopStubbing();
+        Application.Service.setMOck(IWsDutchBusiness.class, wsDutchBusinessMock);
+
+        // when
+        // we update the dossier
+        Test.startTest();
+        BusinessService.updateDossiersWithVendorData(new List<Business_Dossier__c>{dossierToBeUpdated});
+        Test.stopTest();
+
+        // then
+        // the updated dossier should assert
+        assertDossier(account.Id);
 
     }
 
@@ -448,6 +522,12 @@ public with sharing class BusinessServiceImplTest {
         Account accountDB = [SELECT Id, Name FROM Account];
         System.assert(accountDB != null);
         System.assert(accountDB.Name == acc.Name);
+        assertDossier(accountDB.Id);
+
+
+    }
+
+    private static void assertDossier(Id accountId) {
         Business_Dossier__c dossierDB = [
                 SELECT
                         CreatedById,
@@ -529,7 +609,7 @@ public with sharing class BusinessServiceImplTest {
                         SystemModstamp
                 FROM Business_Dossier__c];
         System.assert(dossierDB != null);
-        System.assert(dossierDB.Account__c == accountDB.Id);
+        System.assert(dossierDB.Account__c == accountId);
 
         System.assertEquals(dossierDB.Year__c, '1900');
         System.assertEquals(dossierDB.Profit__c, 'EUR 20000');
@@ -576,20 +656,12 @@ public with sharing class BusinessServiceImplTest {
 
         List<Business_Data_SBI__c> sbi = [SELECT SBI_Code__c, SBI_Description__c, SBI_Type__c, Business_Dossier__c FROM Business_Data_SBI__c WHERE Business_Dossier__c = :dossierDB.Id];
         System.assert(sbi.size() == 10);
-//        for (Business_Data_SBI__c businessDataSBI : sbi) {
-//            System.assert(businessDataSBI.);
-//        }
-//        if (sbi.size() > 0) {
-//            System.assertEquals(sbi[0].SBI_Type__c, 'original');
-//            System.assertEquals(sbi[0].SBI_Description__c, 'o0');
-//            System.assertEquals(sbi[0].SBI_Code__c , 'o0');
-//        }
 
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1__c , 'sbi');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_1_Text__c , 'secondary_sbi_code1_text');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2__c, 'sbis2');
         System.assertEquals(dossierDB.Secondary_Sbi_Code_2_Text__c , 'secondary_sbi_code2_text');
-         System.assertEquals(dossierDB.Status__c , 'Import');
+        System.assertEquals(dossierDB.Status__c , 'Import');
         System.assertEquals(dossierDB.Number_Of_Subsidiaries__c, '1');
         System.assertEquals(dossierDB.Parent_Chamber_Of_Commerce_Number__c, '123');
         System.assertEquals(dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c, '1122');
@@ -623,7 +695,6 @@ public with sharing class BusinessServiceImplTest {
         System.assertEquals(eAddress.Street__c, 'street');
         System.assertEquals(eAddress.House_Number_Addition__c, 'a');
         System.assertEquals(eAddress.House_Number__c, '10');
-
     }
 
     @IsTest

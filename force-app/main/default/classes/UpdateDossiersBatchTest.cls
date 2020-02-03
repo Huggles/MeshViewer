@@ -68,7 +68,7 @@ public class UpdateDossiersBatchTest {
 
         DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
 
-        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.anyInteger())).thenReturn(output);
         mocks.when(mockWS.dutchBusinessGetDossierV3(a1.dossier_number, a1.establishment_number)).thenReturn(output1);
 
         mocks.stopStubbing();
@@ -114,7 +114,7 @@ public class UpdateDossiersBatchTest {
 
         DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
 
-        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.anyInteger())).thenReturn(output);
         mocks.when(mockWS.dutchBusinessGetDossierV3(a1.dossier_number, a1.establishment_number)).thenReturn(output1);
 
         mocks.stopStubbing();
@@ -147,7 +147,7 @@ public class UpdateDossiersBatchTest {
 
         DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
 
-        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.anyInteger())).thenReturn(output);
         mocks.when(mockWS.dutchBusinessGetDossierV3('', '')).thenReturn(output1);
 
         mocks.stopStubbing();

@@ -19,18 +19,6 @@ public interface IBusinessService {
      * @return
      */
     List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name);
-//    /**
-//     * Retrieves the requested dossier from the backend.
-//     *
-//     * @param dossierNumber
-//     * @param establishmentNumber
-//     *
-//     * @return
-//     */
-//    DutchBusinessWsdl.DutchBusinessGetDossierResponse getDossier(String dossierNumber, String establishmentNumber);
-
-//     String updateAccountDossier(DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier);
-//    List<Object> upsertAccountAndDossier(DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier, String accountId);
 
     /**
      * Deletes the dossier related to the given account id
@@ -41,36 +29,8 @@ public interface IBusinessService {
      */
     Boolean deleteDossier(Id accountId);
 
-//    /**
-//     * Retrieves the dossier from the backend using the Salesforce Id of the dossier
-//     *
-//     * @param dossierId
-//     *
-//     * @return
-//     */
-//    Business_Dossier__c selectDossier(Id dossierId);
-
     /**
-     * Updates a given set of dossiers with the data from the backend. Used in the nightly update function
-     *
-     * @param updateDossierRequestDTOS
-     *
-     * @return
-     */
-    List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS);
-
-//    // TODO: replace by update (we already have insert and upserting is difficult with the fflib framework)
-//    /**
-//     * Upserts a dossier
-//     *
-//     * @param dossier
-//     *
-//     * @return
-//     */
-//    List<Object> upsertDossier(Business_Dossier__c dossier);
-
-    /**
-     * Sets the vat number on the dossier with the given dossiernumber. Requests the vat number based on the dossier number. If a dossier in the database with the same dossier number but
+     * Sets the vat number on the dutch business dossier with the given dossiernumber. Requests the vat number based on the dossier number. If a dossier in the database with the same dossier number but
      * with a different establishment number already has a Vat number that number is returned. Otherwise the backend will
      * be queried. If no vat number is found a CCNoVatException will be thrown. Else the vat number is set on the db and the record is updated.
      *
@@ -79,18 +39,6 @@ public interface IBusinessService {
      * @return the updated dossier
      */
      Business_Dossier__c setVatNumber(Id dossierId);
-
-    //Account createAccountForDossier(String accountId, DutchBusinessWsdl.DutchBusinessGetDossierResponse dossier, fflib_ISObjectUnitOfWork unitOfWork);
-    //list<String> checkForAccountDuplicates(Account acc);
-
-//    /**
-//     * Creates new accounts and inserts them into the DB based on the given dossiers coming from the datavendor. Returns the created accounts.
-//     *
-//     * @param dataVendorDossiers
-//     *
-//     * @return
-//     */
-//    List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessWsdl.DutchBusinessGetDossierResponse> dataVendorDossiers);
 
     /**
      * Inserts a single dossier + account into the DB found through the search function (so based on the dossier number and establishment number).
@@ -107,14 +55,26 @@ public interface IBusinessService {
      */
     InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor, Id accountId);
 
-
     /**
-     * Retrieves the requested dossiers that needs update from the company.info server. This method is called from a batch class.
+     * Retrieves all Dutch Business Dossiers that have been updated since a certain date. Paginated. Supply the right CI page nr. to get the right results
      *
      * @param pageNr
+     * @param updateTypes
+     * @param changedSince
      *
-     * @return UpdateDossierReferenceDTO
+     * @return
      */
-    List<UpdateDossierReferenceDTO> getChangedDossiers(Integer pageNr);
+    List<UpdateDossierReferenceDTO> getDutchBusinessUpdatedDossiersSince(Integer pageNr, List<String> updateTypes, Date changedSince);
+
+    /**
+     * Updates every dossier given with the newest data from the CI backend.
+     *
+     * @param dossiersToUpdate the dossiers to update
+     */
+    void updateDossiersWithVendorData(List<Business_Dossier__c> dossiersToUpdate);
+
+
+
+
 
 }
