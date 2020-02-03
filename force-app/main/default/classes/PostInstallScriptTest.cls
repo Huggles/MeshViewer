@@ -4,6 +4,56 @@
 
 @IsTest
 private class PostInstallScriptTest {
+
+    public class TestNameSpaceInstallAction implements IInstallAction {
+        public void execute(InstallContext context) {
+            throw new CCException('');
+        }
+    }
+
+    @IsTest
+    private static void testNameSpaceSwitchCustConnect() {
+        // given
+        // a postinstall script for the namespace cust_connect with a test installaction that throws an error
+        PostInstallScript script = new PostInstallScript(PostInstallScript.CUST_CONNECT_NAMESPACE_PREFIX);
+        script.installAction = new TestNameSpaceInstallAction();
+
+        // when
+        // running the postinstall script
+        Boolean errorThrown = false;
+        Test.startTest();
+        try {
+            Test.testInstall(script, null);
+        } catch (CCException e) {
+            errorThrown = true;
+        }
+
+        // then
+        // an error is thrown
+        System.assert(errorThrown);
+    }
+
+    @IsTest
+    private static void testNameSpaceSwitchAppsolutely() {
+        // given
+        // a postinstall script for the namespace cust_connect with a test installaction that throws an error
+        PostInstallScript script = new PostInstallScript(PostInstallScript.APPSOLUTELY_NAMESPACE_PREFIX);
+        script.installAction = new TestNameSpaceInstallAction();
+
+        // when
+        // running the postinstall script
+        Boolean errorThrown = false;
+        Test.startTest();
+        try {
+            Test.testInstall(script, null);
+        } catch (CCException e) {
+            errorThrown = true;
+        }
+
+        // then
+        // an error is thrown
+        System.assert(errorThrown);
+    }
     
     @TestSetup
     static void testSetup() {
@@ -22,9 +72,9 @@ private class PostInstallScriptTest {
         c.Last_Executed_Batch__c = Datetime.newInstance(2019, 7, 28);
         insert c;
     }
-    
+
     @IsTest
-    static void testV20Upgrade() {
+    static void testV20UpgradeCustConnect() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
         Integer pageNR = 1;
