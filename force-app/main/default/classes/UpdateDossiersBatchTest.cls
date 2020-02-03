@@ -5,173 +5,284 @@
 @IsTest
 public class UpdateDossiersBatchTest {
 
-    @TestSetup
-    private static void setupData() {
-        Credentials__c c = new Credentials__c();
-        c.Username__c = 'test';
-        c.Password__c = 'pas';
-        c.CompanyInfo_Account_Id__c = '1';
-        c.CompanyConnectUserId__c = 11;
-        c.Last_Executed_Batch__c = Datetime.newInstance(2019, 7, 28);
-
-        Business_Dossier__c d = new Business_Dossier__c();
-        d.Dossier_Number__c = '1';
-        d.Establishment_Number__c = '2';
-        d.Indication_Main_Establishment__c = false;
-        d.Name = 't1';
-
-        Business_Dossier__c d1 = new Business_Dossier__c();
-        d1.Dossier_Number__c = '11';
-        d1.Establishment_Number__c = '12';
-        d1.Name = 't11';
-
-        Account a1 = new Account();
-        a1.Name = 'aa';
-        Account a2 = new Account();
-        a2.Name = 'aa2';
-
-        insert a1;
-        insert a2;
-        insert c;
-        d.Account__c = a1.Id;
-        d1.Account__c = a2.Id;
-        insert d;
-        insert d1;
-    }
-
-
     @IsTest
-    static void testBatch() {
+    public static void testNoResults() {
+        // given
+        // a list of updated  dossiers from the CI backend
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
-        Integer pageNR = 1;
-
+        IWsDutchBusiness wsDutchBusinessMock = (IWsDutchBusiness) mocks.mock(IWsDutchBusiness.class);
         mocks.startStubbing();
 
-        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
-        output.paging = new DutchBusinessWsdl.ResultInfo();
-        output.paging.numpages = 1;
-        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
-        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
-        DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
-        a1.dossier_number = '1';
-        a1.establishment_number = '2';
-        a1.update_types = stringArray(new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'});
-        output.results.item.add(a1);
-
-        DutchBusinessWsdl.DutchBusinessUpdateReference a2 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
-        a2.dossier_number = '11';
-        a2.establishment_number = '12';
-        a2.update_types = stringArray(new List<String>{'Removed'});
-        output.results.item.add(a2);
-        Credentials__c c = Credentials__c.getOrgDefaults();
-
-        DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
-
-        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.anyInteger())).thenReturn(output);
-        mocks.when(mockWS.dutchBusinessGetDossierV3(a1.dossier_number, a1.establishment_number)).thenReturn(output1);
-
+        mocks.when(wsDutchBusinessMock.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.integerBetween(1, true, 1, true))).thenReturn(getDutchBusinessUpdateReferencePagedResultMock(10, 1, 1, 0, 1));
         mocks.stopStubbing();
-        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
+        Application.Service.setMock(IWsDutchBusiness.class, wsDutchBusinessMock);
+        // with no match with the dossiers currently in SF
+        List<Business_Dossier__c> dossiers = getBusinessDossiersMock(10, 30, 1, 1);
+        insert dossiers;
+        dossiers = [
+                SELECT
+                        Account__c,
+                        Annual_Financial_Statement_Summary__c,
+                        Assets__c,
+                        Authorized_Share_Capital__c,
+                        Authorized_Share_Capital_Currency__c,
+                        Chamber_Code__c,
+                        Chamber_Number__c,
+                        Class_Personnel__c,
+                        Class_Personnel_CI__c,
+                        Class_Personnel_Fulltime__c,
+                        Contact_Gender__c,
+                        Contact_Initials__c,
+                        Contact_Prefix__c,
+                        Contact_Surname__c,
+                        Contact_Title1__c,
+                        Contact_Title2__c,
+                        Continuation_Date__c,
+                        Creditsafe_Id__c,
+                        Date_of_Last_Account__c,
+                        Date_of_Last_Change__c,
+                        Discontinuation_Date__c,
+                        Domain_Name__c,
+                        Dossier_Number__c,
+                        Establishment_Date__c,
+                        Establishment_Number__c,
+                        Founding_Date__c,
+                        Indication_Bankruptcy__c,
+                        Indication_Dip__c,
+                        Indication_Economically_Active__c,
+                        Indication_Export__c,
+                        Indication_Import__c,
+                        Indication_Main_Establishment__c,
+                        Indication_Non_Mailing__c,
+                        Indication_Organisation_Code__c,
+                        Insolvencies__c,
+                        Is_Removed__c,
+                        Issued_Share_Capital__c,
+                        Issued_Share_Capital_Currency__c,
+                        Legal_Form_Code__c,
+                        Legal_Form_Text__c,
+                        Main_Establishment_Number__c,
+                        Mobile_Number__c,
+                        Number_Of_Subsidiaries__c,
+                        Office_Type__c,
+                        Paid_Up_Share_Capital__c,
+                        Paid_Up_Share_Capital_Currency__c,
+                        Parent_Chamber_Of_Commerce_Number__c,
+                        Personnel__c,
+                        Personnel_CI__c,
+                        Personnel_CI_Reference_Date__c,
+                        Personnel_Fulltime__c,
+                        Personnel_Reference_Date__c,
+                        Primary_Sbi_Code__c,
+                        Primary_Sbi_Code_Text__c,
+                        Profit__c,
+                        Registration_Country__c,
+                        Rsin_Number__c,
+                        Sbi_Collection__c,
+                        Secondary_Sbi_Code_1__c,
+                        Secondary_Sbi_Code_1_Text__c,
+                        Secondary_Sbi_Code_2__c,
+                        Secondary_Sbi_Code_2_Text__c,
+                        Status__c,
+                        Structure__c,
+                        Telephone_Number__c,
+                        Trade_Name_45__c,
+                        Trade_Name_Full__c,
+                        Trade_Names__c,
+                        Turnover__c,
+                        Type__c,
+                        Ultimate_Parent_Chamber_Of_Commerce_Nr__c,
+                        VAT_Number__c,
+                        Year__c,
+                        CreatedById,
+                        CreatedDate,
+                        Id,
+                        IsDeleted,
+                        LastModifiedById,
+                        LastModifiedDate,
+                        LastReferencedDate,
+                        LastViewedDate,
+                        Name,
+                        OwnerId,
+                        RecordTypeId,
+                        SystemModstamp
+                FROM Business_Dossier__c];
 
-        test.startTest();
-        UpdateDossiersBatch o = new UpdateDossiersBatch();
-        Database.executeBatch(o);
-        test.stopTest();
+        // when
+        // we run the batch
+        Test.startTest();
+        Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
+        Database.executeBatch(batch, 100);
+        Test.stopTest();
 
-        List<Business_Dossier__c> bd = [SELECT Id, Is_Removed__c, Dossier_Number__c FROM Business_Dossier__c WHERE Dossier_Number__c = '11' LIMIT 1];
-        System.assertEquals(bd[0].Is_Removed__c, true);
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        Date d = cs.Last_Executed_Batch__c.Date();
-        System.assertEquals(d, Datetime.now().Date());
-    }
-
-    @IsTest
-    static void testBatchWithMorePages() {
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
-        Integer pageNR = 1;
-
-        mocks.startStubbing();
-
-        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
-        output.paging = new DutchBusinessWsdl.ResultInfo();
-        output.paging.numpages = 5;
-        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
-        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
-        DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
-        a1.dossier_number = '1';
-        a1.establishment_number = '2';
-        a1.update_types = stringArray(new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'});
-        output.results.item.add(a1);
-
-        DutchBusinessWsdl.DutchBusinessUpdateReference a2 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
-        a2.dossier_number = '11';
-        a2.establishment_number = '12';
-        a2.update_types = stringArray(new List<String>{'Removed'});
-        output.results.item.add(a2);
-        Credentials__c c = Credentials__c.getOrgDefaults();
-
-        DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
-
-        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.anyInteger())).thenReturn(output);
-        mocks.when(mockWS.dutchBusinessGetDossierV3(a1.dossier_number, a1.establishment_number)).thenReturn(output1);
-
-        mocks.stopStubbing();
-        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
-
-        test.startTest();
-        UpdateDossiersBatch o = new UpdateDossiersBatch();
-        Database.executeBatch(o);
-        test.stopTest();
-
-        List<Business_Dossier__c> bd = [SELECT Id, Is_Removed__c, Dossier_Number__c FROM Business_Dossier__c WHERE Dossier_Number__c = '11' LIMIT 1];
-        System.assertEquals(bd[0].Is_Removed__c, true);
-    }
-
-    @IsTest
-    static void testBatchWithNoUpdates() {
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
-        Integer pageNR = 1;
-
-        mocks.startStubbing();
-
-        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
-        output.paging = new DutchBusinessWsdl.ResultInfo();
-        output.paging.numpages = 1;
-        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
-        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
-
-        Credentials__c c = Credentials__c.getOrgDefaults();
-
-        DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
-
-        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.anyInteger())).thenReturn(output);
-        mocks.when(mockWS.dutchBusinessGetDossierV3('', '')).thenReturn(output1);
-
-        mocks.stopStubbing();
-        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
-
-        test.startTest();
-        UpdateDossiersBatch o = new UpdateDossiersBatch();
-        Database.executeBatch(o);
-        test.stopTest();
-
-        List<Business_Dossier__c> bd = [SELECT Id, Is_Removed__c, Dossier_Number__c FROM Business_Dossier__c WHERE Dossier_Number__c = '11' LIMIT 1];
-        System.assertEquals(bd[0].Is_Removed__c, false);
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        Date d = cs.Last_Executed_Batch__c.Date();
-        System.assertEquals(d, Datetime.now().Date());
-    }
-
-    public static DutchBusinessWsdl.stringArray stringArray (List<String> types) {
-        DutchBusinessWsdl.stringArray updateTypesArrayResponse = new DutchBusinessWsdl.stringArray();
-        updateTypesArrayResponse.item = new List<String>();
-        for (String s : types) {
-            updateTypesArrayResponse.item.add(s);
+        // then
+        // no dossiers in the DB should be changed
+        List<Business_Dossier__c> dossiersToBeAsserted = [
+                SELECT
+                        Account__c,
+                        Annual_Financial_Statement_Summary__c,
+                        Assets__c,
+                        Authorized_Share_Capital__c,
+                        Authorized_Share_Capital_Currency__c,
+                        Chamber_Code__c,
+                        Chamber_Number__c,
+                        Class_Personnel__c,
+                        Class_Personnel_CI__c,
+                        Class_Personnel_Fulltime__c,
+                        Contact_Gender__c,
+                        Contact_Initials__c,
+                        Contact_Prefix__c,
+                        Contact_Surname__c,
+                        Contact_Title1__c,
+                        Contact_Title2__c,
+                        Continuation_Date__c,
+                        Creditsafe_Id__c,
+                        Date_of_Last_Account__c,
+                        Date_of_Last_Change__c,
+                        Discontinuation_Date__c,
+                        Domain_Name__c,
+                        Dossier_Number__c,
+                        Establishment_Date__c,
+                        Establishment_Number__c,
+                        Founding_Date__c,
+                        Indication_Bankruptcy__c,
+                        Indication_Dip__c,
+                        Indication_Economically_Active__c,
+                        Indication_Export__c,
+                        Indication_Import__c,
+                        Indication_Main_Establishment__c,
+                        Indication_Non_Mailing__c,
+                        Indication_Organisation_Code__c,
+                        Insolvencies__c,
+                        Is_Removed__c,
+                        Issued_Share_Capital__c,
+                        Issued_Share_Capital_Currency__c,
+                        Legal_Form_Code__c,
+                        Legal_Form_Text__c,
+                        Main_Establishment_Number__c,
+                        Mobile_Number__c,
+                        Number_Of_Subsidiaries__c,
+                        Office_Type__c,
+                        Paid_Up_Share_Capital__c,
+                        Paid_Up_Share_Capital_Currency__c,
+                        Parent_Chamber_Of_Commerce_Number__c,
+                        Personnel__c,
+                        Personnel_CI__c,
+                        Personnel_CI_Reference_Date__c,
+                        Personnel_Fulltime__c,
+                        Personnel_Reference_Date__c,
+                        Primary_Sbi_Code__c,
+                        Primary_Sbi_Code_Text__c,
+                        Profit__c,
+                        Registration_Country__c,
+                        Rsin_Number__c,
+                        Sbi_Collection__c,
+                        Secondary_Sbi_Code_1__c,
+                        Secondary_Sbi_Code_1_Text__c,
+                        Secondary_Sbi_Code_2__c,
+                        Secondary_Sbi_Code_2_Text__c,
+                        Status__c,
+                        Structure__c,
+                        Telephone_Number__c,
+                        Trade_Name_45__c,
+                        Trade_Name_Full__c,
+                        Trade_Names__c,
+                        Turnover__c,
+                        Type__c,
+                        Ultimate_Parent_Chamber_Of_Commerce_Nr__c,
+                        VAT_Number__c,
+                        Year__c,
+                        CreatedById,
+                        CreatedDate,
+                        Id,
+                        IsDeleted,
+                        LastModifiedById,
+                        LastModifiedDate,
+                        LastReferencedDate,
+                        LastViewedDate,
+                        Name,
+                        OwnerId,
+                        RecordTypeId,
+                        SystemModstamp
+                FROM Business_Dossier__c
+        ];
+        System.assert(dossiers.size() == dossiersToBeAsserted.size());
+        Map<String, Business_Dossier__c> dossiersToBeAssertedByUniqueId = new Map<String, Business_Dossier__c>();
+        for (Business_Dossier__c businessDossier : dossiersToBeAsserted) {
+            dossiersToBeAssertedByUniqueId.put(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c, businessDossier);
         }
+        for (Business_Dossier__c businessDossier : dossiers) {
+            Business_Dossier__c dossierToBeAsserted = dossiersToBeAssertedByUniqueId.get(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c);
+            System.debug('dossierToBeAsserted: ' + dossierToBeAsserted);
+            System.assert(dossierToBeAsserted != null);
+            System.debug('businessDossier: ' + businessDossier);
+            System.assert(businessDossier == dossierToBeAsserted);
+        }
+    }
 
-        return updateTypesArrayResponse;
+
+    @IsTest
+    public static void testOnePage() {
+        // given
+        // a list of updated  dossiers from the CI backend (one page)
+        // with matches to the SF dossiers
+
+        // when
+        // we run the batch
+
+        // then
+        // the matching dossiers in the DB should be changed
+    }
+
+    /**
+     * Returns a mock DutchBusinessUpdateReferencePagedResult based on the given parameters
+     *
+     * @param nrOfDossiersPerPage
+     * @param startDossierNr
+     * @param startEstablishmentNr
+     * @param nrOfEstablishmentsPerDossierNr
+     * @param maxPages
+     *
+     * @return
+     */
+    private static DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult getDutchBusinessUpdateReferencePagedResultMock(Integer nrOfDossiersPerPage, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr, Integer maxPages) {
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
+        output.paging = new DutchBusinessWsdl.ResultInfo();
+        output.paging.numpages = maxPages;
+        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
+        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
+        for (Integer i = 0; i < nrOfDossiersPerPage / (nrOfEstablishmentsPerDossierNr == 0 ? 1 : nrOfEstablishmentsPerDossierNr) ; i++) {
+            DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
+            a1.dossier_number = '' + (startDossierNr + i);
+            for (Integer i2 = 0; i2 < nrOfEstablishmentsPerDossierNr; i2++) {
+                a1.establishment_number = '' + (startEstablishmentNr + i2);
+            }
+            a1.update_types = new DutchBusinessWsdl.stringArray();
+            a1.update_types.item = new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'};
+            output.results.item.add(a1);
+        }
+        return output;
+    }
+
+    /**
+     * Returns a list of business dossiers with the given dossier and establishment numbers
+     *
+     * @param nrOfDossiers
+     * @param startDossierNr
+     * @param startEstablishmentNr
+     * @param nrOfEstablishmentsPerDossierNr
+     *
+     * @return
+     */
+    private static List<Business_Dossier__c> getBusinessDossiersMock(Integer nrOfDossiers, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr) {
+        List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
+        for (Integer i = 0; i < nrOfDossiers / (nrOfEstablishmentsPerDossierNr == 0 ? 1 : nrOfEstablishmentsPerDossierNr); i++) {
+            Business_Dossier__c dossier = new Business_Dossier__c(Name = '' + i, Dossier_Number__c = '' + (startDossierNr + i));
+            for (Integer i2 = 0; i2 < nrOfEstablishmentsPerDossierNr; i2++) {
+                dossier.Establishment_Number__c = '' + (startEstablishmentNr + i2);
+            }
+            dossiers.add(dossier);
+        }
+        return dossiers;
     }
 }

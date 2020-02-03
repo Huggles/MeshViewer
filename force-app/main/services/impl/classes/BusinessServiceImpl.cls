@@ -76,7 +76,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         }
 
         DutchBusinessWsdl.stringArray wsUpdateTypesArray = new DutchBusinessWsdl.stringArray();
-        wsUpdateTypesArray.item = new List<String>();
+        wsUpdateTypesArray.item = updateTypes;
 
         //callout to get the list of dossiers with updates
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult response = WsDutchBusiness.dutchBusinessUpdateGetChangedDossiers(changedSince, wsUpdateTypesArray, pageNr);
