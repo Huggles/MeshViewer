@@ -73,6 +73,14 @@ public interface IBusinessService {
      */
     void updateDossiersWithVendorData(List<Business_Dossier__c> dossiersToUpdate);
 
+    /**
+     * Processes the dutch business dossiers that have been removed from the CI backend
+     *
+     * @param removedDossiers
+     */
+    void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers);
+
+
 
 
 

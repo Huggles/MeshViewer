@@ -24,6 +24,10 @@ public inherited sharing class BusinessService {
         newInstance().updateDossiersWithVendorData(dossiersToUpdate);
     }
 
+    public static void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers) {
+        newInstance().processRemovedDutchDossiers(removedDossiers);
+    }
+
     public static IBusinessService newInstance() {
         return (IBusinessService) Application.Service.newInstance(IBusinessService.class);
     }

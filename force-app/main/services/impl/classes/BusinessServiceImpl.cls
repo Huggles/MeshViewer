@@ -138,6 +138,22 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
     }
 
     /**
+    * Processes the dutch business dossiers that have been removed from the CI backend
+    *
+    * @param removedDossiers
+    */
+    public void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers) {
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        if (removedDossiers != null) {
+            for (Business_Dossier__c businessDossier : removedDossiers) {
+                businessDossier.Is_Removed__c = true;
+            }
+            unitOfWork.registerDirty(removedDossiers);
+            unitOfWork.commitWork();
+        }
+    }
+
+    /**
      * Inserts a single dossier + account into the DB found through the search function (so based on the dossier number and establishment number).
      * If the dossier is already there, just returns the dossier with a flag it already existed. If the account already exists, just reuses it.
      * If more than one duplicate account exist, throws a CCDuplicateException. This method is synchronous so only one dossier
