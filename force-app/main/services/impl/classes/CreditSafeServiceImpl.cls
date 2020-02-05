@@ -114,6 +114,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         additionalInformationHistoricalEvents.add(additionalInformationHistoricalEvent);
                     }
                 }
+                companyReportFull.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
             }
 
             if (reportFullV2.additional_information.nl != null) {
@@ -230,6 +231,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         additionalInformationHistoricalEvents.add(additionalInformationHistoricalEvent);
                     }
                 }
+                companyReportFull.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
             }
 
             if (reportFullV2.additional_information.generic != null) {
@@ -241,6 +243,17 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     creditsafeCompanyKeyValue.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
                 }
             }
+            //insert order additionalInfoDE, additionalInfoNL, additionalInfoComments, additionalInformationHistoricalEvents,
+            // additionalInformationNLFinancialItems, additionalInformationNLKvkFilings, additionalInfoNLLetterOfLiabilities, additionalInfoComments, additionalInformationHistoricalEvents,
+            // companyReportFull, creditsafeCompanyKeyValues
+        }
+
+        if (reportFullV2.company_identification != null) {
+            if (reportFullV2.company_identification.basic_information != null) {
+                Creditsafe_Company_Basic_Information__c basicInformation = new Creditsafe_Company_Basic_Information__c();
+                
+            }
+
         }
 
         return new CreditSafeCompanyReportDTO(reportFullV2);
