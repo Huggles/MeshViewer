@@ -4,17 +4,8 @@ public inherited sharing class BusinessService {
         return newInstance().searchForDossiers(country, trade_name, registration_number, vat_number, city, street, postcode, house_number, house_number_addition, province, telephone_number, domain_name);
     }
 
-
-    public static List<UpdateDossierReferenceDTO> getChangedDossiers(Integer pageNr){
-        return newInstance().getChangedDossiers(pageNr);
-    }
-
     public static Boolean deleteDossier(Id accountId){
         return newInstance().deleteDossier(accountId);
-    }
-
-    public static List<Business_Dossier__c> updateDossiersWithDataVendorData(List<UpdateDossierRequestDTO> updateDossierRequestDTOS) {
-        return newInstance().updateDossiersWithDataVendorData(updateDossierRequestDTOS);
     }
 
     public static Business_Dossier__c setVatNumber(String dossierNumber){
@@ -23,6 +14,18 @@ public inherited sharing class BusinessService {
 
     public static InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor,  Id accountId) {
         return newInstance().insertSingleDossierFromDataVendorData(creditSafeId, dossierNumber, establishmentNumber, vendor, accountId);
+    }
+
+    public static List<UpdateDossierReferenceDTO> getDutchBusinessUpdatedDossiersSince(Integer pageNr, List<String> updateTypes, Date changedSince) {
+        return newInstance().getDutchBusinessUpdatedDossiersSince(pageNr, updateTypes, changedSince);
+    }
+
+    public static void updateDossiersWithVendorData(List<Business_Dossier__c> dossiersToUpdate) {
+        newInstance().updateDossiersWithVendorData(dossiersToUpdate);
+    }
+
+    public static void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers) {
+        newInstance().processRemovedDutchDossiers(removedDossiers);
     }
 
     public static IBusinessService newInstance() {

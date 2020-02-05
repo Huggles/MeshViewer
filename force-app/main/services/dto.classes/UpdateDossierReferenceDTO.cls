@@ -13,7 +13,7 @@ public with sharing class UpdateDossierReferenceDTO {
         this.dossier_number = updateReference.dossier_number;
         this.establishment_number = updateReference.establishment_number;
         this.update_types = new List<String>();
-        this.update_types.addAll(updateReference.update_types.item);
+        this.update_types = updateReference.update_types.item;
         this.numPages = numPages;
     }
 
