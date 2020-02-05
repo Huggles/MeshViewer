@@ -5,7 +5,7 @@
 /**
  * Batch class to remove dutch business dossiers.
  */
-public without sharing class ProcessRemovedDutchDossiersBatch implements Database.Batchable<Business_Dossier__c>, Database.AllowsCallouts, Database.Stateful {
+public without sharing class ProcessRemovedDutchDossiersBatch implements Database.Batchable<Business_Dossier__c>, Database.AllowsCallouts {
 
     @TestVisible
     private static final List<String> UPDATE_TYPES = new List<String>{'Removed'};

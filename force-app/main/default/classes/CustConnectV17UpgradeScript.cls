@@ -10,7 +10,7 @@ public without sharing class CustConnectV17UpgradeScript implements IInstallActi
         },
         'Business_Dossier__c',
         'RecordTypeId = null'));
-    } 
+    }
 
 
 }
