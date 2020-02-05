@@ -14,7 +14,8 @@ public without sharing class PostInstallScript implements InstallHandler {
     // for each previous version a action (aka script) should be added. The actions/scripts handle the previous version specific actions.
     // this map works for the cust_connect namespace/versions
     private Map<Version, IInstallAction> upgradeActionsByPreviousVersionsCustConnect = new Map<Version, IInstallAction> {
-            new Version(1,7) => new v20upgradeScript()
+            new Version(1, 7) => new CustConnectV17UpgradeScript(),
+            new Version(2,0) => new CustConnectV20UpgradeScript()
     };
 
     // add actions that implement the IInstallAction interface to this map to have them executed on post install
