@@ -9,7 +9,7 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
     @TestVisible
     private final static String PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME = 'Process removed Dutch dossiers';
 
-    private class BatchScheduler implements Schedulable {
+    private inherited sharing class BatchScheduler implements Schedulable {
 
         private Database.Batchable<Business_Dossier__c> batchable;
         private Integer batchSize;

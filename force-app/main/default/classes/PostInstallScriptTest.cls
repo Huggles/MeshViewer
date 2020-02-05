@@ -5,7 +5,7 @@
 @IsTest
 private class PostInstallScriptTest {
 
-    public class TestNameSpaceInstallAction implements IInstallAction {
+    public inherited sharing class TestNameSpaceInstallAction implements IInstallAction {
         public void execute(InstallContext context) {
             throw new CCException('');
         }

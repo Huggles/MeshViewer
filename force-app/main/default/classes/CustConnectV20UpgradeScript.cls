@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 04/02/2020.
  */
 
-public with sharing class CustConnectV20UpgradeScript implements IInstallAction {
+public without sharing class CustConnectV20UpgradeScript implements IInstallAction {
 
     @TestVisible
     private final static String UPDATE_DOSSIER_SCHEDULE_NAME = 'Update dossiers';
