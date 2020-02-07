@@ -217,14 +217,13 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             addressDB.House_Number__c = dataVendorDossier.address.house_number;
             addressDB.House_Number_Addition__c = null;
             addressDB.Country__c = dataVendorDossier.address.country;
-            //addressDB.Type__c = 'Creditsafe'; todo: change this
+            addressDB.RecordTypeId = Schema.SObjectType.Dossier_Address__c.getRecordTypeInfosByDeveloperName().get('Creditsafe_Address').getRecordTypeId();
         }
         return addressDB;
     }
 
     private Business_Dossier__c mapCreditSafeDataToDossier(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Business_Dossier__c dossierDB) {
-        Id recordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName()
-                .get('Creditsafe').getRecordTypeId();
+        Id recordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName().get('Creditsafe').getRecordTypeId();
         dossierDB.RecordTypeId = recordTypeId;
         dossierDB.Dossier_Number__c = dataVendorDossier.registration_number;
         dossierDB.Name = dataVendorDossier.name;

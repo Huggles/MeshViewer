@@ -4,9 +4,7 @@
     <description>Record creation time.</description>
     <externalId>false</externalId>
     <label>Created At</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Date</type>
 </CustomField>

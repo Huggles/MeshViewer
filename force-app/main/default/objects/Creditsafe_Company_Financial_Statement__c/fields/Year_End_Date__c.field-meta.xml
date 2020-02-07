@@ -4,9 +4,7 @@
     <description>Year to which the annual account relates to.</description>
     <externalId>false</externalId>
     <label>Year End Date</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Date</type>
 </CustomField>

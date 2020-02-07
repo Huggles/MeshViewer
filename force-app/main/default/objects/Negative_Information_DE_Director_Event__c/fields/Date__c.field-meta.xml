@@ -4,9 +4,7 @@
     <description>The date the negativeEvent occurred/is registered.</description>
     <externalId>false</externalId>
     <label>Date</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Date</type>
 </CustomField>
