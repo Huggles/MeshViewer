@@ -148,7 +148,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>total_Intangible_Assets__c</field>
+                <field>Total_Intangible_Assets__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

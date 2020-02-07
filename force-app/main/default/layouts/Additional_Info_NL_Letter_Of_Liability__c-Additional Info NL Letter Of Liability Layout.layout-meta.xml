@@ -84,10 +84,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Liability2_Submitted_Parent2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Liability2_Start_Date_Parent2__c</field>
             </layoutItems>
             <layoutItems>
