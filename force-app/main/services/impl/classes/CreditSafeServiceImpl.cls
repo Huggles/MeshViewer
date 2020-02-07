@@ -416,25 +416,25 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         if (reportFullV2.group_structure != null) {
             if (reportFullV2.group_structure.ultimate_parent != null) {
                 Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Ultimate_Parent').getRecordTypeId();
-                Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c, reportFullV2.group_structure.ultimate_parent, recordTypeId);
+                Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), reportFullV2.group_structure.ultimate_parent, recordTypeId);
                 //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
             }
             if (reportFullV2.group_structure.immediate_parent != null) {
                 Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Immediate_Parent').getRecordTypeId();
-                Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c, reportFullV2.group_structure.immediate_parent, recordTypeId);
+                Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), reportFullV2.group_structure.immediate_parent, recordTypeId);
                 //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
             }
             if (reportFullV2.group_structure.subsidiary_companies != null) {
                 Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Subsidiary_Companies').getRecordTypeId();
                 for (CreditsafeWsdl.CreditsafeCompanyCompanyV2 creditsafeCompanyV2 :reportFullV2.group_structure.subsidiary_companies.item) {
-                    Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c, creditsafeCompanyV2, recordTypeId);
+                    Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), creditsafeCompanyV2, recordTypeId);
                     //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
                 }
             }
             if (reportFullV2.group_structure.affiliated_companies != null) {
                 Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Affiliated_Companies').getRecordTypeId();
                 for (CreditsafeWsdl.CreditsafeCompanyCompanyV2 creditsafeCompanyV2 :reportFullV2.group_structure.affiliated_companies.item) {
-                    Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c, creditsafeCompanyV2, recordTypeId);
+                    Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), creditsafeCompanyV2, recordTypeId);
                     //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
                 }
             }
@@ -538,7 +538,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             if (reportFullV2.share_capital_structure.share_holders != null) {
                 for (CreditsafeWsdl.CreditsafeCompanyShareHolderV2 shareHolderV2 :reportFullV2.share_capital_structure.share_holders.item) {
                     Creditsafe_Company_Share_Holder__c shareHolder = new Creditsafe_Company_Share_Holder__c();
-                    Dossier_Address__c address = mapCreditSafeAddress(shareHolderV2.address, new Dossier_Address__c);
+                    Dossier_Address__c address = mapCreditSafeAddress(shareHolderV2.address, new Dossier_Address__c());
                     shareHolder.Name__c = shareHolderV2.name;
                     shareHolder.Share_Percent__c = String.valueOf(shareHolderV2.share_percent);
                 }
@@ -588,6 +588,8 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         creditsafeCompany.Status__c = creditsafeCompanyV2.status;
         creditsafeCompany.Office_Type__c = creditsafeCompanyV2.office_type;
         creditsafeCompany.RecordTypeId = recordTypeId;
+
+        return creditsafeCompany;
 
     }
 
@@ -643,8 +645,8 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         financialStatement.Consolidated_Accounts__c = financialStatementV2.consolidated_accounts;
         financialStatement.Currency__c = financialStatementV2.currency_x;
         financialStatement.Number_Of_Weeks__c = String.valueOf(financialStatementV2.number_of_weeks);
-        financialStatement.Net_Worth__c = financialStatementV2.other_financials != null ? financialStatementV2.other_financials.net_worth : null;
-        financialStatement.Working_Capital__c = financialStatementV2.other_financials != null ? financialStatementV2.other_financials.working_capital : null;
+        financialStatement.Net_Worth__c = financialStatementV2.other_financials != null ? String.valueOf(financialStatementV2.other_financials.net_worth) : null;
+        financialStatement.Working_Capital__c = financialStatementV2.other_financials != null ? String.valueOf(financialStatementV2.other_financials.working_capital) : null;
         if(financialStatementV2.profit_and_loss != null) {
             financialStatement.Depreciation__c = String.valueOf(financialStatementV2.profit_and_loss.depreciation);
             financialStatement.Dividends__c = String.valueOf(financialStatementV2.profit_and_loss.dividends);
@@ -679,6 +681,8 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         }
         financialStatement.Type__c = financialStatementV2.type_x;
         financialStatement.Year_End_Date__c = getDate(financialStatementV2.year_end_date);
+
+        return financialStatement;
     }
 
     private Dossier_Address__c mapCreditSafeAddress(CreditsafeWsdl.CreditsafeAddressV2 dataVendorDossier, Dossier_Address__c addressDB) {
