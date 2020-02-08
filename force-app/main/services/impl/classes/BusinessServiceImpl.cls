@@ -179,10 +179,6 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         return response;
     }
 
-    /**************************************************************************
-     * IMPLEMENTATION METHODS (PRIVATE, NOT IMPLEMENTING THE INTERFACE) BELOW *
-     **************************************************************************/
-
     /**
     * Searches for dutch business dossiers in Company.info backend (Dutch Business service)
     *
@@ -197,7 +193,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
     *
     * @return
     */
-    private List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
+    public List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
         List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
         DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, 1);
         if (returnedResults.results != null && returnedResults.results.item != null) {
@@ -215,6 +211,10 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         }
         return returnValue;
     }
+
+    /**************************************************************************
+     * IMPLEMENTATION METHODS (PRIVATE, NOT IMPLEMENTING THE INTERFACE) BELOW *
+     **************************************************************************/
 
     /**
      * Searches for credit safe dossiers.

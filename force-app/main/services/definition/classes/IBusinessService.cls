@@ -80,6 +80,22 @@ public interface IBusinessService {
      */
     void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers);
 
+    /**
+     * Searches for dutch dossiers using the given parameters.
+     *
+     * @param trade_name
+     * @param city
+     * @param street
+     * @param postcode
+     * @param house_number
+     * @param house_number_addition
+     * @param telephone_number
+     * @param domain_name
+     *
+     * @return
+     */
+    List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name);
+
 
 
 
