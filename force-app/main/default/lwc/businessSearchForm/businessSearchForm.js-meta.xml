@@ -15,7 +15,9 @@
             <property name="houseNumberAddition" type="String" label="House Number Addition"/>
             <property name="city" type="String" label="City"/>
             <property name="postalCode" type="String" label="Postal Code"/>
+            <property name="domainName" type="String" label="Domain Name"/>
+            <property name="phoneNumber" type="String" label="Phone Number"/>
         </targetConfig>
     </targetConfigs>
-    <masterLabel>Organisation Search Form</masterLabel>
+    <masterLabel>Business Search Form</masterLabel>
 </LightningComponentBundle>

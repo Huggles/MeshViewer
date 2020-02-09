@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>47.0</apiVersion>
+    <description>Footer for the flow</description>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="nextButtonTitle" type="String" default="Next"/>
+            <property name="previousButtonTitle" type="String" default="Previous" role="inputOnly"/>
+            <property name="pauseButtonTitle" type="String" default="Pause" role="inputOnly"/>
+            <property name="showCancelButton" type="Boolean" default="false" role="inputOnly"/>
+            <property name="cancelButtonTitle" type="String" default="Cancel" role="inputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+    <masterLabel>Flow Footer</masterLabel>
+</LightningComponentBundle>

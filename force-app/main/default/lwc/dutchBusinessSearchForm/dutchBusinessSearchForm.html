@@ -1,0 +1,33 @@
+<!--
+ - Created by jaapbranderhorst on 09/02/2020.
+ -->
+
+<!-- Dutch Business Search Form -->
+<template>
+    <lightning-input name="tradeName" class="slds-m-around_x-small" label="Trade Name" required type="text" value={tradeName} variant="standard" onchange={handleOnChange}></lightning-input>
+    <lightning-input name="domainName" class="slds-m-around_x-small" label="Domain Name" type="text" variant="standard" value={domainName} onchange={handleOnChange}></lightning-input>
+    <lightning-input name="phoneNumber" class="slds-m-around_x-small" label="Phone Number" type="tel" variant="standard" value={phoneNumber} onchange={handleOnChange}></lightning-input>
+    <lightning-layout>
+        <lightning-layout-item size="6">
+            <lightning-input name="street" class="slds-m-around_x-small" label="Street" type="text" variant="standard" value={street} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-layout>
+                <lightning-layout-item size="6">
+                    <lightning-input name="houseNumber" class="slds-m-around_x-small" label="House Number" type="text" value={houseNumber} onchange={handleOnChange} variant="standard"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input name="houseNumberAddition" class="slds-m-around_x-small" label="House Number Addition" type="text" variant="standard" value={houseNumberAddition} onchange={handleOnChange}></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="4">
+            <lightning-input name="postalCode" class="slds-m-around_x-small" label="Postal Code" type="text" variant="standard" value={postalCode} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="8">
+            <lightning-input name="city" class="slds-m-around_x-small" label="City" type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
