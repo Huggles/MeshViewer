@@ -69,19 +69,55 @@ export default class BusinessSearchForm extends LightningElement {
         return this.selectedCountry === 'IE';
     }
 
+    /**
+     * Checks if the input in all input elements in this template is valid
+     * @returns true if valid
+     */
+    get allValid() {
+        const allValid = [...this.template.querySelectorAll('lightning-input')]
+            .reduce((validSoFar, inputCmp) => {
+                inputCmp.reportValidity();
+                return validSoFar && inputCmp.checkValidity();
+            }, true);
+        return allValid;
+    }
+
+    /**
+     * Called by the framework
+     * TODO this needs to be called before the next button is entered and not by the flow framework since that overrides the error handling
+     */
     @api
     validate() {
-        if(this.allValid) {
-            return { isValid: true };
+        // first check if all input elements here are valid
+        // if (this.allValid) {
+            // then go over all child templates
+        const allValid = [...this.template.querySelectorAll('.searchForm')]
+            .reduce((validSoFar, template) => {
+                return validSoFar && template.checkValid();
+            }, true);
+        if (allValid) {
+            return { isValid: true};
         }
         else {
-            // If the component is invalid, return the isValid parameter
-            // as false and return an error message.
             return {
                 isValid: false,
-                errorMessage: '/*A message that explains what went wrong in upper elem.*/'
-            };
+                errorMessage: 'test'
+
+            }
         }
+        // }
+
+        // if(this.allValid) {
+        //     return { isValid: true };
+        // }
+        // else {
+        //     // If the component is invalid, return the isValid parameter
+        //     // as false and return an error message.
+        //     return {
+        //         isValid: false,
+        //         errorMessage: '/*A message that explains what went wrong in upper elem.*/'
+        //     };
+        // }
     }
 
 }

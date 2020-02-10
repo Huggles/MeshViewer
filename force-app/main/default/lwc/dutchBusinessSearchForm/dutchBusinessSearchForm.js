@@ -22,7 +22,8 @@ export default class DutchBusinessSearchForm extends LightningElement {
     @api
     phoneNumber;
 
-    get allValid() {
+    @api
+    checkValid() {
         const allValid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();

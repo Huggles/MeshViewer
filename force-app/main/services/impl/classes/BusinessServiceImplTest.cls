@@ -27,11 +27,12 @@ public with sharing class BusinessServiceImplTest {
         mocks.stopStubbing();
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
-        test.startTest();
-
+        Test.startTest();
         DutchBusinessWsdl.DutchBusinessDossierV3 dossier = (new BusinessServiceImpl()).getDossier(dossierNumber, null);
-        system.assertNotEquals(null, dossier);
-        test.stopTest();
+        Test.stopTest();
+
+        System.assertNotEquals(null, dossier);
+
     }
 
     @isTest
