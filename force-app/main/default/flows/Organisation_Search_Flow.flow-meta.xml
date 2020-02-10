@@ -1,5 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
+        <name>Search_for_Dutch_Dossiers</name>
+        <label>Search for Dutch Dossiers</label>
+        <locationX>375</locationX>
+        <locationY>302</locationY>
+        <actionName>SearchForDutchDossiersInvocable</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>domain_name</name>
+        </inputParameters>
+        <inputParameters>
+            <name>telephone_number</name>
+        </inputParameters>
+        <inputParameters>
+            <name>street</name>
+            <value>
+                <elementReference>Street</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>postcode</name>
+            <value>
+                <elementReference>PostalCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>city</name>
+            <value>
+                <elementReference>City</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>trade_name</name>
+            <value>
+                <elementReference>TradeName</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>house_number_addition</name>
+            <value>
+                <elementReference>HouseNumberAddition</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>house_number</name>
+        </inputParameters>
+    </actionCalls>
     <decisions>
         <description>Decides which search method to call based on the selected country</description>
         <name>Decide_search_method</name>
@@ -29,6 +77,9 @@
                     <stringValue>NL</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Search_for_Dutch_Dossiers</targetReference>
+            </connector>
             <label>Dutch Dossier v3</label>
         </rules>
     </decisions>
@@ -50,23 +101,41 @@
     <processType>Flow</processType>
     <screens>
         <name>Search</name>
-        <label>Search</label>
-        <locationX>203</locationX>
+        <label>Enter Search Criteria</label>
+        <locationX>209</locationX>
         <locationY>50</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowPause>false</allowPause>
         <connector>
             <targetReference>Decide_search_method</targetReference>
         </connector>
         <fields>
-            <name>organisationSearchForm</name>
-            <extensionName>appsolutely:organisationSearchForm</extensionName>
+            <name>organisationSearchFormHeader</name>
+            <extensionName>appsolutely:flowHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Search for Organisations</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>BusinessSearchForm</name>
+            <extensionName>appsolutely:businessSearchForm</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>city</name>
                 <value>
                     <elementReference>City</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>domainName</name>
+                <value>
+                    <elementReference>DomainName</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -82,9 +151,21 @@
                 </value>
             </inputParameters>
             <inputParameters>
+                <name>phoneNumber</name>
+                <value>
+                    <elementReference>PhoneNumber</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>postalCode</name>
                 <value>
                     <elementReference>PostalCode</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>selectedCountry</name>
+                <value>
+                    <elementReference>SelectedCountry</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -99,16 +180,14 @@
                     <elementReference>TradeName</elementReference>
                 </value>
             </inputParameters>
-            <inputParameters>
-                <name>selectedCountry</name>
-                <value>
-                    <elementReference>SelectedCountry</elementReference>
-                </value>
-            </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>City</assignToReference>
                 <name>city</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>DomainName</assignToReference>
+                <name>domainName</name>
             </outputParameters>
             <outputParameters>
                 <assignToReference>HouseNumber</assignToReference>
@@ -119,8 +198,16 @@
                 <name>houseNumberAddition</name>
             </outputParameters>
             <outputParameters>
-                <assignToReference>Street</assignToReference>
+                <assignToReference>PhoneNumber</assignToReference>
+                <name>phoneNumber</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>PostalCode</assignToReference>
                 <name>postalCode</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SelectedCountry</assignToReference>
+                <name>selectedCountry</name>
             </outputParameters>
             <outputParameters>
                 <assignToReference>Street</assignToReference>
@@ -130,13 +217,21 @@
                 <assignToReference>TradeName</assignToReference>
                 <name>tradeName</name>
             </outputParameters>
-            <outputParameters>
-                <assignToReference>SelectedCountry</assignToReference>
-                <name>selectedCountry</name>
-            </outputParameters>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <fields>
+            <name>businessSearchFooter</name>
+            <extensionName>appsolutely:flowFooter</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>nextButtonTitle</name>
+                <value>
+                    <stringValue>Search</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>50</locationX>
@@ -155,6 +250,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>DomainName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
         <description>The house number searched for</description>
         <name>HouseNumber</name>
         <dataType>String</dataType>
@@ -165,6 +267,21 @@
     <variables>
         <description>The house number addition searched for</description>
         <name>HouseNumberAddition</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>NextButtonTitle</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>The phone number used in the search</description>
+        <name>PhoneNumber</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
