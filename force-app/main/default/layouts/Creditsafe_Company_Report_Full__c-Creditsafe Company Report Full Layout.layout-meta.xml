@@ -251,6 +251,7 @@
             <field>Day_Sales_Outstanding_Upper__c</field>
         </layoutItems>
     </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
