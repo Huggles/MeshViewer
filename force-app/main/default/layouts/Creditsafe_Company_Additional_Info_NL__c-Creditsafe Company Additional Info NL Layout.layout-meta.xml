@@ -90,6 +90,10 @@
                 <behavior>Edit</behavior>
                 <field>Day_Sales_Outstanding_Upper__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Creditsafe_Company_Report_Full__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -146,10 +150,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Additional_Information_Historical_Event__c.Creditsafe_Company_Additional_Info_NL__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Creditsafe_Company_Report_Full__c.Creditsafe_Company_Additional_Info_NL__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

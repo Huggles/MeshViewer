@@ -58,6 +58,10 @@
     <picklistValues>
         <picklist>Class_Personnel_CI__c</picklist>
         <values>
+            <fullName>0</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>1</fullName>
             <default>false</default>
         </values>
@@ -109,6 +113,10 @@
     <picklistValues>
         <picklist>Class_Personnel_Fulltime__c</picklist>
         <values>
+            <fullName>0</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>1</fullName>
             <default>false</default>
         </values>
@@ -159,6 +167,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Class_Personnel__c</picklist>
+        <values>
+            <fullName>0</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>1</fullName>
             <default>false</default>

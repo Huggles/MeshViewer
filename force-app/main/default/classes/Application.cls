@@ -12,7 +12,34 @@ public inherited sharing class Application {
                     Account.SObjectType,
                     Business_Dossier__c.SObjectType,
                     Business_Data_SBI__c.SObjectType,
-                    Dossier_Address__c.SObjectType
+                    Dossier_Address__c.SObjectType,
+                    Creditsafe_Company_Report_Full__c.SObjectType,
+                    Creditsafe_Company_Additional_Info_DE__c.SObjectType,
+//                    Creditsafe_Comp_Additional_Info_Comment__c.SObjectType,
+//                    Additional_Information_Historical_Event__c.SObjectType,
+                    Creditsafe_Company_Additional_Info_NL__c.SObjectType,
+                    Additional_Information_NL_Financial_Item__c.SObjectType,
+                    Additional_Information_NL_Kvk_Filing__c.SObjectType,
+                    Additional_Info_NL_Letter_Of_Liability__c.SObjectType,
+                    Creditsafe_Comp_Additional_Info_Comment__c.SObjectType,
+                    Additional_Information_Historical_Event__c.SObjectType,
+                    Creditsafe_Company_Basic_Information__c.SObjectType,
+                    Creditsafe_Comp_Activity_Classifications__c.SObjectType,
+                    Creditsafe_Company_Activity__c.SObjectType,
+                    Creditsafe_Company_Summary__c.SObjectType,
+                    Creditsafe_Company_Credit_Score__c.SObjectType,
+                    Creditsafe_Person_Director__c.SObjectType,
+                    Creditsafe_Company_Financial_Statement__c.SObjectType,
+                    Creditsafe_Company__c.SObjectType,
+                    Creditsafe_Company_Negative_Info_NL__c.SObjectType,
+                    Creditsafe_Company_Negative_Info_DE__c.SObjectType,
+                    Negative_Information_DE_Insolvency_Event__c.SObjectType,
+                    Negative_Information_DE_Director_Event__c.SObjectType,
+                    Creditsafe_Company_Banker__c.SObjectType,
+                    Creditsafe_Company_Advisor__c.SObjectType,
+                    Creditsafe_Company_Employee_Information__c.SObjectType,
+                    Creditsafe_Company_Share_Holder__c.SObjectType,
+                    Creditsafe_Company_Key_Value__c.SObjectType
             });
 
     // Configure and create the ServiceFactory for this Application
@@ -37,6 +64,5 @@ public inherited sharing class Application {
                     Dossier_Address__c.SObjectType => DossierAddressSelector.class,
                     Business_Data_SBI__c.SObjectType => SbiCodeSelector.class
             });
-
 
 }

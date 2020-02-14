@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Business_Data__c</fullName>
+    <fullName>Creditsafe_Company_Report_Full__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
+    <description>A detailed report about a company.</description>
     <externalId>false</externalId>
-    <label>Business Data</label>
-    <referenceTo>Business_Dossier__c</referenceTo>
+    <label>Creditsafe Company Report Full</label>
+    <referenceTo>Creditsafe_Company_Report_Full__c</referenceTo>
     <relationshipLabel>Business Addresses</relationshipLabel>
-    <relationshipName>Business_Addresses</relationshipName>
+    <relationshipName>Creditsafe_Addresses</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

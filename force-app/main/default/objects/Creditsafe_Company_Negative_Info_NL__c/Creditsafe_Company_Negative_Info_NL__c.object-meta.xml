@@ -56,7 +56,7 @@
     <label>Creditsafe Company Negative Info NL</label>
     <nameField>
         <displayFormat>CI-{000000}</displayFormat>
-        <label>CreditsafeCompanyNegativeInformationNLCo Name</label>
+        <label>Creditsafe Company Negative Info NL Name</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Creditsafe Company Negative Info NL</pluralLabel>

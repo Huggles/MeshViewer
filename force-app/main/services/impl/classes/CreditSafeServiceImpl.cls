@@ -4,8 +4,6 @@
 
 public inherited sharing class CreditSafeServiceImpl implements ICreditSafeService {
 
-
-
     //  CreditsafeWsdl.CreditsafeSearchResultV2 creditsafeSearchV2(CreditsafeWsdl.stringArray countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
 
     // reuse the searchresultdossierdto??
@@ -29,16 +27,407 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         return resultValue;
     }
 
-    public CreditSafeCompanyReportDTO getCreditsafeReportFullV2(String company_id, String language, String reason) {
+    public Creditsafe_Company_Report_Full__c getCreditsafeReportFullV2(String company_id, String language, String reason) {
         //check input
         if (String.isEmpty(company_id) || String.isEmpty(language)) {
             throw new CCInputException(Label.Error_Input_Incorrect);
         }
 
         CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2 = WsCreditsafe.creditsafeGetReportFullV2(company_id, language, reason);
-        System.debug('============='+ reportFullV2);
-
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         Creditsafe_Company_Report_Full__c companyReportFull = new Creditsafe_Company_Report_Full__c();
+        unitOfWork.registerNew(companyReportFull);
+
+        companyReportFull = mapAdditionalInfo(companyReportFull, reportFullV2, unitOfWork);
+        companyReportFull = mapCompanyIdentification(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapCompanySummary(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapContactInfo(companyReportFull, reportFullV2, unitOfWork);
+//
+//        companyReportFull = mapCreditScore(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapDirectors(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapFinancialStatements(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapGroupStructure(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapLocalFinancialStatements(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapNegativeInformation(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapOtherInformation(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapShareCapital(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapPaymentData(companyReportFull, reportFullV2, unitOfWork);
+
+        companyReportFull.Order_Number__c = reportFullV2.order_number != null &&  reportFullV2.order_number != 'N/A'? Integer.valueOf(reportFullV2.order_number) : null;
+        companyReportFull.Company_Id__c = reportFullV2.company_id;
+        companyReportFull.Language__c = reportFullV2.language;
+
+        unitOfWork.commitWork();
+
+        return companyReportFull;
+
+    }
+
+    private Creditsafe_Company_Report_Full__c mapPaymentData(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.payment_data != null && reportFullV2.payment_data.generic != null && reportFullV2.payment_data.generic.item != null) {
+            for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 :reportFullV2.payment_data.generic.item) {
+                Creditsafe_Company_Key_Value__c keyValue = new Creditsafe_Company_Key_Value__c();
+                keyValue.Key__c = keyValueV2.key;
+                keyValue.Value__c = keyValueV2.value;
+                unitOfWork.registerNew(keyValue, Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapShareCapital(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.share_capital_structure != null) {
+            companyReportFull.Issued_Share_Capital__c = reportFullV2.share_capital_structure.issued_share_capital;
+            companyReportFull.Nominal_Share_Capital__c = reportFullV2.share_capital_structure.nominal_share_capital;
+            if (reportFullV2.share_capital_structure.share_holders != null && reportFullV2.share_capital_structure.share_holders.item != null) {
+                for (CreditsafeWsdl.CreditsafeCompanyShareHolderV2 shareHolderV2 :reportFullV2.share_capital_structure.share_holders.item) {
+                    Creditsafe_Company_Share_Holder__c shareHolder = new Creditsafe_Company_Share_Holder__c();
+                    Dossier_Address__c address = mapCreditSafeAddress(shareHolderV2.address, new Dossier_Address__c());
+                    shareHolder.Name__c = shareHolderV2.name;
+                    shareHolder.Share_Percent__c = String.valueOf(shareHolderV2.share_percent);
+                    unitOfWork.registerNew(shareHolder, Creditsafe_Company_Share_Holder__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                    unitOfWork.registerNew(address, Dossier_Address__c.Creditsafe_Company_Share_Holder__c, shareHolder);
+                }
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapOtherInformation(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.other_information != null) {
+            if (reportFullV2.other_information.bankers != null && reportFullV2.other_information.bankers.item != null) {
+                for (CreditsafeWsdl.CreditsafeCompanyBankerV2 bankerV2 :reportFullV2.other_information.bankers.item) {
+                    Creditsafe_Company_Banker__c banker = new Creditsafe_Company_Banker__c();
+                    Dossier_Address__c address = mapCreditSafeAddress(bankerV2.address, new Dossier_Address__c());
+                    banker.Bank_Code__c = bankerV2.bank_code;
+                    banker.Name__c = bankerV2.name;
+                    unitOfWork.registerNew(banker, Creditsafe_Company_Banker__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                    unitOfWork.registerNew(address, Dossier_Address__c.Creditsafe_Company_Banker__c, banker);
+                }
+            }
+            if (reportFullV2.other_information.advisors != null && reportFullV2.other_information.advisors.item != null) {
+                for (CreditsafeWsdl.CreditsafeCompanyAdvisorV2 advisorV2 :reportFullV2.other_information.advisors.item) {
+                    Creditsafe_Company_Advisor__c advisor = new Creditsafe_Company_Advisor__c();
+                    advisor.Auditor_Name__c = advisorV2.auditor_name;
+                    advisor.Solicitor_Name__c = advisorV2.solicitor_name;
+                    unitOfWork.registerNew(advisor, Creditsafe_Company_Advisor__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
+            }
+            if (reportFullV2.other_information.employees_information != null && reportFullV2.other_information.employees_information.item != null) {
+                for (CreditsafeWsdl.CreditsafeCompanyEmployeeInformationV2 employeeInformationV2 :reportFullV2.other_information.employees_information.item) {
+                    Creditsafe_Company_Employee_Information__c employeeInformation = new Creditsafe_Company_Employee_Information__c();
+                    employeeInformation.Number_Of_Employees__c = employeeInformationV2.number_of_employees;
+                    employeeInformation.Year__c = employeeInformationV2.year;
+                    unitOfWork.registerNew(employeeInformation, Creditsafe_Company_Employee_Information__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapNegativeInformation(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.negative_information != null) {
+            if (reportFullV2.negative_information.nl != null && reportFullV2.negative_information.nl.court_items != null) {
+                for (CreditsafeWsdl.CreditsafeCompanyNegativeInformationNLCourtItemV2 negativeInformationNLCourtItemV2 :reportFullV2.negative_information.nl.court_items.item) {
+                    Creditsafe_Company_Negative_Info_NL__c negativeInfoNL = new Creditsafe_Company_Negative_Info_NL__c();
+                    negativeInfoNL.Address__c = negativeInformationNLCourtItemV2.address;
+                    negativeInfoNL.Date_Of_Bankruptcy__c = getDate(negativeInformationNLCourtItemV2.date_of_bankruptcy);
+                    negativeInfoNL.Court_Action__c = negativeInformationNLCourtItemV2.court_action;
+                    unitOfWork.registerNew(negativeInfoNL, Creditsafe_Company_Negative_Info_NL__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
+            }
+            if (reportFullV2.negative_information.de != null) {
+                Creditsafe_Company_Negative_Info_DE__c negativeInfoDE = new Creditsafe_Company_Negative_Info_DE__c();
+                if (reportFullV2.negative_information.de.bankruptcy != null) {
+                    negativeInfoDE.Has_Bankruptcy__c = reportFullV2.negative_information.de.bankruptcy.has_bankruptcy;
+                }
+                if (reportFullV2.negative_information.de.insolvency_information != null) {
+                    negativeInfoDE.Date_Of_Insolvency__c = reportFullV2.negative_information.de.insolvency_information.dateof_insolvency;
+                    if (reportFullV2.negative_information.de.insolvency_information.trustee != null) {
+                        negativeInfoDE.Trustee_City__c = reportFullV2.negative_information.de.insolvency_information.trustee.city;
+                        negativeInfoDE.Trustee_Code__c = reportFullV2.negative_information.de.insolvency_information.trustee.code;
+                        negativeInfoDE.Trustee_Email_Address__c = reportFullV2.negative_information.de.insolvency_information.trustee.email_address;
+                        negativeInfoDE.Trustee_Fax_Number__c = reportFullV2.negative_information.de.insolvency_information.trustee.fax_number;
+                        negativeInfoDE.Trustee_First_Name__c = reportFullV2.negative_information.de.insolvency_information.trustee.first_name;
+                        negativeInfoDE.Trustee_Last_Name__c = reportFullV2.negative_information.de.insolvency_information.trustee.last_name;
+                        negativeInfoDE.Trustee_Name__c = reportFullV2.negative_information.de.insolvency_information.trustee.name;
+                        negativeInfoDE.Trustee_Telephone_Number__c = reportFullV2.negative_information.de.insolvency_information.trustee.telephone_number;
+                        negativeInfoDE.Trustee_Title__c = reportFullV2.negative_information.de.insolvency_information.trustee.title;
+                    }
+                    if (reportFullV2.negative_information.de.insolvency_information.insolvency_events != null && reportFullV2.negative_information.de.insolvency_information.insolvency_events.item != null) {
+                        for (CreditsafeWsdl.CreditsafeCompanyNegativeInformationDEInsolvencyEventV2 insolvencyEventV2 : reportFullV2.negative_information.de.insolvency_information.insolvency_events.item) {
+                            Negative_Information_DE_Insolvency_Event__c insolvencyEvent = new Negative_Information_DE_Insolvency_Event__c();
+                            insolvencyEvent.Reference_Number_Court__c = insolvencyEventV2.reference_number_court;
+                            insolvencyEvent.Created_At__c = getDate(insolvencyEventV2.created_at);
+                            unitOfWork.registerNew(insolvencyEvent, Negative_Information_DE_Insolvency_Event__c.Creditsafe_Company_Negative_Info_DE__c , negativeInfoDE);
+                        }
+                    }
+                }
+                if (reportFullV2.negative_information.de.director_events != null && reportFullV2.negative_information.de.director_events.item != null) {
+                    for (CreditsafeWsdl.CreditsafeCompanyNegativeInformationDEDirectorEventV2 directorEventV2 : reportFullV2.negative_information.de.director_events.item) {
+                        Negative_Information_DE_Director_Event__c directorEvent = new Negative_Information_DE_Director_Event__c();
+                        directorEvent.Name__c = directorEventV2.name;
+                        directorEvent.Type__c = directorEventV2.type_x;
+                        directorEvent.Date__c = getDate(directorEventV2.date_x);
+                        directorEvent.Description__c = directorEventV2.description;
+                        directorEvent.Code__c = directorEventV2.code;
+                        unitOfWork.registerNew(directorEvent, Negative_Information_DE_Director_Event__c.Creditsafe_Company_Negative_Info_DE__c , negativeInfoDE);
+                    }
+                }
+                unitOfWork.registerNew(negativeInfoDE, Creditsafe_Company_Negative_Info_DE__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+            }
+            if (reportFullV2.negative_information.generic != null && reportFullV2.negative_information.generic.item != null) {
+                for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 :reportFullV2.negative_information.generic.item) {
+                    Creditsafe_Company_Key_Value__c keyValue = new Creditsafe_Company_Key_Value__c();
+                    keyValue.Key__c = keyValueV2.key;
+                    keyValue.Value__c = keyValueV2.value;
+                    unitOfWork.registerNew(keyValue, Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapLocalFinancialStatements(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.local_financial_statements != null && reportFullV2.local_financial_statements.item != null) {
+            Id recordTypeId = Schema.SObjectType.Creditsafe_Company_Financial_Statement__c.getRecordTypeInfosByDeveloperName().get('Local_Financial_Statements').getRecordTypeId();
+            for (CreditsafeWsdl.CreditsafeCompanyFinancialStatementV2 financialStatementV2 :reportFullV2.local_financial_statements.item) {
+                Creditsafe_Company_Financial_Statement__c financialStatement = mapFinancialStatement(financialStatementV2, new Creditsafe_Company_Financial_Statement__c(), recordTypeId);
+                unitOfWork.registerNew(financialStatement, Creditsafe_Company_Financial_Statement__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapGroupStructure(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.group_structure != null) {
+            if (reportFullV2.group_structure.ultimate_parent != null) {
+                Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Ultimate_Parent').getRecordTypeId();
+                Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), reportFullV2.group_structure.ultimate_parent, recordTypeId);
+                unitOfWork.registerNew(creditsafeCompany, Creditsafe_Company__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+            }
+            if (reportFullV2.group_structure.immediate_parent != null) {
+                Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Immediate_Parent').getRecordTypeId();
+                Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), reportFullV2.group_structure.immediate_parent, recordTypeId);
+                unitOfWork.registerNew(creditsafeCompany, Creditsafe_Company__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+            }
+            if (reportFullV2.group_structure.subsidiary_companies != null && reportFullV2.group_structure.subsidiary_companies.item != null) {
+                Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Subsidiary_Companies').getRecordTypeId();
+                for (CreditsafeWsdl.CreditsafeCompanyCompanyV2 creditsafeCompanyV2 :reportFullV2.group_structure.subsidiary_companies.item) {
+                    Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), creditsafeCompanyV2, recordTypeId);
+                    unitOfWork.registerNew(creditsafeCompany, Creditsafe_Company__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
+            }
+            if (reportFullV2.group_structure.affiliated_companies != null && reportFullV2.group_structure.affiliated_companies.item != null) {
+                Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Affiliated_Companies').getRecordTypeId();
+                for (CreditsafeWsdl.CreditsafeCompanyCompanyV2 creditsafeCompanyV2 :reportFullV2.group_structure.affiliated_companies.item) {
+                    Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), creditsafeCompanyV2, recordTypeId);
+                    unitOfWork.registerNew(creditsafeCompany, Creditsafe_Company__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapFinancialStatements(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.financial_statements != null && reportFullV2.financial_statements.item != null) {
+            Id recordTypeId = Schema.SObjectType.Creditsafe_Company_Financial_Statement__c.getRecordTypeInfosByDeveloperName().get('Financial_Statements').getRecordTypeId();
+            for (CreditsafeWsdl.CreditsafeCompanyFinancialStatementV2 financialStatementV2 :reportFullV2.financial_statements.item) {
+                Creditsafe_Company_Financial_Statement__c financialStatement = mapFinancialStatement(financialStatementV2, new Creditsafe_Company_Financial_Statement__c(), recordTypeId);
+                unitOfWork.registerNew(financialStatement, Creditsafe_Company_Financial_Statement__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapContactInfo(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.contact_information != null) {
+            if (reportFullV2.contact_information.main_address != null) {
+                Dossier_Address__c mainAddress = mapCreditSafeAddress(reportFullV2.contact_information.main_address, new Dossier_Address__c());
+                unitOfWork.registerNew(mainAddress, Dossier_Address__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+            }
+            if (reportFullV2.contact_information.other_addresses != null && reportFullV2.contact_information.other_addresses.item != null) {
+                for (CreditsafeWsdl.CreditsafeAddressV2 otherAddressV2 :reportFullV2.contact_information.other_addresses.item) {
+                    Dossier_Address__c contactInfoAddress = mapCreditSafeAddress(otherAddressV2, new Dossier_Address__c());
+                    unitOfWork.registerNew(contactInfoAddress, Dossier_Address__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapDirectors(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.directors != null) {
+            if (reportFullV2.directors.current_directors != null && reportFullV2.directors.current_directors.item != null) {
+                Id currentDirectorRecordId = Schema.SObjectType.Creditsafe_Person_Director__c.getRecordTypeInfosByDeveloperName().get('Current_Director').getRecordTypeId();
+                for (CreditsafeWsdl.CreditsafePersonDirectorV2 currentDirectorV2 :reportFullV2.directors.current_directors.item) {
+                    Creditsafe_Person_Director__c personDirector = new Creditsafe_Person_Director__c();
+                    personDirector.Director_Type__c = currentDirectorV2.director_type;
+                    personDirector.Director_Id__c = currentDirectorV2.id;
+                    personDirector.Name = currentDirectorV2.name;
+                    personDirector.Date_of_Birth__c = getDate(currentDirectorV2.date_of_birth);
+                    personDirector.Gender__c = currentDirectorV2.gender;
+                    personDirector.RecordTypeId = currentDirectorRecordId;
+                    //TODO add position
+                    Dossier_Address__c address = mapCreditSafeAddress(currentDirectorV2.address, new Dossier_Address__c());
+                    unitOfWork.registerNew(personDirector, Creditsafe_Person_Director__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                    unitOfWork.registerNew(address, Dossier_Address__c.Creditsafe_Person_Director__c, personDirector);
+                }
+            }
+
+            if (reportFullV2.directors.previous_directors != null && reportFullV2.directors.previous_directors.item != null) {
+                Id previousDirectorRecordId = Schema.SObjectType.Creditsafe_Person_Director__c.getRecordTypeInfosByDeveloperName().get('Previous_Director').getRecordTypeId();
+                for (CreditsafeWsdl.CreditsafePersonPreviousDirectorV2 previousDirectorV2 :reportFullV2.directors.previous_directors.item) {
+                    Creditsafe_Person_Director__c personDirector = new Creditsafe_Person_Director__c();
+                    personDirector.Director_Type__c = previousDirectorV2.director_type;
+                    personDirector.Director_Id__c = previousDirectorV2.id;
+                    personDirector.Name = previousDirectorV2.name;
+                    personDirector.Date_of_Birth__c = getDate(previousDirectorV2.date_of_birth);
+                    personDirector.Gender__c = previousDirectorV2.gender;
+                    personDirector.RecordTypeId = previousDirectorRecordId;
+                    Dossier_Address__c address = mapCreditSafeAddress(previousDirectorV2.address, new Dossier_Address__c());
+                    unitOfWork.registerNew(personDirector, Creditsafe_Person_Director__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                    unitOfWork.registerNew(address, Dossier_Address__c.Creditsafe_Person_Director__c, personDirector);
+                }
+            }
+            //add these related list to companyReportFull
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapCreditScore(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork){
+        if (reportFullV2.credit_score != null) {
+            Creditsafe_Company_Credit_Score__c creditScore = new Creditsafe_Company_Credit_Score__c();
+            if (reportFullV2.credit_score.current_credit_rating != null) {
+                creditScore.Current_CR_Limit__c = reportFullV2.credit_score.current_credit_rating.credit_limit;
+                creditScore.Current_CR_Common_Description__c = reportFullV2.credit_score.current_credit_rating.common_description;
+                creditScore.Current_CR_Common_Value__c = reportFullV2.credit_score.current_credit_rating.common_value;
+                creditScore.Current_CR_Provider_Description__c = reportFullV2.credit_score.current_credit_rating.provider_description;
+                if (reportFullV2.credit_score.current_credit_rating.provider_value != null) {
+                    creditScore.Current_CR_Provider_Value__c = reportFullV2.credit_score.current_credit_rating.provider_value.value;
+                    creditScore.Current_CR_Provider_Value_Max__c = reportFullV2.credit_score.current_credit_rating.provider_value.max_value;
+                    creditScore.Current_CR_Provider_Value_Min__c = reportFullV2.credit_score.current_credit_rating.provider_value.min_value;
+                }
+            }
+            if (reportFullV2.credit_score.previous_credit_rating != null) {
+                creditScore.Previous_CR_Limit__c = reportFullV2.credit_score.previous_credit_rating.credit_limit;
+                creditScore.Previous_CR_Common_Description__c = reportFullV2.credit_score.previous_credit_rating.common_description;
+                creditScore.Previous_CR_Common_Value__c = reportFullV2.credit_score.previous_credit_rating.common_value;
+                creditScore.Previous_CR_Provider_Description__c = reportFullV2.credit_score.previous_credit_rating.provider_description;
+                if (reportFullV2.credit_score.previous_credit_rating.provider_value != null) {
+                    creditScore.Previous_CR_Provider_Value__c = reportFullV2.credit_score.previous_credit_rating.provider_value.value;
+                    creditScore.Previous_CR_Provider_Value_Max__c = reportFullV2.credit_score.previous_credit_rating.provider_value.max_value;
+                    creditScore.Previous_CR_Provider_Value_Min__c = reportFullV2.credit_score.previous_credit_rating.provider_value.min_value;
+                }
+            }
+            //companyReportFull.Creditsafe_Company_Credit_Score__c = creditScore.Id;
+            unitOfWork.registerNew(creditScore, Creditsafe_Company_Credit_Score__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapCompanySummary(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.company_summary != null) {
+            Creditsafe_Company_Summary__c companySummary = new Creditsafe_Company_Summary__c();
+            if (reportFullV2.company_summary.company_status != null) {
+                companySummary.Company_Status__c = reportFullV2.company_summary.company_status.status;
+                companySummary.Company_Status_Description__c = reportFullV2.company_summary.company_status.description;
+            }
+            if (reportFullV2.company_summary.credit_rating != null) {
+                companySummary.Credit_Rating_Common_Description__c = reportFullV2.company_summary.credit_rating.common_description;
+                companySummary.Credit_Rating_Common_Value__c = reportFullV2.company_summary.credit_rating.common_value;
+                companySummary.Credit_Rating_Limit__c = reportFullV2.company_summary.credit_rating.credit_limit;
+                companySummary.Credit_Rating_Provider_Description__c = reportFullV2.company_summary.credit_rating.provider_description;
+                if (reportFullV2.company_summary.credit_rating.provider_value != null) {
+                    companySummary.Credit_Rating_Provider_Value__c = reportFullV2.company_summary.credit_rating.provider_value.value;
+                    companySummary.Credit_Rating_Provider_Value_Max__c = reportFullV2.company_summary.credit_rating.provider_value.max_value;
+                    companySummary.Credit_Rating_Provider_Value_Min__c = reportFullV2.company_summary.credit_rating.provider_value.min_value;
+                }
+            }
+            if (reportFullV2.company_summary.main_activity != null) {
+                companySummary.Main_Activity_Code__c = reportFullV2.company_summary.main_activity.activity_code;
+                companySummary.Main_Activity_Classification__c = reportFullV2.company_summary.main_activity.classification;
+                companySummary.Main_Activity_Description__c = reportFullV2.company_summary.main_activity.activity_description;
+            }
+            companySummary.Latest_Shareholders_Equity_Figure__c = String.valueOf(reportFullV2.company_summary.latest_shareholders_equity_figure);
+            companySummary.Latest_Turnover_Figure__c = String.valueOf(reportFullV2.company_summary.latest_turnover_figure);
+            companySummary.Number__c = reportFullV2.company_summary.number_x;
+            companySummary.Company_Registration_Number__c = reportFullV2.company_summary.company_registration_number;
+            companySummary.Business_Name__c = reportFullV2.company_summary.business_name;
+            companySummary.Country__c = reportFullV2.company_summary.country;
+            //companyReportFull.Creditsafe_Company_Summary__c = companySummary.Id;
+            unitOfWork.registerNew(companySummary, Creditsafe_Company_Summary__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapCompanyIdentification(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+        if (reportFullV2.company_identification != null) {
+            if (reportFullV2.company_identification.basic_information != null) {
+                CreditsafeWsdl.CreditsafeCompanyBasicInformationV2 basicInformationV2 = reportFullV2.company_identification.basic_information;
+                Creditsafe_Company_Basic_Information__c basicInformation = new Creditsafe_Company_Basic_Information__c();
+                if (basicInformationV2.company_status != null) {
+                    basicInformation.Company_Status__c = basicInformationV2.company_status.status;
+                    basicInformation.Company_Status_Description__c = basicInformationV2.company_status.description;
+                }
+                if (basicInformationV2.legal_form != null) {
+                    basicInformation.Legal_Form_Code__c = basicInformationV2.legal_form.code;
+                    basicInformation.Legal_Form_Description__c = basicInformationV2.legal_form.description;
+                    basicInformation.Legal_Form_Value__c = basicInformationV2.legal_form.value;
+                }
+                if (basicInformationV2.principal_activity != null) {
+                    basicInformation.Principal_Activity_Code__c = basicInformationV2.principal_activity.code;
+                    basicInformation.Principal_Activity_Description__c = basicInformationV2.principal_activity.description;
+                    basicInformation.Principal_Activity_Value__c = basicInformationV2.principal_activity.value;
+                }
+                basicInformation.Company_Registration_Number__c = basicInformationV2.company_registration_number;
+                basicInformation.Business_Name__c = basicInformationV2.business_name;
+                basicInformation.Country__c = basicInformationV2.country;
+                basicInformation.Dateof_Company_Registration__c = basicInformationV2.dateof_company_registration;
+                basicInformation.Dateof_Starting_Operations__c = basicInformationV2.dateof_starting_operations;
+                basicInformation.Registered_Company_Name__c = basicInformationV2.registered_company_name;
+                basicInformation.VAT_Registration_Number__c = basicInformationV2.vat_registration_number;
+                unitOfWork.registerNew(basicInformation, Creditsafe_Company_Basic_Information__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+
+//                if (basicInformationV2.contact_address != null) { //TODO change the lookup
+//                    Dossier_Address__c contactAddress = mapCreditSafeAddress(basicInformationV2.contact_address, new Dossier_Address__c());
+//                    unitOfWork.registerRelationship(basicInformation, Creditsafe_Company_Basic_Information__c.Contact_Address__c, contactAddress);
+//                }
+            }
+            if (reportFullV2.company_identification.activity_classifications != null && reportFullV2.company_identification.activity_classifications.item != null) {
+                for (CreditsafeWsdl.CreditsafeCompanyActivityClassificationV2 activityClassificationV2 : reportFullV2.company_identification.activity_classifications.item) {
+                    Creditsafe_Comp_Activity_Classifications__c activityClassification = new Creditsafe_Comp_Activity_Classifications__c();
+                    activityClassification.Classification__c = activityClassificationV2.classification;
+
+                    for (CreditsafeWsdl.CreditsafeCompanyActivityV2 companyActivityV2 : activityClassificationV2.activities.item) {
+                        Creditsafe_Company_Activity__c companyActivity = new Creditsafe_Company_Activity__c();
+                        companyActivity.Classification__c = companyActivityV2.classification;
+                        companyActivity.Activity_Code__c = companyActivityV2.activity_code;
+                        companyActivity.Activity_Description__c = companyActivityV2.activity_description;
+                        //companyActivity.Creditsafe_Comp_Activity_Classification__c = activityClassification.Id;
+                        unitOfWork.registerNew(companyActivity, Creditsafe_Company_Activity__c.Creditsafe_Comp_Activity_Classification__c, activityClassification);
+                    }
+                    //activityClassification.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
+                    unitOfWork.registerNew(activityClassification, Creditsafe_Comp_Activity_Classifications__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
+            }
+        }
+
+        return companyReportFull;
+    }
+
+    private Creditsafe_Company_Report_Full__c mapAdditionalInfo(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
         if (reportFullV2.additional_information != null) {
 
             if (reportFullV2.additional_information.de != null) {
@@ -91,30 +480,29 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     additionalInfoDE.Turnover_Ranges__c = additionalInformationDEAdditionalInformationV2.turnover_ranges.range;
                 }
 
-                if (additionalInformationDEAdditionalInformationV2.comments != null) {
-                    List<Creditsafe_Comp_Additional_Info_Comment__c> additionalInfoComments = new List<Creditsafe_Comp_Additional_Info_Comment__c>();
+                if (additionalInformationDEAdditionalInformationV2.comments != null && additionalInformationDEAdditionalInformationV2.comments.item != null) {
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationCommentV2 commentV2 : additionalInformationDEAdditionalInformationV2.comments.item) {
                         Creditsafe_Comp_Additional_Info_Comment__c additionalInfoComment = new Creditsafe_Comp_Additional_Info_Comment__c();
                         additionalInfoComment.Text__c = commentV2.text;
                         additionalInfoComment.Sentiment__c = commentV2.sentiment;
-                        additionalInfoComment.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
-                        additionalInfoComments.add(additionalInfoComment);
+                        //additionalInfoComment.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
+                        unitOfWork.registerNew(additionalInfoComment, Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Additional_Info_DE__c, additionalInfoDE);
                     }
                 }
 
-                if (additionalInformationDEAdditionalInformationV2.historical_events != null) {
-                    List<Additional_Information_Historical_Event__c> additionalInformationHistoricalEvents = new List<Additional_Information_Historical_Event__c>();
+                if (additionalInformationDEAdditionalInformationV2.historical_events != null && additionalInformationDEAdditionalInformationV2.historical_events.item != null) {
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationHistoricalEventV2 historicalEventV2 : additionalInformationDEAdditionalInformationV2.historical_events.item) {
                         Additional_Information_Historical_Event__c additionalInformationHistoricalEvent = new Additional_Information_Historical_Event__c();
                         additionalInformationHistoricalEvent.Date__c = getDate(historicalEventV2.date_x);
                         additionalInformationHistoricalEvent.Description__c = historicalEventV2.description;
                         additionalInformationHistoricalEvent.Previous_Value__c = historicalEventV2.previous_value;
                         additionalInformationHistoricalEvent.Current_Value__c = historicalEventV2.current_value;
-                        additionalInformationHistoricalEvent.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
-                        additionalInformationHistoricalEvents.add(additionalInformationHistoricalEvent);
+                        //additionalInformationHistoricalEvent.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
+                        unitOfWork.registerNew(additionalInformationHistoricalEvent, Additional_Information_Historical_Event__c.Creditsafe_Company_Additional_Info_DE__c, additionalInfoDE);
                     }
                 }
-                companyReportFull.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
+                //companyReportFull.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
+                unitOfWork.registerNew(additionalInfoDE, Creditsafe_Company_Additional_Info_DE__c.Creditsafe_Company_Report_Full__c, companyReportFull);
             }
 
             if (reportFullV2.additional_information.nl != null) {
@@ -158,31 +546,28 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     }
                 }
 
-                if (additionalInformationNLAdditionalInformationV2.financial_items != null) {
-                    List<Additional_Information_NL_Financial_Item__c> additionalInformationNLFinancialItems = new List<Additional_Information_NL_Financial_Item__c>();
+                if (additionalInformationNLAdditionalInformationV2.financial_items != null && additionalInformationNLAdditionalInformationV2.financial_items.item != null) {
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationNLFinancialItemV2 financialItemV2 :additionalInformationNLAdditionalInformationV2.financial_items.item) {
                         Additional_Information_NL_Financial_Item__c additionalInformationNLFinancialItem = new Additional_Information_NL_Financial_Item__c();
                         additionalInformationNLFinancialItem.Date_Year_End__c = getDate(financialItemV2.date_year_end);
                         additionalInformationNLFinancialItem.Judgement__c = financialItemV2.judgement;
                         additionalInformationNLFinancialItem.Consolidated_Subsidiaries__c = financialItemV2.consolidated_subsidiaries;
-                        additionalInformationNLFinancialItem.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
-                        additionalInformationNLFinancialItems.add(additionalInformationNLFinancialItem);
+                        //additionalInformationNLFinancialItem.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
+                        unitOfWork.registerNew(additionalInformationNLFinancialItem, Additional_Information_NL_Financial_Item__c.Creditsafe_Company_Additional_Info_NL__c, additionalInfoNL);
                     }
                 }
 
-                if (additionalInformationNLAdditionalInformationV2.kvk_filings != null) {
-                    List<Additional_Information_NL_Kvk_Filing__c> additionalInformationNLKvkFilings = new List<Additional_Information_NL_Kvk_Filing__c>();
+                if (additionalInformationNLAdditionalInformationV2.kvk_filings != null && additionalInformationNLAdditionalInformationV2.kvk_filings.item != null) {
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationNLKvkFilingV2 kvkFilingV2 : additionalInformationNLAdditionalInformationV2.kvk_filings.item) {
                         Additional_Information_NL_Kvk_Filing__c additionalInformationNLKvkFiling = new Additional_Information_NL_Kvk_Filing__c();
                         additionalInformationNLKvkFiling.Date__c = getDate(kvkFilingV2.date_x);
                         additionalInformationNLKvkFiling.Event__c = kvkFilingV2.event;
-                        additionalInformationNLKvkFiling.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
-                        additionalInformationNLKvkFilings.add(additionalInformationNLKvkFiling);
+                        //additionalInformationNLKvkFiling.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
+                        unitOfWork.registerNew(additionalInformationNLKvkFiling, Additional_Information_NL_Kvk_Filing__c.Creditsafe_Company_Additional_Info_NL__c, additionalInfoNL);
                     }
                 }
 
-                if (additionalInformationNLAdditionalInformationV2.letters_of_liablility_information403 != null) {
-                    List<Additional_Info_NL_Letter_Of_Liability__c> additionalInfoNLLetterOfLiabilities = new List<Additional_Info_NL_Letter_Of_Liability__c>();
+                if (additionalInformationNLAdditionalInformationV2.letters_of_liablility_information403 != null && additionalInformationNLAdditionalInformationV2.letters_of_liablility_information403.item != null) {
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationNLLetterOfLiabilityInformation403V2 letterOfLiabilityInformation403V2 : additionalInformationNLAdditionalInformationV2.letters_of_liablility_information403.item) {
                         Additional_Info_NL_Letter_Of_Liability__c additionalInfoNLLetterOfLiability = new Additional_Info_NL_Letter_Of_Liability__c();
                         additionalInfoNLLetterOfLiability.Financial_Year__c = String.valueOf(letterOfLiabilityInformation403V2.financial_year);
@@ -205,361 +590,50 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         additionalInfoNLLetterOfLiability.Liability2_Submitted_Date_Parent2__c = getDate(letterOfLiabilityInformation403V2.letter_of_liability2_submitted_date_parent2);
                         additionalInfoNLLetterOfLiability.Liability2_Removal_Submitted_Parent2__c = getDate(letterOfLiabilityInformation403V2.letter_of_liability2_removal_submitted_parent2);
                         additionalInfoNLLetterOfLiability.Liability2_Removal_Date_Parent2__c = getDate(letterOfLiabilityInformation403V2.letter_of_liability2_removal_date_parent2);
+                        unitOfWork.registerNew(additionalInfoNLLetterOfLiability, Additional_Info_NL_Letter_Of_Liability__c.Creditsafe_Company_Additional_Info_NL__c, additionalInfoNL);
                     }
                 }
 
-                if (additionalInformationNLAdditionalInformationV2.comments != null) {
-                    List<Creditsafe_Comp_Additional_Info_Comment__c> additionalInfoComments = new List<Creditsafe_Comp_Additional_Info_Comment__c>();
+                if (additionalInformationNLAdditionalInformationV2.comments != null && additionalInformationNLAdditionalInformationV2.comments.item != null) {
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationCommentV2 commentV2 : additionalInformationNLAdditionalInformationV2.comments.item) {
                         Creditsafe_Comp_Additional_Info_Comment__c additionalInfoComment = new Creditsafe_Comp_Additional_Info_Comment__c();
                         additionalInfoComment.Text__c = commentV2.text;
                         additionalInfoComment.Sentiment__c = commentV2.sentiment;
-                        additionalInfoComment.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
-                        additionalInfoComments.add(additionalInfoComment);
+                        //additionalInfoComment.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
+                        unitOfWork.registerNew(additionalInfoComment, Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Additional_Info_NL__c, additionalInfoNL);
                     }
                 }
 
-                if (additionalInformationNLAdditionalInformationV2.historical_events != null) {
-                    List<Additional_Information_Historical_Event__c> additionalInformationHistoricalEvents = new List<Additional_Information_Historical_Event__c>();
+                if (additionalInformationNLAdditionalInformationV2.historical_events != null && additionalInformationNLAdditionalInformationV2.historical_events.item != null) {
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationHistoricalEventV2 historicalEventV2 : additionalInformationNLAdditionalInformationV2.historical_events.item) {
                         Additional_Information_Historical_Event__c additionalInformationHistoricalEvent = new Additional_Information_Historical_Event__c();
                         additionalInformationHistoricalEvent.Date__c = getDate(historicalEventV2.date_x);
                         additionalInformationHistoricalEvent.Description__c = historicalEventV2.description;
                         additionalInformationHistoricalEvent.Previous_Value__c = historicalEventV2.previous_value;
                         additionalInformationHistoricalEvent.Current_Value__c = historicalEventV2.current_value;
-                        additionalInformationHistoricalEvent.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
-                        additionalInformationHistoricalEvents.add(additionalInformationHistoricalEvent);
+                        //additionalInformationHistoricalEvent.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
+                        unitOfWork.registerNew(additionalInformationHistoricalEvent, Additional_Information_Historical_Event__c.Creditsafe_Company_Additional_Info_NL__c, additionalInfoNL);
                     }
                 }
-                companyReportFull.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
+                //companyReportFull.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
+                unitOfWork.registerNew(additionalInfoNL, Creditsafe_Company_Additional_Info_NL__c.Creditsafe_Company_Report_Full__c, companyReportFull);
             }
 
-            if (reportFullV2.additional_information.generic != null) {
-                List<Creditsafe_Company_Key_Value__c> creditsafeCompanyKeyValues = new List<Creditsafe_Company_Key_Value__c>();
-                for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 : reportFullV2.additional_information.generic.item) {
-                    Creditsafe_Company_Key_Value__c creditsafeCompanyKeyValue = new Creditsafe_Company_Key_Value__c();
-                    creditsafeCompanyKeyValue.Key__c = keyValueV2.key;
-                    creditsafeCompanyKeyValue.Value__c = keyValueV2.value;
-                    creditsafeCompanyKeyValue.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
-                }
+            if (reportFullV2.additional_information.generic != null && reportFullV2.additional_information.generic.item != null) {
+                    for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 : reportFullV2.additional_information.generic.item) {
+                        Creditsafe_Company_Key_Value__c creditsafeCompanyKeyValue = new Creditsafe_Company_Key_Value__c();
+                        creditsafeCompanyKeyValue.Key__c = keyValueV2.key;
+                        creditsafeCompanyKeyValue.Value__c = keyValueV2.value;
+                        //creditsafeCompanyKeyValue.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
+                        unitOfWork.registerNew(creditsafeCompanyKeyValue, Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                    }
             }
             //insert order additionalInfoDE, additionalInfoNL, additionalInfoComments, additionalInformationHistoricalEvents,
             // additionalInformationNLFinancialItems, additionalInformationNLKvkFilings, additionalInfoNLLetterOfLiabilities, additionalInfoComments, additionalInformationHistoricalEvents,
             // companyReportFull, creditsafeCompanyKeyValues
         }
 
-        if (reportFullV2.company_identification != null) {
-            if (reportFullV2.company_identification.basic_information != null) {
-                CreditsafeWsdl.CreditsafeCompanyBasicInformationV2 basicInformationV2 = reportFullV2.company_identification.basic_information;
-                Creditsafe_Company_Basic_Information__c basicInformation = new Creditsafe_Company_Basic_Information__c();
-                if (basicInformationV2.company_status != null) {
-                    basicInformation.Company_Status__c = basicInformationV2.company_status.status;
-                    basicInformation.Company_Status_Description__c = basicInformationV2.company_status.description;
-                }
-                if (basicInformationV2.contact_address != null) {
-                    Dossier_Address__c contactAddress = mapCreditSafeAddress(basicInformationV2.contact_address, new Dossier_Address__c());
-                    //basicInformation.Contact_Address__c unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                }
-                if (basicInformationV2.legal_form != null) {
-                    basicInformation.Legal_Form_Code__c = basicInformationV2.legal_form.code;
-                    basicInformation.Legal_Form_Description__c = basicInformationV2.legal_form.description;
-                    basicInformation.Legal_Form_Value__c = basicInformationV2.legal_form.value;
-                }
-                if (basicInformationV2.principal_activity != null) {
-                    basicInformation.Principal_Activity_Code__c = basicInformationV2.principal_activity.code;
-                    basicInformation.Principal_Activity_Description__c = basicInformationV2.principal_activity.description;
-                    basicInformation.Principal_Activity_Value__c = basicInformationV2.principal_activity.value;
-                }
-                basicInformation.Company_Registration_Number__c = basicInformationV2.company_registration_number;
-                basicInformation.Business_Name__c = basicInformationV2.business_name;
-                basicInformation.Country__c = basicInformationV2.country;
-                basicInformation.Dateof_Company_Registration__c = basicInformationV2.dateof_company_registration;
-                basicInformation.Dateof_Starting_Operations__c = basicInformationV2.dateof_starting_operations;
-                basicInformation.Registered_Company_Name__c = basicInformationV2.registered_company_name;
-                basicInformation.VAT_Registration_Number__c = basicInformationV2.vat_registration_number;
-            }
-            if (reportFullV2.company_identification.activity_classifications != null) {
-                List<Creditsafe_Comp_Activity_Classifications__c> activityClassifications = new List<Creditsafe_Comp_Activity_Classifications__c>();
-                for (CreditsafeWsdl.CreditsafeCompanyActivityClassificationV2 activityClassificationV2 : reportFullV2.company_identification.activity_classifications.item) {
-                    Creditsafe_Comp_Activity_Classifications__c activityClassification = new Creditsafe_Comp_Activity_Classifications__c();
-                    activityClassification.Classification__c = activityClassificationV2.classification;
-
-                    List<Creditsafe_Company_Activity__c> companyActivities = new List<Creditsafe_Company_Activity__c>();
-                    for (CreditsafeWsdl.CreditsafeCompanyActivityV2 companyActivityV2 : activityClassificationV2.activities.item) {
-                        Creditsafe_Company_Activity__c companyActivity = new Creditsafe_Company_Activity__c();
-                        companyActivity.Classification__c = companyActivityV2.classification;
-                        companyActivity.Activity_Code__c = companyActivityV2.activity_code;
-                        companyActivity.Activity_Description__c = companyActivityV2.activity_description;
-                        companyActivity.Creditsafe_Comp_Activity_Classification__c = activityClassification.Id;
-                        companyActivities.add(companyActivity);
-                    }
-                    activityClassification.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
-                    activityClassifications.add(activityClassification);
-                }
-            }
-        }
-
-        if (reportFullV2.company_summary != null) {
-            Creditsafe_Company_Summary__c companySummary = new Creditsafe_Company_Summary__c();
-            if (reportFullV2.company_summary.company_status != null) {
-                companySummary.Company_Status__c = reportFullV2.company_summary.company_status.status;
-                companySummary.Company_Status_Description__c = reportFullV2.company_summary.company_status.description;
-            }
-            if (reportFullV2.company_summary.credit_rating != null) {
-                companySummary.Credit_Rating_Common_Description__c = reportFullV2.company_summary.credit_rating.common_description;
-                companySummary.Credit_Rating_Common_Value__c = reportFullV2.company_summary.credit_rating.common_value;
-                companySummary.Credit_Rating_Limit__c = reportFullV2.company_summary.credit_rating.credit_limit;
-                companySummary.Credit_Rating_Provider_Description__c = reportFullV2.company_summary.credit_rating.provider_description;
-                if (reportFullV2.company_summary.credit_rating.provider_value != null) {
-                    companySummary.Credit_Rating_Provider_Value__c = reportFullV2.company_summary.credit_rating.provider_value.value;
-                    companySummary.Credit_Rating_Provider_Value_Max__c = reportFullV2.company_summary.credit_rating.provider_value.max_value;
-                    companySummary.Credit_Rating_Provider_Value_Min__c = reportFullV2.company_summary.credit_rating.provider_value.min_value;
-                }
-            }
-            if (reportFullV2.company_summary.main_activity != null) {
-                companySummary.Main_Activity_Code__c = reportFullV2.company_summary.main_activity.activity_code;
-                companySummary.Main_Activity_Classification__c = reportFullV2.company_summary.main_activity.classification;
-                companySummary.Main_Activity_Description__c = reportFullV2.company_summary.main_activity.activity_description;
-            }
-            companySummary.Latest_Shareholders_Equity_Figure__c = String.valueOf(reportFullV2.company_summary.latest_shareholders_equity_figure);
-            companySummary.Latest_Turnover_Figure__c = String.valueOf(reportFullV2.company_summary.latest_turnover_figure);
-            companySummary.Number__c = reportFullV2.company_summary.number_x;
-            companySummary.Company_Registration_Number__c = reportFullV2.company_summary.company_registration_number;
-            companySummary.Business_Name__c = reportFullV2.company_summary.business_name;
-            companySummary.Country__c = reportFullV2.company_summary.country;
-            companyReportFull.Creditsafe_Company_Summary__c = companySummary.Id;
-        }
-
-        if (reportFullV2.contact_information != null) {
-            if (reportFullV2.contact_information.main_address != null) {
-                Dossier_Address__c contactAddress = mapCreditSafeAddress(reportFullV2.contact_information.main_address, new Dossier_Address__c());
-                //basicInformation.Contact_Address__c unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-            }
-            if (reportFullV2.contact_information.other_addresses != null) {
-                for (CreditsafeWsdl.CreditsafeAddressV2 otherAddressV2 :reportFullV2.contact_information.other_addresses.item) {
-                    Dossier_Address__c contactAddress = mapCreditSafeAddress(otherAddressV2, new Dossier_Address__c());
-                    //basicInformation.Contact_Address__c unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                }
-            }
-        }
-
-        if (reportFullV2.credit_score != null) {
-            Creditsafe_Company_Credit_Score__c creditScore = new Creditsafe_Company_Credit_Score__c();
-            if (reportFullV2.credit_score.current_credit_rating != null) {
-                creditScore.Current_CR_Limit__c = reportFullV2.credit_score.current_credit_rating.credit_limit;
-                creditScore.Current_CR_Common_Description__c = reportFullV2.credit_score.current_credit_rating.common_description;
-                creditScore.Current_CR_Common_Value__c = reportFullV2.credit_score.current_credit_rating.common_value;
-                creditScore.Current_CR_Provider_Description__c = reportFullV2.credit_score.current_credit_rating.provider_description;
-                if (reportFullV2.credit_score.current_credit_rating.provider_value != null) {
-                    creditScore.Current_CR_Provider_Value__c = reportFullV2.credit_score.current_credit_rating.provider_value.value;
-                    creditScore.Current_CR_Provider_Value_Max__c = reportFullV2.credit_score.current_credit_rating.provider_value.max_value;
-                    creditScore.Current_CR_Provider_Value_Min__c = reportFullV2.credit_score.current_credit_rating.provider_value.min_value;
-                }
-            }
-            if (reportFullV2.credit_score.previous_credit_rating != null) {
-                creditScore.Previous_CR_Limit__c = reportFullV2.credit_score.previous_credit_rating.credit_limit;
-                creditScore.Previous_CR_Common_Description__c = reportFullV2.credit_score.previous_credit_rating.common_description;
-                creditScore.Previous_CR_Common_Value__c = reportFullV2.credit_score.previous_credit_rating.common_value;
-                creditScore.Previous_CR_Provider_Description__c = reportFullV2.credit_score.previous_credit_rating.provider_description;
-                if (reportFullV2.credit_score.previous_credit_rating.provider_value != null) {
-                    creditScore.Previous_CR_Provider_Value__c = reportFullV2.credit_score.previous_credit_rating.provider_value.value;
-                    creditScore.Previous_CR_Provider_Value_Max__c = reportFullV2.credit_score.previous_credit_rating.provider_value.max_value;
-                    creditScore.Previous_CR_Provider_Value_Min__c = reportFullV2.credit_score.previous_credit_rating.provider_value.min_value;
-                }
-            }
-            companyReportFull.Creditsafe_Company_Credit_Score__c = creditScore.Id;
-        }
-
-        if (reportFullV2.directors != null) {
-            if (reportFullV2.directors.current_directors != null) {
-                Id currentDirectorRecordId = Schema.SObjectType.Creditsafe_Person_Director__c.getRecordTypeInfosByDeveloperName().get('Current_Director').getRecordTypeId();
-                for (CreditsafeWsdl.CreditsafePersonDirectorV2 currentDirectorV2 :reportFullV2.directors.current_directors.item) {
-                    Creditsafe_Person_Director__c personDirector = new Creditsafe_Person_Director__c();
-                    personDirector.Director_Type__c = currentDirectorV2.director_type;
-                    personDirector.Director_Id__c = currentDirectorV2.id;
-                    personDirector.Name = currentDirectorV2.name;
-                    personDirector.Date_of_Birth__c = getDate(currentDirectorV2.date_of_birth);
-                    personDirector.Gender__c = currentDirectorV2.gender;
-                    personDirector.RecordTypeId = currentDirectorRecordId;
-                    Dossier_Address__c contactAddress = mapCreditSafeAddress(currentDirectorV2.address, new Dossier_Address__c());
-                    //basicInformation.Contact_Address__c unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                    //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                }
-            }
-
-            if (reportFullV2.directors.previous_directors != null) {
-                Id previousDirectorRecordId = Schema.SObjectType.Creditsafe_Person_Director__c.getRecordTypeInfosByDeveloperName().get('Previous_Director').getRecordTypeId();
-                for (CreditsafeWsdl.CreditsafePersonPreviousDirectorV2 previousDirectorV2 :reportFullV2.directors.previous_directors.item) {
-                    Creditsafe_Person_Director__c personDirector = new Creditsafe_Person_Director__c();
-                    personDirector.Director_Type__c = previousDirectorV2.director_type;
-                    personDirector.Director_Id__c = previousDirectorV2.id;
-                    personDirector.Name = previousDirectorV2.name;
-                    personDirector.Date_of_Birth__c = getDate(previousDirectorV2.date_of_birth);
-                    personDirector.Gender__c = previousDirectorV2.gender;
-                    personDirector.RecordTypeId = previousDirectorRecordId;
-                    Dossier_Address__c contactAddress = mapCreditSafeAddress(previousDirectorV2.address, new Dossier_Address__c());
-                    //basicInformation.Contact_Address__c unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                    //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                }
-            }
-            //add these related list to companyReportFull
-        }
-
-        if (reportFullV2.financial_statements != null) {
-            Id recordTypeId = Schema.SObjectType.Creditsafe_Company_Financial_Statement__c.getRecordTypeInfosByDeveloperName().get('Financial_Statements').getRecordTypeId();
-            for (CreditsafeWsdl.CreditsafeCompanyFinancialStatementV2 financialStatementV2 :reportFullV2.financial_statements.item) {
-                Creditsafe_Company_Financial_Statement__c financialStatement = mapFinancialStatement(financialStatementV2, new Creditsafe_Company_Financial_Statement__c(), recordTypeId);
-                //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-            }
-        }
-
-        if (reportFullV2.group_structure != null) {
-            if (reportFullV2.group_structure.ultimate_parent != null) {
-                Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Ultimate_Parent').getRecordTypeId();
-                Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), reportFullV2.group_structure.ultimate_parent, recordTypeId);
-                //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-            }
-            if (reportFullV2.group_structure.immediate_parent != null) {
-                Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Immediate_Parent').getRecordTypeId();
-                Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), reportFullV2.group_structure.immediate_parent, recordTypeId);
-                //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-            }
-            if (reportFullV2.group_structure.subsidiary_companies != null) {
-                Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Subsidiary_Companies').getRecordTypeId();
-                for (CreditsafeWsdl.CreditsafeCompanyCompanyV2 creditsafeCompanyV2 :reportFullV2.group_structure.subsidiary_companies.item) {
-                    Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), creditsafeCompanyV2, recordTypeId);
-                    //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                }
-            }
-            if (reportFullV2.group_structure.affiliated_companies != null) {
-                Id recordTypeId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Affiliated_Companies').getRecordTypeId();
-                for (CreditsafeWsdl.CreditsafeCompanyCompanyV2 creditsafeCompanyV2 :reportFullV2.group_structure.affiliated_companies.item) {
-                    Creditsafe_Company__c creditsafeCompany = mapCreditsafeCompany(new Creditsafe_Company__c(), creditsafeCompanyV2, recordTypeId);
-                    //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                }
-            }
-        }
-
-        if (reportFullV2.local_financial_statements != null) {
-            Id recordTypeId = Schema.SObjectType.Creditsafe_Company_Financial_Statement__c.getRecordTypeInfosByDeveloperName().get('Local_Financial_Statements').getRecordTypeId();
-            for (CreditsafeWsdl.CreditsafeCompanyFinancialStatementV2 financialStatementV2 :reportFullV2.financial_statements.item) {
-                Creditsafe_Company_Financial_Statement__c financialStatement = mapFinancialStatement(financialStatementV2, new Creditsafe_Company_Financial_Statement__c(), recordTypeId);
-                //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-            }
-        }
-
-        if (reportFullV2.negative_information != null) {
-            if (reportFullV2.negative_information.nl != null && reportFullV2.negative_information.nl.court_items != null) {
-                for (CreditsafeWsdl.CreditsafeCompanyNegativeInformationNLCourtItemV2 negativeInformationNLCourtItemV2 :reportFullV2.negative_information.nl.court_items.item) {
-                    Creditsafe_Company_Negative_Info_NL__c negativeInfoNL = new Creditsafe_Company_Negative_Info_NL__c();
-                    negativeInfoNL.Address__c = negativeInformationNLCourtItemV2.address;
-                    negativeInfoNL.Date_Of_Bankruptcy__c = getDate(negativeInformationNLCourtItemV2.date_of_bankruptcy);
-                    negativeInfoNL.Court_Action__c = negativeInformationNLCourtItemV2.court_action;
-                    //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                }
-            }
-            if (reportFullV2.negative_information.de != null) {
-                Creditsafe_Company_Negative_Info_DE__c negativeInfoDE = new Creditsafe_Company_Negative_Info_DE__c();
-                if (reportFullV2.negative_information.de.bankruptcy != null) {
-                    negativeInfoDE.Has_Bankruptcy__c = reportFullV2.negative_information.de.bankruptcy.has_bankruptcy;
-                }
-                if (reportFullV2.negative_information.de.insolvency_information != null) {
-                    negativeInfoDE.Date_Of_Insolvency__c = reportFullV2.negative_information.de.insolvency_information.dateof_insolvency;
-                    if (reportFullV2.negative_information.de.insolvency_information.trustee != null) {
-                        negativeInfoDE.Trustee_City__c = reportFullV2.negative_information.de.insolvency_information.trustee.city;
-                        negativeInfoDE.Trustee_Code__c = reportFullV2.negative_information.de.insolvency_information.trustee.code;
-                        negativeInfoDE.Trustee_Email_Address__c = reportFullV2.negative_information.de.insolvency_information.trustee.email_address;
-                        negativeInfoDE.Trustee_Fax_Number__c = reportFullV2.negative_information.de.insolvency_information.trustee.fax_number;
-                        negativeInfoDE.Trustee_First_Name__c = reportFullV2.negative_information.de.insolvency_information.trustee.first_name;
-                        negativeInfoDE.Trustee_Last_Name__c = reportFullV2.negative_information.de.insolvency_information.trustee.last_name;
-                        negativeInfoDE.Trustee_Name__c = reportFullV2.negative_information.de.insolvency_information.trustee.name;
-                        negativeInfoDE.Trustee_Telephone_Number__c = reportFullV2.negative_information.de.insolvency_information.trustee.telephone_number;
-                        negativeInfoDE.Trustee_Title__c = reportFullV2.negative_information.de.insolvency_information.trustee.title;
-                    }
-                    if (reportFullV2.negative_information.de.insolvency_information.insolvency_events != null) {
-                        for (CreditsafeWsdl.CreditsafeCompanyNegativeInformationDEInsolvencyEventV2 insolvencyEventV2 : reportFullV2.negative_information.de.insolvency_information.insolvency_events.item) {
-                            Negative_Information_DE_Insolvency_Event__c insolvencyEvent = new Negative_Information_DE_Insolvency_Event__c();
-                            insolvencyEvent.Reference_Number_Court__c = insolvencyEventV2.reference_number_court;
-                            insolvencyEvent.Created_At__c = getDate(insolvencyEventV2.created_at);
-                            //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                        }
-                    }
-                }
-                if (reportFullV2.negative_information.de.director_events != null) {
-                    for (CreditsafeWsdl.CreditsafeCompanyNegativeInformationDEDirectorEventV2 directorEventV2 : reportFullV2.negative_information.de.director_events.item) {
-                        Negative_Information_DE_Director_Event__c directorEvent = new Negative_Information_DE_Director_Event__c();
-                        directorEvent.Name__c = directorEventV2.name;
-                        directorEvent.Type__c = directorEventV2.type_x;
-                        directorEvent.Date__c = getDate(directorEventV2.date_x);
-                        directorEvent.Description__c = directorEventV2.description;
-                        directorEvent.Code__c = directorEventV2.code;
-                    }
-                }
-            }
-            if (reportFullV2.negative_information.generic != null) {
-                for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 :reportFullV2.negative_information.generic.item) {
-                    Creditsafe_Company_Key_Value__c keyValue = new Creditsafe_Company_Key_Value__c();
-                    keyValue.Key__c = keyValueV2.key;
-                    keyValue.Value__c = keyValueV2.value;
-                    //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                }
-            }
-        }
-
-        if (reportFullV2.other_information != null) {
-            if (reportFullV2.other_information.bankers != null) {
-                for (CreditsafeWsdl.CreditsafeCompanyBankerV2 bankerV2 :reportFullV2.other_information.bankers.item) {
-                    Creditsafe_Company_Banker__c banker = new Creditsafe_Company_Banker__c();
-                    Dossier_Address__c address = mapCreditSafeAddress(bankerV2.address, new Dossier_Address__c());
-                    //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-                    banker.Bank_Code__c = bankerV2.bank_code;
-                    banker.Name__c = bankerV2.name;
-                }
-            }
-            if (reportFullV2.other_information.advisors != null) {
-                for (CreditsafeWsdl.CreditsafeCompanyAdvisorV2 advisorV2 :reportFullV2.other_information.advisors.item) {
-                    Creditsafe_Company_Advisor__c advisor = new Creditsafe_Company_Advisor__c();
-                    advisor.Auditor_Name__c = advisorV2.auditor_name;
-                    advisor.Solicitor_Name__c = advisorV2.solicitor_name;
-                }
-            }
-            if (reportFullV2.other_information.employees_information != null) {
-                for (CreditsafeWsdl.CreditsafeCompanyEmployeeInformationV2 employeeInformationV2 :reportFullV2.other_information.employees_information.item) {
-                    Creditsafe_Company_Employee_Information__c employeeInformation = new Creditsafe_Company_Employee_Information__c();
-                    employeeInformation.Number_Of_Employees__c = employeeInformationV2.number_of_employees;
-                    employeeInformation.Year__c = employeeInformationV2.year;
-                }
-            }
-        }
-
-        if (reportFullV2.share_capital_structure != null) {
-            companyReportFull.Issued_Share_Capital__c = reportFullV2.share_capital_structure.issued_share_capital;
-            companyReportFull.Nominal_Share_Capital__c = reportFullV2.share_capital_structure.nominal_share_capital;
-            if (reportFullV2.share_capital_structure.share_holders != null) {
-                for (CreditsafeWsdl.CreditsafeCompanyShareHolderV2 shareHolderV2 :reportFullV2.share_capital_structure.share_holders.item) {
-                    Creditsafe_Company_Share_Holder__c shareHolder = new Creditsafe_Company_Share_Holder__c();
-                    Dossier_Address__c address = mapCreditSafeAddress(shareHolderV2.address, new Dossier_Address__c());
-                    shareHolder.Name__c = shareHolderV2.name;
-                    shareHolder.Share_Percent__c = String.valueOf(shareHolderV2.share_percent);
-                }
-            }
-        }
-
-        if (reportFullV2.payment_data != null && reportFullV2.payment_data.generic != null) {
-            for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 :reportFullV2.payment_data.generic.item) {
-                Creditsafe_Company_Key_Value__c keyValue = new Creditsafe_Company_Key_Value__c();
-                keyValue.Key__c = keyValueV2.key;
-                keyValue.Value__c = keyValueV2.value;
-                //unitOfWork.registerNew(contactAddress, Dossier_Address__c.Business_Data__c, dossierDB);
-            }
-        }
-
-        companyReportFull.Order_Number__c = reportFullV2.order_number != null ? Integer.valueOf(reportFullV2.order_number) : null;
-        companyReportFull.Company_Id__c = reportFullV2.company_id;
-        companyReportFull.Language__c = reportFullV2.language;
-
-        return new CreditSafeCompanyReportDTO(reportFullV2);
-
+        return companyReportFull;
     }
 
     private Creditsafe_Company__c mapCreditsafeCompany(Creditsafe_Company__c creditsafeCompany, CreditsafeWsdl.CreditsafeCompanyCompanyV2 creditsafeCompanyV2, Id recordTypeId) {
@@ -642,7 +716,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             financialStatement.Trade_Receivables__c = String.valueOf(financialStatementV2.balance_sheet.trade_receivables);
             financialStatement.Work_In_Progress__c = String.valueOf(financialStatementV2.balance_sheet.work_in_progress);
         }
-        financialStatement.Consolidated_Accounts__c = financialStatementV2.consolidated_accounts;
+        financialStatement.Consolidated_Accounts__c = financialStatementV2.consolidated_accounts != null ? financialStatementV2.consolidated_accounts : false;
         financialStatement.Currency__c = financialStatementV2.currency_x;
         financialStatement.Number_Of_Weeks__c = String.valueOf(financialStatementV2.number_of_weeks);
         financialStatement.Net_Worth__c = financialStatementV2.other_financials != null ? String.valueOf(financialStatementV2.other_financials.net_worth) : null;

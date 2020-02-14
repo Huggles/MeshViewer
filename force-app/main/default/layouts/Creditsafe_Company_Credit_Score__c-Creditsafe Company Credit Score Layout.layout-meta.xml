@@ -66,6 +66,10 @@
                 <behavior>Edit</behavior>
                 <field>Previous_CR_Provider_Value__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Creditsafe_Company_Report_Full__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

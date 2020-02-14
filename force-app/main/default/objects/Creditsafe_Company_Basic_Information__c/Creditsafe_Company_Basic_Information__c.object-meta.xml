@@ -41,7 +41,7 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Basic information on a company.</description>
     <enableActivities>false</enableActivities>
@@ -55,8 +55,9 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Creditsafe Company Basic Information</label>
     <nameField>
-        <label>Creditsafe Company Basic Information Name</label>
-        <type>Text</type>
+        <displayFormat>BI-{000000}</displayFormat>
+        <label>Creditsafe Company Basic Info Name</label>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Creditsafe Company Basic Information</pluralLabel>
     <searchLayouts/>

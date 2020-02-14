@@ -78,6 +78,10 @@
                 <behavior>Edit</behavior>
                 <field>Business_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Creditsafe_Company_Report_Full__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

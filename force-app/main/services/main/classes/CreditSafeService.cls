@@ -12,4 +12,8 @@ public inherited sharing class CreditSafeService {
         return (ICreditSafeService)Application.Service.newInstance(ICreditSafeService.class);
     }
 
+    public static Creditsafe_Company_Report_Full__c getCreditsafeReportFullV2(String company_id, String language, String reason) {
+        return newInstance().getCreditsafeReportFullV2(company_id, language, reason);
+    }
+
 }
