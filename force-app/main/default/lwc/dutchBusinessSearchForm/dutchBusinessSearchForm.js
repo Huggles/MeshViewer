@@ -3,6 +3,8 @@
  */
 
 import {api, LightningElement} from 'lwc';
+import {fireEvent, registerListener} from "c/pubsub";
+import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
 export default class DutchBusinessSearchForm extends LightningElement {
     @api
@@ -22,34 +24,36 @@ export default class DutchBusinessSearchForm extends LightningElement {
     @api
     phoneNumber;
 
-    @api
-    checkValid() {
-        const allValid = [...this.template.querySelectorAll('lightning-input')]
+    connectedCallback() {
+        registerListener('validationRequest', this.handleValidationRequest, this);
+        registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
+    }
+
+    handleComponentRegistrationOpen(registrar) {
+        // fire a registration event
+        fireEvent(this.pageRef, 'componentRegistration', {component: this});
+    }
+
+    handleValidationRequest() {
+        fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: this.allValid()});
+    }
+
+    /**
+     * Checks if the input in all input elements in this template is valid
+     * @returns true if valid
+     */
+    allValid() {
+        const valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
-        return allValid;
+        return valid;
     }
 
     handleOnChange(event) {
         const attributeChangeEvent = new FlowAttributeChangeEvent(event.target.name, event.target.value);
         this.dispatchEvent(attributeChangeEvent);
-    }
-
-    @api
-    validate() {
-        if(this.allValid) {
-            return { isValid: true };
-        }
-        else {
-            // If the component is invalid, return the isValid parameter
-            // as false and return an error message.
-            return {
-                isValid: false,
-                errorMessage: '/*A message in dutch business form that explains what went wrong.*/'
-            };
-        }
     }
 
 }

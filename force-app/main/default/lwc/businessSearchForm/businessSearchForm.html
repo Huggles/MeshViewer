@@ -5,7 +5,7 @@
 <!-- Organisation Search Form -->
 <template>
     <!-- TODO: implement country specific search forms -->
-    <lightning-combobox name="selectedCountry" class="slds-m-around_x-small" label="Country" options={countries} value={selectedCountry} placeholder="Select a Country" dropdown-alignment="left" required variant="standard"></lightning-combobox>
+    <lightning-combobox name="selectedCountry" class="slds-m-around_x-small" label="Country" options={countries} value={selectedCountry} placeholder="Select a Country" dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>
     <!-- TODO: add templates for the other countries -->
     <template if:true={isNlSelected}>
         <c-dutch-business-search-form class="searchForm" trade-name={tradeName} city={city} street={street} domain-name={domainName} house-number={houseNumber} house-number-addition={houseNumberAddition} phone-number={phoneNumber} postal-code={postalCode}></c-dutch-business-search-form>

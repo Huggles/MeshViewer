@@ -4,20 +4,37 @@
 
 import {LightningElement, api, track} from 'lwc';
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
-import {fireEvent} from 'c/pubsub';
+import {fireEvent, registerListener} from 'c/pubsub';
+import Country_Belgium from '@salesforce/label/c.Country_Belgium';
+import Country_France from '@salesforce/label/c.Country_France';
+import Country_Germany from '@salesforce/label/c.Country_Germany';
+import Country_Ireland from '@salesforce/label/c.Country_Ireland';
+import Country_Netherlands from '@salesforce/label/c.Country_Netherlands';
+import Country_United_Kingdom from '@salesforce/label/c.Country_United_Kingdom';
+import Country_Sweden from '@salesforce/label/c.Country_Sweden';
 
 export default class BusinessSearchForm extends LightningElement {
     // TODO: implement validation
     // TODO: introduce labels
+    labels = {
+        Country_Belgium,
+        Country_France,
+        Country_Germany,
+        Country_Ireland,
+        Country_Netherlands,
+        Country_United_Kingdom,
+        Country_Sweden
+    }
+
     get countries() {
         return [
-            { label: 'The Netherlands', value: 'NL' },
-            { label: 'Belgium', value: 'BE' },
-            { label: 'Germany', value: 'DE' },
-            { label: 'France', value: 'FR' },
-            { label: 'United Kingdom', value: 'GB' },
-            { label: 'Ireland', value: 'IR' },
-            { label: 'Sweden', value: 'SE' }
+            { label: Country_Netherlands, value: 'NL' },
+            { label: Country_Belgium, value: 'BE' },
+            { label: Country_Germany, value: 'DE' },
+            { label: Country_France, value: 'FR' },
+            { label: Country_United_Kingdom, value: 'GB' },
+            { label: Country_Ireland, value: 'IR' },
+            { label: Country_Sweden, value: 'SE' }
         ];
     }
     // TODO: make NL configurable depending on a user custom setting
@@ -69,55 +86,35 @@ export default class BusinessSearchForm extends LightningElement {
         return this.selectedCountry === 'IE';
     }
 
+    connectedCallback() {
+        registerListener('validationRequest', this.handleValidationRequest, this);
+        registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
+    }
+
+    handleComponentRegistrationOpen(registrar) {
+        // fire a registration event
+        fireEvent(this.pageRef, 'componentRegistration', {component: this});
+    }
+
+    handleValidationRequest() {
+        fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: this.allValid()});
+    }
+
+    handleSelectedCountryChange(event) {
+        this.selectedCountry = event.target.value;
+    }
+
     /**
      * Checks if the input in all input elements in this template is valid
      * @returns true if valid
      */
-    get allValid() {
-        const allValid = [...this.template.querySelectorAll('lightning-input')]
+    allValid() {
+        const valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
-        return allValid;
-    }
-
-    /**
-     * Called by the framework
-     * TODO this needs to be called before the next button is entered and not by the flow framework since that overrides the error handling
-     */
-    @api
-    validate() {
-        // first check if all input elements here are valid
-        // if (this.allValid) {
-            // then go over all child templates
-        const allValid = [...this.template.querySelectorAll('.searchForm')]
-            .reduce((validSoFar, template) => {
-                return validSoFar && template.checkValid();
-            }, true);
-        if (allValid) {
-            return { isValid: true};
-        }
-        else {
-            return {
-                isValid: false,
-                errorMessage: 'test'
-
-            }
-        }
-        // }
-
-        // if(this.allValid) {
-        //     return { isValid: true };
-        // }
-        // else {
-        //     // If the component is invalid, return the isValid parameter
-        //     // as false and return an error message.
-        //     return {
-        //         isValid: false,
-        //         errorMessage: '/*A message that explains what went wrong in upper elem.*/'
-        //     };
-        // }
+        return valid;
     }
 
 }
