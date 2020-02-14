@@ -29,17 +29,17 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
 
     public Creditsafe_Company_Report_Full__c getCreditsafeReportFullV2(String company_id, String language, String reason) {
         //check input
-        if (String.isEmpty(company_id) || String.isEmpty(language)) {
-            throw new CCInputException(Label.Error_Input_Incorrect);
-        }
-
-        CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2 = WsCreditsafe.creditsafeGetReportFullV2(company_id, language, reason);
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+//        if (String.isEmpty(company_id) || String.isEmpty(language)) {
+//            throw new CCInputException(Label.Error_Input_Incorrect);
+//        }
+//
+//        CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2 = WsCreditsafe.creditsafeGetReportFullV2(company_id, language, reason);
+//        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         Creditsafe_Company_Report_Full__c companyReportFull = new Creditsafe_Company_Report_Full__c();
-        unitOfWork.registerNew(companyReportFull);
-
-        companyReportFull = mapAdditionalInfo(companyReportFull, reportFullV2, unitOfWork);
-        companyReportFull = mapCompanyIdentification(companyReportFull, reportFullV2, unitOfWork);
+//        unitOfWork.registerNew(companyReportFull);
+//
+//        companyReportFull = mapAdditionalInfo(companyReportFull, reportFullV2, unitOfWork);
+//        companyReportFull = mapCompanyIdentification(companyReportFull, reportFullV2, unitOfWork);
 //        companyReportFull = mapCompanySummary(companyReportFull, reportFullV2, unitOfWork);
 //        companyReportFull = mapContactInfo(companyReportFull, reportFullV2, unitOfWork);
 //
@@ -53,17 +53,17 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
 //        companyReportFull = mapShareCapital(companyReportFull, reportFullV2, unitOfWork);
 //        companyReportFull = mapPaymentData(companyReportFull, reportFullV2, unitOfWork);
 
-        companyReportFull.Order_Number__c = reportFullV2.order_number != null &&  reportFullV2.order_number != 'N/A'? Integer.valueOf(reportFullV2.order_number) : null;
-        companyReportFull.Company_Id__c = reportFullV2.company_id;
-        companyReportFull.Language__c = reportFullV2.language;
-
-        unitOfWork.commitWork();
+//        companyReportFull.Order_Number__c = reportFullV2.order_number != null &&  reportFullV2.order_number != 'N/A'? Integer.valueOf(reportFullV2.order_number) : null;
+//        companyReportFull.Company_Id__c = reportFullV2.company_id;
+//        companyReportFull.Language__c = reportFullV2.language;
+//
+//        unitOfWork.commitWork();
 
         return companyReportFull;
 
     }
 
-    private Creditsafe_Company_Report_Full__c mapPaymentData(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
+    /*private Creditsafe_Company_Report_Full__c mapPaymentData(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
         if (reportFullV2.payment_data != null && reportFullV2.payment_data.generic != null && reportFullV2.payment_data.generic.item != null) {
             for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 :reportFullV2.payment_data.generic.item) {
                 Creditsafe_Company_Key_Value__c keyValue = new Creditsafe_Company_Key_Value__c();
@@ -780,6 +780,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
 
     private Integer getInteger(String value) {
         return value != null ? Integer.valueOf(value) : null;
-    }
+    }*/
 
 }

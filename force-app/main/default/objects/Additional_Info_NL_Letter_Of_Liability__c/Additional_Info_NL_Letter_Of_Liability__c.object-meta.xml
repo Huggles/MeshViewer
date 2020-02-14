@@ -50,13 +50,13 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <label>Additional Info NL Letter Of Liability</label>
     <nameField>
         <displayFormat>LI-{000000}</displayFormat>
-        <label>Additional Info NL Letter Of Liability Name</label>
+        <label>Additional Info NL Letter Of Liability</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Additional Info NL Letter Of Liabilities</pluralLabel>

@@ -20,7 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Creditsafe_Company_Additional_Info_NL__c</field>
+                <field>Creditsafe_Company_Report_Full__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
