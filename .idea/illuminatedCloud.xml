@@ -8,6 +8,7 @@
           <option name="connectionType" value="SFDX" />
           <option name="defaultModuleName" value="CompanyInfoComponents" />
           <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/test_kbsrs9huxmxh_example_com/OfflineSymbolTable.zip" />
+          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/InternationalAddress/OfflineSymbolTable.zip" />
         </IlluminatedCloudConnection>
       </list>
     </option>
