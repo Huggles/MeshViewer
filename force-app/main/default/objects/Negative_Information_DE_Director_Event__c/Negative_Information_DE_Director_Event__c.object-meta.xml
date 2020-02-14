@@ -56,7 +56,7 @@
     <label>Negative Information DE Director Event</label>
     <nameField>
         <displayFormat>DE-{000000}</displayFormat>
-        <label>NegativeInformationDEDi Name</label>
+        <label>DE Director Event Name</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Negative Information DE Director Event</pluralLabel>

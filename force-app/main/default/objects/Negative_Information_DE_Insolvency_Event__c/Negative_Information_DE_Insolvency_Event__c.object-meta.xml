@@ -56,7 +56,7 @@
     <label>Negative Information DE Insolvency Event</label>
     <nameField>
         <displayFormat>IE-{000000}</displayFormat>
-        <label>Negative Information DE Insolvency Event</label>
+        <label>DE Insolvency Event Name</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Negative Information DE Insolvency Event</pluralLabel>
