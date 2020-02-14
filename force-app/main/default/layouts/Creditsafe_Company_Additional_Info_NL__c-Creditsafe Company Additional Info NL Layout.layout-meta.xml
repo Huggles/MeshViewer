@@ -47,26 +47,6 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Additional_Information_NL_Financial_Item__c.Creditsafe_Company_Additional_Info_NL__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Additional_Information_NL_Kvk_Filing__c.Creditsafe_Company_Additional_Info_NL__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Additional_Info_NL_Letter_Of_Liability__c.Creditsafe_Company_Additional_Info_NL__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Additional_Info_NL__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Additional_Information_Historical_Event__c.Creditsafe_Company_Additional_Info_NL__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
