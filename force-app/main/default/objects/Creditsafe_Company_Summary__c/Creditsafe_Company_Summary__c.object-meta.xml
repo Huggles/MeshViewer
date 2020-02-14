@@ -41,7 +41,6 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>A CreditsafeCompanySummaryV2.</description>
     <enableActivities>false</enableActivities>

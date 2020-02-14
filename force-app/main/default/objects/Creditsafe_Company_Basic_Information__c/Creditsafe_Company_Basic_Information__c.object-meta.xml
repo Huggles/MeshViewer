@@ -41,7 +41,6 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Basic information on a company.</description>
     <enableActivities>false</enableActivities>
