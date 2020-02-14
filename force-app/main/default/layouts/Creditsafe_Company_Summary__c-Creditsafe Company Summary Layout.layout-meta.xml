@@ -76,7 +76,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Business_Name__c</field>
+                <field>Company_Summary_Business_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
