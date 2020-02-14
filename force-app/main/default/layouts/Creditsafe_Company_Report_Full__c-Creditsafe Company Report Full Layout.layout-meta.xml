@@ -411,10 +411,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>Creditsafe_Company_Negative_Info_DE__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <relatedList>Creditsafe_Company_Summary__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
