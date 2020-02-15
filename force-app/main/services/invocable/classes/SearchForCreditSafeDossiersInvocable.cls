@@ -4,7 +4,6 @@
 
 global with sharing class SearchForCreditSafeDossiersInvocable {
 
-    // TODO: rewrite class for creditsafe
     global class SearchForCreditSafeResponse {
         @InvocableVariable(label='Creditsafe number' description='Creditsafe number')
         global String creditsafe_number;
@@ -17,7 +16,7 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
         @InvocableVariable(label='VAT Numbers' description='The VAT Numbers the company uses.')
         global List<String> vat_numbers;
         @InvocableVariable(label='Country ISO Code' description='The ISO 3166-1-alpha-2 country code of the company’s country.')
-        global String countryISOCode;
+        global String country;
         @InvocableVariable(label='Registration Number' description='Company registration number according to country’s Chambre of Commerce.')
         global String registration_number;
         @InvocableVariable(label='Name' description='Company name.')
@@ -32,8 +31,8 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
         global String office_type;
         @InvocableVariable(label='City' description='Address city')
         global String city;
-        @InvocableVariable(label='Country' description='Address Country')
-        global String country;
+        @InvocableVariable(label='Address Country' description='Address Country')
+        global String address_country;
         @InvocableVariable(label='Full Address' description='Full Address')
         global String full_address;
         @InvocableVariable(label='House Number' description='Address House Number')
@@ -64,7 +63,7 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
             this.date_last_change = searchForDossiersResultDt.date_last_change;
             this.date_last_account = searchForDossiersResultDt.date_last_account;
             this.creditsafe_number = searchForDossiersResultDt.creditsafe_number;
-            this.countryISOCode = searchForDossiersResultDt.countryISOCode;
+            this.address_country = searchForDossiersResultDt.address_country;
         }
     }
     
