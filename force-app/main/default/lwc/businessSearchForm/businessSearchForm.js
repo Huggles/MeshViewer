@@ -33,7 +33,7 @@ export default class BusinessSearchForm extends LightningElement {
             { label: Country_Germany, value: 'DE' },
             { label: Country_France, value: 'FR' },
             { label: Country_United_Kingdom, value: 'GB' },
-            { label: Country_Ireland, value: 'IR' },
+            { label: Country_Ireland, value: 'IE' },
             { label: Country_Sweden, value: 'SE' }
         ];
     }
@@ -56,6 +56,20 @@ export default class BusinessSearchForm extends LightningElement {
     domainName;
     @api
     phoneNumber;
+    @api
+    id;
+    @api
+    status;
+    @api
+    registrationNumber;
+    @api
+    registrationType;
+    @api
+    vatNumber;
+    @api
+    province;
+    @api
+    name;
 
     @api
     get isNlSelected() {
@@ -67,7 +81,7 @@ export default class BusinessSearchForm extends LightningElement {
     }
     @api
     get isBeSelected() {
-        return this.selectedCountry === 'Be';
+        return this.selectedCountry === 'BE';
     }
     @api
     get isDeSelected() {

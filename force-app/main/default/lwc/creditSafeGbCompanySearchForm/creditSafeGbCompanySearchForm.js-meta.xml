@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>47.0</apiVersion>
+    <description>Credit Safe Gb Company Search Form</description>
+    <isExposed>false</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="id" type="String" label="Creditsafe Company Identifier"/>
+            <property name="name" type="String" label="Name"/>
+            <property name="status" type="String" label="Company Status"/>
+            <property name="registration_number" type="String" label=" Registration Number"/>
+            <property name="registration_type" type="String" label="House Number"/>
+            <property name="vat_number" type="String" label="VAT Number"/>
+            <property name="province" type="String" label="Province"/>
+            <property name="city" type="String" label="City"/>
+            <property name="street" type="String" label="Street"/>
+            <property name="postal_code" type="String" label="Postal Code"/>
+        </targetConfig>
+    </targetConfigs>
+
+    <masterLabel>Credit Safe Gb Company Search Form</masterLabel>
+</LightningComponentBundle>

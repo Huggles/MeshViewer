@@ -129,7 +129,8 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
         for (SearchForCreditSafeDossiersArgument argument : arguments) {
             searchForDossiersResultDtos.addAll(CreditSafeService.searchForCreditSafeDossiers(
                     convertCountries(argument.countries),
-                    argument.id, argument.status,
+                    argument.id,
+                    argument.status,
                     argument.registration_number,
                     argument.registration_type,
                     argument.vat_number,

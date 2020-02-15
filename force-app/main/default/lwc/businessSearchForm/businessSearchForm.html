@@ -10,5 +10,24 @@
     <template if:true={isNlSelected}>
         <c-dutch-business-search-form class="searchForm" trade-name={tradeName} city={city} street={street} domain-name={domainName} house-number={houseNumber} house-number-addition={houseNumberAddition} phone-number={phoneNumber} postal-code={postalCode}></c-dutch-business-search-form>
     </template>
+    <template if:true={isBeSelected}>
+        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+    </template>
+    <template if:true={isDeSelected}>
+        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+    </template>
+    <template if:true={isFrSelected}>
+        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+    </template>
+    <template if:true={isGbSelected}>
+        <c-credit-safe-gb-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-gb-company-search-form>
+    </template>
+    <template if:true={isIeSelected}>
+        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+    </template>
+    <template if:true={isSeSelected}>
+        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+    </template>
+
 
 </template>

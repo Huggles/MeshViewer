@@ -1,0 +1,26 @@
+<!--
+ - Created by jaapbranderhorst on 15/02/2020.
+ -->
+
+<!-- Credit Safe Company Search Form -->
+<template>
+    <lightning-input name="name" class="slds-m-around_x-small" label="Name" type="text" value={name} variant="standard" onchange={handleOnChange}></lightning-input>
+    <lightning-input name="registration_type" class="slds-m-around_x-small" label="Registration Type" type="text" variant="standard" value={registration_type} onchange={handleOnChange}></lightning-input>
+    <lightning-input name="registration_number" class="slds-m-around_x-small" label="Registration Number" type="tel" variant="standard" value={registration_number} onchange={handleOnChange}></lightning-input>
+    <lightning-layout>
+        <lightning-layout-item size="8">
+            <lightning-input name="street" class="slds-m-around_x-small" label="Street" type="text" variant="standard" value={street} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="4">
+            <lightning-input name="postalCode" class="slds-m-around_x-small" label="Postal Code" type="text" value={postal_code} onchange={handleOnChange} variant="standard"></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="6">
+            <lightning-input name="province" class="slds-m-around_x-small" label="Province" type="text" variant="standard" value={province} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-input name="city" class="slds-m-around_x-small" label="City" type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
