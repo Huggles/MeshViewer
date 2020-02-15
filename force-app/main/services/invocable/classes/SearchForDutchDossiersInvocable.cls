@@ -61,33 +61,26 @@ global with sharing class SearchForDutchDossiersInvocable {
 
     @InvocableMethod
     global static List<SearchForDutchDossiersResponse> searchForDutchDossiers(List<SearchForDutchDossiersArgument> arguments) {
-        // TODO: extend exception handling
-        try {
-            List<SearchForDossiersResultDto> searchForDossiersResultDtos = new List<SearchForDossiersResultDto>();
-            for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
-                searchForDossiersResultDtos.addAll(
-                        BusinessService.searchForDutchDossiers(
-                                searchForDutchDossiersArgument.trade_name,
-                                searchForDutchDossiersArgument.city,
-                                searchForDutchDossiersArgument.street,
-                                searchForDutchDossiersArgument.postcode,
-                                searchForDutchDossiersArgument.house_number,
-                                searchForDutchDossiersArgument.house_number_addition,
-                                searchForDutchDossiersArgument.telephone_number,
-                                searchForDutchDossiersArgument.domain_name
-                        )
-                );
-            }
-            List<SearchForDutchDossiersResponse> responses = new List<SearchForDutchDossiersInvocable.SearchForDutchDossiersResponse>();
-            for (SearchForDossiersResultDto searchForDossiersResultDto : searchForDossiersResultDtos) {
-                responses.add(new SearchForDutchDossiersResponse(searchForDossiersResultDto));
-            }
-            return responses;
-        } catch (Exception ex) {
-            ErrorLogUtil.logException(ex);
-            return null;
+        List<SearchForDossiersResultDto> searchForDossiersResultDtos = new List<SearchForDossiersResultDto>();
+        for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
+            searchForDossiersResultDtos.addAll(
+                    BusinessService.searchForDutchDossiers(
+                            searchForDutchDossiersArgument.trade_name,
+                            searchForDutchDossiersArgument.city,
+                            searchForDutchDossiersArgument.street,
+                            searchForDutchDossiersArgument.postcode,
+                            searchForDutchDossiersArgument.house_number,
+                            searchForDutchDossiersArgument.house_number_addition,
+                            searchForDutchDossiersArgument.telephone_number,
+                            searchForDutchDossiersArgument.domain_name
+                    )
+            );
         }
-
+        List<SearchForDutchDossiersResponse> responses = new List<SearchForDutchDossiersInvocable.SearchForDutchDossiersResponse>();
+        for (SearchForDossiersResultDto searchForDossiersResultDto : searchForDossiersResultDtos) {
+            responses.add(new SearchForDutchDossiersResponse(searchForDossiersResultDto));
+        }
+        return responses;
     }
 
 }

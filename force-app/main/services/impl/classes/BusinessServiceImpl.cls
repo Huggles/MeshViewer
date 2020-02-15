@@ -39,6 +39,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         if (country == CreditSafe.Country.NL.name()) {
             resultValue = searchForDutchDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
         } else {
+            // TODO: refactor so it uses the credit safe services
             resultValue = searchForCreditSafeDossiers(new List<String>{country}, null, null, registration_number, null, vat_number, province, city, street, postcode, trade_name);
         }
         return resultValue;

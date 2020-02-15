@@ -65,21 +65,21 @@ private class CreditSafeServiceImplTest {
 
         Test.startTest();
         {
-            List<SearchForDossiersResultDto> searchForDossiersResultDtos = CreditSafeService.searchForCreditSafeDossiers(new List<CreditSafe.Country>{CreditSafe.Country.SE}, 'id', 'status', 'regnr', 'type', 'vat', 'province', 'city', 'street', 'postal_code', 'name');
+            List<SearchForCreditSafeDossiersResultDto> searchForDossiersResultDtos = CreditSafeService.searchForCreditSafeDossiers(new List<CreditSafe.Country>{CreditSafe.Country.SE}, 'id', 'status', 'regnr', 'type', 'vat', 'province', 'city', 'street', 'postal_code', 'name');
             System.assert(searchForDossiersResultDtos.size() == 5);
-            for (SearchForDossiersResultDto searchForDossiersResultDto : searchForDossiersResultDtos) {
+            for (SearchForCreditSafeDossiersResultDto searchForDossiersResultDto : searchForDossiersResultDtos) {
                 System.debug(searchForDossiersResultDto);
                 System.assert(searchForDossiersResultDto.name.isNumeric());
-                System.assert(searchForDossiersResultDto.dossier_number.startsWith('123'));
-                System.assert(searchForDossiersResultDto.creditSafeCountry == CreditSafe.Country.NL.name());
-                System.assert(searchForDossiersResultDto.establishment_street == 'Braillelaan');
-                System.assert(searchForDossiersResultDto.establishment_city == 'Utrecht');
-                System.assert(searchForDossiersResultDto.creditSafeId.isNumeric());
+                System.assert(searchForDossiersResultDto.registration_number.startsWith('123'));
+                System.assert(searchForDossiersResultDto.country == CreditSafe.Country.NL.name());
+                System.assert(searchForDossiersResultDto.street == 'Braillelaan');
+                System.assert(searchForDossiersResultDto.city == 'Utrecht');
+                System.assert(searchForDossiersResultDto.id.isNumeric());
                 System.assert(searchForDossiersResultDto.date_last_account != null && searchForDossiersResultDto.date_last_account < Datetime.now());
                 System.assert(searchForDossiersResultDto.date_last_change != null && searchForDossiersResultDto.date_last_change < Datetime.now());
                 System.assert(searchForDossiersResultDto.office_type == 'Headoffice');
                 System.assert(searchForDossiersResultDto.trade_names != null && searchForDossiersResultDto.trade_names.size() == 3);
-                System.assert(searchForDossiersResultDto.phone.isNumeric());
+                System.assert(searchForDossiersResultDto.telephone.isNumeric());
             }
         }
         Test.stopTest();
