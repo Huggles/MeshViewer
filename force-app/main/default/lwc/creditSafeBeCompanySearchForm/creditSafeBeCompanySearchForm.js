@@ -1,32 +1,18 @@
 /**
- * Created by jaapbranderhorst on 15/02/2020.
+ * Created by jaapbranderhorst on 16/02/2020.
  */
 
-import {LightningElement, api} from 'lwc';
+import {api, LightningElement} from 'lwc';
 import {fireEvent, registerListener} from "c/pubsub";
+import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
-export default class CreditSafeCompanySearchForm extends LightningElement {
-
+export default class CreditSafeBeCompanySearchForm extends LightningElement {
     @api
     id;
     @api
-    status;
-    @api
     registration_number;
     @api
-    registration_type;
-    @api
     vat_number;
-    @api
-    province;
-    @api
-    city;
-    @api
-    street;
-    @api
-    postal_code;
-    @api
-    name;
 
     connectedCallback() {
         registerListener('validationRequest', this.handleValidationRequest, this);

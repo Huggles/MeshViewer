@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>Cancel</name>
+        <label>Cancel</label>
+        <locationX>599</locationX>
+        <locationY>209</locationY>
+        <actionName>appsolutely:flowCancelEndPoint</actionName>
+        <actionType>component</actionType>
+    </actionCalls>
+    <actionCalls>
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
-        <locationX>623</locationX>
-        <locationY>57</locationY>
+        <locationX>377</locationX>
+        <locationY>50</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Show_Credit_Safe_Search_Results</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Search</targetReference>
+        </faultConnector>
         <inputParameters>
             <name>Name</name>
             <value>
@@ -154,10 +168,16 @@
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
-        <locationX>375</locationX>
-        <locationY>302</locationY>
+        <locationX>378</locationX>
+        <locationY>399</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Dutch_Dossiers_Search_Results</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Search</targetReference>
+        </faultConnector>
         <inputParameters>
             <name>domain_name</name>
         </inputParameters>
@@ -202,12 +222,27 @@
         <description>Decides which search method to call based on the selected country</description>
         <name>Decide_search_method</name>
         <label>Decide search method</label>
-        <locationX>367</locationX>
-        <locationY>52</locationY>
+        <locationX>368</locationX>
+        <locationY>212</locationY>
         <defaultConnector>
             <targetReference>Search_for_Credit_Safe_Dossiers</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_Pressed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>cancelPressed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cancel</targetReference>
+            </connector>
+            <label>Cancel Pressed</label>
+        </rules>
         <rules>
             <name>Dutch_Dossier_v3</name>
             <conditionLogic>and</conditionLogic>
@@ -241,16 +276,42 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <screens>
+        <name>Dutch_Dossiers_Search_Results</name>
+        <label>Dutch Dossiers Search Results</label>
+        <locationX>592</locationX>
+        <locationY>399</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Search</name>
         <label>Enter Search Criteria</label>
-        <locationX>209</locationX>
-        <locationY>50</locationY>
+        <locationX>210</locationX>
+        <locationY>210</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
             <targetReference>Decide_search_method</targetReference>
         </connector>
+        <fields>
+            <name>ErrorHandler</name>
+            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>$Flow.FaultMessage</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue/>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <fields>
             <name>organisationSearchFormHeader</name>
             <extensionName>appsolutely:flowHeader</extensionName>
@@ -369,14 +430,35 @@
                     <stringValue>Search</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>showCancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>cancelPressed</assignToReference>
+                <name>cancelPressed</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Show_Credit_Safe_Search_Results</name>
+        <label>Show Credit Safe Search Results</label>
+        <locationX>591</locationX>
+        <locationY>50</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>210</locationY>
         <connector>
             <targetReference>Search</targetReference>
         </connector>
@@ -385,6 +467,13 @@
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>cancelPressed</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

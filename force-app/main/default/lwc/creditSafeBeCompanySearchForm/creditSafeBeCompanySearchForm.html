@@ -1,0 +1,10 @@
+<!--
+ - Created by jaapbranderhorst on 16/02/2020.
+ -->
+
+<!-- Credit Safe Be Company Search Form -->
+<template>
+    <lightning-input name="id" class="slds-m-around_x-small" label="CreditSafe Identification Number" type="text" variant="standard" pattern="^(BE)\d{3}/(X)/\d{9}$" message-when-pattern-mismatch="Please enter a valid CreditSafe registration number." value={id} onchange={handleOnChange}></lightning-input>
+    <lightning-input name="registration_number" class="slds-m-around_x-small" label="Registration Number" type="text" variant="standard" pattern="\d{9}" message-when-pattern-mismatch="Please enter a valid Belgian registration number consisting of 9 digits." value={registration_number} onchange={handleOnChange}></lightning-input>
+    <lightning-input name="vat_number" class="slds-m-around_x-small" label="VAT Number" type="text" variant="standard" pattern="\d{9}" message-when-pattern-mismatch="Please enter a valid Belgian VAT Number starting with BE0 followed by 9 digits." value={vat_number} onchange={handleOnChange}></lightning-input>
+</template>

@@ -1,27 +1,22 @@
 /**
- * Created by jaapbranderhorst on 15/02/2020.
+ * Created by jaapbranderhorst on 16/02/2020.
  */
 
-import {LightningElement, api} from 'lwc';
+import {api, LightningElement} from 'lwc';
 import {fireEvent, registerListener} from "c/pubsub";
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
-export default class CreditSafeGbCompanySearchForm extends LightningElement {
+export default class CreditSafeNameAddressSearchForm extends LightningElement {
     @api
-    id;
+    province;
     @api
-    status;
+    city;
     @api
-    registration_number;
+    street;
     @api
-    vat_number;
-
-    get statuses() {
-        return [
-            { label: 'Active', value: 'Active' },
-            { label: 'Active, NonActive', value: 'Active, NonActive' }
-        ];
-    }
+    postal_code;
+    @api
+    name;
 
     connectedCallback() {
         registerListener('validationRequest', this.handleValidationRequest, this);
@@ -53,11 +48,6 @@ export default class CreditSafeGbCompanySearchForm extends LightningElement {
     handleOnChange(event) {
         const attributeChangeEvent = new FlowAttributeChangeEvent(event.target.name, event.target.value);
         this.dispatchEvent(attributeChangeEvent);
-    }
-
-    handleStatusOnChange(event) {
-        this.status = event.target.value;
-        this.handleOnChange(event);
     }
 
 }

@@ -1,12 +1,12 @@
 /**
- * Created by jaapbranderhorst on 15/02/2020.
+ * Created by jaapbranderhorst on 16/02/2020.
  */
 
-import {LightningElement, api} from 'lwc';
+import {api, LightningElement} from 'lwc';
 import {fireEvent, registerListener} from "c/pubsub";
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
-export default class CreditSafeGbCompanySearchForm extends LightningElement {
+export default class CreditSafeFrCompanySearchForm extends LightningElement {
     @api
     id;
     @api
@@ -19,6 +19,7 @@ export default class CreditSafeGbCompanySearchForm extends LightningElement {
     get statuses() {
         return [
             { label: 'Active', value: 'Active' },
+            { label: 'NonActive', value: 'NonActive'},
             { label: 'Active, NonActive', value: 'Active, NonActive' }
         ];
     }

@@ -6,28 +6,26 @@
 <template>
     <!-- TODO: implement country specific search forms -->
     <lightning-combobox name="selectedCountry" class="slds-m-around_x-small" label="Country" options={countries} value={selectedCountry} placeholder="Select a Country" dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>
-    <!-- TODO: add templates for the other countries -->
     <template if:true={isNlSelected}>
         <c-dutch-business-search-form class="searchForm" trade-name={tradeName} city={city} street={street} domain-name={domainName} house-number={houseNumber} house-number-addition={houseNumberAddition} phone-number={phoneNumber} postal-code={postalCode}></c-dutch-business-search-form>
     </template>
     <template if:true={isBeSelected}>
-        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+        <c-credit-safe-be-company-search-form class="searchForm" registration-number={registrationNumber}  id={id} vat-number={vatNumber}></c-credit-safe-be-company-search-form>
     </template>
     <template if:true={isDeSelected}>
-        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+        <c-credit-safe-de-company-search-form class="searchForm" registration-number={registrationNumber} status={status} id={id} vat-number={vatNumber}></c-credit-safe-de-company-search-form>
     </template>
     <template if:true={isFrSelected}>
-        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+        <c-credit-safe-fr-company-search-form class="searchForm" registration-number={registrationNumber} status={status} id={id} vat-number={vatNumber}></c-credit-safe-fr-company-search-form>
     </template>
     <template if:true={isGbSelected}>
-        <c-credit-safe-gb-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-gb-company-search-form>
+        <c-credit-safe-gb-company-search-form class="searchForm" registration-number={registrationNumber} status={status} id={id} vat-number={vatNumber}></c-credit-safe-gb-company-search-form>
     </template>
     <template if:true={isIeSelected}>
-        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+        <c-credit-safe-ie-company-search-form class="searchForm" registration-number={registrationNumber} status={status} id={id} vat-number={vatNumber}></c-credit-safe-ie-company-search-form>
     </template>
     <template if:true={isSeSelected}>
-        <c-credit-safe-company-search-form class="searchForm" registration-number={registrationNumber} registration-type={registrationType} name={name} province={province} status={status} id={id} vat-number={vatNumber}  city={city} street={street}  postal-code={postalCode}></c-credit-safe-company-search-form>
+        <c-credit-safe-se-company-search-form class="searchForm" registration-number={registrationNumber} status={status} id={id} vat-number={vatNumber}></c-credit-safe-se-company-search-form>
     </template>
-
-
+    <c-credit-safe-name-address-search-form province={province} name={name} postal-code={postalCode} street={street} city={city}></c-credit-safe-name-address-search-form>
 </template>

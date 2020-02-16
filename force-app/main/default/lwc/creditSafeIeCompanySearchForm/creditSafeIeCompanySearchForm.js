@@ -1,12 +1,12 @@
 /**
- * Created by jaapbranderhorst on 15/02/2020.
+ * Created by jaapbranderhorst on 16/02/2020.
  */
 
-import {LightningElement, api} from 'lwc';
+import {api, LightningElement} from 'lwc';
 import {fireEvent, registerListener} from "c/pubsub";
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
-export default class CreditSafeGbCompanySearchForm extends LightningElement {
+export default class CreditSafeIeCompanySearchForm extends LightningElement {
     @api
     id;
     @api
@@ -59,5 +59,4 @@ export default class CreditSafeGbCompanySearchForm extends LightningElement {
         this.status = event.target.value;
         this.handleOnChange(event);
     }
-
 }

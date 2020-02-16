@@ -4,24 +4,8 @@
 
 <!-- Credit Safe Gb Company Search Form -->
 <template>
-    <lightning-input name="name" class="slds-m-around_x-small" label="Name" type="text" value={name} minlength=2 message-when-too-short="Please enter at least two characters." variant="standard" onchange={handleOnChange}></lightning-input>
-    <lightning-combobox name="status" class="slds-m-around_x-small" label="Country" options={statuses} value={status} placeholder="Select a Status" dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
+    <lightning-combobox name="status" class="slds-m-around_x-small" label="Status" options={statuses} value={status} placeholder="Select a Status" dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
     <lightning-input name="id" class="slds-m-around_x-small" label="CreditSafe Identification Number" type="text" variant="standard" pattern="^(GB)\d{3}/(0|1)/.+$" message-when-pattern-mismatch="Not a valid CreditSafe Identification Number for country Great-Britain" value={id} onchange={handleOnChange}></lightning-input>
     <lightning-input name="registration_number" class="slds-m-around_x-small" label="Registration Number" type="text" variant="standard" minlength=2 message-when-too-short="Please enter at least two characters to search on the registration number." value={registration_number} onchange={handleOnChange}></lightning-input>
-    <lightning-layout>
-        <lightning-layout-item size="8">
-            <lightning-input name="street" class="slds-m-around_x-small" label="Street" type="text" variant="standard" value={street} onchange={handleOnChange}></lightning-input>
-        </lightning-layout-item>
-        <lightning-layout-item size="4">
-            <lightning-input name="postalCode" class="slds-m-around_x-small" label="Postal Code" type="text" value={postal_code} onchange={handleOnChange} variant="standard"></lightning-input>
-        </lightning-layout-item>
-    </lightning-layout>
-    <lightning-layout>
-        <lightning-layout-item size="6">
-            <lightning-input name="province" class="slds-m-around_x-small" label="Province" type="text" variant="standard" value={province} onchange={handleOnChange}></lightning-input>
-        </lightning-layout-item>
-        <lightning-layout-item size="6">
-            <lightning-input name="city" class="slds-m-around_x-small" label="City" type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
-        </lightning-layout-item>
-    </lightning-layout>
+    <lightning-input label="VAT Number" name="vat_number" class="slds-m-around_x-small" pattern="(GB)?([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})" message-when-pattern-mismatch="Please enter a valid VAT Number for the United Kingdom." value={vat_number} onchange={handleOnChange}></lightning-input>
 </template>

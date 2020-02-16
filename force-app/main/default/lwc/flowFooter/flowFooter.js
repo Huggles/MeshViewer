@@ -39,6 +39,8 @@ export default class FlowFooter extends LightningElement {
     showCancelButton;
     @api
     cancelButtonTitle = 'Cancel';
+    @api
+    cancelPressed = false;
 
     connectedCallback() {
         // the theory is that components fire a registration event AFTER the listener has been registered. For that the firing needs to be done from the renderedCallback method
@@ -120,9 +122,14 @@ export default class FlowFooter extends LightningElement {
     }
 
     handleCancelClick(event) {
-        // TODO: check if this always works
-        const navigateFinishEvent = new FlowNavigationFinishEvent();
-        this.dispatchEvent(navigateFinishEvent);
+        if (this.availableActions.find(action => action === 'FINISH')) {
+            const navigateFinishEvent = new FlowNavigationFinishEvent();
+            this.dispatchEvent(navigateFinishEvent);
+        } else { // no finish means next?
+            this.cancelPressed = true;
+            const navigateNextEvent = new FlowNavigationNextEvent();
+            this.dispatchEvent(navigateNextEvent);
+        }
     }
 
     handlePreviousClick(event) {
