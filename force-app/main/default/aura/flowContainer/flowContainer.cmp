@@ -1,0 +1,10 @@
+<!--
+ - Created by jaapbranderhorst on 16/02/2020.
+ -->
+
+<aura:component description="newAccountFlowContainer">
+    <aura:attribute name="flowName" access="public" type="String" description="API name of the flow to show"/>
+    <aura:registerEvent name="flowChangeEvent" type="c:flowStatusChangedEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}"/>
+</aura:component>

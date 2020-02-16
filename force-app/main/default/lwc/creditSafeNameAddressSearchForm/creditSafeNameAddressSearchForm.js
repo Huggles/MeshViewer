@@ -14,7 +14,7 @@ export default class CreditSafeNameAddressSearchForm extends LightningElement {
     @api
     street;
     @api
-    postal_code;
+    postalCode;
     @api
     name;
 
