@@ -1,9 +1,11 @@
 ({
     doInit : function(component, event, helper) {
-        $A.createComponent("c:flowContainer", {"flowName": "Organisation_Search_Flow"},
+        $A.createComponent("c:flowContainer",
+            {"flowName": "Organisation_Search_Flow",
+            "flowChangeEvent" : component.getReference("c.handleFlowChangeEvent")},
            function(content, status) {
                if (status === "SUCCESS") {
-                   component.find('overlayLib').showCustomModal({
+                   var promiseModal = component.find('overlayLib').showCustomModal({
                        body: content,
                        showCloseButton: true,
                        closeCallback: function() {
@@ -11,6 +13,8 @@
                             dismissActionPanel.fire();
                        }
                    });
+                   component.set("v.overlayPromise", promiseModal);
+
                }
            }
         );
@@ -18,7 +22,8 @@
     handleFlowChangeEvent : function(component, event, helper) {
         var status = event.getParam("status");
         if (status === "FINISHED") {
-            component.find('overlayLib').notifyClose();
+            let overlayPromise = component.get("v.overlayPromise");
+            overlayPromise.then((modal) => {modal.close()});
         }
     }
 });
