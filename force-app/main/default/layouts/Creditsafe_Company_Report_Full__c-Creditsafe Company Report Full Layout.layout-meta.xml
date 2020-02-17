@@ -587,6 +587,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>Creditsafe_Address__c.Creditsafe_Company_Report_Full__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -646,13 +650,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Creditsafe_Company_Negative_Info_NL__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>City__c</fields>
-        <fields>Street__c</fields>
-        <fields>Country__c</fields>
-        <relatedList>Dossier_Address__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
