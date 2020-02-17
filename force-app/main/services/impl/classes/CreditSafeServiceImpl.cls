@@ -306,7 +306,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
 
     private Creditsafe_Company_Report_Full__c mapCreditScore(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork){
         if (reportFullV2.credit_score != null) {
-            Creditsafe_Company_Credit_Score__c creditScore = new Creditsafe_Company_Credit_Score__c();
             if (reportFullV2.credit_score.current_credit_rating != null) {
                 companyReportFull.Current_CR_Limit__c = reportFullV2.credit_score.current_credit_rating.credit_limit;
                 companyReportFull.Current_CR_Common_Description__c = reportFullV2.credit_score.current_credit_rating.common_description;
@@ -338,7 +337,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
 
     private Creditsafe_Company_Report_Full__c mapCompanySummary(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
         if (reportFullV2.company_summary != null) {
-            Creditsafe_Company_Summary__c companySummary = new Creditsafe_Company_Summary__c();
             if (reportFullV2.company_summary.company_status != null) {
                 companyReportFull.Company_Status__c = reportFullV2.company_summary.company_status.status;
                 companyReportFull.Company_Status_Description__c = reportFullV2.company_summary.company_status.description;
