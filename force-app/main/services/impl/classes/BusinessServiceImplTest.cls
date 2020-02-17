@@ -223,7 +223,7 @@ public with sharing class BusinessServiceImplTest {
         InsertDossiersFromDataVendorResponseDTO responseDTO = BusinessService.insertSingleDossierFromDataVendorData('1', null, null, CustomerConnect.DataVendor.CREDIT_SAFE.name(), accountId);
         Test.stopTest();
         List<Business_Dossier__c> dossiersInDb = [SELECT Id, Creditsafe_Id__c, Trade_Name_Full__c, VAT_Number__c FROM Business_Dossier__c];
-        List<Dossier_Address__c> dossierAddresses = [SELECT Id, Business_Data__c FROM Dossier_Address__c];
+        List<Creditsafe_Address__c> dossierAddresses = [SELECT Id, Business_Data__c FROM Creditsafe_Address__c];
         System.assert(dossiersInDb.size() == 1);
         System.assertEquals(dossierAddresses.size(), 1);
         System.assertEquals(dossierAddresses[0].Business_Data__c, dossiersInDb.get(0).Id);
