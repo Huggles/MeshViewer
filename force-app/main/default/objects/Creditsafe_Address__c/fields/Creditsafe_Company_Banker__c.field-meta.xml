@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Creditsafe_Person_Director__c</fullName>
+    <fullName>Creditsafe_Company_Banker__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Creditsafe Person Director</label>
-    <referenceTo>Creditsafe_Person_Director__c</referenceTo>
-    <relationshipLabel>Business Addresses</relationshipLabel>
-    <relationshipName>Director_Addresses</relationshipName>
+    <label>Creditsafe Company Banker</label>
+    <referenceTo>Creditsafe_Company_Banker__c</referenceTo>
+    <relationshipLabel>Creditsafe Addresses</relationshipLabel>
+    <relationshipName>Banker_Addresses</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
