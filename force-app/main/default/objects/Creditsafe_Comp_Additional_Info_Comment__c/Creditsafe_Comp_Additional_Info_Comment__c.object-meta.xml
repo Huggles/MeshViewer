@@ -61,6 +61,6 @@
     </nameField>
     <pluralLabel>Creditsafe Comp Additional Info Comments</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

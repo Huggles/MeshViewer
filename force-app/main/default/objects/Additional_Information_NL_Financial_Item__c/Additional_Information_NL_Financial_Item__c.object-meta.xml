@@ -61,6 +61,6 @@
     </nameField>
     <pluralLabel>Additional Information NL Financial Item</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

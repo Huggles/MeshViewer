@@ -61,7 +61,7 @@
     </nameField>
     <pluralLabel>Creditsafe Comp Activity Classifications</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
 </CustomObject>

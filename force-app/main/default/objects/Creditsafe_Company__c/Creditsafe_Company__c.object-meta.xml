@@ -61,6 +61,6 @@
     </nameField>
     <pluralLabel>Creditsafe Companies</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
