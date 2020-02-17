@@ -9,14 +9,8 @@
             "c/configApp": [
                 "configApp/configApp.js"
             ],
-            "c/licenseControlList": [
-                "licenseControlList/licenseControlList.js"
-            ],
             "c/onboardCustomer": [
                 "onboardCustomer/onboardCustomer.js"
-            ],
-            "c/searchParamSelector": [
-                "searchParamSelector/searchParamSelector.js"
             ]
         }
     },

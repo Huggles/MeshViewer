@@ -1,0 +1,12 @@
+/**
+ * Created by appsolutely on 17/02/2020.
+ */
+
+.THIS {
+}
+.THIS .logoContainer {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 8em;
+}

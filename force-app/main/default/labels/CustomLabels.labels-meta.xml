@@ -604,6 +604,35 @@
         <value>No authentication data found. The app is not activated</value>
     </labels>
     <labels>
+        <fullName>Search_Organization</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International Address search organization details</shortDescription>
+        <value>Search_Organizationd</value>
+    </labels>
+    <labels>
+        <fullName>Search_Building</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International Address search building details</shortDescription>
+        <value>Search_Building</value>
+    </labels>
+    <labels>
+        <fullName>Search_Housenr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International Address search house number details</shortDescription>
+        <value>Search_Housenr</value>
+    </labels>
+    <labels>
+        <fullName>Search_PObox</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International Address search PObox details</shortDescription>
+        <value>Search_PObox</value>
+    </labels>
+
+    <labels>
         <fullName>Search_Address</fullName>
         <language>en_US</language>
         <protected>true</protected>
