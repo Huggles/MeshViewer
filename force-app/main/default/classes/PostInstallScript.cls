@@ -39,7 +39,7 @@ public without sharing class PostInstallScript implements InstallHandler {
     }
 
     public PostInstallScript() {
-        ApexClass apexClass = [SELECT NameSpacePrefix FROM ApexClass WHERE Name = 'PostInstallScript'];
+        ApexClass apexClass = [SELECT NameSpacePrefix FROM ApexClass WHERE Name = 'PostInstallScript' AND (NameSpacePrefix = 'cust_connect' OR NameSpacePrefix = 'appsolutely') LIMIT 1];
         this.nameSpace = apexClass.NamespacePrefix;
     }
 
