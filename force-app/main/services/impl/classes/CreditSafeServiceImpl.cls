@@ -83,7 +83,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             if (reportFullV2.share_capital_structure.share_holders != null && reportFullV2.share_capital_structure.share_holders.item != null) {
                 for (CreditsafeWsdl.CreditsafeCompanyShareHolderV2 shareHolderV2 :reportFullV2.share_capital_structure.share_holders.item) {
                     Creditsafe_Company_Share_Holder__c shareHolder = new Creditsafe_Company_Share_Holder__c();
-                    Creditsafe_Address__c address = mapCreditSafeAddress(shareHolderV2.address, new Creditsafe_Address__c());
+                    Creditsafe_Address__c address = mapCreditSafeAddress(shareHolderV2.address, new Creditsafe_Address__c(), 'Share Holder Address');
                     shareHolder.Name__c = shareHolderV2.name;
                     shareHolder.Share_Percent__c = String.valueOf(shareHolderV2.share_percent);
                     unitOfWork.registerNew(shareHolder, Creditsafe_Company_Share_Holder__c.Creditsafe_Company_Report_Full__c, companyReportFull);
@@ -100,7 +100,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             if (reportFullV2.other_information.bankers != null && reportFullV2.other_information.bankers.item != null) {
                 for (CreditsafeWsdl.CreditsafeCompanyBankerV2 bankerV2 :reportFullV2.other_information.bankers.item) {
                     Creditsafe_Company_Banker__c banker = new Creditsafe_Company_Banker__c();
-                    Creditsafe_Address__c address = mapCreditSafeAddress(bankerV2.address, new Creditsafe_Address__c());
+                    Creditsafe_Address__c address = mapCreditSafeAddress(bankerV2.address, new Creditsafe_Address__c(), 'Banker Address');
                     banker.Bank_Code__c = bankerV2.bank_code;
                     banker.Name__c = bankerV2.name;
                     unitOfWork.registerNew(banker, Creditsafe_Company_Banker__c.Creditsafe_Company_Report_Full__c, companyReportFull);
@@ -250,12 +250,12 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
     private Creditsafe_Company_Report_Full__c mapContactInfo(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
         if (reportFullV2.contact_information != null) {
             if (reportFullV2.contact_information.main_address != null) {
-                Creditsafe_Address__c mainAddress = mapCreditSafeAddress(reportFullV2.contact_information.main_address, new Creditsafe_Address__c());
+                Creditsafe_Address__c mainAddress = mapCreditSafeAddress(reportFullV2.contact_information.main_address, new Creditsafe_Address__c(), 'Main Address');
                 unitOfWork.registerNew(mainAddress, Creditsafe_Address__c.Creditsafe_Company_Report_Full__c, companyReportFull);
             }
             if (reportFullV2.contact_information.other_addresses != null && reportFullV2.contact_information.other_addresses.item != null) {
                 for (CreditsafeWsdl.CreditsafeAddressV2 otherAddressV2 :reportFullV2.contact_information.other_addresses.item) {
-                    Creditsafe_Address__c contactInfoAddress = mapCreditSafeAddress(otherAddressV2, new Creditsafe_Address__c());
+                    Creditsafe_Address__c contactInfoAddress = mapCreditSafeAddress(otherAddressV2, new Creditsafe_Address__c(), 'Other Address');
                     unitOfWork.registerNew(contactInfoAddress, Creditsafe_Address__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                 }
             }
@@ -277,7 +277,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     personDirector.Gender__c = currentDirectorV2.gender;
                     personDirector.RecordTypeId = currentDirectorRecordId;
                     //TODO add position
-                    Creditsafe_Address__c address = mapCreditSafeAddress(currentDirectorV2.address, new Creditsafe_Address__c());
+                    Creditsafe_Address__c address = mapCreditSafeAddress(currentDirectorV2.address, new Creditsafe_Address__c(), 'Director Address');
                     unitOfWork.registerNew(personDirector, Creditsafe_Person_Director__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     unitOfWork.registerNew(address, Creditsafe_Address__c.Creditsafe_Person_Director__c, personDirector);
                 }
@@ -293,7 +293,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     personDirector.Date_of_Birth__c = getDate(previousDirectorV2.date_of_birth);
                     personDirector.Gender__c = previousDirectorV2.gender;
                     personDirector.RecordTypeId = previousDirectorRecordId;
-                    Creditsafe_Address__c address = mapCreditSafeAddress(previousDirectorV2.address, new Creditsafe_Address__c());
+                    Creditsafe_Address__c address = mapCreditSafeAddress(previousDirectorV2.address, new Creditsafe_Address__c(), 'Director Address');
                     unitOfWork.registerNew(personDirector, Creditsafe_Person_Director__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     unitOfWork.registerNew(address, Creditsafe_Address__c.Creditsafe_Person_Director__c, personDirector);
                 }
@@ -401,7 +401,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                 //unitOfWork.registerNew(basicInformation, Creditsafe_Company_Basic_Information__c.Creditsafe_Company_Report_Full__c, companyReportFull);
 
                 if (basicInformationV2.contact_address != null) {
-                    Creditsafe_Address__c contactAddress = mapCreditSafeAddress(basicInformationV2.contact_address, new Creditsafe_Address__c());
+                    Creditsafe_Address__c contactAddress = mapCreditSafeAddress(basicInformationV2.contact_address, new Creditsafe_Address__c(), 'Contact Address');
                     unitOfWork.registerRelationship(contactAddress, Creditsafe_Address__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                 }
             }
@@ -620,13 +620,13 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             }
 
             if (reportFullV2.additional_information.generic != null && reportFullV2.additional_information.generic.item != null) {
-                    for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 : reportFullV2.additional_information.generic.item) {
-                        Creditsafe_Company_Key_Value__c creditsafeCompanyKeyValue = new Creditsafe_Company_Key_Value__c();
-                        creditsafeCompanyKeyValue.Key__c = keyValueV2.key;
-                        creditsafeCompanyKeyValue.Value__c = keyValueV2.value;
-                        //creditsafeCompanyKeyValue.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
-                        unitOfWork.registerNew(creditsafeCompanyKeyValue, Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c, companyReportFull);
-                    }
+                for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 : reportFullV2.additional_information.generic.item) {
+                    Creditsafe_Company_Key_Value__c creditsafeCompanyKeyValue = new Creditsafe_Company_Key_Value__c();
+                    creditsafeCompanyKeyValue.Key__c = keyValueV2.key;
+                    creditsafeCompanyKeyValue.Value__c = keyValueV2.value;
+                    //creditsafeCompanyKeyValue.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
+                    unitOfWork.registerNew(creditsafeCompanyKeyValue, Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                }
             }
             //insert order additionalInfoDE, additionalInfoNL, additionalInfoComments, additionalInformationHistoricalEvents,
             // additionalInformationNLFinancialItems, additionalInformationNLKvkFilings, additionalInfoNLLetterOfLiabilities, additionalInfoComments, additionalInformationHistoricalEvents,
@@ -759,8 +759,8 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         return financialStatement;
     }
 
-    public Creditsafe_Address__c mapCreditSafeAddress(CreditsafeWsdl.CreditsafeAddressV2 dataVendorDossier, Creditsafe_Address__c addressDB) {
-        addressDB.Name = dataVendorDossier.full_address != null ? dataVendorDossier.full_address.abbreviate(79) : '';
+    public Creditsafe_Address__c mapCreditSafeAddress(CreditsafeWsdl.CreditsafeAddressV2 dataVendorDossier, Creditsafe_Address__c addressDB, String type) {
+        addressDB.Name = dataVendorDossier.street != null ? dataVendorDossier.street.abbreviate(79) : '';
         addressDB.Full_Address__c = dataVendorDossier.full_address;
         addressDB.Postcode__c = dataVendorDossier.postal_code;
         addressDB.Street__c = dataVendorDossier.street;
@@ -768,6 +768,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         addressDB.House_Number__c = dataVendorDossier.house_number;
         addressDB.Country__c = dataVendorDossier.country;
         addressDB.Telephone__c = dataVendorDossier.telephone;
+        addressDB.Type__c = type;
 
         return addressDB;
     }

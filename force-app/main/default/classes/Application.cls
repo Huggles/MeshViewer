@@ -14,9 +14,6 @@ public inherited sharing class Application {
                     Business_Data_SBI__c.SObjectType,
                     Dossier_Address__c.SObjectType,
                     Creditsafe_Company_Report_Full__c.SObjectType,
-                    Creditsafe_Address__c.SObjectType,
-//                    Creditsafe_Comp_Additional_Info_Comment__c.SObjectType,
-//                    Additional_Information_Historical_Event__c.SObjectType,
                     Additional_Information_NL_Financial_Item__c.SObjectType,
                     Additional_Information_NL_Kvk_Filing__c.SObjectType,
                     Additional_Info_NL_Letter_Of_Liability__c.SObjectType,
@@ -38,6 +35,7 @@ public inherited sharing class Application {
                     Creditsafe_Company_Advisor__c.SObjectType,
                     Creditsafe_Company_Employee_Information__c.SObjectType,
                     Creditsafe_Company_Share_Holder__c.SObjectType,
+                    Creditsafe_Address__c.SObjectType,
                     Creditsafe_Company_Key_Value__c.SObjectType
             });
 

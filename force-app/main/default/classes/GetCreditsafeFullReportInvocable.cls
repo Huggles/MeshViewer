@@ -4,7 +4,7 @@
 
 global with sharing class GetCreditsafeFullReportInvocable {
 
-    global class CreditsafeReportParameters {
+    global inherited sharing class CreditsafeReportParameters {
         @InvocableVariable(label = 'Company Id')
         global String companyId;
         @InvocableVariable(label = 'Language')

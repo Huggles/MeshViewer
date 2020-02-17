@@ -56,11 +56,11 @@
     <label>Creditsafe Company Financial Statement</label>
     <nameField>
         <displayFormat>FS-{000000}</displayFormat>
-        <label>Creditsafe Company Financial Statement Name</label>
+        <label>Creditsafe Company Financial Statement</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Creditsafe Company Financial Statements</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
