@@ -759,7 +759,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         return financialStatement;
     }
 
-    private Creditsafe_Address__c mapCreditSafeAddress(CreditsafeWsdl.CreditsafeAddressV2 dataVendorDossier, Creditsafe_Address__c addressDB) {
+    public Creditsafe_Address__c mapCreditSafeAddress(CreditsafeWsdl.CreditsafeAddressV2 dataVendorDossier, Creditsafe_Address__c addressDB) {
         addressDB.Name = dataVendorDossier.full_address != null ? dataVendorDossier.full_address.abbreviate(79) : '';
         addressDB.Full_Address__c = dataVendorDossier.full_address;
         addressDB.Postcode__c = dataVendorDossier.postal_code;

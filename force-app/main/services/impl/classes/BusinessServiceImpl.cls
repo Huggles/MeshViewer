@@ -202,7 +202,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         unitOfWork.registerNew(dossierDB, Business_Dossier__c.Account__c, account);
         if (dataVendorDossier != null && dataVendorDossier.address != null) {
             Creditsafe_Address__c addressDB = new CreditSafeServiceImpl().mapCreditSafeAddress(dataVendorDossier.address, new Creditsafe_Address__c());
-            unitOfWork.registerNew(addressDB, Dossier_Address__c.Business_Data__c, dossierDB);
+            unitOfWork.registerNew(addressDB, Creditsafe_Address__c.Business_Data__c, dossierDB);
         }
 
         return dossierDB;
