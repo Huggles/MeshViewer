@@ -8,7 +8,7 @@
         <name>backgroundComponents</name>
         <type>Background</type>
     </flexiPageRegions>
-    <masterLabel>Customer.connect Administration UtilityBar</masterLabel>
+    <masterLabel>Company.info for Sales Administration UtilityBar</masterLabel>
     <template>
         <name>one:utilityBarTemplateDesktop</name>
     </template>

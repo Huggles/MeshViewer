@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
     <customApplications>
-        <label>Customer.connect setup</label>
+        <label>Company.info for Sales setup</label>
         <name>Customerconnect_Administration</name>
     </customApplications>
     <customLabels>
@@ -93,11 +93,11 @@
         <name>Config_Loading</name>
     </customLabels>
     <customLabels>
-        <label>Customer.connect configuratie pagina</label>
+        <label>Company.info for Sales configuratie pagina</label>
         <name>Config_Page_Title</name>
     </customLabels>
     <customLabels>
-        <label>Customer.connect configuratie</label>
+        <label>Company.info for Sales configuratie</label>
         <name>Config_Title</name>
     </customLabels>
     <customLabels>
@@ -157,7 +157,7 @@
         <name>DML_Manager_Error</name>
     </customLabels>
     <customLabels>
-        <label>De onderstaande details zijn gesynchroniseerd vanuit Customer.connect</label>
+        <label>De onderstaande details zijn gesynchroniseerd vanuit Company.info</label>
         <name>Details_Help</name>
     </customLabels>
     <customLabels>
@@ -185,11 +185,11 @@
         <name>Dossier_Number</name>
     </customLabels>
     <customLabels>
-        <label>Verwijder Customer.connect gegevens</label>
+        <label>Verwijder Company.info gegevens</label>
         <name>Dossier_Remove</name>
     </customLabels>
     <customLabels>
-        <label>Customer.connect gegevens verwijderd</label>
+        <label>Company.info gegevens verwijderd</label>
         <name>Dossier_Removed</name>
     </customLabels>
     <customLabels>
@@ -237,7 +237,7 @@
         <name>Error_Client_Payment</name>
     </customLabels>
     <customLabels>
-        <label>Fout 103 ontvangen van Customer.connect. Neem contact op met support.</label>
+        <label>Fout 103 ontvangen van Company.info. Neem contact op met support.</label>
         <name>Error_Config</name>
     </customLabels>
     <customLabels>
@@ -249,7 +249,7 @@
         <name>Error_Input_Incorrect</name>
     </customLabels>
     <customLabels>
-        <label>Er was een probleem met het verwijderen van de Customer.connect gegevens. Controleer of u toestemming heeft Customer.connect gegevens te verwijderen.</label>
+        <label>Er was een probleem met het verwijderen van de Company.info gegevens. Controleer of u toestemming heeft Company.info gegevens te verwijderen.</label>
         <name>Error_Remove_Dossier</name>
     </customLabels>
     <customLabels>
@@ -285,7 +285,7 @@
         <name>Error_Server_Unavailable_Temporary</name>
     </customLabels>
     <customLabels>
-        <label>Fout 102 ontvangen van Customer.connect. Neem contact op met support.</label>
+        <label>Fout 102 ontvangen van Company.info. Neem contact op met support.</label>
         <name>Error_Unknown</name>
     </customLabels>
     <customLabels>
@@ -317,11 +317,11 @@
         <name>Matching_Companies</name>
     </customLabels>
     <customLabels>
-        <label>Nieuwe Organisatie op basis van Customer.connect</label>
+        <label>Nieuwe Organisatie op basis van Company.info data</label>
         <name>New_Account_CC</name>
     </customLabels>
     <customLabels>
-        <label>Geen Customer.connect authenticatie data gevonden. Customer.connect is nog niet geactiveerd</label>
+        <label>Geen Company.info for Salest authenticatie data gevonden. Company.info for Sales is nog niet geactiveerd</label>
         <name>NoAuthAppNotActive</name>
     </customLabels>
     <customLabels>
@@ -429,11 +429,11 @@
         <name>Success</name>
     </customLabels>
     <customLabels>
-        <label>Customer.connect synchronisatie</label>
+        <label>Company.info for Sales synchronisatie</label>
         <name>Sync</name>
     </customLabels>
     <customLabels>
-        <label>Customer.connect synchronisatie is succesvol uitgevoerd</label>
+        <label>Company.info for Sales synchronisatie is succesvol uitgevoerd</label>
         <name>Sync_Success</name>
     </customLabels>
     <customLabels>
@@ -457,7 +457,7 @@
         <name>WSCall_Unknown_Exception</name>
     </customLabels>
     <customLabels>
-        <label>Customer.connect kan de systemen van de data leverancier niet bereiken. Probeer het later nog een keer.</label>
+        <label>Company.info for Sales kan de systemen van de Company.info niet bereiken. Probeer het later nog een keer.</label>
         <name>WSCall_Unsuccessful</name>
     </customLabels>
     <customLabels>
@@ -509,7 +509,7 @@
         <name>Link_to_config</name>
     </customPageWebLinks>
     <customTabs>
-        <label>Customer.connect setup</label>
+        <label>Company.info for Sales setup</label>
         <name>Customer_connect_configuration</name>
     </customTabs>
     <quickActions>
@@ -553,7 +553,7 @@
         <name>NewTask</name>
     </quickActions>
     <quickActions>
-        <label>Nieuw Account met Customer.connect</label>
+        <label>Nieuw Account met Company.info for Sales</label>
         <name>searchGlobalAction</name>
     </quickActions>
     <quickActions>
