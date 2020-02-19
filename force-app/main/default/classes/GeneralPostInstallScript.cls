@@ -4,25 +4,50 @@
 
 public without sharing class GeneralPostInstallScript implements IInstallAction {
 
-    private final String UPDATE_DOSSIER_SCHEDULE_NAME = 'Update dossiers';
+    @TestVisible
+    private final static String PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME = 'Process updated Dutch dossiers';
+    @TestVisible
+    private final static String PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME = 'Process removed Dutch dossiers';
 
-    public void execute(InstallContext context) {
-        //schedule an Update dossier scheduler
-        scheduleUpdateDossier();
+    private inherited sharing class BatchScheduler implements Schedulable {
+
+        private Database.Batchable<Business_Dossier__c> batchable;
+        private Integer batchSize;
+
+        public BatchScheduler(Database.Batchable<Business_Dossier__c> batchable, Integer batchSize) {
+            this.batchable = batchable;
+            this.batchSize = batchSize;
+        }
+
+        public void execute(SchedulableContext sc) {
+            Database.ExecuteBatch(batchable, batchSize);
+        }
     }
 
-    private void scheduleUpdateDossier() {
-        // check if there is an existing scheduled job, else create one
+    public void execute(InstallContext context) {
+        //get the time
+        List<Schedule_Update_Dossier__mdt> scheduleUpdateDossiers = [SELECT Hour__c, Label, MasterLabel, DeveloperName FROM Schedule_Update_Dossier__mdt LIMIT 1];
+        String hour = String.valueOf(scheduleUpdateDossiers[0].Hour__c).substringBefore('.').substringBefore(',');
+        String cronexpression = '0 0 '+ hour +' * * ?';
+        // schedule the batches
+        scheduleBatch(PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), cronexpression);
+        cronexpression = '0 0 '+ hour + 1 +' * * ?'; // offset of 1h
+        scheduleBatch(PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), cronexpression);
+    }
+
+    private void scheduleBatch(String scheduleName, Schedulable schedulable, String cronExpression) {
+        // check if there is an existing scheduled job, if so abort it and restart (to ensure no 'stale' jobs run)
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger
-            WHERE CronJobDetail.Name =: UPDATE_DOSSIER_SCHEDULE_NAME LIMIT 1];
-        if (! (cronTriggers.size() > 0)) {
-            List<Schedule_Update_Dossier__mdt> scheduleUpdateDossiers = [SELECT cust_connect__Hour__c, Label, MasterLabel, DeveloperName from cust_connect__Schedule_Update_Dossier__mdt LIMIT 1];
-            if (scheduleUpdateDossiers.size() > 0) {
-                String hour = String.valueOf(scheduleUpdateDossiers[0].Hour__c).substringBefore('.').substringBefore(',');
-                String cronexpression = '0 0 '+ hour +' * * ?';
-                System.Schedule(UPDATE_DOSSIER_SCHEDULE_NAME, cronexpression, new cust_connect.UpdateDossierBatchScheduler());
+            WHERE CronJobDetail.Name =: scheduleName];
+        for (CronTrigger cronTrigger : cronTriggers) {
+            try {
+                System.abortJob(cronTrigger.Id);
+            } catch (Exception ex) { // sometimes this throws unexpected exceptions which can be ignored.
+
             }
+
         }
+        System.schedule(scheduleName, cronexpression, schedulable);
     }
 
 }

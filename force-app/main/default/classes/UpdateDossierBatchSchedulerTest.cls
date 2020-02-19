@@ -31,20 +31,21 @@ private class UpdateDossierBatchSchedulerTest {
         output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
         DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
         a1.dossier_number = '1';
-        a1.establishment_number = '2';
-        a1.update_types = UpdateDossiersBatchTest.stringArray(new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'});
+        a1.update_types = new DutchBusinessWsdl.stringArray();
+        a1.update_types.item = new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'};
         output.results.item.add(a1);
 
         DutchBusinessWsdl.DutchBusinessUpdateReference a2 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
         a2.dossier_number = '11';
         a2.establishment_number = '12';
-        a2.update_types = UpdateDossiersBatchTest.stringArray(new List<String>{'Removed'});
+        a2.update_types = new DutchBusinessWsdl.stringArray();
+        a2.update_types.item = new List<String>{'Removed'};
         output.results.item.add(a2);
         Credentials__c c = Credentials__c.getOrgDefaults();
 
         DutchBusinessWsdl.DutchBusinessDossierV3 output1 = new DutchBusinessWsdl.DutchBusinessDossierV3();
 
-        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(c.Last_Executed_Batch__c.date(), BusinessServiceImpl.updateTypesArray, pageNR)).thenReturn(output);
+        mocks.when(mockWS.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.anyInteger())).thenReturn(output);
         mocks.when(mockWS.dutchBusinessGetDossierV3(a1.dossier_number, a1.establishment_number)).thenReturn(output1);
 
         mocks.stopStubbing();

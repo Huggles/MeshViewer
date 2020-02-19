@@ -1793,7 +1793,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Customer.connect Administrator</label>
+    <label>Company.info for Sales Administrator</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -2073,6 +2073,10 @@
     </tabSettings>
     <tabSettings>
         <tab>Creditsafe_Company_Report_Full__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Business_Dossier__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

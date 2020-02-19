@@ -4,6 +4,12 @@
 
 public inherited sharing class CallOutHelper {
 
+    @TestVisible
+    private static final String ERROR_MESSAGE_START_STRING = 'Web service callout failed: WebService returned a SOAP Fault: ';
+
+    @TestVisible
+    private static final String FAULT_CODE_STRING = ' faultcode';
+
     /**
      * Handles a callout exception that can occur when calling the data vendor.
      *
@@ -120,11 +126,16 @@ public inherited sharing class CallOutHelper {
         return faultCode;
     }
 
+    @TestVisible
     private static String getErrorMessage(String message) {
-        String returnValue = '';
-        returnValue = message.removeStart('Web service callout failed: WebService returned a SOAP Fault: ');
-        returnValue = message.substring(0, message.indexOf(' faultcode'));
-        return returnValue;
+        try {
+            String returnValue = '';
+            returnValue = message.removeStart(ERROR_MESSAGE_START_STRING);
+            returnValue = returnValue.substring(0, returnValue.indexOf(FAULT_CODE_STRING));
+            return returnValue;
+        } catch (StringException e) {
+            return message;
+        }
     }
 
 }

@@ -79,7 +79,7 @@ public with sharing class BusinessAccountingServiceImplTest {
         output1.results.item.add(a);
 
         mocks.startStubbing();
-        mocks.when(mockWS.userCreateV2(accountId, username, password, BusinessAccountingServiceImpl.usergroups, 'customer.connect.support@appsolutely.nl',
+        mocks.when(mockWS.userCreateV2(accountId, username, password, BusinessAccountingServiceImpl.usergroups, 'incident@appsolutely.nl',
                 orgDetails.Name, orgDetails.Address.getStreet() + ', ' + orgDetails.Address.getPostalCode(),
                 UserInfo.getName(), UserInfo.getUserEmail(), orgDetails.Phone, orgDetails.Fax, '', '')).thenReturn(output);
         mocks.when(mockWS.accountUserSearchV2(accountId, 'test', 1)).thenReturn(output1);

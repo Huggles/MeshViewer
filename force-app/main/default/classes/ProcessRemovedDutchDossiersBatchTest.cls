@@ -1,23 +1,23 @@
 /**
- * Created by tejaswinidandi on 2019-08-01.
+ * Created by jaapbranderhorst on 04/02/2020.
  */
 
 @IsTest
-public class UpdateDossiersBatchTest {
+private class ProcessRemovedDutchDossiersBatchTest {
 
     @IsTest
-    public static void testNoResults() {
+    static void testNoResults() {
         // given
         // a list of updated  dossiers from the CI backend
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsDutchBusiness wsDutchBusinessMock = (IWsDutchBusiness) mocks.mock(IWsDutchBusiness.class);
         mocks.startStubbing();
 
-        mocks.when(wsDutchBusinessMock.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.integerBetween(1, true, 1, true))).thenReturn(getDutchBusinessUpdateReferencePagedResultMock(10, 1, 1, 0, 1));
+        mocks.when(wsDutchBusinessMock.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.integerBetween(1, true, 1, true))).thenReturn(UpdateDossiersBatchTest.getDutchBusinessUpdateReferencePagedResultMock(10, 1, 1, 0, 1));
         mocks.stopStubbing();
         Application.Service.setMock(IWsDutchBusiness.class, wsDutchBusinessMock);
         // with no match with the dossiers currently in SF
-        List<Business_Dossier__c> dossiers = getBusinessDossiersMock(10, 30, 1, 1);
+        List<Business_Dossier__c> dossiers = UpdateDossiersBatchTest.getBusinessDossiersMock(10, 30, 1, 1);
         insert dossiers;
         dossiers = [
                 SELECT
@@ -111,7 +111,7 @@ public class UpdateDossiersBatchTest {
         // when
         // we run the batch
         Test.startTest();
-        Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
+        Database.Batchable<Business_Dossier__c> batch = new ProcessRemovedDutchDossiersBatch();
         Database.executeBatch(batch, 100);
         Test.stopTest();
 
@@ -218,25 +218,21 @@ public class UpdateDossiersBatchTest {
         }
     }
 
-
     @IsTest
-    public static void testOnePage() {
-        // given
-        // a list of updated  dossiers from the CI backend (one page)
-        // with matches to the SF dossiers
+    private static void testOnePage() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsDutchBusiness wsDutchBusinessMock = (IWsDutchBusiness) mocks.mock(IWsDutchBusiness.class);
         mocks.startStubbing();
 
-        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateReferencePagedResultMock = getDutchBusinessUpdateReferencePagedResultMock(10, 1, 1, 1, 1);
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateReferencePagedResultMock = UpdateDossiersBatchTest.getDutchBusinessUpdateReferencePagedResultMock(10, 1, 1, 1, 1);
         mocks.when(wsDutchBusinessMock.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.integerBetween(1, true, 1, true))).thenReturn(dutchBusinessUpdateReferencePagedResultMock);
-        for (DutchBusinessWsdl.DutchBusinessUpdateReference businessUpdateReference : dutchBusinessUpdateReferencePagedResultMock.results.item) {
-            mocks.when(wsDutchBusinessMock.dutchBusinessGetDossierV3(businessUpdateReference.dossier_number, businessUpdateReference.establishment_number)).thenReturn(getWsDutchBusinessDossierV3Mock(businessUpdateReference.dossier_number, businessUpdateReference.establishment_number));
-        }
+//        for (DutchBusinessWsdl.DutchBusinessUpdateReference businessUpdateReference : dutchBusinessUpdateReferencePagedResultMock.results.item) {
+//            mocks.when(wsDutchBusinessMock.dutchBusinessGetDossierV3(businessUpdateReference.dossier_number, businessUpdateReference.establishment_number)).thenReturn(getWsDutchBusinessDossierV3Mock(businessUpdateReference.dossier_number, businessUpdateReference.establishment_number));
+//        }
         mocks.stopStubbing();
         Application.Service.setMock(IWsDutchBusiness.class, wsDutchBusinessMock);
         // with a match with the dossiers currently in SF
-        List<Business_Dossier__c> dossiers = getBusinessDossiersMock(10, 1, 1, 1);
+        List<Business_Dossier__c> dossiers = UpdateDossiersBatchTest.getBusinessDossiersMock(10, 1, 1, 1);
         insert dossiers;
         dossiers = [
                 SELECT
@@ -330,7 +326,7 @@ public class UpdateDossiersBatchTest {
         // when
         // we run the batch
         Test.startTest();
-        Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
+        Database.Batchable<Business_Dossier__c> batch = new ProcessRemovedDutchDossiersBatch();
         Database.executeBatch(batch, 100);
         Test.stopTest();
 
@@ -423,76 +419,8 @@ public class UpdateDossiersBatchTest {
                         OwnerId,
                         RecordTypeId,
                         SystemModstamp
-                FROM Business_Dossier__c WHERE Trade_Name_Full__c = 'test'];
+                FROM Business_Dossier__c WHERE Is_Removed__c = true];
         System.assert(dossiers.size() == dossiersToBeAsserted.size());
 
-    }
-
-    /**
-     * Returns a mock DutchBusinessUpdateReferencePagedResult based on the given parameters
-     *
-     * @param nrOfDossiersPerPage
-     * @param startDossierNr
-     * @param startEstablishmentNr
-     * @param nrOfEstablishmentsPerDossierNr
-     * @param maxPages
-     *
-     * @return
-     */
-    public static DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult getDutchBusinessUpdateReferencePagedResultMock(Integer nrOfDossiersPerPage, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr, Integer maxPages) {
-        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
-        output.paging = new DutchBusinessWsdl.ResultInfo();
-        output.paging.numpages = maxPages;
-        output.results = new DutchBusinessWsdl.DutchBusinessUpdateReferenceArray();
-        output.results.item = new List<DutchBusinessWsdl.DutchBusinessUpdateReference>();
-        for (Integer i = 0; i < nrOfDossiersPerPage / (nrOfEstablishmentsPerDossierNr == 0 ? 1 : nrOfEstablishmentsPerDossierNr) ; i++) {
-            DutchBusinessWsdl.DutchBusinessUpdateReference a1 =  new DutchBusinessWsdl.DutchBusinessUpdateReference();
-            a1.dossier_number = '' + (startDossierNr + i);
-            for (Integer i2 = 0; i2 < nrOfEstablishmentsPerDossierNr; i2++) {
-                a1.establishment_number = '' + (startEstablishmentNr + i2);
-            }
-            a1.update_types = new DutchBusinessWsdl.stringArray();
-            a1.update_types.item = new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress'};
-            output.results.item.add(a1);
-        }
-        return output;
-    }
-
-    /**
-     * Returns a list of business dossiers with the given dossier and establishment numbers
-     *
-     * @param nrOfDossiers
-     * @param startDossierNr
-     * @param startEstablishmentNr
-     * @param nrOfEstablishmentsPerDossierNr
-     *
-     * @return
-     */
-    public static List<Business_Dossier__c> getBusinessDossiersMock(Integer nrOfDossiers, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr) {
-        List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
-        for (Integer i = 0; i < nrOfDossiers / (nrOfEstablishmentsPerDossierNr == 0 ? 1 : nrOfEstablishmentsPerDossierNr); i++) {
-            Business_Dossier__c dossier = new Business_Dossier__c(Name = '' + i, Dossier_Number__c = '' + (startDossierNr + i));
-            for (Integer i2 = 0; i2 < nrOfEstablishmentsPerDossierNr; i2++) {
-                dossier.Establishment_Number__c = '' + (startEstablishmentNr + i2);
-            }
-            dossiers.add(dossier);
-        }
-        return dossiers;
-    }
-
-    /**
-     * Returns a mock dutch business dossier with a trade name set to test
-     *
-     * @param dossierNumber
-     * @param establishmentNumber
-     *
-     * @return
-     */
-    public static DutchBusinessWsdl.DutchBusinessDossierV3 getWsDutchBusinessDossierV3Mock(String dossierNumber, String establishmentNumber) {
-        DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessDossierV3 = new DutchBusinessWsdl.DutchBusinessDossierV3();
-        dutchBusinessDossierV3.dossier_number = dossierNumber;
-        dutchBusinessDossierV3.establishment_number = establishmentNumber;
-        dutchBusinessDossierV3.trade_name_full = 'test';
-        return dutchBusinessDossierV3;
     }
 }

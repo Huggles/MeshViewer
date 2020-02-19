@@ -1,13 +1,20 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "Company.info for Sales",
+            "versionName": "Winter 20",
+            "versionNumber": "2.2.1.NEXT"
+        }
+    ],
+    "namespace": "appsolutely",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "47.0",
+    "packageAliases": {
+        "Company.info for Sales": "0Ho0J0000004C9wSAE",
+        "Company.info for Sales@0.1.0-2-release/v2.0": "04t0J000000M9MUQA0",
+        "Company.info for Sales@0.1.0-3-release/v2.0": "04t0J000000M9MZQA0",
+        "Company.info for Sales@1.0.0-1": "04t0J000000M9NIQA0"
     }
-  ],
-  "namespace": "cust_connect",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "45.0"
 }
-
-

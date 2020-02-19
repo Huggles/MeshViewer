@@ -359,6 +359,60 @@ private class CallOutHelperTest {
         System.assert([SELECT Id FROM Error_Log__c].size() == 1);
     }
 
+    @IsTest
+    static void testGetErrorMessageCorrectErrorMessage() {
+        // given
+        // a raw error message that complies to the expectation
+        String testValue = 'test';
+        String rawMessage = CallOutHelper.ERROR_MESSAGE_START_STRING + testValue + CallOutHelper.FAULT_CODE_STRING;
+
+        // when
+        // getErrorMessage is called
+        Test.startTest();
+        String sanitizedErrorMessage = CallOutHelper.getErrorMessage(rawMessage);
+        Test.stopTest();
+
+        // then we get the sanitized error message back
+        System.assert(sanitizedErrorMessage == testValue);
+
+    }
+
+    @IsTest
+    static void testGetErrorMessageNoFaultString() {
+        // given
+        // a raw error message without 'fault'
+        String testValue = 'test';
+        String rawMessage = CallOutHelper.ERROR_MESSAGE_START_STRING + testValue;
+
+        // when
+        // getErrorMessage is called
+        Test.startTest();
+        String sanitizedErrorMessage = CallOutHelper.getErrorMessage(rawMessage);
+        Test.stopTest();
+
+        // then we get the raw error message back (no exceptions thrown)
+        System.assert(sanitizedErrorMessage == rawMessage);
+
+    }
+
+    @IsTest
+    static void testGetErrorMessageNoSoapFaultStart() {
+        // given
+        // a raw error message without 'error message start'
+        String testValue = 'test';
+        String rawMessage = testValue + CallOutHelper.FAULT_CODE_STRING;
+
+        // when
+        // getErrorMessage is called
+        Test.startTest();
+        String sanitizedErrorMessage = CallOutHelper.getErrorMessage(rawMessage);
+        Test.stopTest();
+
+        // then everything works
+        System.assert(sanitizedErrorMessage == testValue);
+
+    }
+
 
 
 }
