@@ -8,6 +8,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
     /**
     * Searches for dutch business dossiers in Company.info backend (Dutch Business service)
+    * TODO: replace with method that returns SObjects
     *
     * @param trade_name
     * @param city
@@ -21,16 +22,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     * @return
     */
     public List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
-        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
-        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, 1);
-        if (returnedResults.results != null && returnedResults.results.item != null) {
-            searchResults.addAll(returnedResults.results.item);
-            Integer numPages = returnedResults.paging.numpages;
-            for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
-                returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, i);
-                searchResults.addAll(returnedResults.results.item);
-            }
-        }
+        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = searchForDutchBusinessesInCompanyInfo(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
 
         List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
         for (DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2 : searchResults) {
@@ -38,6 +30,32 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         }
         return returnValue;
     }
+
+    /**
+    * Searches for dutch business dossiers in Company.info backend (Dutch Business service)
+    * TODO: replace searchForDutchDossiers with this
+    *
+    * @param trade_name
+    * @param city
+    * @param street
+    * @param postcode
+    * @param house_number
+    * @param house_number_addition
+    * @param telephone_number
+    * @param domain_name
+    *
+    * @return
+    */
+    public List<Business_Dossier__c> searchForDutchDossiersSObject(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
+        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = searchForDutchBusinessesInCompanyInfo(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
+
+        List<Business_Dossier__c> returnValue = new List<Business_Dossier__c>();
+        for (DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2 : searchResults) {
+            returnValue.add(mapDutchBusinessReferenceV2ToBusinessDossier(dutchBusinessReferenceV2));
+        }
+        return returnValue;
+    }
+
 
     /**
 * Processes the dutch business dossiers that have been removed from the CI backend
@@ -229,6 +247,20 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     /*****************************
     /** IMPLEMENTATION METHODS
     /******************************/
+
+    private List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchForDutchBusinessesInCompanyInfo(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
+        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
+        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, 1);
+        if (returnedResults.results != null && returnedResults.results.item != null) {
+            searchResults.addAll(returnedResults.results.item);
+            Integer numPages = returnedResults.paging.numpages;
+            for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
+                returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, i);
+                searchResults.addAll(returnedResults.results.item);
+            }
+        }
+        return searchResults;
+    }
 
     @TestVisible
     private List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessWsdl.DutchBusinessDossierV3> dataVendorDossiers, fflib_ISObjectUnitOfWork unitOfWork) {
@@ -442,6 +474,26 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             }
         }
         return sbiCodesDB;
+    }
+
+    /**
+     * Maps a dutch business search result to a business dossier SObject
+     *
+     * @param reference the dutch business reference (search result)
+     *
+     * @return a new business dossier
+     */
+    private static Business_Dossier__c mapDutchBusinessReferenceV2ToBusinessDossier(DutchBusinessWsdl.DutchBusinessReferenceV2 reference) {
+        Business_Dossier__c dossier = new Business_Dossier__c();
+        dossier.Dossier_Number__c = reference.dossier_number;
+        dossier.Establishment_Number__c = reference.establishment_number;
+        dossier.Name = reference.name;
+        dossier.Indication_Economically_Active__c = reference.indication_economically_active;
+        dossier.Establishment_City__c = reference.establishment_city;
+        dossier.Establishment_street__c = reference.establishment_street;
+        dossier.Correspondence_City__c = reference.correspondence_city;
+        dossier.Correspondence_Street__c = reference.correspondence_street;
+        return dossier;
     }
 
     private static String determineStatus(DutchBusinessWsdl.DutchBusinessDossierV3 dossier) {

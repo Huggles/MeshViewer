@@ -31,6 +31,7 @@ public interface IDutchBusinessService {
 
     /**
      * Searches for dutch dossiers using the given parameters.
+     * TODO: replace with method that returns SObjects
      *
      * @param trade_name
      * @param city
@@ -44,6 +45,24 @@ public interface IDutchBusinessService {
      * @return
      */
     List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name);
+
+    /**
+     * Searches for dutch dossiers using the given parameters.
+     * TODO: replace searchForDutchDossiers with this
+     *
+     * @param trade_name
+     * @param city
+     * @param street
+     * @param postcode
+     * @param house_number
+     * @param house_number_addition
+     * @param telephone_number
+     * @param domain_name
+     *
+     * @return
+     */
+    List<Business_Dossier__c> searchForDutchDossiersSObject(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name);
+
 
     /**
      * Sets the vat number on the dutch business dossier with the given dossiernumber. Requests the vat number based on the dossier number. If a dossier in the database with the same dossier number but
