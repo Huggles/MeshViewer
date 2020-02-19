@@ -30,17 +30,6 @@ public interface IBusinessService {
     Boolean deleteDossier(Id accountId);
 
     /**
-     * Sets the vat number on the dutch business dossier with the given dossiernumber. Requests the vat number based on the dossier number. If a dossier in the database with the same dossier number but
-     * with a different establishment number already has a Vat number that number is returned. Otherwise the backend will
-     * be queried. If no vat number is found a CCNoVatException will be thrown. Else the vat number is set on the db and the record is updated.
-     *
-     * @param dossierId
-     *
-     * @return the updated dossier
-     */
-     Business_Dossier__c setVatNumber(Id dossierId);
-
-    /**
      * Inserts a single dossier + account into the DB found through the search function (so based on the dossier number and establishment number).
      * If the dossier is already there, just returns the dossier with a flag it already existed. If the account already exists, just reuses it.
      * If more than one duplicate account exist, throws a CCDuplicateException. This method is synchronous so only one dossier
@@ -55,46 +44,6 @@ public interface IBusinessService {
      */
     InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor, Id accountId);
 
-    /**
-     * Retrieves all Dutch Business Dossiers that have been updated since a certain date. Paginated. Supply the right CI page nr. to get the right results
-     *
-     * @param pageNr
-     * @param updateTypes
-     * @param changedSince
-     *
-     * @return
-     */
-    List<UpdateDossierReferenceDTO> getDutchBusinessUpdatedDossiersSince(Integer pageNr, List<String> updateTypes, Date changedSince);
-
-    /**
-     * Updates every dossier given with the newest data from the CI backend.
-     *
-     * @param dossiersToUpdate the dossiers to update
-     */
-    void updateDossiersWithVendorData(List<Business_Dossier__c> dossiersToUpdate);
-
-    /**
-     * Processes the dutch business dossiers that have been removed from the CI backend
-     *
-     * @param removedDossiers
-     */
-    void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers);
-
-    /**
-     * Searches for dutch dossiers using the given parameters.
-     *
-     * @param trade_name
-     * @param city
-     * @param street
-     * @param postcode
-     * @param house_number
-     * @param house_number_addition
-     * @param telephone_number
-     * @param domain_name
-     *
-     * @return
-     */
-    List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name);
 
 
 

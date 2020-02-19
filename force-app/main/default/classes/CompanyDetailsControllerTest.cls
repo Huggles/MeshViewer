@@ -200,13 +200,13 @@ public with sharing class CompanyDetailsControllerTest {
     @IsTest
     public static void getVatHappyScenario() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IBusinessService mockBusinessService = (IBusinessService)mocks.mock(IBusinessService.class);
+        IDutchBusinessService mockBusinessService = (IDutchBusinessService)mocks.mock(IDutchBusinessService.class);
         Id dossierId = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType);
 
         mocks.startStubbing();
         mocks.when(mockBusinessService.setVatNumber(dossierId)).thenReturn(new Business_Dossier__c(VAT_Number__c = '1234', Id = dossierId));
         mocks.stopStubbing();
-        Application.Service.setMock(IBusinessService.class, mockBusinessService);
+        Application.Service.setMock(IDutchBusinessService.class, mockBusinessService);
 
         Test.startTest();
         AuraResponseWrapper wrapper = (AuraResponseWrapper)CompanyDetailsController.getVATDetails(dossierId);
@@ -220,13 +220,13 @@ public with sharing class CompanyDetailsControllerTest {
     @IsTest
     public static void getVatCCVatNotFoundExceptionScenario() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IBusinessService mockBusinessService = (IBusinessService)mocks.mock(IBusinessService.class);
+        IDutchBusinessService mockBusinessService = (IDutchBusinessService)mocks.mock(IDutchBusinessService.class);
         Id dossierId = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType);
 
         mocks.startStubbing();
         mocks.when(mockBusinessService.setVatNumber(dossierId)).thenThrow(new CCWsServerDataNotFoundVatException('test'));
         mocks.stopStubbing();
-        Application.Service.setMock(IBusinessService.class, mockBusinessService);
+        Application.Service.setMock(IDutchBusinessService.class, mockBusinessService);
 
         Test.startTest();
         AuraResponseWrapper wrapper = (AuraResponseWrapper)CompanyDetailsController.getVATDetails(dossierId);
@@ -239,13 +239,13 @@ public with sharing class CompanyDetailsControllerTest {
     @IsTest
     public static void getVatGenericExceptionScenario() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IBusinessService mockBusinessService = (IBusinessService)mocks.mock(IBusinessService.class);
+        IDutchBusinessService mockBusinessService = (IDutchBusinessService)mocks.mock(IDutchBusinessService.class);
         Id dossierId = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType);
 
         mocks.startStubbing();
         mocks.when(mockBusinessService.setVatNumber(dossierId)).thenThrow(new CustomException('test'));
         mocks.stopStubbing();
-        Application.Service.setMock(IBusinessService.class, mockBusinessService);
+        Application.Service.setMock(IDutchBusinessService.class, mockBusinessService);
 
         Test.startTest();
         AuraResponseWrapper wrapper = (AuraResponseWrapper)CompanyDetailsController.getVATDetails(dossierId);

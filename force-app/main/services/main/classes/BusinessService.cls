@@ -8,28 +8,8 @@ public inherited sharing class BusinessService {
         return newInstance().deleteDossier(accountId);
     }
 
-    public static Business_Dossier__c setVatNumber(String dossierNumber){
-        return newInstance().setVatNumber(dossierNumber);
-    }
-
     public static InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor,  Id accountId) {
         return newInstance().insertSingleDossierFromDataVendorData(creditSafeId, dossierNumber, establishmentNumber, vendor, accountId);
-    }
-
-    public static List<UpdateDossierReferenceDTO> getDutchBusinessUpdatedDossiersSince(Integer pageNr, List<String> updateTypes, Date changedSince) {
-        return newInstance().getDutchBusinessUpdatedDossiersSince(pageNr, updateTypes, changedSince);
-    }
-
-    public static void updateDossiersWithVendorData(List<Business_Dossier__c> dossiersToUpdate) {
-        newInstance().updateDossiersWithVendorData(dossiersToUpdate);
-    }
-
-    public static void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers) {
-        newInstance().processRemovedDutchDossiers(removedDossiers);
-    }
-
-    public static List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
-        return newInstance().searchForDutchDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
     }
 
     public static IBusinessService newInstance() {

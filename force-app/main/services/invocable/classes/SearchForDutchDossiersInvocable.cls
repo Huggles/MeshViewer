@@ -64,7 +64,7 @@ global with sharing class SearchForDutchDossiersInvocable {
         List<SearchForDossiersResultDto> searchForDossiersResultDtos = new List<SearchForDossiersResultDto>();
         for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
             searchForDossiersResultDtos.addAll(
-                    BusinessService.searchForDutchDossiers(
+                    DutchBusinessService.searchForDutchDossiers(
                             searchForDutchDossiersArgument.trade_name,
                             searchForDutchDossiersArgument.city,
                             searchForDutchDossiersArgument.street,

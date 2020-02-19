@@ -66,7 +66,7 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
     private List<Business_Dossier__c> retrievePage(Integer pageNr) {
 
         // query the next page in CI
-        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = BusinessService.getDutchBusinessUpdatedDossiersSince(currentPageNr, updateTypes, Date.today() - 1);
+        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = DutchBusinessService.getDutchBusinessUpdatedDossiersSince(currentPageNr, updateTypes, Date.today() - 1);
 
         List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
         if (updateDossierReferenceDTOS != null && updateDossierReferenceDTOS.size() > 0) {
