@@ -119,7 +119,7 @@
 
         var navEvt = $A.get("e.force:navigateToSObject");
         navEvt.setParams({
-            "recordId": response.dossier.cust_connect__Account__c,
+            "recordId": response.dossier.appsolutely__Account__c,
             "slideDevName": "related"
         });
         navEvt.fire();
