@@ -22,6 +22,7 @@ public inherited sharing class Application {
                     Creditsafe_Comp_Activity_Classifications__c.SObjectType,
                     Creditsafe_Company_Activity__c.SObjectType,
                     Creditsafe_Person_Director__c.SObjectType,
+                    Creditsafe_Person_Position__c.SObjectType,
                     Creditsafe_Company_Financial_Statement__c.SObjectType,
                     Creditsafe_Company__c.SObjectType,
                     Creditsafe_Company_Negative_Info_NL__c.SObjectType,

@@ -58,7 +58,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         companyReportFull.Language__c = reportFullV2.language;
 
         unitOfWork.commitWork();
-
         return companyReportFull;
 
     }
@@ -276,9 +275,16 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     personDirector.Date_of_Birth__c = getDate(currentDirectorV2.date_of_birth);
                     personDirector.Gender__c = currentDirectorV2.gender;
                     personDirector.RecordTypeId = currentDirectorRecordId;
-                    //TODO add position
-                    Creditsafe_Address__c address = mapCreditSafeAddress(currentDirectorV2.address, new Creditsafe_Address__c(), 'Director Address');
                     unitOfWork.registerNew(personDirector, Creditsafe_Person_Director__c.Creditsafe_Company_Report_Full__c, companyReportFull);
+                    if (currentDirectorV2.positions != null) {
+                        for (CreditsafeWsdl.CreditsafePersonPositionV2 positionV2: currentDirectorV2.positions.item) {
+                            Creditsafe_Person_Position__c personPosition = new Creditsafe_Person_Position__c();
+                            personPosition.Date_Appointed__c = getDate(positionV2.date_appointed);
+                            personPosition.Position_Name__c = positionV2.name;
+                            unitOfWork.registerNew(personPosition, Creditsafe_Person_Position__c.Creditsafe_Person_Director__c, personDirector);
+                        }
+                    }
+                    Creditsafe_Address__c address = mapCreditSafeAddress(currentDirectorV2.address, new Creditsafe_Address__c(), 'Director Address');
                     unitOfWork.registerNew(address, Creditsafe_Address__c.Creditsafe_Person_Director__c, personDirector);
                 }
             }
@@ -489,12 +495,14 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                 }
 
                 if (additionalInformationDEAdditionalInformationV2.historical_events != null && additionalInformationDEAdditionalInformationV2.historical_events.item != null) {
+                    Id recordTypeId = Schema.SObjectType.Additional_Information_Historical_Event__c.getRecordTypeInfosByDeveloperName().get('DE_Historical_Event').getRecordTypeId();
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationHistoricalEventV2 historicalEventV2 : additionalInformationDEAdditionalInformationV2.historical_events.item) {
                         Additional_Information_Historical_Event__c additionalInformationHistoricalEvent = new Additional_Information_Historical_Event__c();
                         additionalInformationHistoricalEvent.Date__c = getDate(historicalEventV2.date_x);
                         additionalInformationHistoricalEvent.Description__c = historicalEventV2.description;
                         additionalInformationHistoricalEvent.Previous_Value__c = historicalEventV2.previous_value;
                         additionalInformationHistoricalEvent.Current_Value__c = historicalEventV2.current_value;
+                        additionalInformationHistoricalEvent.RecordTypeId = recordTypeId;
                         //additionalInformationHistoricalEvent.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
                         unitOfWork.registerNew(additionalInformationHistoricalEvent, Additional_Information_Historical_Event__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
@@ -603,12 +611,14 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                 }
 
                 if (additionalInformationNLAdditionalInformationV2.historical_events != null && additionalInformationNLAdditionalInformationV2.historical_events.item != null) {
+                    Id recordTypeId = Schema.SObjectType.Additional_Information_Historical_Event__c.getRecordTypeInfosByDeveloperName().get('NL_Historical_Event').getRecordTypeId();
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationHistoricalEventV2 historicalEventV2 : additionalInformationNLAdditionalInformationV2.historical_events.item) {
                         Additional_Information_Historical_Event__c additionalInformationHistoricalEvent = new Additional_Information_Historical_Event__c();
                         additionalInformationHistoricalEvent.Date__c = getDate(historicalEventV2.date_x);
                         additionalInformationHistoricalEvent.Description__c = historicalEventV2.description;
                         additionalInformationHistoricalEvent.Previous_Value__c = historicalEventV2.previous_value;
                         additionalInformationHistoricalEvent.Current_Value__c = historicalEventV2.current_value;
+                        additionalInformationHistoricalEvent.RecordTypeId = recordTypeId;
                         //additionalInformationHistoricalEvent.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
                         unitOfWork.registerNew(additionalInformationHistoricalEvent, Additional_Information_Historical_Event__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
@@ -753,6 +763,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         }
         financialStatement.Type__c = financialStatementV2.type_x;
         financialStatement.Year_End_Date__c = getDate(financialStatementV2.year_end_date);
+        financialStatement.RecordTypeId = recordTypeId;
 
         return financialStatement;
     }
