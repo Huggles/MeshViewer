@@ -946,7 +946,6 @@ private class CreditSafeServiceImplTest {
                         IsDeleted,
                         LastModifiedById,
                         LastModifiedDate,
-                        LastReferencedDate,
                         LastViewedDate,
                         Name,
                         OwnerId,
