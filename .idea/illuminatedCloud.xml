@@ -4,10 +4,10 @@
     <option name="connections">
       <list>
         <IlluminatedCloudConnection>
-          <option name="connectionName" value="CompanyDataByAppsolutely_Dev" />
+          <option name="connectionName" value="td1@cc" />
           <option name="connectionType" value="SFDX" />
           <option name="defaultModuleName" value="CompanyInfoComponents" />
-          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/CompanyDataByAppsolutely_Dev/OfflineSymbolTable.zip" />
+          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/td1_cc/OfflineSymbolTable.zip" />
         </IlluminatedCloudConnection>
       </list>
     </option>

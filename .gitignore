@@ -6,3 +6,6 @@ force-app/main/default/applications/standard__LightningSales.app-meta.xml
 .idea/workspace.xml
 .idea/shelf
 IlluminatedCloud
+force-app/main/default/objectTranslations/*
+.idea/illuminatedCloud.xml
+.idea/misc.xml
