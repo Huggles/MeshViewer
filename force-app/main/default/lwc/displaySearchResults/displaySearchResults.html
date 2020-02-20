@@ -1,0 +1,20 @@
+<!--
+ - Created by appsolutely on 19/02/2020.
+ -->
+
+<!-- Display Search Results -->
+<template>
+    <lightning-card title="ApexWireMethodToProperty" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <template if:true={irresults.data}>
+                <div class="slds-m-around_medium">
+                <template for:each={irresults.data} for:item="todo">
+
+                    <p key={todo.Id}>{todo.Id}+' '+{todo.appsolutely__International_Address_Request__c}</p>
+
+                </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

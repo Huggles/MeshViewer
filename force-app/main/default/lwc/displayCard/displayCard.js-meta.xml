@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="lwc_TextBox">
+    <apiVersion>47.0</apiVersion>
+    <isExposed>true</isExposed>
+
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="organization" type="String"  />
+            <property name="building" type="String"/>
+            <property name="street" type="String"/>
+            <property name="housenr" type="String"/>
+            <property name="pobox" type="String"/>
+            <property name="locality" type="String"/>
+            <property name="postcode" type="String"/>
+            <property name="province" type="String"/>
+            <property name="language" type="String"/>
+           <!-- <property name="country" type="String" /> -->
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

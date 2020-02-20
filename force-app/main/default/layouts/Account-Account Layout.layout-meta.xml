@@ -159,24 +159,39 @@
             <sortOrder>1</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewTask</actionName>
+            <actionName>appsolutely__NewTask</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewContact</actionName>
+            <actionName>appsolutely__NewContact</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewCase</actionName>
+            <actionName>appsolutely__NewCase</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>LogACall</actionName>
+            <actionName>appsolutely__LogACall</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>appsolutely__NewNote</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>appsolutely__NewOpportunity</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>appsolutely__NewEvent</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.RypplePost</actionName>
@@ -199,7 +214,7 @@
             <sortOrder>12</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
+            <actionName>appsolutely__SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>13</sortOrder>
         </platformActionListItems>
@@ -207,21 +222,6 @@
             <actionName>CreateSurveyInvitation</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>14</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewNote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewOpportunity</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewEvent</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>ChangeOwnerOne</actionName>
@@ -314,7 +314,7 @@
             <sortOrder>32</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Account.Search_Form</actionName>
+            <actionName>Account.appsolutely__Search_Form</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>33</sortOrder>
         </platformActionListItems>
@@ -431,7 +431,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3E000001G5oc</masterLabel>
+        <masterLabel>00h3O000000SHZM</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
