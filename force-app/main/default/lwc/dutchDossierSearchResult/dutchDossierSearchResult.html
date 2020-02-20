@@ -1,0 +1,19 @@
+<!--
+ - Created by jaapbranderhorst on 19/02/2020.
+ -->
+
+<!-- Dutch Dossier Search Result -->
+<template>
+    <article aura-id="{searchResult.dossier_number}" class="{!v.style}" onclick="{!c.onClick}" style="cursor:pointer" >
+        <div class="slds-media__figure">
+            <lightning-icon iconName="{icon}" variant="{!v.variant}" size="x-small"></lightning-icon>
+        </div>
+        <div class="slds-media__body">
+            <h3 class="slds-tile__title slds-truncate" title="{searchResult.name + ' (' + v.result.dossier_number + ')'}">{searchResult.name}</h3>
+            <div class="slds-tile__detail">
+                <div>{searchResult.dossier_number}</div>
+                <div>{searchResult.establishment_street + ', ' + v.result.establishment_city}</div>
+            </div>
+        </div>
+    </article>
+</template>
