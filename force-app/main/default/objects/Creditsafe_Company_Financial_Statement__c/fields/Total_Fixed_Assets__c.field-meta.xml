@@ -4,9 +4,10 @@
     <description>The total of Tangible and Intangible Assets.</description>
     <externalId>false</externalId>
     <label>Total Fixed Assets</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

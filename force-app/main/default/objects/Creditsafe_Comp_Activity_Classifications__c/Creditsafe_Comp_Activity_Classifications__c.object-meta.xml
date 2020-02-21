@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Creditsafe Comp. Activity Classification</label>
     <nameField>
-        <displayFormat>AC-{0000}</displayFormat>
+        <displayFormat>{00000000}</displayFormat>
         <label>Activity Classifications Name</label>
         <type>AutoNumber</type>
     </nameField>

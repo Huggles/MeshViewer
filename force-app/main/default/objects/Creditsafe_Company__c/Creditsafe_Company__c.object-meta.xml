@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Creditsafe Company</label>
     <nameField>
-        <displayFormat>C-{00000}</displayFormat>
+        <displayFormat>{00000000}</displayFormat>
         <label>Creditsafe Company</label>
         <type>AutoNumber</type>
     </nameField>

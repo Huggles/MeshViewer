@@ -3,7 +3,7 @@
     <fullName>Credit_Rating_Provider_Value_Max__c</fullName>
     <description>Max value.</description>
     <externalId>false</externalId>
-    <label>Credit Rating Provider Value Max</label>
+    <label>Maximum Value Credit Rating Provider</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

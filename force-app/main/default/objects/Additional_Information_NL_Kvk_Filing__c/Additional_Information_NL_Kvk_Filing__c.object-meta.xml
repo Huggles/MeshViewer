@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Additional Information NL Kvk Filing</label>
     <nameField>
-        <displayFormat>Kvk-{000000}</displayFormat>
+        <displayFormat>{00000000}</displayFormat>
         <label>Additional Information NL Kvk Filing</label>
         <type>AutoNumber</type>
     </nameField>

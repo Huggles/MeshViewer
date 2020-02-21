@@ -3,7 +3,7 @@
     <fullName>Previous_CR_Provider_Value__c</fullName>
     <description>Value.</description>
     <externalId>false</externalId>
-    <label>Previous CR Provider Value</label>
+    <label>Previous Provider Value</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

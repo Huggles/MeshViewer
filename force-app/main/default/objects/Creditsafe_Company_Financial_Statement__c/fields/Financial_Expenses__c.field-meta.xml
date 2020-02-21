@@ -4,9 +4,10 @@
     <description>Interest expenses incurred during the year.</description>
     <externalId>false</externalId>
     <label>Financial Expenses</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

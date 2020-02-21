@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Negative Information DE Director Event</label>
     <nameField>
-        <displayFormat>DE-{000000}</displayFormat>
+        <displayFormat>{00000000}</displayFormat>
         <label>DE Director Event Name</label>
         <type>AutoNumber</type>
     </nameField>

@@ -4,9 +4,10 @@
     <description>The results of the company after all income and expenses have been credited /debited.</description>
     <externalId>false</externalId>
     <label>Retained Profit</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

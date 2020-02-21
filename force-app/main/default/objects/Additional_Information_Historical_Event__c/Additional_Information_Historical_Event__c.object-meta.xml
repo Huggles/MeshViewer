@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Additional Information Historical  Event</label>
     <nameField>
-        <displayFormat>HE-{000000}</displayFormat>
+        <displayFormat>{00000000}</displayFormat>
         <label>Creditsafe Company Additional Info Event Name</label>
         <type>AutoNumber</type>
     </nameField>

@@ -4,9 +4,10 @@
     <description>Bank Overdraft &amp; Loans + Total Long Term Liabilities/Shareholders funds x 100.  This is the relationship between the size of the companies debt in proportion to Equity (Shareholders Funds).</description>
     <externalId>false</externalId>
     <label>Gearing</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

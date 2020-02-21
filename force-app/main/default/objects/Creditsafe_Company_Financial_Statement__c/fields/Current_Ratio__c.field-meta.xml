@@ -4,9 +4,10 @@
     <description>Total Current Assets / Total Current Liabilities.  This is an indication of a company’s ability to meet short-term debt obligations; the higher the ratio, the more liquid the company is.</description>
     <externalId>false</externalId>
     <label>Current Ratio</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

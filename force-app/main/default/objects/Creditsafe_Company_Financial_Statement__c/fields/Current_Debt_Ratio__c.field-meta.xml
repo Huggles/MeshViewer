@@ -4,9 +4,10 @@
     <description>Total Current Liabilities / Shareholders Funds.  This measures the amount of short term debt in relation to the value of shareholders funds.</description>
     <externalId>false</externalId>
     <label>Current Debt Ratio</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

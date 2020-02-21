@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Additional Info NL Letter Of Liability</label>
     <nameField>
-        <displayFormat>LI-{000000}</displayFormat>
+        <displayFormat>{00000000}</displayFormat>
         <label>Additional Info NL Letter Of Liability</label>
         <type>AutoNumber</type>
     </nameField>

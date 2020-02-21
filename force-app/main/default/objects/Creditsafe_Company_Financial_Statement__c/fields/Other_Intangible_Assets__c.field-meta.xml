@@ -4,9 +4,10 @@
     <description>Intangible fixed assets other than goodwill such as Trade Marks, Patents, Research &amp; Development etc.</description>
     <externalId>false</externalId>
     <label>Other Intangible Assets</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

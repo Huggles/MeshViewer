@@ -3,7 +3,7 @@
     <fullName>Creditsafe_Company_Report_Full__c</fullName>
     <description>A detailed report about a company.</description>
     <externalId>false</externalId>
-    <label>Creditsafe Company Report Full</label>
+    <label>Creditsafe Company Report</label>
     <referenceTo>Creditsafe_Company_Report_Full__c</referenceTo>
     <relationshipLabel>Negative Information DE Director Event</relationshipLabel>
     <relationshipName>Negative_Information_DE_Director_Event</relationshipName>

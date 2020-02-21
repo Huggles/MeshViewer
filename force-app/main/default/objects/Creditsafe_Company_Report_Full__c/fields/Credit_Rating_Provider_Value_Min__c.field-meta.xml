@@ -3,7 +3,7 @@
     <fullName>Credit_Rating_Provider_Value_Min__c</fullName>
     <description>Min value.</description>
     <externalId>false</externalId>
-    <label>Credit Rating Provider Value Min</label>
+    <label>Minimal Value Credit Rating Provider</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

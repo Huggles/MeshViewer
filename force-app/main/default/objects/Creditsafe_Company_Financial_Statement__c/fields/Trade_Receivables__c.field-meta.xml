@@ -4,9 +4,10 @@
     <description>Amounts due within one year from customers for goods and services supplied on credit.</description>
     <externalId>false</externalId>
     <label>Trade Receivables</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

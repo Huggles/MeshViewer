@@ -4,9 +4,10 @@
     <description>Current assets - Stocks/Current Liabilities.  This, like the current ratio, measures how quickly in the short term a company can meet its debts.  However, this ratio excludes stock as there is no guarantee the value of Stocks can be realised quickly.</description>
     <externalId>false</externalId>
     <label>Liquidity Ratio Or Acid Test</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

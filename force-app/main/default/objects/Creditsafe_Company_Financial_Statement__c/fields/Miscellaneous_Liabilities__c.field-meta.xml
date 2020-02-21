@@ -4,9 +4,10 @@
     <description>Other amounts due within one year owing by the company.</description>
     <externalId>false</externalId>
     <label>Miscellaneous Liabilities</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

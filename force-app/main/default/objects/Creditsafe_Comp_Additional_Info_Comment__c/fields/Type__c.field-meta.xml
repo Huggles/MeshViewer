@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Company_Registration_Number__c</fullName>
-    <description>Official registration number.</description>
-    <externalId>true</externalId>
-    <label>Company Registration Number</label>
+    <fullName>Type__c</fullName>
+    <description>Type of comment</description>
+    <externalId>false</externalId>
+    <label>Type</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

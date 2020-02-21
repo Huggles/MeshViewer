@@ -4,43 +4,9 @@
     <description>Type of the address</description>
     <externalId>false</externalId>
     <label>Type</label>
+    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
-    <valueSet>
-        <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Main Address</fullName>
-                <default>false</default>
-                <label>Main Address</label>
-            </value>
-            <value>
-                <fullName>Contact Address</fullName>
-                <default>false</default>
-                <label>Contact Address</label>
-            </value>
-            <value>
-                <fullName>Director Address</fullName>
-                <default>false</default>
-                <label>Director Address</label>
-            </value>
-            <value>
-                <fullName>Share Holder Address</fullName>
-                <default>false</default>
-                <label>Share Holder Address</label>
-            </value>
-            <value>
-                <fullName>Banker Address</fullName>
-                <default>false</default>
-                <label>Banker Address</label>
-            </value>
-            <value>
-                <fullName>Other Address</fullName>
-                <default>false</default>
-                <label>Other Address</label>
-            </value>
-        </valueSetDefinition>
-    </valueSet>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

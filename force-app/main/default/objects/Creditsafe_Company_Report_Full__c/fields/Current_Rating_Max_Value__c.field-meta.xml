@@ -3,7 +3,7 @@
     <fullName>Current_Rating_Max_Value__c</fullName>
     <description>Max value.</description>
     <externalId>false</externalId>
-    <label>Current Rating Max Value</label>
+    <label>Current Rating Maximum Value</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

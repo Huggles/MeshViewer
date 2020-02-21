@@ -3,7 +3,7 @@
     <fullName>Previous_CR_Limit__c</fullName>
     <description>Amount of advisable credit.</description>
     <externalId>false</externalId>
-    <label>Previous CR Limit</label>
+    <label>Previous Credit Rating Limit</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

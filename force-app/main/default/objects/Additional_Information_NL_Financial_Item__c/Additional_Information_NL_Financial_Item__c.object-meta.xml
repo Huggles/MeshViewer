@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Additional Information NL Financial Item</label>
     <nameField>
-        <displayFormat>FI-{000000}</displayFormat>
+        <displayFormat>{00000000}</displayFormat>
         <label>Additional Information NL Name</label>
         <type>AutoNumber</type>
     </nameField>

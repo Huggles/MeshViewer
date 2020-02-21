@@ -4,9 +4,10 @@
     <description>Trade Debtors / Turnover x 365 days.  This is a calculation that predicts the average time taken for the company to collect its invoices for goods and services provided to its customers.</description>
     <externalId>false</externalId>
     <label>Debtor Days</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

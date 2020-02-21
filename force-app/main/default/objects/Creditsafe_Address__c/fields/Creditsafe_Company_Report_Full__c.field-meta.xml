@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>A detailed report about a company.</description>
     <externalId>false</externalId>
-    <label>Creditsafe Company Report Full</label>
+    <label>Creditsafe Company Report</label>
     <referenceTo>Creditsafe_Company_Report_Full__c</referenceTo>
     <relationshipLabel>Creditsafe Addresses</relationshipLabel>
     <relationshipName>Creditsafe_Addresses</relationshipName>

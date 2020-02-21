@@ -4,9 +4,10 @@
     <description>Pre-Tax Profit / Capital Employed x 100.  This ratio measures the profits a business yields in return for the money (Capital) invested.</description>
     <externalId>false</externalId>
     <label>Return On Capital Employed</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

@@ -3,7 +3,7 @@
     <fullName>Current_CR_Provider_Value_Max__c</fullName>
     <description>Max value.</description>
     <externalId>false</externalId>
-    <label>Current CR Provider Value Max</label>
+    <label>Maximum Current Provider Value</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

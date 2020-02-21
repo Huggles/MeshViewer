@@ -55,7 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <label>Creditsafe Company Financial Statement</label>
     <nameField>
-        <displayFormat>FS-{000000}</displayFormat>
+        <displayFormat>{00000000}</displayFormat>
         <label>Creditsafe Company Financial Statement</label>
         <type>AutoNumber</type>
     </nameField>
