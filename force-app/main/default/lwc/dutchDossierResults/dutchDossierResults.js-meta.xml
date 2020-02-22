@@ -8,7 +8,8 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="searchResults" type="String" label="Trade Name"/>
+            <property name="searchResults" type="@salesforce/schema/appsolutely__Business_Dossier__c[]" label="Search Results" role="inputOnly"/>
+            <property name="selectedResult" type="@salesforce/schema/appsolutely__Business_Dossier__c" label="Selected Search Result" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>
     <masterLabel>Dutch Dossier Results</masterLabel>

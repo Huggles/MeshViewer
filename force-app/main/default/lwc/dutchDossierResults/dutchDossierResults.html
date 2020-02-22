@@ -4,4 +4,11 @@
 
 <!-- Dutch Dossier Results -->
 <template>
+    <lightning-layout multiple-rows="true">
+        <template for:each={searchResults} for:index="index" for:item="dossier">
+            <lightning-layout-item key={ourKey} padding="around-small">
+                <c-dutch-dossier-search-result-card search-result={dossier} search-result-id={index} onselected={handleSelected}></c-dutch-dossier-search-result-card>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
 </template>

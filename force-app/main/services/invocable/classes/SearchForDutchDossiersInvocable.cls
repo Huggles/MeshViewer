@@ -43,7 +43,11 @@ global with sharing class SearchForDutchDossiersInvocable {
                             searchForDutchDossiersArgument.domain_name
                     )
             );
+            for (Business_Dossier__c businessDossier : businessDossiers) {
+                businessDossier.Id = fflib_IDGenerator.generate(Business_Dossier__c.SObjectType);
+            }
             returnList.add(businessDossiers);
+            System.debug('returnList: ' + JSON.serializePretty(returnList));
         }
         return returnList;
     }
