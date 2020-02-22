@@ -146,7 +146,7 @@ private class DutchBusinessServiceImplTest {
     public static void testUpdateDossiersHappyFlow() {
         // given
         // a dossier to be updated
-        Business_Dossier__c dossierToBeUpdated = (new DutchBusinessServiceImpl()).mapDataVendorDataToDossier(getDataVendorMockDossier(), new Business_Dossier__c());
+        Business_Dossier__c dossierToBeUpdated = (new DutchBusinessServiceImpl()).mapDutchBusinessDossierV3ToDossier(getDataVendorMockDossier(), new Business_Dossier__c());
         dossierToBeUpdated.Name = 'I need to be updated';
         Account account = new Account(Name = 'testAccount');
         insert Account;

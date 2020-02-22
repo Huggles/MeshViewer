@@ -87,4 +87,13 @@ public interface IDutchBusinessService {
      */
     InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromCompanyInfo(String dossierNumber, String establishmentNumber, Id accountId, fflib_ISObjectUnitOfWork unitOfWork );
 
+    /**
+     * Fetches the dutch business dossier with the given dossier number and establishment number and creates it in the database (incl. any related records)
+     *
+     * @param dossierNumber
+     * @param establishmentNumber
+     *
+     * @return the newly created dossier
+     */
+    Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber);
 }

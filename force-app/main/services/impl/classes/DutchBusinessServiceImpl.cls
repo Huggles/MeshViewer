@@ -58,10 +58,10 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
 
     /**
-* Processes the dutch business dossiers that have been removed from the CI backend
-*
-* @param removedDossiers
-*/
+    * Processes the dutch business dossiers that have been removed from the CI backend
+    *
+    * @param removedDossiers
+    */
     public void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         if (removedDossiers != null) {
@@ -101,7 +101,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             String establishmentNumber = businessDossier.Establishment_Number__c;
             DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessDossierV3 = WsDutchBusiness.dutchBusinessGetDossierV3(dossierNumber, establishmentNumber);
 
-            Business_Dossier__c dossier = mapDataVendorDataToDossier(dutchBusinessDossierV3, businessDossier);
+            Business_Dossier__c dossier = mapDutchBusinessDossierV3ToDossier(dutchBusinessDossierV3, businessDossier);
             unitOfWork.registerDirty(dossier);
 
             Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(dutchBusinessDossierV3, new Dossier_Address__c());
@@ -116,6 +116,42 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             }
         }
         unitOfWork.commitWork();
+    }
+
+    /**
+     * Fetches the dutch business dossier with the given dossier number and establishment number and creates it in the database (incl. any related records)
+     *
+     * @param dossierNumber
+     * @param establishmentNumber
+     *
+     * @return
+     */
+    public Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber) {
+        if (dossierNumber == null || dossierNumber == '') {
+            Exception ex = new CCInputException('empty dossier number');
+            ErrorLogUtil.logException(ex);
+            throw ex;
+        }
+        // fetch the data
+        DutchBusinessWsdl.DutchBusinessDossierV3 dossierV3 = WsDutchBusiness.dutchBusinessGetDossierV3(dossierNumber, establishmentNumber);
+        // insert the dossier
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        Business_Dossier__c dossier = new Business_Dossier__c();
+        dossier = mapDutchBusinessDossierV3ToDossier(dossierV3, dossier);
+        unitOfWork.registerNew(dossier);
+        List<Business_Data_SBI__c> sbiCodes = new List<Business_Data_SBI__c>();
+        sbiCodes = mapDataVendorDataToSBICodes(dossierV3, sbiCodes);
+        for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
+            unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, dossier);
+        }
+        Dossier_Address__c correspondenceAddress = new Dossier_Address__c();
+        correspondenceAddress = mapDataVendorDataToCorrespondenceAddress(dossierV3, correspondenceAddress);
+        unitOfWork.registerNew(correspondenceAddress, Dossier_Address__c.Business_Data__c, dossier);
+        Dossier_Address__c establishmentAddress = new Dossier_Address__c();
+        establishmentAddress = mapDataVendorDataToEstablishmentAddress(dossierV3, establishmentAddress);
+        unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
+        unitOfWork.commitWork();
+        return dossier;
     }
 
     /**
@@ -291,7 +327,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     private List<Business_Dossier__c> insertCompanyInfoDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS, fflib_ISObjectUnitOfWork unitOfWork) {
         List<Business_Dossier__c> returnList = new List<Business_Dossier__c>();
         for (InsertDossierRequestDTO insertDossierRequestDTO : InsertDossierRequestDTOS) {
-            Business_Dossier__c dossier = mapDataVendorDataToDossier(insertDossierRequestDTO.dossier, new Business_Dossier__c());
+            Business_Dossier__c dossier = mapDutchBusinessDossierV3ToDossier(insertDossierRequestDTO.dossier, new Business_Dossier__c());
             unitOfWork.registerNew(dossier, Business_Dossier__c.Account__c, insertDossierRequestDTO.account);
 
             // unitOfWork.registerRelationship(insertDossierRequestDTO.account, Account.Business_Dossier__c, dossier);
@@ -319,7 +355,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     }
 
     @TestVisible
-    private Business_Dossier__c mapDataVendorDataToDossier(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Business_Dossier__c dossierDB) {
+    private Business_Dossier__c mapDutchBusinessDossierV3ToDossier(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Business_Dossier__c dossierDB) {
         Id recordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName()
                 .get('Dutch_Business').getRecordTypeId();
         dossierDB.RecordTypeId = recordTypeId;

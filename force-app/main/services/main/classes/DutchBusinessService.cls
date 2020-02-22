@@ -32,6 +32,10 @@ public inherited sharing class DutchBusinessService {
         return newInstance().insertSingleDossierFromCompanyInfo(dossierNumber, establishmentNumber, accountId, unitOfWork);
     }
 
+    public static Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber) {
+        return newInstance().createDutchDossier(dossierNumber, establishmentNumber);
+    }
+
     public static IDutchBusinessService newInstance() {
         return (IDutchBusinessService) Application.Service.newInstance(IDutchBusinessService.class);
     }
