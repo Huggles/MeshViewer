@@ -3,8 +3,12 @@
  */
 
 import {LightningElement, api, track} from 'lwc';
+import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 
 export default class DutchDossierResults extends LightningElement {
+    @api
+    availableActions = [];
+
     @api
     searchResults;
 
@@ -19,8 +23,29 @@ export default class DutchDossierResults extends LightningElement {
         return this.localKey;
     }
 
+    /**
+     * Handler to handle the selection of a search result.
+     * @param event
+     */
     handleSelected(event) {
-
+        // search for the right record
+        const id = event.detail.recordSelected;
+        const dutchDossierSearchResultCards = [...this.template.querySelectorAll('c-dutch-dossier-search-result-card')];
+        const dutchDossierSearchResultCard = dutchDossierSearchResultCards.find(card => card.searchResultId === id);
+        // set the result param
+        const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', dutchDossierSearchResultCard.searchResult);
+        this.dispatchEvent(attributeChangeEvent);
+        // go to the next step
+        if (this.availableActions.find(action => action === 'NEXT')) {
+            // navigate to the next screen
+            const navigateNextEvent = new FlowNavigationNextEvent();
+            this.dispatchEvent(navigateNextEvent);
+        } else {
+            if (this.availableActions.find(action => action === 'FINISH')) {
+                const navigateFinishEvent = new FlowNavigationFinishEvent();
+                this.dispatchEvent(navigateFinishEvent);
+            }
+        }
     }
 
 
