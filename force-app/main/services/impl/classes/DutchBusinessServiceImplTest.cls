@@ -508,7 +508,8 @@ private class DutchBusinessServiceImplTest {
                         SystemModstamp
                 FROM Business_Dossier__c];
         System.assert(dossierDB != null);
-        System.assert(dossierDB.Account__c == accountId);
+        if (accountId != null)
+            System.assert(dossierDB.Account__c == accountId);
 
         System.assertEquals(dossierDB.Year__c, '1900');
         System.assertEquals(dossierDB.Profit__c, 'EUR 20000');
@@ -952,6 +953,55 @@ private class DutchBusinessServiceImplTest {
         assertDossier(accountDB.Id);
 
 
+    }
+
+    @IsTest
+    private static void testCreateDutchDossierHappyFlow() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossier);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
+        Business_Dossier__c dossier = null;
+
+        Test.startTest();
+        {
+            dossier = DutchBusinessService.createDutchDossier(dossierNumber, establishmentNUmber);
+        }
+        Test.stopTest();
+        System.assert(dossier != null);
+        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
+        assertDossier(null);
+    }
+
+    @IsTest
+    private static void testCreateDutchDossierNoDossierNumber() {
+        // given
+        // no dossiernumber
+        String dossierNumber = null;
+        String establishmentNumber = '123';
+
+        // when
+        Business_Dossier__c dossier = null;
+        Boolean exceptionThrown = false;
+        try {
+            Test.startTest();
+            {
+                dossier = DutchBusinessService.createDutchDossier(dossierNumber, establishmentNUmber);
+            }
+        } catch (CCInputException e) {
+            exceptionThrown = true;
+        }
+
+        // then
+        // error thrown
+        System.assert(exceptionThrown);
     }
 
     @IsTest

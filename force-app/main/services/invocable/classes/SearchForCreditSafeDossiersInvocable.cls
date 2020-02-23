@@ -123,7 +123,7 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
         return returnList;
     }
 
-    @InvocableMethod
+    @InvocableMethod(label = 'Search for Credit Safe reports' description='Searches for credit safe reports based on the given arguments.' category='Company.info for Sales')
     global static List<SearchForCreditSafeResponse> searchForCreditSafeDossier(List<SearchForCreditSafeDossiersArgument> arguments) {
         List<SearchForCreditSafeDossiersResultDto> searchForDossiersResultDtos = new List<SearchForCreditSafeDossiersResultDto>();
         for (SearchForCreditSafeDossiersArgument argument : arguments) {
