@@ -15,6 +15,10 @@ global with sharing class CreateDutchDossierInvocable {
             this.dossierNumber = dossierNumber;
             this.establishmentNumber = establishmentNumber;
         }
+
+        global CreateDutchDossierArgument() {
+
+        }
     }
 
 
