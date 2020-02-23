@@ -9,10 +9,35 @@
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
+        <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
+        <name>Create_Dutch_Dossiers</name>
+        <label>Create Dutch Dossiers</label>
+        <locationX>781</locationX>
+        <locationY>426</locationY>
+        <actionName>CreateDutchDossierInvocable</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>dossierNumber</name>
+            <value>
+                <elementReference>selectedDutchDossier.Dossier_Number__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>establishmentNumber</name>
+            <value>
+                <elementReference>selectedDutchDossier.Establishment_Number__c</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>selectedDutchDossier</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
-        <locationX>377</locationX>
-        <locationY>50</locationY>
+        <locationX>412</locationX>
+        <locationY>1</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -168,8 +193,8 @@
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
-        <locationX>378</locationX>
-        <locationY>399</locationY>
+        <locationX>415</locationX>
+        <locationY>426</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -179,27 +204,15 @@
             <targetReference>Search</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>domain_name</name>
-        </inputParameters>
-        <inputParameters>
-            <name>telephone_number</name>
-        </inputParameters>
-        <inputParameters>
             <name>street</name>
             <value>
                 <elementReference>Street</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>postcode</name>
+            <name>telephone_number</name>
             <value>
-                <elementReference>PostalCode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>city</name>
-            <value>
-                <elementReference>City</elementReference>
+                <elementReference>PhoneNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -209,25 +222,50 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>postcode</name>
+            <value>
+                <elementReference>PostalCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>house_number</name>
+            <value>
+                <elementReference>HouseNumberAsIntConversion</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>city</name>
+            <value>
+                <elementReference>City</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>domain_name</name>
+            <value>
+                <elementReference>DomainName</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>house_number_addition</name>
             <value>
                 <elementReference>HouseNumberAddition</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>house_number</name>
-        </inputParameters>
+        <outputParameters>
+            <assignToReference>foundBusinessDossiers</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
     <decisions>
         <description>Decides which search method to call based on the selected country</description>
         <name>Decide_search_method</name>
         <label>Decide search method</label>
-        <locationX>368</locationX>
-        <locationY>212</locationY>
+        <locationX>403</locationX>
+        <locationY>217</locationY>
         <defaultConnector>
             <targetReference>Search_for_Credit_Safe_Dossiers</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Search via Credit Safe</defaultConnectorLabel>
         <rules>
             <name>Cancel_Pressed</name>
             <conditionLogic>and</conditionLogic>
@@ -244,7 +282,7 @@
             <label>Cancel Pressed</label>
         </rules>
         <rules>
-            <name>Dutch_Dossier_v3</name>
+            <name>Search_for_Dutch_Dossiers_Outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>SelectedCountry</leftValueReference>
@@ -256,9 +294,15 @@
             <connector>
                 <targetReference>Search_for_Dutch_Dossiers</targetReference>
             </connector>
-            <label>Dutch Dossier v3</label>
+            <label>Search for Dutch Dossiers</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>HouseNumberAsIntConversion</name>
+        <dataType>Number</dataType>
+        <expression>VALUE({!HouseNumber})</expression>
+        <scale>0</scale>
+    </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Organisation Search Flow</label>
@@ -278,11 +322,30 @@
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
-        <locationX>592</locationX>
-        <locationY>399</locationY>
+        <locationX>598</locationX>
+        <locationY>426</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_Dutch_Dossiers</targetReference>
+        </connector>
+        <fields>
+            <name>dutchDossiersResult</name>
+            <extensionName>appsolutely:dutchDossierResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>foundBusinessDossiers</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDutchDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -290,7 +353,7 @@
         <name>Search</name>
         <label>Enter Search Criteria</label>
         <locationX>210</locationX>
-        <locationY>210</locationY>
+        <locationY>215</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -300,6 +363,21 @@
         <fields>
             <name>ErrorHandler</name>
             <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>$Flow.FaultMessage</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue/>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>errorMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(237, 2, 2);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -448,8 +526,8 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>591</locationX>
-        <locationY>50</locationY>
+        <locationX>597</locationX>
+        <locationY>1</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -457,8 +535,8 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>210</locationY>
+        <locationX>51</locationX>
+        <locationY>215</locationY>
         <connector>
             <targetReference>Search</targetReference>
         </connector>
@@ -529,6 +607,14 @@
         <isOutput>true</isOutput>
     </variables>
     <variables>
+        <name>foundBusinessDossiers</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
         <name>FullAddress</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -550,6 +636,14 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>HouseNumberAsInt</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
     </variables>
     <variables>
         <name>Id</name>
@@ -619,6 +713,14 @@
         <value>
             <stringValue>NL</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>selectedDutchDossier</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
         <name>Status</name>

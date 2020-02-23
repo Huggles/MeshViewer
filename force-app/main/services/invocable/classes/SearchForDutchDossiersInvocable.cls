@@ -44,7 +44,6 @@ global with sharing class SearchForDutchDossiersInvocable {
                     )
             );
             returnList.add(businessDossiers);
-            System.debug('returnList: ' + JSON.serializePretty(returnList));
         }
         return returnList;
     }
