@@ -12,9 +12,9 @@ export default class CreditSafeGbCompanySearchForm extends LightningElement {
     @api
     status;
     @api
-    registration_number;
+    registrationNumber;
     @api
-    vat_number;
+    vatNumber;
 
     get statuses() {
         return [

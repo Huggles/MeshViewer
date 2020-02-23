@@ -8,11 +8,11 @@ import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
 export default class CreditSafeBeCompanySearchForm extends LightningElement {
     @api
-    id;
+    creditSafeId;
     @api
-    registration_number;
+    registrationNumber;
     @api
-    vat_number;
+    vatNumber;
 
     connectedCallback() {
         registerListener('validationRequest', this.handleValidationRequest, this);
@@ -42,6 +42,7 @@ export default class CreditSafeBeCompanySearchForm extends LightningElement {
     }
 
     handleOnChange(event) {
+        debugger;
         const attributeChangeEvent = new FlowAttributeChangeEvent(event.target.name, event.target.value);
         this.dispatchEvent(attributeChangeEvent);
     }

@@ -14,9 +14,15 @@
             <property name="houseNumber" type="String" label="House Number"/>
             <property name="houseNumberAddition" type="String" label="House Number Addition"/>
             <property name="city" type="String" label="City"/>
+            <property name="province" type="String" label="Province"/>
             <property name="postalCode" type="String" label="Postal Code"/>
             <property name="domainName" type="String" label="Domain Name"/>
             <property name="phoneNumber" type="String" label="Phone Number"/>
+            <property name="creditSafeId" type="String" label="CreditSafe Id"/>
+            <property name="registrationNumber" type="String" label="CreditSafe registration number"/>
+            <property name="vatNumber" type="String" label="VAT Number"/>
+            <property name="status" type="String" label="CreditSafe status (Active/non-Acive("/>
+            <property name="registrationType" type="String" label="CreditSafe registration type (Ltd/non-Ltd)"/>
         </targetConfig>
     </targetConfigs>
     <masterLabel>Business Search Form</masterLabel>

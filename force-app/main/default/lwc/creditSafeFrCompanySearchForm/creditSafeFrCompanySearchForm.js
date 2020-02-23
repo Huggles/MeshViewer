@@ -8,13 +8,13 @@ import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
 export default class CreditSafeFrCompanySearchForm extends LightningElement {
     @api
-    id;
+    creditSafeId;
     @api
     status;
     @api
-    registration_number;
+    registrationNumber;
     @api
-    vat_number;
+    vatNumber;
 
     get statuses() {
         return [

@@ -57,7 +57,7 @@ export default class BusinessSearchForm extends LightningElement {
     @api
     phoneNumber;
     @api
-    id;
+    creditSafeId;
     @api
     status;
     @api
@@ -123,11 +123,13 @@ export default class BusinessSearchForm extends LightningElement {
      * @returns true if valid
      */
     allValid() {
-        const valid = [...this.template.querySelectorAll('lightning-input')]
+        let valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
+        // validate per country
+        valid = this.template.querySelector('.searchForm').allValid();
         return valid;
     }
 

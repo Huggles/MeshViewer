@@ -70,6 +70,7 @@ export default class FlowFooter extends LightningElement {
     validatedComponents;
 
     handleComponentValidationDone(event) {
+        // TODO: handle FINISH state as well
         if (this.availableActions.find(action => action === 'NEXT')) { // should be true but just to be certain
             // check if validatedComponents exists, if not initialize it
             const component = event.component;

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Cancel</name>
-        <label>Cancel</label>
-        <locationX>599</locationX>
-        <locationY>209</locationY>
-        <actionName>appsolutely:flowCancelEndPoint</actionName>
-        <actionType>component</actionType>
-    </actionCalls>
-    <actionCalls>
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
         <label>Create Dutch Dossiers</label>
-        <locationX>781</locationX>
+        <locationX>766</locationX>
         <locationY>426</locationY>
         <actionName>CreateDutchDossierInvocable</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>End</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Dutch_Dossiers_Search_Results</targetReference>
+        </faultConnector>
         <inputParameters>
             <name>dossierNumber</name>
             <value>
@@ -32,6 +30,15 @@
             <assignToReference>selectedDutchDossier</assignToReference>
             <name>output</name>
         </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &#39;normal&#39; end flow.</description>
+        <name>End</name>
+        <label>End</label>
+        <locationX>599</locationX>
+        <locationY>210</locationY>
+        <actionName>appsolutely:flowCancelEndPoint</actionName>
+        <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Search_for_Credit_Safe_Dossiers</name>
@@ -277,7 +284,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Cancel</targetReference>
+                <targetReference>End</targetReference>
             </connector>
             <label>Cancel Pressed</label>
         </rules>
@@ -331,6 +338,28 @@
         <connector>
             <targetReference>Create_Dutch_Dossiers</targetReference>
         </connector>
+        <fields>
+            <name>flowErrorHandlerDutchResultsScreen</name>
+            <extensionName>appsolutely:flowErrorHandler</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>$Flow.FaultMessage</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>$Flow.FaultMessage</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue/>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <fields>
             <name>dutchDossiersResult</name>
             <extensionName>appsolutely:dutchDossierResults</extensionName>
