@@ -297,6 +297,7 @@
             <label>Search for Dutch Dossiers</label>
         </rules>
     </decisions>
+    <description>Search for organisations through CreditSafe or through the Dutch Chamber of Commerce. When an organisation has been found and selected fetches this organisation and inserts it into Salesforce as a Business Dossier.</description>
     <formulas>
         <name>HouseNumberAsIntConversion</name>
         <dataType>Number</dataType>
@@ -361,24 +362,16 @@
             <targetReference>Decide_search_method</targetReference>
         </connector>
         <fields>
-            <name>ErrorHandler</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>$Flow.FaultMessage</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue/>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>errorMessage</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(237, 2, 2);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>flowErrorHandlerSearchScreen</name>
+            <extensionName>appsolutely:flowErrorHandler</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>$Flow.FaultMessage</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
