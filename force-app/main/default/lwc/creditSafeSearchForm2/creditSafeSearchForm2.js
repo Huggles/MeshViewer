@@ -3,6 +3,7 @@
  */
 
 import {api, LightningElement, track} from 'lwc';
+import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 import Country_Belgium from '@salesforce/label/c.Country_Belgium';
 import Country_France from '@salesforce/label/c.Country_France';
 import Country_Germany from '@salesforce/label/c.Country_Germany';
@@ -19,6 +20,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
     @api status;
     @api creditSafeId;
     @api registrationNumber;
+    @api registrationType;
     @api vatNumber;
     @api province;
     @api city;
@@ -48,27 +50,33 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         ];
     }
 
-    @api
+    get registrationTypes() {
+        return [
+            { label: 'Ltd', value: 'Ltd'},
+            { label: 'Non Ltd', value: 'NonLtd'}
+        ]
+    }
+
     get isGbSelected() {
         return this.selectedCountry === 'GB';
     }
-    @api
+
     get isBeSelected() {
         return this.selectedCountry === 'BE';
     }
-    @api
+
     get isDeSelected() {
         return this.selectedCountry === 'DE';
     }
-    @api
+
     get isFrSelected() {
         return this.selectedCountry === 'FR';
     }
-    @api
+
     get isSeSelected() {
         return this.selectedCountry === 'SE';
     }
-    @api
+
     get isIeSelected() {
         return this.selectedCountry === 'IE';
     }
@@ -91,6 +99,15 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         return statuses;
     }
 
+    get hasErrorMessage() {
+        let retValue;
+        if (this.errorMessage)
+            retValue = true;
+        else
+            retValue = false;
+        return retValue;
+    }
+
     @api
     allValid() {
         let valid = [...this.template.querySelectorAll('lightning-input')]
@@ -99,11 +116,22 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                 return validSoFar && inputCmp.checkValidity();
             }, true);
         if (this.isBeSelected) {
-           // if (!this.creditSafeId && !this.registrationNumber && !this.vatNumber && ())
-
+           if (!this.creditSafeId &&
+               !this.registrationNumber &&
+               !this.vatNumber &&
+               !(this.name && this.name.length >= 2 && this.postalCode && this.postalCode.length >= 2)) {
+               // TODO: label
+               this.errorMessage = 'wrong input';
+           }
         }
         if (this.isDeSelected) {
-
+            if (!this.creditSafeId &&
+                !this.registrationNumber &&
+                !this.vatNumber &&
+                !(this.name && this.name.length >= 2 && this.postalCode && this.postalCode.length >= 2)) {
+                // TODO: label
+                this.errorMessage = 'wrong input';
+            }
         }
         if (this.isFrSelected) {
 
@@ -119,6 +147,9 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         }
         // if the errorMessage is set, this will return false
         valid = valid && !this.errorMessage;
+        if (this.errorMessage) {
+            this.template.querySelector('.error-message').showToast();
+        }
         return valid;
     }
 
@@ -129,10 +160,16 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     handleSelectedCountryChange(event) {
         this.selectedCountry = event.target.value;
+        this.handleOnChange(event);
     }
 
     handleStatusOnChange(event) {
         this.status = event.target.value;
+        this.handleOnChange(event);
+    }
+
+    handleRegistrationTypeOnChange(event) {
+        this.registrationType = event.target.value;
         this.handleOnChange(event);
     }
 

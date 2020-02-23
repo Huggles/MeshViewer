@@ -5,9 +5,8 @@
 <!-- Credit Safe Search Form 2 -->
 <template>
     <!-- show errors only if error message is filled -->
-    <template if:true={errorMessage}>
-        <c-custom-toast message={errorMessage} title={errorTitle}></c-custom-toast>
-    </template>
+
+    <c-custom-toast class="error-message" message={errorMessage} title={errorTitle}></c-custom-toast>
     <!-- show country selection box in case this form is used standalone -->
     <template if:false={selectedCountry}>
         <lightning-combobox name="selectedCountry" class="slds-m-around_x-small" label="Country" options={countries} value={selectedCountry} placeholder="Select a Country" dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>
@@ -52,6 +51,7 @@
         <lightning-combobox name="status" class="slds-m-around_x-small" label="Status" options={statuses} value={status} placeholder="Select a Status" dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
         <lightning-input name="creditSafe_id" class="slds-m-around_x-small" label="CreditSafe Identification Number" type="text" variant="standard" pattern="^(DE)\d{3}/(0|1)/DE\d{8}$" message-when-pattern-mismatch="Please enter a valid CreditSafe registration id for Germany." value={creditSafeId} onchange={handleOnChange}></lightning-input>
         <lightning-input name="registration_number" class="slds-m-around_x-small" label="Registration Number" type="text" variant="standard" minlength=4 message-when-too-short="Please enter a valid German registration number with a minimum length of 4 characters." value={registrationNumber} onchange={handleOnChange}></lightning-input>
+        <lightning-combobox name="registrationType" class="slds-m-around_x-small" label="Registration Type" options={registrationTypes} value={registrationType} placeholder="Select a Registration Type" dropdown-alignment="left" variant="standard" onchange={handleRegistrationTypeOnChange}></lightning-combobox>
         <lightning-input label="VAT Number" name="vat_number" class="slds-m-around_x-small" pattern="(DE)?[0-9]{9}" message-when-pattern-mismatch="Please enter a valid German VAT Number starting with DE followed by 9 digits." value={vatNumber} onchange={handleOnChange}></lightning-input>
     </template>
     <!-- Address -->
