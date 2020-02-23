@@ -157,7 +157,7 @@
     <label>Creditsafe Person Position</label>
     <nameField>
         <displayFormat>{00000000}</displayFormat>
-        <label>Creditsafe Person Position Name</label>
+        <label>Creditsafe Person Position</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Creditsafe Person Positions</pluralLabel>

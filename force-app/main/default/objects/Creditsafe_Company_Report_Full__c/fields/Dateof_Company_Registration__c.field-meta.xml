@@ -3,7 +3,7 @@
     <fullName>Dateof_Company_Registration__c</fullName>
     <description>The date the company was registered.</description>
     <externalId>false</externalId>
-    <label>Dateof Company Registration</label>
+    <label>Date of Company Registration</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>DateTime</type>

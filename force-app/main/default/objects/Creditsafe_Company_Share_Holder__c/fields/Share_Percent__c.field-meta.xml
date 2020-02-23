@@ -4,9 +4,9 @@
     <description>Percentage this share holder has in shares.</description>
     <externalId>false</externalId>
     <label>Share Percent</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Percent</type>
 </CustomField>

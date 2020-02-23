@@ -4,9 +4,10 @@
     <description>The average credit rating for the company’s activity code.</description>
     <externalId>false</externalId>
     <label>Industry Average Credit Rating</label>
-    <length>255</length>
+    <precision>16</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

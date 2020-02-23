@@ -292,7 +292,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
                 throw e;
             } catch (Exception e) {
                 ErrorLogUtil.logException(e);
-                throw new CCException(e + e.getStackTraceString());
+                throw new CCException(e);
             }
         }
         return response;
@@ -310,21 +310,6 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
         return dossierDB;
     }
-
-//    private Dossier_Address__c mapCreditSafeAddress(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Dossier_Address__c addressDB) {
-//        if (dataVendorDossier.address != null) {
-//            addressDB = new Dossier_Address__c();
-//            addressDB.Name = dataVendorDossier.address.full_address;
-//            addressDB.Postcode__c = dataVendorDossier.address.postal_code;
-//            addressDB.Street__c = dataVendorDossier.address.street;
-//            addressDB.City__c = dataVendorDossier.address.city;
-//            addressDB.House_Number__c = dataVendorDossier.address.house_number;
-//            addressDB.House_Number_Addition__c = null;
-//            addressDB.Country__c = dataVendorDossier.address.country;
-//            //addressDB.RecordTypeId = Schema.SObjectType.Dossier_Address__c.getRecordTypeInfosByDeveloperName().get('Creditsafe_Address').getRecordTypeId();
-//        }
-//        return addressDB;
-//    }
 
     private Business_Dossier__c mapCreditSafeDataToDossier(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Business_Dossier__c dossierDB) {
         Id recordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName().get('Creditsafe').getRecordTypeId();

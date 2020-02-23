@@ -4,9 +4,8 @@
     <description>Email address of the trustee.</description>
     <externalId>false</externalId>
     <label>Trustee Email Address</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Email</type>
     <unique>false</unique>
 </CustomField>

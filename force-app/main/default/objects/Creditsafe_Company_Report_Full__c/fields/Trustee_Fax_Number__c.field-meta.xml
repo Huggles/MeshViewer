@@ -4,9 +4,7 @@
     <description>Fax number trustee.</description>
     <externalId>false</externalId>
     <label>Trustee Fax Number</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Phone</type>
 </CustomField>

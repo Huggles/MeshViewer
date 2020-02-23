@@ -4,9 +4,10 @@
     <description>The lower value for the company ranked 1/4 divided by industry code.</description>
     <externalId>false</externalId>
     <label>Payment Expectation Days Lower</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>0</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

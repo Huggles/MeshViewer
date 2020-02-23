@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Previous_Rating_Min_Value__c</fullName>
-    <description>Min value</description>
+    <fullName>Company_Type__c</fullName>
+    <description>Type of company</description>
     <externalId>false</externalId>
-    <label>Previous Rating Minimum Value</label>
+    <label>Company Type</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

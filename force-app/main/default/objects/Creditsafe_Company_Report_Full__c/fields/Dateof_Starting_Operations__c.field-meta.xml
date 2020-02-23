@@ -3,7 +3,7 @@
     <fullName>Dateof_Starting_Operations__c</fullName>
     <description>The date the company began trading.</description>
     <externalId>false</externalId>
-    <label>Dateof Starting Operations</label>
+    <label>Date of Starting Operations</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>DateTime</type>

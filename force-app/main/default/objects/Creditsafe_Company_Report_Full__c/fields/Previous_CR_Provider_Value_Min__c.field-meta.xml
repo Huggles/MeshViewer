@@ -3,7 +3,7 @@
     <fullName>Previous_CR_Provider_Value_Min__c</fullName>
     <description>Min value.</description>
     <externalId>false</externalId>
-    <label>Previous CR Provider Value Min</label>
+    <label>Previous Provider Minimal Value</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

@@ -66,6 +66,10 @@
                 <behavior>Required</behavior>
                 <field>Creditsafe_Company_Report_Full__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Company_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

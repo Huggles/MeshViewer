@@ -82,27 +82,6 @@ public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
                 'language' => language,
                 'reason' => reason
         });
-//        CreditsafeWsdl.creditsafeGetReportFullV2RequestType request_x = new CreditsafeWsdl.creditsafeGetReportFullV2RequestType();
-//        request_x.company_id = company_id;
-//        request_x.language = language;
-//        request_x.reason = reason;
-//        CreditsafeWsdl.creditsafeGetReportFullV2ResponseType response_x;
-//        Map<String, CreditsafeWsdl.creditsafeGetReportFullV2ResponseType> response_map_x = new Map<String, CreditsafeWsdl.creditsafeGetReportFullV2ResponseType>();
-//        response_map_x.put('response_x', response_x);
-//        WebServiceCallout.invoke(
-//                this,
-//                request_x,
-//                response_map_x,
-//                new String[]{endpoint_x,
-//                        'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2',
-//                        'http://www.webservices.nl/soap/',
-//                        'creditsafeGetReportFullV2',
-//                        'http://www.webservices.nl/soap/',
-//                        'creditsafeGetReportFullV2Response',
-//                        'CreditsafeWsdl.creditsafeGetReportFullV2ResponseType'}
-//        );
-//        response_x = response_map_x.get('response_x');
-//        return response_x.out;
     }
 
 }
