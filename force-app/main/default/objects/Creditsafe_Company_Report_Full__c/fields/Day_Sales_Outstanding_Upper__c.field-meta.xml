@@ -4,7 +4,7 @@
     <description>The higher value for the company ranked 3/4 divided by industry code.</description>
     <externalId>false</externalId>
     <label>Day Sales Outstanding Upper</label>
-    <precision>16</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>

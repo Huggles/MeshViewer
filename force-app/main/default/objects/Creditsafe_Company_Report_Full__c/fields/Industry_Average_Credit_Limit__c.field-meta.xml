@@ -4,7 +4,7 @@
     <description>The average credit limit for the company’s activity code.</description>
     <externalId>false</externalId>
     <label>Industry Average Credit Limit</label>
-    <precision>16</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>

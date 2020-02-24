@@ -4,7 +4,7 @@
     <description>The total of Called up Share Capital, Revenue Reserves, Share Premium and Other Reserves.</description>
     <externalId>false</externalId>
     <label>Latest Shareholders Equity Figure</label>
-    <precision>16</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>

@@ -4,10 +4,9 @@
     <description>The maximum amount of share capital the company is authorised by its constitutional documents to issue to shareholders.</description>
     <externalId>false</externalId>
     <label>Nominal Share Capital</label>
-    <precision>16</precision>
+    <length>255</length>
     <required>false</required>
-    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

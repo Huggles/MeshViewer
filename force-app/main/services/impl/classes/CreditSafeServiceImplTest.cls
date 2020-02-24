@@ -2,6 +2,7 @@
  * Created by jaapbranderhorst on 2019-07-03.
  */
 
+
 @IsTest
 private class CreditSafeServiceImplTest {
 
@@ -737,7 +738,7 @@ private class CreditSafeServiceImplTest {
         reportFullV2.negative_information.de.insolvency_information.trustee.city = 'trustee.city';
         reportFullV2.negative_information.de.insolvency_information.trustee.telephone_number = '12';
         reportFullV2.negative_information.de.insolvency_information.trustee.fax_number = '12';
-        reportFullV2.negative_information.de.insolvency_information.trustee.email_address = 'trustee.email_address';
+        reportFullV2.negative_information.de.insolvency_information.trustee.email_address = 'trustee@gmail.com';
         reportFullV2.negative_information.de.director_events = new CreditsafeWsdl.CreditsafeCompanyNegativeInformationDEDirectorEventV2Array();
         reportFullV2.negative_information.de.director_events.item = new List<CreditsafeWsdl.CreditsafeCompanyNegativeInformationDEDirectorEventV2>();
         CreditsafeWsdl.CreditsafeCompanyNegativeInformationDEDirectorEventV2 directorEventV2 = new CreditsafeWsdl.CreditsafeCompanyNegativeInformationDEDirectorEventV2();
@@ -991,13 +992,13 @@ private class CreditSafeServiceImplTest {
         System.assert(reportFull.Date_Of_Legal_Form__c  == Datetime.newInstance(2020, 2, 2).date());
         System.assert(reportFull.Dateof_Company_Registration__c == Datetime.newInstance(2010, 1,1));
         System.assert(reportFull.Dateof_Starting_Operations__c == Datetime.newInstance(2010, 1,1));
-        System.assert(reportFull.Day_Sales_Outstanding__c == '20');
-        System.assert(reportFull.Day_Sales_Outstanding_Lower__c == '0.0');
-        System.assert(reportFull.Day_Sales_Outstanding_Median__c == '5.0');
-        System.assert(reportFull.Day_Sales_Outstanding_Upper__c == '10.0');
-        System.assert(reportFull.DE_Negative_Rating__c == '12');
+        System.assert(reportFull.Day_Sales_Outstanding__c == 20);
+        System.assert(reportFull.Day_Sales_Outstanding_Lower__c == 0.0);
+        System.assert(reportFull.Day_Sales_Outstanding_Median__c == 5.0);
+        System.assert(reportFull.Day_Sales_Outstanding_Upper__c == 10.0);
+        System.assert(reportFull.DE_Negative_Rating__c == 12);
         System.assert(reportFull.Exporter__c == '13');
-        System.assert(reportFull.Fax_Number__c == 1);
+        System.assert(reportFull.Fax_Number__c == '1');
         System.assert(reportFull.Financials_Quality__c == '2');
         System.assert(reportFull.Has_Bankruptcy__c == 'yes');
         System.assert(reportFull.Image_Account_Document_Type__c == 'document_type');
@@ -1007,14 +1008,14 @@ private class CreditSafeServiceImplTest {
         System.assert(reportFull.Image_Account_Serial_Number__c == '123123');
         System.assert(reportFull.Image_Account_Start_Date__c == Datetime.newInstance(2020, 02, 13 ).date());
         System.assert(reportFull.Importer__c == '12');
-        System.assert(reportFull.Industry_Average_Credit_Limit__c == '5.0');
-        System.assert(reportFull.Industry_Average_Credit_Rating__c == '2.0');
-        System.assert(reportFull.Industry_Average_Day_Sales_Outstanding__c == '21');
-        System.assert(reportFull.Industry_Average_Payment_Expectation_Day__c == '25');
+        System.assert(reportFull.Industry_Average_Credit_Limit__c == 5.0);
+        System.assert(reportFull.Industry_Average_Credit_Rating__c == 2.0);
+        System.assert(reportFull.Industry_Average_Day_Sales_Outstanding__c == 21);
+        System.assert(reportFull.Industry_Average_Payment_Expectation_Day__c == 25);
         System.assert(reportFull.Issued_Share_Capital__c == 'issued_share_capital');
         System.assert(reportFull.Language__c == 'lang');
-        System.assert(reportFull.Latest_Shareholders_Equity_Figure__c == '3');
-        System.assert(reportFull.Latest_Turnover_Figure__c == '2');
+        System.assert(reportFull.Latest_Shareholders_Equity_Figure__c == 3);
+        System.assert(reportFull.Latest_Turnover_Figure__c == 2);
         System.assert(reportFull.Legal_Form_Code__c == 'legal_form.code');
         System.assert(reportFull.Legal_Form_Description__c == 'legal_form.description');
         System.assert(reportFull.Legal_Form_Value__c == 'legal_form.value');
@@ -1022,14 +1023,14 @@ private class CreditSafeServiceImplTest {
         System.assert(reportFull.Main_Activity_Code__c == '1212');
         System.assert(reportFull.Main_Activity_Description__c == 'activity_description');
         System.assert(reportFull.Miscellaneous_Turnover_Range__c == '1234');
-        System.assert(reportFull.NL_Negative_Rating__c == '0');
+        System.assert(reportFull.NL_Negative_Rating__c == 0);
         System.assert(reportFull.Nominal_Share_Capital__c == 'nominal_share_capital');
         System.assert(reportFull.Number__c == '9');
-        System.assert(reportFull.Order_Number__c == 1212);
-        System.assert(reportFull.Payment_Expectation_Days__c == '10');
-        System.assert(reportFull.Payment_Expectation_Days_Lower__c == '0.0');
-        System.assert(reportFull.Payment_Expectation_Days_Median__c == '5.0');
-        System.assert(reportFull.Payment_Expectation_Days_Upper__c == '10.0');
+        System.assert(reportFull.Order_Number__c == '1212');
+        System.assert(reportFull.Payment_Expectation_Days__c == 10);
+        System.assert(reportFull.Payment_Expectation_Days_Lower__c == 0.0);
+        System.assert(reportFull.Payment_Expectation_Days_Median__c == 5.0);
+        System.assert(reportFull.Payment_Expectation_Days_Upper__c == 10.0);
         System.assert(reportFull.Premise_Type__c == 'premise');
         System.assert(reportFull.Previous_CR_Common_Description__c == 'previous_credit_rating.common_description');
         System.assert(reportFull.Previous_CR_Common_Value__c == 'previous_credit_rating.common_value');
@@ -1050,14 +1051,14 @@ private class CreditSafeServiceImplTest {
         System.assert(reportFull.Suspension_Of_Payments_Mora__c == 'mora');
         System.assert(reportFull.Trustee_City__c == 'trustee.city');
         System.assert(reportFull.Trustee_Code__c == 'trustee.code');
-        System.assert(reportFull.Trustee_Email_Address__c == 'trustee.email_address');
+        System.assert(reportFull.Trustee_Email_Address__c == 'trustee@gmail.com');
         System.assert(reportFull.Trustee_Fax_Number__c == '12');
         System.assert(reportFull.Trustee_First_Name__c == 'trustee.first_name');
         System.assert(reportFull.Trustee_Last_Name__c == 'trustee.last_name');
         System.assert(reportFull.Trustee_Name__c == 'trustee.name');
         System.assert(reportFull.Trustee_Telephone_Number__c == '12');
         System.assert(reportFull.Trustee_Title__c == 'trustee.title');
-        System.assert(reportFull.Turnover_Range_Year__c == 2020);
+        System.assert(reportFull.Turnover_Range_Year__c == '2020');
         System.assert(reportFull.Turnover_Ranges__c == '1000-5000');
         System.assert(reportFull.VAT_Registration_Number__c == '1212');
 
@@ -1293,7 +1294,6 @@ private class CreditSafeServiceImplTest {
                         Director_Id__c,
                         Director_Type__c,
                         Gender__c,
-                        Position__c,
                         Resignation_Date__c,
                         Id,
                         IsDeleted,
@@ -1363,7 +1363,6 @@ private class CreditSafeServiceImplTest {
                         Director_Id__c,
                         Director_Type__c,
                         Gender__c,
-                        Position__c,
                         Resignation_Date__c,
                         Id,
                         IsDeleted,
@@ -1406,13 +1405,13 @@ private class CreditSafeServiceImplTest {
                 FROM Creditsafe_Address__c WHERE Creditsafe_Person_Director__c = :personDirectors1.Id];
         System.assert(addressesDirector1.size() == 1);
 
-        Id ultimateId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Ultimate_Parent').getRecordTypeId();
         Creditsafe_Company__c ucompany = [
                 SELECT
                         CreatedById,
                         CreatedDate,
                         Address__c,
                         Company_Id__c,
+                        Company_Type__c,
                         Country__c,
                         Creditsafe_Company_Report_Full__c,
                         Creditsafe_Number__c,
@@ -1430,9 +1429,8 @@ private class CreditSafeServiceImplTest {
                         LastModifiedById,
                         LastModifiedDate,
                         Name,
-                        RecordTypeId,
                         SystemModstamp
-                FROM Creditsafe_Company__c WHERE Creditsafe_Company_Report_Full__c = : reportFull.Id AND RecordTypeId = :ultimateId];
+                FROM Creditsafe_Company__c WHERE Creditsafe_Company_Report_Full__c = : reportFull.Id AND Company_Type__c = 'Ultimate_Parent'];
         System.assert(ucompany.Company_Id__c == '12');
         System.assert(ucompany.Country__c == 'country');
         System.assert(ucompany.Creditsafe_Number__c == '12');
@@ -1444,7 +1442,6 @@ private class CreditSafeServiceImplTest {
         System.assert(ucompany.Trade_Names__c == 'trade names');
         System.assert(ucompany.VAT_Numbers__c == '1');
 
-        Id immediateId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Immediate_Parent').getRecordTypeId();
         Creditsafe_Company__c icompany = [
                 SELECT
                         CreatedById,
@@ -1468,9 +1465,9 @@ private class CreditSafeServiceImplTest {
                         LastModifiedById,
                         LastModifiedDate,
                         Name,
-                        RecordTypeId,
+                        Company_Type__c,
                         SystemModstamp
-                FROM Creditsafe_Company__c WHERE Creditsafe_Company_Report_Full__c = : reportFull.Id AND RecordTypeId = :immediateId];
+                FROM Creditsafe_Company__c WHERE Creditsafe_Company_Report_Full__c = : reportFull.Id AND Company_Type__c = 'Immediate_Parent'];
         System.assert(icompany.Company_Id__c == '12');
         System.assert(icompany.Country__c == 'country');
         System.assert(icompany.Creditsafe_Number__c == '12');
@@ -1482,7 +1479,6 @@ private class CreditSafeServiceImplTest {
         System.assert(icompany.Trade_Names__c == 'trade names');
         System.assert(icompany.VAT_Numbers__c == '1');
 
-        Id subsidiaryId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Subsidiary_Companies').getRecordTypeId();
         Creditsafe_Company__c scompany = [
                 SELECT
                         CreatedById,
@@ -1506,9 +1502,9 @@ private class CreditSafeServiceImplTest {
                         LastModifiedById,
                         LastModifiedDate,
                         Name,
-                        RecordTypeId,
+                        Company_Type__c,
                         SystemModstamp
-                FROM Creditsafe_Company__c WHERE Creditsafe_Company_Report_Full__c = : reportFull.Id AND RecordTypeId = :subsidiaryId];
+                FROM Creditsafe_Company__c WHERE Creditsafe_Company_Report_Full__c = : reportFull.Id AND Company_Type__c = 'Subsidiary_Companies'];
         System.assert(scompany.Company_Id__c == '12');
         System.assert(scompany.Country__c == 'country');
         System.assert(scompany.Creditsafe_Number__c == '12');
@@ -1520,7 +1516,6 @@ private class CreditSafeServiceImplTest {
         System.assert(scompany.Trade_Names__c == 'trade names');
         System.assert(scompany.VAT_Numbers__c == '1');
 
-        Id affId = Schema.SObjectType.Creditsafe_Company__c.getRecordTypeInfosByDeveloperName().get('Affiliated_Companies').getRecordTypeId();
         Creditsafe_Company__c acompany = [
                 SELECT
                         CreatedById,
@@ -1544,9 +1539,9 @@ private class CreditSafeServiceImplTest {
                         LastModifiedById,
                         LastModifiedDate,
                         Name,
-                        RecordTypeId,
+                        Company_Type__c,
                         SystemModstamp
-                FROM Creditsafe_Company__c WHERE Creditsafe_Company_Report_Full__c = : reportFull.Id AND RecordTypeId = :affId];
+                FROM Creditsafe_Company__c WHERE Creditsafe_Company_Report_Full__c = : reportFull.Id AND Company_Type__c = 'Affiliated_Companies'];
         System.assert(acompany.Company_Id__c == '12');
         System.assert(acompany.Country__c == 'country');
         System.assert(acompany.Creditsafe_Number__c == '12');
@@ -1558,7 +1553,6 @@ private class CreditSafeServiceImplTest {
         System.assert(acompany.Trade_Names__c == 'trade names');
         System.assert(acompany.VAT_Numbers__c == '1');
 
-        Id finId = Schema.SObjectType.Creditsafe_Company_Financial_Statement__c.getRecordTypeInfosByDeveloperName().get('Financial_Statements').getRecordTypeId();
         Creditsafe_Company_Financial_Statement__c financialStatement = [
                 SELECT
                         CreatedById,
@@ -1650,91 +1644,89 @@ private class CreditSafeServiceImplTest {
                         LastModifiedById,
                         LastModifiedDate,
                         Name,
-                        RecordTypeId,
                         SystemModstamp
-                FROM Creditsafe_Company_Financial_Statement__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id AND RecordTypeId = :finId];
-        System.assert(financialStatement.Balance_Sheets_Consolidated_Accounts__c == '5');
-        System.assert(financialStatement.Bank_Liabilities__c == '1');
-        System.assert(financialStatement.Bank_Liabilities_Due_After1year__c == '2');
-        System.assert(financialStatement.Called_Up_Share_Capital__c == '3');
-        System.assert(financialStatement.Cash__c  ==  '4');
+                FROM Creditsafe_Company_Financial_Statement__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id AND Type__c = 'fin'];
+        System.assert(financialStatement.Balance_Sheets_Consolidated_Accounts__c == 5);
+        System.assert(financialStatement.Bank_Liabilities__c == 1);
+        System.assert(financialStatement.Bank_Liabilities_Due_After1year__c == 2);
+        System.assert(financialStatement.Called_Up_Share_Capital__c == 3);
+        System.assert(financialStatement.Cash__c  ==  4);
         System.assert(financialStatement.Consolidated_Accounts__c  ==  true);
-        System.assert(financialStatement.Creditor_Days__c  ==  '1.0');
+        System.assert(financialStatement.Creditor_Days__c  ==  1.0);
         System.assert(financialStatement.Currency__c  ==  '12');
-        System.assert(financialStatement.Current_Debt_Ratio__c  ==  '2.0');
-        System.assert(financialStatement.Current_Ratio__c  ==  '3.0');
-        System.assert(financialStatement.Debtor_Days__c  ==  '4.0');
-        System.assert(financialStatement.Depreciation__c  ==  '1');
-        System.assert(financialStatement.Dividends__c  ==  '2');
-        System.assert(financialStatement.Equity_In_Percentage__c  ==  '5.0');
-        System.assert(financialStatement.Financial_Expenses__c  ==  '3');
-        System.assert(financialStatement.Financial_Income__c  ==  '4');
-        System.assert(financialStatement.Finished_Goods__c  ==  '6');
-        System.assert(financialStatement.Gearing__c  ==  '6.0');
-        System.assert(financialStatement.Goodwill__c  ==  '7');
-        System.assert(financialStatement.Group_Payables__c  ==  '8');
-        System.assert(financialStatement.Group_Payables_Due_After1year__c  ==  '9');
-        System.assert(financialStatement.Group_Receivables__c  ==  '10');
-        System.assert(financialStatement.Investments__c  ==  '11');
-        System.assert(financialStatement.Land_And_Buildings__c  ==  '12');
-        System.assert(financialStatement.Liquidity_Ratio_Or_Acid_Test__c  ==  '7.0');
-        System.assert(financialStatement.Loans_To_Group__c  ==  '13');
-        System.assert(financialStatement.Miscellaneous_Fixed_Assets__c  ==  '14');
-        System.assert(financialStatement.Miscellaneous_Liabilities__c  ==  '15');
-        System.assert(financialStatement.Miscellaneous_Liabilities_Due_After1year__c  ==  '16');
-        System.assert(financialStatement.Miscellaneous_Receivables__c  ==  '17');
-        System.assert(financialStatement.Net_Worth__c  ==  '2');
-        System.assert(financialStatement.Number_Of_Weeks__c  ==  '3');
-        System.assert(financialStatement.Operating_Costs__c  ==  '5');
-        System.assert(financialStatement.Operating_Profit__c  ==  '6');
-        System.assert(financialStatement.Other_Appropriations__c  ==  '7');
-        System.assert(financialStatement.Other_Current_Assets__c  ==  '18');
-        System.assert(financialStatement.Other_Intangible_Assets__c  ==  '19');
-        System.assert(financialStatement.Other_Inventories__c  ==  '20');
-        System.assert(financialStatement.Other_Loans__c  ==  '21');
-        System.assert(financialStatement.Other_Loans_Or_Finance__c  ==  '22');
-        System.assert(financialStatement.Other_Loans_Or_Finance_Due_After1year__c  ==  '23');
-        System.assert(financialStatement.Other_Reserves__c  ==  '24');
-        System.assert(financialStatement.Other_Tangible_Assets__c  ==  '25');
-        System.assert(financialStatement.Pension_Costs__c  ==  '8');
-        System.assert(financialStatement.Plant_And_Machinery__c  ==  '26');
-        System.assert(financialStatement.Pre_Tax_Profit_Margin__c  ==  '8.0');
-        System.assert(financialStatement.Profit_After_Tax__c  ==  '9');
-        System.assert(financialStatement.Profit_Before_Tax__c  ==  '10');
-        System.assert(financialStatement.Raw_Materials__c  ==  '27');
-        System.assert(financialStatement.Receivables_Due_After1year__c  ==  '28');
-        System.assert(financialStatement.Retained_Profit__c  ==  '11');
-        System.assert(financialStatement.Return_On_Capital_Employed__c  ==  '9.0');
-        System.assert(financialStatement.Return_On_Net_Assets_Employed__c  ==  '10.0');
-        System.assert(financialStatement.Return_On_Total_Assets_Employed__c  ==  '11.0');
-        System.assert(financialStatement.Revenue__c  ==  '12');
-        System.assert(financialStatement.Revenue_Reserves__c  ==  '29');
-        System.assert(financialStatement.Sales_Or_Net_Working_Capital__c  ==  '12.0');
-        System.assert(financialStatement.Share_Premium__c  ==  '30');
-        System.assert(financialStatement.Stock_Turnover_Ratio__c  ==  '13.0');
-        System.assert(financialStatement.Tax__c  ==  '13');
-        System.assert(financialStatement.Total_Assets__c  ==  '31');
-        System.assert(financialStatement.Total_Current_Assets__c  ==  '32');
-        System.assert(financialStatement.Total_Current_Liabilities__c  ==  '33');
-        System.assert(financialStatement.Total_Debt_Ratio__c  ==  '15.0');
-        System.assert(financialStatement.Total_Fixed_Assets__c  ==  '34');
-        System.assert(financialStatement.Total_Intangible_Assets__c  ==  '35');
-        System.assert(financialStatement.Total_Inventories__c  ==  '36');
-        System.assert(financialStatement.Total_Liabilities__c  ==  '37');
-        System.assert(financialStatement.Total_Long_Term_Liabilities__c  ==  '38');
-        System.assert(financialStatement.Total_Other_Fixed_Assets__c  ==  '39');
-        System.assert(financialStatement.Total_Receivables__c  ==  '40');
-        System.assert(financialStatement.Total_Shareholders_Equity__c  ==  '41');
-        System.assert(financialStatement.Total_Tangible_Assets__c  ==  '42');
-        System.assert(financialStatement.Trade_Payables__c  ==  '43');
-        System.assert(financialStatement.Trade_Payables_Due_After1year__c  ==  '44');
-        System.assert(financialStatement.Trade_Receivables__c  ==  '45');
-        System.assert(financialStatement.Wages_And_Salaries__c  ==  '14');
-        System.assert(financialStatement.Work_In_Progress__c  ==  '46');
-        System.assert(financialStatement.Working_Capital__c  ==  '1');
+        System.assert(financialStatement.Current_Debt_Ratio__c  ==  2.0);
+        System.assert(financialStatement.Current_Ratio__c  ==  3.0);
+        System.assert(financialStatement.Debtor_Days__c  ==  4.0);
+        System.assert(financialStatement.Depreciation__c  == 1);
+        System.assert(financialStatement.Dividends__c  == 2);
+        System.assert(financialStatement.Equity_In_Percentage__c  == 5.0);
+        System.assert(financialStatement.Financial_Expenses__c  == 3);
+        System.assert(financialStatement.Financial_Income__c  == 4);
+        System.assert(financialStatement.Finished_Goods__c  == 6);
+        System.assert(financialStatement.Gearing__c  == 6.0);
+        System.assert(financialStatement.Goodwill__c  == 7);
+        System.assert(financialStatement.Group_Payables__c  == 8);
+        System.assert(financialStatement.Group_Payables_Due_After1year__c  == 9);
+        System.assert(financialStatement.Group_Receivables__c  == 10);
+        System.assert(financialStatement.Investments__c  == 11);
+        System.assert(financialStatement.Land_And_Buildings__c  == 12);
+        System.assert(financialStatement.Liquidity_Ratio_Or_Acid_Test__c  == 7.0);
+        System.assert(financialStatement.Loans_To_Group__c  == 13);
+        System.assert(financialStatement.Miscellaneous_Fixed_Assets__c  == 14);
+        System.assert(financialStatement.Miscellaneous_Liabilities__c  == 15);
+        System.assert(financialStatement.Miscellaneous_Liabilities_Due_After1year__c  == 16);
+        System.assert(financialStatement.Miscellaneous_Receivables__c  == 17);
+        System.assert(financialStatement.Net_Worth__c  == 2);
+        System.assert(financialStatement.Number_Of_Weeks__c  == 3);
+        System.assert(financialStatement.Operating_Costs__c  == 5);
+        System.assert(financialStatement.Operating_Profit__c  == 6);
+        System.assert(financialStatement.Other_Appropriations__c  == 7);
+        System.assert(financialStatement.Other_Current_Assets__c  == 18);
+        System.assert(financialStatement.Other_Intangible_Assets__c  == 19);
+        System.assert(financialStatement.Other_Inventories__c  == 20);
+        System.assert(financialStatement.Other_Loans__c  == 21);
+        System.assert(financialStatement.Other_Loans_Or_Finance__c  == 22);
+        System.assert(financialStatement.Other_Loans_Or_Finance_Due_After1year__c  == 23);
+        System.assert(financialStatement.Other_Reserves__c  == 24);
+        System.assert(financialStatement.Other_Tangible_Assets__c  == 25);
+        System.assert(financialStatement.Pension_Costs__c  == 8);
+        System.assert(financialStatement.Plant_And_Machinery__c  == 26);
+        System.assert(financialStatement.Pre_Tax_Profit_Margin__c  == 8.0);
+        System.assert(financialStatement.Profit_After_Tax__c  == 9);
+        System.assert(financialStatement.Profit_Before_Tax__c  == 10);
+        System.assert(financialStatement.Raw_Materials__c  == 27);
+        System.assert(financialStatement.Receivables_Due_After1year__c  == 28);
+        System.assert(financialStatement.Retained_Profit__c  == 11);
+        System.assert(financialStatement.Return_On_Capital_Employed__c  == 9.0);
+        System.assert(financialStatement.Return_On_Net_Assets_Employed__c  == 10.0);
+        System.assert(financialStatement.Return_On_Total_Assets_Employed__c  == 11.0);
+        System.assert(financialStatement.Revenue__c  == 12);
+        System.assert(financialStatement.Revenue_Reserves__c  == 29);
+        System.assert(financialStatement.Sales_Or_Net_Working_Capital__c  == 12.0);
+        System.assert(financialStatement.Share_Premium__c  == 30);
+        System.assert(financialStatement.Stock_Turnover_Ratio__c  == 13.0);
+        System.assert(financialStatement.Tax__c  == 13);
+        System.assert(financialStatement.Total_Assets__c  == 31);
+        System.assert(financialStatement.Total_Current_Assets__c  == 32);
+        System.assert(financialStatement.Total_Current_Liabilities__c  == 33);
+        System.assert(financialStatement.Total_Debt_Ratio__c  == 15.0);
+        System.assert(financialStatement.Total_Fixed_Assets__c  == 34);
+        System.assert(financialStatement.Total_Intangible_Assets__c  == 35);
+        System.assert(financialStatement.Total_Inventories__c  == 36);
+        System.assert(financialStatement.Total_Liabilities__c  == 37);
+        System.assert(financialStatement.Total_Long_Term_Liabilities__c  == 38);
+        System.assert(financialStatement.Total_Other_Fixed_Assets__c  == 39);
+        System.assert(financialStatement.Total_Receivables__c  == 40);
+        System.assert(financialStatement.Total_Shareholders_Equity__c  == 41);
+        System.assert(financialStatement.Total_Tangible_Assets__c  == 42);
+        System.assert(financialStatement.Trade_Payables__c  == 43);
+        System.assert(financialStatement.Trade_Payables_Due_After1year__c  == 44);
+        System.assert(financialStatement.Trade_Receivables__c  == 45);
+        System.assert(financialStatement.Wages_And_Salaries__c  == 14);
+        System.assert(financialStatement.Work_In_Progress__c  == 46);
+        System.assert(financialStatement.Working_Capital__c  == 1);
         System.assert(financialStatement.Year_End_Date__c  ==  Datetime.newInstance(2002, 12, 9).date());
 
-        Id lfinId = Schema.SObjectType.Creditsafe_Company_Financial_Statement__c.getRecordTypeInfosByDeveloperName().get('Local_Financial_Statements').getRecordTypeId();
         Creditsafe_Company_Financial_Statement__c lfinancialStatement = [
                 SELECT
                         CreatedById,
@@ -1826,89 +1818,88 @@ private class CreditSafeServiceImplTest {
                         LastModifiedById,
                         LastModifiedDate,
                         Name,
-                        RecordTypeId,
                         SystemModstamp
-                FROM Creditsafe_Company_Financial_Statement__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id AND RecordTypeId = :lfinId];
+                FROM Creditsafe_Company_Financial_Statement__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id AND Type__c = 'loc'];
         System.debug(lfinancialStatement);
-        System.assert(lfinancialStatement.Balance_Sheets_Consolidated_Accounts__c == '5');
-        System.assert(lfinancialStatement.Bank_Liabilities__c == '1');
-        System.assert(lfinancialStatement.Bank_Liabilities_Due_After1year__c == '2');
-        System.assert(lfinancialStatement.Called_Up_Share_Capital__c == '3');
-        System.assert(lfinancialStatement.Cash__c  ==  '4');
+        System.assert(lfinancialStatement.Balance_Sheets_Consolidated_Accounts__c == 5);
+        System.assert(lfinancialStatement.Bank_Liabilities__c == 1);
+        System.assert(lfinancialStatement.Bank_Liabilities_Due_After1year__c == 2);
+        System.assert(lfinancialStatement.Called_Up_Share_Capital__c == 3);
+        System.assert(lfinancialStatement.Cash__c  == 4);
         System.assert(lfinancialStatement.Consolidated_Accounts__c  ==  true);
-        System.assert(lfinancialStatement.Creditor_Days__c  ==  '1.0');
+        System.assert(lfinancialStatement.Creditor_Days__c  == 1.0);
         System.assert(lfinancialStatement.Currency__c  ==  '12');
-        System.assert(lfinancialStatement.Current_Debt_Ratio__c  ==  '2.0');
-        System.assert(lfinancialStatement.Current_Ratio__c  ==  '3.0');
-        System.assert(lfinancialStatement.Debtor_Days__c  ==  '4.0');
-        System.assert(lfinancialStatement.Depreciation__c  ==  '1');
-        System.assert(lfinancialStatement.Dividends__c  ==  '2');
-        System.assert(lfinancialStatement.Equity_In_Percentage__c  ==  '5.0');
-        System.assert(lfinancialStatement.Financial_Expenses__c  ==  '3');
-        System.assert(lfinancialStatement.Financial_Income__c  ==  '4');
-        System.assert(lfinancialStatement.Finished_Goods__c  ==  '6');
-        System.assert(lfinancialStatement.Gearing__c  ==  '6.0');
-        System.assert(lfinancialStatement.Goodwill__c  ==  '7');
-        System.assert(lfinancialStatement.Group_Payables__c  ==  '8');
-        System.assert(lfinancialStatement.Group_Payables_Due_After1year__c  ==  '9');
-        System.assert(lfinancialStatement.Group_Receivables__c  ==  '10');
-        System.assert(lfinancialStatement.Investments__c  ==  '11');
-        System.assert(lfinancialStatement.Land_And_Buildings__c  ==  '12');
-        System.assert(lfinancialStatement.Liquidity_Ratio_Or_Acid_Test__c  ==  '7.0');
-        System.assert(lfinancialStatement.Loans_To_Group__c  ==  '13');
-        System.assert(lfinancialStatement.Miscellaneous_Fixed_Assets__c  ==  '14');
-        System.assert(lfinancialStatement.Miscellaneous_Liabilities__c  ==  '15');
-        System.assert(lfinancialStatement.Miscellaneous_Liabilities_Due_After1year__c  ==  '16');
-        System.assert(lfinancialStatement.Miscellaneous_Receivables__c  ==  '17');
-        System.assert(lfinancialStatement.Net_Worth__c  ==  '2');
-        System.assert(lfinancialStatement.Number_Of_Weeks__c  ==  '3');
-        System.assert(lfinancialStatement.Operating_Costs__c  ==  '5');
-        System.assert(lfinancialStatement.Operating_Profit__c  ==  '6');
-        System.assert(lfinancialStatement.Other_Appropriations__c  ==  '7');
-        System.assert(lfinancialStatement.Other_Current_Assets__c  ==  '18');
-        System.assert(lfinancialStatement.Other_Intangible_Assets__c  ==  '19');
-        System.assert(lfinancialStatement.Other_Inventories__c  ==  '20');
-        System.assert(lfinancialStatement.Other_Loans__c  ==  '21');
-        System.assert(lfinancialStatement.Other_Loans_Or_Finance__c  ==  '22');
-        System.assert(lfinancialStatement.Other_Loans_Or_Finance_Due_After1year__c  ==  '23');
-        System.assert(lfinancialStatement.Other_Reserves__c  ==  '24');
-        System.assert(lfinancialStatement.Other_Tangible_Assets__c  ==  '25');
-        System.assert(lfinancialStatement.Pension_Costs__c  ==  '8');
-        System.assert(lfinancialStatement.Plant_And_Machinery__c  ==  '26');
-        System.assert(lfinancialStatement.Pre_Tax_Profit_Margin__c  ==  '8.0');
-        System.assert(lfinancialStatement.Profit_After_Tax__c  ==  '9');
-        System.assert(lfinancialStatement.Profit_Before_Tax__c  ==  '10');
-        System.assert(lfinancialStatement.Raw_Materials__c  ==  '27');
-        System.assert(lfinancialStatement.Receivables_Due_After1year__c  ==  '28');
-        System.assert(lfinancialStatement.Retained_Profit__c  ==  '11');
-        System.assert(lfinancialStatement.Return_On_Capital_Employed__c  ==  '9.0');
-        System.assert(lfinancialStatement.Return_On_Net_Assets_Employed__c  ==  '10.0');
-        System.assert(lfinancialStatement.Return_On_Total_Assets_Employed__c  ==  '11.0');
-        System.assert(lfinancialStatement.Revenue__c  ==  '12');
-        System.assert(lfinancialStatement.Revenue_Reserves__c  ==  '29');
-        System.assert(lfinancialStatement.Sales_Or_Net_Working_Capital__c  ==  '12.0');
-        System.assert(lfinancialStatement.Share_Premium__c  ==  '30');
-        System.assert(lfinancialStatement.Stock_Turnover_Ratio__c  ==  '13.0');
-        System.assert(lfinancialStatement.Tax__c  ==  '13');
-        System.assert(lfinancialStatement.Total_Assets__c  ==  '31');
-        System.assert(lfinancialStatement.Total_Current_Assets__c  ==  '32');
-        System.assert(lfinancialStatement.Total_Current_Liabilities__c  ==  '33');
-        System.assert(lfinancialStatement.Total_Debt_Ratio__c  ==  '15.0');
-        System.assert(lfinancialStatement.Total_Fixed_Assets__c  ==  '34');
-        System.assert(lfinancialStatement.Total_Intangible_Assets__c  ==  '35');
-        System.assert(lfinancialStatement.Total_Inventories__c  ==  '36');
-        System.assert(lfinancialStatement.Total_Liabilities__c  ==  '37');
-        System.assert(lfinancialStatement.Total_Long_Term_Liabilities__c  ==  '38');
-        System.assert(lfinancialStatement.Total_Other_Fixed_Assets__c  ==  '39');
-        System.assert(lfinancialStatement.Total_Receivables__c  ==  '40');
-        System.assert(lfinancialStatement.Total_Shareholders_Equity__c  ==  '41');
-        System.assert(lfinancialStatement.Total_Tangible_Assets__c  ==  '42');
-        System.assert(lfinancialStatement.Trade_Payables__c  ==  '43');
-        System.assert(lfinancialStatement.Trade_Payables_Due_After1year__c  ==  '44');
-        System.assert(lfinancialStatement.Trade_Receivables__c  ==  '45');
-        System.assert(lfinancialStatement.Wages_And_Salaries__c  ==  '14');
-        System.assert(lfinancialStatement.Work_In_Progress__c  ==  '46');
-        System.assert(lfinancialStatement.Working_Capital__c  ==  '1');
+        System.assert(lfinancialStatement.Current_Debt_Ratio__c  == 2.0);
+        System.assert(lfinancialStatement.Current_Ratio__c  == 3.0);
+        System.assert(lfinancialStatement.Debtor_Days__c  == 4.0);
+        System.assert(lfinancialStatement.Depreciation__c  == 1);
+        System.assert(lfinancialStatement.Dividends__c  == 2);
+        System.assert(lfinancialStatement.Equity_In_Percentage__c  == 5.0);
+        System.assert(lfinancialStatement.Financial_Expenses__c  == 3);
+        System.assert(lfinancialStatement.Financial_Income__c  == 4);
+        System.assert(lfinancialStatement.Finished_Goods__c  == 6);
+        System.assert(lfinancialStatement.Gearing__c  == 6.0);
+        System.assert(lfinancialStatement.Goodwill__c  == 7);
+        System.assert(lfinancialStatement.Group_Payables__c  == 8);
+        System.assert(lfinancialStatement.Group_Payables_Due_After1year__c  == 9);
+        System.assert(lfinancialStatement.Group_Receivables__c  == 10);
+        System.assert(lfinancialStatement.Investments__c  == 11);
+        System.assert(lfinancialStatement.Land_And_Buildings__c  == 12);
+        System.assert(lfinancialStatement.Liquidity_Ratio_Or_Acid_Test__c  == 7.0);
+        System.assert(lfinancialStatement.Loans_To_Group__c  == 13);
+        System.assert(lfinancialStatement.Miscellaneous_Fixed_Assets__c  == 14);
+        System.assert(lfinancialStatement.Miscellaneous_Liabilities__c  == 15);
+        System.assert(lfinancialStatement.Miscellaneous_Liabilities_Due_After1year__c  == 16);
+        System.assert(lfinancialStatement.Miscellaneous_Receivables__c  == 17);
+        System.assert(lfinancialStatement.Net_Worth__c  == 2);
+        System.assert(lfinancialStatement.Number_Of_Weeks__c  == 3);
+        System.assert(lfinancialStatement.Operating_Costs__c  == 5);
+        System.assert(lfinancialStatement.Operating_Profit__c  == 6);
+        System.assert(lfinancialStatement.Other_Appropriations__c  == 7);
+        System.assert(lfinancialStatement.Other_Current_Assets__c  == 18);
+        System.assert(lfinancialStatement.Other_Intangible_Assets__c  == 19);
+        System.assert(lfinancialStatement.Other_Inventories__c  == 20);
+        System.assert(lfinancialStatement.Other_Loans__c  == 21);
+        System.assert(lfinancialStatement.Other_Loans_Or_Finance__c  == 22);
+        System.assert(lfinancialStatement.Other_Loans_Or_Finance_Due_After1year__c  == 23);
+        System.assert(lfinancialStatement.Other_Reserves__c  == 24);
+        System.assert(lfinancialStatement.Other_Tangible_Assets__c  == 25);
+        System.assert(lfinancialStatement.Pension_Costs__c  == 8);
+        System.assert(lfinancialStatement.Plant_And_Machinery__c  == 26);
+        System.assert(lfinancialStatement.Pre_Tax_Profit_Margin__c  == 8.0);
+        System.assert(lfinancialStatement.Profit_After_Tax__c  == 9);
+        System.assert(lfinancialStatement.Profit_Before_Tax__c  == 10);
+        System.assert(lfinancialStatement.Raw_Materials__c  == 27);
+        System.assert(lfinancialStatement.Receivables_Due_After1year__c  == 28);
+        System.assert(lfinancialStatement.Retained_Profit__c  == 11);
+        System.assert(lfinancialStatement.Return_On_Capital_Employed__c  == 9.0);
+        System.assert(lfinancialStatement.Return_On_Net_Assets_Employed__c  == 10.0);
+        System.assert(lfinancialStatement.Return_On_Total_Assets_Employed__c  == 11.0);
+        System.assert(lfinancialStatement.Revenue__c  == 12);
+        System.assert(lfinancialStatement.Revenue_Reserves__c  == 29);
+        System.assert(lfinancialStatement.Sales_Or_Net_Working_Capital__c  == 12.0);
+        System.assert(lfinancialStatement.Share_Premium__c  == 30);
+        System.assert(lfinancialStatement.Stock_Turnover_Ratio__c  == 13.0);
+        System.assert(lfinancialStatement.Tax__c  == 13);
+        System.assert(lfinancialStatement.Total_Assets__c  == 31);
+        System.assert(lfinancialStatement.Total_Current_Assets__c  == 32);
+        System.assert(lfinancialStatement.Total_Current_Liabilities__c  == 33);
+        System.assert(lfinancialStatement.Total_Debt_Ratio__c  == 15.0);
+        System.assert(lfinancialStatement.Total_Fixed_Assets__c  == 34);
+        System.assert(lfinancialStatement.Total_Intangible_Assets__c  == 35);
+        System.assert(lfinancialStatement.Total_Inventories__c  == 36);
+        System.assert(lfinancialStatement.Total_Liabilities__c  == 37);
+        System.assert(lfinancialStatement.Total_Long_Term_Liabilities__c  == 38);
+        System.assert(lfinancialStatement.Total_Other_Fixed_Assets__c  == 39);
+        System.assert(lfinancialStatement.Total_Receivables__c  == 40);
+        System.assert(lfinancialStatement.Total_Shareholders_Equity__c  == 41);
+        System.assert(lfinancialStatement.Total_Tangible_Assets__c  == 42);
+        System.assert(lfinancialStatement.Trade_Payables__c  == 43);
+        System.assert(lfinancialStatement.Trade_Payables_Due_After1year__c  == 44);
+        System.assert(lfinancialStatement.Trade_Receivables__c  == 45);
+        System.assert(lfinancialStatement.Wages_And_Salaries__c  == 14);
+        System.assert(lfinancialStatement.Work_In_Progress__c  == 46);
+        System.assert(lfinancialStatement.Working_Capital__c  == 1);
         System.assert(lfinancialStatement.Year_End_Date__c  ==  Datetime.newInstance(2002, 12, 9).date());
 
         List<Creditsafe_Company_Key_Value__c> keyValue = [
@@ -1948,7 +1939,7 @@ private class CreditSafeServiceImplTest {
                         SystemModstamp
                 FROM Creditsafe_Company_Share_Holder__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id];
         System.assert(shareHolder.Name__c == 'shareholder');
-        System.assert(shareHolder.Share_Percent__c == '100');
+        System.assert(shareHolder.Share_Percent__c == 100);
 
         List<Creditsafe_Address__c> saddresses = [
                 SELECT
@@ -2130,5 +2121,4 @@ private class CreditSafeServiceImplTest {
         System.assert(employeeInformation.Year__c == 2020);
 
     }
-
 }

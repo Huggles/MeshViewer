@@ -4,7 +4,7 @@
     <description>This is the guideline expectations, based upon our analysis, as to this company’s payment behaviour.</description>
     <externalId>false</externalId>
     <label>Industry Average Payment Expectation Day</label>
-    <precision>16</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>

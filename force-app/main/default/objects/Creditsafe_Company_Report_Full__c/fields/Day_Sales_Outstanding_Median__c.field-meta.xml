@@ -4,7 +4,7 @@
     <description>The middle value of the estimated number of days taken to pay the business.</description>
     <externalId>false</externalId>
     <label>Day Sales Outstanding Median</label>
-    <precision>16</precision>
+    <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>

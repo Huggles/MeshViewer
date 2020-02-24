@@ -4,10 +4,9 @@
     <description>This is the issued and paid share capital from shareholders.</description>
     <externalId>false</externalId>
     <label>Issued Share Capital</label>
-    <precision>16</precision>
+    <length>255</length>
     <required>false</required>
-    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>
