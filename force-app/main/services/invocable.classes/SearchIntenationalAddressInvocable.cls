@@ -6,7 +6,7 @@ global inherited sharing class SearchIntenationalAddressInvocable {
 
 
 
-    global class SearchInternationalAddressResponse {
+    global inherited sharing class SearchInternationalAddressResponse {
         @InvocableVariable(label='Organization' description='Organination Name')
         global String organization;
         @InvocableVariable(label='Building' description='Building of the address of the business')
@@ -46,7 +46,7 @@ global inherited sharing class SearchIntenationalAddressInvocable {
     }
 
 
-    global class SearchInternationalAddressArgument {
+    global inherited sharing class SearchInternationalAddressArgument {
         @InvocableVariable(label='Organization' description='Organination Name')
         global String organization;
         @InvocableVariable(label='Building' description='')
