@@ -152,7 +152,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
     <label>International Address</label>
     <nameField>
         <displayFormat>IA-{0000}</displayFormat>
