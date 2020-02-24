@@ -1195,7 +1195,6 @@ private class CreditSafeServiceImplTest {
                         LastModifiedById,
                         LastModifiedDate,
                         Name,
-                        RecordTypeId,
                         SystemModstamp
                 FROM Additional_Information_Historical_Event__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id];
         System.assert(historicalEvents.size() == 4);

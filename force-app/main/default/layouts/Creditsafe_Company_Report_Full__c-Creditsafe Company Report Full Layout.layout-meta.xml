@@ -580,8 +580,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Position__c</fields>
         <relatedList>Creditsafe_Person_Director__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>

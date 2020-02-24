@@ -1725,11 +1725,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Creditsafe_Person_Director__c.Position__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Creditsafe_Person_Director__c.Resignation_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2049,46 +2044,6 @@
         <object>Negative_Information_DE_Insolvency_Event__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
-        <recordType>Additional_Information_Historical_Event__c.DE_Historical_Event</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Additional_Information_Historical_Event__c.NL_Historical_Event</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Creditsafe_Comp_Additional_Info_Comment__c.DE_Comments</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Creditsafe_Comp_Additional_Info_Comment__c.NL_Comments</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Creditsafe_Company_Financial_Statement__c.Financial_Statements</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Creditsafe_Company_Financial_Statement__c.Local_Financial_Statements</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Creditsafe_Company__c.Affiliated_Companies</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Creditsafe_Company__c.Immediate_Parent</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Creditsafe_Company__c.Subsidiary_Companies</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Creditsafe_Company__c.Ultimate_Parent</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Creditsafe_Person_Director__c.Current_Director</recordType>
         <visible>true</visible>

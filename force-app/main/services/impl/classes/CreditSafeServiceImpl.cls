@@ -2,7 +2,6 @@
  * Created by jaapbranderhorst on 2019-07-03.
  */
 
-
 public inherited sharing class CreditSafeServiceImpl implements ICreditSafeService{
 
     //  CreditsafeWsdl.CreditsafeSearchResultV2 creditsafeSearchV2(CreditsafeWsdl.stringArray countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
@@ -484,30 +483,26 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         Creditsafe_Comp_Additional_Info_Comment__c additionalInfoComment = new Creditsafe_Comp_Additional_Info_Comment__c();
                         additionalInfoComment.Text__c = commentV2.text;
                         additionalInfoComment.Sentiment__c = commentV2.sentiment;
+                        additionalInfoComment.Type__c = 'DE_Comments';
                         //additionalInfoComment.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
                         unitOfWork.registerNew(additionalInfoComment, Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
                 }
 
                 if (additionalInformationDEAdditionalInformationV2.historical_events != null && additionalInformationDEAdditionalInformationV2.historical_events.item != null) {
-                    Id recordTypeId = Schema.SObjectType.Additional_Information_Historical_Event__c.getRecordTypeInfosByDeveloperName().get('DE_Historical_Event').getRecordTypeId();
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationHistoricalEventV2 historicalEventV2 : additionalInformationDEAdditionalInformationV2.historical_events.item) {
                         Additional_Information_Historical_Event__c additionalInformationHistoricalEvent = new Additional_Information_Historical_Event__c();
                         additionalInformationHistoricalEvent.Date__c = getDate(historicalEventV2.date_x);
                         additionalInformationHistoricalEvent.Description__c = historicalEventV2.description;
                         additionalInformationHistoricalEvent.Previous_Value__c = historicalEventV2.previous_value;
                         additionalInformationHistoricalEvent.Current_Value__c = historicalEventV2.current_value;
-                        additionalInformationHistoricalEvent.RecordTypeId = recordTypeId;
-                        //additionalInformationHistoricalEvent.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
+                        additionalInformationHistoricalEvent.Type__c = 'DE_Historical_Event';
                         unitOfWork.registerNew(additionalInformationHistoricalEvent, Additional_Information_Historical_Event__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
                 }
-                //companyReportFull.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
-                //unitOfWork.registerNew(additionalInfoDE, Creditsafe_Company_Additional_Info_DE__c.Creditsafe_Company_Report_Full__c, companyReportFull);
             }
 
             if (reportFullV2.additional_information.nl != null) {
-                //Creditsafe_Company_Additional_Info_NL__c additionalInfoNL = new Creditsafe_Company_Additional_Info_NL__c();
 
                 CreditsafeWsdl.CreditsafeCompanyAdditionalInformationNLAdditionalInformationV2 additionalInformationNLAdditionalInformationV2 = reportFullV2.additional_information.nl;
                 if (additionalInformationNLAdditionalInformationV2.payment_expectations_summary != null) {
@@ -600,26 +595,23 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         Creditsafe_Comp_Additional_Info_Comment__c additionalInfoComment = new Creditsafe_Comp_Additional_Info_Comment__c();
                         additionalInfoComment.Text__c = commentV2.text;
                         additionalInfoComment.Sentiment__c = commentV2.sentiment;
+                        additionalInfoComment.Type__c = 'NL_Comments';
                         //additionalInfoComment.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
                         unitOfWork.registerNew(additionalInfoComment, Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
                 }
 
                 if (additionalInformationNLAdditionalInformationV2.historical_events != null && additionalInformationNLAdditionalInformationV2.historical_events.item != null) {
-                    Id recordTypeId = Schema.SObjectType.Additional_Information_Historical_Event__c.getRecordTypeInfosByDeveloperName().get('NL_Historical_Event').getRecordTypeId();
                     for (CreditsafeWsdl.CreditsafeCompanyAdditionalInformationHistoricalEventV2 historicalEventV2 : additionalInformationNLAdditionalInformationV2.historical_events.item) {
                         Additional_Information_Historical_Event__c additionalInformationHistoricalEvent = new Additional_Information_Historical_Event__c();
                         additionalInformationHistoricalEvent.Date__c = getDate(historicalEventV2.date_x);
                         additionalInformationHistoricalEvent.Description__c = historicalEventV2.description;
                         additionalInformationHistoricalEvent.Previous_Value__c = historicalEventV2.previous_value;
                         additionalInformationHistoricalEvent.Current_Value__c = historicalEventV2.current_value;
-                        additionalInformationHistoricalEvent.RecordTypeId = recordTypeId;
-                        //additionalInformationHistoricalEvent.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
+                        additionalInformationHistoricalEvent.Type__c = 'NL_Historical_Event';
                         unitOfWork.registerNew(additionalInformationHistoricalEvent, Additional_Information_Historical_Event__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
                 }
-                //companyReportFull.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
-                //unitOfWork.registerNew(additionalInfoNL, Creditsafe_Company_Additional_Info_NL__c.Creditsafe_Company_Report_Full__c, companyReportFull);
             }
 
             if (reportFullV2.additional_information.generic != null && reportFullV2.additional_information.generic.item != null) {
@@ -631,9 +623,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     unitOfWork.registerNew(creditsafeCompanyKeyValue, Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                 }
             }
-            //insert order additionalInfoDE, additionalInfoNL, additionalInfoComments, additionalInformationHistoricalEvents,
-            // additionalInformationNLFinancialItems, additionalInformationNLKvkFilings, additionalInfoNLLetterOfLiabilities, additionalInfoComments, additionalInformationHistoricalEvents,
-            // companyReportFull, creditsafeCompanyKeyValues
         }
 
         return companyReportFull;
