@@ -599,6 +599,14 @@
         <value>Below is the detailed company dossier. Please press create account to proceed with account creation.</value>
     </labels>
     <labels>
+        <fullName>Ltd</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Ltd</shortDescription>
+        <value>Ltd</value>
+    </labels>
+    <labels>
         <fullName>Matching_Companies</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -634,6 +642,13 @@
         <protected>true</protected>
         <shortDescription>NonActive</shortDescription>
         <value>Non Active</value>
+    </labels>
+    <labels>
+        <fullName>Non_Limited</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Non Limited</shortDescription>
+        <value>Non Limited</value>
     </labels>
     <labels>
         <fullName>Province</fullName>

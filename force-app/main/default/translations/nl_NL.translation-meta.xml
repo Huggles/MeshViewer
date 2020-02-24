@@ -333,6 +333,10 @@
         <name>Get_Dossier_Results_Help</name>
     </customLabels>
     <customLabels>
+        <label>B.V.</label>
+        <name>Ltd</name>
+    </customLabels>
+    <customLabels>
         <label>Overeenkomstige organisatie</label>
         <name>Matching_Companies</name>
     </customLabels>
@@ -351,6 +355,10 @@
     <customLabels>
         <label>Niet actief</label>
         <name>NonActive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Non Limited --></label>
+        <name>Non_Limited</name>
     </customLabels>
     <customLabels>
         <label>Provincie</label>

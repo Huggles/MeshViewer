@@ -24,6 +24,8 @@ import Province from '@salesforce/label/c.Province';
 import Search_Postal_Code from '@salesforce/label/c.Search_Postal_Code';
 import Name from '@salesforce/label/c.Name';
 import Search_Country from '@salesforce/label/c.Search_Country';
+import Ltd from '@salesforce/label/c.Ltd';
+import Non_Limited from '@salesforce/label/c.Non_Limited';
 
 
 export default class CreditSafeSearchForm2 extends LightningElement {
@@ -72,8 +74,8 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     get registrationTypes() {
         return [
-            { label: 'Ltd', value: 'Ltd'},
-            { label: 'Non Ltd', value: 'NonLtd'}
+            { label: Ltd, value: 'Ltd'},
+            { label: Non_Limited, value: 'NonLtd'}
         ]
     }
 
@@ -110,22 +112,22 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         if (this.isFrSelected) {
             // TODO: labels
             statuses = [
-                { label: Active, value: 'Active' },
-                { label: NonActive, value: 'NonActive'},
-                { label: 'Active, NonActive', value: 'Active, NonActive' }
+                { label: Active, value: 'active' },
+                { label: NonActive, value: 'nonactive'},
+                { label: 'Active, NonActive', value: 'active, NonActive' }
             ];
         }
         if (this.isSeSelected || this.isIeSelected || this.isGbSelected || this.isDeSelected) {
             // TODO: labels
             statuses = [
-                { label: 'Active', value: 'Active' },
+                { label: Active, value: 'active' },
                 { label: 'Active, NonActive', value: 'Active, NonActive' }
             ];
         }
         if (this.isBeSelected) {
             statuses = [
-                { label: Active, value: 'Active' },
-                { label: NonActive, value: 'NonActive' }
+                { label: Active, value: 'active' },
+                { label: NonActive, value: 'nonactive' }
             ];
         }
         return statuses;
