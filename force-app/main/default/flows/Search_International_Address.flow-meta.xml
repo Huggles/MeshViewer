@@ -8,8 +8,26 @@
         <actionName>SearchIntenationalAddressInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Output</targetReference>
+            <targetReference>Decision</targetReference>
         </connector>
+        <inputParameters>
+            <name>street</name>
+            <value>
+                <elementReference>var_Street</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>province</name>
+            <value>
+                <elementReference>var_Province</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>country</name>
+            <value>
+                <elementReference>var_Country</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>locality</name>
             <value>
@@ -17,15 +35,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>organization</name>
+            <name>postal_code</name>
             <value>
-                <elementReference>var_Organization</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>language</name>
-            <value>
-                <elementReference>var_Language</elementReference>
+                <elementReference>var_Postcode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -41,36 +53,53 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>country</name>
-            <value>
-                <elementReference>var_Country</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>postal_code</name>
-            <value>
-                <elementReference>var_Postcode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>province</name>
-            <value>
-                <elementReference>var_Province</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>street</name>
-            <value>
-                <elementReference>var_Street</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>housenr</name>
             <value>
                 <elementReference>var_Housenr</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>organization</name>
+            <value>
+                <elementReference>var_Organization</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>language</name>
+            <value>
+                <elementReference>var_Language</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>internationalAddressInvocableData</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
+    <decisions>
+        <name>Decision</name>
+        <label>Decision</label>
+        <locationX>598</locationX>
+        <locationY>187</locationY>
+        <defaultConnector>
+            <targetReference>Output</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Results_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>internationalAddressInvocableData</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>No_Results</targetReference>
+            </connector>
+            <label>No Results Found</label>
+        </rules>
+    </decisions>
     <interviewLabel>Search International Address {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Search International Address</label>
     <processMetadataValues>
@@ -89,8 +118,8 @@
     <screens>
         <name>International_Address</name>
         <label>International Address</label>
-        <locationX>254</locationX>
-        <locationY>60</locationY>
+        <locationX>252</locationX>
+        <locationY>59</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -101,64 +130,14 @@
             <name>SearchInternationalAddress</name>
             <extensionName>appsolutely:searchInternationalAddress</extensionName>
             <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>building</name>
-                <value>
-                    <elementReference>var_Building</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>housenr</name>
-                <value>
-                    <elementReference>var_Housenr</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>language</name>
-                <value>
-                    <elementReference>var_Language</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>locality</name>
-                <value>
-                    <elementReference>var_Locality</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>organization</name>
-                <value>
-                    <elementReference>var_Organization</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>pobox</name>
-                <value>
-                    <elementReference>var_POBox</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>postcode</name>
-                <value>
-                    <elementReference>var_Postcode</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>province</name>
-                <value>
-                    <elementReference>var_Province</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>street</name>
-                <value>
-                    <elementReference>var_Street</elementReference>
-                </value>
-            </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>var_Building</assignToReference>
                 <name>building</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>var_Country</assignToReference>
+                <name>country</name>
             </outputParameters>
             <outputParameters>
                 <assignToReference>var_Housenr</assignToReference>
@@ -193,20 +172,44 @@
                 <name>street</name>
             </outputParameters>
         </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>No_Results</name>
+        <label>No Results</label>
+        <locationX>805</locationX>
+        <locationY>283</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ZeroResults</name>
+            <fieldText>&lt;p&gt;Sorry no results found&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Output</name>
         <label>Output</label>
-        <locationX>197</locationX>
-        <locationY>272</locationY>
+        <locationX>341</locationX>
+        <locationY>277</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
-            <name>Result</name>
-            <fieldType>DisplayText</fieldType>
+            <name>DisplaySearchResults</name>
+            <extensionName>appsolutely:displaySearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>internationalAddressList</name>
+                <value>
+                    <elementReference>internationalAddressInvocableData</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -218,7 +221,15 @@
             <targetReference>International_Address</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
+    <variables>
+        <name>internationalAddressInvocableData</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>International_Address__c</objectType>
+    </variables>
     <variables>
         <name>var_Building</name>
         <dataType>String</dataType>
@@ -232,9 +243,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
-        <value>
-            <stringValue>nl</stringValue>
-        </value>
     </variables>
     <variables>
         <name>var_Housenr</name>

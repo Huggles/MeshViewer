@@ -67,26 +67,6 @@ export default class DisplayInternationalAddress extends LightningElement {
         countries(data);{
 
         }
-       /* search({
-            organization: this._organization,
-            building: this._building,
-            street: this._street,
-            houseNumber: this._housenr,
-            pobox: this._pobox,
-            locality: this._locality,
-            postcode: this._postcode,
-            province: this._province,
-            country: this._country,
-            language: this._language,
-            countryFormat: this._country
-        })
-        if (data) {
-            //this.retData = data;
-            this.error = 'undefined';
-        } else if (error) {
-            this.retData = undefined;
-            this.error = error;
-        }*/
 
     }
 }

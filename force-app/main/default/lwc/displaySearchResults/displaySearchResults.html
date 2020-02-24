@@ -4,15 +4,20 @@
 
 <!-- Display Search Results -->
 <template>
-    <lightning-card title="ApexWireMethodToProperty" icon-name="custom:custom63">
+    <lightning-card title="International Address Results" icon-name="custom:custom63">
         <div class="slds-m-around_medium">
-            <template if:true={irresults.data}>
-                <div class="slds-m-around_medium">
-                <template for:each={irresults.data} for:item="todo">
+            <lightning-button onclick={saveRecords} label="Confirm" ></lightning-button>
+            <template if:true={internationalAddressList}>
+               <div class="slds-m-around_medium">
+                   <lightning-layout vertical-align="center" multiple-rows>
+                       <template for:each={internationalAddressList} for:item="record">
 
-                    <p key={todo.Id}>{todo.Id}+' '+{todo.appsolutely__International_Address_Request__c}</p>
+                            <c-international-address-card-tile onselectitem={handleClick} key={record.appsolutely__RecordRefNo__c} international-address-data={record} >
+                            </c-international-address-card-tile>
 
-                </template>
+                        </template>
+
+                   </lightning-layout>
                 </div>
             </template>
         </div>

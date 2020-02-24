@@ -20,6 +20,7 @@
             <property name="postcode" type="String"/>
             <property name="province" type="String"/>
             <property name="language" type="String"/>
+            <property name="country" type="String"/>
 
         </targetConfig>
     </targetConfigs>

@@ -4,9 +4,15 @@
 
 <!-- Search International Address -->
 <template>
-    <lightning-card title="Lightning Web Component For Flow" icon-name="custom:custom14">
+    <lightning-card title="Search International Address" icon-name="custom:custom14">
         <div class="slds-m-around_medium">
-
+            <lightning-combobox name="country"
+                                label="Country"
+                                value={value}
+                                placeholder="Select Progress"
+                                options={selectOptions}
+                                onchange={handleChange}>
+            </lightning-combobox> <br />
             <lightning-input name="organization" label="Organization" value={_organization} title="Organization" onchange={handleChange} ></lightning-input><br />
             <lightning-input name="building" label="Building" title="Building" value={_building} onchange={handleChange}></lightning-input><br />
             <lightning-input name="street" label="Street" title="Street" value={_street} onchange={handleChange}></lightning-input>  <br />
@@ -15,11 +21,10 @@
             <lightning-input name="locality" label="Locality" title="Locality" value={_locality} onchange={handleChange}></lightning-input>  <br />
             <lightning-input name="postcode" label="Postcode" title="Postcode" value={_postcode} onchange={handleChange}></lightning-input>  <br />
             <lightning-input name="province" label="Province" title="Province" value={_province} onchange={handleChange}></lightning-input>  <br />
-            <!-- <lightning-input name="country" label="Country" title="Country" value={_country} onchange={handleChange}></lightning-input>  <br /> -->
             <lightning-input name="language" label="Language" title="Language" value={_language} onchange={handleChange}></lightning-input>  <br />
 
-            <lightning-button label="Publish Attribute" onclick={handleClick}></lightning-button>
-            <lightning-button label="Navigate to Next" variant="brand" onclick={handleNext} ></lightning-button>
+            <!--<lightning-button label="Publish Attribute" onclick={handleClick}></lightning-button> -->
+            <lightning-button label="Search" variant="brand" onclick={handleNext} ></lightning-button>
         </div>
     </lightning-card>
 </template>

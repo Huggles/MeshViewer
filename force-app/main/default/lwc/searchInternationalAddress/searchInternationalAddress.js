@@ -3,8 +3,9 @@
  */
 
 //import {LightningElement} from 'lwc';
-import { LightningElement , track, api} from 'lwc';
+import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
+import getCountries from '@salesforce/apex/InternationalAddressController.getCountries';
 
 export default class SearchInternationalAddress extends LightningElement {
 
@@ -18,8 +19,28 @@ export default class SearchInternationalAddress extends LightningElement {
     @track _pobox = '';
     @track _language = '';
     @track _txtBoxVal = '';
+    @track _country = '';
 
     @api availableActions = [];
+
+    @track selectOptions = [];
+    @track value = 'en';
+    @track org = '';
+
+    @wire(getCountries)
+    countries({ error, data }){
+        if(data){
+            for(const list of data){
+                const option = {
+                    label: list.DeveloperName,
+                    value: list.appsolutely__Country_Format__c
+                };
+                this.selectOptions = [...this.selectOptions, option];
+
+            }
+
+        }
+    }
 
     @api
     get txtBoxVal(){
@@ -111,6 +132,15 @@ export default class SearchInternationalAddress extends LightningElement {
         this._language = val;
     }
 
+    @api
+    get country(){
+        return this._country;
+    }
+
+    set country(val){
+        this._country = val;
+    }
+
     handleChange(event) {
         if(event.target.name == 'organization') {
             this._organization = event.target.value;
@@ -138,28 +168,13 @@ export default class SearchInternationalAddress extends LightningElement {
         else if(event.target.name == 'language'){
             this._language = event.target.value;
         }
-
-
-    }
-
-    //Change attribute on Flow
-    handleClick(event) {
-        const attributeChangeEvent = new FlowAttributeChangeEvent('organization', this._organization);
-        this.dispatchEvent(attributeChangeEvent);
-    }
-
-    //Hook to Flow's Validation engine
-    @api
-    validate() {
-        if(!this._organization.includes('oracle')) {
-            return { isValid: true };
+        else if(event.target.name == 'country'){
+            this._country = event.target.value;
         }
-        //If the component is invalid, return the isValid parameter as false and return an error message.
-        return {
-            isValid: false,
-            errorMessage:  'You cannot have string oracle in String'
-        };
+
+
     }
+
 
     //Go to Next screen of Flow
     handleNext(event){

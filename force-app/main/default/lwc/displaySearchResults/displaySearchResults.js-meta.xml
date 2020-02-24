@@ -11,4 +11,9 @@
         <target>lightning__RecordPage</target>
     </targets>
     <masterLabel>Display Search Results</masterLabel>
+   <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="internationalAddressList" type="@salesforce/schema/appsolutely__International_Address__c[]" />
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
