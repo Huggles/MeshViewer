@@ -2,7 +2,7 @@
  * Created by appsolutely on 18/02/2020.
  */
 
-global with sharing class SearchIntenationalAddressInvocable {
+global inherited sharing class SearchIntenationalAddressInvocable {
 
 
 

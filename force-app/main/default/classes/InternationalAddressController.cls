@@ -2,7 +2,7 @@
  * Created by appsolutely on 16/02/2020.
  */
 
-global with sharing class InternationalAddressController {
+global inherited sharing class InternationalAddressController {
 
 
     @AuraEnabled
@@ -31,7 +31,7 @@ global with sharing class InternationalAddressController {
 
     @AuraEnabled(cacheable=true)
     global static List<appsolutely__Country__mdt> getCountries(){
-        return [SELECT developerName, appsolutely__Country_Format__c FROM appsolutely__Country__mdt];
+        return [SELECT developerName, appsolutely__Country_Format__c FROM appsolutely__Country__mdt LIMIT 100];
     }
 
     /*
@@ -51,7 +51,7 @@ global with sharing class InternationalAddressController {
     global static String createSearchResults(List<appsolutely__International_Address__c> userSelectedAddress){
         if(!userSelectedAddress.isEmpty()){
             try{
-                insert  userSelectedAddress;
+                InternationalAddressService.insertInternationalAddress(userSelectedAddress);
                 return 'Success ';
 
             } catch (Exception e) {

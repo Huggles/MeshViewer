@@ -48,4 +48,10 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
     public string login(String name, String Password){
     return null;
     }
+
+    public void insertInternationalAddress(List<appsolutely__International_Address__c> insertAddress){
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        unitOfWork.registerNew(insertAddress);
+        unitOfWork.commitWork();
+    }
 }
