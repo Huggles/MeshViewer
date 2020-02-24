@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>Active</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
         <fullName>Back_To_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -223,6 +231,14 @@
         <protected>true</protected>
         <shortDescription>Country to Search</shortDescription>
         <value>Country to Search</value>
+    </labels>
+    <labels>
+        <fullName>Creditsafe_company_identifier</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Creditsafe company identifier</shortDescription>
+        <value>Creditsafe company identifier</value>
     </labels>
     <labels>
         <fullName>DBSCall_AccountDupCheck_Exception</fullName>
@@ -590,6 +606,14 @@
         <value>Matching Companies</value>
     </labels>
     <labels>
+        <fullName>Name</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
         <fullName>New_Account_CC</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -602,6 +626,38 @@
         <protected>true</protected>
         <shortDescription>NoAuthAppNotActive</shortDescription>
         <value>No authentication data found. The app is not activated</value>
+    </labels>
+    <labels>
+        <fullName>NonActive</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NonActive</shortDescription>
+        <value>Non Active</value>
+    </labels>
+    <labels>
+        <fullName>Province</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Province</shortDescription>
+        <value>Province</value>
+    </labels>
+    <labels>
+        <fullName>Registration_Number</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Registration Number</shortDescription>
+        <value>Registration Number</value>
+    </labels>
+    <labels>
+        <fullName>Registration_Type</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Registration Type</shortDescription>
+        <value>Registration Type</value>
     </labels>
     <labels>
         <fullName>Search_Address</fullName>
@@ -773,10 +829,19 @@
     </labels>
     <labels>
         <fullName>Search_VAT_Number</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Search VAT Number</shortDescription>
         <value>VAT Number</value>
+    </labels>
+    <labels>
+        <fullName>Status</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status</shortDescription>
+        <value>Status</value>
     </labels>
     <labels>
         <fullName>Success</fullName>

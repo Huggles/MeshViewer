@@ -11,6 +11,20 @@ import Country_Ireland from '@salesforce/label/c.Country_Ireland';
 import Country_Netherlands from '@salesforce/label/c.Country_Netherlands';
 import Country_United_Kingdom from '@salesforce/label/c.Country_United_Kingdom';
 import Country_Sweden from '@salesforce/label/c.Country_Sweden';
+import Active from '@salesforce/label/c.Active';
+import NonActive from '@salesforce/label/c.NonActive';
+import Status from '@salesforce/label/c.Status';
+import Search_VAT_Number from '@salesforce/label/c.Search_VAT_Number';
+import Registration_Type from '@salesforce/label/c.Registration_Type';
+import Registration_Number from '@salesforce/label/c.Registration_Number';
+import Creditsafe_company_identifier from '@salesforce/label/c.Creditsafe_company_identifier';
+import Search_Street from '@salesforce/label/c.Search_Street';
+import Search_City from '@salesforce/label/c.Search_City';
+import Province from '@salesforce/label/c.Province';
+import Search_Postal_Code from '@salesforce/label/c.Search_Postal_Code';
+import Name from '@salesforce/label/c.Name';
+import Search_Country from '@salesforce/label/c.Search_Country';
+
 
 export default class CreditSafeSearchForm2 extends LightningElement {
 
@@ -30,17 +44,23 @@ export default class CreditSafeSearchForm2 extends LightningElement {
     @track errorMessage;
     @track errorTitle;
 
-    labels = {
-        Country_Belgium,
-        Country_France,
-        Country_Germany,
-        Country_Ireland,
-        Country_United_Kingdom,
-        Country_Sweden
+    label = {
+        Status,
+        Search_VAT_Number,
+        Registration_Type,
+        Registration_Number,
+        Creditsafe_company_identifier,
+        Search_Street,
+        Search_City,
+        Province,
+        Search_Postal_Code,
+        Name,
+        Search_Country
     }
 
     get countries() {
         return [
+            { label: Country_Netherlands, value: 'NL'},
             { label: Country_Belgium, value: 'BE' },
             { label: Country_Germany, value: 'DE' },
             { label: Country_France, value: 'FR' },
@@ -81,19 +101,31 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         return this.selectedCountry === 'IE';
     }
 
+    get showProvince() {
+        return this.isFrSelected;
+    }
+
     get statuses() {
         let statuses;
         if (this.isFrSelected) {
+            // TODO: labels
             statuses = [
-                { label: 'Active', value: 'Active' },
-                { label: 'NonActive', value: 'NonActive'},
+                { label: Active, value: 'Active' },
+                { label: NonActive, value: 'NonActive'},
                 { label: 'Active, NonActive', value: 'Active, NonActive' }
             ];
         }
         if (this.isSeSelected || this.isIeSelected || this.isGbSelected || this.isDeSelected) {
+            // TODO: labels
             statuses = [
                 { label: 'Active', value: 'Active' },
                 { label: 'Active, NonActive', value: 'Active, NonActive' }
+            ];
+        }
+        if (this.isBeSelected) {
+            statuses = [
+                { label: Active, value: 'Active' },
+                { label: NonActive, value: 'NonActive' }
             ];
         }
         return statuses;
@@ -115,41 +147,65 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
-        if (this.isBeSelected) {
-           if (!this.creditSafeId &&
-               !this.registrationNumber &&
-               !this.vatNumber &&
-               !(this.name && this.name.length >= 2 && this.postalCode && this.postalCode.length >= 2)) {
-               // TODO: label
-               this.errorMessage = 'wrong input';
-           }
-        }
-        if (this.isDeSelected) {
-            if (!this.creditSafeId &&
-                !this.registrationNumber &&
-                !this.vatNumber &&
-                !(this.name && this.name.length >= 2 && this.postalCode && this.postalCode.length >= 2)) {
-                // TODO: label
-                this.errorMessage = 'wrong input';
+        // format of the fields is checked through the right markup (regex, minlength etc.)
+        // so we only need to check if the right fields have been filled
+        if (valid) {
+            if (this.isNlSelected) {
+                if (!this.creditSafeId &&
+                    !this.registrationNumber &&
+                    !(this.name || this.status || this.street || this.city || this.postalCode )) {
+                    // TODO: label, format text
+                    this.errorMessage = 'wrong input';
+                }
             }
-        }
-        if (this.isFrSelected) {
-
-        }
-        if (this.isGbSelected) {
-
-        }
-        if (this.isIeSelected) {
-
-        }
-        if (this.isSeSelected) {
-
+            if (this.isBeSelected) {
+                if (!this.creditSafeId &&
+                    !this.registrationNumber &&
+                    !this.vatNumber &&
+                    !(this.name || this.status || this.street || this.city || this.postalCode )) {
+                    // TODO: label, format text
+                    this.errorMessage = 'wrong input';
+                }
+            }
+            if (this.isDeSelected) {
+                if (!this.creditSafeId &&
+                    !this.registrationNumber &&
+                    !this.vatNumber &&
+                    !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) {
+                    // TODO: label, format text
+                    this.errorMessage = 'wrong input';
+                }
+            }
+            if (this.isFrSelected) {
+                if (!this.creditSafeId &&
+                    !this.registrationNumber && // postal code and status can be entered/selected as well but are optional so we don't check
+                    !this.vatNumber &&
+                    !(this.name || this.status || this.street || this.city || this.postalCode || this.province)) { // apparently this is how it should work but you can get a lot of results
+                    // TODO: label, format text
+                    this.errorMessage = 'wrong input';
+                }
+            }
+            if (this.isGbSelected || this.isIeSelected) {
+                if (!this.creditSafeId &&
+                    !this.registrationNumber &&
+                    !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
+                    // TODO: label, format text
+                    this.errorMessage = 'wrong input';
+                }
+            }
+            if (this.isSeSelected) {
+                if (!this.registrationNumber &&
+                    !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
+                    // TODO: label, format text
+                    this.errorMessage = 'wrong input';
+                }
+            }
+            if (this.errorMessage) {
+                this.template.querySelector('.error-message').showToast();
+            }
         }
         // if the errorMessage is set, this will return false
         valid = valid && !this.errorMessage;
-        if (this.errorMessage) {
-            this.template.querySelector('.error-message').showToast();
-        }
         return valid;
     }
 

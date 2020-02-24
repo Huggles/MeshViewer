@@ -5,6 +5,10 @@
         <name>Customerconnect_Administration</name>
     </customApplications>
     <customLabels>
+        <label>Actief</label>
+        <name>Active</name>
+    </customLabels>
+    <customLabels>
         <label>Terug naar resultaten</label>
         <name>Back_To_Search</name>
     </customLabels>
@@ -133,6 +137,10 @@
         <name>Country_to_Search</name>
     </customLabels>
     <customLabels>
+        <label>Creditsafe bedrijfsnummer</label>
+        <name>Creditsafe_company_identifier</name>
+    </customLabels>
+    <customLabels>
         <label><!-- WSCall_Unknown_Exception --></label>
         <name>DBSCall_AccountDupCheck_Exception</name>
     </customLabels>
@@ -177,12 +185,24 @@
         <name>Dossier_Account_Update_Completed</name>
     </customLabels>
     <customLabels>
+        <label><!-- Dossier ID Access --></label>
+        <name>Dossier_ID_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Dossier ID Missing --></label>
+        <name>Dossier_ID_Missing</name>
+    </customLabels>
+    <customLabels>
         <label>Er zijn meerdere gelijkende accounts gevonden. Het is niet mogelijk om de data aan het juiste account toe te wijzen. Verwijder alstublieft de gelijkende accounts en probeer het opnieuw.</label>
         <name>Dossier_Multiple_Account_Duplicates_Found</name>
     </customLabels>
     <customLabels>
         <label>Kamer van Koophandel nummer</label>
         <name>Dossier_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Dossier Number Missing --></label>
+        <name>Dossier_Number_Missing</name>
     </customLabels>
     <customLabels>
         <label>Verwijder Customer.connect gegevens</label>
@@ -317,12 +337,32 @@
         <name>Matching_Companies</name>
     </customLabels>
     <customLabels>
+        <label>Naam</label>
+        <name>Name</name>
+    </customLabels>
+    <customLabels>
         <label>Nieuwe Organisatie op basis van Customer.connect</label>
         <name>New_Account_CC</name>
     </customLabels>
     <customLabels>
         <label>Geen Customer.connect authenticatie data gevonden. Customer.connect is nog niet geactiveerd</label>
         <name>NoAuthAppNotActive</name>
+    </customLabels>
+    <customLabels>
+        <label>Niet actief</label>
+        <name>NonActive</name>
+    </customLabels>
+    <customLabels>
+        <label>Provincie</label>
+        <name>Province</name>
+    </customLabels>
+    <customLabels>
+        <label>Registratienummer</label>
+        <name>Registration_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Registratie type</label>
+        <name>Registration_Type</name>
     </customLabels>
     <customLabels>
         <label>Adres</label>
@@ -425,6 +465,10 @@
         <name>Search_VAT_Number</name>
     </customLabels>
     <customLabels>
+        <label>Status</label>
+        <name>Status</name>
+    </customLabels>
+    <customLabels>
         <label>Gelukt</label>
         <name>Success</name>
     </customLabels>
@@ -512,6 +556,39 @@
         <label>Customer.connect setup</label>
         <name>Customer_connect_configuration</name>
     </customTabs>
+    <flowDefinitions>
+        <flows>
+            <fullName>Organisation_Search_Flow-1</fullName>
+            <screens>
+                <fields>
+                    <name>dutchDossiersResult</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerDutchResultsScreen</name>
+                </fields>
+                <name>Dutch_Dossiers_Search_Results</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>BusinessSearchForm</name>
+                </fields>
+                <fields>
+                    <name>businessSearchFooter</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerSearchScreen</name>
+                </fields>
+                <fields>
+                    <name>organisationSearchFormHeader</name>
+                </fields>
+                <name>Search</name>
+            </screens>
+            <screens>
+                <name>Show_Credit_Safe_Search_Results</name>
+            </screens>
+        </flows>
+        <fullName>Organisation_Search_Flow</fullName>
+    </flowDefinitions>
     <quickActions>
         <label><!-- LogACall --></label>
         <name>LogACall</name>
