@@ -318,11 +318,6 @@
             <actionType>QuickAction</actionType>
             <sortOrder>33</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Account.International_Address</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>34</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <quickActionList>
         <quickActionListItems>

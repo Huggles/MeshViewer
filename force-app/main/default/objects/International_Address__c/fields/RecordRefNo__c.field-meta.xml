@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RecordRefNo__c</fullName>
+    <description>This field will be used only for unique data reference while displaying the search results on screen.</description>
+    <externalId>false</externalId>
+    <label>RecordRefNumber</label>
+    <length>50</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
