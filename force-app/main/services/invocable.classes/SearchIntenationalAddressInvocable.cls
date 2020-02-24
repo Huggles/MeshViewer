@@ -9,11 +9,11 @@ global with sharing class SearchIntenationalAddressInvocable {
     global class SearchInternationalAddressResponse {
         @InvocableVariable(label='Organization' description='Organination Name')
         global String organization;
-        @InvocableVariable(label='Building' description='')
+        @InvocableVariable(label='Building' description='Building of the address of the business')
         global String building;
-        @InvocableVariable(label='POBox' description='')
+        @InvocableVariable(label='POBox' description='POBox of the address of the business')
         global String pobox;
-        @InvocableVariable(label='Province' description='')
+        @InvocableVariable(label='Province' description='Province of the address of the business')
         global String province;
         @InvocableVariable(label='City' description='City of the address of the business')
         global String city;
@@ -36,12 +36,10 @@ global with sharing class SearchIntenationalAddressInvocable {
             organization = searchInternationalAddressResultsDto.organization;
             building = searchInternationalAddressResultsDto.building;
             pobox = searchInternationalAddressResultsDto.pobox;
-            //city = searchInternationalAddressResultsDto.c;
             street = searchInternationalAddressResultsDto.street;
             postal_code = searchInternationalAddressResultsDto.postcode;
             housenr = searchInternationalAddressResultsDto.housenr;
             locality = searchInternationalAddressResultsDto.locality;
-            //language = searchInternationalAddressResultsDto.;
             country = searchInternationalAddressResultsDto.country;
         }
 
@@ -75,49 +73,50 @@ global with sharing class SearchIntenationalAddressInvocable {
     }
 
     @InvocableMethod
-    global static List<List<appsolutely__International_Address__c>> searchInternationalAddress(List<SearchInternationalAddressArgument> arguments) {
-        List<List<appsolutely__International_Address__c>> listFinal = new List<List<appsolutely__International_Address__c>>();
-        List<appsolutely__International_Address__c> lstInternationalAddresses = new List<appsolutely__International_Address__c>();
-        List<InternationalAddressResultsDto> searchInternationalAddressResultsDtos = new List<InternationalAddressResultsDto>();
-        for (SearchInternationalAddressArgument searchInternationalAddressArgument : arguments) {
-            searchInternationalAddressResultsDtos.addAll(
-                    InternationalAddressService.internationalAddressSearchV2(
-                            searchInternationalAddressArgument.organization,
-                            searchInternationalAddressArgument.building,
-                            searchInternationalAddressArgument.street,
-                            searchInternationalAddressArgument.housenr,
-                            searchInternationalAddressArgument.pobox,
-                            searchInternationalAddressArgument.locality,
-                            searchInternationalAddressArgument.postal_code,
-                            searchInternationalAddressArgument.province,
-                            searchInternationalAddressArgument.country,
-                            searchInternationalAddressArgument.language,
-                            searchInternationalAddressArgument.country
-                    )
-            );
-        }
-
-        appsolutely__International_Address_Request__c interAddReq = new appsolutely__International_Address_Request__c();
-        insert interAddReq;
-
-       // if(interAddReq.Id != null) {
-
-
-            List<SearchInternationalAddressResponse> responses = new List<SearchIntenationalAddressInvocable.SearchInternationalAddressResponse>();
-
-            for (InternationalAddressResultsDto searchInternationalAddressResultDto : searchInternationalAddressResultsDtos) {
-                responses.add(new SearchInternationalAddressResponse(searchInternationalAddressResultDto));
-                lstInternationalAddresses.add(assignInternationalAddress(searchInternationalAddressResultDto, interAddReq.Id));
+    global static List<List<appsolutely__International_Address__c>>  searchInternationalAddress(List<SearchInternationalAddressArgument> arguments) {
+       try{
+            List<List<appsolutely__International_Address__c>> listInternationalAddressesFinal = new List<List<appsolutely__International_Address__c>>();
+            List<appsolutely__International_Address__c> listInternationalAddresses = new List<appsolutely__International_Address__c>();
+            Integer recordRefNumberCount = 1;
+           system.debug('Arguments '+arguments);
+            List<InternationalAddressResultsDto> searchInternationalAddressResultsDtos = new List<InternationalAddressResultsDto>();
+            for (SearchInternationalAddressArgument searchInternationalAddressArgument : arguments) {
+                searchInternationalAddressResultsDtos.addAll(
+                        InternationalAddressService.internationalAddressSearchV2(
+                                searchInternationalAddressArgument.organization,
+                                searchInternationalAddressArgument.building,
+                                searchInternationalAddressArgument.street,
+                                searchInternationalAddressArgument.housenr,
+                                searchInternationalAddressArgument.pobox,
+                                searchInternationalAddressArgument.locality,
+                                searchInternationalAddressArgument.postal_code,
+                                searchInternationalAddressArgument.province,
+                                searchInternationalAddressArgument.country,
+                                searchInternationalAddressArgument.language,
+                                searchInternationalAddressArgument.country
+                        )
+                );
             }
 
-       // }
-        listFinal.add(lstInternationalAddresses);
-        return listFinal;
-    //            insert lstInternationalAddresses;
-       // return responses;
+            List<SearchInternationalAddressResponse> responses = new List<SearchIntenationalAddressInvocable.SearchInternationalAddressResponse>();
+           system.debug('searchInternationalAddressResultsDtos'+searchInternationalAddressResultsDtos.size());
+            for (InternationalAddressResultsDto searchInternationalAddressResultDto : searchInternationalAddressResultsDtos) {
+                responses.add(new SearchInternationalAddressResponse(searchInternationalAddressResultDto));
+                listInternationalAddresses.add(assignInternationalAddress(searchInternationalAddressResultDto, 'IA00'+recordRefNumberCount));
+                recordRefNumberCount = recordRefNumberCount + 1;
+            }
+
+           listInternationalAddressesFinal.add(listInternationalAddresses);
+           system.debug('listInternationalAddressesFinal'+listInternationalAddressesFinal.size());
+           return listInternationalAddressesFinal;
+       } catch (Exception e) {
+           ErrorLogUtil.logException(e);
+
+       }
+        return null;
     }
 
-    public static appsolutely__International_Address__c assignInternationalAddress(InternationalAddressResultsDto searchInternationalAddressResultsDto, Id requestId) {
+    public static appsolutely__International_Address__c assignInternationalAddress(InternationalAddressResultsDto searchInternationalAddressResultsDto, String recordRefNumber) {
         appsolutely__International_Address__c interAddress = new appsolutely__International_Address__c();
         interAddress.appsolutely__Organization__c = searchInternationalAddressResultsDto.organization;
         interAddress.appsolutely__Building__c = searchInternationalAddressResultsDto.building;
@@ -127,8 +126,7 @@ global with sharing class SearchIntenationalAddressInvocable {
         interAddress.appsolutely__POBox__c = searchInternationalAddressResultsDto.pobox;
         interAddress.appsolutely__Postcode__c =  searchInternationalAddressResultsDto.postcode;
         interAddress.appsolutely__Country__c = searchInternationalAddressResultsDto.country;
-        interAddress.appsolutely__International_Address_Request__c = requestId;
-        //interAddress.appsolutely__Language__c;
+        interAddress.appsolutely__RecordRefNo__c = recordRefNumber;
         return interAddress;
     }
 
