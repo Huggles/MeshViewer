@@ -304,11 +304,26 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB = mapCreditSafeDataToDossier(dataVendorDossier, dossierDB);
         unitOfWork.registerNew(dossierDB, Business_Dossier__c.Account__c, account);
         if (dataVendorDossier != null && dataVendorDossier.address != null) {
-            Creditsafe_Address__c addressDB = new CreditSafeServiceImpl().mapCreditSafeAddress(dataVendorDossier.address, new Creditsafe_Address__c(), 'Main Address');
-            unitOfWork.registerNew(addressDB, Creditsafe_Address__c.Business_Data__c, dossierDB);
+            Dossier_Address__c addressDB = mapCreditSafeAddress(dataVendorDossier, new Dossier_Address__c());
+            unitOfWork.registerNew(addressDB, Dossier_Address__c.Business_Data__c, dossierDB);
         }
 
         return dossierDB;
+    }
+
+    private Dossier_Address__c mapCreditSafeAddress(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Dossier_Address__c addressDB) {
+        if (dataVendorDossier.address != null) {
+            addressDB = new Dossier_Address__c();
+            addressDB.Name = dataVendorDossier.address.full_address;
+            addressDB.Postcode__c = dataVendorDossier.address.postal_code;
+            addressDB.Street__c = dataVendorDossier.address.street;
+            addressDB.City__c = dataVendorDossier.address.city;
+            addressDB.House_Number__c = dataVendorDossier.address.house_number;
+            addressDB.House_Number_Addition__c = null;
+            addressDB.Country__c = dataVendorDossier.address.country;
+            //addressDB.Type__c = 'Creditsafe';
+        }
+        return addressDB;
     }
 
     private Business_Dossier__c mapCreditSafeDataToDossier(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Business_Dossier__c dossierDB) {

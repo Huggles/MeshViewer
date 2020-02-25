@@ -1245,7 +1245,6 @@ private class CreditSafeServiceImplTest {
                 SELECT
                         CreatedById,
                         CreatedDate,
-                        Business_Data__c,
                         City__c,
                         Country__c,
                         Creditsafe_Company_Report_Full__c,
@@ -1261,7 +1260,6 @@ private class CreditSafeServiceImplTest {
                         LastModifiedById,
                         LastModifiedDate,
                         Name,
-                        OwnerId,
                         SystemModstamp
                 FROM Creditsafe_Address__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id];
         System.assert(addresses.size() == 2);

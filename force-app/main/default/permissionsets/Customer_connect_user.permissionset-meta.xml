@@ -530,22 +530,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Creditsafe_Address__c.Business_Data__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Creditsafe_Address__c.City__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Creditsafe_Address__c.Country__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Creditsafe_Address__c.Creditsafe_Company_Report_Full__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
