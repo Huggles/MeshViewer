@@ -7,7 +7,7 @@ force-app/main/default/applications/standard__LightningSales.app-meta.xml
 .idea/shelf
 out
 IlluminatedCloud
-force-app/main/default/objectTranslations/*
 .idea/illuminatedCloud.xml
 .idea/misc.xml
 force-app/main/default/objects/Creditsafe_Company_Report_Full__c/listViews/All.listView-meta.xml
+force-app/main/default/layouts/Global-Global Layout.layout-meta.xml
