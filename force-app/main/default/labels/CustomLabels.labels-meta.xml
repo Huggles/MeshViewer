@@ -233,6 +233,14 @@
         <value>Country to Search</value>
     </labels>
     <labels>
+        <fullName>CreditSafe_Validation_Message_Heading</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CreditSafe Validation Message Heading</shortDescription>
+        <value>Please enter valid search criteria:</value>
+    </labels>
+    <labels>
         <fullName>Creditsafe_company_identifier</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>

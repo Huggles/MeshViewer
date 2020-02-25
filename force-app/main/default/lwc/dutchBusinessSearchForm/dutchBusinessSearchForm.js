@@ -42,12 +42,14 @@ export default class DutchBusinessSearchForm extends LightningElement {
      * Checks if the input in all input elements in this template is valid
      * @returns true if valid
      */
+    @api
     allValid() {
-        const valid = [...this.template.querySelectorAll('lightning-input')]
+        let valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
+        valid = valid && (this.tradeName || this.city || this.street || this.postalCode || this.domainName || this.phoneNumber);
         return valid;
     }
 

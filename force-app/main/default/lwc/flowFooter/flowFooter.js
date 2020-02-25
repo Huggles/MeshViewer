@@ -97,7 +97,7 @@ export default class FlowFooter extends LightningElement {
             }
             // reset this.validatedComponents if necessary
             let resetValidationComponents = true;
-            for (const validatedComponent of this.validatedComponents) {
+            for (const validatedComponent of this.validatedComponents.values()) {
                 if (!validatedComponent.validated) {
                     resetValidationComponents = false;
                     break;

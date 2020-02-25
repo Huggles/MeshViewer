@@ -26,6 +26,7 @@ import Name from '@salesforce/label/c.Name';
 import Search_Country from '@salesforce/label/c.Search_Country';
 import Ltd from '@salesforce/label/c.Ltd';
 import Non_Limited from '@salesforce/label/c.Non_Limited';
+import CreditSafe_Validation_Message_Heading from '@salesforce/label/c.CreditSafe_Validation_Message_Heading';
 
 
 export default class CreditSafeSearchForm2 extends LightningElement {
@@ -140,6 +141,25 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         else
             retValue = false;
         return retValue;
+    }
+
+    /**
+     * Creates the error message markup for when the validation of the search criteria does turn up problems.
+     * @param hints the labels to be shown per search criteria
+     */
+    createErrorMessageMarkup(hints) {
+        let errorMessageMarkup;
+        errorMessageMarkup = '<div>' + CreditSafe_Validation_Message_Heading + '</div>';
+        if (hints) {
+            errorMessageMarkup += '<ul>';
+            for (const hint of hints) {
+                errorMessageMarkup += '<li>';
+                errorMessageMarkup += hint;
+                errorMessageMarkup += '</li>';
+            }
+            errorMessageMarkup += '</ul>';
+        }
+        return errorMessageMarkup;
     }
 
     @api

@@ -137,6 +137,10 @@
         <name>Country_to_Search</name>
     </customLabels>
     <customLabels>
+        <label>Voer alstublieft de correcte zoekcriteria op:</label>
+        <name>CreditSafe_Validation_Message_Heading</name>
+    </customLabels>
+    <customLabels>
         <label>Creditsafe bedrijfsnummer</label>
         <name>Creditsafe_company_identifier</name>
     </customLabels>
