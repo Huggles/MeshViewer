@@ -303,9 +303,10 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         Business_Dossier__c dossierDB = new Business_Dossier__c();
         dossierDB = mapCreditSafeDataToDossier(dataVendorDossier, dossierDB);
         unitOfWork.registerNew(dossierDB, Business_Dossier__c.Account__c, account);
-
-        Dossier_Address__c addressDB = mapCreditSafeAddress(dataVendorDossier, new Dossier_Address__c());
-        unitOfWork.registerNew(addressDB, Dossier_Address__c.Business_Data__c, dossierDB);
+        if (dataVendorDossier != null && dataVendorDossier.address != null) {
+            Dossier_Address__c addressDB = mapCreditSafeAddress(dataVendorDossier, new Dossier_Address__c());
+            unitOfWork.registerNew(addressDB, Dossier_Address__c.Business_Data__c, dossierDB);
+        }
 
         return dossierDB;
     }
@@ -320,14 +321,13 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             addressDB.House_Number__c = dataVendorDossier.address.house_number;
             addressDB.House_Number_Addition__c = null;
             addressDB.Country__c = dataVendorDossier.address.country;
-            addressDB.Type__c = 'Creditsafe';
+            //addressDB.Type__c = 'Creditsafe';
         }
         return addressDB;
     }
 
     private Business_Dossier__c mapCreditSafeDataToDossier(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, Business_Dossier__c dossierDB) {
-        Id recordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName()
-                .get('Creditsafe').getRecordTypeId();
+        Id recordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName().get('Creditsafe').getRecordTypeId();
         dossierDB.RecordTypeId = recordTypeId;
         dossierDB.Dossier_Number__c = dataVendorDossier.registration_number;
         dossierDB.Name = dataVendorDossier.name;
@@ -346,7 +346,8 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         dossierDB.Creditsafe_Id__c = dataVendorDossier.creditsafe_number;
         dossierDB.Date_of_Last_Account__c = dataVendorDossier.date_last_account;
         dossierDB.Date_of_Last_Change__c = dataVendorDossier.date_last_change;
-         dossierDB.Status__c = dataVendorDossier.status;
+        dossierDB.Status__c = dataVendorDossier.status;
+        dossierDB.Company_Id__c = dataVendorDossier.id;
 
         if (dataVendorDossier.vat_numbers != null && dataVendorDossier.vat_numbers.item != null && dataVendorDossier.vat_numbers.item.size() > 0) {
             // TODO: handle multiple VAT numbers
@@ -357,8 +358,6 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
         return dossierDB;
     }
-
-
 
     private Account insertAccount(CreditsafeWsdl.CreditsafeCompanyV2 dataVendorDossier, fflib_ISObjectUnitOfWork unitOfWork) {
         Account account = mapDataVendorToAccount(dataVendorDossier, new Account());

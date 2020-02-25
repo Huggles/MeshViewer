@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stock_Turnover_Ratio__c</fullName>
+    <description>Stocks / Turnover x 100.  This shows the number of times the trading stock of a company is ‘turned over’ in a trading period.  If the ratio is low this indicates that relatively little money is tied up in Stocks.</description>
+    <externalId>false</externalId>
+    <label>Stock Turnover Ratio</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

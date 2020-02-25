@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Liability2_Submitted_Date_Parent2__c</fullName>
+    <description>Shows the submit date for this 403 statement of mother company 2.</description>
+    <externalId>false</externalId>
+    <label>Liability2 Submitted Date Parent2</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

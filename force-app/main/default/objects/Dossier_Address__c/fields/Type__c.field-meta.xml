@@ -20,11 +20,6 @@
                 <default>false</default>
                 <label>Establishment</label>
             </value>
-            <value>
-                <fullName>Creditsafe</fullName>
-                <default>false</default>
-                <label>Creditsafe</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

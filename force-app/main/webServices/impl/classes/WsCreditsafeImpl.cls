@@ -6,6 +6,7 @@ public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
 
     private inherited sharing class CreditSafeMethodCallOut extends MethodCallout {
 
+
         public Object call(String methodName, Map<String, Object> arguments) {
             CreditsafeWsdl.Webservices_nlPort port = (CreditsafeWsdl.Webservices_nlPort) this.port;
             switch on methodName {
@@ -22,6 +23,14 @@ public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
                             (String)arguments.get('street'),
                             (String)arguments.get('postal_code'),
                             (String)arguments.get('name')
+                    );
+
+                }
+                when 'creditsafeGetReportFullV2' {
+                    return port.creditsafeGetReportFullV2(
+                            (String)arguments.get('company_id'),
+                            (String)arguments.get('language'),
+                            (String)arguments.get('reason')
                     );
 
                 }
@@ -64,6 +73,14 @@ public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
                 'street' => street,
                 'postal_code' => postal_code,
                 'name' => name
+        });
+    }
+
+    public CreditsafeWsdl.CreditsafeCompanyReportFullV2 creditsafeGetReportFullV2(String company_id, String language, String reason) {
+        return (CreditsafeWsdl.CreditsafeCompanyReportFullV2)methodCallOut.callOut('creditsafeGetReportFullV2', new Map<String, Object>{
+                'company_id' => company_id,
+                'language' => language,
+                'reason' => reason
         });
     }
 
