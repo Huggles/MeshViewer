@@ -545,22 +545,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Creditsafe_Address__c.Creditsafe_Company_Banker__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Creditsafe_Address__c.Creditsafe_Company_Report_Full__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Creditsafe_Address__c.Creditsafe_Company_Share_Holder__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Creditsafe_Address__c.Creditsafe_Person_Director__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
