@@ -10,3 +10,4 @@ IlluminatedCloud
 force-app/main/default/objectTranslations/*
 .idea/illuminatedCloud.xml
 .idea/misc.xml
+force-app/main/default/objects/Creditsafe_Company_Report_Full__c/listViews/All.listView-meta.xml

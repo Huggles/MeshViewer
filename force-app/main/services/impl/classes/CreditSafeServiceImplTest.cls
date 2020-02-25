@@ -1248,10 +1248,7 @@ private class CreditSafeServiceImplTest {
                         Business_Data__c,
                         City__c,
                         Country__c,
-                        Creditsafe_Company_Banker__c,
                         Creditsafe_Company_Report_Full__c,
-                        Creditsafe_Company_Share_Holder__c,
-                        Creditsafe_Person_Director__c,
                         Full_Address__c,
                         House_Number__c,
                         House_Number_Addition__c,
@@ -1294,6 +1291,14 @@ private class CreditSafeServiceImplTest {
                         Director_Type__c,
                         Gender__c,
                         Resignation_Date__c,
+                        City__c,
+                        Country__c,
+                        Full_Address__c,
+                        House_Number__c,
+                        House_Number_Addition__c,
+                        Postcode__c,
+                        Street__c,
+                        Telephone__c,
                         Id,
                         IsDeleted,
                         LastModifiedById,
@@ -1307,33 +1312,13 @@ private class CreditSafeServiceImplTest {
         System.assert(personDirectors.Gender__c == 'cr gender');
         System.assert(personDirectors.Date_of_Birth__c == Datetime.newInstance(1970, 2, 1).date());
         System.assert(personDirectors.Director_Type__c == 'ceo');
-        List<Creditsafe_Address__c> addressesDirector = [
-                SELECT
-                        CreatedById,
-                        CreatedDate,
-                        Business_Data__c,
-                        City__c,
-                        Country__c,
-                        Creditsafe_Company_Banker__c,
-                        Creditsafe_Company_Report_Full__c,
-                        Creditsafe_Company_Share_Holder__c,
-                        Creditsafe_Person_Director__c,
-                        Full_Address__c,
-                        House_Number__c,
-                        House_Number_Addition__c,
-                        Postcode__c,
-                        Street__c,
-                        Telephone__c,
-                        Type__c,
-                        Id,
-                        IsDeleted,
-                        LastModifiedById,
-                        LastModifiedDate,
-                        Name,
-                        OwnerId,
-                        SystemModstamp
-                FROM Creditsafe_Address__c WHERE Creditsafe_Person_Director__c = :personDirectors.Id];
-        System.assert(addressesDirector.size() == 1);
+        System.assert(personDirectors.City__c == 'cr city');
+        System.assert(personDirectors.Country__c == 'cr country');
+        System.assert(personDirectors.Full_Address__c == 'cr full_address');
+        System.assert(personDirectors.House_Number__c == '1');
+        System.assert(personDirectors.Postcode__c == '1212');
+        System.assert(personDirectors.Street__c == 'cr street');
+        System.assert(personDirectors.Telephone__c == '987654321');
 
         Creditsafe_Person_Position__c position = [
                 SELECT
@@ -1363,6 +1348,14 @@ private class CreditSafeServiceImplTest {
                         Director_Type__c,
                         Gender__c,
                         Resignation_Date__c,
+                        City__c,
+                        Country__c,
+                        Full_Address__c,
+                        House_Number__c,
+                        House_Number_Addition__c,
+                        Postcode__c,
+                        Street__c,
+                        Telephone__c,
                         Id,
                         IsDeleted,
                         LastModifiedById,
@@ -1376,33 +1369,13 @@ private class CreditSafeServiceImplTest {
         System.assert(personDirectors1.Gender__c == 'pr gender');
         System.assert(personDirectors1.Date_of_Birth__c == Datetime.newInstance(1970, 2, 1).date());
         System.assert(personDirectors1.Director_Type__c == 'cto');
-        List<Creditsafe_Address__c> addressesDirector1 = [
-                SELECT
-                        CreatedById,
-                        CreatedDate,
-                        Business_Data__c,
-                        City__c,
-                        Country__c,
-                        Creditsafe_Company_Banker__c,
-                        Creditsafe_Company_Report_Full__c,
-                        Creditsafe_Company_Share_Holder__c,
-                        Creditsafe_Person_Director__c,
-                        Full_Address__c,
-                        House_Number__c,
-                        House_Number_Addition__c,
-                        Postcode__c,
-                        Street__c,
-                        Telephone__c,
-                        Type__c,
-                        Id,
-                        IsDeleted,
-                        LastModifiedById,
-                        LastModifiedDate,
-                        Name,
-                        OwnerId,
-                        SystemModstamp
-                FROM Creditsafe_Address__c WHERE Creditsafe_Person_Director__c = :personDirectors1.Id];
-        System.assert(addressesDirector1.size() == 1);
+        System.assert(personDirectors1.City__c == 'pr city');
+        System.assert(personDirectors1.Country__c == 'pr country');
+        System.assert(personDirectors1.Full_Address__c == 'pr full_address');
+        System.assert(personDirectors1.House_Number__c == '1');
+        System.assert(personDirectors1.Postcode__c == '1212');
+        System.assert(personDirectors1.Street__c == 'pr street');
+        System.assert(personDirectors1.Telephone__c == '987654321');
 
         Creditsafe_Company__c ucompany = [
                 SELECT
@@ -1930,6 +1903,14 @@ private class CreditSafeServiceImplTest {
                         Creditsafe_Company_Report_Full__c,
                         Name__c,
                         Share_Percent__c,
+                        City__c,
+                        Country__c,
+                        Full_Address__c,
+                        House_Number__c,
+                        House_Number_Addition__c,
+                        Postcode__c,
+                        Street__c,
+                        Telephone__c,
                         Id,
                         IsDeleted,
                         LastModifiedById,
@@ -1939,41 +1920,13 @@ private class CreditSafeServiceImplTest {
                 FROM Creditsafe_Company_Share_Holder__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id];
         System.assert(shareHolder.Name__c == 'shareholder');
         System.assert(shareHolder.Share_Percent__c == 100);
-
-        List<Creditsafe_Address__c> saddresses = [
-                SELECT
-                        CreatedById,
-                        CreatedDate,
-                        Business_Data__c,
-                        City__c,
-                        Country__c,
-                        Creditsafe_Company_Banker__c,
-                        Creditsafe_Company_Report_Full__c,
-                        Creditsafe_Company_Share_Holder__c,
-                        Creditsafe_Person_Director__c,
-                        Full_Address__c,
-                        House_Number__c,
-                        House_Number_Addition__c,
-                        Postcode__c,
-                        Street__c,
-                        Telephone__c,
-                        Type__c,
-                        Id,
-                        IsDeleted,
-                        LastModifiedById,
-                        LastModifiedDate,
-                        Name,
-                        OwnerId,
-                        SystemModstamp
-                FROM Creditsafe_Address__c WHERE Creditsafe_Company_Share_Holder__c = :shareHolder.Id];
-
-        System.assert(saddresses[0].Country__c == 'shareholder country');
-        System.assert(saddresses[0].House_Number__c == '1');
-        System.assert(saddresses[0].Full_Address__c == 'shareholder full_address');
-        System.assert(saddresses[0].Telephone__c == '987654321');
-        System.assert(saddresses[0].Street__c == 'shareholder street');
-        System.assert(saddresses[0].City__c == 'shareholder city');
-        System.assert(saddresses[0].Postcode__c == '1212');
+        System.assert(shareHolder.City__c == 'shareholder city');
+        System.assert(shareHolder.Country__c == 'shareholder country');
+        System.assert(shareHolder.Full_Address__c == 'shareholder full_address');
+        System.assert(shareHolder.House_Number__c == '1');
+        System.assert(shareHolder.Postcode__c == '1212');
+        System.assert(shareHolder.Street__c == 'shareholder street');
+        System.assert(shareHolder.Telephone__c == '987654321');
 
         Negative_Information_DE_Director_Event__c directorEvent = [
                 SELECT
@@ -2039,6 +1992,14 @@ private class CreditSafeServiceImplTest {
                         Bank_Code__c,
                         Creditsafe_Company_Report_Full__c,
                         Name__c,
+                        City__c,
+                        Country__c,
+                        Full_Address__c,
+                        House_Number__c,
+                        House_Number_Addition__c,
+                        Postcode__c,
+                        Street__c,
+                        Telephone__c,
                         Id,
                         IsDeleted,
                         LastModifiedById,
@@ -2048,40 +2009,13 @@ private class CreditSafeServiceImplTest {
                 FROM Creditsafe_Company_Banker__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id];
         System.assert(banker.Bank_Code__c == '1212');
         System.assert(banker.Name__c == 'bank');
-
-        List<Creditsafe_Address__c> baddresses = [
-                SELECT
-                        CreatedById,
-                        CreatedDate,
-                        Business_Data__c,
-                        City__c,
-                        Country__c,
-                        Creditsafe_Company_Banker__c,
-                        Creditsafe_Company_Report_Full__c,
-                        Creditsafe_Company_Share_Holder__c,
-                        Creditsafe_Person_Director__c,
-                        Full_Address__c,
-                        House_Number__c,
-                        House_Number_Addition__c,
-                        Postcode__c,
-                        Street__c,
-                        Telephone__c,
-                        Type__c,
-                        Id,
-                        IsDeleted,
-                        LastModifiedById,
-                        LastModifiedDate,
-                        Name,
-                        OwnerId,
-                        SystemModstamp
-                FROM Creditsafe_Address__c WHERE Creditsafe_Company_Banker__c = :banker.Id];
-        System.assert(baddresses[0].Country__c == 'bank country');
-        System.assert(baddresses[0].House_Number__c == '1');
-        System.assert(baddresses[0].Full_Address__c == 'bank full_address');
-        System.assert(baddresses[0].Telephone__c == '987654321');
-        System.assert(baddresses[0].Street__c == 'bank street');
-        System.assert(baddresses[0].City__c == 'bank city');
-        System.assert(baddresses[0].Postcode__c == '1212');
+        System.assert(banker.Country__c == 'bank country');
+        System.assert(banker.House_Number__c == '1');
+        System.assert(banker.Full_Address__c == 'bank full_address');
+        System.assert(banker.Telephone__c == '987654321');
+        System.assert(banker.Street__c == 'bank street');
+        System.assert(banker.City__c == 'bank city');
+        System.assert(banker.Postcode__c == '1212');
 
         Creditsafe_Company_Negative_Info_NL__c negativeInfoNL = [
                 SELECT
