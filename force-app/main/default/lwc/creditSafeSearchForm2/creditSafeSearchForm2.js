@@ -35,6 +35,7 @@ import Search_Criterium_Name_Status_Address_Description from '@salesforce/label/
 import Search_Criterium_VAT_Number_Description from '@salesforce/label/c.Search_Criterium_VAT_Number_Description';
 import Search_Criterium_Name_Status_Registration_type_Address_Description from '@salesforce/label/c.Search_Criterium_Name_Status_Registration_type_Address_Description';
 import Search_Criterium_Name_Status_Address_Province_Description from '@salesforce/label/c.Search_Criterium_Name_Status_Address_Province_Description';
+import Validation_Error_Message_Toast_Title from '@salesforce/label/c.Validation_Error_Message_Toast_Title';
 
 export default class CreditSafeSearchForm2 extends LightningElement {
 
@@ -52,7 +53,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
     @api postalCode;
 
     @track errorMessage;
-    @track errorTitle;
+    @track errorTitle = Validation_Error_Message_Toast_Title;
 
     label = {
         Status,
@@ -152,6 +153,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     @api
     allValid() {
+        this.errorMessage = null;
         let valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();

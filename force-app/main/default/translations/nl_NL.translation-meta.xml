@@ -417,6 +417,10 @@
         <name>Search_Criterium_Registration_Number_Description</name>
     </customLabels>
     <customLabels>
+        <label>Een geldige handelsnaam, domeinnaam, stad, straat of postcode of een combinatie hiervan.</label>
+        <name>Search_Criterium_TradeName_Address_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Een geldig BTW nummer</label>
         <name>Search_Criterium_VAT_Number_Description</name>
     </customLabels>
@@ -523,6 +527,10 @@
     <customLabels>
         <label><!-- VAT_Retrieve --></label>
         <name>VAT_Retrieve</name>
+    </customLabels>
+    <customLabels>
+        <label>Validatie fout</label>
+        <name>Validation_Error_Message_Toast_Title</name>
     </customLabels>
     <customLabels>
         <label>Een fout is opgetreden tijdens het veranderen van het budget.</label>
