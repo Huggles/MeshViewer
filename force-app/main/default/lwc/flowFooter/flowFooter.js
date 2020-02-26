@@ -17,98 +17,30 @@ export default class FlowFooter extends LightningElement {
     @api
     availableActions = [];
 
-    @api
     get showNextButton() {
-        return this.availableActions.find(action => action === 'NEXT');
+        return (this.availableActions.find(action => action === 'NEXT') || this.availableActions.find(action => action === 'FINISH'));
     }
+
     @api
-    nextButtonTitle = 'Next';
-    @api
+    nextButtonTitle;
+
     get showPreviousButton() {
         return this.availableActions.find(action => action === 'PREVIOUS');
     }
     @api
     previousButtonTitle;
-    @api
+
     get showPauseButton() {
         return this.availableActions.find(action => action === 'PAUSE');
     }
     @api
-    pauseButtonTitle = 'Pause';
+    pauseButtonTitle;
     @api
     showCancelButton;
     @api
-    cancelButtonTitle = 'Cancel';
+    cancelButtonTitle;
     @api
     cancelPressed = false;
-
-    connectedCallback() {
-        // the theory is that components fire a registration event AFTER the listener has been registered. For that the firing needs to be done from the renderedCallback method
-        registerListener('componentRegistration', this.handleComponentRegistration, this);
-        registerListener('componentValidationDone', this.handleComponentValidationDone, this);
-        // open up registration of components
-        fireEvent(this.pageRef, 'componentRegistrationOpen', this);
-    }
-
-    disconnectedCallback() {
-        // unsubscribe from searchKeyChange event
-        unregisterAllListeners(this);
-    }
-
-    registeredComponents = new Set();
-
-    /**
-     * Handle the registration of a component. The component will be notified if the user tries to press the next button
-     * after which the component needs to validate himself and send an event back with the validation status
-     * @param component
-     */
-    handleComponentRegistration(event) {
-        if (event.component)
-            this.registeredComponents.add(event.component);
-    }
-
-    validatedComponents;
-
-    handleComponentValidationDone(event) {
-        // TODO: handle FINISH state as well
-        if (this.availableActions.find(action => action === 'NEXT')) { // should be true but just to be certain
-            // check if validatedComponents exists, if not initialize it
-            const component = event.component;
-            const isValid = event.isValid;
-            if (!this.validatedComponents) {
-                this.validatedComponents = new Map();
-                for (const registeredComponent of this.registeredComponents) {
-                    this.validatedComponents.set(registeredComponent, {validated: false, isValid: false});
-                }
-            }
-            this.validatedComponents.set(component, {validated: true, isValid: isValid});
-            // check if all components have been validated and if they are all true. If so navigate to next
-
-            let allValid = true;
-            for (const validatedComponent of this.validatedComponents.values()) { // go through all values and see if all components are validated and valid
-                if (!validatedComponent.validated || !validatedComponent.isValid) {
-                    allValid = false;
-                    break; // don't need to look further. We are not finished yet.
-                }
-            }
-            if (allValid) { // ok everything is fine and we can move to the next thing in the flow
-                const navigateNextEvent = new FlowNavigationNextEvent();
-                this.dispatchEvent(navigateNextEvent);
-            }
-            // reset this.validatedComponents if necessary
-            let resetValidationComponents = true;
-            for (const validatedComponent of this.validatedComponents.values()) {
-                if (!validatedComponent.validated) {
-                    resetValidationComponents = false;
-                    break;
-                }
-            }
-            if (resetValidationComponents) {
-                this.validatedComponents = null;
-            }
-
-        }
-    }
 
     /**
      * Handles the click on the pause button. Pauses the flow
@@ -119,18 +51,22 @@ export default class FlowFooter extends LightningElement {
             // navigate to the next screen
             const navigatePauseEvent = new FlowNavigationPauseEvent();
             this.dispatchEvent(navigatePauseEvent);
+            this.dispatchEvent(new CustomEvent('pauseclick'));
         }
     }
 
     handleCancelClick(event) {
+        this.cancelPressed = true;
         if (this.availableActions.find(action => action === 'FINISH')) {
             const navigateFinishEvent = new FlowNavigationFinishEvent();
             this.dispatchEvent(navigateFinishEvent);
         } else { // no finish means next?
-            this.cancelPressed = true;
             const navigateNextEvent = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNextEvent);
         }
+        const attributeChangeEvent = new FlowAttributeChangeEvent('cancelPressed', this.cancelPressed);
+        this.dispatchEvent(attributeChangeEvent);
+        this.dispatchEvent(new CustomEvent('cancelclick'));
     }
 
     handlePreviousClick(event) {
@@ -138,6 +74,7 @@ export default class FlowFooter extends LightningElement {
             // navigate to the next screen
             const navigateBackEvent = new FlowNavigationBackEvent();
             this.dispatchEvent(navigateBackEvent);
+            this.dispatchEvent(new CustomEvent('previousclick'));
         }
     }
 
@@ -145,7 +82,7 @@ export default class FlowFooter extends LightningElement {
         if (this.availableActions.find(action => action === 'NEXT')) {
             // fire validationRequest, pageRef is undefined but just adhering to the current pubsup module,
             // makes it easier as soon as pageRef is supported on flow
-            fireEvent(this.pageRef, 'validationRequest');
+            this.dispatchEvent(new CustomEvent('nextclick'));
         }
     }
 

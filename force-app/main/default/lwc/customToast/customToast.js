@@ -7,11 +7,14 @@ import {api, LightningElement} from 'lwc';
 export default class CustomToast extends LightningElement {
 
     @api title = 'Sample Title';
-    @api message = 'Sample Message';
     @api variant = 'error';
     @api autoCloseTime = 5000;
     @api autoClose = false;
     @api autoCloseErrorWarning = false;
+    @api message;
+    @api showOnLoad;
+
+    initialRendered;
 
     @api
     showToast() {
@@ -26,6 +29,13 @@ export default class CustomToast extends LightningElement {
                 }, this.autoCloseTime);
 
             }
+    }
+
+    renderedCallback() {
+        if (this.showOnLoad && !this.initialRendered) {
+            this.showToast();
+            this.initialRendered = true;
+        }
     }
 
     closeModel() {

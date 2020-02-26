@@ -17,6 +17,10 @@
         <name>Business_Data_Exists</name>
     </customLabels>
     <customLabels>
+        <label>Annuleren</label>
+        <name>Cancel</name>
+    </customLabels>
+    <customLabels>
         <label>Dank u voor het installeren van Custommer.connect. Om te starten, voer uw gebruikersgegevens in of</label>
         <name>Config_Account_ActivateDescription</name>
     </customLabels>
@@ -363,6 +367,10 @@
     <customLabels>
         <label><!-- Non Limited --></label>
         <name>Non_Limited</name>
+    </customLabels>
+    <customLabels>
+        <label>Vorige</label>
+        <name>Previous</name>
     </customLabels>
     <customLabels>
         <label>Provincie</label>

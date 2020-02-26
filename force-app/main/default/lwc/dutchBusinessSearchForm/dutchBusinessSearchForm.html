@@ -4,7 +4,18 @@
 
 <!-- Dutch Business Search Form -->
 <template>
-    <c-custom-toast class="error-message" message={errorMessage} title={errorTitle}></c-custom-toast>
+    <template if:true={hints}>
+        <c-custom-toast class="error-message" show-on-load title={label.Validation_Error_Message_Toast_Title}>
+                <div>{label.CreditSafe_Validation_Message_Heading}</div>
+                <ul class="slds-list_dotted">
+                    <template for:each={hints} for:item="hint">
+                        <li key={hint}>
+                            {hint}
+                        </li>
+                    </template>
+                </ul>
+        </c-custom-toast>
+    </template>
     <lightning-input name="tradeName" class="slds-m-around_x-small" label="Trade Name" type="text" value={tradeName} variant="standard" onchange={handleOnChange}></lightning-input>
     <lightning-input name="domainName" class="slds-m-around_x-small" label="Domain Name" type="text" variant="standard" value={domainName} onchange={handleOnChange}></lightning-input>
     <lightning-input name="phoneNumber" class="slds-m-around_x-small" label="Phone Number" type="tel" variant="standard" value={phoneNumber} pattern="^((\+31)|(0031)|0)(\(0\)|)(\d{1,3})(\s|\-|)(\d{8}|\d{4}\s\d{4}|\d{2}\s\d{2}\s\d{2}\s\d{2})$" message-when-pattern-mismatch="Please enter a valid Dutch phone number" onchange={handleOnChange}></lightning-input>

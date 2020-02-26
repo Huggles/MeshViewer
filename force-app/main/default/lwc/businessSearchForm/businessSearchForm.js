@@ -128,7 +128,7 @@ export default class BusinessSearchForm extends LightningElement {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
-        // validate per country
+        // validate per search form
         valid = valid && this.template.querySelector('.searchForm').allValid();
         return valid;
     }

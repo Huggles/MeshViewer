@@ -52,8 +52,10 @@ export default class CreditSafeSearchForm2 extends LightningElement {
     @api street;
     @api postalCode;
 
-    @track errorMessage;
     @track errorTitle = Validation_Error_Message_Toast_Title;
+
+    @track
+    hints;
 
     label = {
         Status,
@@ -153,7 +155,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     @api
     allValid() {
-        this.errorMessage = null;
+        this.hints = null; // remove the toast
         let valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();
@@ -166,11 +168,11 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                 if (!this.creditSafeId &&
                     !this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode )) {
-                    this.errorMessage = createErrorMessageMarkup(
+                    this.hints =
                         [Search_Criterium_CreditSafe_Id_Description,
                             Search_Criterium_Registration_Number_Description,
                             Search_Criterium_Name_Status_Address_Description
-                        ]);
+                        ];
                 }
             }
             if (this.isBeSelected) {
@@ -178,12 +180,12 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                     !this.registrationNumber &&
                     !this.vatNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode )) {
-                    this.errorMessage = createErrorMessageMarkup(
+                    this.hints =
                         [Search_Criterium_CreditSafe_Id_Description,
                             Search_Criterium_Registration_Number_Description,
                             Search_Criterium_Name_Status_Address_Description,
                             Search_Criterium_VAT_Number_Description
-                        ]);
+                        ];
                 }
             }
             if (this.isDeSelected) {
@@ -191,12 +193,12 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                     !this.registrationNumber &&
                     !this.vatNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) {
-                    this.errorMessage = createErrorMessageMarkup(
+                    this.hints =
                         [Search_Criterium_CreditSafe_Id_Description,
                             Search_Criterium_Registration_Number_Description,
                             Search_Criterium_Name_Status_Registration_type_Address_Description,
                             Search_Criterium_VAT_Number_Description
-                        ]);
+                        ];
                 }
             }
             if (this.isFrSelected) {
@@ -204,44 +206,42 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                     !this.registrationNumber && // postal code and status can be entered/selected as well but are optional so we don't check
                     !this.vatNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.province)) { // apparently this is how it should work but you can get a lot of results
-                    this.errorMessage = createErrorMessageMarkup(
+                    this.hints =
                         [Search_Criterium_CreditSafe_Id_Description,
                             Search_Criterium_Registration_Number_Description,
                             Search_Criterium_Name_Status_Address_Province_Description,
                             Search_Criterium_VAT_Number_Description
-                        ]);
+                        ];
                 }
             }
             if (this.isGbSelected || this.isIeSelected) {
                 if (!this.creditSafeId &&
                     !this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
-                    this.errorMessage = createErrorMessageMarkup(
+                    this.hints =
                         [Search_Criterium_CreditSafe_Id_Description,
                             Search_Criterium_Registration_Number_Description,
                             Search_Criterium_Name_Status_Registration_type_Address_Description
-                        ]);
+                        ];
                 }
             }
             if (this.isSeSelected) {
                 if (!this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
-                    this.errorMessage = createErrorMessageMarkup(
+                    this.hints =
                         [Search_Criterium_Registration_Number_Description,
                             Search_Criterium_Name_Status_Registration_type_Address_Description
-                        ]);
+                        ];
                 }
             }
-            if (this.errorMessage) {
-                this.template.querySelector('.error-message').showToast();
-            }
         }
-        // if the errorMessage is set, this will return false
-        valid = valid && !this.errorMessage;
+        // if there are hints, this will return false
+        valid = valid && !this.hints;
         return valid;
     }
 
     handleOnChange(event) {
+        this.hints = null; // remove the toast
         const attributeChangeEvent = new FlowAttributeChangeEvent(event.target.name, event.target.value);
         this.dispatchEvent(attributeChangeEvent);
     }

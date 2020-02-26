@@ -23,6 +23,13 @@
         <value>The Business Data  record already exists.</value>
     </labels>
     <labels>
+        <fullName>Cancel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
         <fullName>Config_Account_ActivateDescription</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -657,6 +664,13 @@
         <protected>true</protected>
         <shortDescription>Non Limited</shortDescription>
         <value>Non Limited</value>
+    </labels>
+    <labels>
+        <fullName>Previous</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Previous</shortDescription>
+        <value>Previous</value>
     </labels>
     <labels>
         <fullName>Province</fullName>

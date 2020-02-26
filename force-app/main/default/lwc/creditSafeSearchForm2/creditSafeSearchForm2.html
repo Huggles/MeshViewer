@@ -4,9 +4,18 @@
 
 <!-- Credit Safe Search Form 2 -->
 <template>
-    <!-- show errors only if error message is filled -->
-
-    <c-custom-toast class="error-message" message={errorMessage} title={errorTitle}></c-custom-toast>
+    <template if:true={hints}>
+        <c-custom-toast class="error-message" show-on-load title={label.Validation_Error_Message_Toast_Title}>
+            <div>{label.CreditSafe_Validation_Message_Heading}</div>
+            <ul class="slds-list_dotted">
+                <template for:each={hints} for:item="hint">
+                    <li key={hint}>
+                        {hint}
+                    </li>
+                </template>
+            </ul>
+        </c-custom-toast>
+    </template>
     <!-- show country selection box in case this form is used standalone -->
     <template if:false={selectedCountry}>
         <lightning-combobox name="selectedCountry" class="slds-m-around_x-small" label={label.Search_Country} options={countries} value={selectedCountry} placeholder="Select a Country" dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>

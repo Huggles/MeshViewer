@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>47.0</apiVersion>
-    <description>Footer for the flow</description>
-    <isExposed>false</isExposed>
+    <description>A flow footer for screens with search functionality</description>
+    <isExposed>true</isExposed>
     <targets>
         <target>lightning__FlowScreen</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="showCancelButton" type="Boolean" default="false" role="inputOnly"/>
-            <property name="cancelPressed" type="Boolean" role="outputOnly"/>
+            <property name="showCancelButton" type="Boolean" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
-    <masterLabel>Flow Footer</masterLabel>
+    <masterLabel>Search Flow Footer</masterLabel>
 </LightningComponentBundle>

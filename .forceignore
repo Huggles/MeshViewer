@@ -1,6 +1,3 @@
-**/jsconfig.json
-
-**/.eslintrc.json
-**/*.profile-meta.xml
 AppSwitcher.appMenu
-
+/force-app/main/default/layouts/Global-Global Layout.layout-meta.xml
+/force-app/main/default/lwc/jsconfig.json
