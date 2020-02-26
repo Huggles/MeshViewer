@@ -137,7 +137,7 @@
         <name>Country_to_Search</name>
     </customLabels>
     <customLabels>
-        <label>Voer alstublieft de correcte zoekcriteria op:</label>
+        <label>Voer alstublieft een van de volgende zoekcriteria op om te kunnen zoeken:</label>
         <name>CreditSafe_Validation_Message_Heading</name>
     </customLabels>
     <customLabels>
@@ -395,6 +395,30 @@
     <customLabels>
         <label>Land</label>
         <name>Search_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Een correct CreditSafe bedrijfsnummer.</label>
+        <name>Search_Criterium_CreditSafe_Id_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldige naam, status, stad, straat of postcode of een combinatie hiervan.</label>
+        <name>Search_Criterium_Name_Status_Address_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldige naam, status, provincie, stad, straat of postcode of een combinatie hiervan.</label>
+        <name>Search_Criterium_Name_Status_Address_Province_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldige name, status, registratie-type, stad, straat of postcode of een combinatie hiervan.</label>
+        <name>Search_Criterium_Name_Status_Registration_type_Address_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een correct registratienummer.</label>
+        <name>Search_Criterium_Registration_Number_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldig BTW nummer</label>
+        <name>Search_Criterium_VAT_Number_Description</name>
     </customLabels>
     <customLabels>
         <label>Details om te synchroniseren</label>

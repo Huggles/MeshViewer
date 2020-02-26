@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 09/02/2020.
  */
 
-import {api, LightningElement} from 'lwc';
+import {api, LightningElement, track} from 'lwc';
 import {fireEvent, registerListener} from "c/pubsub";
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
@@ -23,6 +23,10 @@ export default class DutchBusinessSearchForm extends LightningElement {
     domainName;
     @api
     phoneNumber;
+    @track
+    errorMessage;
+    @track
+    errorTitle;
 
     connectedCallback() {
         registerListener('validationRequest', this.handleValidationRequest, this);

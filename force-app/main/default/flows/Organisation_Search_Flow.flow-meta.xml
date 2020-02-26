@@ -44,7 +44,7 @@
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
         <locationX>412</locationX>
-        <locationY>1</locationY>
+        <locationY>0</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -331,7 +331,7 @@
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
         <locationX>598</locationX>
-        <locationY>426</locationY>
+        <locationY>425</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

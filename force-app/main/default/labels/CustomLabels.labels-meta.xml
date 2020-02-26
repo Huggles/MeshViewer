@@ -238,7 +238,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>CreditSafe Validation Message Heading</shortDescription>
-        <value>Please enter valid search criteria:</value>
+        <value>Please enter one of the following search criteria to search:</value>
     </labels>
     <labels>
         <fullName>Creditsafe_company_identifier</fullName>
@@ -716,6 +716,54 @@
         <protected>true</protected>
         <shortDescription>Business Data Search Country</shortDescription>
         <value>Country</value>
+    </labels>
+    <labels>
+        <fullName>Search_Criterium_CreditSafe_Id_Description</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Criterium CreditSafe Id Description</shortDescription>
+        <value>A valid CreditSafe company identifier.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Criterium_Name_Status_Address_Description</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Criterium Name Status Address Description</shortDescription>
+        <value>A valid name, status, city, street or postal code or any combination of these.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Criterium_Name_Status_Address_Province_Description</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Criterium Name Status Address Province Description</shortDescription>
+        <value>A valid name, status, province, city, street or postal code or any combination of these.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Criterium_Name_Status_Registration_type_Address_Description</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Criterium Name Status Registration type Address Description</shortDescription>
+        <value>A valid name, status, registration type, city, street or postal code or any combination of these.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Criterium_Registration_Number_Description</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Criterium Registration Number Description</shortDescription>
+        <value>A valid registration number.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Criterium_VAT_Number_Description</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Criterium VAT Number Description</shortDescription>
+        <value>A valid VAT Number</value>
     </labels>
     <labels>
         <fullName>Search_Details</fullName>

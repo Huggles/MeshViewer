@@ -4,6 +4,8 @@
 
 import {api, LightningElement, track} from 'lwc';
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
+import {createErrorMessageMarkup} from 'c/companyInfoUtils';
+
 import Country_Belgium from '@salesforce/label/c.Country_Belgium';
 import Country_France from '@salesforce/label/c.Country_France';
 import Country_Germany from '@salesforce/label/c.Country_Germany';
@@ -27,7 +29,12 @@ import Search_Country from '@salesforce/label/c.Search_Country';
 import Ltd from '@salesforce/label/c.Ltd';
 import Non_Limited from '@salesforce/label/c.Non_Limited';
 import CreditSafe_Validation_Message_Heading from '@salesforce/label/c.CreditSafe_Validation_Message_Heading';
-
+import Search_Criterium_Registration_Number_Description from '@salesforce/label/c.Search_Criterium_Registration_Number_Description';
+import Search_Criterium_CreditSafe_Id_Description from '@salesforce/label/c.Search_Criterium_CreditSafe_Id_Description';
+import Search_Criterium_Name_Status_Address_Description from '@salesforce/label/c.Search_Criterium_Name_Status_Address_Description';
+import Search_Criterium_VAT_Number_Description from '@salesforce/label/c.Search_Criterium_VAT_Number_Description';
+import Search_Criterium_Name_Status_Registration_type_Address_Description from '@salesforce/label/c.Search_Criterium_Name_Status_Registration_type_Address_Description';
+import Search_Criterium_Name_Status_Address_Province_Description from '@salesforce/label/c.Search_Criterium_Name_Status_Address_Province_Description';
 
 export default class CreditSafeSearchForm2 extends LightningElement {
 
@@ -143,25 +150,6 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         return retValue;
     }
 
-    /**
-     * Creates the error message markup for when the validation of the search criteria does turn up problems.
-     * @param hints the labels to be shown per search criteria
-     */
-    createErrorMessageMarkup(hints) {
-        let errorMessageMarkup;
-        errorMessageMarkup = '<div>' + CreditSafe_Validation_Message_Heading + '</div>';
-        if (hints) {
-            errorMessageMarkup += '<ul>';
-            for (const hint of hints) {
-                errorMessageMarkup += '<li>';
-                errorMessageMarkup += hint;
-                errorMessageMarkup += '</li>';
-            }
-            errorMessageMarkup += '</ul>';
-        }
-        return errorMessageMarkup;
-    }
-
     @api
     allValid() {
         let valid = [...this.template.querySelectorAll('lightning-input')]
@@ -176,8 +164,11 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                 if (!this.creditSafeId &&
                     !this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode )) {
-                    // TODO: label, format text
-                    this.errorMessage = 'wrong input';
+                    this.errorMessage = createErrorMessageMarkup(
+                        [Search_Criterium_CreditSafe_Id_Description,
+                            Search_Criterium_Registration_Number_Description,
+                            Search_Criterium_Name_Status_Address_Description
+                        ]);
                 }
             }
             if (this.isBeSelected) {
@@ -185,8 +176,12 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                     !this.registrationNumber &&
                     !this.vatNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode )) {
-                    // TODO: label, format text
-                    this.errorMessage = 'wrong input';
+                    this.errorMessage = createErrorMessageMarkup(
+                        [Search_Criterium_CreditSafe_Id_Description,
+                            Search_Criterium_Registration_Number_Description,
+                            Search_Criterium_Name_Status_Address_Description,
+                            Search_Criterium_VAT_Number_Description
+                        ]);
                 }
             }
             if (this.isDeSelected) {
@@ -194,8 +189,12 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                     !this.registrationNumber &&
                     !this.vatNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) {
-                    // TODO: label, format text
-                    this.errorMessage = 'wrong input';
+                    this.errorMessage = createErrorMessageMarkup(
+                        [Search_Criterium_CreditSafe_Id_Description,
+                            Search_Criterium_Registration_Number_Description,
+                            Search_Criterium_Name_Status_Registration_type_Address_Description,
+                            Search_Criterium_VAT_Number_Description
+                        ]);
                 }
             }
             if (this.isFrSelected) {
@@ -203,23 +202,32 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                     !this.registrationNumber && // postal code and status can be entered/selected as well but are optional so we don't check
                     !this.vatNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.province)) { // apparently this is how it should work but you can get a lot of results
-                    // TODO: label, format text
-                    this.errorMessage = 'wrong input';
+                    this.errorMessage = createErrorMessageMarkup(
+                        [Search_Criterium_CreditSafe_Id_Description,
+                            Search_Criterium_Registration_Number_Description,
+                            Search_Criterium_Name_Status_Address_Province_Description,
+                            Search_Criterium_VAT_Number_Description
+                        ]);
                 }
             }
             if (this.isGbSelected || this.isIeSelected) {
                 if (!this.creditSafeId &&
                     !this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
-                    // TODO: label, format text
-                    this.errorMessage = 'wrong input';
+                    this.errorMessage = createErrorMessageMarkup(
+                        [Search_Criterium_CreditSafe_Id_Description,
+                            Search_Criterium_Registration_Number_Description,
+                            Search_Criterium_Name_Status_Registration_type_Address_Description
+                        ]);
                 }
             }
             if (this.isSeSelected) {
                 if (!this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
-                    // TODO: label, format text
-                    this.errorMessage = 'wrong input';
+                    this.errorMessage = createErrorMessageMarkup(
+                        [Search_Criterium_Registration_Number_Description,
+                            Search_Criterium_Name_Status_Registration_type_Address_Description
+                        ]);
                 }
             }
             if (this.errorMessage) {
