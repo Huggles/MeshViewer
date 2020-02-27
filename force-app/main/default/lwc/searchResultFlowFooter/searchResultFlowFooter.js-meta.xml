@@ -3,5 +3,8 @@
     <apiVersion>47.0</apiVersion>
     <description>A footer for flow to be used in search result screens</description>
     <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
     <masterLabel>Search Result Flow Footer</masterLabel>
 </LightningComponentBundle>
