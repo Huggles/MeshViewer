@@ -11,19 +11,22 @@ import Country_Germany from '@salesforce/label/c.Country_Germany';
 import Country_Ireland from '@salesforce/label/c.Country_Ireland';
 import Country_Netherlands from '@salesforce/label/c.Country_Netherlands';
 import Country_United_Kingdom from '@salesforce/label/c.Country_United_Kingdom';
-import Country_Sweden from '@salesforce/label/c.Country_Sweden';
+import Country from '@salesforce/label/c.Country';
+import Select_a_Country from '@salesforce/label/c.Select_a_Country';
 
 export default class BusinessSearchForm extends LightningElement {
     // TODO: implement validation
     // TODO: introduce labels
-    labels = {
+    label = {
         Country_Belgium,
         Country_France,
         Country_Germany,
         Country_Ireland,
         Country_Netherlands,
         Country_United_Kingdom,
-        Country_Sweden
+        Country_Sweden,
+        Country,
+        Select_a_Country
     }
 
     get countries() {

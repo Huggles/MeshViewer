@@ -8,6 +8,17 @@ import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 import {createErrorMessageMarkup} from 'c/companyInfoUtils';
 import Search_Criterium_TradeName_Address_Description from '@salesforce/label/c.Search_Criterium_TradeName_Address_Description';
 import Validation_Error_Message_Toast_Title from '@salesforce/label/c.Validation_Error_Message_Toast_Title';
+import Valid_Dutch_phone_number from '@salesforce/label/c.Valid_Dutch_phone_number';
+import Trade_Name from '@salesforce/label/c.Trade_Name';
+import Domain_Name from '@salesforce/label/c.Domain_Name';
+import Phone_Number from '@salesforce/label/c.Phone_Number';
+import Street from '@salesforce/label/c.Street';
+import House_Number from '@salesforce/label/c.House_Number';
+import Valid_house_number from '@salesforce/label/c.Valid_house_number';
+import Addition from '@salesforce/label/c.Addition';
+import Postal_Code from '@salesforce/label/c.Postal_Code';
+import Valid_Dutch_postal_code from '@salesforce/label/c.Valid_Dutch_postal_code';
+import City from '@salesforce/label/c.City';
 
 
 export default class DutchBusinessSearchForm extends LightningElement {
@@ -31,6 +42,20 @@ export default class DutchBusinessSearchForm extends LightningElement {
     errorMessage;
     @track
     errorTitle = Validation_Error_Message_Toast_Title;
+
+    label = {
+        Valid_Dutch_phone_number,
+        Trade_Name,
+        Domain_Name,
+        Phone_Number,
+        Street,
+        House_Number,
+        Valid_house_number,
+        Addition,
+        Postal_Code,
+        Valid_Dutch_postal_code,
+        City
+    }
 
     connectedCallback() {
         registerListener('validationRequest', this.handleValidationRequest, this);
