@@ -19,7 +19,7 @@ import Select_a_Country from '@salesforce/label/c.Select_a_Country';
 
 export default class BusinessSearchForm extends LightningElement {
 
-    labels = {
+    label = {
         Country_Belgium,
         Country_France,
         Country_Germany,
