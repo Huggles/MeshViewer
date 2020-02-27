@@ -20,7 +20,6 @@
      */
     onSelect : function(component, event, helper) {
         var params = event.getParams();
-        // TODO: check why the account Id is missing from the params
         var callParams = {dossierNumber: params.DossierNumber,
             establishmentNumber: params.EstablishmentNumber,
             vendor: params.selectedDataVendor,
@@ -68,9 +67,9 @@
      * @param {*} helper 
      */
     getVAT : function (component, event, helper) {
-        var callParams = {dossierId: component.get('v.simpleRecord').cust_connect__Business_Dossier__c};
+        var callParams = {dossierId: component.get('v.simpleRecord').appsolutely__Business_Dossier__c};
         helper.callServer(component, 'c.getVATDetails', callParams, function(response) {
-            if (response && response.cust_connect__VAT_Number__c !== undefined)
+            if (response && response.appsolutely__VAT_Number__c !== undefined)
                 helper.showToast(component, $A.get('$Label.c.Success'), $A.get('$Label.c.Dossier_Account_Update_Completed'), 'success');
             else {
                 var errors = response.getError();

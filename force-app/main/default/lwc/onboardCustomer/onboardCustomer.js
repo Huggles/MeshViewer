@@ -75,10 +75,10 @@ export default class onboardCustomer extends LightningElement {
             this.error = result.error;
         }else{
             if (result && result.data) {
-                this.accountId = result.data.cust_connect__CompanyConnectUserId__c;
-                this.username = result.data.cust_connect__Username__c;
-                this.password = result.data.cust_connect__Password__c;
-                this.newUser = result.data.cust_connect__CompanyConnectUserId__c === undefined;
+                this.accountId = result.data.appsolutely__CompanyConnectUserId__c;
+                this.username = result.data.appsolutely__Username__c;
+                this.password = result.data.appsolutely__Password__c;
+                this.newUser = result.data.appsolutely__CompanyConnectUserId__c === undefined;
                 this.error = undefined;
             }
         }

@@ -24,6 +24,7 @@ public inherited sharing class SearchForDossiersResultDto {
     @AuraEnabled public String establishment_full_address { get; set; }
     @AuraEnabled public String establishment_house_nr { get; set; }
     @AuraEnabled public String establishment_postal_code { get; set; }
+    @AuraEnabled public String company_id { get; set; }
 
 
     public SearchForDossiersResultDto(DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2) {
@@ -54,7 +55,7 @@ public inherited sharing class SearchForDossiersResultDto {
             phone = address.telephone;
         }
         creditSafeStatus = creditsafeCompanyV2.status;
-        creditSafeId = creditsafeCompanyV2.id;
+        creditSafeId = creditsafeCompanyV2.creditsafe_number;
         date_last_change = creditsafeCompanyV2.date_last_change;
         date_last_account = creditsafeCompanyV2.date_last_account;
         office_type = creditsafeCompanyV2.office_type;
@@ -64,6 +65,6 @@ public inherited sharing class SearchForDossiersResultDto {
                 trade_names.add(str);
             }
         }
-
+        company_id = creditsafeCompanyV2.id;
     }
 }
