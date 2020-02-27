@@ -17,17 +17,17 @@
         <inputParameters>
             <name>dossierNumber</name>
             <value>
-                <elementReference>selectedDutchDossier.Dossier_Number__c</elementReference>
+                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>establishmentNumber</name>
             <value>
-                <elementReference>selectedDutchDossier.Establishment_Number__c</elementReference>
+                <elementReference>selectedDossier.Establishment_Number__c</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
-            <assignToReference>selectedDutchDossier</assignToReference>
+            <assignToReference>selectedDossier</assignToReference>
             <name>output</name>
         </outputParameters>
     </actionCalls>
@@ -327,6 +327,19 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_Credit_Safe_dossier</name>
+        <label>Create Credit Safe dossier</label>
+        <locationX>783</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>End</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Show_Credit_Safe_Search_Results</targetReference>
+        </faultConnector>
+        <inputReference>selectedDossier</inputReference>
+    </recordCreates>
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
@@ -338,6 +351,12 @@
         <connector>
             <targetReference>Create_Dutch_Dossiers</targetReference>
         </connector>
+        <fields>
+            <name>dutchSearchResultFlowHeader</name>
+            <extensionName>appsolutely:flowHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
         <fields>
             <name>flowErrorHandlerDutchResultsScreen</name>
             <extensionName>appsolutely:flowErrorHandler</extensionName>
@@ -372,12 +391,18 @@
             </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>selectedDutchDossier</assignToReference>
+                <assignToReference>selectedDossier</assignToReference>
                 <name>selectedResult</name>
             </outputParameters>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <fields>
+            <name>dutchSearchResultFlowFooter</name>
+            <extensionName>appsolutely:searchResultFlowFooter</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Search</name>
@@ -521,15 +546,9 @@
             </outputParameters>
         </fields>
         <fields>
-            <name>businessSearchFooter</name>
-            <extensionName>appsolutely:flowFooter</extensionName>
+            <name>searchFlowFooter</name>
+            <extensionName>appsolutely:searchFlowFooter</extensionName>
             <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>nextButtonTitle</name>
-                <value>
-                    <stringValue>Search</stringValue>
-                </value>
-            </inputParameters>
             <inputParameters>
                 <name>showCancelButton</name>
                 <value>
@@ -537,10 +556,6 @@
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>cancelPressed</assignToReference>
-                <name>cancelPressed</name>
-            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -548,13 +563,50 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>597</locationX>
-        <locationY>1</locationY>
+        <locationX>598</locationX>
+        <locationY>0</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <connector>
+            <targetReference>Create_Credit_Safe_dossier</targetReference>
+        </connector>
+        <fields>
+            <name>creditSafeSearchResultFlowErrorHandler</name>
+            <extensionName>appsolutely:flowErrorHandler</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>$Flow.FaultMessage</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>$Flow.FaultMessage</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue/>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>creditSafeResultFlowHeader</name>
+            <extensionName>appsolutely:flowHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>creditSafeSearchResultFlowFooter</name>
+            <extensionName>appsolutely:searchResultFlowFooter</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>51</locationX>
@@ -737,11 +789,12 @@
         </value>
     </variables>
     <variables>
-        <name>selectedDutchDossier</name>
+        <description>The selected dossier</description>
+        <name>selectedDossier</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>

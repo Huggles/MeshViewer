@@ -1,3 +1,4 @@
 AppSwitcher.appMenu
-/force-app/main/default/layouts/Global-Global Layout.layout-meta.xml
-/force-app/main/default/lwc/jsconfig.json
+force-app/main/default/layouts/Global-Global Layout.layout-meta.xml
+force-app/main/default/lwc/jsconfig.json
+force-app/main/default/profiles/Admin.profile-meta.xml

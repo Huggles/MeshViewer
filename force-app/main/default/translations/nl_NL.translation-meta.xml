@@ -12,10 +12,10 @@
         <label>Terug naar resultaten</label>
         <name>Back_To_Search</name>
     </customLabels>
-    <customLabels>
-        <label><!-- Business Data Exists --></label>
-        <name>Business_Data_Exists</name>
-    </customLabels>
+<!--    <customLabels>-->
+<!--        <label>&lt;!&ndash; Business Data Exists &ndash;&gt;</label>-->
+<!--        <name>Business_Data_Exists</name>-->
+<!--    </customLabels>-->
     <customLabels>
         <label>Annuleren</label>
         <name>Cancel</name>
@@ -623,9 +623,6 @@
             <screens>
                 <fields>
                     <name>BusinessSearchForm</name>
-                </fields>
-                <fields>
-                    <name>businessSearchFooter</name>
                 </fields>
                 <fields>
                     <name>flowErrorHandlerSearchScreen</name>
