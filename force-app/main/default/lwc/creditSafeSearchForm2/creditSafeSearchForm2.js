@@ -36,6 +36,25 @@ import Search_Criterium_VAT_Number_Description from '@salesforce/label/c.Search_
 import Search_Criterium_Name_Status_Registration_type_Address_Description from '@salesforce/label/c.Search_Criterium_Name_Status_Registration_type_Address_Description';
 import Search_Criterium_Name_Status_Address_Province_Description from '@salesforce/label/c.Search_Criterium_Name_Status_Address_Province_Description';
 import Validation_Error_Message_Toast_Title from '@salesforce/label/c.Validation_Error_Message_Toast_Title';
+import Select_a_Country from '@salesforce/label/c.Select_a_Country';
+import Fill_minimum_characters from '@salesforce/label/c.Fill_minimum_characters';
+import Select_a_Status from '@salesforce/label/c.Select_a_Status';
+import Valid_CreditSafe_registration_number from '@salesforce/label/c.Valid_CreditSafe_registration_number';
+import Minimum_registration_number_length from '@salesforce/label/c.Minimum_registration_number_length';
+import Valid_Belgian_registration_number from '@salesforce/label/c.Valid_Belgian_registration_number';
+import Valid_Swedish_CreditSafe_Identification_Nr from '@salesforce/label/c.Valid_Swedish_CreditSafe_Identification_Nr';
+import Valid_registration_number from '@salesforce/label/c.Valid_registration_number';
+import Valid_CreditSafe_France_Registration_Id from '@salesforce/label/c.Valid_CreditSafe_France_Registration_Id';
+import Valid_French_registration_number from '@salesforce/label/c.Valid_French_registration_number';
+import Valid_French_VAT_Number from '@salesforce/label/c.Valid_French_VAT_Number';
+import Valid_Irish_CreditSafe_Identification_Nr from '@salesforce/label/c.Valid_Irish_CreditSafe_Identification_Nr';
+import Minimum_registration_number_characters from '@salesforce/label/c.Minimum_registration_number_characters';
+import Valid_Irish_VAT_Number from '@salesforce/label/c.Valid_Irish_VAT_Number';
+import Valid_GB_CreditSafe_Identification_Number from '@salesforce/label/c.Valid_GB_CreditSafe_Identification_Number';
+import Valid_GB_VAT_Number from '@salesforce/label/c.Valid_GB_VAT_Number';
+import Valid_Germany_CreditSafe_registration_id from '@salesforce/label/c.Valid_Germany_CreditSafe_registration_id';
+import Select_a_Registration_Type from '@salesforce/label/c.Select_a_Registration_Type';
+import Valid_German_VAT_Number from '@salesforce/label/c.Valid_German_VAT_Number';
 
 export default class CreditSafeSearchForm2 extends LightningElement {
 
@@ -68,7 +87,26 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         Province,
         Search_Postal_Code,
         Name,
-        Search_Country
+        Search_Country,
+        Select_a_Country,
+        Fill_minimum_characters,
+        Select_a_Status,
+        Valid_CreditSafe_registration_number,
+        Minimum_registration_number_length,
+        Valid_Belgian_registration_number,
+        Valid_Swedish_CreditSafe_Identification_Nr,
+        Valid_registration_number,
+        Valid_CreditSafe_France_Registration_Id,
+        Valid_French_registration_number,
+        Valid_French_VAT_Number,
+        Valid_Irish_CreditSafe_Identification_Nr,
+        Minimum_registration_number_characters,
+        Valid_Irish_VAT_Number,
+        Valid_GB_CreditSafe_Identification_Number,
+        Valid_GB_VAT_Number,
+        Valid_Germany_CreditSafe_registration_id,
+        Select_a_Registration_Type,
+        Valid_German_VAT_Number
     }
 
     get countries() {
