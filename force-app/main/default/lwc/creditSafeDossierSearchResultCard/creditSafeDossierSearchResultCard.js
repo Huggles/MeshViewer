@@ -1,11 +1,10 @@
 /**
- * Created by jaapbranderhorst on 19/02/2020.
+ * Created by jaapbranderhorst on 27/02/2020.
  */
 
-import {LightningElement, api, track} from 'lwc';
+import {api, LightningElement, track} from 'lwc';
 
-export default class DutchDossierSearchResultCard extends LightningElement {
-
+export default class CreditSafeDossierSearchResultCard extends LightningElement {
     /**
      * Contains the search result (in fact a business data SObject)
      */
@@ -35,4 +34,5 @@ export default class DutchDossierSearchResultCard extends LightningElement {
         const selectedEvent = new CustomEvent('selected', {detail : {recordSelected: this.searchResultId}});
         this.dispatchEvent(selectedEvent);
     }
+
 }

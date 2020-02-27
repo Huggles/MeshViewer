@@ -179,7 +179,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Business_Dossier__c.Annual_Financial_Statement_Summary__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -210,6 +215,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Business_Dossier__c.City__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Business_Dossier__c.Class_Personnel_CI__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -221,6 +231,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Class_Personnel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Company_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -266,6 +281,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Correspondence_Street__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -455,6 +475,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Business_Dossier__c.Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Business_Dossier__c.Primary_Sbi_Code_Text__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -506,6 +531,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Street__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2050,6 +2080,14 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
+        <recordType>Business_Dossier__c.Creditsafe</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>Business_Dossier__c.Dutch_Business</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>Creditsafe_Person_Director__c.Current_Director</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -2063,10 +2101,6 @@
     </tabSettings>
     <tabSettings>
         <tab>Creditsafe_Company_Report_Full__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Business_Dossier__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

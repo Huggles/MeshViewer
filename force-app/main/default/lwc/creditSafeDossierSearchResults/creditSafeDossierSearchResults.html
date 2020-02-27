@@ -1,0 +1,14 @@
+<!--
+ - Created by jaapbranderhorst on 27/02/2020.
+ -->
+
+<!-- Credit Safe Dossier Search Results -->
+<template>
+    <lightning-layout multiple-rows="true">
+        <template for:each={searchResults} for:index="index" for:item="dossier">
+            <lightning-layout-item key={ourKey} padding="around-small" size=4>
+                <c-credit-safe-dossier-search-result-card search-result={dossier} search-result-id={index} onselected={handleSelected}></c-credit-safe-dossier-search-result-card>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
+</template>

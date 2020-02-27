@@ -54,57 +54,9 @@
             <targetReference>Search</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>Name</name>
-            <value>
-                <elementReference>TradeName</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>vat_number</name>
-            <value>
-                <elementReference>VATNumber</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>id</name>
             <value>
                 <elementReference>CreditSafeRegistrationId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>postal_code</name>
-            <value>
-                <elementReference>PostalCode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>countries</name>
-            <value>
-                <elementReference>Countries</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>city</name>
-            <value>
-                <elementReference>City</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>province</name>
-            <value>
-                <elementReference>Province</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>street</name>
-            <value>
-                <elementReference>Street</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>status</name>
-            <value>
-                <elementReference>Status</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -114,86 +66,62 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>city</name>
+            <value>
+                <elementReference>City</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>postal_code</name>
+            <value>
+                <elementReference>PostalCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>province</name>
+            <value>
+                <elementReference>Province</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>status</name>
+            <value>
+                <elementReference>Status</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Name</name>
+            <value>
+                <elementReference>TradeName</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>registration_number</name>
             <value>
                 <elementReference>RegistrationNumber</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>FullAddress</assignToReference>
-            <name>full_address</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>TradeNames</assignToReference>
-            <name>trade_names</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>DateLastChange</assignToReference>
-            <name>date_last_change</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>Id</assignToReference>
-            <name>id</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>Status</assignToReference>
-            <name>status</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>AddressCountry</assignToReference>
-            <name>address_country</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>CountryIsoCode</assignToReference>
-            <name>country</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>RegistrationNumber</assignToReference>
-            <name>registration_number</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>Street</assignToReference>
+        <inputParameters>
             <name>street</name>
-        </outputParameters>
+            <value>
+                <elementReference>Street</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>vat_number</name>
+            <value>
+                <elementReference>VATNumber</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>countries</name>
+            <value>
+                <elementReference>Countries</elementReference>
+            </value>
+        </inputParameters>
         <outputParameters>
-            <assignToReference>TradeName</assignToReference>
-            <name>name</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>DateLastAccount</assignToReference>
-            <name>date_last_account</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>City</assignToReference>
-            <name>city</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>HouseNumber</assignToReference>
-            <name>house_number</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>PostalCode</assignToReference>
-            <name>postal_code</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>PhoneNumber</assignToReference>
-            <name>telephone</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>OfficeType</assignToReference>
-            <name>office_type</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>CreditSafeRegistrationId</assignToReference>
-            <name>creditsafe_number</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>Type</assignToReference>
-            <name>type</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>VATNumbers</assignToReference>
-            <name>vat_numbers</name>
+            <assignToReference>foundBusinessDossiers</assignToReference>
+            <name>output</name>
         </outputParameters>
     </actionCalls>
     <actionCalls>
@@ -598,6 +526,22 @@
             <extensionName>appsolutely:flowHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>creditSafeDossierSearchResults</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>foundBusinessDossiers</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>creditSafeSearchResultFlowFooter</name>

@@ -2,9 +2,7 @@
  - Created by jaapbranderhorst on 08/02/2020.
  -->
 
-<!-- Organisation Search Form -->
 <template>
-    <!-- TODO: implement country specific search forms -->
     <lightning-combobox name="selectedCountry" class="slds-m-around_x-small" label={label.Country} options={countries} value={selectedCountry} placeholder={label.Select_a_Country} dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>
     <template if:true={isNlSelected}>
         <c-dutch-business-search-form class="searchForm" trade-name={tradeName} city={city} street={street} domain-name={domainName} house-number={houseNumber} house-number-addition={houseNumberAddition} phone-number={phoneNumber} postal-code={postalCode}></c-dutch-business-search-form>
