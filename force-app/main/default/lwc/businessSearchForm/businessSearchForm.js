@@ -14,8 +14,7 @@ import Country_United_Kingdom from '@salesforce/label/c.Country_United_Kingdom';
 import Country_Sweden from '@salesforce/label/c.Country_Sweden';
 
 export default class BusinessSearchForm extends LightningElement {
-    // TODO: implement validation
-    // TODO: introduce labels
+
     labels = {
         Country_Belgium,
         Country_France,

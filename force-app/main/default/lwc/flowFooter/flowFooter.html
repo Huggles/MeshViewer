@@ -25,7 +25,7 @@
                 </template>
                 <template if:true={showNextButton}>
                     <div class="slds-button-group-item">
-                    <lightning-button variant="brand" label={nextButtonTitle} onclick={handleNextClick} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand" label={nextButtonTitle} disabled={nextButtonDisabled} onclick={handleNextClick} class="slds-m-left_x-small"></lightning-button>
                     </div>
                 </template>
             </lightning-button-group>

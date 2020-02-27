@@ -23,6 +23,8 @@ export default class FlowFooter extends LightningElement {
 
     @api
     nextButtonTitle;
+    @api
+    nextButtonDisabled;
 
     get showPreviousButton() {
         return this.availableActions.find(action => action === 'PREVIOUS');
