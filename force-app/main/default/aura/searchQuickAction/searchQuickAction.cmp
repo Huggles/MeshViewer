@@ -1,7 +1,4 @@
 <aura:component implements="force:lightningQuickActionWithoutHeader">
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    <aura:handler name="flowChangeEvent" event="c:flowStatusChangedEvent" action="{!c.handleFlowChangeEvent}"/>
-    <aura:attribute name="overlayPromise" type="Aura.Component"/>
-    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <c:globalFlowQuickAction flow="Organisation_Search_Flow"></c:globalFlowQuickAction>
 </aura:component>	
 
