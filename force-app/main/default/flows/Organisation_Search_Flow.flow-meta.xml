@@ -508,8 +508,8 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>674</locationX>
-        <locationY>50</locationY>
+        <locationX>675</locationX>
+        <locationY>51</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -576,7 +576,7 @@
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>

@@ -13,3 +13,6 @@ force-app/main/default/objects/Creditsafe_Company_Report_Full__c/listViews/All.l
 force-app/main/default/profiles/Admin.profile-meta.xml
 force-app/main/default/layouts/Global-Global Layout.layout-meta.xml
 .idea/fileTemplates/
+force-app/main/default/profiles/Custom%3A Marketing Profile.profile-meta.xml
+force-app/main/default/profiles/Custom%3A Sales Profile.profile-meta.xml
+force-app/main/default/profiles/Custom%3A Support Profile.profile-meta.xml

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <decisions>
+        <name>CreditSafe_or_Dutch_Dossier</name>
+        <label>CreditSafe or Dutch Dossier?</label>
+        <locationX>512</locationX>
+        <locationY>54</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dutch_Dossier</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CreatedDossier.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dutch_Business</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
+            </connector>
+            <label>Dutch Dossier</label>
+        </rules>
+    </decisions>
+    <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
+    <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
+    <label>Complete Account with Dossier Data</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Account</name>
+        <label>Get Account</label>
+        <locationX>182</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Organisation_Search_Flow</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates an account with the details of a dutch business dossier</description>
+        <name>Update_Account_for_Dutch_Dossier</name>
+        <label>Update Account for Dutch Dossier</label>
+        <locationX>736</locationX>
+        <locationY>56</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>CreatedDossier.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Account</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <description>Searches for organisations. Uses the input values as defaults to search on.</description>
+        <name>Organisation_Search_Flow</name>
+        <label>Organisation Search Flow</label>
+        <locationX>347</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>CreditSafe_or_Dutch_Dossier</targetReference>
+        </connector>
+        <flowName>Organisation_Search_Flow</flowName>
+        <inputAssignments>
+            <name>City</name>
+            <value>
+                <elementReference>Get_Account.BillingCity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>DomainName</name>
+            <value>
+                <elementReference>Get_Account.Website</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>PhoneNumber</name>
+            <value>
+                <elementReference>Get_Account.Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>PostalCode</name>
+            <value>
+                <elementReference>Get_Account.BillingPostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>SelectedCountry</name>
+            <value>
+                <elementReference>Get_Account.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Street</name>
+            <value>
+                <elementReference>Get_Account.BillingStreet</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TradeName</name>
+            <value>
+                <elementReference>Get_Account.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>CreatedDossier</assignToReference>
+            <name>selectedDossier</name>
+        </outputAssignments>
+    </subflows>
+    <variables>
+        <description>The dossier created in the organisation search subflow</description>
+        <name>CreatedDossier</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <description>The record Id of the Account to complete</description>
+        <name>RecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
