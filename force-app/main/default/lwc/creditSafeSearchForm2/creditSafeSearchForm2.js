@@ -60,7 +60,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     @api selectedCountry;
 
-    @api name;
+    @api name
     @api status;
     @api creditSafeId;
     @api registrationNumber;
@@ -72,6 +72,9 @@ export default class CreditSafeSearchForm2 extends LightningElement {
     @api postalCode;
 
     @track errorTitle = Validation_Error_Message_Toast_Title;
+
+    @track
+    localName;
 
     @track
     hints;
@@ -282,6 +285,11 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         this.hints = null; // remove the toast
         const attributeChangeEvent = new FlowAttributeChangeEvent(event.target.name, event.target.value);
         this.dispatchEvent(attributeChangeEvent);
+    }
+
+    handleNameChange(event) {
+        this.name = event.target.value;
+        this.handleOnChange(event);
     }
 
     handleSelectedCountryChange(event) {

@@ -4,8 +4,8 @@
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
         <label>Create Dutch Dossiers</label>
-        <locationX>766</locationX>
-        <locationY>426</locationY>
+        <locationX>785</locationX>
+        <locationY>575</locationY>
         <actionName>CreateDutchDossierInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -35,16 +35,16 @@
         <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &#39;normal&#39; end flow.</description>
         <name>End</name>
         <label>End</label>
-        <locationX>599</locationX>
-        <locationY>210</locationY>
+        <locationX>785</locationX>
+        <locationY>369</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
-        <locationX>412</locationX>
-        <locationY>0</locationY>
+        <locationX>522</locationX>
+        <locationY>50</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -54,39 +54,15 @@
             <targetReference>Search</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>id</name>
-            <value>
-                <elementReference>CreditSafeRegistrationId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>registration_type</name>
-            <value>
-                <elementReference>RegistrationType</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>city</name>
-            <value>
-                <elementReference>City</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>postal_code</name>
-            <value>
-                <elementReference>PostalCode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>province</name>
             <value>
                 <elementReference>Province</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>status</name>
+            <name>city</name>
             <value>
-                <elementReference>Status</elementReference>
+                <elementReference>City</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -102,9 +78,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>street</name>
+            <name>registration_type</name>
             <value>
-                <elementReference>Street</elementReference>
+                <elementReference>RegistrationType</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -119,6 +95,30 @@
                 <elementReference>Countries</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>id</name>
+            <value>
+                <elementReference>CreditSafeRegistrationId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>street</name>
+            <value>
+                <elementReference>Street</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>postal_code</name>
+            <value>
+                <elementReference>PostalCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>status</name>
+            <value>
+                <elementReference>Status</elementReference>
+            </value>
+        </inputParameters>
         <outputParameters>
             <assignToReference>foundBusinessDossiers</assignToReference>
             <name>output</name>
@@ -129,7 +129,7 @@
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
         <locationX>415</locationX>
-        <locationY>426</locationY>
+        <locationY>575</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -191,14 +191,31 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
+    <assignments>
+        <description>Assigns the country selected in the search screen to a list</description>
+        <name>Assign_Selected_Country_to_List</name>
+        <label>Assign Selected Country to List</label>
+        <locationX>521</locationX>
+        <locationY>200</locationY>
+        <assignmentItems>
+            <assignToReference>Countries</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>SelectedCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Search_for_Credit_Safe_Dossiers</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <description>Decides which search method to call based on the selected country</description>
         <name>Decide_search_method</name>
         <label>Decide search method</label>
         <locationX>403</locationX>
-        <locationY>217</locationY>
+        <locationY>367</locationY>
         <defaultConnector>
-            <targetReference>Search_for_Credit_Safe_Dossiers</targetReference>
+            <targetReference>Assign_Selected_Country_to_List</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Search via Credit Safe</defaultConnectorLabel>
         <rules>
@@ -258,8 +275,8 @@
     <recordCreates>
         <name>Create_Credit_Safe_dossier</name>
         <label>Create Credit Safe dossier</label>
-        <locationX>783</locationX>
-        <locationY>0</locationY>
+        <locationX>785</locationX>
+        <locationY>152</locationY>
         <connector>
             <targetReference>End</targetReference>
         </connector>
@@ -272,7 +289,7 @@
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
         <locationX>598</locationX>
-        <locationY>425</locationY>
+        <locationY>575</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -336,7 +353,7 @@
         <name>Search</name>
         <label>Enter Search Criteria</label>
         <locationX>210</locationX>
-        <locationY>215</locationY>
+        <locationY>365</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -491,8 +508,8 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>598</locationX>
-        <locationY>0</locationY>
+        <locationX>674</locationX>
+        <locationY>50</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -554,7 +571,7 @@
     </screens>
     <start>
         <locationX>51</locationX>
-        <locationY>215</locationY>
+        <locationY>365</locationY>
         <connector>
             <targetReference>Search</targetReference>
         </connector>

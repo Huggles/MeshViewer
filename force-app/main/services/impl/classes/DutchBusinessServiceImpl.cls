@@ -529,6 +529,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         dossier.Establishment_street__c = reference.establishment_street;
         dossier.Correspondence_City__c = reference.correspondence_city;
         dossier.Correspondence_Street__c = reference.correspondence_street;
+        dossier.RecordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName().get('Dutch_Business').recordTypeId;
         return dossier;
     }
 
