@@ -5,7 +5,7 @@
     <aura:attribute name="dossierId" type="String" />
     <aura:attribute name="simpleRecord" type="object" />
     <aura:attribute name="myTitleName" type="Aura.Component[]">
-        <div class="logoContainer"><img src="{!$Resource.AppsolutelyLogo}"/></div>
+        <div class="logoContainer"><img src="{!$Resource.companyInfoLogoSmall}"/></div>
     </aura:attribute>
     <aura:attribute name="error" type="string" description="error message. Shown when changed and not null in toast"/>
 
