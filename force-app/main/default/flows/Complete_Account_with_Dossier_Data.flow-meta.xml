@@ -1,31 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <decisions>
-        <name>CreditSafe_or_Dutch_Dossier</name>
-        <label>CreditSafe or Dutch Dossier?</label>
-        <locationX>512</locationX>
-        <locationY>54</locationY>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Dutch_Dossier</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>CreatedDossier.RecordType.DeveloperName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Dutch_Business</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
-            </connector>
-            <label>Dutch Dossier</label>
-        </rules>
-    </decisions>
     <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
     <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
-    <label>Complete Account with Dossier Data</label>
+    <label>Enrich Account with Dossier Data</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -52,7 +30,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RecordId</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -63,15 +41,21 @@
         <description>Updates an account with the details of a dutch business dossier</description>
         <name>Update_Account_for_Dutch_Dossier</name>
         <label>Update Account for Dutch Dossier</label>
-        <locationX>736</locationX>
-        <locationY>56</locationY>
+        <locationX>539</locationX>
+        <locationY>50</locationY>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RecordId</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Business_Dossier__c</field>
+            <value>
+                <elementReference>CreatedDossier.Id</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Name</field>
             <value>
@@ -95,7 +79,7 @@
         <locationX>347</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>CreditSafe_or_Dutch_Dossier</targetReference>
+            <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
         </connector>
         <flowName>Organisation_Search_Flow</flowName>
         <inputAssignments>
@@ -156,7 +140,7 @@
     </variables>
     <variables>
         <description>The record Id of the Account to complete</description>
-        <name>RecordId</name>
+        <name>recordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

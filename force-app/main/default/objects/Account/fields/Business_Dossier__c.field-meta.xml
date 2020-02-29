@@ -3,7 +3,7 @@
     <fullName>Business_Dossier__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Business Data</label>
+    <label>Company.info</label>
     <referenceTo>Business_Dossier__c</referenceTo>
     <relationshipLabel>Accounts</relationshipLabel>
     <relationshipName>Accounts</relationshipName>
