@@ -7,7 +7,7 @@
     <lightning-layout multiple-rows="true" class="slds-scrollable_y">
         <template for:each={searchResults} for:index="index" for:item="dossier">
             <lightning-layout-item key={ourKey} padding="around-small" size=4>
-                <c-dutch-dossier-search-result-card search-result={dossier} search-result-id={index} oncardclicked= {handleCardClicked}></c-dutch-dossier-search-result-card>
+                <c-dutch-dossier-search-result-card search-result={dossier} search-result-id={index} oncardclicked={handleCardClicked}></c-dutch-dossier-search-result-card>
             </lightning-layout-item>
         </template>
     </lightning-layout>

@@ -19,6 +19,12 @@ export default class DutchDossierSearchResultCard extends LightningElement {
     searchResultId;
 
     /**
+     * The api name of the fieldset
+     */
+    @api
+    fieldSetName;
+
+    /**
      * The icon to be shown
      */
     get icon() {

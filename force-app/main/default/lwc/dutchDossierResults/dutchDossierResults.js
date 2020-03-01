@@ -4,7 +4,7 @@
 
 import {LightningElement, api, track} from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
-import {fireEvent, registerListener} from "c/pubsub";
+import {fireEvent} from "c/pubsub";
 
 export default class DutchDossierResults extends LightningElement {
     @api
