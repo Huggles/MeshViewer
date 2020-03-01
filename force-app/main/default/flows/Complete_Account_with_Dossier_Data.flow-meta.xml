@@ -1,5 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Assign_billing_country_default</name>
+        <label>Assign billing country default</label>
+        <locationX>521</locationX>
+        <locationY>50</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Account.BillingCountry</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>NL</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Organisation_Search_Flow</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Selected_country_is_empty</name>
+        <label>Selected country is empty</label>
+        <locationX>379</locationX>
+        <locationY>269</locationY>
+        <defaultConnector>
+            <targetReference>Organisation_Search_Flow</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Selected_country_is_empty_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account.BillingCountry</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_billing_country_default</targetReference>
+            </connector>
+            <label>Selected country is empty</label>
+        </rules>
+    </decisions>
     <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
     <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
@@ -21,10 +62,10 @@
         <name>Get_Account</name>
         <label>Get Account</label>
         <locationX>182</locationX>
-        <locationY>50</locationY>
+        <locationY>267</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Organisation_Search_Flow</targetReference>
+            <targetReference>Selected_country_is_empty</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -41,8 +82,8 @@
         <description>Updates an account with the details of a dutch business dossier</description>
         <name>Update_Account_for_Dutch_Dossier</name>
         <label>Update Account for Dutch Dossier</label>
-        <locationX>539</locationX>
-        <locationY>50</locationY>
+        <locationX>845</locationX>
+        <locationY>267</locationY>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -66,7 +107,7 @@
     </recordUpdates>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>267</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
@@ -76,8 +117,8 @@
         <description>Searches for organisations. Uses the input values as defaults to search on.</description>
         <name>Organisation_Search_Flow</name>
         <label>Organisation Search Flow</label>
-        <locationX>347</locationX>
-        <locationY>50</locationY>
+        <locationX>653</locationX>
+        <locationY>267</locationY>
         <connector>
             <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
         </connector>

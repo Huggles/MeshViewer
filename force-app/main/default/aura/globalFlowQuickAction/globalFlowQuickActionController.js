@@ -9,8 +9,6 @@
                 "flowChangeEvent" : component.getReference("c.handleFlowChangeEvent")},
             function(content, status) {
                 if (status === "SUCCESS") {
-                    // TODO: this modal takes the flow as content and thus doesn't see the footer of the flow as the footer of the modal
-                    // TODO: just create a modal which takes the content of the flow through javascript/html/css
                     var promiseModal = component.find('overlayLib').showCustomModal({
                         body: content,
                         showCloseButton: true,

@@ -7,6 +7,10 @@
                 <value>false</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
+                <name>hideChatterActions</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
                 <name>numVisibleActions</name>
                 <value>3</value>
             </componentInstanceProperties>
@@ -53,7 +57,7 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentName>dossierDetails</componentName>
+            <componentName>accountEnrichment</componentName>
         </componentInstances>
         <name>Facet-d49e42ad-da06-4630-a188-7bb243deb3b3</name>
         <type>Facet</type>
@@ -62,7 +66,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>active</name>
-                <value>true</value>
+                <value>false</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>body</name>
@@ -86,6 +90,10 @@
             <componentName>flexipage:tab</componentName>
         </componentInstances>
         <componentInstances>
+            <componentInstanceProperties>
+                <name>active</name>
+                <value>true</value>
+            </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>body</name>
                 <value>Facet-d49e42ad-da06-4630-a188-7bb243deb3b3</value>

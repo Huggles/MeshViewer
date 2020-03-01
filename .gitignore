@@ -1,6 +1,6 @@
 .sfdx
 .vscode
-force-app/main/default/settings/*
+force-app/main/default/settings
 force-app/main/default/applications/standard__LightningSales.app-meta.xml
 .DS_STORE
 .idea/workspace.xml
