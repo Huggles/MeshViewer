@@ -76,11 +76,11 @@
     <lightning-layout>
         <!-- province field should only be shown for FR -->
         <template if:true={showProvince}>
-            <lightning-layout-item size="6">
+            <lightning-layout-item>
                 <lightning-input name="province" class="slds-m-around_x-small" label={label.Province} type="text" variant="standard" value={province} onchange={handleOnChange}></lightning-input>
             </lightning-layout-item>
         </template>
-        <lightning-layout-item size="6">
+        <lightning-layout-item>
             <lightning-input name="city" class="slds-m-around_x-small" label={label.Search_City} type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
     </lightning-layout>

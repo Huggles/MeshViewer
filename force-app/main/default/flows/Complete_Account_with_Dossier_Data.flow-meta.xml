@@ -19,7 +19,7 @@
     <decisions>
         <name>Selected_country_is_empty</name>
         <label>Selected country is empty</label>
-        <locationX>379</locationX>
+        <locationX>380</locationX>
         <locationY>269</locationY>
         <defaultConnector>
             <targetReference>Organisation_Search_Flow</targetReference>
@@ -27,7 +27,14 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Selected_country_is_empty_outcome</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Account.BillingCountry</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>Get_Account.BillingCountry</leftValueReference>
                 <operator>EqualTo</operator>
