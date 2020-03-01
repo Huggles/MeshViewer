@@ -20,8 +20,7 @@
         toastEvent.fire();
     },
     /**
-     * Starts the flow
-     * TODO: make the flow name configurable
+     * Starts the flow with the attribute name 'flowName'
      * @param component
      */
     startFlow: function(component) {

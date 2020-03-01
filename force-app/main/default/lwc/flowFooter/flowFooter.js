@@ -9,7 +9,7 @@
  *  - Blocking the next action when components on the same page do not validate
  */
 import {LightningElement, api, wire} from 'lwc';
-import {FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationPauseEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationPauseEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 import {fireEvent, registerListener, unregisterAllListeners} from 'c/pubsub';
 
 export default class FlowFooter extends LightningElement {
@@ -27,7 +27,7 @@ export default class FlowFooter extends LightningElement {
     nextButtonDisabled;
 
     get showPreviousButton() {
-        return this.availableActions.find(action => action === 'PREVIOUS');
+        return this.availableActions.find(action => action === 'BACK');
     }
     @api
     previousButtonTitle;
@@ -72,7 +72,7 @@ export default class FlowFooter extends LightningElement {
     }
 
     handlePreviousClick(event) {
-        if (this.availableActions.find(action => action === 'PREVIOUS')) {
+        if (this.availableActions.find(action => action === 'BACK')) {
             // navigate to the next screen
             const navigateBackEvent = new FlowNavigationBackEvent();
             this.dispatchEvent(navigateBackEvent);

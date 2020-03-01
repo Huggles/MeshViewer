@@ -4,8 +4,8 @@
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
         <label>Create Dutch Dossiers</label>
-        <locationX>785</locationX>
-        <locationY>575</locationY>
+        <locationX>811</locationX>
+        <locationY>652</locationY>
         <actionName>CreateDutchDossierInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -35,16 +35,16 @@
         <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &#39;normal&#39; end flow.</description>
         <name>End</name>
         <label>End</label>
-        <locationX>785</locationX>
-        <locationY>369</locationY>
+        <locationX>811</locationX>
+        <locationY>379</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
-        <locationX>522</locationX>
-        <locationY>50</locationY>
+        <locationX>212</locationX>
+        <locationY>42</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -128,8 +128,8 @@
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
-        <locationX>415</locationX>
-        <locationY>575</locationY>
+        <locationX>413</locationX>
+        <locationY>579</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -195,8 +195,8 @@
         <description>Assigns the country selected in the search screen to a list</description>
         <name>Assign_Selected_Country_to_List</name>
         <label>Assign Selected Country to List</label>
-        <locationX>521</locationX>
-        <locationY>200</locationY>
+        <locationX>410</locationX>
+        <locationY>135</locationY>
         <assignmentItems>
             <assignToReference>Countries</assignToReference>
             <operator>Add</operator>
@@ -209,11 +209,61 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Cancel_pressed_in_CreditSafe_search_results</name>
+        <label>Cancel pressed in CreditSafe search results</label>
+        <locationX>574</locationX>
+        <locationY>235</locationY>
+        <defaultConnector>
+            <targetReference>Create_Credit_Safe_dossier</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Create CreditSafe dossier</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_Pressed_Creditsafe_search_results_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Cancel_Pressed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End</targetReference>
+            </connector>
+            <label>Cancel Pressed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Cancel_pressed_in_Dutch_search_results</name>
+        <label>Cancel pressed in Dutch search results</label>
+        <locationX>577</locationX>
+        <locationY>511</locationY>
+        <defaultConnector>
+            <targetReference>Create_Dutch_Dossiers</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Create Dutch Dossier</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_Pressed_Dutch_search_results</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Cancel_Pressed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End</targetReference>
+            </connector>
+            <label>Cancel Pressed</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Decides which search method to call based on the selected country</description>
         <name>Decide_search_method</name>
         <label>Decide search method</label>
         <locationX>403</locationX>
-        <locationY>367</locationY>
+        <locationY>380</locationY>
         <defaultConnector>
             <targetReference>Assign_Selected_Country_to_List</targetReference>
         </defaultConnector>
@@ -275,8 +325,8 @@
     <recordCreates>
         <name>Create_Credit_Safe_dossier</name>
         <label>Create Credit Safe dossier</label>
-        <locationX>785</locationX>
-        <locationY>152</locationY>
+        <locationX>810</locationX>
+        <locationY>41</locationY>
         <connector>
             <targetReference>End</targetReference>
         </connector>
@@ -288,13 +338,13 @@
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
-        <locationX>598</locationX>
-        <locationY>575</locationY>
+        <locationX>586</locationX>
+        <locationY>659</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Dutch_Dossiers</targetReference>
+            <targetReference>Cancel_pressed_in_Dutch_search_results</targetReference>
         </connector>
         <fields>
             <name>dutchSearchResultFlowHeader</name>
@@ -353,7 +403,7 @@
         <name>Search</name>
         <label>Enter Search Criteria</label>
         <locationX>210</locationX>
-        <locationY>365</locationY>
+        <locationY>378</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -508,13 +558,13 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>675</locationX>
-        <locationY>51</locationY>
+        <locationX>582</locationX>
+        <locationY>34</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Create_Credit_Safe_dossier</targetReference>
+            <targetReference>Cancel_pressed_in_CreditSafe_search_results</targetReference>
         </connector>
         <fields>
             <name>creditSafeSearchResultFlowErrorHandler</name>
@@ -570,8 +620,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>51</locationX>
-        <locationY>365</locationY>
+        <locationX>49</locationX>
+        <locationY>378</locationY>
         <connector>
             <targetReference>Search</targetReference>
         </connector>

@@ -3,7 +3,7 @@
  */
 
 import {api, LightningElement} from 'lwc';
-import Search_Confirm from '@salesforce/label/c.Search_Confirm';
+import Search_Results_Confirm from '@salesforce/label/c.Search_Results_Confirm';
 import Cancel from '@salesforce/label/c.Cancel';
 import Search_Reset from '@salesforce/label/c.Search_Reset';
 import {registerListener, unregisterAllListeners} from "c/pubsub";
@@ -15,7 +15,7 @@ export default class SearchResultFlowFooter extends LightningElement {
     availableActions = [];
 
     label = {
-        Search_Confirm,
+        Search_Results_Confirm,
         Cancel,
         Search_Reset
     }
