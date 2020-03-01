@@ -28,15 +28,25 @@ export default class DutchDossierResults extends LightningElement {
      * Handler to handle the selection of a search result.
      * @param event
      */
-    handleSelected(event) {
+    handleCardClicked(event) {
         // search for the right record
-        const id = event.detail.recordSelected;
+        const id = event.detail.id;
         const dutchDossierSearchResultCards = [...this.template.querySelectorAll('c-dutch-dossier-search-result-card')];
-        const dutchDossierSearchResultCard = dutchDossierSearchResultCards.find(card => card.searchResultId === id);
-        // set the result param, this is done here because this component knows the type
-        const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', dutchDossierSearchResultCard.searchResult);
-        this.dispatchEvent(attributeChangeEvent);
-        fireEvent(null, 'resultSelected', {selectedResult: event.detail.recordSelected}); // let the world know something is selected
+        let cardClicked = dutchDossierSearchResultCards.find(card => card.searchResultId === id);
+        // (un)select the cards
+        if (!cardClicked.selected) { // current 'old' state is unselected, user wants to select this card
+            const unselectedCards = dutchDossierSearchResultCards.filter(value => value !== cardClicked);
+            unselectedCards.forEach(value => value.selected = false);
+            // set the result param, this is done here because this component knows the type
+            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', cardClicked.searchResult);
+            this.dispatchEvent(attributeChangeEvent);
+            fireEvent(null, 'resultselected', {selectedResult: event.detail.recordSelected}); // let the world know something is selected
+        } else {
+            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', null);
+            this.dispatchEvent(attributeChangeEvent);
+            fireEvent(null, 'resultunselected');
+        }
+        cardClicked.selected = !cardClicked.selected; // select or unselect the card
     }
 
 }

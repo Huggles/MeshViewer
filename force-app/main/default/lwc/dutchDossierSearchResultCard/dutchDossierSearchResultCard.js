@@ -21,8 +21,19 @@ export default class DutchDossierSearchResultCard extends LightningElement {
     /**
      * The icon to be shown
      */
-    @track
-    icon = 'action:record';
+    get icon() {
+        if (!this.selected) {
+            return 'action:record';
+        } else {
+            return 'action:approval';
+        }
+    }
+
+    /**
+     * True if the card is selected, otherwise false
+     */
+    @api
+    selected;
 
     /**
      * The title of the card
@@ -31,8 +42,8 @@ export default class DutchDossierSearchResultCard extends LightningElement {
     title = 'title';
 
     handleOnClick(event) {
-        this.icon = 'action:approval';
-        const selectedEvent = new CustomEvent('selected', {detail : {recordSelected: this.searchResultId}});
-        this.dispatchEvent(selectedEvent);
+        // this.selected = !this.selected;
+        const cardClickedEvent = new CustomEvent('cardclicked', {detail : {id: this.searchResultId}});
+        this.dispatchEvent(cardClickedEvent);
     }
 }

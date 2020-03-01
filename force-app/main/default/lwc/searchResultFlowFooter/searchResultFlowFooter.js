@@ -21,7 +21,8 @@ export default class SearchResultFlowFooter extends LightningElement {
     }
 
     connectedCallback() {
-        registerListener('resultSelected', this.handleResultSelected, this);
+        registerListener('resultselected', this.handleResultSelected, this);
+        registerListener('resultunselected', this.handleResultUnSelected, this);
     }
 
     disconnectedCallback() {
@@ -29,8 +30,13 @@ export default class SearchResultFlowFooter extends LightningElement {
     }
 
     handleResultSelected(event) {
-        const nextButtonDisabled = this.template.querySelector('c-flow-footer').nextButtonDisabled;
-        this.template.querySelector('c-flow-footer').nextButtonDisabled = !nextButtonDisabled;
+        // const nextButtonDisabled = this.template.querySelector('c-flow-footer').nextButtonDisabled;
+        this.template.querySelector('c-flow-footer').nextButtonDisabled = false;
+    }
+
+    handleResultUnSelected(event) {
+        // const nextButtonDisabled = this.template.querySelector('c-flow-footer').nextButtonDisabled;
+        this.template.querySelector('c-flow-footer').nextButtonDisabled = true;
     }
 
     handleNextClick(event) {

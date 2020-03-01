@@ -34,7 +34,7 @@
                     value : component.get("v.recordId")
                 }
             ];
-            flow.startFlow("Complete_Account_with_Dossier_Data", inputVariables);
+            flow.startFlow(component.get("v.flowName"), inputVariables);
         }
     }
 });
