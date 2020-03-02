@@ -24,6 +24,9 @@ export default class DutchDossierResults extends LightningElement {
         return this.localKey;
     }
 
+    @track
+    error;
+
     /**
      * Handler to handle the selection of a search result.
      * @param event
@@ -47,6 +50,10 @@ export default class DutchDossierResults extends LightningElement {
             fireEvent(null, 'resultunselected');
         }
         cardClicked.selected = !cardClicked.selected; // select or unselect the card
+    }
+
+    handleError(event) {
+        this.error = event.detail.error;
     }
 
 }

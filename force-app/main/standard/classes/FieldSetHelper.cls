@@ -4,8 +4,21 @@
 
 public with sharing class FieldSetHelper {
 
+    public class FieldDescriptionDto {
+        @AuraEnabled
+        public String label;
+        @AuraEnabled
+        public String apiName;
+
+        public FieldDescriptionDto(String label, String apiName) {
+            this.label = label;
+            this.apiName = apiName;
+        }
+    }
+
+
     /**
-     * Returns the field names defined in the fieldset with name fieldSetName and defined for sObject objectName
+     * Returns the field definitions (API name, label) defined in the fieldset with name fieldSetName and defined for sObject objectName
      *
      * @param objectName
      * @param fieldSetName
@@ -13,7 +26,7 @@ public with sharing class FieldSetHelper {
      * @return
      */
     @AuraEnabled(Cacheable=true)
-    public static List<String> getFieldSetFieldNames(String objectName, String fieldSetName) {
+    public static List<FieldDescriptionDto> getFieldSetFieldDescriptions(String objectName, String fieldSetName) {
         Map<String, Schema.SObjectType> globalDescribeMap = Schema.getGlobalDescribe();
         Schema.SObjectType sObjectTypeObj = globalDescribeMap.get(objectName);
         if (sObjectTypeObj == null) {
@@ -28,11 +41,11 @@ public with sharing class FieldSetHelper {
             ErrorLogUtil.logException(e);
             throw e;
         }
-        List<String> apiNames = new List<String>();
+        List<FieldDescriptionDto> fieldDescriptionDtos = new List<FieldDescriptionDto>();
         for (Schema.FieldSetMember fieldSetMember : fieldSetObj.getFields()) {
-            apiNames.add(fieldSetMember.getFieldPath());
+            fieldDescriptionDtos.add(new FieldDescriptionDto(fieldSetMember.getLabel(), fieldSetMember.getFieldPath()));
         }
-        return apiNames;
+        return fieldDescriptionDtos;
     }
 
 }

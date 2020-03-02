@@ -6,7 +6,7 @@
 private class FieldSetHelperTest {
 
     @IsTest
-    static void testGetFieldSetFieldNamesWrongSobject() {
+    static void testGetFieldSetFieldDescriptionsWrongSobject() {
         //given
         // a dummy sobject name
         String sObjectName = 'fake__c';
@@ -16,7 +16,7 @@ private class FieldSetHelperTest {
         String message = null;
         Test.startTest();
         try {
-            FieldSetHelper.getFieldSetFieldNames(sObjectName, 'fake');
+            FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, 'fake');
         } catch (InputException e) {
             exceptionThrown = true;
             message = e.getMessage();
@@ -29,7 +29,7 @@ private class FieldSetHelperTest {
     }
 
     @IsTest
-    static void testGetFieldSetFieldNamesNonExistingFieldset() {
+    static void testGetFieldSetFieldDescriptionsNonExistingFieldset() {
         //given
         // a good sObjectName without field sets
         String sObjectName = 'Account';
@@ -41,7 +41,7 @@ private class FieldSetHelperTest {
         String message = null;
         Test.startTest();
         try {
-            FieldSetHelper.getFieldSetFieldNames(sObjectName, fieldSetName);
+            FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, fieldSetName);
         } catch (InputException e) {
             exceptionThrown = true;
             message = e.getMessage();
@@ -54,7 +54,7 @@ private class FieldSetHelperTest {
     }
 
     @IsTest
-    static void testGetFieldSetFieldNamesHappyFlow() {
+    static void testGetFieldSetFieldDescriptionsHappyFlow() {
         //given
         // a good sObjectName with a field set
         String sObjectName = 'appsolutely__Business_Dossier__c';
@@ -64,10 +64,10 @@ private class FieldSetHelperTest {
         // when
         Boolean exceptionThrown = false;
         String message = null;
-        List<String> fieldNames = null;
+        List<FieldSetHelper.FieldDescriptionDto> fieldDescriptionDtos = null;
         Test.startTest();
         try {
-            fieldNames = FieldSetHelper.getFieldSetFieldNames(sObjectName, fieldSetName);
+            fieldDescriptionDtos = FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, fieldSetName);
         } catch (InputException e) {
             exceptionThrown = true;
             message = e.getMessage();
@@ -78,8 +78,8 @@ private class FieldSetHelperTest {
         System.assert(!exceptionThrown);
         System.assert(message == null);
         // fieldNames should be there and the length should be more than zero (don't want to test for exact length so we don't need to change the test every time the field set changes
-        System.assert(fieldNames != null);
-        System.assert(fieldNames.size() > 0);
+        System.assert(fieldDescriptionDtos != null);
+        System.assert(fieldDescriptionDtos.size() > 0);
     }
 
 }
