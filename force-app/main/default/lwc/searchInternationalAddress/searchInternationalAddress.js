@@ -2,10 +2,8 @@
  * Created by appsolutely on 18/02/2020.
  */
 
-//import {LightningElement} from 'lwc';
 import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
-import getCountries from '@salesforce/apex/InternationalAddressController.getCountries';
 
 export default class SearchInternationalAddress extends LightningElement {
 
@@ -27,19 +25,31 @@ export default class SearchInternationalAddress extends LightningElement {
     @track value = 'en';
     @track org = '';
 
-    @wire(getCountries)
-    countries({ error, data }){
-        if(data){
-            for(const list of data){
-                const option = {
-                    label: list.DeveloperName,
-                    value: list.appsolutely__Country_Format__c
-                };
-                this.selectOptions = [...this.selectOptions, option];
+    // @wire(getCountries)
+    // countries({ error, data }){
+    //     if(data){
+    //         for(const list of data){
+    //             const option = {
+    //                 label: list.DeveloperName,
+    //                 value: list.appsolutely__Country_Format__c
+    //             };
+    //             this.selectOptions = [...this.selectOptions, option];
+    //
+    //         }
+    //
+    //     }
+    // }
 
-            }
-
-        }
+    get countries() {
+        return [
+            { label: 'Country_Netherlands', value: 'NL' },
+            { label: 'Country_Belgium', value: 'BE' },
+            { label: 'Country_Germany', value: 'DE' },
+            { label: 'Country_France', value: 'FR' },
+            { label: 'Country_United_Kingdom', value: 'GB' },
+            { label: 'Country_Ireland', value: 'IE' },
+            { label: 'Country_Sweden', value: 'SE' }
+        ];
     }
 
     @api
@@ -156,7 +166,8 @@ export default class SearchInternationalAddress extends LightningElement {
         }
         else if(event.target.name == 'pobox'){
             this._pobox = event.target.value;
-        }else if(event.target.name == 'locality'){
+        }
+        else if(event.target.name == 'locality'){
             this._locality = event.target.value;
         }
         else if(event.target.name == 'postcode'){
@@ -171,7 +182,6 @@ export default class SearchInternationalAddress extends LightningElement {
         else if(event.target.name == 'country'){
             this._country = event.target.value;
         }
-
 
     }
 
