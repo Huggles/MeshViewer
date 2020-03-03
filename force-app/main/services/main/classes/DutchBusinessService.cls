@@ -36,6 +36,17 @@ public inherited sharing class DutchBusinessService {
         return newInstance().createDutchDossier(dossierNumber, establishmentNumber);
     }
 
+    /**
+     * Updates a given Dutch business dossier with the VAT number from the CI backend. Does not update it in the backend.
+     *
+     * @param dossier the dossier to be updated
+     *
+     * @return the updated dossier
+     */
+    public static Business_Dossier__c updateBusinessDossierWithVATNumber(Business_Dossier__c dossier) {
+        return newInstance().updateBusinessDossierWithVATNumber(dossier);
+    }
+
     public static IDutchBusinessService newInstance() {
         return (IDutchBusinessService) Application.Service.newInstance(IDutchBusinessService.class);
     }

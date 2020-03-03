@@ -173,6 +173,69 @@ private class DutchBusinessServiceImplTest {
     }
 
     @IsTest
+    public static void testUpdateVATNumberNoVatKnown() {
+
+        // given
+        // we have a dossier for which we don't know the vat number
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+
+        Id accountId = null;
+        DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessDossierV3 = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = new DutchBusinessWsdl.DutchBusinessVatNumber();
+        vatResponse.dossier_number = dutchBusinessDossierV3.dossier_number;
+        vatResponse.vat_number = null;
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dutchBusinessDossierV3.dossier_number, dutchBusinessDossierV3.establishment_number)).thenReturn(dutchBusinessDossierV3);
+        mocks.when(webserviceMock.dutchBusinessGetVatNumber(dutchBusinessDossierV3.dossier_number)).thenReturn(vatResponse);
+        mocks.stopStubbing();
+        Business_Dossier__c dossier = (new DutchBusinessServiceImpl()).mapDutchBusinessDossierV3ToDossier(dutchBusinessDossierV3, new Business_Dossier__c());
+
+
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
+
+        // when
+        Test.startTest();
+        Business_Dossier__c dossierToAssert = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
+        Test.stopTest();
+
+        // then
+        System.assert(dossierToAssert.Dossier_Number__c == dossier.Dossier_Number__c);
+        System.assert(dossierToAssert.VAT_Number__c == null);
+    }
+
+    @IsTest
+    public static void testUpdateVATNumberVatKnown() {
+
+        // given
+        // we have a dossier for which we know the vat number
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+
+        Id accountId = null;
+        DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessDossierV3 = getDataVendorMockDossier();
+        DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = new DutchBusinessWsdl.DutchBusinessVatNumber();
+        vatResponse.dossier_number = dutchBusinessDossierV3.dossier_number;
+        vatResponse.vat_number = '12345';
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dutchBusinessDossierV3.dossier_number, dutchBusinessDossierV3.establishment_number)).thenReturn(dutchBusinessDossierV3);
+        mocks.when(webserviceMock.dutchBusinessGetVatNumber(dutchBusinessDossierV3.dossier_number)).thenReturn(vatResponse);
+        mocks.stopStubbing();
+        Business_Dossier__c dossier = (new DutchBusinessServiceImpl()).mapDutchBusinessDossierV3ToDossier(dutchBusinessDossierV3, new Business_Dossier__c());
+
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
+
+        // when
+        Test.startTest();
+        Business_Dossier__c dossierToAssert = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
+        Test.stopTest();
+
+        // then
+        System.assert(dossierToAssert.Dossier_Number__c == dossier.Dossier_Number__c);
+        System.assert(dossierToAssert.VAT_Number__c == vatResponse.vat_number);
+    }
+
+    @IsTest
     public static void testSetVatNumberNoVatKnown() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);

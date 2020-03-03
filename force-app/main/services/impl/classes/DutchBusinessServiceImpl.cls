@@ -155,6 +155,25 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     }
 
     /**
+     * Updates a given Dutch business dossier with the VAT number from the CI backend. Does not update it in the backend.
+     *
+     * @param dossier the dossier to be updated
+     *
+     * @return the updated dossier
+     */
+    public  Business_Dossier__c updateBusinessDossierWithVATNumber(Business_Dossier__c dossier) {
+        if (dossier == null) {
+            throw new CCInputException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input
+        }
+        if (dossier.Dossier_Number__c == null) {
+            throw new CCInputException(System.Label.Dossier_Number_Missing);
+        }
+        DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = WsDutchBusiness.dutchBusinessGetVatNumber(dossier.Dossier_Number__c);
+        dossier.VAT_Number__c = vatResponse.vat_number;
+        return dossier;
+    }
+
+    /**
      * Retrieves all Dutch Business Dossiers that have been updated since a certain date. Paginated. Supply the right CI page nr. to get the right results
      *
      * @param pageNr
@@ -202,6 +221,7 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         return updateDossiersList;
     }
 
+    //TODO: remove this and replace it by updateDutchDossiersWithVAT
     public Business_Dossier__c setVatNumber(Id dossierId) {
         if (dossierId == null) {
             throw new CCException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input

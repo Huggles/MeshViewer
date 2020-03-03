@@ -96,4 +96,13 @@ public interface IDutchBusinessService {
      * @return the newly created dossier
      */
     Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber);
+
+    /**
+     * Updates a given Dutch business dossier with the VAT number from the CI backend. Does not update it in the backend.
+     *
+     * @param dossier the dossier to be updated
+     *
+     * @return the updated dossier
+     */
+    Business_Dossier__c updateBusinessDossierWithVATNumber(Business_Dossier__c dossier);
 }
