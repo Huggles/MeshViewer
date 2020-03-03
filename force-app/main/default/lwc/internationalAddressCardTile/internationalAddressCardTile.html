@@ -8,14 +8,25 @@
         <div class="slds-p-around_medium lgc-bg">
             <lightning-tile label={internationalAddressData.name} type="media">
                 <lightning-button-icon slot="media" key={internationalAddressData.appsolutely__RecordRefNo__c} icon-name={iconname} onclick={handleClick}></lightning-button-icon>
-                    <lightning-formatted-address
-                            street={internationalAddressData.appsolutely__Street__c}
-                            city={internationalAddressData.appsolutely__Locality__c}
-                            country={internationalAddressData.appsolutely__Country__c}
-                            province={internationalAddressData.appsolutely__Locality__c}
-                            postal-code={internationalAddressData.appsolutely__Postcode__c}
-                            disabled
-                    ></lightning-formatted-address>
+<!--                    <lightning-formatted-address-->
+<!--                            street={internationalAddressData.appsolutely__Street__c}-->
+<!--                            city={internationalAddressData.appsolutely__Locality__c}-->
+<!--                            country={internationalAddressData.appsolutely__Country__c}-->
+<!--                            province={internationalAddressData.appsolutely__Locality__c}-->
+<!--                            postal-code={internationalAddressData.appsolutely__Postcode__c}-->
+<!--                            disabled-->
+<!--                    ></lightning-formatted-address>-->
+                <span if:true={isStreetAvailable}>Street: {internationalAddressData.appsolutely__Street__c}</br></span>
+                <span if:true={isHouseNrAvailable}>House Number: {internationalAddressData.appsolutely__House_Number__c}</br></span>
+                <span if:true={isPOBoxAvailable}>POBox: {internationalAddressData.appsolutely__POBox__c}</br></span>
+                <span if:true={isLocalityAvailable}>Locality: {internationalAddressData.appsolutely__Locality__c}</br></span>
+                <span if:true={isPostcodeAvailable}>Postcode: {internationalAddressData.appsolutely__Postcode__c}</br></span>
+                <span if:true={isProvinceAvailable}>Province: {internationalAddressData.appsolutely__Province__c}</br></span>
+                <span if:true={isCountryAvailable}>Country: {internationalAddressData.appsolutely__Country__c}</br></span>
+                <span if:true={isCountrySpecificLocalityAvailable}>Country Specific Locality: {internationalAddressData.appsolutely__Country_Specific_Locality__c}</br></span>
+                <span if:true={isDeliveryAddressAvailable}>Delivery Address: {internationalAddressData.appsolutely__Delivery_Address__c}</br></span>
+                <span if:true={isFormattedAddressAvailable}>Formatted Address: {internationalAddressData.appsolutely__Formatted_Address__c}</br></span>
+
             </lightning-tile>
         </div>
     </lightning-layout>

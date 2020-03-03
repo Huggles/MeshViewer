@@ -4,6 +4,7 @@
 
 import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
+import getCountries from '@salesforce/apex/InternationalAddressController.getCountries';
 
 export default class SearchInternationalAddress extends LightningElement {
 
@@ -25,32 +26,30 @@ export default class SearchInternationalAddress extends LightningElement {
     @track value = 'en';
     @track org = '';
 
-    // @wire(getCountries)
-    // countries({ error, data }){
-    //     if(data){
-    //         for(const list of data){
-    //             const option = {
-    //                 label: list.DeveloperName,
-    //                 value: list.appsolutely__Country_Format__c
-    //             };
-    //             this.selectOptions = [...this.selectOptions, option];
-    //
-    //         }
-    //
-    //     }
-    // }
-
-    get countries() {
-        return [
-            { label: 'Country_Netherlands', value: 'NL' },
-            { label: 'Country_Belgium', value: 'BE' },
-            { label: 'Country_Germany', value: 'DE' },
-            { label: 'Country_France', value: 'FR' },
-            { label: 'Country_United_Kingdom', value: 'GB' },
-            { label: 'Country_Ireland', value: 'IE' },
-            { label: 'Country_Sweden', value: 'SE' }
-        ];
+    @wire(getCountries)
+    countries({ error, data }){
+        if(data){
+            for(var i=0; i < data.length; i++){
+                const option = {
+                    label: data[i],
+                    value: data[i]
+                };
+                this.selectOptions = [...this.selectOptions, option];
+            }
+        }
     }
+
+    // get countries() {
+    //     return [
+    //         { label: 'Country_Netherlands', value: 'NL' },
+    //         { label: 'Country_Belgium', value: 'BE' },
+    //         { label: 'Country_Germany', value: 'DE' },
+    //         { label: 'Country_France', value: 'FR' },
+    //         { label: 'Country_United_Kingdom', value: 'GB' },
+    //         { label: 'Country_Ireland', value: 'IE' },
+    //         { label: 'Country_Sweden', value: 'SE' }
+    //     ];
+    // }
 
     @api
     get txtBoxVal(){

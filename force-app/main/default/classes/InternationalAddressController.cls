@@ -4,19 +4,22 @@
 
 global inherited sharing class InternationalAddressController {
 
+    public static Map<String,String> countries{
+        get{
+            if(countries == null){
+                countries = getCountriesFromPicklist();
+            }
+            return countries;
+        }
+        set;
+    }
 
     @AuraEnabled
     public static Object search(String organization,String building,String street,String houseNumber,String pobox,String locality,String postcode,String province,String country,String language,String country_Format){
         if(country!=null){
             try{
-                Map<String, String> mapCountries = new Map<String, String>();
-                String countryFormat = 'nl';
-                for(appsolutely__Country__mdt countryName : getCountries()){
-                    mapCountries.put(countryName.DeveloperName, countryName.appsolutely__Country_Format__c);
-                }
-
-                 countryFormat =  mapCountries.get(country);
-                 List<InternationalAddressResultsDto> searchResults = InternationalAddressService.internationalAddressSearchV2( organization, building, street, houseNumber,pobox, locality, postcode, province, country, language, countryFormat);
+                String countryFormat =  countries.get(country);
+                 List<InternationalAddressResultsDto> searchResults = InternationalAddressService.internationalAddressSearchV2( organization, building, street, houseNumber,pobox, locality, postcode, province, country, language, country_Format);
 
                 return new AuraResponseWrapper(searchResults);
             } catch (CCException e) {
@@ -30,22 +33,9 @@ global inherited sharing class InternationalAddressController {
     }
 
     @AuraEnabled(cacheable=true)
-    global static List<appsolutely__Country__mdt> getCountries(){
-        return [SELECT developerName, appsolutely__Country_Format__c FROM appsolutely__Country__mdt LIMIT 100];
+    global static List<String> getCountries(){
+        return new List<String>(countries.keySet());
     }
-
-    /*
-    @AuraEnabled(cacheable=true)
-    global static List<appsolutely__International_Address__c> getSearchResults(){
-        List<appsolutely__International_Address__c> lstIAR = [SELECT Id,Name, appsolutely__Organization__c ,appsolutely__Building__c ,appsolutely__Street__c ,appsolutely__House_Number__c ,appsolutely__Locality__c ,appsolutely__POBox__c ,appsolutely__Postcode__c ,appsolutely__Country__c ,appsolutely__International_Address_Request__c   FROM appsolutely__International_Address__c ];
-
-        //if(!lstIAR.isEmpty()){
-        System.debug('lstIAR'+lstIAR);
-        return lstIAR;
-
-//            return [SELECT Id, appsolutely__Organization__c ,appsolutely__Building__c ,appsolutely__Street__c ,appsolutely__House_Number__c ,appsolutely__Locality__c ,appsolutely__POBox__c ,appsolutely__Postcode__c ,appsolutely__Country__c ,appsolutely__International_Address_Request__c   FROM appsolutely__International_Address__c WHERE appsolutely__International_Address_Request__c IN: [SELECT Id FROM appsolutely__International_Address_Request__c WHERE CreatedBy.ID =: UserInfo.getUserId() ORDER BY createddate DESC LIMIT 1]];
-        //}
-    }*/
 
     @AuraEnabled
     global static String createSearchResults(List<appsolutely__International_Address__c> userSelectedAddress){
@@ -60,5 +50,18 @@ global inherited sharing class InternationalAddressController {
             }
         }
         return 'Error';
+    }
+
+    private static Map<String,String> getCountriesFromPicklist() {
+        Map<String,String> countries = new Map<String, String>();
+
+        Schema.SObjectField countriesPicklist = SObjectType.appsolutely__Business_Dossier__c.fields.appsolutely__Registration_Country__c.getSobjectField();//TODO check if this picklist is ok, or create another picklist
+        List<PicklistEntry> entries = countriesPicklist.getDescribe().getPicklistValues();
+
+        for (Schema.PicklistEntry pickListVal : entries) {
+           countries.put(pickListVal.getLabel(), pickListVal.getValue());
+        }
+
+        return countries;
     }
 }

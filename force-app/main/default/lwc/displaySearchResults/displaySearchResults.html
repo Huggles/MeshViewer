@@ -6,12 +6,10 @@
 <template>
     <lightning-card title="International Address Results" icon-name="custom:custom63">
         <div class="slds-m-around_medium">
-            <lightning-button onclick={saveRecords} label="Confirm" ></lightning-button>
             <template if:true={internationalAddressList}>
                <div class="slds-m-around_medium">
                    <lightning-layout vertical-align="center" multiple-rows>
                        <template for:each={internationalAddressList} for:item="record">
-
                             <c-international-address-card-tile onselectitem={handleClick} key={record.appsolutely__RecordRefNo__c} international-address-data={record} >
                             </c-international-address-card-tile>
 
@@ -20,6 +18,7 @@
                    </lightning-layout>
                 </div>
             </template>
+            <lightning-button onclick={saveRecords} label="Confirm" ></lightning-button>
         </div>
     </lightning-card>
 </template>
