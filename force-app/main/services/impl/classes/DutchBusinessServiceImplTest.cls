@@ -506,7 +506,7 @@ private class DutchBusinessServiceImplTest {
                         Name,
                         OwnerId,
                         SystemModstamp
-                FROM Business_Dossier__c];
+                FROM Business_Dossier__c LIMIT 1];
         System.assert(dossierDB != null);
         if (accountId != null)
             System.assert(dossierDB.Account__c == accountId);
