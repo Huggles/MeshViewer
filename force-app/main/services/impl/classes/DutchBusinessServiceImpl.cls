@@ -120,13 +120,15 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
     /**
      * Fetches the dutch business dossier with the given dossier number and establishment number and creates it in the database (incl. any related records)
+     * If getVAT is true, also enriches the dossier with the VAT number (if available) before inserting it in the database.
      *
      * @param dossierNumber
      * @param establishmentNumber
+     * @param getVAT
      *
      * @return
      */
-    public Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber) {
+    public Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT) {
         if (dossierNumber == null || dossierNumber == '') {
             Exception ex = new CCInputException('empty dossier number');
             ErrorLogUtil.logException(ex);
@@ -150,6 +152,15 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         Dossier_Address__c establishmentAddress = new Dossier_Address__c();
         establishmentAddress = mapDataVendorDataToEstablishmentAddress(dossierV3, establishmentAddress);
         unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
+
+        if(getVAT) {
+            try {
+                dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
+            } catch(CCWsServerDataNotFoundVatException e) {
+                // just don't do anything since the VAT number should stay null in this case.
+            }
+        }
+
         unitOfWork.commitWork();
         return dossier;
     }

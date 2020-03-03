@@ -16,7 +16,6 @@
             </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
         </componentInstances>
-        <mode>Replace</mode>
         <name>header</name>
         <type>Region</type>
     </flexiPageRegions>
@@ -43,7 +42,6 @@
             </componentInstanceProperties>
             <componentName>force:relatedListContainer</componentName>
         </componentInstances>
-        <mode>Replace</mode>
         <name>relatedTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -51,12 +49,15 @@
         <componentInstances>
             <componentName>force:detailPanel</componentName>
         </componentInstances>
-        <mode>Replace</mode>
         <name>detailTabContent</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentInstanceProperties>
+                <name>flowName</name>
+                <value>Complete_Account_with_Dossier_Data</value>
+            </componentInstanceProperties>
             <componentName>accountEnrichment</componentName>
         </componentInstances>
         <name>Facet-d49e42ad-da06-4630-a188-7bb243deb3b3</name>
@@ -104,7 +105,6 @@
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
-        <mode>Replace</mode>
         <name>maintabs</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -116,20 +116,13 @@
             </componentInstanceProperties>
             <componentName>flexipage:tabset</componentName>
         </componentInstances>
-        <mode>Replace</mode>
         <name>main</name>
         <type>Region</type>
     </flexiPageRegions>
-    <flexiPageRegions>
-        <mode>Replace</mode>
-        <name>sidebar</name>
-        <type>Region</type>
-    </flexiPageRegions>
     <masterLabel>Account Record Page</masterLabel>
-    <parentFlexiPage>sfa__Account_rec_L</parentFlexiPage>
     <sobjectType>Account</sobjectType>
     <template>
-        <name>flexipage:recordHomeTemplateDesktop</name>
+        <name>flexipage:recordHomeSimpleViewTemplate</name>
     </template>
     <type>RecordPage</type>
 </FlexiPage>

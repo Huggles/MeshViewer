@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Dutch_Business</fullName>
+    <fullName>Dutch_Business_search_result_fields</fullName>
     <availableFields>
         <field>Correspondence_City__c</field>
         <isFieldManaged>false</isFieldManaged>
@@ -42,5 +42,5 @@
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
-    <label>Dutch Business</label>
+    <label>Dutch Business search result fields</label>
 </FieldSet>

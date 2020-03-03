@@ -89,13 +89,15 @@ public interface IDutchBusinessService {
 
     /**
      * Fetches the dutch business dossier with the given dossier number and establishment number and creates it in the database (incl. any related records)
+     * If getVAT is true, also enriches the dossier with the VAT number (if available) before inserting it in the database.
      *
      * @param dossierNumber
      * @param establishmentNumber
+     * @param getVAT
      *
      * @return the newly created dossier
      */
-    Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber);
+    Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT);
 
     /**
      * Updates a given Dutch business dossier with the VAT number from the CI backend. Does not update it in the backend.

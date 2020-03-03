@@ -1035,11 +1035,41 @@ private class DutchBusinessServiceImplTest {
 
         Test.startTest();
         {
-            dossier = DutchBusinessService.createDutchDossier(dossierNumber, establishmentNUmber);
+            dossier = DutchBusinessService.createDutchDossier(dossierNumber, establishmentNUmber, false);
         }
         Test.stopTest();
         System.assert(dossier != null);
         System.assert([SELECT Id FROM Error_Log__c].size() == 0);
+        assertDossier(null);
+    }
+
+    @IsTest
+    private static void testCreateDutchDossierHappyFlowWithVAT() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessDossierV3 = getDataVendorMockDossier();DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = new DutchBusinessWsdl.DutchBusinessVatNumber();
+        vatResponse.dossier_number = dutchBusinessDossierV3.dossier_number;
+        vatResponse.vat_number = '12345';
+
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dutchBusinessDossierV3);
+        mocks.when(webserviceMock.dutchBusinessGetVatNumber(dutchBusinessDossierV3.dossier_number)).thenReturn(vatResponse);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
+        Business_Dossier__c dossier = null;
+
+        Test.startTest();
+        {
+            dossier = DutchBusinessService.createDutchDossier(dossierNumber, establishmentNUmber, true);
+        }
+        Test.stopTest();
+        System.assert(dossier != null);
+        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
+        System.assert(dossier.VAT_Number__c == vatResponse.vat_number);
         assertDossier(null);
     }
 
@@ -1056,7 +1086,7 @@ private class DutchBusinessServiceImplTest {
         try {
             Test.startTest();
             {
-                dossier = DutchBusinessService.createDutchDossier(dossierNumber, establishmentNUmber);
+                dossier = DutchBusinessService.createDutchDossier(dossierNumber, establishmentNUmber, false);
             }
         } catch (CCInputException e) {
             exceptionThrown = true;

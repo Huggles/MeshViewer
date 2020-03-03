@@ -7,6 +7,10 @@
     <aura:attribute name="flowName" type="String" required="true" default="Complete_Account_with_Dossier_Data" description="The API name of the flow to search for the dossier to enrich the account with."/>
     <aura:attribute name="accountRecord" type="Account" />
     <aura:attribute name="error" type="String"/>
+    <aura:attribute name="myTitleName" type="Aura.Component[]">
+        <div class="logoContainer"><img src="{!$Resource.companyInfoLogoSmall}"/></div>
+    </aura:attribute>
+    <aura:attribute name="dossier" type="appsolutely__Business_Dossier__c"/>
 
     <aura:handler name="errorChange" value="{!v.error}" action="{!c.handleErrorChange}"/>
 
@@ -15,11 +19,24 @@
 
     <!-- if the business dossier is there show it -->
     <aura:if isTrue="{!v.accountRecord.appsolutely__Business_Dossier__c}">
+        <!-- show the title bar -->
+        <div class="slds-box slds-theme_default slds-m-bottom_small">
+            <lightning:card variant="Narrow" >
+                <aura:set attribute="title">{!v.myTitleName}</aura:set>
+                <aura:set attribute="actions">
+                    <aura:if isTrue="{!(!v.dossier.VAT_Number__c)}">
+                        <lightning:button label="{!$Label.c.VAT_Retrieve}" onclick="{!c.getVAT}" />
+                    </aura:if>
+                    <lightning:button label="{!$Label.c.Dossier_Remove}" onclick="{!c.removeDossier}" />
+                </aura:set>
+            </lightning:card>
+        </div>
         <!-- this doesn't show the sections -->
-        <lightning:recordForm objectApiName="appsolutely__Business_Dossier__c"
-                              recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}"
-                              layoutType="Full"
-                              mode="readonly" columns="2"/>
+        <force:recordView recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}" record="{!v.dossier}"/>
+<!--        <lightning:recordForm objectApiName="appsolutely__Business_Dossier__c"-->
+<!--                              recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}"-->
+<!--                              layoutType="Full"-->
+<!--                              mode="readonly" columns="2"/>-->
         <!-- if the business dossier is not there, let's create one through flow -->
         <aura:set attribute="else">
             <lightning:flow aura:id="flowData" onstatuschange="{!c.handleFlowChangeEvent}"/>

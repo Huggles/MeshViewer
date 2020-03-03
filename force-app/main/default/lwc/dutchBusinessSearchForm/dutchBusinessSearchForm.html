@@ -18,14 +18,14 @@
     </template>
     <lightning-input name="tradeName" class="slds-m-around_x-small" label={label.Trade_Name} type="text" value={tradeName} variant="standard" onchange={handleOnChange}></lightning-input>
     <lightning-layout>
-        <lightning-layout>
-            <lightning-layout-item size="4">
-                <lightning-input name="postalCode" class="slds-m-around_x-small" label={label.Postal_Code} pattern="^(?:NL-)?(?:[1-9]\d{3} ?(?:[A-EGHJ-NPRTVWXZ][A-EGHJ-NPRSTVWXZ]|S[BCEGHJ-NPRTVWXZ]))" type="text" message-when-pattern-mismatch={label.Valid_Dutch_postal_code} variant="standard" value={postalCode} onchange={handleOnChange}></lightning-input>
-            </lightning-layout-item>
-            <lightning-layout-item size="8">
-                <lightning-input name="city" class="slds-m-around_x-small" label={label.City} type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
-            </lightning-layout-item>
-        </lightning-layout>
+        <lightning-layout-item size="4">
+            <lightning-input name="postalCode" class="slds-m-around_x-small" label={label.Postal_Code} pattern="^(?:NL-)?(?:[1-9]\d{3} ?(?:[A-EGHJ-NPRTVWXZ][A-EGHJ-NPRSTVWXZ]|S[BCEGHJ-NPRTVWXZ]))" type="text" message-when-pattern-mismatch={label.Valid_Dutch_postal_code} variant="standard" value={postalCode} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="8">
+            <lightning-input name="city" class="slds-m-around_x-small" label={label.City} type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
         <lightning-layout-item size="6">
             <lightning-input name="street" class="slds-m-around_x-small" label={label.Street} type="text" variant="standard" value={street} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
