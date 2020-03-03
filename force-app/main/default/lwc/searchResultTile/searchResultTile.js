@@ -5,7 +5,7 @@
 import {LightningElement, api, track, wire} from 'lwc';
 import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 
-export default class DutchDossierSearchResultCard extends LightningElement {
+export default class SearchResultTile extends LightningElement {
 
     /**
      * Contains the search result (in fact a business data SObject)
@@ -26,16 +26,16 @@ export default class DutchDossierSearchResultCard extends LightningElement {
     title
 
     /**
-     * The api name of the fieldset
+     * The namespaced api name of the fieldset (for instance 'appsolutely__Dutch_Business')
      */
     @api
-    fieldSetName = 'appsolutely__Dutch_Business';
+    fieldSetName;
 
     /**
-     * The api name of the sObject (appsolutely__Business_Dossier__c)
+     * The namespaced api name of the sObject (for instance 'appsolutely__Business_Dossier__c')
      */
     @api
-    sObjectName = 'appsolutely__Business_Dossier__c';
+    sObjectName;
 
     /**
      * Loads the fieldset
