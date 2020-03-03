@@ -1,9 +1,0 @@
-<!--
- - Created by appsolutely on 17/02/2020.
- -->
-
-<aura:event type="COMPONENT" description="Event template">
-    <aura:attribute name="street" type="String"/>
-    <aura:attribute name="delivery_address" type="String"/>
-    <aura:attribute name="countryspecific_locality" type="String" />
-</aura:event>
