@@ -5,7 +5,6 @@
 import {api, LightningElement, track} from 'lwc';
 import {fireEvent, registerListener} from "c/pubsub";
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
-import {createErrorMessageMarkup} from 'c/companyInfoUtils';
 
 import Search_Criterium_TradeName_Address_Description from '@salesforce/label/c.Search_Criterium_TradeName_Address_Description';
 import Validation_Error_Message_Toast_Title from '@salesforce/label/c.Validation_Error_Message_Toast_Title';

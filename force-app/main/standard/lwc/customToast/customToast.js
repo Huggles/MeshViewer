@@ -40,6 +40,7 @@ export default class CustomToast extends LightningElement {
 
     closeModel() {
         const toastModel = this.template.querySelector('[data-id="toastModel"]');
+        this.message = null;
         toastModel.className = 'slds-hide';
     }
 

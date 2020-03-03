@@ -37,6 +37,14 @@ export default class SearchResultTile extends LightningElement {
     @api
     sObjectName;
 
+    get localTitle() {
+        if (this.title) {
+            return this.title;
+        } else {
+            return this.searchResult['Name'];
+        }
+    }
+
     /**
      * Loads the fieldset
      */

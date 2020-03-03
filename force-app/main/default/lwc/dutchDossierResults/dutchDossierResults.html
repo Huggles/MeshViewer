@@ -4,16 +4,5 @@
 
 <!-- Dutch Dossier Results -->
 <template>
-    <template if:true={error}>
-        <c-custom-toast class="error-message" show-on-load>
-            {error}
-        </c-custom-toast>
-    </template>
-    <lightning-layout multiple-rows="true" class="slds-scrollable_y">
-        <template for:each={searchResults} for:index="index" for:item="dossier">
-            <lightning-layout-item key={ourKey} padding="around-small" size=4>
-                <c-dutch-dossier-search-result-card search-result={dossier} search-result-id={index} onerror={handleError} oncardclicked={handleCardClicked}></c-dutch-dossier-search-result-card>
-            </lightning-layout-item>
-        </template>
-    </lightning-layout>
+    <c-search-result-tiles-list search-results={searchResults} selected-result={selectedResult} s-object-name="appsolutely__Business_Dossier__c" field-set-name="appsolutely__Dutch_Business_search_result_fields"></c-search-result-tiles-list>
 </template>

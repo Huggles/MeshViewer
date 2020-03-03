@@ -19,8 +19,10 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         }
 
         CreditsafeWsdl.CreditsafeSearchResultV2 searchResult = WsCreditsafe.creditsafeSearchV2(creditSafeCountries, id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name);
-        for (CreditsafeWsdl.CreditsafeCompanyV2 company : searchResult.companies.item) {
-            resultValue.add(mapCreditsafeSearchResultV2ToBusinessDossier(company));
+        if (searchResult != null && searchResult.companies != null && searchResult.companies.item != null) {
+            for (CreditsafeWsdl.CreditsafeCompanyV2 company : searchResult.companies.item) {
+                resultValue.add(mapCreditsafeSearchResultV2ToBusinessDossier(company));
+            }
         }
         return resultValue;
     }
@@ -72,9 +74,11 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         if (creditsafeCompanyV2.trade_names != null && creditsafeCompanyV2.trade_names.item != null) {
             for (Integer i = 0; i < creditsafeCompanyV2.trade_names.item.size(); i++) {
                 String tradeName = creditsafeCompanyV2.trade_names.item[i];
-                dossier.Trade_Names__c += tradeName;
-                if (i < creditsafeCompanyV2.trade_names.item.size() - 1) {
-                    dossier.Trade_Names__c += ', ';
+                if (tradeName != null) {
+                    dossier.Trade_Names__c += tradeName;
+                    if (i < creditsafeCompanyV2.trade_names.item.size() - 1) {
+                        dossier.Trade_Names__c += ', ';
+                    }
                 }
             }
         }

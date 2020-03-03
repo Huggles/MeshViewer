@@ -4,7 +4,6 @@
 
 import {api, LightningElement, track} from 'lwc';
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
-import {createErrorMessageMarkup} from 'c/companyInfoUtils';
 
 import Country_Belgium from '@salesforce/label/c.Country_Belgium';
 import Country_France from '@salesforce/label/c.Country_France';
@@ -60,7 +59,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     @api selectedCountry;
 
-    @api name
+    @api name;
     @api status;
     @api creditSafeId;
     @api registrationNumber;
@@ -73,8 +72,9 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     @track errorTitle = Validation_Error_Message_Toast_Title;
 
-    @track
-    localName;
+    get localName() {
+        return this.name;
+    }
 
     @track
     hints;

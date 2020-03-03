@@ -1,0 +1,19 @@
+<!--
+ - Created by jaapbranderhorst on 03/03/2020.
+ -->
+
+<!-- Search Result Tiles List -->
+<template>
+    <template if:true={error}>
+        <c-custom-toast class="error-message" show-on-load>
+            {error}
+        </c-custom-toast>
+    </template>
+    <lightning-layout multiple-rows="true" class="slds-scrollable_y">
+        <template for:each={searchResults} for:index="index" for:item="dossier">
+            <lightning-layout-item key={ourKey} padding="around-small" size=4>
+                <c-search-result-tile search-result={dossier} search-result-id={index} s-object-name={sObjectName} field-set-name={fieldSetName} title={title} onerror={handleError} oncardclicked={handleCardClicked}></c-search-result-tile>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
+</template>
