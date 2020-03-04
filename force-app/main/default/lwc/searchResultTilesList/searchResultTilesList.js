@@ -2,8 +2,9 @@
  * Created by jaapbranderhorst on 03/03/2020.
  */
 
-import {LightningElement, api, track} from 'lwc';
+import {LightningElement, api, track, wire} from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
+import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 import {fireEvent} from "c/pubsub";
 
 export default class SearchResultTilesList extends LightningElement {
@@ -54,6 +55,20 @@ export default class SearchResultTilesList extends LightningElement {
      */
     @track
     error;
+
+    /**
+     * Loads the label/fieldname combination from the fieldset
+     */
+    @wire(getFieldSetFieldDescriptions, {objectName: '$sObjectName', fieldSetName: '$fieldSetName'})
+    labelsAndFields;
+
+    // loadLabelFieldCombinations({error, data}) {
+    //     if (data && this.searchResult) {
+    //         data.forEach((value, index) => this.fieldValues.push({index: index, label: value.label, value: this.searchResult[value.apiName]}));
+    //     } else if (error) {
+    //         const errorEvent = new CustomEvent('error', {detail: error});
+    //     }
+    // }
 
     /**
      * Handler to handle the selection of a search result.
