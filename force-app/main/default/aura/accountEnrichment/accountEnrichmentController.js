@@ -22,6 +22,13 @@
             helper.startFlow(component);
         }
     },
+    handleDossierRecordUpdated : function(component, event, helper) {
+        debugger;
+        var eventParams = event.getParams();
+        if(eventParams.changeType === "LOADED") {
+            helper.startFlow(component);
+        }
+    },
     handleErrorChange : function(component, event, helper) {
         var error = component.get('v.error');
         if (error && error != '') {

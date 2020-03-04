@@ -3,7 +3,6 @@
  */
 
 import {LightningElement, api, track} from 'lwc';
-// import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 
 export default class SearchResultTile extends LightningElement {
 
@@ -25,18 +24,6 @@ export default class SearchResultTile extends LightningElement {
     @api
     title
 
-    // /**
-    //  * The namespaced api name of the fieldset (for instance 'appsolutely__Dutch_Business')
-    //  */
-    // @api
-    // fieldSetName;
-    //
-    // /**
-    //  * The namespaced api name of the sObject (for instance 'appsolutely__Business_Dossier__c')
-    //  */
-    // @api
-    // sObjectName;
-
     /**
      * An object containing a data structure with a label and a field
      */
@@ -50,18 +37,6 @@ export default class SearchResultTile extends LightningElement {
             return this.searchResult['Name'];
         }
     }
-
-    // /**
-    //  * Loads the fieldset
-    //  */
-    // @wire(getFieldSetFieldDescriptions, {objectName: '$sObjectName', fieldSetName: '$fieldSetName'})
-    // loadFieldValues({error, data}) {
-    //     if (data && this.searchResult) {
-    //         data.forEach((value, index) => this.fieldValues.push({index: index, label: value.label, value: this.searchResult[value.apiName]}));
-    //     } else if (error) {
-    //         const errorEvent = new CustomEvent('error', {detail: error});
-    //     }
-    // }
 
     connectedCallback() {
         if (this.labelsAndFields.data) {

@@ -1,45 +1,18 @@
 ({
-    /**
-     * Search event triggered. Retrieve list of matching dossiers from apex
-     * @param {*} component 
-     * @param {*} event 
-     * @param {*} helper 
-     */
-	onSubmit : function(component, event, helper) {
-        var params = event.getParam("params");
+    doInit : function(component, event, helper) {
+        debugger;
+       var flow = component.find("v.flowContainer");
+       var recId = component.get("v.recordId");
+       var arguments;
+       if (recId) {
+           arguments = [{
+               name: 'recordId',
+               type: 'String',
+               value: recId
+           }]
+       }
+       //flow.startFlow('')
 
-        helper.callServer(component, 'c.search', {searchParams: JSON.stringify(params)}, function(response) {
-            helper.handleSearchResults(component, response);
-        });
-    },
-    /**
-     * Select dossier event triggered. Get dossier from API, check if the dossier already exists in the DB and if not save to sObject.
-     * @param {*} component 
-     * @param {*} event 
-     * @param {*} helper 
-     */
-    onSelect : function(component, event, helper) {
-        var params = event.getParams();
-        var callParams = {dossierNumber: params.DossierNumber,
-            establishmentNumber: params.EstablishmentNumber,
-            vendor: params.selectedDataVendor,
-            creditSafeId: params.creditSafeId,
-            accountId: component.get('v.recordId')};
-        // TODO: does this work with CreditSafe?
-        // and is it necessary even?
-        component.set('v.selected', params.DossierNumber);
-        helper.callServer(component, 'c.createDossier', callParams, function(response) {
-            helper.handleCompanyData(component, response);
-        });
-    },
-    /**
-     * Decrement step to allow another search to take place
-     * @param {*} component 
-     * @param {*} event 
-     * @param {*} helper 
-     */
-    onBack : function (component, event, helper) {
-        component.set('v.step', '1');
     },
 
     /**
@@ -82,6 +55,7 @@
             component.find('recordHandler').reloadRecord(true);
         });
     },
+
     /**
      * Handles a change of the error attribute. If the error attribute is not empty shows a toast with the error message.
      * When setting the error message take into account multi-linguality!

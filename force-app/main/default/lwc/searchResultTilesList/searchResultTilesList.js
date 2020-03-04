@@ -62,14 +62,6 @@ export default class SearchResultTilesList extends LightningElement {
     @wire(getFieldSetFieldDescriptions, {objectName: '$sObjectName', fieldSetName: '$fieldSetName'})
     labelsAndFields;
 
-    // loadLabelFieldCombinations({error, data}) {
-    //     if (data && this.searchResult) {
-    //         data.forEach((value, index) => this.fieldValues.push({index: index, label: value.label, value: this.searchResult[value.apiName]}));
-    //     } else if (error) {
-    //         const errorEvent = new CustomEvent('error', {detail: error});
-    //     }
-    // }
-
     /**
      * Handler to handle the selection of a search result.
      * @param event

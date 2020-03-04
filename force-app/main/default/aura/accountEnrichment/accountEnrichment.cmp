@@ -19,6 +19,9 @@
 
     <!-- if the business dossier is there show it -->
     <aura:if isTrue="{!v.accountRecord.appsolutely__Business_Dossier__c}">
+        <!-- load the VAT number -->
+        <force:recordData aura:id="dossierLoader" recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}" targetFields="{!v.dossier}"
+                          fields="appsolutely__VAT_Number__c" targetError="{!v.error}" recordUpdated="{!c.handleDossierRecordUpdated}"/>
         <!-- show the title bar -->
         <div class="slds-box slds-theme_default slds-m-bottom_small">
             <lightning:card variant="Narrow" >
@@ -31,8 +34,8 @@
                 </aura:set>
             </lightning:card>
         </div>
-        <!-- this doesn't show the sections -->
-        <force:recordView recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}" record="{!v.dossier}"/>
+        <force:recordView recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}"/>
+
 <!--        <lightning:recordForm objectApiName="appsolutely__Business_Dossier__c"-->
 <!--                              recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}"-->
 <!--                              layoutType="Full"-->
