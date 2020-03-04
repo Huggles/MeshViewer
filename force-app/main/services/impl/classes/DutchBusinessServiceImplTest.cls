@@ -255,7 +255,7 @@ private class DutchBusinessServiceImplTest {
         mocks.when(webserviceMock.dutchBusinessGetVatNumber(dutchBusinessDossierV3.dossier_number)).thenReturn(vatResponse);
         mocks.stopStubbing();
         Business_Dossier__c dossier = (new DutchBusinessServiceImpl()).mapDutchBusinessDossierV3ToDossier(dutchBusinessDossierV3, new Business_Dossier__c());
-
+        
         Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         // when
@@ -266,7 +266,7 @@ private class DutchBusinessServiceImplTest {
         // then
         System.assert(dossierToAssert.Dossier_Number__c == dossier.Dossier_Number__c);
         System.assert(dossierToAssert.VAT_Number__c == vatResponse.vat_number);
-        System.assert(dossierToAssert.No_VAT_Number__c = false);
+        System.assert(dossierToAssert.No_VAT_Number__c == false);
     }
 
     @IsTest
