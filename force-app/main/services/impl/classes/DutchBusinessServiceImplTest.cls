@@ -202,6 +202,39 @@ private class DutchBusinessServiceImplTest {
         // then
         System.assert(dossierToAssert.Dossier_Number__c == dossier.Dossier_Number__c);
         System.assert(dossierToAssert.VAT_Number__c == null);
+        System.assert(dossierToAssert.No_VAT_Number__c = true);
+    }
+
+    @IsTest
+    public static void testStoreDossiers() {
+        // given
+        // a new dossier, fresh from CI
+        DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessDossierV3 = getDataVendorMockDossier();
+        Business_Dossier__c dossier = (new DutchBusinessServiceImpl()).mapDutchBusinessDossierV3ToDossier(dutchBusinessDossierV3, new Business_Dossier__c());
+
+        // when
+        Test.startTest();
+        DutchBusinessService.storeDossiers(new List<Business_Dossier__c>{dossier}, null);
+
+        // then
+        System.assert([SELECT Id FROM Business_Dossier__c].size() == 1);
+
+        // given
+        // a dossier with a name to be updated
+        String newName = 'testStoreDossiers';
+        dossier.Name = newName;
+
+        // when
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        DutchBusinessService.storeDossiers(new List<Business_Dossier__c>{dossier}, unitOfWork);
+        unitOfWork.commitWork();
+        Test.stopTest();
+
+        List<Business_Dossier__c> dossiersToAssert = [SELECT Name, Id FROM Business_Dossier__c];
+
+        System.assert(dossiersToAssert.size() == 1);
+        System.assert(dossiersToAssert[0].Name == newName);
+
     }
 
     @IsTest
@@ -233,6 +266,7 @@ private class DutchBusinessServiceImplTest {
         // then
         System.assert(dossierToAssert.Dossier_Number__c == dossier.Dossier_Number__c);
         System.assert(dossierToAssert.VAT_Number__c == vatResponse.vat_number);
+        System.assert(dossierToAssert.No_VAT_Number__c = false);
     }
 
     @IsTest

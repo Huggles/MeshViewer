@@ -2,7 +2,9 @@
  - Created by jaapbranderhorst on 29/02/2020.
  -->
 
-<aura:component description="accountEnrichment" implements="flexipage:availableForRecordHome,force:hasRecordId">
+<aura:component controller="CompanyDetailsController" description="accountEnrichment" implements="flexipage:availableForRecordHome,force:hasRecordId">
+
+    <lightning:notificationsLibrary aura:id="notifLib"/>
 
     <aura:attribute name="flowName" type="String" required="true" default="Complete_Account_with_Dossier_Data" description="The API name of the flow to search for the dossier to enrich the account with."/>
     <aura:attribute name="accountRecord" type="Account" />
@@ -22,8 +24,9 @@
     <aura:if isTrue="{!v.accountRecord.appsolutely__Business_Dossier__c}">
         <!-- load the VAT number -->
         <force:recordData aura:id="dossierLoader" recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}" targetFields="{!v.dossier}"
-                          fields="appsolutely__VAT_Number__c" targetError="{!v.error}" recordUpdated="{!c.handleDossierRecordUpdated}"/>
+                          fields="appsolutely__VAT_Number__c,appsolutely__No_VAT__c" targetError="{!v.error}" recordUpdated="{!c.handleDossierRecordUpdated}"/>
         <!-- show the title bar -->
+        <!-- TODO: migrate this to a lwc -->
         <div class="slds-box slds-theme_default slds-m-bottom_small">
             <lightning:card variant="Narrow" >
                 <aura:set attribute="title">{!v.myTitleName}</aura:set>
@@ -37,11 +40,6 @@
         </div>
         <force:recordView recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}"/>
 
-<!--        <lightning:recordForm objectApiName="appsolutely__Business_Dossier__c"-->
-<!--                              recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}"-->
-<!--                              layoutType="Full"-->
-<!--                              mode="readonly" columns="2"/>-->
-        <!-- if the business dossier is not there, let's create one through flow -->
         <aura:set attribute="else">
             <lightning:flow aura:id="flowData" onstatuschange="{!c.handleFlowChangeEvent}"/>
         </aura:set>

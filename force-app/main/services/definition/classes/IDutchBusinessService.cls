@@ -100,11 +100,30 @@ public interface IDutchBusinessService {
     Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT);
 
     /**
-     * Updates a given Dutch business dossier with the VAT number from the CI backend. Does not update it in the backend.
+     * Updates a given Dutch business dossier with the VAT number from the CI backend.
+     * Sets the flag No_VAT__c to true if no VAT number is known in the backend.
+     * Does not update it in the backend.
      *
      * @param dossier the dossier to be updated
      *
      * @return the updated dossier
      */
     Business_Dossier__c updateBusinessDossierWithVATNumber(Business_Dossier__c dossier);
+
+    /**
+     * Reads the dossiers with the given ids from the DB
+     *
+     * @param ids
+     *
+     * @return
+     */
+    List<Business_Dossier__c> getDossiersById(Set<Id> ids);
+
+    /**
+     * Stores the given dossiers in the database. If no id is present inserts the dossiers, otherwise updates them.
+     *
+     * @param dossiers the dossiers to be stored
+     * @param unitOfWork if not present a new uow will be created and used to do the work
+     */
+    void storeDossiers(List<Business_Dossier__c> dossiers, fflib_ISObjectUnitOfWork unitOfWork);
 }

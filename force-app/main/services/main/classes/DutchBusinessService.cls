@@ -47,6 +47,27 @@ public inherited sharing class DutchBusinessService {
         return newInstance().updateBusinessDossierWithVATNumber(dossier);
     }
 
+    /**
+     * Reads the dossiers with the given ids from the DB
+     *
+     * @param ids
+     *
+     * @return
+     */
+    public static List<Business_Dossier__c> getDossiersById(Set<Id> ids) {
+        return newInstance().getDossiersById(ids);
+    }
+
+    /**
+     * Stores the given dossiers in the database. If no id is present inserts the dossiers, otherwise updates them.
+     *
+     * @param dossiers the dossiers to be stored
+     * @param unitOfWork if null a new uow will be created and used to do the work
+     */
+    public static void storeDossiers(List<Business_Dossier__c> dossiers, fflib_ISObjectUnitOfWork unitOfWork) {
+        newInstance().storeDossiers(dossiers, unitOfWork);
+    }
+
     public static IDutchBusinessService newInstance() {
         return (IDutchBusinessService) Application.Service.newInstance(IDutchBusinessService.class);
     }

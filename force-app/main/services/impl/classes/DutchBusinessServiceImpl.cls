@@ -4,6 +4,13 @@
 
 public with sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
 
+    private class UpsertBusinessDossierWorker extends AbstractUpsertUnitOfWork {
+
+        public UpsertBusinessDossierWorker() {
+            m_records = new List<Business_Dossier__c>();
+        }
+    }
+
     public static final Integer MAX_SEARCH_RESULTS = 1000;
 
     /**
@@ -69,6 +76,27 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
                 businessDossier.Is_Removed__c = true;
             }
             unitOfWork.registerDirty(removedDossiers);
+            unitOfWork.commitWork();
+        }
+    }
+
+    /**
+     * Stores the given dossiers in the database. If no id is present inserts the dossiers, otherwise updates them.
+     *
+     * @param dossiers the dossiers to be stored
+     * @param unitOfWork if null a new uow will be created and used to do the work
+     */
+    public static void storeDossiers(List<Business_Dossier__c> dossiers, fflib_ISObjectUnitOfWork originalInitOfWork) {
+        fflib_ISObjectUnitOfWork unitOfWork = null;
+        if (originalInitOfWork == null) {
+            unitOfWork = Application.UnitOfWork.newInstance();
+        } else {
+            unitOfWork = originalInitOfWork;
+        }
+        UpsertBusinessDossierWorker upsertUnitOfWork = new UpsertBusinessDossierWorker();
+        upsertUnitOfWork.registerUpsert(dossiers);
+        unitOfWork.registerWork(upsertUnitOfWork);
+        if (originalInitOfWork == null) {
             unitOfWork.commitWork();
         }
     }
@@ -166,12 +194,14 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     }
 
     /**
-     * Updates a given Dutch business dossier with the VAT number from the CI backend. Does not update it in the backend.
-     *
-     * @param dossier the dossier to be updated
-     *
-     * @return the updated dossier
-     */
+      * Updates a given Dutch business dossier with the VAT number from the CI backend.
+      * Sets the flag No_VAT__c to true if no VAT number is known in the backend.
+      * Does not update it in the backend.
+      *
+      * @param dossier the dossier to be updated
+      *
+      * @return the updated dossier
+      */
     public  Business_Dossier__c updateBusinessDossierWithVATNumber(Business_Dossier__c dossier) {
         if (dossier == null) {
             throw new CCInputException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input
@@ -180,7 +210,11 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             throw new CCInputException(System.Label.Dossier_Number_Missing);
         }
         DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = WsDutchBusiness.dutchBusinessGetVatNumber(dossier.Dossier_Number__c);
-        dossier.VAT_Number__c = vatResponse.vat_number;
+        if (vatResponse.vat_number != null && vatResponse.vat_number != '') {
+            dossier.VAT_Number__c = vatResponse.vat_number;
+        } else {
+            dossier.No_VAT_Number__c = true;
+        }
         return dossier;
     }
 
@@ -229,6 +263,17 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
             updateDossiersList.add(new UpdateDossierReferenceDTO(updatedDossier, numPages));
         }
         return updateDossiersList;
+    }
+
+    /**
+     * Reads the dossiers with the given ids from the DB
+     *
+     * @param ids
+     *
+     * @return
+     */
+    public List<Business_Dossier__c> getDossiersById(Set<Id> ids) {
+        return BusinessDossierSelector.newInstance().selectById(ids);
     }
 
     //TODO: remove this and replace it by updateDutchDossiersWithVAT
