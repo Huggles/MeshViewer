@@ -1,0 +1,46 @@
+<!--
+ - Created by jaapbranderhorst on 09/02/2020.
+ -->
+
+<!-- Dutch Business Search Form -->
+<template>
+    <template if:true={hints}>
+        <c-custom-toast class="error-message" show-on-load title={label.Validation_Error_Message_Toast_Title}>
+                <div>{label.CreditSafe_Validation_Message_Heading}</div>
+                <ul class="slds-list_dotted">
+                    <template for:each={hints} for:item="hint">
+                        <li key={hint}>
+                            {hint}
+                        </li>
+                    </template>
+                </ul>
+        </c-custom-toast>
+    </template>
+    <lightning-input name="tradeName" class="slds-m-around_x-small" label={label.Trade_Name} type="text" value={tradeName} variant="standard" onchange={handleOnChange}></lightning-input>
+    <lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item size="4">
+                <lightning-input name="postalCode" class="slds-m-around_x-small" label={label.Postal_Code} pattern="^(?:NL-)?(?:[1-9]\d{3} ?(?:[A-EGHJ-NPRTVWXZ][A-EGHJ-NPRSTVWXZ]|S[BCEGHJ-NPRTVWXZ]))" type="text" message-when-pattern-mismatch={label.Valid_Dutch_postal_code} variant="standard" value={postalCode} onchange={handleOnChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="8">
+                <lightning-input name="city" class="slds-m-around_x-small" label={label.City} type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout-item size="6">
+            <lightning-input name="street" class="slds-m-around_x-small" label={label.Street} type="text" variant="standard" value={street} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-layout>
+                <lightning-layout-item size="6">
+                    <lightning-input name="houseNumber" class="slds-m-around_x-small" label={label.House_Number} type="text" value={houseNumber} pattern="^[1-9]\d*$" message-when-pattern-mismatch={label.Valid_house_number} onchange={handleOnChange} variant="standard"></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="6">
+                    <lightning-input name="houseNumberAddition" class="slds-m-around_x-small" label={label.Addition} type="text" variant="standard" value={houseNumberAddition} onchange={handleOnChange}></lightning-input>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-input name="domainName" class="slds-m-around_x-small" label={label.Domain_Name} type="text" variant="standard" value={domainName} onchange={handleOnChange}></lightning-input>
+    <lightning-input name="phoneNumber" class="slds-m-around_x-small" label={label.Phone_Number} type="tel" variant="standard" value={phoneNumber} pattern="^((\+31)|(0031)|0)(\(0\)|)(\d{1,3})(\s|\-|)(\d{8}|\d{4}\s\d{4}|\d{2}\s\d{2}\s\d{2}\s\d{2})$" message-when-pattern-mismatch={label.Valid_Dutch_phone_number} onchange={handleOnChange}></lightning-input>
+
+</template>

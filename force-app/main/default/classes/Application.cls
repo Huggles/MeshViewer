@@ -46,7 +46,8 @@ public inherited sharing class Application {
                             IBusinessService.class => BusinessServiceImpl.class,
                             IBusinessDuplicateService.class => BusinessDuplicateServiceImpl.class,
                             IWsCreditsafe.class => WsCreditsafeImpl.class,
-                            ICreditSafeService.class => CreditSafeServiceImpl.class
+                            ICreditSafeService.class => CreditSafeServiceImpl.class,
+                            IDutchBusinessService.class => DutchBusinessServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application

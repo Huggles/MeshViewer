@@ -1,0 +1,29 @@
+<!--
+ - Created by jaapbranderhorst on 29/02/2020.
+ -->
+
+<aura:component description="accountEnrichment" implements="flexipage:availableForRecordHome,force:hasRecordId">
+
+    <aura:attribute name="flowName" type="String" required="true" default="Complete_Account_with_Dossier_Data" description="The API name of the flow to search for the dossier to enrich the account with."/>
+    <aura:attribute name="accountRecord" type="Account" />
+    <aura:attribute name="error" type="String"/>
+
+    <aura:handler name="errorChange" value="{!v.error}" action="{!c.handleErrorChange}"/>
+
+    <force:recordData aura:id="accountLoader" recordId="{!v.recordId}" targetFields="{!v.accountRecord}"
+                      fields="appsolutely__Business_Dossier__c" targetError="{!v.error}" recordUpdated="{!c.handleAccountRecordUpdated}"/>
+
+    <!-- if the business dossier is there show it -->
+    <aura:if isTrue="{!v.accountRecord.appsolutely__Business_Dossier__c}">
+        <!-- this doesn't show the sections -->
+        <lightning:recordForm objectApiName="appsolutely__Business_Dossier__c"
+                              recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}"
+                              layoutType="Full"
+                              mode="readonly" columns="2"/>
+        <!-- if the business dossier is not there, let's create one through flow -->
+        <aura:set attribute="else">
+            <lightning:flow aura:id="flowData" onstatuschange="{!c.handleFlowChangeEvent}"/>
+        </aura:set>
+    </aura:if>
+
+</aura:component>

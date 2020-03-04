@@ -5,12 +5,20 @@
         <name>Customerconnect_Administration</name>
     </customApplications>
     <customLabels>
+        <label>Actief</label>
+        <name>Active</name>
+    </customLabels>
+    <customLabels>
         <label>Terug naar resultaten</label>
         <name>Back_To_Search</name>
     </customLabels>
+<!--    <customLabels>-->
+<!--        <label>&lt;!&ndash; Business Data Exists &ndash;&gt;</label>-->
+<!--        <name>Business_Data_Exists</name>-->
+<!--    </customLabels>-->
     <customLabels>
-        <label><!-- Business Data Exists --></label>
-        <name>Business_Data_Exists</name>
+        <label>Annuleren</label>
+        <name>Cancel</name>
     </customLabels>
     <customLabels>
         <label>Dank u voor het installeren van Custommer.connect. Om te starten, voer uw gebruikersgegevens in of</label>
@@ -131,6 +139,14 @@
     <customLabels>
         <label><!-- Country to Search --></label>
         <name>Country_to_Search</name>
+    </customLabels>
+    <customLabels>
+        <label>Voer alstublieft een van de volgende zoekcriteria op om te kunnen zoeken:</label>
+        <name>CreditSafe_Validation_Message_Heading</name>
+    </customLabels>
+    <customLabels>
+        <label>Creditsafe bedrijfsnummer</label>
+        <name>Creditsafe_company_identifier</name>
     </customLabels>
     <customLabels>
         <label><!-- WSCall_Unknown_Exception --></label>
@@ -313,8 +329,16 @@
         <name>Get_Dossier_Results_Help</name>
     </customLabels>
     <customLabels>
+        <label>B.V.</label>
+        <name>Ltd</name>
+    </customLabels>
+    <customLabels>
         <label>Overeenkomstige organisatie</label>
         <name>Matching_Companies</name>
+    </customLabels>
+    <customLabels>
+        <label>Naam</label>
+        <name>Name</name>
     </customLabels>
     <customLabels>
         <label>Nieuwe Organisatie op basis van Company.info data</label>
@@ -323,6 +347,30 @@
     <customLabels>
         <label>Geen Company.info for Salest authenticatie data gevonden. Company.info for Sales is nog niet geactiveerd</label>
         <name>NoAuthAppNotActive</name>
+    </customLabels>
+    <customLabels>
+        <label>Niet actief</label>
+        <name>NonActive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Non Limited --></label>
+        <name>Non_Limited</name>
+    </customLabels>
+    <customLabels>
+        <label>Vorige</label>
+        <name>Previous</name>
+    </customLabels>
+    <customLabels>
+        <label>Provincie</label>
+        <name>Province</name>
+    </customLabels>
+    <customLabels>
+        <label>Registratienummer</label>
+        <name>Registration_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Registratie type</label>
+        <name>Registration_Type</name>
     </customLabels>
     <customLabels>
         <label>Adres</label>
@@ -343,6 +391,34 @@
     <customLabels>
         <label>Land</label>
         <name>Search_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Een correct CreditSafe bedrijfsnummer.</label>
+        <name>Search_Criterium_CreditSafe_Id_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldige naam, status, stad, straat of postcode of een combinatie hiervan.</label>
+        <name>Search_Criterium_Name_Status_Address_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldige naam, status, provincie, stad, straat of postcode of een combinatie hiervan.</label>
+        <name>Search_Criterium_Name_Status_Address_Province_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldige name, status, registratie-type, stad, straat of postcode of een combinatie hiervan.</label>
+        <name>Search_Criterium_Name_Status_Registration_type_Address_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een correct registratienummer.</label>
+        <name>Search_Criterium_Registration_Number_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldige handelsnaam, domeinnaam, stad, straat of postcode of een combinatie hiervan.</label>
+        <name>Search_Criterium_TradeName_Address_Description</name>
+    </customLabels>
+    <customLabels>
+        <label>Een geldig BTW nummer</label>
+        <name>Search_Criterium_VAT_Number_Description</name>
     </customLabels>
     <customLabels>
         <label>Details om te synchroniseren</label>
@@ -425,6 +501,10 @@
         <name>Search_VAT_Number</name>
     </customLabels>
     <customLabels>
+        <label>Status</label>
+        <name>Status</name>
+    </customLabels>
+    <customLabels>
         <label>Gelukt</label>
         <name>Success</name>
     </customLabels>
@@ -443,6 +523,10 @@
     <customLabels>
         <label><!-- VAT_Retrieve --></label>
         <name>VAT_Retrieve</name>
+    </customLabels>
+    <customLabels>
+        <label>Validatie fout</label>
+        <name>Validation_Error_Message_Toast_Title</name>
     </customLabels>
     <customLabels>
         <label>Een fout is opgetreden tijdens het veranderen van het budget.</label>
@@ -512,6 +596,36 @@
         <label>Company.info for Sales setup</label>
         <name>Customer_connect_configuration</name>
     </customTabs>
+    <flowDefinitions>
+        <flows>
+            <fullName>Organisation_Search_Flow-1</fullName>
+            <screens>
+                <fields>
+                    <name>dutchDossiersResult</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerDutchResultsScreen</name>
+                </fields>
+                <name>Dutch_Dossiers_Search_Results</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>BusinessSearchForm</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerSearchScreen</name>
+                </fields>
+                <fields>
+                    <name>organisationSearchFormHeader</name>
+                </fields>
+                <name>Search</name>
+            </screens>
+            <screens>
+                <name>Show_Credit_Safe_Search_Results</name>
+            </screens>
+        </flows>
+        <fullName>Organisation_Search_Flow</fullName>
+    </flowDefinitions>
     <quickActions>
         <label><!-- LogACall --></label>
         <name>LogACall</name>

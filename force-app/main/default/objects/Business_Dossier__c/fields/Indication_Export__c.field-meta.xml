@@ -5,6 +5,7 @@
     <description>Indication of whether the company does export.  Optional.</description>
     <externalId>false</externalId>
     <label>Exports</label>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

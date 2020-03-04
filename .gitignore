@@ -1,6 +1,6 @@
 .sfdx
 .vscode
-force-app/main/default/settings/*
+force-app/main/default/settings
 force-app/main/default/applications/standard__LightningSales.app-meta.xml
 .DS_STORE
 .idea/workspace.xml
@@ -10,4 +10,10 @@ IlluminatedCloud
 .idea/illuminatedCloud.xml
 .idea/misc.xml
 force-app/main/default/objects/Creditsafe_Company_Report_Full__c/listViews/All.listView-meta.xml
+force-app/main/default/profiles/Admin.profile-meta.xml
 force-app/main/default/layouts/Global-Global Layout.layout-meta.xml
+.idea/fileTemplates/
+force-app/main/default/profiles/Custom%3A Marketing Profile.profile-meta.xml
+force-app/main/default/profiles/Custom%3A Sales Profile.profile-meta.xml
+force-app/main/default/profiles/Custom%3A Support Profile.profile-meta.xml
+force-app/main/default/layouts/Account-Account Layout.layout-meta.xml

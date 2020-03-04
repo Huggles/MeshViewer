@@ -2,6 +2,7 @@
   "orgName": "Company.info",
   "edition": "Developer",
   "language": "en_US",
+  "hasSampleData": false,
   "features": [],
   "settings": {
     "lightningExperienceSettings": {

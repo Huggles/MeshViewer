@@ -21,7 +21,7 @@ public without sharing class ProcessRemovedDutchDossiersBatch implements Databas
     }
 
     public void execute(Database.BatchableContext context, List<Business_Dossier__c> dossiersRemoved) {
-        BusinessService.processRemovedDutchDossiers(dossiersRemoved);
+        DutchBusinessService.processRemovedDutchDossiers(dossiersRemoved);
     }
 
     public void finish(Database.BatchableContext context) {

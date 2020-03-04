@@ -3,17 +3,15 @@
  */
 
 public inherited sharing class CreditSafeServiceImpl implements ICreditSafeService{
-
-    //  CreditsafeWsdl.CreditsafeSearchResultV2 creditsafeSearchV2(CreditsafeWsdl.stringArray countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
-
-    // reuse the searchresultdossierdto??
-    public List<SearchForDossiersResultDto> searchForCreditSafeDossiers(List<CreditSafe.Country> countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+    
+    public List<Business_Dossier__c> searchForCreditSafeDossiers(List<CreditSafe.Country> countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
         // check the input
         if (countries == null || countries.isEmpty()) {
             throw new CCInputException(Label.Error_Input_Incorrect);
         }
         // no checks needed so commented
-        List<SearchForDossiersResultDto> resultValue = new List<SearchForDossiersResultDto>();
+        // TODO: extend the checks so that per country only relevant patterns can be searched
+        List<Business_Dossier__c> resultValue = new List<Business_Dossier__c>();
         CreditsafeWsdl.stringArray creditSafeCountries = new CreditsafeWsdl.stringArray();
         creditSafeCountries.item = new List<String>();
         for (CreditSafe.Country country : countries) {
@@ -21,8 +19,10 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         }
 
         CreditsafeWsdl.CreditsafeSearchResultV2 searchResult = WsCreditsafe.creditsafeSearchV2(creditSafeCountries, id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name);
-        for (CreditsafeWsdl.CreditsafeCompanyV2 company : searchResult.companies.item) {
-            resultValue.add(new SearchForDossiersResultDto(company));
+        if (searchResult != null && searchResult.companies != null && searchResult.companies.item != null) {
+            for (CreditsafeWsdl.CreditsafeCompanyV2 company : searchResult.companies.item) {
+                resultValue.add(mapCreditsafeSearchResultV2ToBusinessDossier(company));
+            }
         }
         return resultValue;
     }
@@ -62,6 +62,43 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
 
     }
 
+    /*********************************
+     * IMPLEMENTATION METHODS
+     ***********************************/
+
+    private Business_Dossier__c mapCreditsafeSearchResultV2ToBusinessDossier(CreditsafeWsdl.CreditsafeCompanyV2 creditsafeCompanyV2) {
+        Business_Dossier__c dossier = new Business_Dossier__c();
+        dossier.Creditsafe_Id__c = creditsafeCompanyV2.creditsafe_number;
+        dossier.Date_of_Last_Account__c = creditsafeCompanyV2.date_last_account;
+        dossier.Date_of_Last_Change__c = creditsafeCompanyV2.date_last_change;
+        if (creditsafeCompanyV2.trade_names != null && creditsafeCompanyV2.trade_names.item != null) {
+            for (Integer i = 0; i < creditsafeCompanyV2.trade_names.item.size(); i++) {
+                String tradeName = creditsafeCompanyV2.trade_names.item[i];
+                if (tradeName != null) {
+                    dossier.Trade_Names__c += tradeName;
+                    if (i < creditsafeCompanyV2.trade_names.item.size() - 1) {
+                        dossier.Trade_Names__c += ', ';
+                    }
+                }
+            }
+        }
+        dossier.VAT_Number__c = (creditsafeCompanyV2.vat_numbers != null && creditsafeCompanyV2.vat_numbers.item != null && creditsafeCompanyV2.vat_numbers.item.size() >= 1) ? creditsafeCompanyV2.vat_numbers.item[0] : null;
+        dossier.Country__c = creditsafeCompanyV2.country;
+        dossier.Dossier_Number__c = creditsafeCompanyV2.registration_number;
+        dossier.Name = creditsafeCompanyV2.name;
+        dossier.Type__c = creditsafeCompanyV2.type_x;
+        dossier.Status__c = creditsafeCompanyV2.status;
+        dossier.Office_Type__c = creditsafeCompanyV2.office_type;
+        dossier.Street__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.street : null;
+        dossier.Telephone_Number__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.telephone : null;
+        dossier.Postal_Code__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.postal_code : null;
+        dossier.House_number__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.house_number : null;
+        dossier.City__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.city : null;
+        dossier.Full_Address__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.full_address : null;
+        dossier.RecordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByName().get('Creditsafe').getRecordTypeId();
+        return dossier;
+    }
+    
     private Creditsafe_Company_Report_Full__c mapPaymentData(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
         if (reportFullV2.payment_data != null && reportFullV2.payment_data.generic != null && reportFullV2.payment_data.generic.item != null) {
             for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 :reportFullV2.payment_data.generic.item) {

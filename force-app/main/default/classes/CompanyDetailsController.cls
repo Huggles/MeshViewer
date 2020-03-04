@@ -65,7 +65,7 @@ public with sharing class CompanyDetailsController {
     @AuraEnabled
     public static Object getVATDetails(Id dossierId){
         try{
-            Business_Dossier__c dossier = BusinessService.setVatNumber(dossierId);
+            Business_Dossier__c dossier = DutchBusinessService.setVatNumber(dossierId);
             return new AuraResponseWrapper(dossier);
         } catch (CCException e) {
             return new AuraResponseWrapper(e);

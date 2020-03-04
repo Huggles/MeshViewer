@@ -1,6 +1,4 @@
-<aura:component implements="force:lightningQuickAction">
-    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    <lightning:overlayLibrary aura:id="overlayLib"/>
-    <!-- <c:dossierDetails /> -->
+<aura:component implements="force:lightningQuickActionWithoutHeader">
+    <c:globalFlowQuickAction flow="Organisation_Search_Flow"></c:globalFlowQuickAction>
 </aura:component>	
 
