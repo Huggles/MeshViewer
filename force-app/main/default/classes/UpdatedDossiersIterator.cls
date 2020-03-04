@@ -16,10 +16,12 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
     private List<Business_Dossier__c> dossiersOnCurrentPage;
     private List<String> updateTypes;
     private UpdateDossiersBatch updateDossiersBatch;
+    private ProcessRemovedDutchDossiersBatch processRemovedDutchDossiersBatch;
 
 
-    public UpdatedDossiersIterator(List<String> updateTypes, UpdateDossiersBatch updateDossiersBatch) {
+    public UpdatedDossiersIterator(List<String> updateTypes, UpdateDossiersBatch updateDossiersBatch, ProcessRemovedDutchDossiersBatch processRemovedDutchDossiersBatch) {
         this.updateDossiersBatch = updateDossiersBatch;
+        this.processRemovedDutchDossiersBatch = processRemovedDutchDossiersBatch;
         try {
             if (updateTypes == null) {
                 CCInputException e = new CCInputException('UpdateTypes is null while trying to create an update dossiers iterator');
@@ -33,7 +35,8 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
             currentDossierPointer = 0;
         }
         catch(Exception e) {
-            this.updateDossiersBatch.exceptions.add(e);
+            if(this.updateDossiersBatch != null) this.updateDossiersBatch.exceptions.add(e);
+            if(this.processRemovedDutchDossiersBatch != null) this.processRemovedDutchDossiersBatch.exceptions.add(e);
         }
     }
 
@@ -60,7 +63,8 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
             }
         }
         catch(Exception e) {
-            this.updateDossiersBatch.exceptions.add(e);
+            if(this.updateDossiersBatch != null) this.updateDossiersBatch.exceptions.add(e);
+            if(this.processRemovedDutchDossiersBatch != null) this.processRemovedDutchDossiersBatch.exceptions.add(e);
         }
         return dossier;
     }
@@ -71,7 +75,7 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
      * @return
      */
     private Boolean hasNextDossierOnCurrentPage() {
-        return (currentDossierPointer < dossiersOnCurrentPage.size());
+        return (currentDossierPointer < (dossiersOnCurrentPage != null ? dossiersOnCurrentPage.size() : 0));
     }
 
     private Boolean hasNextPage() {

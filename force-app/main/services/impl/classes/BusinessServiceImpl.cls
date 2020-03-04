@@ -80,14 +80,15 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
         //callout to get the list of dossiers with updates
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult response = WsDutchBusiness.dutchBusinessUpdateGetChangedDossiers(changedSince, wsUpdateTypesArray, pageNr);
-        System.debug('response: ' + response);
         Integer numPages = response.paging.numpages;
 
         //collect list of dossiers that needs to be updated
         List<UpdateDossierReferenceDTO> updateDossiersList = new List<UpdateDossierReferenceDTO>();
 
-        for (DutchBusinessWsdl.DutchBusinessUpdateReference updatedDossier : response.results.item) {
-            updateDossiersList.add(new UpdateDossierReferenceDTO(updatedDossier, numPages));
+        if (response != null && response.results != null && response.results.item != null) {
+            for (DutchBusinessWsdl.DutchBusinessUpdateReference updatedDossier : response.results.item) {
+                updateDossiersList.add(new UpdateDossierReferenceDTO(updatedDossier, numPages));
+            }
         }
         return updateDossiersList;
     }
