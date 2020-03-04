@@ -220,7 +220,6 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
         //callout to get the list of dossiers with updates
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult response = WsDutchBusiness.dutchBusinessUpdateGetChangedDossiers(changedSince, wsUpdateTypesArray, pageNr);
-        System.debug('response: ' + response);
         Integer numPages = response.paging.numpages;
 
         //collect list of dossiers that needs to be updated

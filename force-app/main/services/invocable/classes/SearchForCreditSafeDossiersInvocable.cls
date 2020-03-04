@@ -64,7 +64,6 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
     global static List<List<Business_Dossier__c>> searchForCreditSafeDossier(List<SearchForCreditSafeDossiersArgument> arguments) {
         List<List<Business_Dossier__c>> dossierLists = new List<List<Business_Dossier__c>>();
         for (SearchForCreditSafeDossiersArgument argument : arguments) {
-            System.debug('SearchForCreditSafeDossiersArgument: ' + JSON.serializePretty(argument));
             List<Business_Dossier__c> dossiers = (CreditSafeService.searchForCreditSafeDossiers(
                     convertCountries(argument.countries),
                     argument.id,

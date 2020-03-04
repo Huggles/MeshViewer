@@ -30,7 +30,6 @@ public without sharing class SimpleDataMigrationBatch implements Database.Batcha
                     query = query + ' WHERE ' + whereClause;
                 }
             }
-            System.debug(query);
             return query;
         }
         set;
@@ -51,7 +50,6 @@ public without sharing class SimpleDataMigrationBatch implements Database.Batcha
                 }
             }
         }
-        System.debug(scope);
         update scope;
     }
 

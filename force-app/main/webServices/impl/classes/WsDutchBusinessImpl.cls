@@ -7,8 +7,6 @@ public inherited sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
     private inherited sharing class DutchBusinessMethodCallOut extends MethodCallout {
 
         public Object call(String methodName, Map<String, Object> arguments) {
-            System.debug('methodName: ' + methodName);
-            System.debug('parameters: ' + JSON.serializePretty(arguments));
             DutchBusinessWsdl.Webservices_nlPort port = (DutchBusinessWsdl.Webservices_nlPort) this.port;
             switch on methodName {
                 when 'dutchBusinessGetVatNumber' {

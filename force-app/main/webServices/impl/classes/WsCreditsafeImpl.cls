@@ -11,7 +11,6 @@ public inherited sharing class WsCreditsafeImpl implements IWsCreditsafe {
             CreditsafeWsdl.Webservices_nlPort port = (CreditsafeWsdl.Webservices_nlPort) this.port;
             switch on methodName {
                 when 'creditsafeSearchV2' {
-                    System.debug('Arguments: ' + JSON.serializePretty(arguments));
                     return port.creditsafeSearchV2(
                             (CreditsafeWsdl.stringArray)arguments.get('countries'),
                             (String)arguments.get('id'),

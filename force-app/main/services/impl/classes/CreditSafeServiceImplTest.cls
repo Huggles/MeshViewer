@@ -69,7 +69,6 @@ private class CreditSafeServiceImplTest {
             List<Business_Dossier__c> dossiers = CreditSafeService.searchForCreditSafeDossiers(new List<CreditSafe.Country>{CreditSafe.Country.SE}, 'id', 'status', 'regnr', 'type', 'vat', 'province', 'city', 'street', 'postal_code', 'name');
             System.assert(dossiers.size() == 5);
             for (Business_Dossier__c dossier : dossiers) {
-                System.debug(dossier);
                 System.assert(dossier.Name.isNumeric());
                 System.assert(dossier.Dossier_Number__c.startsWith('123'));
                 System.assert(dossier.Country__c == CreditSafe.Country.NL.name());
@@ -1789,7 +1788,6 @@ private class CreditSafeServiceImplTest {
                         Name,
                         SystemModstamp
                 FROM Creditsafe_Company_Financial_Statement__c WHERE Creditsafe_Company_Report_Full__c = :reportFull.Id AND Type__c = 'loc'];
-        System.debug(lfinancialStatement);
         System.assert(lfinancialStatement.Balance_Sheets_Consolidated_Accounts__c == 5);
         System.assert(lfinancialStatement.Bank_Liabilities__c == 1);
         System.assert(lfinancialStatement.Bank_Liabilities_Due_After1year__c == 2);

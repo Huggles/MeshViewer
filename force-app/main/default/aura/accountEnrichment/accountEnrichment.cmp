@@ -11,6 +11,7 @@
         <div class="logoContainer"><img src="{!$Resource.companyInfoLogoSmall}"/></div>
     </aura:attribute>
     <aura:attribute name="dossier" type="appsolutely__Business_Dossier__c"/>
+    <aura:attribute name="showVAT" type="Boolean"/>
 
     <aura:handler name="errorChange" value="{!v.error}" action="{!c.handleErrorChange}"/>
 
@@ -27,7 +28,7 @@
             <lightning:card variant="Narrow" >
                 <aura:set attribute="title">{!v.myTitleName}</aura:set>
                 <aura:set attribute="actions">
-                    <aura:if isTrue="{!(!v.dossier.VAT_Number__c)}">
+                    <aura:if isTrue="{!v.showVAT}">
                         <lightning:button label="{!$Label.c.VAT_Retrieve}" onclick="{!c.getVAT}" />
                     </aura:if>
                     <lightning:button label="{!$Label.c.Dossier_Remove}" onclick="{!c.removeDossier}" />

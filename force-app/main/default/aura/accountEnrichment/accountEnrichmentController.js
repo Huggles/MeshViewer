@@ -23,10 +23,14 @@
         }
     },
     handleDossierRecordUpdated : function(component, event, helper) {
-        debugger;
         var eventParams = event.getParams();
         if(eventParams.changeType === "LOADED") {
-            helper.startFlow(component);
+            var dossier = component.get("v.dossier");
+            if (!dossier.appsolutely__VAT_Number__c) {
+                component.set("v.showVAT", true);
+            } else {
+                component.set("v.showVAT", false);
+            }
         }
     },
     handleErrorChange : function(component, event, helper) {
