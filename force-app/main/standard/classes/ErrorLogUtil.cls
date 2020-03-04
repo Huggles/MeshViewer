@@ -75,7 +75,7 @@ public inherited sharing class ErrorLogUtil {
             logException(e);
         }
 
-        if (errorLogSetting.size() > 0 && errorLogSetting[0].Send_Via_Email__c) {
+        if (exceptions.size() > 0 && errorLogSetting.size() > 0 && errorLogSetting[0].Send_Via_Email__c) {
             //send email
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
