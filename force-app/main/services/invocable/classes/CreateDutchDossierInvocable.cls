@@ -4,7 +4,7 @@
 
 global with sharing class CreateDutchDossierInvocable {
 
-    global class CreateDutchDossierArgument {
+    global inherited sharing class CreateDutchDossierArgument {
         @InvocableVariable(label='Dossier Number' description='The dossier number (Chamber of Commerce) of the Dutch dossier to be fetched from Company.info and created' required=true)
         global String dossierNumber;
         @InvocableVariable(label='Establishment Number' description='The establishment number of the Dutch dossier to be fetched from Company.info and created')

@@ -4,7 +4,7 @@
 
 global with sharing class SearchForCreditSafeDossiersInvocable {
 
-    global class SearchForCreditSafeDossiersArgument {
+    global inherited sharing class SearchForCreditSafeDossiersArgument {
         @InvocableVariable(label='Name' description='Name under which the organisation engages in commercial activity')
         global String Name;
         @InvocableVariable(label='City')

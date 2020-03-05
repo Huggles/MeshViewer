@@ -2,9 +2,9 @@
  * Created by jaapbranderhorst on 19/02/2020.
  */
 
-public with sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
+public inherited sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
 
-    private class UpsertBusinessDossierWorker extends AbstractUpsertUnitOfWork {
+    private inherited sharing class UpsertBusinessDossierWorker extends AbstractUpsertUnitOfWork {
 
         public UpsertBusinessDossierWorker() {
             m_records = new List<Business_Dossier__c>();
