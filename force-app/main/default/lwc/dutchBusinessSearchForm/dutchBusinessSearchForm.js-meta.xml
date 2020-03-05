@@ -8,6 +8,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+            <property name="dossierNumber" type="String" label="Dutch Chamber of Commerce Number"/>
             <property name="tradeName" type="String" label="Trade Name"/>
             <property name="street" type="String" label="Street"/>
             <property name="houseNumber" type="String" label="House Number"/>

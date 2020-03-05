@@ -20,9 +20,11 @@ import Postal_Code from '@salesforce/label/c.Postal_Code';
 import Valid_Dutch_postal_code from '@salesforce/label/c.Valid_Dutch_postal_code';
 import City from '@salesforce/label/c.City';
 import CreditSafe_Validation_Message_Heading from '@salesforce/label/c.CreditSafe_Validation_Message_Heading';
-
+import Dossier_Number from '@salesforce/label/c.Dossier_Number';
 
 export default class DutchBusinessSearchForm extends LightningElement {
+    @api
+    dossierNumber;
     @api
     tradeName;
     @api
@@ -56,7 +58,8 @@ export default class DutchBusinessSearchForm extends LightningElement {
         Valid_Dutch_postal_code,
         City,
         CreditSafe_Validation_Message_Heading,
-        Validation_Error_Message_Toast_Title
+        Validation_Error_Message_Toast_Title,
+        Dossier_Number
     }
 
 
@@ -72,7 +75,7 @@ export default class DutchBusinessSearchForm extends LightningElement {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
-        if (!(this.tradeName || this.city || this.street || this.postalCode || this.domainName || this.phoneNumber)) {
+        if (!(this.dossierNumber || this.tradeName || this.city || this.street || this.postalCode || this.domainName || this.phoneNumber)) {
             this.hints = [Search_Criterium_TradeName_Address_Description];
         }
         valid = valid && !this.hints;
