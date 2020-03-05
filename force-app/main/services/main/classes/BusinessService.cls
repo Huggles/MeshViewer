@@ -4,8 +4,14 @@ public inherited sharing class BusinessService {
         return newInstance().searchForDossiers(country, trade_name, registration_number, vat_number, city, street, postcode, house_number, house_number_addition, province, telephone_number, domain_name);
     }
 
-    public static Boolean deleteDossier(Id accountId){
-        return newInstance().deleteDossier(accountId);
+    /**
+     * Deletes the dossier with the given id with all related objects
+     *
+     * @param dossierId
+     *
+     */
+    public static void deleteDossier(Id dossierId){
+        newInstance().deleteDossier(dossierId);
     }
 
     public static InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor,  Id accountId) {

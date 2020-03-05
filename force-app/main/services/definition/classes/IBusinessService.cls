@@ -21,13 +21,12 @@ public interface IBusinessService {
     List<SearchForDossiersResultDto> searchForDossiers(String country, String trade_name, String registration_number, String vat_number, String city, String street, String postcode, Integer house_number, String house_number_addition, String province, String telephone_number, String domain_name);
 
     /**
-     * Deletes the dossier related to the given account id
+     * Deletes the dossier with the given id with all related objects
      *
-     * @param accountId
+     * @param dossierId
      *
-     * @return
      */
-    Boolean deleteDossier(Id accountId);
+    void deleteDossier(Id dossierId);
 
     /**
      * Inserts a single dossier + account into the DB found through the search function (so based on the dossier number and establishment number).

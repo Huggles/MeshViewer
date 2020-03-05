@@ -1,0 +1,15 @@
+<!--
+ - Created by jaapbranderhorst on 05/03/2020.
+ -->
+
+<!-- Search Again Button -->
+<template>
+    <lightning-button name="searchAgain" label={label.Search_Reset} onclick={handleOnClick}></lightning-button>
+    <c-confirmation-dialog name="confirmModal"
+                           title="TBD"
+                           message="TBD"
+                           cancel-label={label.Cancel}
+                           confirm-label={label.Search_Confirm}
+                           visible={confirmDialogVisible}
+                           onclick={handleOnClickConfirmationDialog}></c-confirmation-dialog>
+</template>

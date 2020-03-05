@@ -45,12 +45,6 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         return resultValue;
     }
 
-
-
-
-
-
-
     /**
      * Inserts a single dossier + account into the DB found through the search function (so based on the dossier number and establishment number).
      * If the dossier is already there, just returns the dossier with a flag it already existed. If the account already exists, just reuses it.
@@ -247,26 +241,25 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         return account;
     }
 
-    // TODO: find out why this is public static
-    public static Boolean deleteDossier(Id accountId) {
-        List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{
-                accountId
-        });
+    /**
+     * Deletes the dossier with the given id with all related objects
+     *
+     * @param dossierId
+     *
+     */
+    public void deleteDossier(Id dossierId) {
         List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{
-                accounts.get(0).Business_Dossier__c
+                dossierId
         });
-        Boolean response = false;
         if (dossierList.size() == 1) {
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
             unitOfWork.registerDeleted(dossierList[0]);
             unitOfWork.commitWork();
-            response = true;
 
-            //if dossier is deleted, then remove it from the update list of dossiers on the company.info server
-            WsDutchBusiness.dutchBusinessUpdateRemoveDossier(dossierList[0].Dossier_Number__c, dossierList[0].Establishment_Number__c);
+            // TODO: commented for now. Must be added back when we move to update lists
+//            //if dossier is deleted, then remove it from the update list of dossiers on the company.info server
+//            WsDutchBusiness.dutchBusinessUpdateRemoveDossier(dossierList[0].Dossier_Number__c, dossierList[0].Establishment_Number__c);
         }
-
-        return response;
     }
 
     /**************

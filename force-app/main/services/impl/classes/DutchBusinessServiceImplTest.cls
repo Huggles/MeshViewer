@@ -713,8 +713,7 @@ private class DutchBusinessServiceImplTest {
         Test.startTest();
         {
             System.assert([SELECT Id FROM Business_Dossier__c].size() == 1);
-            Boolean result = BusinessService.deleteDossier(responseDTO.dossier.Account__c);
-            System.assert(result);
+            BusinessService.deleteDossier(responseDTO.dossier.Id);
             System.assert([SELECT Id FROM Business_Dossier__c].size() == 0);
         }
         Test.stopTest();

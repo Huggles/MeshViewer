@@ -1,6 +1,0 @@
-<aura:event type="COMPONENT" description="Event template">
-    <aura:attribute name="DossierNumber" type="String"/>
-    <aura:attribute name="EstablishmentNumber" type="String"/>
-    <aura:attribute name="selectedDataVendor" type="String" />
-    <aura:attribute name="creditSafeId" type="String"/>
-</aura:event>

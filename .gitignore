@@ -4,6 +4,7 @@ force-app/main/default/settings
 force-app/main/default/applications/standard__LightningSales.app-meta.xml
 .DS_STORE
 .idea
+.idea/shelf
 out
 IlluminatedCloud
 force-app/main/default/objects/Creditsafe_Company_Report_Full__c/listViews/All.listView-meta.xml

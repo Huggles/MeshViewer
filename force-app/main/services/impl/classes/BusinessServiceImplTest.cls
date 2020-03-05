@@ -12,7 +12,29 @@ public with sharing class BusinessServiceImplTest {
         insert c;
     }
 
+    @IsTest
+    public static void testDeleteDossierHappyFlow() {
+        // given
+        // a business dossier, a SBI code and an address in the DB
+        Business_Dossier__c dossier = new Business_Dossier__c(Name = 'test');
+        insert dossier;
+        Business_Data_SBI__c sb = new Business_Data_SBI__c(Business_Dossier__c = dossier.Id);
+        insert sb;
+        Dossier_Address__c address = new Dossier_Address__c(Business_Data__c = dossier.Id);
+        insert address;
 
+        // when
+        Test.startTest();
+        BusinessService.deleteDossier(dossier.Id);
+        Test.stopTest();
+
+        // then
+        // no objects any more
+        System.assert([SELECT Id FROM Business_Dossier__c].size() == 0);
+        System.assert([SELECT Id FROM Business_Data_SBI__c].size() == 0);
+        System.assert([SELECT Id FROM Dossier_Address__c].size() == 0);
+
+    }
 
     @isTest
     public static void testSearchForDutchDossiers(){
@@ -63,44 +85,6 @@ public with sharing class BusinessServiceImplTest {
         List<Error_Log__c> errorLogs = [SELECT Id FROM Error_Log__c];
         System.assertEquals(errorLogs.size(), 1);
     }
-
-//    @IsTest
-//    public static void testSearchForCreditSafeDossiers(){
-//        fflib_ApexMocks mocks = new fflib_ApexMocks();
-//        IWsCreditsafe mockWS = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
-//
-//        mocks.startStubbing();
-//        CreditsafeWsdl.stringArray trade_names = new CreditsafeWsdl.stringArray();
-//        trade_names.item = new List<String>();
-//        trade_names.item.add('trade names');
-//        CreditsafeWsdl.stringArray vat_numbers = new CreditsafeWsdl.stringArray();
-//        vat_numbers.item = new List<String>();
-//        vat_numbers.item.add('123');
-//        CreditsafeWsdl.CreditsafeAddressV2 address = new CreditsafeWsdl.CreditsafeAddressV2();
-//        address.city = 'city1';
-//        CreditsafeWsdl.CreditsafeSearchResultV2 output = new CreditsafeWsdl.CreditsafeSearchResultV2();
-//        output.companies = new CreditsafeWsdl.CreditsafeCompanyV2Array();
-//        output.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
-//        CreditsafeWsdl.CreditsafeCompanyV2 item1 = new CreditsafeWsdl.CreditsafeCompanyV2();
-//        item1.id = '1';
-//        item1.creditsafe_number = '1';
-//        item1.name = 'test';
-//        item1.address = address;
-//        item1.trade_names = trade_names;
-//        item1.vat_numbers = vat_numbers;
-//        output.companies.item.add(item1);
-//        CreditsafeWsdl.stringArray countries = new CreditsafeWsdl.stringArray();
-//        countries.item = new List<String>{'BE'};
-//
-//        mocks.when(mockWS.creditsafeSearchV2((CreditsafeWsdl.stringArray)fflib_Match.anyObject(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString(), fflib_Match.anyString())).thenReturn(output);
-//        mocks.stopStubbing();
-//
-//        Application.Service.setMock(IWsCreditsafe.class, mockWS);
-//        Test.startTest();
-//        List<SearchForDossiersResultDto> returnValue = BusinessService.searchForDossiers('BE','duh', 'duh', 'duh', 'duh', 'duh', 'duh', 91, 'duh', 'duh', 'duh', 'duh');
-//        Test.stopTest();
-//        System.assertEquals(1, returnValue.size());
-//    }
 
     @IsTest
     public static void testinsertSingleDossierFromCreditSafeNoAccountHappyFlow() {
