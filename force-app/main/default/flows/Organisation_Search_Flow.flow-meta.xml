@@ -672,7 +672,7 @@
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>
