@@ -738,7 +738,7 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow-6</fullName>
+            <fullName>Organisation_Search_Flow</fullName>
             <screens>
                 <fields>
                     <name>dutchDossiersResult</name>
@@ -789,7 +789,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Complete_Account_with_Dossier_Data-3</fullName>
+            <fullName>Complete_Account_with_Dossier_Data</fullName>
         </flows>
         <fullName>Complete_Account_with_Dossier_Data</fullName>
     </flowDefinitions>
