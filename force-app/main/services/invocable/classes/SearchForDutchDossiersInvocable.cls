@@ -7,7 +7,7 @@
  */
 global with sharing class SearchForDutchDossiersInvocable {
 
-    global class SearchForDutchDossiersArgument {
+    global inherited sharing class SearchForDutchDossiersArgument {
         @InvocableVariable(label='Trade Name' description='Name under which the organisation engages in commercial activity')
         global String trade_name;
         @InvocableVariable(label='City')

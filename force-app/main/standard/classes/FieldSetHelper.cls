@@ -2,9 +2,9 @@
  * Created by jaapbranderhorst on 01/03/2020.
  */
 
-public with sharing class FieldSetHelper {
+public without sharing class FieldSetHelper {
 
-    public class FieldDescriptionDto {
+    public inherited sharing class FieldDescriptionDto {
         @AuraEnabled
         public String label;
         @AuraEnabled

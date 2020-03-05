@@ -2,7 +2,14 @@
  * Created by jaapbranderhorst on 19/02/2020.
  */
 
-public with sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
+public inherited sharing class DutchBusinessServiceImpl implements IDutchBusinessService {
+
+    private inherited sharing class UpsertBusinessDossierWorker extends AbstractUpsertUnitOfWork {
+
+        public UpsertBusinessDossierWorker() {
+            m_records = new List<Business_Dossier__c>();
+        }
+    }
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
 
@@ -74,6 +81,27 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
     }
 
     /**
+     * Stores the given dossiers in the database. If no id is present inserts the dossiers, otherwise updates them.
+     *
+     * @param dossiers the dossiers to be stored
+     * @param unitOfWork if null a new uow will be created and used to do the work
+     */
+    public static void storeDossiers(List<Business_Dossier__c> dossiers, fflib_ISObjectUnitOfWork originalInitOfWork) {
+        fflib_ISObjectUnitOfWork unitOfWork = null;
+        if (originalInitOfWork == null) {
+            unitOfWork = Application.UnitOfWork.newInstance();
+        } else {
+            unitOfWork = originalInitOfWork;
+        }
+        UpsertBusinessDossierWorker upsertUnitOfWork = new UpsertBusinessDossierWorker();
+        upsertUnitOfWork.registerUpsert(dossiers);
+        unitOfWork.registerWork(upsertUnitOfWork);
+        if (originalInitOfWork == null) {
+            unitOfWork.commitWork();
+        }
+    }
+
+    /**
      * Updates every dossier given with the newest data from the CI backend.
      *
      * @param dossiersToUpdate the dossiers to update
@@ -120,13 +148,15 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
     /**
      * Fetches the dutch business dossier with the given dossier number and establishment number and creates it in the database (incl. any related records)
+     * If getVAT is true, also enriches the dossier with the VAT number (if available) before inserting it in the database.
      *
      * @param dossierNumber
      * @param establishmentNumber
+     * @param getVAT
      *
      * @return
      */
-    public Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber) {
+    public Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT) {
         if (dossierNumber == null || dossierNumber == '') {
             Exception ex = new CCInputException('empty dossier number');
             ErrorLogUtil.logException(ex);
@@ -150,7 +180,41 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         Dossier_Address__c establishmentAddress = new Dossier_Address__c();
         establishmentAddress = mapDataVendorDataToEstablishmentAddress(dossierV3, establishmentAddress);
         unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
+
+        if(getVAT) {
+            try {
+                dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
+            } catch(CCWsServerDataNotFoundVatException e) {
+                // just don't do anything since the VAT number should stay null in this case.
+            }
+        }
+
         unitOfWork.commitWork();
+        return dossier;
+    }
+
+    /**
+      * Updates a given Dutch business dossier with the VAT number from the CI backend.
+      * Sets the flag No_VAT__c to true if no VAT number is known in the backend.
+      * Does not update it in the backend.
+      *
+      * @param dossier the dossier to be updated
+      *
+      * @return the updated dossier
+      */
+    public  Business_Dossier__c updateBusinessDossierWithVATNumber(Business_Dossier__c dossier) {
+        if (dossier == null) {
+            throw new CCInputException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input
+        }
+        if (dossier.Dossier_Number__c == null) {
+            throw new CCInputException(System.Label.Dossier_Number_Missing);
+        }
+        DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = WsDutchBusiness.dutchBusinessGetVatNumber(dossier.Dossier_Number__c);
+        if (vatResponse.vat_number != null && vatResponse.vat_number != '') {
+            dossier.VAT_Number__c = vatResponse.vat_number;
+        } else {
+            dossier.No_VAT_Number__c = true;
+        }
         return dossier;
     }
 
@@ -190,7 +254,6 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
 
         //callout to get the list of dossiers with updates
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult response = WsDutchBusiness.dutchBusinessUpdateGetChangedDossiers(changedSince, wsUpdateTypesArray, pageNr);
-        System.debug('response: ' + response);
         Integer numPages = response.paging.numpages;
 
         //collect list of dossiers that needs to be updated
@@ -202,6 +265,18 @@ public with sharing class DutchBusinessServiceImpl implements IDutchBusinessServ
         return updateDossiersList;
     }
 
+    /**
+     * Reads the dossiers with the given ids from the DB
+     *
+     * @param ids
+     *
+     * @return
+     */
+    public List<Business_Dossier__c> getDossiersById(Set<Id> ids) {
+        return BusinessDossierSelector.newInstance().selectById(ids);
+    }
+
+    //TODO: remove this and replace it by updateDutchDossiersWithVAT
     public Business_Dossier__c setVatNumber(Id dossierId) {
         if (dossierId == null) {
             throw new CCException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input

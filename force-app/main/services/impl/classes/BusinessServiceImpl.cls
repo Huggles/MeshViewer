@@ -67,7 +67,6 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
     public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromDataVendorData(String creditSafeId, String dossierNumber, String establishmentNumber, String vendor, Id accountId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         InsertDossiersFromDataVendorResponseDTO response = null;
-        System.debug(CustomerConnect.DataVendor.COMPANY_INFO.name() + '  ' + vendor);
         if (vendor == CustomerConnect.DataVendor.COMPANY_INFO.name()) {
             response = DutchBusinessService.insertSingleDossierFromCompanyInfo(dossierNumber, establishmentNumber, accountId, unitOfWork);
         } else { // no checks on input but should be ok

@@ -28,8 +28,6 @@ public without sharing class PostInstallActionExecutor {
                 upgradeAction.execute(context);
             }
             Version previousVersion = context.previousVersion();
-            System.debug('Previous Version: ' + previousVersion);
-            System.debug('upgradeActionsByVersion: ' + upgradeActionsByVersion);
             IInstallAction action = upgradeActionsByVersion.get(previousVersion);
             if (action != null)
                 action.execute(context);

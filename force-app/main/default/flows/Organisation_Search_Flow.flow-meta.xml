@@ -5,7 +5,7 @@
         <name>Create_Dutch_Dossiers</name>
         <label>Create Dutch Dossiers</label>
         <locationX>811</locationX>
-        <locationY>652</locationY>
+        <locationY>648</locationY>
         <actionName>CreateDutchDossierInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -15,15 +15,21 @@
             <targetReference>Dutch_Dossiers_Search_Results</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>dossierNumber</name>
+            <name>getVat</name>
             <value>
-                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
+                <elementReference>VATEnrichmentRequired</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>establishmentNumber</name>
             <value>
                 <elementReference>selectedDossier.Establishment_Number__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>dossierNumber</name>
+            <value>
+                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -236,8 +242,8 @@
     <decisions>
         <name>Cancel_pressed_in_Dutch_search_results</name>
         <label>Cancel pressed in Dutch search results</label>
-        <locationX>577</locationX>
-        <locationY>511</locationY>
+        <locationX>696</locationX>
+        <locationY>515</locationY>
         <defaultConnector>
             <targetReference>Create_Dutch_Dossiers</targetReference>
         </defaultConnector>
@@ -338,8 +344,8 @@
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
-        <locationX>586</locationX>
-        <locationY>659</locationY>
+        <locationX>567</locationX>
+        <locationY>579</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -844,6 +850,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>VATEnrichmentRequired</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>VATNumber</name>

@@ -32,8 +32,40 @@ public inherited sharing class DutchBusinessService {
         return newInstance().insertSingleDossierFromCompanyInfo(dossierNumber, establishmentNumber, accountId, unitOfWork);
     }
 
-    public static Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber) {
-        return newInstance().createDutchDossier(dossierNumber, establishmentNumber);
+    public static Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT) {
+        return newInstance().createDutchDossier(dossierNumber, establishmentNumber, getVAT);
+    }
+
+    /**
+     * Updates a given Dutch business dossier with the VAT number from the CI backend. Does not update it in the backend.
+     *
+     * @param dossier the dossier to be updated
+     *
+     * @return the updated dossier
+     */
+    public static Business_Dossier__c updateBusinessDossierWithVATNumber(Business_Dossier__c dossier) {
+        return newInstance().updateBusinessDossierWithVATNumber(dossier);
+    }
+
+    /**
+     * Reads the dossiers with the given ids from the DB
+     *
+     * @param ids
+     *
+     * @return
+     */
+    public static List<Business_Dossier__c> getDossiersById(Set<Id> ids) {
+        return newInstance().getDossiersById(ids);
+    }
+
+    /**
+     * Stores the given dossiers in the database. If no id is present inserts the dossiers, otherwise updates them.
+     *
+     * @param dossiers the dossiers to be stored
+     * @param unitOfWork if null a new uow will be created and used to do the work
+     */
+    public static void storeDossiers(List<Business_Dossier__c> dossiers, fflib_ISObjectUnitOfWork unitOfWork) {
+        newInstance().storeDossiers(dossiers, unitOfWork);
     }
 
     public static IDutchBusinessService newInstance() {
