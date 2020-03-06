@@ -34,7 +34,7 @@
                     <aura:if isTrue="{!v.showVAT}">
                         <lightning:button label="{!$Label.c.VAT_Retrieve}" onclick="{!c.getVAT}" />
                     </aura:if>
-<!--                    <c:searchAgainButton dossierId="{!v.accountRecord.appsolutely__Business_Dossier__c}"/>-->
+                   <c:searchAgainButton dossierId="{!v.accountRecord.appsolutely__Business_Dossier__c}" ondossierdeleted="{!c.handleDossierDeleted}"/>
 <!--                  <lightning:button label="{!$Label.c.Dossier_Remove}" onclick="{!c.removeDossier}" />  -->
                 </aura:set>
             </lightning:card>

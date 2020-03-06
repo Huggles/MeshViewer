@@ -18,7 +18,7 @@
     },
     handleAccountRecordUpdated : function(component, event, helper) {
         var eventParams = event.getParams();
-        if(eventParams.changeType === "LOADED") {
+        if((eventParams.changeType === "LOADED" || eventParams.changeType === "CHANGED") && !component.get("v.accountRecord.appsolutely__Business_Dossier__c")) {
             helper.startFlow(component);
         }
     },
@@ -38,6 +38,9 @@
         if (error && error != '') {
             helper.showToast(component, $A.get('$Label.c.Error'), error);
         }
+    },
+    handleDossierDeleted : function(component, event, helper) {
+        component.set("v.accountRecord.appsolutely__Business_Dossier__c", null);
     },
     getVAT : function(component, event, helper) {
         var callParams = {dossierId: component.get('v.accountRecord').appsolutely__Business_Dossier__c};

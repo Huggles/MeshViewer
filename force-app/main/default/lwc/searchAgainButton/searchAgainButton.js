@@ -3,18 +3,22 @@
  */
 
 import {LightningElement, api} from 'lwc';
-import deleteDossier from '@salesforce/apex/SearchAgainButtonController.deleteDossier';
+import { deleteRecord } from 'lightning/uiRecordApi';
 
-import Cancel from '@salesforce/label/c.Cancel';
-import Search_Confirm from '@salesforce/label/c.Search_Confirm';
+import No from '@salesforce/label/c.No';
+import Yes from '@salesforce/label/c.Yes';
 import Search_Reset from '@salesforce/label/c.Search_Reset';
+import Search_Again_Confirmation_Dialog_Message from '@salesforce/label/c.Search_Again_Confirmation_Dialog_Message';
+import Search_Again_Confirmation_Dialog_Title from '@salesforce/label/c.Search_Again_Confirmation_Dialog_Title';
 
 export default class SearchAgainButton extends LightningElement {
 
     label = {
-        Cancel,
-        Search_Confirm,
-        Search_Reset
+        No,
+        Yes,
+        Search_Reset,
+        Search_Again_Confirmation_Dialog_Title,
+        Search_Again_Confirmation_Dialog_Message
     }
 
     /**
@@ -36,7 +40,9 @@ export default class SearchAgainButton extends LightningElement {
         if (event.detail.status) {
             if (event.detail.status === 'confirm') {
                 // delete the record
-                deleteDossier(this.dossierId).catch(error => {});
+                deleteRecord(this.dossierId);
+                const recordDeletedEvent = new CustomEvent('dossierdeleted');
+                this.dispatchEvent(recordDeletedEvent);
             }
             // we don't care about the other statuses (cancel).
             // this.confirmDialogVisible = false;

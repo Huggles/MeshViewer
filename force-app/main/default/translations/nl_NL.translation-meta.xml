@@ -9,16 +9,24 @@
         <name>Active</name>
     </customLabels>
     <customLabels>
+        <label><!-- Addition --></label>
+        <name>Addition</name>
+    </customLabels>
+    <customLabels>
         <label>Terug naar resultaten</label>
         <name>Back_To_Search</name>
     </customLabels>
-<!--    <customLabels>-->
-<!--        <label>&lt;!&ndash; Business Data Exists &ndash;&gt;</label>-->
-<!--        <name>Business_Data_Exists</name>-->
-<!--    </customLabels>-->
+    <customLabels>
+        <label><!-- Business Data Exists --></label>
+        <name>Business_Data_Exists</name>
+    </customLabels>
     <customLabels>
         <label>Annuleren</label>
         <name>Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- City --></label>
+        <name>City</name>
     </customLabels>
     <customLabels>
         <label>Dank u voor het installeren van Custommer.connect. Om te starten, voer uw gebruikersgegevens in of</label>
@@ -109,6 +117,10 @@
         <name>Config_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Country --></label>
+        <name>Country</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Country Belgium --></label>
         <name>Country_Belgium</name>
     </customLabels>
@@ -177,6 +189,10 @@
         <name>Details_Help</name>
     </customLabels>
     <customLabels>
+        <label><!-- Domain Name --></label>
+        <name>Domain_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Creeer organisatie</label>
         <name>Dossier_Account_Create</name>
     </customLabels>
@@ -193,12 +209,24 @@
         <name>Dossier_Account_Update_Completed</name>
     </customLabels>
     <customLabels>
+        <label><!-- Dossier ID Access --></label>
+        <name>Dossier_ID_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Dossier ID Missing --></label>
+        <name>Dossier_ID_Missing</name>
+    </customLabels>
+    <customLabels>
         <label>Er zijn meerdere gelijkende accounts gevonden. Het is niet mogelijk om de data aan het juiste account toe te wijzen. Verwijder alstublieft de gelijkende accounts en probeer het opnieuw.</label>
         <name>Dossier_Multiple_Account_Duplicates_Found</name>
     </customLabels>
     <customLabels>
         <label>Kamer van Koophandel nummer</label>
         <name>Dossier_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Dossier Number Missing --></label>
+        <name>Dossier_Number_Missing</name>
     </customLabels>
     <customLabels>
         <label>Verwijder Company.info gegevens</label>
@@ -325,8 +353,16 @@
         <name>Establishment_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Fill minimum characters --></label>
+        <name>Fill_minimum_characters</name>
+    </customLabels>
+    <customLabels>
         <label>Onderstaand de gedetailleerde organisatie gegevens. Druk op creeer organisatie om de organisatie (Account) aan te maken.</label>
         <name>Get_Dossier_Results_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- House Number --></label>
+        <name>House_Number</name>
     </customLabels>
     <customLabels>
         <label>B.V.</label>
@@ -337,12 +373,24 @@
         <name>Matching_Companies</name>
     </customLabels>
     <customLabels>
+        <label><!-- Minimum registration number characters --></label>
+        <name>Minimum_registration_number_characters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Minimum registration number length --></label>
+        <name>Minimum_registration_number_length</name>
+    </customLabels>
+    <customLabels>
         <label>Naam</label>
         <name>Name</name>
     </customLabels>
     <customLabels>
         <label>Nieuwe Organisatie op basis van Company.info data</label>
         <name>New_Account_CC</name>
+    </customLabels>
+    <customLabels>
+        <label>Nee</label>
+        <name>No</name>
     </customLabels>
     <customLabels>
         <label>Geen Company.info for Salest authenticatie data gevonden. Company.info for Sales is nog niet geactiveerd</label>
@@ -355,6 +403,14 @@
     <customLabels>
         <label><!-- Non Limited --></label>
         <name>Non_Limited</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Phone Number --></label>
+        <name>Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Postal Code --></label>
+        <name>Postal_Code</name>
     </customLabels>
     <customLabels>
         <label>Vorige</label>
@@ -375,6 +431,14 @@
     <customLabels>
         <label>Adres</label>
         <name>Search_Address</name>
+    </customLabels>
+    <customLabels>
+        <label>Weet u het zeker dat u opnieuw wilt zoeken?</label>
+        <name>Search_Again_Confirmation_Dialog_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Zoek opnieuw</label>
+        <name>Search_Again_Confirmation_Dialog_Title</name>
     </customLabels>
     <customLabels>
         <label>Stad</label>
@@ -501,8 +565,24 @@
         <name>Search_VAT_Number</name>
     </customLabels>
     <customLabels>
+        <label><!-- Select a Country --></label>
+        <name>Select_a_Country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select a Registration Type --></label>
+        <name>Select_a_Registration_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Select a Status --></label>
+        <name>Select_a_Status</name>
+    </customLabels>
+    <customLabels>
         <label>Status</label>
         <name>Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Street --></label>
+        <name>Street</name>
     </customLabels>
     <customLabels>
         <label>Gelukt</label>
@@ -517,12 +597,84 @@
         <name>Sync_Success</name>
     </customLabels>
     <customLabels>
+        <label><!-- Trade Name --></label>
+        <name>Trade_Name</name>
+    </customLabels>
+    <customLabels>
         <label>Sorry. Het BTW nummer voor deze organisatie is niet publiekelijk bekend. Contacteer de organisatie alstublieft en vraag om het BTW nummer.</label>
         <name>VAT_Not_Found</name>
     </customLabels>
     <customLabels>
         <label><!-- VAT_Retrieve --></label>
         <name>VAT_Retrieve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Belgian registration number --></label>
+        <name>Valid_Belgian_registration_number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid CreditSafe France Registration Id --></label>
+        <name>Valid_CreditSafe_France_Registration_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid CreditSafe registration number --></label>
+        <name>Valid_CreditSafe_registration_number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Dutch phone number --></label>
+        <name>Valid_Dutch_phone_number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Dutch postal code --></label>
+        <name>Valid_Dutch_postal_code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid French VAT Number --></label>
+        <name>Valid_French_VAT_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid French registration number --></label>
+        <name>Valid_French_registration_number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid GB CreditSafe Identification Number --></label>
+        <name>Valid_GB_CreditSafe_Identification_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid GB VAT Number --></label>
+        <name>Valid_GB_VAT_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid German VAT Number --></label>
+        <name>Valid_German_VAT_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Germany CreditSafe registration id --></label>
+        <name>Valid_Germany_CreditSafe_registration_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Irish CreditSafe Identification Nr --></label>
+        <name>Valid_Irish_CreditSafe_Identification_Nr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Irish VAT Number --></label>
+        <name>Valid_Irish_VAT_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Swedish CreditSafe Identification Nr --></label>
+        <name>Valid_Swedish_CreditSafe_Identification_Nr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid Swedish VAT Number --></label>
+        <name>Valid_Swedish_VAT_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid house number --></label>
+        <name>Valid_house_number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Valid registration number --></label>
+        <name>Valid_registration_number</name>
     </customLabels>
     <customLabels>
         <label>Validatie fout</label>
@@ -543,6 +695,10 @@
     <customLabels>
         <label>Company.info for Sales kan de systemen van de Company.info niet bereiken. Probeer het later nog een keer.</label>
         <name>WSCall_Unsuccessful</name>
+    </customLabels>
+    <customLabels>
+        <label>Ja</label>
+        <name>Yes</name>
     </customLabels>
     <customLabels>
         <label><!-- Error when selecting a cross-object fieldsset is not allowed and attempted. --></label>
@@ -598,10 +754,16 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow-1</fullName>
+            <fullName>Organisation_Search_Flow</fullName>
             <screens>
                 <fields>
                     <name>dutchDossiersResult</name>
+                </fields>
+                <fields>
+                    <name>dutchSearchResultFlowFooter</name>
+                </fields>
+                <fields>
+                    <name>dutchSearchResultFlowHeader</name>
                 </fields>
                 <fields>
                     <name>flowErrorHandlerDutchResultsScreen</name>
@@ -618,13 +780,34 @@
                 <fields>
                     <name>organisationSearchFormHeader</name>
                 </fields>
+                <fields>
+                    <name>searchFlowFooter</name>
+                </fields>
                 <name>Search</name>
             </screens>
             <screens>
+                <fields>
+                    <name>creditSafeDossierSearchResults</name>
+                </fields>
+                <fields>
+                    <name>creditSafeResultFlowHeader</name>
+                </fields>
+                <fields>
+                    <name>creditSafeSearchResultFlowErrorHandler</name>
+                </fields>
+                <fields>
+                    <name>creditSafeSearchResultFlowFooter</name>
+                </fields>
                 <name>Show_Credit_Safe_Search_Results</name>
             </screens>
         </flows>
         <fullName>Organisation_Search_Flow</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data</fullName>
+        </flows>
+        <fullName>Complete_Account_with_Dossier_Data</fullName>
     </flowDefinitions>
     <quickActions>
         <label><!-- LogACall --></label>
