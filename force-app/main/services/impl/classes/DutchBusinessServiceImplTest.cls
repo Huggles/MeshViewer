@@ -148,10 +148,9 @@ private class DutchBusinessServiceImplTest {
         // a dossier to be updated
         Business_Dossier__c dossierToBeUpdated = (new DutchBusinessServiceImpl()).mapDutchBusinessDossierV3ToDossier(getDataVendorMockDossier(), new Business_Dossier__c());
         dossierToBeUpdated.Name = 'I need to be updated';
-        Account account = new Account(Name = 'testAccount');
-        insert Account;
-        dossierToBeUpdated.Account__c = account.Id;
         insert dossierToBeUpdated;
+        Account account = new Account(Name = 'testAccount', Business_Dossier__c = dossierToBeUpdated.Id);
+        insert Account;
         // a mock dossier from the webservice
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsDutchBusiness wsDutchBusinessMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
