@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <brand>
-        <headerColor>#EE6807</headerColor>
-        <logo>AppsolutelyLogo</logo>
+        <headerColor>#746D68</headerColor>
+        <logo>companyinfologonopayoffsmall</logo>
         <logoVersion>1</logoVersion>
         <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
     </brand>
+    <description>Configure Company.info</description>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <label>Company.info for Sales Setup</label>
+    <label>Company.info Setup</label>
     <navType>Standard</navType>
-    <tabs>Customer_connect_configuration</tabs>
+    <tabs>Company_info_Setup</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Customer_connect_Administration_UtilityBar</utilityBar>
 </CustomApplication>
