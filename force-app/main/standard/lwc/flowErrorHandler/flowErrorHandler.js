@@ -11,10 +11,6 @@ export default class FlowErrorHandler extends LightningElement {
 
     @api title = 'Sample Title';
     @api message = 'Sample Message';
-    // @api variant = 'error';
-    // @api autoCloseTime = 5000;
-    // @api autoClose = false;
-    // @api autoCloseErrorWarning = false;
 
     toastRendered = false;
 
@@ -24,15 +20,5 @@ export default class FlowErrorHandler extends LightningElement {
             this.toastRendered = true;
         }
     }
-
-    // showToast() {
-    //     const event = new ShowToastEvent({
-    //         title: this.title,
-    //         message: this.errorMessage
-    //     });
-    //     this.dispatchEvent(event);
-    // }
-
-
 
 }
