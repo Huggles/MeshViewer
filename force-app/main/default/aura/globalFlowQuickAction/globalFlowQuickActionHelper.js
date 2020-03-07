@@ -28,7 +28,9 @@
     showModalAndFlow : function(component, event) {
         var modalBody;
         $A.createComponent("lightning:flow",
-            {"aura:id": "flow"},
+            {"aura:id": "flow",
+                "onstatuschange" : component.getReference("c.handleFlowChangeEvent")
+            },
             function(content, status, errorMessage) {
                 if (status === "SUCCESS") {
                     modalBody = content;

@@ -6,6 +6,9 @@ import {LightningElement, api} from 'lwc';
 
 export default class FlowErrorHandler extends LightningElement {
 
+    @api
+    availableActions;
+
     @api title = 'Sample Title';
     @api message = 'Sample Message';
     // @api variant = 'error';
