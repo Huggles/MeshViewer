@@ -850,10 +850,6 @@
         <name>NewTask</name>
     </quickActions>
     <quickActions>
-        <label>Nieuw Account met Company.info for Sales</label>
-        <name>searchGlobalAction</name>
-    </quickActions>
-    <quickActions>
         <label><!-- SendEmail --></label>
         <name>SendEmail</name>
     </quickActions>

@@ -4,24 +4,11 @@
 
 ({
     doInit : function(component, event, helper) {
-        $A.createComponent("c:flowContainer",
-            {"flowName": "Organisation_Search_Flow",
-                "flowChangeEvent" : component.getReference("c.handleFlowChangeEvent")},
-            function(content, status) {
-                if (status === "SUCCESS") {
-                    var promiseModal = component.find('overlayLib').showCustomModal({
-                        body: content,
-                        showCloseButton: true,
-                        closeCallback: function() {
-                            var dismissActionPanel = $A.get("e.force:closeQuickAction");
-                            dismissActionPanel.fire();
-                        }
-                    });
-                    component.set("v.overlayPromise", promiseModal);
-
-                }
-            }
-        );
+        var flowAPIName = component.get("v.flowAPIName");
+        if (!flowAPIName) {
+            // get the flow from the server
+            helper.getFlowAPIName(component,event);
+        }
     },
     handleFlowChangeEvent : function(component, event, helper) {
         var status = event.getParam("status");
@@ -29,5 +16,8 @@
             let overlayPromise = component.get("v.overlayPromise");
             overlayPromise.then((modal) => {modal.close()});
         }
+    },
+    handleFlowAPINameChangeEvent : function(component, event, helper) {
+        helper.showModalAndFlow(component, event);
     }
 });
