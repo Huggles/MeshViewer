@@ -273,29 +273,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return account;
     }
 
-    private List<Business_Dossier__c> insertCompanyInfoDossier(List<InsertDossierRequestDTO> InsertDossierRequestDTOS, fflib_ISObjectUnitOfWork unitOfWork) {
-        List<Business_Dossier__c> returnList = new List<Business_Dossier__c>();
-        for (InsertDossierRequestDTO insertDossierRequestDTO : InsertDossierRequestDTOS) {
-            Business_Dossier__c dossier = mapDutchBusinessDossierV3ToDossier(insertDossierRequestDTO.dossier, new Business_Dossier__c());
-            unitOfWork.registerNew(dossier, Business_Dossier__c.Account__c, insertDossierRequestDTO.account);
-
-            // unitOfWork.registerRelationship(insertDossierRequestDTO.account, Account.Business_Dossier__c, dossier);
-
-            Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
-            unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
-
-            Dossier_Address__c correspondenceAddress = mapDataVendorDataToCorrespondenceAddress(insertDossierRequestDTO.dossier, new Dossier_Address__c());
-            unitOfWork.registerNew(correspondenceAddress, Dossier_Address__c.Business_Data__c, dossier);
-
-            List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(insertDossierRequestDTO.dossier, new List<Business_Data_SBI__c>());
-            for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
-                unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, dossier);
-            }
-            returnList.add(dossier);
-        }
-        return returnList;
-    }
-
     // TODO: refactor Has side effects.
     @TestVisible
     private DutchBusinessWsdl.DutchBusinessDossierV3 getDossier(String dossierNumber, String establishmentNumber) {
