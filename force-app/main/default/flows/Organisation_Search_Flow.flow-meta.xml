@@ -313,7 +313,6 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
-    <isTemplate>true</isTemplate>
     <label>Organisation Search Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>

@@ -29,43 +29,12 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
         global String id;
     }
 
-    private static List<CreditSafe.Country> convertCountries(List<String> countriesAsStrings) {
-        List<CreditSafe.Country> returnList = new List<CreditSafe.Country>();
-        for (String str : countriesAsStrings) {
-            switch on str {
-                when 'NL' {
-                    returnList.add(CreditSafe.Country.NL);
-                }
-                when 'BE' {
-                    returnList.add(CreditSafe.Country.BE);
-                }
-                when 'IE' {
-                    returnList.add(CreditSafe.Country.IE);
-                }
-                when 'GB' {
-                    returnList.add(CreditSafe.Country.GB);
-                }
-                when 'DE' {
-                    returnList.add(CreditSafe.Country.DE);
-                }
-                when 'FR' {
-                    returnList.add(CreditSafe.Country.FR);
-                }
-                when 'SE' {
-                    returnList.add(CreditSafe.Country.SE);
-                }
-            }
-
-        }
-        return returnList;
-    }
-
     @InvocableMethod(label='Search for Credit Safe reports' description='Searches for credit safe reports based on the given arguments.' category='Company.info for Sales')
     global static List<List<Business_Dossier__c>> searchForCreditSafeDossier(List<SearchForCreditSafeDossiersArgument> arguments) {
         List<List<Business_Dossier__c>> dossierLists = new List<List<Business_Dossier__c>>();
         for (SearchForCreditSafeDossiersArgument argument : arguments) {
             List<Business_Dossier__c> dossiers = (CreditSafeService.searchForCreditSafeDossiers(
-                    convertCountries(argument.countries),
+                    argument.countries,
                     argument.id,
                     argument.status,
                     argument.registration_number,

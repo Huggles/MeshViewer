@@ -15,32 +15,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
     /**
     * Searches for dutch business dossiers in Company.info backend (Dutch Business service)
-    * TODO: replace with method that returns SObjects
-    *
-    * @param trade_name
-    * @param city
-    * @param street
-    * @param postcode
-    * @param house_number
-    * @param house_number_addition
-    * @param telephone_number
-    * @param domain_name
-    *
-    * @return
-    */
-    public List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
-        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = searchForDutchBusinessesInCompanyInfo(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
-
-        List<SearchForDossiersResultDto> returnValue = new List<SearchForDossiersResultDto>();
-        for (DutchBusinessWsdl.DutchBusinessReferenceV2 dutchBusinessReferenceV2 : searchResults) {
-            returnValue.add(new SearchForDossiersResultDto(dutchBusinessReferenceV2));
-        }
-        return returnValue;
-    }
-
-    /**
-    * Searches for dutch business dossiers in Company.info backend (Dutch Business service)
-    * TODO: replace searchForDutchDossiers with this
     *
     * @param trade_name
     * @param city
@@ -276,85 +250,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return BusinessDossierSelector.newInstance().selectById(ids);
     }
 
-    //TODO: remove this and replace it by updateDutchDossiersWithVAT
-    public Business_Dossier__c setVatNumber(Id dossierId) {
-        if (dossierId == null) {
-            throw new CCException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input
-        }
-
-        List<Business_Dossier__c> dossiersDB = ((IBusinessDossierSelector)Application.Selector.newInstance(Business_Dossier__c.SObjectType)).selectById(new Set<Id>{dossierId});
-        if (dossiersDB.isEmpty()) {
-            throw new CCException(System.Label.Dossier_ID_Access + dossierId);
-        }
-
-        Business_Dossier__c dossierDB = dossiersDB.get(0);
-        if (String.isEmpty(dossierDB.Dossier_Number__c)) {//cannot get the VAT number if Registration Number is not filled, the callout fails
-            throw new CCException(System.Label.Dossier_Number_Missing);
-        }
-        String vatNumber = BusinessDuplicateService.checkForExistingVatNumberInDB(dossierDB.Dossier_Number__c);
-
-        // if no vat number in the db, get it from the data vendor
-        if (String.isEmpty(vatNumber)) { // no VAT number for any other dossier in the database
-            DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = WsDutchBusiness.dutchBusinessGetVatNumber(dossierDB.Dossier_Number__c);
-            vatNumber = vatResponse.vat_number;
-        }
-
-        // update the dossier with the vatnumber
-        dossierDB.VAT_Number__c = vatNumber;
-        // without CRUD/FLS check since the user has paid for the data and has access to the original record
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        unitOfWork.registerDirty(dossierDB);
-        unitOfWork.commitWork();
-        return dossierDB;
-    }
-
-    // TODO: can be removed as soon as the UI has been refactored (only needed for the 'old' Aura components)
-    public InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromCompanyInfo(String dossierNumber, String establishmentNumber, Id accountId, fflib_ISObjectUnitOfWork unitOfWork ) {
-        InsertDossiersFromDataVendorResponseDTO response = null;
-        Account account = null;
-
-        // first find any dossiers that are already existing
-        List<CheckDuplicateDossierResponse> duplicateDossierResponses = BusinessDuplicateService.checkForDuplicateDossiers(
-                new List<CheckDuplicateDossierRequest>{new CheckDuplicateDossierRequest(dossierNumber, establishmentNumber)}
-        );
-        if (duplicateDossierResponses.get(0).dossierFound != null) { // duplicate found
-            Business_Dossier__c duplicateDossier = duplicateDossierResponses.get(0).dossierFound;
-            response = new InsertDossiersFromDataVendorResponseDTO(duplicateDossier, true);
-        } else { // no duplicate, we need to insert the dossier
-            try {
-                // get the dossier from the datavendor
-                DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDossier(dossierNumber, establishmentNumber);
-
-                // create an account if the account id is null
-                if (accountId == null) {
-                    List<InsertAccountResponseDTO> accountResponseDTOS = insertAccount(new List<DutchBusinessWsdl.DutchBusinessDossierV3>{dataVendorDossier}, unitOfWork);
-                    account = accountResponseDTOS.get(0).account;
-                } else {
-                    List<Account> accounts = AccountSelector.newInstance().selectById(new Set<Id>{accountId});
-                    account = accounts.get(0);
-                }
-                List<Business_Dossier__c> dossierDBs = insertCompanyInfoDossier(new List<InsertDossierRequestDTO>{new InsertDossierRequestDTO(dataVendorDossier, account)}, unitOfWork);
-
-                response = new InsertDossiersFromDataVendorResponseDTO(dossierDBs.get(0), false);
-                unitOfWork.commitWork();
-
-                // now update the account in a new round since only now we have the id of the dossier.
-                // Someone had the smart idea of creating a circular relationship in the database...
-                // Since the id of the account is not known before creation, registering a relationship doesn't work
-                unitOfWork = Application.UnitOfWork.newInstance();
-                unitOfWork.registerDirty(account, Schema.Account.Business_Dossier__c, dossierDBs.get(0));
-                unitOfWork.commitWork();
-
-            } catch (CCDuplicateException e) { // multiple duplicate accounts have been found
-                throw e;
-            } catch (Exception e) {
-                ErrorLogUtil.logException(e);
-                throw new CCException(e);
-            }
-        }
-        return response;
-    }
-
     /*****************************
     /** IMPLEMENTATION METHODS
     /******************************/
@@ -371,27 +266,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
             }
         }
         return searchResults;
-    }
-
-    @TestVisible
-    private List<InsertAccountResponseDTO> insertAccount(List<DutchBusinessWsdl.DutchBusinessDossierV3> dataVendorDossiers, fflib_ISObjectUnitOfWork unitOfWork) {
-        List<InsertAccountResponseDTO> responses = new List<InsertAccountResponseDTO>();
-        for (DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier : dataVendorDossiers) {
-            Account account = mapDataVendorToAccount(dataVendorDossier, new Account());
-            // TODO: make this bulkified and move it outside of the loop
-            List<Account> duplicateAccounts = BusinessDuplicateService.checkForAccountDuplicates(account);
-            if (duplicateAccounts.size() > 1) { // too many duplicates found. Cannot map them.
-                throw new CCDuplicateException(Label.Dossier_Multiple_Account_Duplicates_Found);
-            } else
-                    if (duplicateAccounts.size() == 1) { // one duplicate found, let's reuse that one
-                        account = duplicateAccounts.get(0);
-                    } else { // no duplicates found, create a new account
-                        unitOfWork.registerNew(account);
-                    }
-            InsertAccountResponseDTO response = new InsertAccountResponseDTO(dataVendorDossier, account);
-            responses.add(response);
-        }
-        return responses;
     }
 
     private Account mapDataVendorToAccount(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Account account) {
