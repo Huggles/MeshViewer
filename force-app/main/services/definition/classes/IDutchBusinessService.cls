@@ -32,6 +32,7 @@ public interface IDutchBusinessService {
     /**
      * Searches for dutch dossiers using the given parameters.
      *
+     * @param dossier_number
      * @param trade_name
      * @param city
      * @param street
@@ -43,7 +44,7 @@ public interface IDutchBusinessService {
      *
      * @return
      */
-    List<Business_Dossier__c> searchForDutchDossiersSObject(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name);
+    List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name);
 
     /**
      * Fetches the dutch business dossier with the given dossier number and establishment number and creates it in the database (incl. any related records)

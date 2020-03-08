@@ -46,6 +46,8 @@ export default class BusinessSearchForm extends LightningElement {
     @api
     selectedCountry;
     @api
+    dossierNumber;
+    @api
     tradeName;
     @api
     street;

@@ -880,7 +880,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Search Criterium TradeName Address Description</shortDescription>
-        <value>A valid trade name, domain name, city, street or postal code or any combination of these.</value>
+        <value>A valid Dutch Chamber of Commerce number, trade name, domain name, city, street or postal code or any combination of these.</value>
     </labels>
     <labels>
         <fullName>Search_Criterium_VAT_Number_Description</fullName>

@@ -8,6 +8,8 @@
 global with sharing class SearchForDutchDossiersInvocable {
 
     global inherited sharing class SearchForDutchDossiersArgument {
+        @InvocableVariable(label='Chamber of Commerce Number' description='The Dutch Chamber of Commerce under which the organisation is registered in the Dutch Chamber of Commerce')
+        global String dossier_number;
         @InvocableVariable(label='Trade Name' description='Name under which the organisation engages in commercial activity')
         global String trade_name;
         @InvocableVariable(label='City')
@@ -28,11 +30,13 @@ global with sharing class SearchForDutchDossiersInvocable {
 
     @InvocableMethod(label = 'Search for Dutch dossiers' description='Searches for Dutch dossiers based on the given arguments.' category='Company.info for Sales')
     global static List<List<Business_Dossier__c>> searchForDutchDossiers(List<SearchForDutchDossiersArgument> arguments) {
+        System.debug('arguments: ' + JSON.serializePretty(arguments));
         List<List<Business_Dossier__c>> returnList = new List<List<Business_Dossier__c>>();
         for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
             List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
             businessDossiers.addAll(
                     DutchBusinessService.searchForDutchDossiersSObject(
+                            searchForDutchDossiersArgument.dossier_number,
                             searchForDutchDossiersArgument.trade_name,
                             searchForDutchDossiersArgument.city,
                             searchForDutchDossiersArgument.street,
