@@ -55,6 +55,12 @@
             <targetReference>Create_Account</targetReference>
         </connector>
         <flowName>Organisation_Search_Flow</flowName>
+        <inputAssignments>
+            <name>VATEnrichmentRequired</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>selectedDossier</assignToReference>
             <name>selectedDossier</name>

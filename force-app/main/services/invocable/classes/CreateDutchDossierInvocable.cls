@@ -14,6 +14,7 @@ global with sharing class CreateDutchDossierInvocable {
 
         @TestVisible
         private CreateDutchDossierArgument(String dossierNumber, String establishmentNumber, Boolean getVat) {
+            System.debug('getVat: ' + getVat);
             this.dossierNumber = dossierNumber;
             this.establishmentNumber = establishmentNumber;
             this.getVat = getVat;

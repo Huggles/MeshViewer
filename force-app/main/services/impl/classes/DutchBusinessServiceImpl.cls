@@ -156,11 +156,11 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
 
         if(getVAT) {
-            try {
+            // try {
                 dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
-            } catch(CCWsServerDataNotFoundVatException e) {
-                // just don't do anything since the VAT number should stay null in this case.
-            }
+//            } catch(CCWsServerDataNotFoundVatException e) {
+//                // just don't do anything since the VAT number should stay null in this case.
+//            }
         }
 
         unitOfWork.commitWork();
@@ -183,10 +183,10 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         if (dossier.Dossier_Number__c == null) {
             throw new CCInputException(System.Label.Dossier_Number_Missing);
         }
-        DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = WsDutchBusiness.dutchBusinessGetVatNumber(dossier.Dossier_Number__c);
-        if (vatResponse.vat_number != null && vatResponse.vat_number != '') {
+        try {
+            DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = WsDutchBusiness.dutchBusinessGetVatNumber(dossier.Dossier_Number__c);
             dossier.VAT_Number__c = vatResponse.vat_number;
-        } else {
+        } catch (CCWsServerDataNotFoundVatException notFoundVatException) {
             dossier.No_VAT_Number__c = true;
         }
         return dossier;
