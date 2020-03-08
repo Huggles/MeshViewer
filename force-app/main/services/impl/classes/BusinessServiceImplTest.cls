@@ -14,7 +14,7 @@ public with sharing class BusinessServiceImplTest {
 
         // when
         Test.startTest();
-        BusinessService.deleteDossier(dossier.Id);
+        BusinessService.deleteDossier(dossier.Id, false);
         Test.stopTest();
 
         // then
