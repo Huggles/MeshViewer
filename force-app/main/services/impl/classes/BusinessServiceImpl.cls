@@ -13,12 +13,17 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
      * @param dossierId
      *
      */
-    public void deleteDossier(Id dossierId) {
+    public void deleteDossier(Id dossierId, Boolean checkPermissions) {
         List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{
                 dossierId
         });
         if (dossierList.size() == 1) {
-            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+            fflib_ISObjectUnitOfWork unitOfWork = null;
+            if (checkPermissions) {
+                unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCRUD());
+            } else {
+                unitOfWork = Application.UnitOfWork.newInstance();
+            }
             unitOfWork.registerDeleted(dossierList[0]);
             unitOfWork.commitWork();
 

@@ -3,7 +3,7 @@
  */
 
 import {LightningElement, api} from 'lwc';
-import { deleteRecord } from 'lightning/uiRecordApi';
+import deleteDossier from '@salesforce/apex/SearchAgainButtonController.deleteDossier';
 
 import No from '@salesforce/label/c.No';
 import Yes from '@salesforce/label/c.Yes';
@@ -40,7 +40,7 @@ export default class SearchAgainButton extends LightningElement {
         if (event.detail.status) {
             if (event.detail.status === 'confirm') {
                 // delete the record
-                deleteRecord(this.dossierId);
+                deleteDossier({dossierId: this.dossierId});
                 const recordDeletedEvent = new CustomEvent('dossierdeleted');
                 this.dispatchEvent(recordDeletedEvent);
             }
