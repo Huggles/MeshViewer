@@ -16,6 +16,8 @@
                 </ul>
         </c-custom-toast>
     </template>
+    <!-- TODO: add validation. Must be 8 numbers -->
+    <lightning-input name="dossierNumber" class="slds-m-around_x-small" label={label.Dossier_Number} type="text" value={dossierNumber} variant="standard" onchange={handleOnChange}></lightning-input>
     <lightning-input name="tradeName" class="slds-m-around_x-small" label={label.Trade_Name} type="text" value={tradeName} variant="standard" onchange={handleOnChange}></lightning-input>
     <lightning-layout>
         <lightning-layout-item size="4">

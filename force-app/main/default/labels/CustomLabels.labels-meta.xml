@@ -31,19 +31,19 @@
         <value>The Business Data  record already exists.</value>
     </labels>
     <labels>
+        <fullName>Cancel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
         <fullName>City</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>City</shortDescription>
         <value>City</value>
-    </labels>
-    <labels>
-        <fullName>Cancel</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Cancel</shortDescription>
-        <value>Cancel</value>
     </labels>
     <labels>
         <fullName>Config_Account_ActivateDescription</fullName>
@@ -730,13 +730,6 @@
         <value>Non Limited</value>
     </labels>
     <labels>
-        <fullName>Previous</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Previous</shortDescription>
-        <value>Previous</value>
-    </labels>
-    <labels>
         <fullName>Phone_Number</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
@@ -751,6 +744,13 @@
         <protected>true</protected>
         <shortDescription>Postal Code</shortDescription>
         <value>Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>Previous</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Previous</shortDescription>
+        <value>Previous</value>
     </labels>
     <labels>
         <fullName>Province</fullName>
@@ -857,7 +857,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Search Criterium TradeName Address Description</shortDescription>
-        <value>A valid trade name, domain name, city, street or postal code or any combination of these.</value>
+        <value>A valid Dutch Chamber of Commerce number, trade name, domain name, city, street or postal code or any combination of these.</value>
     </labels>
     <labels>
         <fullName>Search_Criterium_VAT_Number_Description</fullName>

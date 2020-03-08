@@ -8,6 +8,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+            <property name="dossierNumber" type="String" label="Dutch Chamber of Commerce Number"/>
             <property name="selectedCountry" type="String" label="Selected Country" description="The selected country"/>
             <property name="tradeName" type="String" label="Trade Name" description="The name the users uses to search. For the Netherlands the trade name."/>
             <property name="street" type="String" label="Street" description="The street the users uses to search"/>

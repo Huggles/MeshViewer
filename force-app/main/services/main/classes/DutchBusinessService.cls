@@ -20,8 +20,8 @@ public inherited sharing class DutchBusinessService {
         return newInstance().searchForDutchDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
     }
 
-    public static List<Business_Dossier__c> searchForDutchDossiersSObject(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
-        return newInstance().searchForDutchDossiersSObject(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
+    public static List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
+        return newInstance().searchForDutchDossiersSObject(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
     }
 
     public static Business_Dossier__c setVatNumber(Id dossierId) {
