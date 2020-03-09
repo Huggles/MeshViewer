@@ -4,7 +4,7 @@
 
 public inherited sharing class CreditSafeService {
 
-    public static List<Business_Dossier__c> searchForCreditSafeDossiers(List<CreditSafe.Country> countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+    public static List<Business_Dossier__c> searchForCreditSafeDossiers(List<String> countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
         return newInstance().searchForCreditSafeDossiers(countries, id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name);
     }
 

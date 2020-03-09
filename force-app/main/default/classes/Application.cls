@@ -44,7 +44,6 @@ public inherited sharing class Application {
                             IWsDutchBusiness.class => WsDutchBusinessImpl.class,
                             IBusinessAccountingService.class => BusinessAccountingServiceImpl.class,
                             IBusinessService.class => BusinessServiceImpl.class,
-                            IBusinessDuplicateService.class => BusinessDuplicateServiceImpl.class,
                             IWsCreditsafe.class => WsCreditsafeImpl.class,
                             ICreditSafeService.class => CreditSafeServiceImpl.class,
                             IDutchBusinessService.class => DutchBusinessServiceImpl.class

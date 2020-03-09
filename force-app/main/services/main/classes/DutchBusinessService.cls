@@ -16,20 +16,8 @@ public inherited sharing class DutchBusinessService {
         newInstance().processRemovedDutchDossiers(removedDossiers);
     }
 
-    public static List<SearchForDossiersResultDto> searchForDutchDossiers(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
-        return newInstance().searchForDutchDossiers(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
-    }
-
     public static List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
         return newInstance().searchForDutchDossiersSObject(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
-    }
-
-    public static Business_Dossier__c setVatNumber(Id dossierId) {
-        return newInstance().setVatNumber(dossierId);
-    }
-
-    public static InsertDossiersFromDataVendorResponseDTO insertSingleDossierFromCompanyInfo(String dossierNumber, String establishmentNumber, Id accountId, fflib_ISObjectUnitOfWork unitOfWork ) {
-        return newInstance().insertSingleDossierFromCompanyInfo(dossierNumber, establishmentNumber, accountId, unitOfWork);
     }
 
     public static Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT) {

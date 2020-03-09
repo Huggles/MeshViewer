@@ -147,7 +147,7 @@
         <inputParameters>
             <name>dossier_number</name>
             <value>
-                <elementReference>dossier_number</elementReference>
+                <elementReference>RegistrationNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -319,7 +319,6 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
-    <isTemplate>true</isTemplate>
     <label>Organisation Search Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -415,7 +414,7 @@
         <name>Search</name>
         <label>Enter Search Criteria</label>
         <locationX>210</locationX>
-        <locationY>377</locationY>
+        <locationY>378</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -517,7 +516,43 @@
             <inputParameters>
                 <name>dossierNumber</name>
                 <value>
-                    <elementReference>dossier_number</elementReference>
+                    <elementReference>RegistrationNumber</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>vatNumber</name>
+                <value>
+                    <elementReference>VATNumber</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>province</name>
+                <value>
+                    <elementReference>Province</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>registrationNumber</name>
+                <value>
+                    <elementReference>RegistrationNumber</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>registrationType</name>
+                <value>
+                    <elementReference>RegistrationType</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>status</name>
+                <value>
+                    <elementReference>Status</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>creditSafeId</name>
+                <value>
+                    <elementReference>CreditSafeRegistrationId</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -556,34 +591,6 @@
             <outputParameters>
                 <assignToReference>TradeName</assignToReference>
                 <name>tradeName</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>dossier_number</assignToReference>
-                <name>dossierNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Status</assignToReference>
-                <name>status</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>RegistrationType</assignToReference>
-                <name>registrationType</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>RegistrationNumber</assignToReference>
-                <name>registrationNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>CreditSafeRegistrationId</assignToReference>
-                <name>creditSafeId</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Province</assignToReference>
-                <name>province</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>VATNumber</assignToReference>
-                <name>vatNumber</name>
             </outputParameters>
         </fields>
         <fields>
@@ -672,7 +679,7 @@
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>
@@ -736,14 +743,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
-    </variables>
-    <variables>
-        <description>The Chamber of Commerce Number to search for</description>
-        <name>dossier_number</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>foundBusinessDossiers</name>

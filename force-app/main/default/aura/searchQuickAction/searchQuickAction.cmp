@@ -1,4 +1,0 @@
-<aura:component implements="force:lightningQuickActionWithoutHeader">
-    <c:globalFlowQuickAction flow="Organisation_Search_Flow"></c:globalFlowQuickAction>
-</aura:component>	
-

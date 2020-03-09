@@ -708,6 +708,13 @@
         <value>New Account with Company.info for Sales</value>
     </labels>
     <labels>
+        <fullName>No</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
         <fullName>NoAuthAppNotActive</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -782,6 +789,22 @@
         <protected>true</protected>
         <shortDescription>Business Data Search Address</shortDescription>
         <value>Address</value>
+    </labels>
+    <labels>
+        <fullName>Search_Again_Confirmation_Dialog_Message</fullName>
+        <categories>DutchBusiness,Search</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Again Confirmation Dialog Message</shortDescription>
+        <value>Are you sure you want to search again?</value>
+    </labels>
+    <labels>
+        <fullName>Search_Again_Confirmation_Dialog_Title</fullName>
+        <categories>DutchBusiness.Search</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Again Confirmation Dialog Title</shortDescription>
+        <value>Search Again</value>
     </labels>
     <labels>
         <fullName>Search_City</fullName>
@@ -1260,6 +1283,13 @@
         <protected>true</protected>
         <shortDescription>WSCall_Unsuccessfull</shortDescription>
         <value>The call to the service was unsuccessful</value>
+    </labels>
+    <labels>
+        <fullName>Yes</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Yes</shortDescription>
+        <value>Yes</value>
     </labels>
     <labels>
         <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>

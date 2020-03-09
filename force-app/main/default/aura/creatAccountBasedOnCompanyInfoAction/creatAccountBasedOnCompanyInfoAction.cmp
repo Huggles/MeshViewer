@@ -1,0 +1,5 @@
+<aura:component controller="GlobalFlowQuickActionController" implements="force:lightningQuickActionWithoutHeader">
+
+    <c:globalFlowQuickAction flowSettingName="Create_Account_Flow_API_Name"></c:globalFlowQuickAction>
+</aura:component>	
+

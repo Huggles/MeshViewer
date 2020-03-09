@@ -172,6 +172,12 @@
                 <elementReference>Get_Account.Name</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>VATEnrichmentRequired</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>CreatedDossier</assignToReference>
             <name>selectedDossier</name>

@@ -30,7 +30,6 @@ global with sharing class SearchForDutchDossiersInvocable {
 
     @InvocableMethod(label = 'Search for Dutch dossiers' description='Searches for Dutch dossiers based on the given arguments.' category='Company.info for Sales')
     global static List<List<Business_Dossier__c>> searchForDutchDossiers(List<SearchForDutchDossiersArgument> arguments) {
-        System.debug('arguments: ' + JSON.serializePretty(arguments));
         List<List<Business_Dossier__c>> returnList = new List<List<Business_Dossier__c>>();
         for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
             List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();

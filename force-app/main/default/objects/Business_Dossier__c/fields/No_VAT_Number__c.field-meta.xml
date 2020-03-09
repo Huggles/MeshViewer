@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Internal field which returns true if there is no VAT number found in the CI backend for Dutch dossiers. For non-Dutch dossiers, Dutch dossiers for which the VAT number has not been checked yet and Dutch dossiers with a VAT number this should return false.</description>
     <externalId>false</externalId>
-    <label>No VAT Number</label>
+    <label>No VAT Number Known</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
