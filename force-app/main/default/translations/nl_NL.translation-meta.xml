@@ -105,11 +105,11 @@
         <name>Config_Loading</name>
     </customLabels>
     <customLabels>
-        <label>Company.info for Sales configuratie pagina</label>
+        <label>Company.info configuratie pagina</label>
         <name>Config_Page_Title</name>
     </customLabels>
     <customLabels>
-        <label>Company.info for Sales configuratie</label>
+        <label>Company.info configuratie</label>
         <name>Config_Title</name>
     </customLabels>
     <customLabels>
@@ -389,7 +389,7 @@
         <name>No</name>
     </customLabels>
     <customLabels>
-        <label>Geen Company.info for Salest authenticatie data gevonden. Company.info for Sales is nog niet geactiveerd</label>
+        <label>Geen Company.info authenticatie data gevonden. Company.info is nog niet geactiveerd</label>
         <name>NoAuthAppNotActive</name>
     </customLabels>
     <customLabels>
@@ -585,11 +585,11 @@
         <name>Success</name>
     </customLabels>
     <customLabels>
-        <label>Company.info for Sales synchronisatie</label>
+        <label>Company.info synchronisatie</label>
         <name>Sync</name>
     </customLabels>
     <customLabels>
-        <label>Company.info for Sales synchronisatie is succesvol uitgevoerd</label>
+        <label>Company.info synchronisatie is succesvol uitgevoerd</label>
         <name>Sync_Success</name>
     </customLabels>
     <customLabels>
@@ -689,7 +689,7 @@
         <name>WSCall_Unknown_Exception</name>
     </customLabels>
     <customLabels>
-        <label>Company.info for Sales kan de systemen van de Company.info niet bereiken. Probeer het later nog een keer.</label>
+        <label>Company.info kan de systemen van de Company.info niet bereiken. Probeer het later nog een keer.</label>
         <name>WSCall_Unsuccessful</name>
     </customLabels>
     <customLabels>
