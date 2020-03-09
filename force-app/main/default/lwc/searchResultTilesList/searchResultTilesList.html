@@ -4,21 +4,19 @@
 
 <!-- Search Result Tiles List -->
 <template>
+
+
     <template if:true={error}>
         <c-custom-toast class="error-message" show-on-load>
             {error}
         </c-custom-toast>
     </template>
-<!--    <lightning-layout multiple-rows="true" class="slds-scrollable_y">-->
-    <div class="grid">
-
-
-        <template for:each={searchResults} for:index="index" for:item="dossier">
-<!--            <lightning-layout-item key={ourKey} padding="around-small">-->
-                <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={index} labels-and-fields={labelsAndFields} title={title} onerror={handleError} oncardclicked={handleCardClicked}></c-search-result-tile>
-<!--            </lightning-layout-item>-->
+    <div class="grid" onscroll={resultsScrolled} style="max-height: 500px; overflow: scroll; resize: vertical">
+        <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="dossier">
+            <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}
+                                  title={title} onerror={handleError} oncardclicked={handleCardClicked}></c-search-result-tile>
         </template>
-
-<!--    </lightning-layout>-->
+        <div class="slds-m-around_small"></div>
     </div>
+
 </template>
