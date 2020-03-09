@@ -4,10 +4,10 @@
     <option name="connections">
       <list>
         <IlluminatedCloudConnection>
-          <option name="connectionName" value="test-ofmzhpyznuid@example.com" />
+          <option name="connectionName" value="creditsafe@cc" />
           <option name="connectionType" value="SFDX" />
           <option name="defaultModuleName" value="CompanyInfoComponents" />
-          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/test_ofmzhpyznuid_example_com/OfflineSymbolTable.zip" />
+          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/creditsafe_cc/OfflineSymbolTable.zip" />
         </IlluminatedCloudConnection>
       </list>
     </option>
