@@ -13,7 +13,7 @@ global with sharing class GetCreditsafeFullReportInvocable {
         global String reason;
     }
 
-    @InvocableMethod
+    @InvocableMethod(label='Get Creditsafe Report' description='Get Creditsafe Report by company Id' category='Company.info for Sales')
     global static List<Creditsafe_Company_Report_Full__c> getCreditsafeCompanyReportFull(List<CreditsafeReportParameters> inputParameters) {
 
         List<Creditsafe_Company_Report_Full__c> companyReportFulls = new List<Creditsafe_Company_Report_Full__c>();

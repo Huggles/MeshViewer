@@ -408,8 +408,8 @@
     <screens>
         <name>Search</name>
         <label>Enter Search Criteria</label>
-        <locationX>210</locationX>
-        <locationY>378</locationY>
+        <locationX>209</locationX>
+        <locationY>379</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -557,6 +557,10 @@
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>cancelPressed</assignToReference>
+                <name>cancelPressed</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -632,7 +636,7 @@
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>

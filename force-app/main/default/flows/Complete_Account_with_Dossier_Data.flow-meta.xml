@@ -48,6 +48,31 @@
             <label>Selected country is empty</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Was_dossier_created</name>
+        <label>Was dossier created</label>
+        <locationX>838</locationX>
+        <locationY>255</locationY>
+        <defaultConnector>
+            <targetReference>Cancelled</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dossier_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CreatedDossier</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
+            </connector>
+            <label>Dossier Found</label>
+        </rules>
+    </decisions>
     <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
     <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
@@ -89,8 +114,8 @@
         <description>Updates an account with the details of a dutch business dossier</description>
         <name>Update_Account_for_Dutch_Dossier</name>
         <label>Update Account for Dutch Dossier</label>
-        <locationX>845</locationX>
-        <locationY>267</locationY>
+        <locationX>1017</locationX>
+        <locationY>167</locationY>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -112,6 +137,22 @@
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
+    <screens>
+        <name>Cancelled</name>
+        <label>Cancelled</label>
+        <locationX>1033</locationX>
+        <locationY>359</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>CancelledText</name>
+            <fieldText>&lt;p&gt;You clicked cancel&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>267</locationY>
@@ -119,7 +160,7 @@
             <targetReference>Get_Account</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <description>Searches for organisations. Uses the input values as defaults to search on.</description>
         <name>Organisation_Search_Flow</name>
@@ -127,7 +168,7 @@
         <locationX>653</locationX>
         <locationY>267</locationY>
         <connector>
-            <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
+            <targetReference>Was_dossier_created</targetReference>
         </connector>
         <flowName>Organisation_Search_Flow</flowName>
         <inputAssignments>

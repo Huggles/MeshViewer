@@ -8,6 +8,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
+            <property name="cancelPressed" type="Boolean" role="outputOnly"/>
             <property name="showCancelButton" type="Boolean" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
