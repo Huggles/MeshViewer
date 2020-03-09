@@ -93,6 +93,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         dossier.City__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.city : null;
         dossier.Full_Address__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.full_address : null;
         dossier.Registration_Country__c = dossier.Country__c;
+        dossier.Company_Id__c = creditsafeCompanyV2.id;
         dossier.RecordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByName().get('Creditsafe').getRecordTypeId();
         return dossier;
     }
