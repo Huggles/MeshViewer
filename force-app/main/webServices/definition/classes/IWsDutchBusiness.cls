@@ -38,7 +38,7 @@ public interface IWsDutchBusiness {
 //    DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchParameters(String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page_x);
 //    DutchBusinessWsdl.DutchBusinessUBOInvestigationStatus dutchBusinessUBOCheckInvestigation(String token);
     void dutchBusinessUpdateRemoveDossier(String dossier_number,String establishment_number);
-//    DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult dutchBusinessSearch(String dossier_number,String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page_x);
+    DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult dutchBusinessSearch(String dossier_number,String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page_x);
 //    void dutchBusinessUpdateAddDossier(String dossier_number,String establishment_number);
 //    DutchBusinessWsdl.DutchBusinessGetLeiResult dutchBusinessGetLei(String dossier_number);
     DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetChangedDossiers(Date changed_since,DutchBusinessWsdl.stringArray update_types,Integer page_x);

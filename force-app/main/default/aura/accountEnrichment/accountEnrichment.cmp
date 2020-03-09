@@ -20,11 +20,15 @@
     <force:recordData aura:id="accountLoader" recordId="{!v.recordId}" targetFields="{!v.accountRecord}"
                       fields="appsolutely__Business_Dossier__c" targetError="{!v.error}" recordUpdated="{!c.handleAccountRecordUpdated}"/>
 
-    <!-- if the business dossier is there show it -->
-    <aura:if isTrue="{!v.accountRecord.appsolutely__Business_Dossier__c}">
+    <aura:if isTrue="{!and(v.accountRecord.appsolutely__Business_Dossier__c, v.accountRecord.appsolutely__Business_Dossier__c != null)}">
         <!-- load the VAT number -->
         <force:recordData aura:id="dossierLoader" recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}" targetFields="{!v.dossier}"
-                          fields="appsolutely__VAT_Number__c,appsolutely__No_VAT__c" targetError="{!v.error}" recordUpdated="{!c.handleDossierRecordUpdated}"/>
+                          fields="Id,appsolutely__VAT_Number__c,appsolutely__No_VAT_Number__c" targetError="{!v.error}" recordUpdated="{!c.handleDossierRecordUpdated}"/>
+    </aura:if>
+
+
+    <!-- if the business dossier is there show it -->
+    <aura:if isTrue="{!and(v.dossier, v.dossier != null)}">
         <!-- show the title bar -->
         <!-- TODO: migrate this to a lwc -->
         <div class="slds-box slds-theme_default slds-m-bottom_small">
@@ -34,11 +38,14 @@
                     <aura:if isTrue="{!v.showVAT}">
                         <lightning:button label="{!$Label.c.VAT_Retrieve}" onclick="{!c.getVAT}" />
                     </aura:if>
-                    <lightning:button label="{!$Label.c.Dossier_Remove}" onclick="{!c.removeDossier}" />
+                   <c:searchAgainButton dossierId="{!v.accountRecord.appsolutely__Business_Dossier__c}" ondossierdeleted="{!c.handleDossierDeleted}"/>
                 </aura:set>
             </lightning:card>
         </div>
-        <force:recordView recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}"/>
+        <aura:if isTrue="{!and(v.dossier, v.dossier.Id != null)}">
+            <force:recordView recordId="{!v.dossier.Id}"/>
+        </aura:if>
+
 
         <aura:set attribute="else">
             <lightning:flow aura:id="flowData" onstatuschange="{!c.handleFlowChangeEvent}"/>

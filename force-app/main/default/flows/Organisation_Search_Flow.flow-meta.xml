@@ -60,39 +60,9 @@
             <targetReference>Search</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>province</name>
-            <value>
-                <elementReference>Province</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>city</name>
             <value>
                 <elementReference>City</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>Name</name>
-            <value>
-                <elementReference>TradeName</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>registration_number</name>
-            <value>
-                <elementReference>RegistrationNumber</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>registration_type</name>
-            <value>
-                <elementReference>RegistrationType</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>vat_number</name>
-            <value>
-                <elementReference>VATNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -108,9 +78,9 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>street</name>
+            <name>Name</name>
             <value>
-                <elementReference>Street</elementReference>
+                <elementReference>TradeName</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -120,9 +90,39 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>province</name>
+            <value>
+                <elementReference>Province</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>registration_number</name>
+            <value>
+                <elementReference>RegistrationNumber</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>registration_type</name>
+            <value>
+                <elementReference>RegistrationType</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>status</name>
             <value>
                 <elementReference>Status</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>street</name>
+            <value>
+                <elementReference>Street</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>vat_number</name>
+            <value>
+                <elementReference>VATNumber</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -145,33 +145,9 @@
             <targetReference>Search</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>street</name>
+            <name>dossier_number</name>
             <value>
-                <elementReference>Street</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>telephone_number</name>
-            <value>
-                <elementReference>PhoneNumber</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>trade_name</name>
-            <value>
-                <elementReference>TradeName</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>postcode</name>
-            <value>
-                <elementReference>PostalCode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>house_number</name>
-            <value>
-                <elementReference>HouseNumberAsIntConversion</elementReference>
+                <elementReference>RegistrationNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -187,9 +163,39 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>house_number</name>
+            <value>
+                <elementReference>HouseNumberAsIntConversion</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>house_number_addition</name>
             <value>
                 <elementReference>HouseNumberAddition</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>postcode</name>
+            <value>
+                <elementReference>PostalCode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>street</name>
+            <value>
+                <elementReference>Street</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>telephone_number</name>
+            <value>
+                <elementReference>PhoneNumber</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>trade_name</name>
+            <value>
+                <elementReference>TradeName</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -313,7 +319,6 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
-    <isTemplate>true</isTemplate>
     <label>Organisation Search Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -506,6 +511,48 @@
                 <name>tradeName</name>
                 <value>
                     <elementReference>TradeName</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>dossierNumber</name>
+                <value>
+                    <elementReference>RegistrationNumber</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>vatNumber</name>
+                <value>
+                    <elementReference>VATNumber</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>province</name>
+                <value>
+                    <elementReference>Province</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>registrationNumber</name>
+                <value>
+                    <elementReference>RegistrationNumber</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>registrationType</name>
+                <value>
+                    <elementReference>RegistrationType</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>status</name>
+                <value>
+                    <elementReference>Status</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>creditSafeId</name>
+                <value>
+                    <elementReference>CreditSafeRegistrationId</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

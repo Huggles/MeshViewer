@@ -18,7 +18,7 @@
     },
     handleAccountRecordUpdated : function(component, event, helper) {
         var eventParams = event.getParams();
-        if(eventParams.changeType === "LOADED") {
+        if((eventParams.changeType === "LOADED" || eventParams.changeType === "CHANGED") && !component.get("v.accountRecord.appsolutely__Business_Dossier__c")) {
             helper.startFlow(component);
         }
     },
@@ -26,7 +26,7 @@
         var eventParams = event.getParams();
         if(eventParams.changeType === "LOADED") {
             var dossier = component.get("v.dossier");
-            if (!dossier.appsolutely__VAT_Number__c && !dossier.appsolutely__No_VAT__c) {
+            if (!dossier.appsolutely__VAT_Number__c && !dossier.appsolutely__No_VAT_Number__c) {
                 component.set("v.showVAT", true);
             } else {
                 component.set("v.showVAT", false);
@@ -38,6 +38,11 @@
         if (error && error != '') {
             helper.showToast(component, $A.get('$Label.c.Error'), error);
         }
+    },
+    handleDossierDeleted : function(component, event, helper) {
+        component.set("v.dossier", null);
+        helper.startFlow(component);
+        //$A.get('e.force:refreshView').fire();
     },
     getVAT : function(component, event, helper) {
         var callParams = {dossierId: component.get('v.accountRecord').appsolutely__Business_Dossier__c};
