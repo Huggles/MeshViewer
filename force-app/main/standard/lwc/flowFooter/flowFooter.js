@@ -49,16 +49,16 @@ export default class FlowFooter extends LightningElement {
      * @param event
      */
     handlePauseClick(event) {
+        this.dispatchEvent(new CustomEvent('pauseclick'));
         if (this.availableActions.find(action => action === 'PAUSE')) {
             // navigate to the next screen
             const navigatePauseEvent = new FlowNavigationPauseEvent();
             this.dispatchEvent(navigatePauseEvent);
-            this.dispatchEvent(new CustomEvent('pauseclick'));
         }
     }
 
     handleCancelClick(event) {
-        this.cancelPressed = true;
+        this.dispatchEvent(new CustomEvent('cancelclick'));
         if (this.availableActions.find(action => action === 'FINISH')) {
             const navigateFinishEvent = new FlowNavigationFinishEvent();
             this.dispatchEvent(navigateFinishEvent);
@@ -66,17 +66,14 @@ export default class FlowFooter extends LightningElement {
             const navigateNextEvent = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNextEvent);
         }
-        const attributeChangeEvent = new FlowAttributeChangeEvent('cancelPressed', this.cancelPressed);
-        this.dispatchEvent(attributeChangeEvent);
-        this.dispatchEvent(new CustomEvent('cancelclick'));
     }
 
     handlePreviousClick(event) {
+        this.dispatchEvent(new CustomEvent('previousclick'));
         if (this.availableActions.find(action => action === 'BACK')) {
             // navigate to the next screen
             const navigateBackEvent = new FlowNavigationBackEvent();
             this.dispatchEvent(navigateBackEvent);
-            this.dispatchEvent(new CustomEvent('previousclick'));
         }
     }
 

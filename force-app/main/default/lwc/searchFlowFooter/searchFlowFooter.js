@@ -22,6 +22,8 @@ export default class SearchFlowFooter extends LightningElement {
 
     @api showCancelButton;
 
+    @api cancelPressed;
+
     registeredComponents = new Set();
 
     validatedComponents;
@@ -95,7 +97,13 @@ export default class SearchFlowFooter extends LightningElement {
     }
 
     handleNextClick(event) {
-        fireEvent(this.pageRef, 'validationRequest');
+        fireEvent(null, 'validationRequest');
+    }
+
+    handleCancelClick() {
+        this.cancelPressed = true;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('cancelPressed', this.cancelPressed);
+        this.dispatchEvent(attributeChangeEvent);
     }
 
 }

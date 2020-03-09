@@ -20,6 +20,10 @@ export default class SearchResultFlowFooter extends LightningElement {
         Search_Reset
     }
 
+    @api showCancelButton;
+    @api cancelPressed;
+
+
     connectedCallback() {
         registerListener('resultselected', this.handleResultSelected, this);
         registerListener('resultunselected', this.handleResultUnSelected, this);
@@ -50,6 +54,12 @@ export default class SearchResultFlowFooter extends LightningElement {
                 this.dispatchEvent(navigateFinishEvent);
             }
         }
+    }
+
+    handleCancelClick() {
+        this.cancelPressed = true;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('cancelPressed', this.cancelPressed);
+        this.dispatchEvent(attributeChangeEvent);
     }
 
 }
