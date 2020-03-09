@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <actionCalls>
+        <name>End</name>
+        <label>End</label>
+        <locationX>604</locationX>
+        <locationY>283</locationY>
+        <actionName>appsolutely:flowCancelEndPoint</actionName>
+        <actionType>component</actionType>
+    </actionCalls>
+    <decisions>
+        <name>Cancel_Pressed</name>
+        <label>Cancel Pressed</label>
+        <locationX>468</locationX>
+        <locationY>51</locationY>
+        <defaultConnector>
+            <targetReference>Create_Account</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_Pressed_Outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>cancelPressed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End</targetReference>
+            </connector>
+            <label>Cancel Pressed</label>
+        </rules>
+    </decisions>
     <description>Template you can use to create an account based on Company.info data. Use this for example in quick actions.</description>
     <interviewLabel>Create Account based on Company.info data {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Account based on Company.info data</label>
     <processMetadataValues>
@@ -22,8 +55,11 @@
         <description>Creates the account. Add field values which take values from the selectedDossier variable to set the different fields on the account to be created.</description>
         <name>Create_Account</name>
         <label>Create Account</label>
-        <locationX>469</locationX>
-        <locationY>50</locationY>
+        <locationX>729</locationX>
+        <locationY>49</locationY>
+        <connector>
+            <targetReference>End</targetReference>
+        </connector>
         <inputAssignments>
             <field>Business_Dossier__c</field>
             <value>
@@ -53,7 +89,7 @@
         <locationX>258</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Create_Account</targetReference>
+            <targetReference>Cancel_Pressed</targetReference>
         </connector>
         <flowName>Organisation_Search_Flow</flowName>
         <inputAssignments>
@@ -63,10 +99,21 @@
             </value>
         </inputAssignments>
         <outputAssignments>
+            <assignToReference>cancelPressed</assignToReference>
+            <name>cancelPressed</name>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>selectedDossier</assignToReference>
             <name>selectedDossier</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>cancelPressed</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <description>The dossier (Company.info record) selected by the user.</description>
         <name>selectedDossier</name>
