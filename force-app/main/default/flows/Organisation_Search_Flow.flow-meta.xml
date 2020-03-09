@@ -319,6 +319,7 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Organisation Search Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -679,7 +680,7 @@
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>

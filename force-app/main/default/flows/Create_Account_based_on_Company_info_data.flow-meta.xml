@@ -2,6 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Template you can use to create an account based on Company.info data. Use this for example in quick actions.</description>
     <interviewLabel>Create Account based on Company.info data {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Account based on Company.info data</label>
     <processMetadataValues>
