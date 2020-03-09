@@ -4,7 +4,7 @@
 
 import {LightningElement, api, track} from 'lwc';
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
-import {fireEvent, registerListener} from 'c/pubsub';
+import {fireEvent, registerListener, unregisterAllListeners} from 'c/pubsub';
 import Country_Belgium from '@salesforce/label/c.Country_Belgium';
 import Country_France from '@salesforce/label/c.Country_France';
 import Country_Germany from '@salesforce/label/c.Country_Germany';
@@ -110,6 +110,10 @@ export default class BusinessSearchForm extends LightningElement {
     connectedCallback() {
         registerListener('validationRequest', this.handleValidationRequest, this);
         registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
+    }
+
+    disconnectedCallback() {
+        unregisterAllListeners(this);
     }
 
     handleComponentRegistrationOpen(registrar) {

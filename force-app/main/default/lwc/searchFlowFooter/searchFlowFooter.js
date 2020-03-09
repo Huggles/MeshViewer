@@ -6,7 +6,7 @@ import {LightningElement, api} from 'lwc';
 import Search_Confirm from '@salesforce/label/c.Search_Confirm';
 import Cancel from '@salesforce/label/c.Cancel';
 import Previous from '@salesforce/label/c.Previous';
-import {FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 import {fireEvent, registerListener, unregisterAllListeners} from "c/pubsub";
 
 export default class SearchFlowFooter extends LightningElement {
