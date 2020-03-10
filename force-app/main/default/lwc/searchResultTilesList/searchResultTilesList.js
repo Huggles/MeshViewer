@@ -7,6 +7,8 @@ import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinish
 import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 import {fireEvent} from "c/pubsub";
 
+import searchResultsLimitedCL from '@salesforce/label/c.Search_Results_Limited';
+
 export default class SearchResultTilesList extends LightningElement {
     @api
     availableActions = [];
@@ -49,6 +51,9 @@ export default class SearchResultTilesList extends LightningElement {
     maxNumberOfResults = 30;
     numberOfResultsIncrement = 9;
     numberOfResults = this.numberOfResultsIncrement;
+    searchResultsLimited = {
+        searchResultsLimitedCL
+    }
 
     @api
     get lazyloadedSearchResults() {

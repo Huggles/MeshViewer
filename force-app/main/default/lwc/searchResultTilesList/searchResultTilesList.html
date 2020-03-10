@@ -4,8 +4,6 @@
 
 <!-- Search Result Tiles List -->
 <template>
-
-
     <template if:true={error}>
         <c-custom-toast class="error-message" show-on-load>
             {error}
@@ -21,7 +19,7 @@
         <div class="slds-m-around_medium slds-size_1-of-1 buffer-zone">
 
             <template if:true={displayingMaxNumberOfResults}>
-                <div class="slds-text-align_center">More results were retrieved but not shown. Please provide more detailed search criteria.</div>
+                <div class="slds-text-align_center">{searchResultsLimited.searchResultsLimitedCL}</div>
             </template>
         </div>
     </div>
