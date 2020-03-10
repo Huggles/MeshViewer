@@ -50,7 +50,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config_Account_ActivateDescription</shortDescription>
-        <value>Thank you for installing Company.info for Sales. To begin, enter your credentials or</value>
+        <value>Thank you for installing Company.info. To begin, enter your credentials or</value>
     </labels>
     <labels>
         <fullName>Config_Account_ActivateDescriptionRequest</fullName>
@@ -190,14 +190,14 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config Page Title</shortDescription>
-        <value>Company.info for Sales configuration page</value>
+        <value>Company.info configuration page</value>
     </labels>
     <labels>
         <fullName>Config_Title</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config_Title</shortDescription>
-        <value>Company.info for Sales Setup</value>
+        <value>Company.info Setup</value>
     </labels>
     <labels>
         <fullName>Country</fullName>
@@ -404,14 +404,14 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier Remove</shortDescription>
-        <value>Remove Company.info for Sales data</value>
+        <value>Remove Company.info data</value>
     </labels>
     <labels>
         <fullName>Dossier_Removed</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier Removed</shortDescription>
-        <value>Company.info for Sales data Removed</value>
+        <value>Company.info data Removed</value>
     </labels>
     <labels>
         <fullName>Error</fullName>
@@ -705,7 +705,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>New_Account_CC</shortDescription>
-        <value>New Account with Company.info for Sales</value>
+        <value>New Account with Company.info</value>
     </labels>
     <labels>
         <fullName>No</fullName>
