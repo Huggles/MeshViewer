@@ -11,12 +11,19 @@
             {error}
         </c-custom-toast>
     </template>
-    <div class="grid" onscroll={resultsScrolled} style="max-height: 500px; overflow: scroll; resize: vertical">
+    <div class="scrollable" onscroll={resultsScrolled}>
+        <div class="grid">
         <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="dossier">
             <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}
                                   title={title} onerror={handleError} oncardclicked={handleCardClicked}></c-search-result-tile>
         </template>
-        <div class="slds-m-around_small"></div>
+        </div>
+        <div class="slds-m-around_medium slds-size_1-of-1 buffer-zone">
+
+            <template if:true={displayingMaxNumberOfResults}>
+                <div class="slds-text-align_center">More results were retrieved but not shown. Please provide more detailed search criteria.</div>
+            </template>
+        </div>
     </div>
 
 </template>
