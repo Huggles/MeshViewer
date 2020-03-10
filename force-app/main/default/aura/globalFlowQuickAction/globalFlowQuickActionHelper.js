@@ -37,6 +37,7 @@
                     var promiseModal = component.find('overlayLib').showCustomModal({
                         body: modalBody,
                         showCloseButton: true,
+                        cssClass: "slds-modal_large",
                         closeCallback: function() {
                             var dismissActionPanel = $A.get("e.force:closeQuickAction");
                             dismissActionPanel.fire();

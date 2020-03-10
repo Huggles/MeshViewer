@@ -2,23 +2,24 @@
  - Created by jaapbranderhorst on 03/03/2020.
  -->
 
+
 <!-- Search Result Tile -->
 <template>
     <div class="slds-p-around_medium slds-box color-on-hover" onclick={handleOnClick}>
-        <lightning-tile label={localTitle} type="media">
+        <lightning-tile label={localTitle} type="media" href="javascript:void(0);">
                 <span slot="media">
                     <lightning-icon icon-name={icon} size="small"></lightning-icon>
                 </span>
-            <dl class="slds-dl_horizontal">
+            <div class="slds-grid slds-wrap">
                 <template for:each={fieldValues} for:item="field">
-                    <dt key={field.index} class="slds-dl_horizontal__label">
+                    <div key={field.index} class="slds-size_2-of-5 slds-text-align_left">
                         <p class="slds-truncate" title={field.label}>{field.label}</p>
-                    </dt>
-                    <dd key={field.index} class="slds-dl_horizontal__detail slds-tile__meta">
+                    </div>
+                    <div key={field.index} class="slds-size_3-of-5 slds-text-align_right">
                         <p class="slds-truncate" title={field.value}>{field.value}</p>
-                    </dd>
+                    </div>
                 </template>
-            </dl>
+            </div>
         </lightning-tile>
     </div>
 </template>
