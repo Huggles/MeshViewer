@@ -1010,6 +1010,13 @@
         <value>The following companies match your search results. Please select the correct match for this account.</value>
     </labels>
     <labels>
+        <fullName>Search_Results_Limited</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Results Limited</shortDescription>
+        <value>More results were retrieved but not shown. Please provide more detailed search criteria.</value>
+    </labels>
+    <labels>
         <fullName>Search_Street</fullName>
         <language>en_US</language>
         <protected>true</protected>
