@@ -9,7 +9,7 @@
 }
 .scrollable{
     max-height: 500px;
-    overflow-x: visible;
+    overflow-x: hidden;
     overflow-y: auto;
     resize: inherit;
 }

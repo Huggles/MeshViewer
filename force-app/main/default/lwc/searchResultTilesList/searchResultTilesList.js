@@ -57,15 +57,19 @@ export default class SearchResultTilesList extends LightningElement {
 
     @api
     get lazyloadedSearchResults() {
-        return this.searchResults.slice(0,this.numberOfResults);
+        if (this.searchResults)
+            return this.searchResults.slice(0,this.numberOfResults);
+        else {
+            return null;
+        }
     }
     /**
      * True when the number of results displayed is limited by maxNumberOfResults.
      */
     get displayingMaxNumberOfResults(){
         return (
-            this.numberOfResults == this.maxNumberOfResults &&
-            this.numberOfResults < this.searchResults.length);
+            this.numberOfResults === this.maxNumberOfResults &&
+            this.numberOfResults < (this.searchResults ? this.searchResults.length : 0) );
     }
 
     /**

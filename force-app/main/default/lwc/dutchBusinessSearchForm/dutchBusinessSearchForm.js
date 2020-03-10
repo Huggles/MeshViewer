@@ -84,7 +84,11 @@ export default class DutchBusinessSearchForm extends LightningElement {
 
     handleOnChange(event) {
         this.hints = null; // remove the toast
-        const attributeChangeEvent = new FlowAttributeChangeEvent(event.target.name, event.target.value);
+        this.dispatchAttributeChangeEvent(event.target.name, event.target.value);
+    }
+
+    dispatchAttributeChangeEvent(name, value) {
+        const attributeChangeEvent = new FlowAttributeChangeEvent(name, value);
         this.dispatchEvent(attributeChangeEvent);
     }
 
