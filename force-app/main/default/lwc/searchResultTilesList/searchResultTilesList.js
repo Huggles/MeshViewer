@@ -7,6 +7,8 @@ import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinish
 import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 import {fireEvent} from "c/pubsub";
 
+import searchResultsLimitedCL from '@salesforce/label/c.Search_Results_Limited';
+
 export default class SearchResultTilesList extends LightningElement {
     @api
     availableActions = [];
@@ -42,8 +44,34 @@ export default class SearchResultTilesList extends LightningElement {
     @api
     title;
 
-    localKey = -1;
 
+    /**
+     * Lazy Loading Attributes
+     */
+    maxNumberOfResults = 30;
+    numberOfResultsIncrement = 9;
+    numberOfResults = this.numberOfResultsIncrement;
+    searchResultsLimited = {
+        searchResultsLimitedCL
+    }
+
+    @api
+    get lazyloadedSearchResults() {
+        return this.searchResults.slice(0,this.numberOfResults);
+    }
+    /**
+     * True when the number of results displayed is limited by maxNumberOfResults.
+     */
+    get displayingMaxNumberOfResults(){
+        return (
+            this.numberOfResults == this.maxNumberOfResults &&
+            this.numberOfResults < this.searchResults.length);
+    }
+
+    /**
+     * Local key attributes
+     */
+    localKey = -1;
     get ourKey()
     {
         this.localKey++;
@@ -55,6 +83,8 @@ export default class SearchResultTilesList extends LightningElement {
      */
     @track
     error;
+
+
 
     /**
      * Loads the label/fieldname combination from the fieldset
@@ -85,6 +115,20 @@ export default class SearchResultTilesList extends LightningElement {
             fireEvent(null, 'resultunselected');
         }
         tileClicked.selected = !tileClicked.selected; // select or unselect the card
+    }
+    resultsScrolled(event){
+        var element = event.target;
+        if (element.scrollHeight - element.scrollTop === element.clientHeight)
+        {
+            if((this.numberOfResults + this.numberOfResultsIncrement) < this.maxNumberOfResults){
+                this.numberOfResults += this.numberOfResultsIncrement;
+            }else{
+                this.numberOfResults = this.maxNumberOfResults;
+            }
+
+        }
+
+
     }
 
     handleError(event) {

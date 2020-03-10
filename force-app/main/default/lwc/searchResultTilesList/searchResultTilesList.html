@@ -9,16 +9,19 @@
             {error}
         </c-custom-toast>
     </template>
-<!--    <lightning-layout multiple-rows="true" class="slds-scrollable_y">-->
-    <div class="grid">
-
-
-        <template for:each={searchResults} for:index="index" for:item="dossier">
-<!--            <lightning-layout-item key={ourKey} padding="around-small">-->
-                <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={index} labels-and-fields={labelsAndFields} title={title} onerror={handleError} oncardclicked={handleCardClicked}></c-search-result-tile>
-<!--            </lightning-layout-item>-->
+    <div class="scrollable" onscroll={resultsScrolled}>
+        <div class="grid">
+        <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="dossier">
+            <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}
+                                  title={title} onerror={handleError} oncardclicked={handleCardClicked}></c-search-result-tile>
         </template>
+        </div>
+        <div class="slds-m-around_medium slds-size_1-of-1 buffer-zone">
 
-<!--    </lightning-layout>-->
+            <template if:true={displayingMaxNumberOfResults}>
+                <div class="slds-text-align_center">{searchResultsLimited.searchResultsLimitedCL}</div>
+            </template>
+        </div>
     </div>
+
 </template>
