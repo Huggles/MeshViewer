@@ -472,7 +472,11 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         Business_Dossier__c dossier = new Business_Dossier__c();
         dossier.Dossier_Number__c = reference.dossier_number;
         dossier.Establishment_Number__c = reference.establishment_number;
-        dossier.Name = reference.legal_name;
+        if (!String.isEmpty(reference.legal_name)) {
+            dossier.Name = reference.legal_name;
+        } else {
+            dossier.Name = reference.trade_name;
+        }
         dossier.Trade_Name_Full__c = reference.trade_name;
         dossier.Establishment_City__c = reference.establishment_city;
         dossier.Establishment_street__c = reference.establishment_street;

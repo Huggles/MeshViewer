@@ -2,11 +2,11 @@
  - Created by jaapbranderhorst on 29/02/2020.
  -->
 
-<aura:component controller="CompanyDetailsController" description="accountEnrichment" implements="flexipage:availableForRecordHome,force:hasRecordId">
+<aura:component controller="CompanyDetailsController" description="accountEnrichment" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
 
     <lightning:notificationsLibrary aura:id="notifLib"/>
 
-    <aura:attribute name="flowName" type="String" required="true" default="Complete_Account_with_Dossier_Data" description="The API name of the flow to search for the dossier to enrich the account with."/>
+    <aura:attribute name="flowName" type="String" default="Complete_Account_with_Dossier_Data" description="The API name of the flow to search for the dossier to enrich the account with." access="global"/>
     <aura:attribute name="accountRecord" type="Account" />
     <aura:attribute name="error" type="String"/>
     <aura:attribute name="myTitleName" type="Aura.Component[]">
