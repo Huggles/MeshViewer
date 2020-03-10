@@ -11,6 +11,15 @@ global with sharing class GetCreditsafeFullReportInvocable {
         global String language;
         @InvocableVariable(label = 'Reason')
         global String reason;
+
+        @TestVisible
+        private CreditsafeReportParameters(String companyId, String language, String reason) {
+            this.companyId = companyId;
+            this.language = language;
+            this.reason = reason;
+        }
+        global CreditsafeReportParameters(){}
+
     }
 
     @InvocableMethod(label='Get Creditsafe Report' description='Get Creditsafe Report by company Id' category='Company.info for Sales')

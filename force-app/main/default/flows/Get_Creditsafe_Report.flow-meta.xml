@@ -44,8 +44,8 @@
     <actionCalls>
         <name>Search_for_Company_ID</name>
         <label>Search for Company ID</label>
-        <locationX>570</locationX>
-        <locationY>631</locationY>
+        <locationX>473</locationX>
+        <locationY>621</locationY>
         <actionName>GetCompanyIdInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -87,8 +87,8 @@
     <assignments>
         <name>Assign_Country</name>
         <label>Assign Country</label>
-        <locationX>418</locationX>
-        <locationY>631</locationY>
+        <locationX>327</locationX>
+        <locationY>621</locationY>
         <assignmentItems>
             <assignToReference>Countries</assignToReference>
             <operator>Add</operator>
@@ -100,6 +100,38 @@
             <targetReference>Search_for_Company_ID</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</name>
+        <choiceText>&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Contract Intention Of Signature Of Leasing Or Rent Contract&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>ContractIntentionOfSignatureOfLeasingOrRentContract</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>CreditAssessmentExistingBusinessConnectionChoice</name>
+        <choiceText>Credit Assessment Existing Business Connection</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>CreditAssessmentExistingBusinessConnection</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>CreditAssessmentFutureBusinessConnectionChoice</name>
+        <choiceText>Credit Assessment Future Business Connection</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>CreditAssessmentFutureBusinessConnection</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>CreditDecisionChoice</name>
+        <choiceText>Credit Decision</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>CreditDecision</elementReference>
+        </value>
+    </choices>
     <choices>
         <name>DutchLanguage</name>
         <choiceText>{!Dutch}</choiceText>
@@ -124,6 +156,66 @@
             <elementReference>German</elementReference>
         </value>
     </choices>
+    <choices>
+        <name>GoodsCreditInsuranceChoice</name>
+        <choiceText>Goods Credit Insurance</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>GoodsCreditInsurance</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
+        <choiceText>Insurance Contract Intention Of Signature Of Insurance Contract</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>InsuranceContractIntentionOfSignatureOfInsuranceContract</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</name>
+        <choiceText>Purchase Contract Intention Of Signature Of Purchase Contract</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>PurchaseContractIntentionOfSignatureOfPurchaseContract</elementReference>
+        </value>
+    </choices>
+    <choices>
+        <name>RealisationCheckReceivablesCollectionChoice</name>
+        <choiceText>Realisation Check Receivables Collection</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <elementReference>RealisationCheckReceivablesCollection</elementReference>
+        </value>
+    </choices>
+    <constants>
+        <name>ContractIntentionOfSignatureOfLeasingOrRentContract</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>7</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CreditAssessmentExistingBusinessConnection</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>3</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CreditAssessmentFutureBusinessConnection</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>2</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>CreditDecision</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>1</stringValue>
+        </value>
+    </constants>
     <constants>
         <name>Dutch</name>
         <dataType>String</dataType>
@@ -150,6 +242,34 @@
         <dataType>String</dataType>
         <value>
             <stringValue>Germany</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>GoodsCreditInsurance</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>6</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>InsuranceContractIntentionOfSignatureOfInsuranceContract</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>8</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>PurchaseContractIntentionOfSignatureOfPurchaseContract</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>5</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>RealisationCheckReceivablesCollection</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>4</stringValue>
         </value>
     </constants>
     <decisions>
@@ -180,8 +300,8 @@
     <decisions>
         <name>Is_Company_Id_Filled</name>
         <label>Is Company Id Filled</label>
-        <locationX>409</locationX>
-        <locationY>400</locationY>
+        <locationX>316</locationX>
+        <locationY>401</locationY>
         <defaultConnector>
             <targetReference>Assign_Country</targetReference>
         </defaultConnector>
@@ -205,8 +325,8 @@
     <decisions>
         <name>Is_Company_Id_Not_Null</name>
         <label>Is Company Id Not Null</label>
-        <locationX>710</locationX>
-        <locationY>633</locationY>
+        <locationX>599</locationX>
+        <locationY>623</locationY>
         <defaultConnector>
             <targetReference>No_Report_screen</targetReference>
         </defaultConnector>
@@ -314,8 +434,8 @@
     <recordLookups>
         <name>Get_Buisness_Dossier_Record</name>
         <label>Get Buisness Dossier Record</label>
-        <locationX>250</locationX>
-        <locationY>398</locationY>
+        <locationX>149</locationX>
+        <locationY>399</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Company_Id_Filled</targetReference>
@@ -346,7 +466,7 @@
         <inputAssignments>
             <field>Business_Data__c</field>
             <value>
-                <elementReference>Get_Buisness_Dossier_Record.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </inputAssignments>
         <object>Creditsafe_Company_Report_Full__c</object>
@@ -363,14 +483,14 @@
             <field>Company_Id__c</field>
             <operator>IsNull</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Buisness_Dossier_Record.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -415,10 +535,18 @@
         </fields>
         <fields>
             <name>Reason</name>
+            <choiceReferences>CreditDecisionChoice</choiceReferences>
+            <choiceReferences>CreditAssessmentFutureBusinessConnectionChoice</choiceReferences>
+            <choiceReferences>CreditAssessmentExistingBusinessConnectionChoice</choiceReferences>
+            <choiceReferences>RealisationCheckReceivablesCollectionChoice</choiceReferences>
+            <choiceReferences>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</choiceReferences>
+            <choiceReferences>GoodsCreditInsuranceChoice</choiceReferences>
+            <choiceReferences>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</choiceReferences>
+            <choiceReferences>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Reason</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
@@ -459,8 +587,8 @@
     <screens>
         <name>No_Report_screen</name>
         <label>No Report</label>
-        <locationX>937</locationX>
-        <locationY>627</locationY>
+        <locationX>807</locationX>
+        <locationY>621</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
