@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- Company.info Setup --></label>
+        <name>Companyinfo_Setup</name>
+    </customApplications>
     <customLabels>
         <label>Actief</label>
         <name>Active</name>
@@ -549,6 +553,10 @@
         <name>Search_Results_Help</name>
     </customLabels>
     <customLabels>
+        <label>Er zijn meer resultaten opgehaald maar deze worden niet getoond. Specificeer gedetailleerdere zoekcriteria.</label>
+        <name>Search_Results_Limited</name>
+    </customLabels>
+    <customLabels>
         <label>Straat</label>
         <name>Search_Street</name>
     </customLabels>
@@ -740,13 +748,19 @@
         <label><!-- fflib_security_error_object_not_updateable --></label>
         <name>fflib_security_error_object_not_updateable</name>
     </customLabels>
-    <customPageWebLinks>
-        <label><!-- Link to config --></label>
-        <name>Link_to_config</name>
-    </customPageWebLinks>
+    <customTabs>
+        <label><!-- Company.info Setup --></label>
+        <name>Company_info_Setup</name>
+    </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow</fullName>
+            <fullName>Complete_Account_with_Dossier_Data-1</fullName>
+        </flows>
+        <fullName>Complete_Account_with_Dossier_Data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Organisation_Search_Flow-1</fullName>
             <screens>
                 <fields>
                     <name>dutchDossiersResult</name>
@@ -797,9 +811,9 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Complete_Account_with_Dossier_Data</fullName>
+            <fullName>Create_Account_based_on_Company_info_data-1</fullName>
         </flows>
-        <fullName>Complete_Account_with_Dossier_Data</fullName>
+        <fullName>Create_Account_based_on_Company_info_data</fullName>
     </flowDefinitions>
     <quickActions>
         <label><!-- LogACall --></label>
@@ -840,6 +854,10 @@
     <quickActions>
         <label><!-- NewTask --></label>
         <name>NewTask</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New Account via Company.info --></label>
+        <name>New_Account_via_Company_info</name>
     </quickActions>
     <quickActions>
         <label><!-- SendEmail --></label>
