@@ -25,11 +25,12 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     * @param house_number_addition
     * @param telephone_number
     * @param domain_name
+    * @param strict_search
     *
     * @return
     */
-    public List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
-        List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchResults = searchForDutchBusinessesInCompanyInfo(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name);
+    public List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+        List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchResults = searchForDutchBusinessesInCompanyInfo(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search);
 
         List<Business_Dossier__c> returnValue = new List<Business_Dossier__c>();
         for (DutchBusinessWsdl.DutchBusinessEstablishmentReference dutchBusinessEstablishmentReference : searchResults) {
@@ -255,28 +256,14 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     /** IMPLEMENTATION METHODS
     /******************************/
 
-    private List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchForDutchBusinessesInCompanyInfo(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
+    private List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchForDutchBusinessesInCompanyInfo(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchResults = new List<DutchBusinessWsdl.DutchBusinessEstablishmentReference>();
-        DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult returnedResults = WsDutchBusiness.dutchBusinessSearch(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, 1);
+        DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult returnedResults = WsDutchBusiness.dutchBusinessSearch(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, 1);
         if (returnedResults.results != null && returnedResults.results.item != null) {
             searchResults.addAll(returnedResults.results.item);
             Integer numPages = returnedResults.paging.numpages;
             for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
-                returnedResults = WsDutchBusiness.dutchBusinessSearch(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, i);
-                searchResults.addAll(returnedResults.results.item);
-            }
-        }
-        return searchResults;
-    }
-
-    private List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchForDutchBusinessesInCompanyInfo(String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name) {
-        List<DutchBusinessWsdl.DutchBusinessReferenceV2> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferenceV2>();
-        DutchBusinessWsdl.DutchBusinessReferenceV2PagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, 1);
-        if (returnedResults.results != null && returnedResults.results.item != null) {
-            searchResults.addAll(returnedResults.results.item);
-            Integer numPages = returnedResults.paging.numpages;
-            for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
-                returnedResults = WsDutchBusiness.dutchBusinessSearchParametersV2(trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, false, i);
+                returnedResults = WsDutchBusiness.dutchBusinessSearch(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, i);
                 searchResults.addAll(returnedResults.results.item);
             }
         }

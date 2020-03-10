@@ -26,6 +26,8 @@ global with sharing class SearchForDutchDossiersInvocable {
         global String telephone_number;
         @InvocableVariable(label='Domain Name' description='Domain name or email address, when an email address is given the domain part of that address is used')
         global String domain_name;
+        @InvocableVariable(label='Strict Search')
+        global Boolean strictSearch = true;
     }
 
     @InvocableMethod(label = 'Search for Dutch dossiers' description='Searches for Dutch dossiers based on the given arguments.' category='Company.info for Sales')
@@ -43,7 +45,8 @@ global with sharing class SearchForDutchDossiersInvocable {
                             searchForDutchDossiersArgument.house_number,
                             searchForDutchDossiersArgument.house_number_addition,
                             searchForDutchDossiersArgument.telephone_number,
-                            searchForDutchDossiersArgument.domain_name
+                            searchForDutchDossiersArgument.domain_name,
+                            searchForDutchDossiersArgument.strictSearch
                     )
             );
             returnList.add(businessDossiers);

@@ -54,15 +54,15 @@ private class DutchBusinessServiceImplTest {
         for (Integer i = 20; i < 30; i++) {
             resultPage2.results.item.add(establishmentReferences[i]);
         }
-        mocks.when(mockWS.dutchBusinessSearch(null, 'trade_name', null, null, null, null, null, null, null, false, 1)).thenReturn(resultPage1);
-        mocks.when(mockWS.dutchBusinessSearch(null, 'trade_name', null, null, null, null, null, null, null, false, 2)).thenReturn(resultPage2);
+        mocks.when(mockWS.dutchBusinessSearch(null, 'trade_name', null, null, null, null, null, null, null, true, 1)).thenReturn(resultPage1);
+        mocks.when(mockWS.dutchBusinessSearch(null, 'trade_name', null, null, null, null, null, null, null, true, 2)).thenReturn(resultPage2);
 
         mocks.stopStubbing();
 
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
         Test.startTest();
-        List<Business_Dossier__c> dossiers = DutchBusinessService.searchForDutchDossiersSObject(null, 'trade_name', null, null, null, null, null, null, null);
+        List<Business_Dossier__c> dossiers = DutchBusinessService.searchForDutchDossiersSObject(null, 'trade_name', null, null, null, null, null, null, null, true);
         Test.stopTest();
 
         System.assert(dossiers.size() == 30);

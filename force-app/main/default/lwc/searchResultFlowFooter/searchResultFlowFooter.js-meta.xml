@@ -6,5 +6,11 @@
     <targets>
         <target>lightning__FlowScreen</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="showCancelButton" type="Boolean" default="false" role="inputOnly"/>
+            <property name="cancelPressed" type="Boolean" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
     <masterLabel>Search Result Flow Footer</masterLabel>
 </LightningComponentBundle>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
@@ -233,7 +234,7 @@
             <name>Cancel_Pressed_Creditsafe_search_results_outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Cancel_Pressed</leftValueReference>
+                <leftValueReference>cancelPressed</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -258,7 +259,7 @@
             <name>Cancel_Pressed_Dutch_search_results</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Cancel_Pressed</leftValueReference>
+                <leftValueReference>cancelPressed</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -405,7 +406,17 @@
             <name>dutchSearchResultFlowFooter</name>
             <extensionName>appsolutely:searchResultFlowFooter</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>showCancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>cancelPressed</assignToReference>
+                <name>cancelPressed</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -592,6 +603,34 @@
                 <assignToReference>TradeName</assignToReference>
                 <name>tradeName</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>RegistrationNumber</assignToReference>
+                <name>registrationNumber</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>RegistrationType</assignToReference>
+                <name>registrationType</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Status</assignToReference>
+                <name>status</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>RegistrationNumber</assignToReference>
+                <name>dossierNumber</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>Province</assignToReference>
+                <name>province</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>VATNumber</assignToReference>
+                <name>vatNumber</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>CreditSafeRegistrationId</assignToReference>
+                <name>creditSafeId</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>searchFlowFooter</name>
@@ -672,6 +711,10 @@
             <extensionName>appsolutely:searchResultFlowFooter</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>cancelPressed</assignToReference>
+                <name>cancelPressed</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -683,7 +726,7 @@
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>
@@ -696,7 +739,7 @@
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>The city to search for</description>
@@ -746,7 +789,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>foundBusinessDossiers</name>
@@ -769,7 +812,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>The house number addition searched for</description>
@@ -777,7 +820,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>HouseNumberAsInt</name>
@@ -814,7 +857,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>The postal code searched for</description>
@@ -822,7 +865,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>Province</name>
@@ -851,7 +894,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
         <value>
             <stringValue>NL</stringValue>
         </value>
@@ -878,7 +921,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>The trade name to search for</description>
@@ -886,7 +929,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>TradeNames</name>

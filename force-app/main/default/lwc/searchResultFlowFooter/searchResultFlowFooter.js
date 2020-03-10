@@ -7,7 +7,7 @@ import Search_Results_Confirm from '@salesforce/label/c.Search_Results_Confirm';
 import Cancel from '@salesforce/label/c.Cancel';
 import Search_Reset from '@salesforce/label/c.Search_Reset';
 import {registerListener, unregisterAllListeners} from "c/pubsub";
-import {FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 
 export default class SearchResultFlowFooter extends LightningElement {
 
@@ -19,6 +19,10 @@ export default class SearchResultFlowFooter extends LightningElement {
         Cancel,
         Search_Reset
     }
+
+    @api showCancelButton;
+    @api cancelPressed;
+
 
     connectedCallback() {
         registerListener('resultselected', this.handleResultSelected, this);
@@ -50,6 +54,12 @@ export default class SearchResultFlowFooter extends LightningElement {
                 this.dispatchEvent(navigateFinishEvent);
             }
         }
+    }
+
+    handleCancelClick() {
+        this.cancelPressed = true;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('cancelPressed', this.cancelPressed);
+        this.dispatchEvent(attributeChangeEvent);
     }
 
 }
