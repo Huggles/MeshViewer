@@ -456,6 +456,9 @@
         <label>Relate Credisafe Report And Business Dossier</label>
         <locationX>1190</locationX>
         <locationY>492</locationY>
+        <connector>
+            <targetReference>Navigation</targetReference>
+        </connector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -580,6 +583,29 @@
                 <assignToReference>CancelPressed</assignToReference>
                 <name>cancelPressed</name>
             </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Navigation</name>
+        <label>Navigation</label>
+        <locationX>1314</locationX>
+        <locationY>482</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NavigateToCreditsafeReport</name>
+            <extensionName>appsolutely:flowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CreditsafeReport.Id</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
