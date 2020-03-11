@@ -366,7 +366,7 @@
             <inputParameters>
                 <name>title</name>
                 <value>
-                    <stringValue>Search results</stringValue>
+                    <stringValue>SEARCH_BUSINESS_RESULTS</stringValue>
                 </value>
             </inputParameters>
         </fields>
@@ -467,7 +467,7 @@
             <inputParameters>
                 <name>title</name>
                 <value>
-                    <stringValue>Search for Organisations</stringValue>
+                    <stringValue>SEARCH_BUSINESS</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

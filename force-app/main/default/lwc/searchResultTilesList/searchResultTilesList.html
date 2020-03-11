@@ -11,7 +11,7 @@
     </template>
     <template if:false={hasResults}>
         <div class="slds-illustration slds-illustration_small">
-            <img src={desertIllustration} class="slds-size_1-of-4"/>
+            <img src={desertIllustration} class="slds-medium-size_1-of-1" style="max-height: 300px;"/>
             <div class="slds-text-longform slds-p-top_small">
                 <h3 class="slds-text-heading_medium">{noDataLabel}</h3>
             </div>
@@ -25,10 +25,10 @@
                                           title={title} onerror={handleError} oncardclicked={handleCardClicked}></c-search-result-tile>
                 </template>
             </div>
-            <div class="slds-m-around_medium slds-size_1-of-1 buffer-zone">
+            <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;">
 
                 <template if:true={displayingMaxNumberOfResults}>
-                    <div class="slds-text-align_center">{searchResultsLimited}</div>
+                    <div class="slds-text-align_center" style="max-width: 80%;">{searchResultsLimited}</div>
                 </template>
             </div>
         </div>
