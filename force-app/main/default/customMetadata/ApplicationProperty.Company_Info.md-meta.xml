@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>DataProviderName__c</field>
-        <value xsi:type="xsd:string">Company.Info</value>
+        <value xsi:type="xsd:string">Company.info</value>
     </values>
     <values>
         <field>Data_Provider_Account_Comment__c</field>

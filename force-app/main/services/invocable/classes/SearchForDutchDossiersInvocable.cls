@@ -30,7 +30,7 @@ global with sharing class SearchForDutchDossiersInvocable {
         global Boolean strictSearch = true;
     }
 
-    @InvocableMethod(label = 'Search for Dutch dossiers' description='Searches for Dutch dossiers based on the given arguments.' category='Company.info for Sales')
+    @InvocableMethod(label = 'Search for Dutch dossiers' description='Searches for Dutch dossiers based on the given arguments.' category='Company.info')
     global static List<List<Business_Dossier__c>> searchForDutchDossiers(List<SearchForDutchDossiersArgument> arguments) {
         List<List<Business_Dossier__c>> returnList = new List<List<Business_Dossier__c>>();
         for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
