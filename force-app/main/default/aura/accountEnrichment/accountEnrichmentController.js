@@ -3,6 +3,7 @@
  */
 
 ({
+
     /**
      * Triggered when the status of the flow changes. Reloads the component if the flow is finished.
      * @param component

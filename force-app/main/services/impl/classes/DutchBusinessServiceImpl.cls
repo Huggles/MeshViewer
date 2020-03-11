@@ -30,6 +30,13 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     * @return
     */
     public List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+        // sanitize the input
+        if (!String.isEmpty(postcode)) {
+            if (postcode.startsWith('NL-')) {
+                postcode = postcode.substring(3);
+            }
+            postcode = postcode.deleteWhitespace();
+        }
         List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchResults = searchForDutchBusinessesInCompanyInfo(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search);
 
         List<Business_Dossier__c> returnValue = new List<Business_Dossier__c>();
@@ -472,7 +479,11 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         Business_Dossier__c dossier = new Business_Dossier__c();
         dossier.Dossier_Number__c = reference.dossier_number;
         dossier.Establishment_Number__c = reference.establishment_number;
-        dossier.Name = reference.legal_name;
+        if (!String.isEmpty(reference.legal_name)) {
+            dossier.Name = reference.legal_name;
+        } else {
+            dossier.Name = reference.trade_name;
+        }
         dossier.Trade_Name_Full__c = reference.trade_name;
         dossier.Establishment_City__c = reference.establishment_city;
         dossier.Establishment_street__c = reference.establishment_street;

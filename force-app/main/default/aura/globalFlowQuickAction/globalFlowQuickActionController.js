@@ -18,7 +18,7 @@
             if (outputVariables) {
                 for (var i = 0; i < outputVariables.length; i++) {
                     outputVar = outputVariables[i];
-                    if (outputVar.name === "recordId") {
+                    if (outputVar.name === "recordId" && outputVar.value && outputVar.value !== null) {
                         var urlEvent = $A.get("e.force:navigateToSObject");
                         urlEvent.setParams({
                             "recordId": outputVar.value,

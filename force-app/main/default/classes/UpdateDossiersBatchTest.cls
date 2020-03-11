@@ -21,7 +21,6 @@ public class UpdateDossiersBatchTest {
         insert dossiers;
         dossiers = [
                 SELECT
-                        Account__c,
                         Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
@@ -119,7 +118,6 @@ public class UpdateDossiersBatchTest {
         // no dossiers in the DB should be changed
         List<Business_Dossier__c> dossiersToBeAsserted = [
                 SELECT
-                        Account__c,
                         Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
@@ -240,7 +238,6 @@ public class UpdateDossiersBatchTest {
         insert dossiers;
         dossiers = [
                 SELECT
-                        Account__c,
                         Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
@@ -338,7 +335,6 @@ public class UpdateDossiersBatchTest {
         // the matching dossiers in the DB should be changed
         List<Business_Dossier__c> dossiersToBeAsserted = [
                 SELECT
-                        Account__c,
                         Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,

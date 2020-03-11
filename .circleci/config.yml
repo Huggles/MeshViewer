@@ -15,7 +15,7 @@ parameters:
   packageid:
     description: "The package id (starts with 0Ho). Copy it from the sfdx-project.json."
     type: string
-    default: "0Ho0J0000004C9wSAE"
+    default: "0Ho0J0000004CA1SAM"
   package_version_tag:
     description: "the package version’s tag"
     type: string
@@ -24,6 +24,10 @@ parameters:
     description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
     type: string
     default: "config/project-scratch-def.json"
+  enterprise_scratch_org_definition_file:
+    description: "the enterprise edition scratch org definition file used to install the beta. Should define all the right org shape/dependencies/features needed for installing the package"
+    type: string
+    default: "config/enterprise-scratch-def.json"
   build_wait:
     description: "the time in minutes the version create command waits until to return"
     type: integer
@@ -81,7 +85,7 @@ jobs:
       - run:
           name: create scratch org
           command: |
-            sfdx force:org:create -s -f << pipeline.parameters.packaging_scratch_org_definition_file >> -a test_circle_build_$CIRCLE_BUILD_NUM
+            sfdx force:org:create -s -f << pipeline.parameters.enterprise_scratch_org_definition_file >> -a test_circle_build_$CIRCLE_BUILD_NUM
       - run:
           name: get latest package version and install
           command: |

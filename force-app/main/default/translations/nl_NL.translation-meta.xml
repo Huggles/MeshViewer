@@ -754,13 +754,13 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Complete_Account_with_Dossier_Data-1</fullName>
+            <fullName>Complete_Account_with_Dossier_Data</fullName>
         </flows>
         <fullName>Complete_Account_with_Dossier_Data</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow-1</fullName>
+            <fullName>Organisation_Search_Flow</fullName>
             <screens>
                 <fields>
                     <name>dutchDossiersResult</name>
@@ -811,7 +811,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Account_based_on_Company_info_data-1</fullName>
+            <fullName>Create_Account_based_on_Company_info_data</fullName>
         </flows>
         <fullName>Create_Account_based_on_Company_info_data</fullName>
     </flowDefinitions>

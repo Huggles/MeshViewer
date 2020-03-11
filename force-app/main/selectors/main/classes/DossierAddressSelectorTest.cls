@@ -6,14 +6,10 @@
 private class DossierAddressSelectorTest {
     @TestSetup
     static void setup() {
-        List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 10; i++) {
-            accounts.add(new Account(Name = '' + i));
-        }
-        insert accounts;
         List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
         for (Integer i = 0; i < 10; i++) {
-            dossiers.add(new Business_Dossier__c(Account__c = accounts.get(i).Id));
+            dossiers.add(new Business_Dossier__c(Name = '' + i));
+
         }
         insert dossiers;
         List<Dossier_Address__c> addresses = new List<Dossier_Address__c>();
