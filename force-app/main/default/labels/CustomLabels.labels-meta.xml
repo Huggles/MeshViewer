@@ -807,6 +807,13 @@
         <value>Search Again</value>
     </labels>
     <labels>
+        <fullName>Search_Business_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Business Title</shortDescription>
+        <value>Search Business</value>
+    </labels>
+    <labels>
         <fullName>Search_City</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1015,6 +1022,13 @@
         <protected>true</protected>
         <shortDescription>Search Results Limited</shortDescription>
         <value>More results were retrieved but not shown. Please provide more detailed search criteria.</value>
+    </labels>
+    <labels>
+        <fullName>Search_Results_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Results Title</shortDescription>
+        <value>Search Results</value>
     </labels>
     <labels>
         <fullName>Search_Street</fullName>
