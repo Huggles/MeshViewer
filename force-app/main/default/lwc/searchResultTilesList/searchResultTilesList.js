@@ -8,6 +8,10 @@ import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFie
 import {fireEvent} from "c/pubsub";
 
 import searchResultsLimitedCL from '@salesforce/label/c.Search_Results_Limited';
+import searchNoResultsCL from '@salesforce/label/c.Search_No_Results';
+
+
+import DESERT_ILLUSTRATION from '@salesforce/resourceUrl/Desert';
 
 export default class SearchResultTilesList extends LightningElement {
     @api
@@ -18,6 +22,24 @@ export default class SearchResultTilesList extends LightningElement {
      */
     @api
     searchResults;
+
+    /**
+     * Are there any results?
+     */
+    get hasResults(){
+        return this.searchResults != null && this.searchResults.length > 0;
+    }
+
+    /**
+     * Illustration initialization
+     */
+    desertIllustration = DESERT_ILLUSTRATION + '#desert';
+
+
+    /**
+     * Label for when no results have been found.
+     */
+    noDataLabel = searchNoResultsCL;
 
     /**
      * The search result selected.
@@ -51,9 +73,7 @@ export default class SearchResultTilesList extends LightningElement {
     maxNumberOfResults = 30;
     numberOfResultsIncrement = 9;
     numberOfResults = this.numberOfResultsIncrement;
-    searchResultsLimited = {
-        searchResultsLimitedCL
-    }
+    searchResultsLimited = searchResultsLimitedCL;
 
     @api
     get lazyloadedSearchResults() {

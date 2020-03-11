@@ -363,6 +363,12 @@
             <extensionName>appsolutely:flowHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Search results</stringValue>
+                </value>
+            </inputParameters>
         </fields>
         <fields>
             <name>flowErrorHandlerDutchResultsScreen</name>
