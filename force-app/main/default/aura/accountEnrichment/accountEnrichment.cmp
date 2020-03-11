@@ -1,0 +1,55 @@
+<!--
+ - Created by jaapbranderhorst on 29/02/2020.
+ -->
+
+<aura:component controller="CompanyDetailsController" description="accountEnrichment" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+
+    <aura:attribute name="flowName" type="String" default="Complete_Account_with_Dossier_Data" description="The API name of the flow to search for the dossier to enrich the account with." access="global"/>
+    <aura:attribute name="accountRecord" type="Account" />
+    <aura:attribute name="error" type="String"/>
+    <aura:attribute name="myTitleName" type="Aura.Component[]">
+        <div class="logoContainer"><img src="{!$Resource.companyInfoLogoSmall}"/></div>
+    </aura:attribute>
+    <aura:attribute name="dossier" type="appsolutely__Business_Dossier__c"/>
+    <aura:attribute name="showVAT" type="Boolean"/>
+
+    <aura:handler name="errorChange" value="{!v.error}" action="{!c.handleErrorChange}"/>
+
+    <force:recordData aura:id="accountLoader" recordId="{!v.recordId}" targetFields="{!v.accountRecord}"
+                      fields="appsolutely__Business_Dossier__c" targetError="{!v.error}" recordUpdated="{!c.handleAccountRecordUpdated}"/>
+
+    <aura:if isTrue="{!and(v.accountRecord.appsolutely__Business_Dossier__c, v.accountRecord.appsolutely__Business_Dossier__c != null)}">
+        <!-- load the VAT number -->
+        <force:recordData aura:id="dossierLoader" recordId="{!v.accountRecord.appsolutely__Business_Dossier__c}" targetFields="{!v.dossier}"
+                          fields="Id,appsolutely__VAT_Number__c,appsolutely__No_VAT_Number__c" targetError="{!v.error}" recordUpdated="{!c.handleDossierRecordUpdated}"/>
+    </aura:if>
+
+
+    <!-- if the business dossier is there show it -->
+    <aura:if isTrue="{!and(v.dossier, v.dossier != null)}">
+        <!-- show the title bar -->
+        <!-- TODO: migrate this to a lwc -->
+        <div class="slds-box slds-theme_default slds-m-bottom_small">
+            <lightning:card variant="Narrow" >
+                <aura:set attribute="title">{!v.myTitleName}</aura:set>
+                <aura:set attribute="actions">
+                    <aura:if isTrue="{!v.showVAT}">
+                        <lightning:button label="{!$Label.c.VAT_Retrieve}" onclick="{!c.getVAT}" />
+                    </aura:if>
+                   <c:searchAgainButton dossierId="{!v.accountRecord.appsolutely__Business_Dossier__c}" ondossierdeleted="{!c.handleDossierDeleted}"/>
+                </aura:set>
+            </lightning:card>
+        </div>
+        <aura:if isTrue="{!and(v.dossier, v.dossier.Id != null)}">
+            <force:recordView recordId="{!v.dossier.Id}"/>
+        </aura:if>
+
+
+        <aura:set attribute="else">
+            <lightning:flow aura:id="flowData" onstatuschange="{!c.handleFlowChangeEvent}"/>
+        </aura:set>
+    </aura:if>
+
+</aura:component>

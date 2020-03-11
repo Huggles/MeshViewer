@@ -13,13 +13,13 @@ private class UpdatedDossiersIteratorTest {
     static void testNoResults() {
         // given
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IBusinessService businessServiceMock = (IBusinessService)mocks.mock(IBusinessService.class);
+        IDutchBusinessService businessServiceMock = (IDutchBusinessService)mocks.mock(IDutchBusinessService.class);
 
         mocks.startStubbing();
         mocks.when(businessServiceMock.getDutchBusinessUpdatedDossiersSince(fflib_Match.anyInteger(), (List<String>)fflib_Match.anyList(), fflib_Match.anyDate())).thenReturn(new List<UpdateDossierReferenceDTO>());
         mocks.stopStubbing();
 
-        Application.Service.setMock(IBusinessService.class, businessServiceMock);
+        Application.Service.setMock(IDutchBusinessService.class, businessServiceMock);
 
         // when
         Test.startTest();
@@ -35,7 +35,7 @@ private class UpdatedDossiersIteratorTest {
     static void testOnePageWithOneDossier() {
         // given
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IBusinessService businessServiceMock = (IBusinessService)mocks.mock(IBusinessService.class);
+        IDutchBusinessService businessServiceMock = (IDutchBusinessService)mocks.mock(IDutchBusinessService.class);
         IBusinessDossierSelector businessDossierSelectorMock = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);
 
         mocks.startStubbing();
@@ -59,7 +59,7 @@ private class UpdatedDossiersIteratorTest {
         mocks.when(businessDossierSelectorMock.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
         mocks.stopStubbing();
 
-        Application.Service.setMock(IBusinessService.class, businessServiceMock);
+        Application.Service.setMock(IDutchBusinessService.class, businessServiceMock);
         Application.Selector.setMock(businessDossierSelectorMock);
 
         // when
@@ -78,7 +78,7 @@ private class UpdatedDossiersIteratorTest {
     static void testTwoPagesWithOneDossier() {
         // given
         fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IBusinessService businessServiceMock = (IBusinessService)mocks.mock(IBusinessService.class);
+        IDutchBusinessService businessServiceMock = (IDutchBusinessService)mocks.mock(IDutchBusinessService.class);
         IBusinessDossierSelector businessDossierSelectorMock = (IBusinessDossierSelector)mocks.mock(IBusinessDossierSelector.class);
 
         mocks.startStubbing();
@@ -102,7 +102,7 @@ private class UpdatedDossiersIteratorTest {
         mocks.when(businessDossierSelectorMock.sObjectType()).thenReturn(Business_Dossier__c.SObjectType);
         mocks.stopStubbing();
 
-        Application.Service.setMock(IBusinessService.class, businessServiceMock);
+        Application.Service.setMock(IDutchBusinessService.class, businessServiceMock);
         Application.Selector.setMock(businessDossierSelectorMock);
 
         // when

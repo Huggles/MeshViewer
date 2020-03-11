@@ -5,6 +5,7 @@ Author          : ValerijsProkudins
 public inherited sharing class BusinessDossierSelector extends fflib_SObjectSelector implements IBusinessDossierSelector  {
 
     public static IBusinessDossierSelector newInstance() {
+
         return (IBusinessDossierSelector) Application.Selector.newInstance(Business_Dossier__c.SObjectType);
     }
 
@@ -15,7 +16,8 @@ public inherited sharing class BusinessDossierSelector extends fflib_SObjectSele
                 Business_Dossier__c.Dossier_Number__c,
                 Business_Dossier__c.Establishment_Number__c,
                 Business_Dossier__c.VAT_Number__c,
-                Business_Dossier__c.Account__c
+                Business_Dossier__c.RecordTypeId,
+                Business_Dossier__c.Creditsafe_Id__c
         };
     }
 
@@ -89,7 +91,7 @@ public inherited sharing class BusinessDossierSelector extends fflib_SObjectSele
         return result;
     }
 
-    public List<Business_Dossier__c> selectById(set<Id> dosserIdSet){//, String sortedBy, String sortedDirection) { // ehhhh this is standard behavior
+    public List<Business_Dossier__c> selectById(set<Id> dosserIdSet){
         return (List<Business_Dossier__c>) selectSObjectsById(dosserIdSet);
     }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_VAT_Number__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Internal field which returns true if there is no VAT number found in the CI backend for Dutch dossiers. For non-Dutch dossiers, Dutch dossiers for which the VAT number has not been checked yet and Dutch dossiers with a VAT number this should return false.</description>
+    <externalId>false</externalId>
+    <label>No VAT Number Known</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

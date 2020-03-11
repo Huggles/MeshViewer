@@ -21,7 +21,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
         insert dossiers;
         dossiers = [
                 SELECT
-                        Account__c,
                         Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
@@ -119,7 +118,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
         // no dossiers in the DB should be changed
         List<Business_Dossier__c> dossiersToBeAsserted = [
                 SELECT
-                        Account__c,
                         Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
@@ -226,9 +224,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
 
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateReferencePagedResultMock = UpdateDossiersBatchTest.getDutchBusinessUpdateReferencePagedResultMock(10, 1, 1, 1, 1);
         mocks.when(wsDutchBusinessMock.dutchBusinessUpdateGetChangedDossiers(fflib_Match.anyDate(), (DutchBusinessWsdl.stringArray) fflib_Match.anyObject(), fflib_Match.integerBetween(1, true, 1, true))).thenReturn(dutchBusinessUpdateReferencePagedResultMock);
-//        for (DutchBusinessWsdl.DutchBusinessUpdateReference businessUpdateReference : dutchBusinessUpdateReferencePagedResultMock.results.item) {
-//            mocks.when(wsDutchBusinessMock.dutchBusinessGetDossierV3(businessUpdateReference.dossier_number, businessUpdateReference.establishment_number)).thenReturn(getWsDutchBusinessDossierV3Mock(businessUpdateReference.dossier_number, businessUpdateReference.establishment_number));
-//        }
         mocks.stopStubbing();
         Application.Service.setMock(IWsDutchBusiness.class, wsDutchBusinessMock);
         // with a match with the dossiers currently in SF
@@ -236,7 +231,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
         insert dossiers;
         dossiers = [
                 SELECT
-                        Account__c,
                         Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
@@ -334,7 +328,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
         // the matching dossiers in the DB should be changed
         List<Business_Dossier__c> dossiersToBeAsserted = [
                 SELECT
-                        Account__c,
                         Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,

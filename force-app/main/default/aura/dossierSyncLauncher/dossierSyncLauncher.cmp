@@ -1,7 +1,0 @@
-<aura:component implements="force:hasRecordId">
-    <aura:attribute name="simpleRecord" type="Object" />
-    <aura:attribute name="error" type="String" />
-    <force:recordData aura:id="recordLoader" recordId="{!v.recordId}" fields="Name,cust_connect__CC_Sync__c, cust_connect__Business_Dossier__c"
-        targetFields="{!v.simpleRecord}" recordUpdated="{!c.display}" targetError="{!v.error}" />
-    <lightning:quickActionAPI aura:id="quickActionAPI" />   
-</aura:component>

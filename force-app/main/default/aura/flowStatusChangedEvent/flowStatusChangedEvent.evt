@@ -1,0 +1,7 @@
+<!--
+ - Created by jaapbranderhorst on 16/02/2020.
+ -->
+
+<aura:event type="COMPONENT" description="FlowStatusChangedEvent">
+    <aura:attribute type="String" name="status" description="event value (FINISHED, NEXT etc)"/>
+</aura:event>

@@ -1,0 +1,18 @@
+/**
+ * Created by jaapbranderhorst on 07/03/2020.
+ */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-gap: 10px;
+}
+.scrollable{
+    max-height: 500px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    resize: inherit;
+}
+.buffer-zone{
+    height: 50px;
+}

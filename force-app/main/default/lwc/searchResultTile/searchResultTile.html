@@ -1,0 +1,25 @@
+<!--
+ - Created by jaapbranderhorst on 03/03/2020.
+ -->
+
+
+<!-- Search Result Tile -->
+<template>
+    <div class="slds-p-around_medium slds-box color-on-hover" onclick={handleOnClick}>
+        <lightning-tile label={localTitle} type="media" href="javascript:void(0);">
+                <span slot="media">
+                    <lightning-icon icon-name={icon} size="small"></lightning-icon>
+                </span>
+            <div class="slds-grid slds-wrap">
+                <template for:each={fieldValues} for:item="field">
+                    <div key={field.index} class="slds-size_2-of-5 slds-text-align_left">
+                        <p class="slds-truncate" title={field.label}>{field.label}</p>
+                    </div>
+                    <div key={field.index} class="slds-size_3-of-5 slds-text-align_right">
+                        <p class="slds-truncate" title={field.value}>{field.value}</p>
+                    </div>
+                </template>
+            </div>
+        </lightning-tile>
+    </div>
+</template>

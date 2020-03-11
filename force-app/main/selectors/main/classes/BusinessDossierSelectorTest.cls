@@ -6,15 +6,10 @@ public with sharing class BusinessDossierSelectorTest {
 
     @TestSetup
     static void setup() {
-        List<Account> accounts = new List<Account>();
-        for (Integer i = 0; i < 20; i++) {
-            accounts.add(new Account(Name = '' + i));
-        }
-        insert accounts;
         List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
         for (Integer i = 0; i < 20; i++) {
-            dossiers.add(new Business_Dossier__c(Account__c = accounts.get(i).Id, Dossier_Number__c = '' + i, Establishment_Number__c = '1', VAT_Number__c = 'vat' + i));
-            dossiers.add(new Business_Dossier__c(Account__c = accounts.get(i).Id, Dossier_Number__c = '' + i, Establishment_Number__c = '2', VAT_Number__c = 'vat' + i));
+            dossiers.add(new Business_Dossier__c(Dossier_Number__c = '' + i, Establishment_Number__c = '1', VAT_Number__c = 'vat' + i));
+            dossiers.add(new Business_Dossier__c(Dossier_Number__c = '' + i, Establishment_Number__c = '2', VAT_Number__c = 'vat' + i));
         }
         insert dossiers;
     }

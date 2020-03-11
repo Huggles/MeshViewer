@@ -1,0 +1,7 @@
+/**
+ * Created by jaapbranderhorst on 03/03/2020.
+ */
+
+.color-on-hover:hover {
+    background-color: var(--lwc-colorBackgroundButtonDefaultHover);
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Full_Address__c</fullName>
+    <description>The full address the organisation currently resides according to CreditSafe</description>
+    <externalId>false</externalId>
+    <inlineHelpText>The full address the organisation currently resides according to CreditSafe</inlineHelpText>
+    <label>Full Address</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -4,7 +4,7 @@
     <protected>true</protected>
     <values>
         <field>Appsolutely_Contact_Email__c</field>
-        <value xsi:type="xsd:string">customer.connect.support@appsolutely.nl</value>
+        <value xsi:type="xsd:string">incident@appsolutely.nl</value>
     </values>
     <values>
         <field>DataProviderAdminPassword__c</field>
@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>DataProviderName__c</field>
-        <value xsi:type="xsd:string">Company.Info</value>
+        <value xsi:type="xsd:string">Company.info</value>
     </values>
     <values>
         <field>Data_Provider_Account_Comment__c</field>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Previous_Director</fullName>
+    <active>true</active>
+    <description>Previous Director</description>
+    <label>Previous Director</label>
+</RecordType>

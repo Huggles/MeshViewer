@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>47.0</apiVersion>
+    <description>Form you can use to search for an organisation. Use this in for example a Flow</description>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="dossierNumber" type="String" label="Dutch Chamber of Commerce Number"/>
+            <property name="selectedCountry" type="String" label="Selected Country" description="The selected country"/>
+            <property name="tradeName" type="String" label="Trade Name" description="The name the users uses to search. For the Netherlands the trade name."/>
+            <property name="street" type="String" label="Street" description="The street the users uses to search"/>
+            <property name="houseNumber" type="String" label="House Number" description="The house number the users uses to search"/>
+            <property name="houseNumberAddition" type="String" label="House Number Addition" description="The house number addition the users uses to search. Only used when the country is the Netherlands"/>
+            <property name="city" type="String" label="City" description="The city the users uses to search"/>
+            <property name="province" type="String" label="Province" description="The street the users uses to search. Only used if the selected country is France."/>
+            <property name="postalCode" type="String" label="Postal Code" description="The postal code the users uses to search"/>
+            <property name="domainName" type="String" label="Domain Name" description="The domain name or email address the users uses to search. Only used when the country is the Netherlands"/>
+            <property name="phoneNumber" type="String" label="Phone Number" description="The phone number the users uses to search. Only used when the country is the Netherlands"/>
+            <property name="creditSafeId" type="String" label="CreditSafe Id" description="The credit safe unique company identifier the user uses to search."/>
+            <property name="registrationNumber" type="String" label="CreditSafe registration number" description="The registration number the user uses to search. Depending on the country this can be the number of the local Chamber of Commerce or the VAT number (e.g. Belgium)"/>
+            <property name="vatNumber" type="String" label="VAT Number" description="The VAT number the user can search for. Not used in case of a.o. the Netherlands"/>
+            <property name="status" type="String" label="CreditSafe status (Active/non-Acive(" description="Indicator if the company is economically active. Not used for the Netherlands."/>
+            <property name="registrationType" type="String" label="CreditSafe registration type (Ltd/non-Ltd)" description="Indicator if this company has limited "/>
+        </targetConfig>
+    </targetConfigs>
+    <masterLabel>Business Search Form</masterLabel>
+</LightningComponentBundle>

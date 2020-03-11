@@ -27,20 +27,15 @@ public without sharing class SimpleSetFieldBatch implements Database.Batchable<S
     }
 
     public Database.QueryLocator start(Database.BatchableContext context) {
-        System.debug(query);
         return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext param1, List<SObject> scope) {
-        System.debug(scope);
         for(SObject recordToConvert : scope) {
             for(String fieldName : constantValuesByFieldName.keySet()) {
-                System.debug('before ' + recordToConvert);
                 recordToConvert.put(fieldName, constantValuesByFieldName.get(fieldName));
-                System.debug('after ' + recordToConvert);
             }
         }
-        System.debug('after ' + scope);
         update scope;
     }
 
