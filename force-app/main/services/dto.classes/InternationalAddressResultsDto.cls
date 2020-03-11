@@ -3,7 +3,6 @@
  */
 
 public with sharing class InternationalAddressResultsDto {
-    @AuraEnabled public String vendor { get; set; }
     @AuraEnabled public Double matchrate { get; set; }
     @AuraEnabled public String street {get; set; }
     @AuraEnabled public String housenr { get; set; } // chamber of commerce number
@@ -21,7 +20,7 @@ public with sharing class InternationalAddressResultsDto {
     @AuraEnabled public String building { get; set; }
 
     public InternationalAddressResultsDto(InternationalAddressWSDL.InternationalV2 searchV2Result) {
-        vendor = CustomerConnect.DataVendor.COMPANY_INFO.name();
+        // vendor = CustomerConnect.DataVendor.COMPANY_INFO.name();
         matchrate = searchV2Result.address.matchrate;
         street = searchV2Result.address.street;
         housenr = searchV2Result.address.housenr;

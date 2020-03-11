@@ -27,7 +27,8 @@ public without sharing class UpdateDossiersBatch implements Database.Batchable<B
 
     public void execute(Database.BatchableContext context, List<Business_Dossier__c> dossiersToUpdate) {
         try {
-            BusinessService.updateDossiersWithVendorData(dossiersToUpdate);}
+            DutchBusinessService.updateDossiersWithVendorData(dossiersToUpdate);
+        }
         catch(Exception e) {
             exceptions.add(e);
         }

@@ -38,7 +38,7 @@ global inherited sharing class InternationalAddressController {
     }
 
     @AuraEnabled
-    global static String createSearchResults(List<appsolutely__International_Address__c> userSelectedAddress){
+    global static String createSearchResults(List<International_Address__c> userSelectedAddress){
         if(!userSelectedAddress.isEmpty()){
             try{
                 InternationalAddressService.insertInternationalAddress(userSelectedAddress);
@@ -55,7 +55,7 @@ global inherited sharing class InternationalAddressController {
     private static Map<String,String> getCountriesFromPicklist() {
         Map<String,String> countries = new Map<String, String>();
 
-        Schema.SObjectField countriesPicklist = SObjectType.appsolutely__Business_Dossier__c.fields.appsolutely__Registration_Country__c.getSobjectField();//TODO check if this picklist is ok, or create another picklist
+        Schema.SObjectField countriesPicklist = SObjectType.Business_Dossier__c.fields.Registration_Country__c.getSobjectField();//TODO check if this picklist is ok, or create another picklist
         List<PicklistEntry> entries = countriesPicklist.getDescribe().getPicklistValues();
 
         for (Schema.PicklistEntry pickListVal : entries) {
