@@ -34,13 +34,6 @@ global with sharing class SearchForDutchDossiersInvocable {
     global static List<List<Business_Dossier__c>> searchForDutchDossiers(List<SearchForDutchDossiersArgument> arguments) {
         List<List<Business_Dossier__c>> returnList = new List<List<Business_Dossier__c>>();
         for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
-            // sanitize the input
-            if (!String.isEmpty(searchForDutchDossiersArgument.postcode)) {
-                if (searchForDutchDossiersArgument.postcode.startsWith('NL-')) {
-                    searchForDutchDossiersArgument.postcode = searchForDutchDossiersArgument.postcode.substring(3);
-                }
-                searchForDutchDossiersArgument.postcode = searchForDutchDossiersArgument.postcode.deleteWhitespace();
-            }
             List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
             businessDossiers.addAll(
                     DutchBusinessService.searchForDutchDossiersSObject(

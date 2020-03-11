@@ -30,6 +30,13 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     * @return
     */
     public List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
+        // sanitize the input
+        if (!String.isEmpty(postcode)) {
+            if (postcode.startsWith('NL-')) {
+                postcode = postcode.substring(3);
+            }
+            postcode = postcode.deleteWhitespace();
+        }
         List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchResults = searchForDutchBusinessesInCompanyInfo(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search);
 
         List<Business_Dossier__c> returnValue = new List<Business_Dossier__c>();
