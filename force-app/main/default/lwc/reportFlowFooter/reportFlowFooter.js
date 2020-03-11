@@ -4,25 +4,29 @@
 
 import {api, LightningElement} from 'lwc';
 import Cancel from '@salesforce/label/c.Cancel';
-import Previous from '@salesforce/label/c.Previous';
-import {FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
+import {FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
 export default class ReportFlowFooter extends LightningElement {
     @api
     availableActions = [];
 
     @api cancelPressed;
-    @api showCancelButton;
 
     label = {
         Cancel,
-        Previous
+        Get_Creditsafe_Report
     }
 
     handleNextClick(event) {
         const navigateNextEvent = new FlowNavigationNextEvent();
         this.dispatchEvent(navigateNextEvent);
+    }
 
+    handleCancelClick() {
+        this.cancelPressed = true;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('cancelPressed', this.cancelPressed);
+        this.dispatchEvent(attributeChangeEvent);
     }
 
 }

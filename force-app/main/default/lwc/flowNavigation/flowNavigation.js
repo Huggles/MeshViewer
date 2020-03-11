@@ -5,7 +5,7 @@
 import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
-export default class Example extends NavigationMixin(LightningElement) {
+export default class FlowNavigation extends NavigationMixin(LightningElement) {
 
     @api
     recordId;

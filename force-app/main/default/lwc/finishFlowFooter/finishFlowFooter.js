@@ -4,24 +4,23 @@
 
 import {api, LightningElement} from 'lwc';
 import Cancel from '@salesforce/label/c.Cancel';
-import Previous from '@salesforce/label/c.Previous';
-import {FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 
 export default class FinishFlowFooter extends LightningElement {
     @api
     availableActions = [];
-
+    @api
+    showNextButton = false;
     @api cancelPressed;
-    @api showCancelButton;
 
     label = {
-        Cancel,
-        Previous
+        Cancel
     }
 
-    handleNextClick(event) {
-        const navigateFinishEvent = new FlowNavigationFinishEvent();
-        this.dispatchEvent(navigateFinishEvent);
-
+    handleCancelClick() {
+        this.cancelPressed = true;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('cancelPressed', this.cancelPressed);
+        this.dispatchEvent(attributeChangeEvent);
     }
+
 }
