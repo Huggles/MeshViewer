@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Business_Data__c</fullName>
+    <fullName>Business_Dossier__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Company details</description>
     <externalId>false</externalId>
-    <label>Business Data</label>
+    <label>Business Dossier</label>
     <referenceTo>Business_Dossier__c</referenceTo>
     <relationshipLabel>Creditsafe Company Reports</relationshipLabel>
     <relationshipName>Creditsafe_Company_Reports</relationshipName>
