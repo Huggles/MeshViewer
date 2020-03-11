@@ -8,23 +8,22 @@ import getCountries from '@salesforce/apex/InternationalAddressController.getCou
 
 export default class SearchInternationalAddress extends LightningElement {
 
-    @track _organization = '';
-    @track _building = '';
-    @track _street = '';
-    @track _housenr = '';
-    @track _postcode = '';
-    @track _locality = '';
-    @track _province = '';
-    @track _pobox = '';
-    @track _language = '';
-    @track _txtBoxVal = '';
-    @track _country = '';
+    @api organization;
+    @api building;
+    @api street;
+    @api housenr;
+    @api postcode;
+    @api locality;
+    @api province;
+    @api pobox;
+    @api language;
+    @api txtBoxVal;
+    @api country;
 
     @api availableActions = [];
 
     @track selectOptions = [];
-    @track value = 'en';
-    @track org = '';
+    @track value = 'EN';
 
     @wire(getCountries)
     countries({ error, data }){
@@ -39,155 +38,8 @@ export default class SearchInternationalAddress extends LightningElement {
         }
     }
 
-    // get countries() {
-    //     return [
-    //         { label: 'Country_Netherlands', value: 'NL' },
-    //         { label: 'Country_Belgium', value: 'BE' },
-    //         { label: 'Country_Germany', value: 'DE' },
-    //         { label: 'Country_France', value: 'FR' },
-    //         { label: 'Country_United_Kingdom', value: 'GB' },
-    //         { label: 'Country_Ireland', value: 'IE' },
-    //         { label: 'Country_Sweden', value: 'SE' }
-    //     ];
-    // }
-
-    @api
-    get txtBoxVal(){
-        return this._organization;
-    }
-
-    set txtBoxVal(val){
-        this._organization = val;
-    }
-
-    @api
-    get organization(){
-        return this._organization;
-    }
-
-    set organization(val){
-        this._organization = val;
-    }
-
-    @api
-    get building(){
-        return this._building;
-    }
-
-    set building(val){
-        this._building = val;
-    }
-
-    @api
-    get street(){
-        return this._street;
-    }
-
-    set street(val){
-        this._street = val;
-    }
-
-    @api
-    get housenr(){
-        return this._housenr;
-    }
-
-    set housenr(val){
-        this._housenr = val;
-    }
-
-    @api
-    get pobox(){
-        return this._pobox;
-    }
-
-    set pobox(val){
-        this._pobox = val;
-    }
-
-    @api
-    get locality(){
-        return this._locality;
-    }
-
-    set locality(val){
-        this._locality = val;
-    }
-
-    @api
-    get postcode(){
-        return this._postcode;
-    }
-
-    set postcode(val){
-        this._postcode = val;
-    }
-
-    @api
-    get province(){
-        return this._province;
-    }
-
-    set province(val){
-        this._province = val;
-    }
-
-    @api
-    get language(){
-        return this._language;
-    }
-
-    set language(val){
-        this._language = val;
-    }
-
-    @api
-    get country(){
-        return this._country;
-    }
-
-    set country(val){
-        this._country = val;
-    }
-
     handleChange(event) {
-        if(event.target.name == 'organization') {
-            this._organization = event.target.value;
-        }
-        else if(event.target.name == 'building'){
-            this._building = event.target.value;
-        }
-        else if(event.target.name == 'street'){
-            this.street = event.target.value;
-        }
-        else if(event.target.name == 'housenr'){
-            this._housenr = event.target.value;
-        }
-        else if(event.target.name == 'pobox'){
-            this._pobox = event.target.value;
-        }
-        else if(event.target.name == 'locality'){
-            this._locality = event.target.value;
-        }
-        else if(event.target.name == 'postcode'){
-            this._postcode = event.target.value;
-        }
-        else if(event.target.name == 'province'){
-            this._province = event.target.value;
-        }
-        else if(event.target.name == 'language'){
-            this._language = event.target.value;
-        }
-        else if(event.target.name == 'country'){
-            this._country = event.target.value;
-        }
-
-    }
-
-
-    //Go to Next screen of Flow
-    handleNext(event){
-        const nextNavigationEvent = new FlowNavigationNextEvent();
-        this.dispatchEvent(nextNavigationEvent);
+        const attributeChangeEvent = new FlowAttributeChangeEvent(event.target.name, event.target.value);
+        this.dispatchEvent(attributeChangeEvent);
     }
 }
