@@ -9,7 +9,7 @@
         <name>Active</name>
     </customLabels>
     <customLabels>
-        <label>Toevoeging</label>
+        <label><!-- Addition --></label>
         <name>Addition</name>
     </customLabels>
     <customLabels>
@@ -25,7 +25,7 @@
         <name>Cancel</name>
     </customLabels>
     <customLabels>
-        <label>Stad</label>
+        <label><!-- City --></label>
         <name>City</name>
     </customLabels>
     <customLabels>
@@ -117,7 +117,7 @@
         <name>Config_Title</name>
     </customLabels>
     <customLabels>
-        <label>Land</label>
+        <label><!-- Country --></label>
         <name>Country</name>
     </customLabels>
     <customLabels>
@@ -189,7 +189,7 @@
         <name>Details_Help</name>
     </customLabels>
     <customLabels>
-        <label>Domeinnaam</label>
+        <label><!-- Domain Name --></label>
         <name>Domain_Name</name>
     </customLabels>
     <customLabels>
@@ -361,7 +361,7 @@
         <name>Get_Dossier_Results_Help</name>
     </customLabels>
     <customLabels>
-        <label>Huisnummer</label>
+        <label><!-- House Number --></label>
         <name>House_Number</name>
     </customLabels>
     <customLabels>
@@ -405,11 +405,11 @@
         <name>Non_Limited</name>
     </customLabels>
     <customLabels>
-        <label>Telefoonnummer</label>
+        <label><!-- Phone Number --></label>
         <name>Phone_Number</name>
     </customLabels>
     <customLabels>
-        <label>Postcode</label>
+        <label><!-- Postal Code --></label>
         <name>Postal_Code</name>
     </customLabels>
     <customLabels>
@@ -585,7 +585,7 @@
         <name>Status</name>
     </customLabels>
     <customLabels>
-        <label>Straat</label>
+        <label><!-- Street --></label>
         <name>Street</name>
     </customLabels>
     <customLabels>
@@ -601,7 +601,7 @@
         <name>Sync_Success</name>
     </customLabels>
     <customLabels>
-        <label>Handelsnaam</label>
+        <label><!-- Trade Name --></label>
         <name>Trade_Name</name>
     </customLabels>
     <customLabels>
@@ -629,7 +629,7 @@
         <name>Valid_Dutch_phone_number</name>
     </customLabels>
     <customLabels>
-        <label>Geldig Nederlandse Postcode</label>
+        <label><!-- Valid Dutch postal code --></label>
         <name>Valid_Dutch_postal_code</name>
     </customLabels>
     <customLabels>
@@ -673,7 +673,7 @@
         <name>Valid_Swedish_VAT_Number</name>
     </customLabels>
     <customLabels>
-        <label>Geldig huisnummer</label>
+        <label><!-- Valid house number --></label>
         <name>Valid_house_number</name>
     </customLabels>
     <customLabels>
@@ -754,7 +754,13 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow-1</fullName>
+            <fullName>Complete_Account_with_Dossier_Data</fullName>
+        </flows>
+        <fullName>Complete_Account_with_Dossier_Data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Organisation_Search_Flow</fullName>
             <screens>
                 <fields>
                     <name>dutchDossiersResult</name>
@@ -805,15 +811,9 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Account_based_on_Company_info_data-1</fullName>
+            <fullName>Create_Account_based_on_Company_info_data</fullName>
         </flows>
         <fullName>Create_Account_based_on_Company_info_data</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Complete_Account_with_Dossier_Data-1</fullName>
-        </flows>
-        <fullName>Complete_Account_with_Dossier_Data</fullName>
     </flowDefinitions>
     <quickActions>
         <label><!-- LogACall --></label>
