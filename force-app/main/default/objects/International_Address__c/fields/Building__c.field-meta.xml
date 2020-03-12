@@ -4,7 +4,7 @@
     <description>This field will hold building address of business</description>
     <externalId>false</externalId>
     <label>Building</label>
-    <length>100</length>
+    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

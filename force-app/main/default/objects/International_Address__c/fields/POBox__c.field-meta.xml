@@ -3,7 +3,7 @@
     <fullName>POBox__c</fullName>
     <description>This field will hold pobox address of business</description>
     <externalId>false</externalId>
-    <label>POBox</label>
+    <label>PO Box</label>
     <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
