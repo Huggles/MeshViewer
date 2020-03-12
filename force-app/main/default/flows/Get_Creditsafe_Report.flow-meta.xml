@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <name>End</name>
         <label>End</label>
@@ -46,14 +45,14 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
-        <name>Get_Dossier_With_Company_Id</name>
-        <label>Get Dossier With Company Id</label>
-        <locationX>326</locationX>
-        <locationY>753</locationY>
-        <actionName>SearchForCreditSafeDossiersInvocable</actionName>
+        <name>Get_for_Company_IDs</name>
+        <label>Get for Company IDs</label>
+        <locationX>533</locationX>
+        <locationY>594</locationY>
+        <actionName>GetCompanyIdsInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Get_Single_Dossier_From_List_of_Dossier</targetReference>
+            <targetReference>Is_Company_Id_Not_Null</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Handling_Screen</targetReference>
@@ -71,7 +70,7 @@
             </value>
         </inputParameters>
         <outputParameters>
-            <assignToReference>BusinessDossiers</assignToReference>
+            <assignToReference>CompanyId</assignToReference>
             <name>output</name>
         </outputParameters>
     </actionCalls>
@@ -104,23 +103,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Get_Dossier_With_Company_Id</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Business_Dossier_With_CompanyId</name>
-        <label>Business Dossier With CompanyId</label>
-        <locationX>682</locationX>
-        <locationY>651</locationY>
-        <assignmentItems>
-            <assignToReference>CompanyId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DossierRecordVariable.Company_Id__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Is_Company_Id_Not_Null</targetReference>
+            <targetReference>Get_for_Company_IDs</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -321,31 +304,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Check_the_Dossier_Id</name>
-        <label>Check the Dossier Id</label>
-        <locationX>676</locationX>
-        <locationY>937</locationY>
-        <defaultConnector>
-            <targetReference>Get_Single_Dossier_From_List_of_Dossier</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No Dossier Id Found</defaultConnectorLabel>
-        <rules>
-            <name>Dossier_Found</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>DossierRecordVariable.Dossier_Number__c</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <elementReference>Get_Buisness_Dossier_Record.Dossier_Number__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Business_Dossier_With_CompanyId</targetReference>
-            </connector>
-            <label>Dossier Found</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Is_Company_Id_Filled</name>
         <label>Is Company Id Filled</label>
         <locationX>316</locationX>
@@ -398,8 +356,8 @@
     <decisions>
         <name>Is_Creditsafe_Report_Created</name>
         <label>Is Creditsafe Report Created</label>
-        <locationX>890</locationX>
-        <locationY>340</locationY>
+        <locationX>808</locationX>
+        <locationY>337</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Creditsafe_Report_Created</name>
@@ -516,21 +474,6 @@
     </formulas>
     <interviewLabel>Get Creditsafe Report {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Get Creditsafe Report</label>
-    <loops>
-        <name>Get_Single_Dossier_From_List_of_Dossier</name>
-        <label>Get Single Dossier From List of Dossier</label>
-        <locationX>329</locationX>
-        <locationY>945</locationY>
-        <assignNextValueToReference>DossierRecordVariable</assignNextValueToReference>
-        <collectionReference>BusinessDossiers</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Check_the_Dossier_Id</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>No_Report_screen</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -620,8 +563,8 @@
     <screens>
         <name>Error_Handling_Screen</name>
         <label>Error Handling Screen</label>
-        <locationX>1393</locationX>
-        <locationY>600</locationY>
+        <locationX>1356</locationX>
+        <locationY>594</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -764,14 +707,6 @@
     </start>
     <status>Active</status>
     <variables>
-        <name>BusinessDossiers</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Business_Dossier__c</objectType>
-    </variables>
-    <variables>
         <name>CancelPressed</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -812,14 +747,6 @@
         <value>
             <elementReference>Get_Buisness_Dossier_Record.Country__c</elementReference>
         </value>
-    </variables>
-    <variables>
-        <name>DossierRecordVariable</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
         <name>recordId</name>
