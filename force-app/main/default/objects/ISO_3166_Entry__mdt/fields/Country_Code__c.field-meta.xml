@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Country_Code__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Three digit country code as defined in ISO 3166-1</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Three digit country code as defined in ISO 3166-1</inlineHelpText>
+    <label>Country Code</label>
+    <length>3</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>
