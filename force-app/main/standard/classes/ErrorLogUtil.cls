@@ -28,10 +28,17 @@ public inherited sharing class ErrorLogUtil {
      * @param e
      */
     public static void logException(Exception e) {
-            String message = '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
+        Error_Events__e error = new Error_Events__e();
+        error.Type__c = e.getTypeName();
+        error.Cause__c = String.valueOf(e.getCause());
+        error.Message__c = e.getMessage();
+        error.Line_Number__c = e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
+        EventBus.publish(error);
+
+        /*String message = '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
                 + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
-            logMessage(message);
-        }
+        logMessage(message);*/
+    }
 
 
     /**
@@ -43,7 +50,7 @@ public inherited sharing class ErrorLogUtil {
         System.debug(LoggingLevel.ERROR, 'ERROR: ' + message);
         if (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs() > 0) {
             try {
-                System.enqueueJob(new ErrorLogQueuable(message));
+                System.enqueueJob(new ErrorLogUtil.ErrorLogQueuable(message));
             } catch (Exception ex) {
                 System.debug(LoggingLevel.ERROR, 'FATAL: cannot enqueue job to log error');
             }
