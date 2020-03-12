@@ -1,0 +1,28 @@
+<!--
+ - Created by appsolutely on 18/02/2020.
+ -->
+
+<!-- Search International Address -->
+<template>
+    <lightning-card title="Search International Address" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <lightning-combobox name="country"
+                                label="Country"
+                                value={country}
+                                placeholder="Select Country"
+                                options={selectOptions}
+                                onchange={handleSelectedCountryChange}>
+            </lightning-combobox> <br />
+            <lightning-input name="organization" label="Organization" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input><br />
+            <lightning-input name="building" label="Building" title="Building" value={building} onchange={handleOnChange}></lightning-input><br />
+            <lightning-input name="street" label="Street" title="Street" value={street} onchange={handleOnChange}></lightning-input>  <br />
+            <lightning-input name="housenr" label="House Number" title="House Number" value={housenr} onchange={handleOnChange}></lightning-input>  <br />
+            <lightning-input name="pobox" label="POBox" title="POBox" value={pobox}  onchange={handleOnChange}></lightning-input>  <br />
+            <lightning-input name="locality" label="Locality" title="Locality" value={locality} onchange={handleOnChange}></lightning-input>  <br />
+            <lightning-input name="postcode" label="Postcode" title="Postcode" value={postcode} onchange={handleOnChange}></lightning-input>  <br />
+            <lightning-input name="province" label="Province" title="Province" value={province} onchange={handleOnChange}></lightning-input>  <br />
+            <lightning-input name="language" label="Language" title="Language" value={language} onchange={handleOnChange}></lightning-input>  <br />
+
+        </div>
+    </lightning-card>
+</template>

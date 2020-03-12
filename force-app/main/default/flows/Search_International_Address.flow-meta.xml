@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
+        <name>End</name>
+        <label>End</label>
+        <locationX>362</locationX>
+        <locationY>363</locationY>
+        <actionName>appsolutely:flowCancelEndPoint</actionName>
+        <actionType>component</actionType>
+    </actionCalls>
+    <actionCalls>
         <name>Search_International_Address_Invocable</name>
         <label>Search International Address Invocable</label>
-        <locationX>449</locationX>
-        <locationY>80</locationY>
+        <locationX>494</locationX>
+        <locationY>50</locationY>
         <actionName>SearchIntenationalAddressInvocable</actionName>
         <actionType>apex</actionType>
-        <connector>
-            <targetReference>Decision</targetReference>
-        </connector>
+        <faultConnector>
+            <targetReference>International_Address</targetReference>
+        </faultConnector>
         <inputParameters>
-            <name>street</name>
+            <name>building</name>
             <value>
-                <elementReference>var_Street</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>province</name>
-            <value>
-                <elementReference>var_Province</elementReference>
+                <elementReference>var_Building</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -29,33 +31,21 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>locality</name>
-            <value>
-                <elementReference>var_Locality</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>postal_code</name>
-            <value>
-                <elementReference>var_Postcode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>pobox</name>
-            <value>
-                <elementReference>var_POBox</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>building</name>
-            <value>
-                <elementReference>var_Building</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>housenr</name>
             <value>
                 <elementReference>var_Housenr</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>language</name>
+            <value>
+                <elementReference>var_Language</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>locality</name>
+            <value>
+                <elementReference>var_Locality</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -65,9 +55,27 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>language</name>
+            <name>pobox</name>
             <value>
-                <elementReference>var_Language</elementReference>
+                <elementReference>var_POBox</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>postal_code</name>
+            <value>
+                <elementReference>var_Postcode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>province</name>
+            <value>
+                <elementReference>var_Province</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>street</name>
+            <value>
+                <elementReference>var_Street</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -76,28 +84,28 @@
         </outputParameters>
     </actionCalls>
     <decisions>
-        <name>Decision</name>
-        <label>Decision</label>
-        <locationX>598</locationX>
-        <locationY>187</locationY>
+        <name>Cancel_Pressed</name>
+        <label>Cancel Pressed</label>
+        <locationX>356</locationX>
+        <locationY>168</locationY>
         <defaultConnector>
-            <targetReference>Output</targetReference>
+            <targetReference>Search_International_Address_Invocable</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
         <rules>
-            <name>No_Results_Found</name>
+            <name>Cancel_Pressed_Outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>internationalAddressInvocableData</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>cancelPressed</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>No_Results</targetReference>
+                <targetReference>End</targetReference>
             </connector>
-            <label>No Results Found</label>
+            <label>Cancel Pressed</label>
         </rules>
     </decisions>
     <interviewLabel>Search International Address {!$Flow.CurrentDateTime}</interviewLabel>
@@ -118,98 +126,41 @@
     <screens>
         <name>International_Address</name>
         <label>International Address</label>
-        <locationX>252</locationX>
-        <locationY>59</locationY>
+        <locationX>251</locationX>
+        <locationY>50</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Search_International_Address_Invocable</targetReference>
+            <targetReference>Cancel_Pressed</targetReference>
         </connector>
         <fields>
-            <name>SearchInternationalAddress</name>
-            <extensionName>appsolutely:searchInternationalAddress</extensionName>
+            <name>searchFlowHeader</name>
+            <extensionName>appsolutely:flowHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>var_Building</assignToReference>
-                <name>building</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_Country</assignToReference>
-                <name>country</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_Housenr</assignToReference>
-                <name>housenr</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_Language</assignToReference>
-                <name>language</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_Locality</assignToReference>
-                <name>locality</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_Organization</assignToReference>
-                <name>organization</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_POBox</assignToReference>
-                <name>pobox</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_Postcode</assignToReference>
-                <name>postcode</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_Province</assignToReference>
-                <name>province</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>var_Street</assignToReference>
-                <name>street</name>
-            </outputParameters>
         </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>No_Results</name>
-        <label>No Results</label>
-        <locationX>805</locationX>
-        <locationY>283</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
         <fields>
-            <name>ZeroResults</name>
-            <fieldText>&lt;p&gt;Sorry no results found&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>searchFlowErrorHandler</name>
+            <extensionName>appsolutely:flowErrorHandler</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Output</name>
-        <label>Output</label>
-        <locationX>341</locationX>
-        <locationY>277</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
         <fields>
-            <name>DisplaySearchResults</name>
-            <extensionName>appsolutely:displaySearchResults</extensionName>
+            <name>searchFlowFooter</name>
+            <extensionName>appsolutely:searchFlowFooter</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>internationalAddressList</name>
+                <name>showCancelButton</name>
                 <value>
-                    <elementReference>internationalAddressInvocableData</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>cancelPressed</assignToReference>
+                <name>cancelPressed</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -222,6 +173,13 @@
         </connector>
     </start>
     <status>Draft</status>
+    <variables>
+        <name>cancelPressed</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>internationalAddressInvocableData</name>
         <dataType>SObject</dataType>
