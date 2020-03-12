@@ -26,8 +26,12 @@ private class ErrorLogUtilTest {
         ErrorLogUtil.logException(ex);
         Test.stopTest();
         Error_Log__c[] logs = [SELECT Trace__c FROM Error_Log__c];
-        System.assert(logs.size() == 1);
-        System.assert(logs[0].Trace__c.contains('test'));
+        System.assert(logs.size() == 0);
+
+        // Test.stopTest triggers the Error_Event__e, but not the subsequent enqueueJob of the message.
+        // Query the number of queued jobs to see there is 1.
+        List<AsyncApexJob> jobInfo = [SELECT Status, NumberOfErrors FROM AsyncApexJob];
+        System.assertEquals(1, jobInfo.size());
     }
 
     @IsTest
@@ -41,8 +45,12 @@ private class ErrorLogUtilTest {
         }
         Test.stopTest();
         Error_Log__c[] logs = [SELECT Trace__c FROM Error_Log__c];
-        System.assert(logs.size() == 1);
-        System.assert(logs[0].Trace__c.contains('test'));
+        System.assertEquals(0, logs.size());
+        
+        // Test.stopTest triggers the Error_Event__e, but not the subsequent enqueueJob of the message.
+        // Query the number of queued jobs to see there is 1.
+        List<AsyncApexJob> jobInfo = [SELECT Status, NumberOfErrors FROM AsyncApexJob];
+        System.assertEquals(1, jobInfo.size());
     }
 
 }

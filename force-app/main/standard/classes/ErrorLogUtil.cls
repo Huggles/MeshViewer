@@ -34,10 +34,6 @@ public inherited sharing class ErrorLogUtil {
         error.Message__c = e.getMessage();
         error.Line_Number__c = e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
         EventBus.publish(error);
-
-        /*String message = '\n' + 'Type: ' + e.getTypeName() + '\n' + 'Cause: ' + e.getCause() + '\n' + 'Message: '
-                + e.getMessage() + '\n' + 'Line #: ' + e.getLineNumber() + '\n' + e.getStackTraceString() + '\n';
-        logMessage(message);*/
     }
 
 

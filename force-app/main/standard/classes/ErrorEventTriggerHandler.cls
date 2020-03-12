@@ -12,9 +12,5 @@ public with sharing class ErrorEventTriggerHandler {
                     + event.Message__c + '\n' + 'Line #: ' + event.Line_Number__c;
             ErrorLogUtil.logMessage(message);
         }
-
-
-
-
     }
 }
