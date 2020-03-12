@@ -3,6 +3,7 @@
     <fullName>Formatted_Address__c</fullName>
     <description>Complete formatted address</description>
     <externalId>false</externalId>
+    <inlineHelpText>Complete formatted address</inlineHelpText>
     <label>Formatted Address</label>
     <length>255</length>
     <required>false</required>

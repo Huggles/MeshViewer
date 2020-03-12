@@ -3,6 +3,7 @@
     <fullName>Delivery_Address__c</fullName>
     <description>Local delivery address</description>
     <externalId>false</externalId>
+    <inlineHelpText>Local delivery address</inlineHelpText>
     <label>Delivery Address</label>
     <length>255</length>
     <required>false</required>

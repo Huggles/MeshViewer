@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>POBox__c</fullName>
-    <description>This field will hold pobox address of business</description>
+    <description>PO box of the address, if available.</description>
     <externalId>false</externalId>
+    <inlineHelpText>PO box of the address, if available.</inlineHelpText>
     <label>PO Box</label>
     <length>50</length>
     <required>false</required>

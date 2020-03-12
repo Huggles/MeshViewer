@@ -3,6 +3,7 @@
     <fullName>Country_Specific_Locality__c</fullName>
     <description>Country specific alternative notation for locality</description>
     <externalId>false</externalId>
+    <inlineHelpText>Country specific alternative notation for locality</inlineHelpText>
     <label>Country Specific Locality</label>
     <length>255</length>
     <required>false</required>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Building__c</fullName>
-    <description>This field will hold building address of business</description>
+    <description>Name of building and / or subbuilding, if available.</description>
     <externalId>false</externalId>
+    <inlineHelpText>Name of building and / or subbuilding, if available.</inlineHelpText>
     <label>Building</label>
     <length>255</length>
     <required>false</required>

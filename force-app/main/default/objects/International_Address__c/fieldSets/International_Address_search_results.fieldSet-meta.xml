@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>International_Address_search_results</fullName>
+    <description>Defines which fields in which order are shown for the International address search results.</description>
+    <label>International Address search results</label>
+</FieldSet>

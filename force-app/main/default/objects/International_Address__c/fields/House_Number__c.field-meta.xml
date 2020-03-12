@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>House_Number__c</fullName>
-    <description>This field will hold house address of business</description>
+    <description>House number of the address, if available.</description>
     <externalId>false</externalId>
+    <inlineHelpText>House number of the address, if available.</inlineHelpText>
     <label>House Number</label>
     <length>100</length>
     <required>false</required>
