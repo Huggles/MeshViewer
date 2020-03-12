@@ -2,7 +2,7 @@
  * Created by appsolutely on 18/02/2020.
  */
 
-global inherited sharing class SearchIntenationalAddressInvocable {
+global inherited sharing class SearchForInternationalAddressInvocable {
 
     global inherited sharing class SearchInternationalAddressArgument {
         @InvocableVariable(label='Organization' description='Name of the company or organisation at the address')
@@ -82,7 +82,7 @@ global inherited sharing class SearchIntenationalAddressInvocable {
         interAddress.Delivery_Address__c = searchInternationalAddressResultsDto.delivery_address;
         interAddress.Department__c = searchInternationalAddressResultsDto.department;
         interAddress.Formatted_Address__c = searchInternationalAddressResultsDto.formatted_address;
-        interAddress.RecordRefNo__c = recordRefNumber;
+        // interAddress.RecordRefNo__c = recordRefNumber;
         return interAddress;
     }
 

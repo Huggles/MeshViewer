@@ -8,89 +8,11 @@
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
-    <actionCalls>
-        <name>Search_International_Address_Invocable</name>
-        <label>Search International Address Invocable</label>
-        <locationX>494</locationX>
-        <locationY>50</locationY>
-        <actionName>SearchIntenationalAddressInvocable</actionName>
-        <actionType>apex</actionType>
-        <faultConnector>
-            <targetReference>International_Address</targetReference>
-        </faultConnector>
-        <inputParameters>
-            <name>building</name>
-            <value>
-                <elementReference>var_Building</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>country</name>
-            <value>
-                <elementReference>var_Country</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>housenr</name>
-            <value>
-                <elementReference>var_Housenr</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>language</name>
-            <value>
-                <elementReference>var_Language</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>locality</name>
-            <value>
-                <elementReference>var_Locality</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>organization</name>
-            <value>
-                <elementReference>var_Organization</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>pobox</name>
-            <value>
-                <elementReference>var_POBox</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>postal_code</name>
-            <value>
-                <elementReference>var_Postcode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>province</name>
-            <value>
-                <elementReference>var_Province</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>street</name>
-            <value>
-                <elementReference>var_Street</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>internationalAddressInvocableData</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
         <locationX>356</locationX>
         <locationY>168</locationY>
-        <defaultConnector>
-            <targetReference>Search_International_Address_Invocable</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
         <rules>
             <name>Cancel_Pressed_Outcome</name>
