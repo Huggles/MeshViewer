@@ -12,7 +12,11 @@ import {LightningElement, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationPauseEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 import {fireEvent, registerListener, unregisterAllListeners} from 'c/pubsub';
 
+import COMPANY_INFO_LOGO from '@salesforce/resourceUrl/companyInfoLogoSmall'
+
 export default class FlowFooter extends LightningElement {
+
+    companyInfoLogo = COMPANY_INFO_LOGO;
 
     @api
     availableActions = [];
