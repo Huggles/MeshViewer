@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Business Dossier</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Business Dossiers</value>
+    </caseValues>
+    <fieldSets>
+        <label><!-- Creditsafe search result fields --></label>
+        <name>Creditsafe_search_result_fields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Dutch Business search result fields --></label>
+        <name>Dutch_Business_search_result_fields</name>
+    </fieldSets>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Business Dossier Layout</layout>
+        <sections>
+            <label><!-- Annual Financial Statement --></label>
+            <section>Annual Financial Statement</section>
+        </sections>
+        <sections>
+            <label><!-- Contact Information --></label>
+            <section>Contact Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Dates --></label>
+            <section>Dates</section>
+        </sections>
+        <sections>
+            <label><!-- Employees Information --></label>
+            <section>Employees Information</section>
+        </sections>
+        <sections>
+            <label><!-- SBI Information --></label>
+            <section>SBI Information</section>
+        </sections>
+        <sections>
+            <label><!-- Share Capital --></label>
+            <section>Share Capital</section>
+        </sections>
+        <sections>
+            <label><!-- Status --></label>
+            <section>Status</section>
+        </sections>
+        <sections>
+            <label><!-- Structure --></label>
+            <section>Structure</section>
+        </sections>
+        <sections>
+            <label><!-- Trade Information --></label>
+            <section>Trade Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Credit Safe Page Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Full address --></label>
+            <section>Full address</section>
+        </sections>
+        <sections>
+            <label><!-- Location information --></label>
+            <section>Location information</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel>Juridische naam</nameFieldLabel>
+    <recordTypes>
+        <description><!-- Record type for dossiers coming from CreditSafe itself. --></description>
+        <label><!-- Creditsafe --></label>
+        <name>Creditsafe</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record type for dossiers coming from Company Info itself. --></description>
+        <label><!-- Dutch Business --></label>
+        <name>Dutch_Business</name>
+    </recordTypes>
+</CustomObjectTranslation>

@@ -9,7 +9,7 @@
         <name>Active</name>
     </customLabels>
     <customLabels>
-        <label><!-- Addition --></label>
+        <label>Toevoeging</label>
         <name>Addition</name>
     </customLabels>
     <customLabels>
@@ -25,7 +25,7 @@
         <name>Cancel</name>
     </customLabels>
     <customLabels>
-        <label><!-- City --></label>
+        <label>Stad</label>
         <name>City</name>
     </customLabels>
     <customLabels>
@@ -117,7 +117,7 @@
         <name>Config_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country --></label>
+        <label>Land</label>
         <name>Country</name>
     </customLabels>
     <customLabels>
@@ -189,7 +189,7 @@
         <name>Details_Help</name>
     </customLabels>
     <customLabels>
-        <label><!-- Domain Name --></label>
+        <label>Domeinnaam</label>
         <name>Domain_Name</name>
     </customLabels>
     <customLabels>
@@ -361,7 +361,7 @@
         <name>Get_Dossier_Results_Help</name>
     </customLabels>
     <customLabels>
-        <label><!-- House Number --></label>
+        <label>Huisnummer</label>
         <name>House_Number</name>
     </customLabels>
     <customLabels>
@@ -405,11 +405,11 @@
         <name>Non_Limited</name>
     </customLabels>
     <customLabels>
-        <label><!-- Phone Number --></label>
+        <label>Telefoonnummer</label>
         <name>Phone_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Postal Code --></label>
+        <label>Postcode</label>
         <name>Postal_Code</name>
     </customLabels>
     <customLabels>
@@ -593,7 +593,7 @@
         <name>Status</name>
     </customLabels>
     <customLabels>
-        <label><!-- Street --></label>
+        <label>Straat</label>
         <name>Street</name>
     </customLabels>
     <customLabels>
@@ -609,7 +609,7 @@
         <name>Sync_Success</name>
     </customLabels>
     <customLabels>
-        <label><!-- Trade Name --></label>
+        <label>Handelsnaam</label>
         <name>Trade_Name</name>
     </customLabels>
     <customLabels>
@@ -637,7 +637,7 @@
         <name>Valid_Dutch_phone_number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid Dutch postal code --></label>
+        <label>Geldig Nederlandse Postcode</label>
         <name>Valid_Dutch_postal_code</name>
     </customLabels>
     <customLabels>
@@ -681,7 +681,7 @@
         <name>Valid_Swedish_VAT_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid house number --></label>
+        <label>Geldig huisnummer</label>
         <name>Valid_house_number</name>
     </customLabels>
     <customLabels>
@@ -760,6 +760,69 @@
         <label><!-- Company.info Setup --></label>
         <name>Company_info_Setup</name>
     </customTabs>
+    <flowDefinitions>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data</fullName>
+        </flows>
+        <fullName>Complete_Account_with_Dossier_Data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Organisation_Search_Flow</fullName>
+            <screens>
+                <fields>
+                    <name>dutchDossiersResult</name>
+                </fields>
+                <fields>
+                    <name>dutchSearchResultFlowFooter</name>
+                </fields>
+                <fields>
+                    <name>dutchSearchResultFlowHeader</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerDutchResultsScreen</name>
+                </fields>
+                <name>Dutch_Dossiers_Search_Results</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>BusinessSearchForm</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerSearchScreen</name>
+                </fields>
+                <fields>
+                    <name>organisationSearchFormHeader</name>
+                </fields>
+                <fields>
+                    <name>searchFlowFooter</name>
+                </fields>
+                <name>Search</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>creditSafeDossierSearchResults</name>
+                </fields>
+                <fields>
+                    <name>creditSafeResultFlowHeader</name>
+                </fields>
+                <fields>
+                    <name>creditSafeSearchResultFlowErrorHandler</name>
+                </fields>
+                <fields>
+                    <name>creditSafeSearchResultFlowFooter</name>
+                </fields>
+                <name>Show_Credit_Safe_Search_Results</name>
+            </screens>
+        </flows>
+        <fullName>Organisation_Search_Flow</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Account_based_on_Company_info_data</fullName>
+        </flows>
+        <fullName>Create_Account_based_on_Company_info_data</fullName>
+    </flowDefinitions>
     <quickActions>
         <label><!-- LogACall --></label>
         <name>LogACall</name>

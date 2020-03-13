@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Rechtsvorm</label>
+    <name>Legal_Form_Text__c</name>
+    <picklistValues>
+        <masterLabel>Besloten Vennootschap blijkens statuten structuurvennootschap</masterLabel>
+        <translation><!-- Besloten Vennootschap blijkens statuten structuurvennootschap --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Besloten Vennootschap met gewone structuur</masterLabel>
+        <translation><!-- Besloten Vennootschap met gewone structuur --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Buitenlandse EG-vennootschap met hoofdnederzetting in Nederland</masterLabel>
+        <translation><!-- Buitenlandse EG-vennootschap met hoofdnederzetting in Nederland --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Buitenlandse EG-vennootschap met onderneming in Nederland</masterLabel>
+        <translation><!-- Buitenlandse EG-vennootschap met onderneming in Nederland --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Buitenlandse op EG-vennootschap lijkende vennootschap met hoofdnederzetting in Nederland</masterLabel>
+        <translation><!-- Buitenlandse op EG-vennootschap lijkende vennootschap met hoofdnederzetting in Nederland --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Buitenlandse op EG-vennootschap lijkende vennootschap met onderneming in Nederland</masterLabel>
+        <translation><!-- Buitenlandse op EG-vennootschap lijkende vennootschap met onderneming in Nederland --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Buitenlandse rechtsvorm met hoofdvestiging in Nederland</masterLabel>
+        <translation><!-- Buitenlandse rechtsvorm met hoofdvestiging in Nederland --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Commanditaire Vennootschap met meer dan één beherende vennoot</masterLabel>
+        <translation><!-- Commanditaire Vennootschap met meer dan één beherende vennoot --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Commanditaire Vennootschap met één beherende vennoot</masterLabel>
+        <translation><!-- Commanditaire Vennootschap met één beherende vennoot --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Coöperatie B.A. blijkens statuten structuurcoöperatie</masterLabel>
+        <translation><!-- Coöperatie B.A. blijkens statuten structuurcoöperatie --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Coöperatie B.A. met gewone structuur</masterLabel>
+        <translation><!-- Coöperatie B.A. met gewone structuur --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Coöperatie U.A. blijkens statuten structuurcoöperatie</masterLabel>
+        <translation><!-- Coöperatie U.A. blijkens statuten structuurcoöperatie --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Coöperatie U.A. met gewone structuur</masterLabel>
+        <translation><!-- Coöperatie U.A. met gewone structuur --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Coöperatie W.A. blijkens statuten structuurcoöperatie</masterLabel>
+        <translation><!-- Coöperatie W.A. blijkens statuten structuurcoöperatie --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Coöperatie W.A. met gewone structuur</masterLabel>
+        <translation><!-- Coöperatie W.A. met gewone structuur --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Eenmanszaak</masterLabel>
+        <translation><!-- Eenmanszaak --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Eenmanszaak met meer dan één eigenaar</masterLabel>
+        <translation><!-- Eenmanszaak met meer dan één eigenaar --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Europees Economisch Samenwerkingsverband</masterLabel>
+        <translation><!-- Europees Economisch Samenwerkingsverband --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Europese naamloze vennootschap (SE)</masterLabel>
+        <translation><!-- Europese naamloze vennootschap (SE) --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Europese naamloze vennootschap (SE) blijkens statuten structuurvennootschap</masterLabel>
+        <translation><!-- Europese naamloze vennootschap (SE) blijkens statuten structuurvennootschap --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Kerkgenootschap</masterLabel>
+        <translation><!-- Kerkgenootschap --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Maatschap</masterLabel>
+        <translation><!-- Maatschap --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>NV / BV in oprichting op A-formulier</masterLabel>
+        <translation><!-- NV / BV in oprichting op A-formulier --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>NV / BV in oprichting op B-formulier</masterLabel>
+        <translation><!-- NV / BV in oprichting op B-formulier --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>NV / BV in oprichting op D-formulier</masterLabel>
+        <translation><!-- NV / BV in oprichting op D-formulier --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>NV beleggingsmaatschappij met veranderlijk kapitaal blijkens statuten structuurvennootschap</masterLabel>
+        <translation><!-- NV beleggingsmaatschappij met veranderlijk kapitaal blijkens statuten structuurvennootschap --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Naamloze Vennootschap beleggingsmaatschappij met veranderlijk kapitaal</masterLabel>
+        <translation><!-- Naamloze Vennootschap beleggingsmaatschappij met veranderlijk kapitaal --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Naamloze Vennootschap blijkens statuten structuurvennootschap</masterLabel>
+        <translation><!-- Naamloze Vennootschap blijkens statuten structuurvennootschap --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Naamloze Vennootschap met gewone structuur</masterLabel>
+        <translation><!-- Naamloze Vennootschap met gewone structuur --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Nevenvestiging met hoofdvestiging in buitenland</masterLabel>
+        <translation><!-- Nevenvestiging met hoofdvestiging in buitenland --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Onderlinge waarborgmaatschappij B.A. blijkens statuten structuuronderlinge</masterLabel>
+        <translation><!-- Onderlinge waarborgmaatschappij B.A. blijkens statuten structuuronderlinge --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Onderlinge waarborgmaatschappij B.A. met gewone structuur</masterLabel>
+        <translation><!-- Onderlinge waarborgmaatschappij B.A. met gewone structuur --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Onderlinge waarborgmaatschappij U.A. blijkens statuten structuuronderlinge</masterLabel>
+        <translation><!-- Onderlinge waarborgmaatschappij U.A. blijkens statuten structuuronderlinge --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Onderlinge waarborgmaatschappij U.A. met gewone structuur</masterLabel>
+        <translation><!-- Onderlinge waarborgmaatschappij U.A. met gewone structuur --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Onderlinge waarborgmaatschappij W.A. blijkens statuten structuuronderlinge</masterLabel>
+        <translation><!-- Onderlinge waarborgmaatschappij W.A. blijkens statuten structuuronderlinge --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Onderlinge waarborgmaatschappij W.A. met gewone structuur</masterLabel>
+        <translation><!-- Onderlinge waarborgmaatschappij W.A. met gewone structuur --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Privaatrechtelijke rechtspersoon</masterLabel>
+        <translation><!-- Privaatrechtelijke rechtspersoon --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Publiekrechtelijke rechtspersoon</masterLabel>
+        <translation><!-- Publiekrechtelijke rechtspersoon --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Rechtspersoon in oprichting</masterLabel>
+        <translation><!-- Rechtspersoon in oprichting --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Rederij</masterLabel>
+        <translation><!-- Rederij --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Stichting</masterLabel>
+        <translation><!-- Stichting --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Vennootschap onder firma</masterLabel>
+        <translation><!-- Vennootschap onder firma --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Vereniging met beperkte rechtsbevoegdheid</masterLabel>
+        <translation><!-- Vereniging met beperkte rechtsbevoegdheid --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Vereniging met volledige rechtsbevoegdheid</masterLabel>
+        <translation><!-- Vereniging met volledige rechtsbevoegdheid --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Vereniging van Eigenaars</masterLabel>
+        <translation><!-- Vereniging van Eigenaars --></translation>
+    </picklistValues>
+</CustomFieldTranslation>
