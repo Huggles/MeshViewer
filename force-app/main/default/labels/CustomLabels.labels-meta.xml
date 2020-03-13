@@ -414,54 +414,6 @@
         <value>Company.info data Removed</value>
     </labels>
     <labels>
-        <fullName>EMPTY_FILE</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSV file is empty.</shortDescription>
-        <value>CSV file is empty.</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_JSON_BAD_FORMAT</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>The provided Json String was badly formatted.</shortDescription>
-        <value>The provided Json String was badly formatted.</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_JSON_EMPTY</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>No field values were found in the Json String.</shortDescription>
-        <value>No field values were found in the Json String.</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_OP_FAILED</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Operation failed, please check messages!</shortDescription>
-        <value>Operation failed, please check messages!</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_REQUEST_FAILED_NO_ERROR</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Request failed with no specified error.</shortDescription>
-        <value>Request failed with no specified error.</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_UNAUTHORIZED_ENDPOINT</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Unauthorized endpoint, please check Setup</shortDescription>
-        <value>Unauthorized endpoint, please check Setup</value>
-    </labels>
-    <labels>
         <fullName>Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -687,14 +639,6 @@
         <value>Establishment Number</value>
     </labels>
     <labels>
-        <fullName>FILE_MISSING</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Please provide a comma separated file.</shortDescription>
-        <value>Please provide a comma separated file.</value>
-    </labels>
-    <labels>
         <fullName>Fill_minimum_characters</fullName>
         <categories>Error</categories>
         <language>en_US</language>
@@ -718,124 +662,12 @@
         <value>House Number</value>
     </labels>
     <labels>
-        <fullName>INVALID_FILE_ROW_SIZE_DOESNT_MATCH</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>The number of field values does not match the number of header fields on line</shortDescription>
-        <value>The number of field values does not match the number of header fields on line</value>
-    </labels>
-    <labels>
         <fullName>Ltd</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Ltd</shortDescription>
         <value>Ltd</value>
-    </labels>
-    <labels>
-        <fullName>MSG_CHECK_API_NAMES</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Please check the Api names!</shortDescription>
-        <value>Please check the Api names!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_CS_MDT_EXISTS</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Make sure Custom Setting and Custom Metadata Types exists in the org!</shortDescription>
-        <value>Make sure Custom Setting and Custom Metadata Types exists in the org!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_CS_MDT_FIELD_NAME_FORMAT</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Please check the format, Custom Setting.field and Custom Metadata Types.field</shortDescription>
-        <value>Please check the format, Custom Setting.field and Custom Metadata Types.field</value>
-    </labels>
-    <labels>
-        <fullName>MSG_CS_MDT_FIELD_NAME_REQ</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Custom Setting Name/Field Name and CMT/Field Name names are required!</shortDescription>
-        <value>Custom Setting Name/Field Name and CMT/Field Name names are required!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_CS_MDT_MAPPING_REQ</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Custom Setting Name, Custom Metadata Types and Json Mapping names are required!</shortDescription>
-        <value>Custom Setting Name, Custom Metadata Types and Json Mapping names are required!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_CS_MDT_REQ</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Custom Setting Api Name and Custom Metadata Types Api names are required!</shortDescription>
-        <value>Custom Setting Api Name and Custom Metadata Types Api names are required!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_CUSTOM_SETTINGS_EXISTS</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Make sure Custom Setting exists in the org!</shortDescription>
-        <value>Make sure Custom Setting exists in the org!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_JSON_API_NAMES</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Please check the Api names in Json!</shortDescription>
-        <value>Please check the Api names in Json!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_JSON_FORMAT</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Please check the Json format!</shortDescription>
-        <value>Please check the Json format!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_MDT_END</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Custom Metadata Types name should end with</shortDescription>
-        <value>Custom Metadata Types name should end with</value>
-    </labels>
-    <labels>
-        <fullName>MSG_MIGRATION_COMPLETED</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Migration Completed!</shortDescription>
-        <value>Migration Completed!</value>
-    </labels>
-    <labels>
-        <fullName>MSG_MIGRATION_IN_PROGRESS</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Migration In Progress, check status under Deploy -&gt; Deployment Status, Job Id:</shortDescription>
-        <value>Migration In Progress, check status under Deploy -&gt; Deployment Status, Job Id:</value>
-    </labels>
-    <labels>
-        <fullName>MSG_NOT_SUPPORTED</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Not Supported!!!</shortDescription>
-        <value>Not Supported!!!</value>
     </labels>
     <labels>
         <fullName>Matching_Companies</fullName>
@@ -980,6 +812,13 @@
         <protected>true</protected>
         <shortDescription>International Address search building details</shortDescription>
         <value>Search_Building</value>
+    </labels>
+    <labels>
+        <fullName>Search_Business_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Business Title</shortDescription>
+        <value>Search Business</value>
     </labels>
     <labels>
         <fullName>Search_City</fullName>
@@ -1213,6 +1052,13 @@
         <value>More results were retrieved but not shown. Please provide more detailed search criteria.</value>
     </labels>
     <labels>
+        <fullName>Search_Results_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Search Results Title</shortDescription>
+        <value>Search Results</value>
+    </labels>
+    <labels>
         <fullName>Search_Street</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1293,14 +1139,6 @@
         <protected>true</protected>
         <shortDescription>Business Data Sync Success</shortDescription>
         <value>Business Data sync was successful.</value>
-    </labels>
-    <labels>
-        <fullName>TYPE_OPTION_NOT_SELECTED</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Please choose a valid custom metadata type.</shortDescription>
-        <value>Please choose a valid custom metadata type.</value>
     </labels>
     <labels>
         <fullName>Trade_Name</fullName>
