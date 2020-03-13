@@ -7,21 +7,6 @@ CAREFULL: doesn't work when you rollback the transaction.
 
 public inherited sharing class ErrorLogUtil {
 
-    public inherited sharing class ErrorLogQueuable implements Queueable {
-
-        private String message { get; set; }
-
-        public void execute(QueueableContext context) {
-            Error_Log__c log = new Error_Log__c(Trace__c = message);
-            insert log;
-        }
-
-        public ErrorLogQueuable(String message) {
-            this.message = message;
-        }
-
-    }
-
     /**
      * Log an exception in the Error_log custom object.
      *
@@ -38,7 +23,8 @@ public inherited sharing class ErrorLogUtil {
 
 
     /**
-     * Log a message in the Error_log custom object
+     * Log a message in the Error_log custom object.
+     * This function should not be called directly. Call logException(Exception e) instead.
      *
      * @param message
      */
@@ -46,7 +32,8 @@ public inherited sharing class ErrorLogUtil {
         System.debug(LoggingLevel.ERROR, 'ERROR: ' + message);
         if (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs() > 0) {
             try {
-                System.enqueueJob(new ErrorLogUtil.ErrorLogQueuable(message));
+                Error_Log__c log = new Error_Log__c(Trace__c = message);
+                insert log;
             } catch (Exception ex) {
                 System.debug(LoggingLevel.ERROR, 'FATAL: cannot enqueue job to log error');
             }
