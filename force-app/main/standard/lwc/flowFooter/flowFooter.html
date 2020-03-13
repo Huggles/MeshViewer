@@ -4,28 +4,35 @@
 
 <!-- Flow Footer -->
 <template>
-    <lightning-layout horizontal-align="spread" vertical-align="center" class="slds-docked-composer__footer">
-        <lightning-layout-item></lightning-layout-item>
+    <div class="slds-size_1-of-1 slds-m-top_small"></div>
+    <lightning-layout horizontal-align="spread" vertical-align="center">
+        <lightning-layout-item>
+            <img src={companyInfoLogo} style="height: 30px;"/>
+        </lightning-layout-item>
         <lightning-layout-item>
             <lightning-button-group class="slds-button-group-row">
                 <template if:true={showPauseButton}>
                     <div class="slds-button-group-item">
-                        <lightning-button label={pauseButtonTitle} title={pauseButtonTitle} onclick={handlePauseClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button   label={pauseButtonTitle} title={pauseButtonTitle}
+                                            onclick={handlePauseClick}></lightning-button>
                     </div>
                 </template>
                 <template if:true={showCancelButton}>
                     <div class="slds-button-group-item">
-                    <lightning-button label={cancelButtonTitle} title={cancelButtonTitle} onclick={handleCancelClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button   label={cancelButtonTitle} title={cancelButtonTitle}
+                                            onclick={handleCancelClick}></lightning-button>
                     </div>
                 </template>
                 <template if:true={showPreviousButton}>
                     <div class="slds-button-group-item">
-                    <lightning-button label={previousButtonTitle} title={previousButtonTitle} onclick={handlePreviousClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button   label={previousButtonTitle} title={previousButtonTitle}
+                                            onclick={handlePreviousClick}></lightning-button>
                     </div>
                 </template>
                 <template if:true={showNextButton}>
                     <div class="slds-button-group-item">
-                    <lightning-button variant="brand" label={nextButtonTitle} disabled={nextButtonDisabled} onclick={handleNextClick} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button   variant="brand" label={nextButtonTitle} disabled={nextButtonDisabled}
+                                            onclick={handleNextClick}></lightning-button>
                     </div>
                 </template>
             </lightning-button-group>
