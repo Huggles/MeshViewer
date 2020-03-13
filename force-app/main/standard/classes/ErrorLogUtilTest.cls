@@ -41,7 +41,7 @@ private class ErrorLogUtilTest {
         }
         Test.stopTest();
         Error_Log__c[] logs = [SELECT Trace__c FROM Error_Log__c];
-        System.assert(logs.size() == 1);
+        System.assertEquals(1, logs.size());
         System.assert(logs[0].Trace__c.contains('test'));
     }
 
