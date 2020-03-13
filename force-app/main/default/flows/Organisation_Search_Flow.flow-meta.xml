@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
@@ -185,6 +184,12 @@
             <name>street</name>
             <value>
                 <elementReference>Street</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>strictSearch</name>
+            <value>
+                <elementReference>StrictSearch</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -431,7 +436,7 @@
         <name>Search</name>
         <label>Enter Search Criteria</label>
         <locationX>210</locationX>
-        <locationY>378</locationY>
+        <locationY>377</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -572,6 +577,12 @@
                     <elementReference>CreditSafeRegistrationId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>strictSearch</name>
+                <value>
+                    <elementReference>StrictSearch</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>City</assignToReference>
@@ -636,6 +647,10 @@
             <outputParameters>
                 <assignToReference>CreditSafeRegistrationId</assignToReference>
                 <name>creditSafeId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>StrictSearch</assignToReference>
+                <name>strictSearch</name>
             </outputParameters>
         </fields>
         <fields>
@@ -732,7 +747,7 @@
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>
@@ -928,6 +943,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>StrictSearch</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>The trade name to search for</description>

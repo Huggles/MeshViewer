@@ -1092,6 +1092,13 @@
         <value>Street</value>
     </labels>
     <labels>
+        <fullName>Strict_Search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Strict Search</shortDescription>
+        <value>Strict Search</value>
+    </labels>
+    <labels>
         <fullName>Success</fullName>
         <language>en_US</language>
         <protected>true</protected>

@@ -597,6 +597,10 @@
         <name>Street</name>
     </customLabels>
     <customLabels>
+        <label>Zoek Exact</label>
+        <name>Strict_Search</name>
+    </customLabels>
+    <customLabels>
         <label>Gelukt</label>
         <name>Success</name>
     </customLabels>
@@ -760,69 +764,6 @@
         <label><!-- Company.info Setup --></label>
         <name>Company_info_Setup</name>
     </customTabs>
-    <flowDefinitions>
-        <flows>
-            <fullName>Complete_Account_with_Dossier_Data</fullName>
-        </flows>
-        <fullName>Complete_Account_with_Dossier_Data</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Organisation_Search_Flow</fullName>
-            <screens>
-                <fields>
-                    <name>dutchDossiersResult</name>
-                </fields>
-                <fields>
-                    <name>dutchSearchResultFlowFooter</name>
-                </fields>
-                <fields>
-                    <name>dutchSearchResultFlowHeader</name>
-                </fields>
-                <fields>
-                    <name>flowErrorHandlerDutchResultsScreen</name>
-                </fields>
-                <name>Dutch_Dossiers_Search_Results</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>BusinessSearchForm</name>
-                </fields>
-                <fields>
-                    <name>flowErrorHandlerSearchScreen</name>
-                </fields>
-                <fields>
-                    <name>organisationSearchFormHeader</name>
-                </fields>
-                <fields>
-                    <name>searchFlowFooter</name>
-                </fields>
-                <name>Search</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>creditSafeDossierSearchResults</name>
-                </fields>
-                <fields>
-                    <name>creditSafeResultFlowHeader</name>
-                </fields>
-                <fields>
-                    <name>creditSafeSearchResultFlowErrorHandler</name>
-                </fields>
-                <fields>
-                    <name>creditSafeSearchResultFlowFooter</name>
-                </fields>
-                <name>Show_Credit_Safe_Search_Results</name>
-            </screens>
-        </flows>
-        <fullName>Organisation_Search_Flow</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Create_Account_based_on_Company_info_data</fullName>
-        </flows>
-        <fullName>Create_Account_based_on_Company_info_data</fullName>
-    </flowDefinitions>
     <quickActions>
         <label><!-- LogACall --></label>
         <name>LogACall</name>
