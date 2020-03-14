@@ -27,9 +27,9 @@ public inherited sharing class Iso3166CountryPickListController {
      *
      * @return
      */
-    @AuraEnabled(Cacheable=true)
+    @AuraEnabled(cacheable=true)
     public static List<Iso3166Option> getIso3166Options() {
-        List<ISO_3166_Entry__mdt> iso3166Entries = [SELECT Country_Code__c, Country_Name__c, Label FROM ISO_3166_Entry__mdt];
+        List<ISO_3166_Entry__mdt> iso3166Entries = [SELECT Country_Code__c, Country_Name__c, Label FROM ISO_3166_Entry__mdt ORDER BY Country_Name__c];
         List<Iso3166Option> options = new List<Iso3166CountryPickListController.Iso3166Option>();
         for (ISO_3166_Entry__mdt o3166Entry : iso3166Entries) {
             options.add(new Iso3166Option(o3166Entry.Country_Name__c, o3166Entry.Label, o3166Entry.Country_Code__c));

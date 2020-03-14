@@ -4,4 +4,13 @@
     <description>Shows search results for international addresses</description>
     <isExposed>true</isExposed>
     <masterLabel>International Address Search Results</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="searchResults" type="@salesforce/schema/appsolutely__International_Address__c[]" label="Search Results" role="inputOnly"/>
+            <property name="selectedResult" type="@salesforce/schema/appsolutely__International_Address__c" label="Selected Search Result" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

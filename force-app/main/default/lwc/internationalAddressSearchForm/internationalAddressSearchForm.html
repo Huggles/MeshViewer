@@ -1,7 +1,7 @@
 <!--
  - Created by appsolutely on 18/02/2020.
  -->
-
+<!-- TODO: beautify this form (add help text, labels etc) -->
 <!-- Search International Address -->
 <template>
     <lightning-card title="Search International Address" icon-name="custom:custom14">
@@ -11,6 +11,7 @@
                                 value={country}
                                 placeholder="Select Country"
                                 options={selectOptions}
+                                spinner-active="true"
                                 onchange={handleSelectedCountryChange}>
             </lightning-combobox> <br />
             <lightning-input name="organization" label="Organization" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input><br />
@@ -21,7 +22,7 @@
             <lightning-input name="locality" label="Locality" title="Locality" value={locality} onchange={handleOnChange}></lightning-input>  <br />
             <lightning-input name="postcode" label="Postcode" title="Postcode" value={postcode} onchange={handleOnChange}></lightning-input>  <br />
             <lightning-input name="province" label="Province" title="Province" value={province} onchange={handleOnChange}></lightning-input>  <br />
-            <lightning-input name="language" label="Language" title="Language" value={language} onchange={handleOnChange}></lightning-input>  <br />
+<!--            <lightning-input name="language" label="Language" title="Language" value={language} onchange={handleOnChange}></lightning-input>  <br />-->
 
         </div>
     </lightning-card>

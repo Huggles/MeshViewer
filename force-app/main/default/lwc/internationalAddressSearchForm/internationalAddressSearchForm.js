@@ -4,7 +4,7 @@
 
 import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
-import getCountries from '@salesforce/apex/Iso3166CountryPickListController.getIso3166Options';
+import getIso3166Options from '@salesforce/apex/Iso3166CountryPickListController.getIso3166Options';
 import {fireEvent, registerListener, unregisterAllListeners} from "c/pubsub";
 
 export default class InternationalAddressSearchForm extends LightningElement {
@@ -29,9 +29,11 @@ export default class InternationalAddressSearchForm extends LightningElement {
         getIso3166Options()
             .then(result => {
                 // result consists of an array of objects with country, alpha3Code and countryCode as fields
+                let localSelectOptions = [];
                 for (const resultElement of result) {
-                    this.selectOptions.push({value: resultElement.alpha3Code, label: resultElement.country});
+                    localSelectOptions.push({value: resultElement.alpha3Code, label: resultElement.country});
                 }
+                this.selectOptions = localSelectOptions;
             })
             .catch(error => {
                 this.error = error;

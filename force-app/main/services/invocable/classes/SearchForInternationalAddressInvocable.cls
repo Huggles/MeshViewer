@@ -43,9 +43,14 @@ global inherited sharing class SearchForInternationalAddressInvocable {
             this.countryFormat = countryFormat;
         }
 
+        public SearchInternationalAddressArgument() {}
+
+
     }
 
-    @InvocableMethod
+    @InvocableMethod(label = 'Search and complete for international addresses'
+            description='Searches and completes/corrects international addresses.'
+            category='Company.info')
     global static List<List<International_Address__c>>  searchInternationalAddress(List<SearchInternationalAddressArgument> arguments) {
         try {
             List<List<International_Address__c>> listInternationalAddresses2 = new List<List<International_Address__c>>();
