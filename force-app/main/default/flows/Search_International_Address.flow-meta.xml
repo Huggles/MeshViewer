@@ -175,12 +175,6 @@
             <targetReference>Cancel_Pressed</targetReference>
         </connector>
         <fields>
-            <name>searchFlowHeader</name>
-            <extensionName>appsolutely:flowHeader</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
             <name>searchFlowErrorHandler</name>
             <extensionName>appsolutely:flowErrorHandler</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -195,6 +189,12 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>searchFlowHeader</name>
+            <extensionName>appsolutely:searchFlowHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>searchInternationalAddress</name>
@@ -291,18 +291,6 @@
             <targetReference>Cancel_Pressed_Search_Results</targetReference>
         </connector>
         <fields>
-            <name>flowHeaderSearchResults</name>
-            <extensionName>appsolutely:flowHeader</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>title</name>
-                <value>
-                    <stringValue>Search Results</stringValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
             <name>flowErrorHandlerSearchScreen</name>
             <extensionName>appsolutely:flowErrorHandler</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -317,6 +305,12 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>searchResultFlowHeader</name>
+            <extensionName>appsolutely:searchResultFlowHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>InternationalAddressSearchResults</name>
