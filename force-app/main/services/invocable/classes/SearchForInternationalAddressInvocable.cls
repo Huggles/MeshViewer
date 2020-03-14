@@ -25,65 +25,35 @@ global inherited sharing class SearchForInternationalAddressInvocable {
         global String language;
         @InvocableVariable(label='Country' description='Country of the address')
         global String country;
+        @InvocableVariable(label='Country Format' description='The format in which the country is returned.')
+        global String countryFormat;
 
     }
 
     @InvocableMethod
     global static List<List<International_Address__c>>  searchInternationalAddress(List<SearchInternationalAddressArgument> arguments) {
-        try{
-            List<List<International_Address__c>> listInternationalAddressesFinal = new List<List<International_Address__c>>();
-            List<International_Address__c> listInternationalAddresses = new List<International_Address__c>();
-            Integer recordRefNumberCount = 1;
-            List<InternationalAddressResultsDto> searchInternationalAddressResultsDtos = new List<InternationalAddressResultsDto>();
+        try {
+            List<List<International_Address__c>> listInternationalAddresses2 = new List<List<International_Address__c>>();
+
             for (SearchInternationalAddressArgument searchInternationalAddressArgument : arguments) {
-                searchInternationalAddressResultsDtos.addAll(
-                        InternationalAddressService.internationalAddressSearchV2(
-                                searchInternationalAddressArgument.organization,
-                                searchInternationalAddressArgument.building,
-                                searchInternationalAddressArgument.street,
-                                searchInternationalAddressArgument.housenr,
-                                searchInternationalAddressArgument.pobox,
-                                searchInternationalAddressArgument.locality,
-                                searchInternationalAddressArgument.postal_code,
-                                searchInternationalAddressArgument.province,
-                                searchInternationalAddressArgument.country,
-                                searchInternationalAddressArgument.language,
-                                InternationalAddressController.countries.get(searchInternationalAddressArgument.country)
-                        )
-                );
+                listInternationalAddresses2.add(InternationalAddressService.internationalAddressSearchV2(
+                        searchInternationalAddressArgument.organization,
+                        searchInternationalAddressArgument.building,
+                        searchInternationalAddressArgument.street,
+                        searchInternationalAddressArgument.housenr,
+                        searchInternationalAddressArgument.pobox,
+                        searchInternationalAddressArgument.locality,
+                        searchInternationalAddressArgument.postal_code,
+                        searchInternationalAddressArgument.province,
+                        searchInternationalAddressArgument.country,
+                        searchInternationalAddressArgument.language,
+                        searchInternationalAddressArgument.countryFormat
+                ));
             }
-
-            for (InternationalAddressResultsDto searchInternationalAddressResultDto : searchInternationalAddressResultsDtos) {
-                listInternationalAddresses.add(assignInternationalAddress(searchInternationalAddressResultDto, 'IA00'+recordRefNumberCount));
-                recordRefNumberCount = recordRefNumberCount + 1;
-            }
-
-            listInternationalAddressesFinal.add(listInternationalAddresses);
-            return listInternationalAddressesFinal;
+            return listInternationalAddresses2;
         } catch (Exception e) {
             ErrorLogUtil.logException(e);
+            throw e;
         }
-        return null;
     }
-
-    private static International_Address__c assignInternationalAddress(InternationalAddressResultsDto searchInternationalAddressResultsDto, String recordRefNumber) {
-        International_Address__c interAddress = new International_Address__c();
-        interAddress.Organization__c = searchInternationalAddressResultsDto.organization;
-        interAddress.Building__c = searchInternationalAddressResultsDto.building;
-        interAddress.Street__c = searchInternationalAddressResultsDto.street;
-        interAddress.House_Number__c = searchInternationalAddressResultsDto.housenr;
-        interAddress.Locality__c = searchInternationalAddressResultsDto.locality;
-        interAddress.POBox__c = searchInternationalAddressResultsDto.pobox;
-        interAddress.Postcode__c =  searchInternationalAddressResultsDto.postcode;
-        interAddress.Country__c = searchInternationalAddressResultsDto.country;
-        interAddress.Province__c = searchInternationalAddressResultsDto.province;
-        interAddress.Contact__c = searchInternationalAddressResultsDto.contact;
-        interAddress.Country_Specific_Locality__c = searchInternationalAddressResultsDto.countryspecific_locality;
-        interAddress.Delivery_Address__c = searchInternationalAddressResultsDto.delivery_address;
-        interAddress.Department__c = searchInternationalAddressResultsDto.department;
-        interAddress.Formatted_Address__c = searchInternationalAddressResultsDto.formatted_address;
-        // interAddress.RecordRefNo__c = recordRefNumber;
-        return interAddress;
-    }
-
 }

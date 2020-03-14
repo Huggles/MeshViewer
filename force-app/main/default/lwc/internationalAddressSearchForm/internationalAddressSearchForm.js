@@ -4,7 +4,7 @@
 
 import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
-import getCountries from '@salesforce/apex/InternationalAddressController.getCountries';
+import getCountries from '@salesforce/apex/Iso3166CountryPickListController.getIso3166Options';
 import {fireEvent, registerListener, unregisterAllListeners} from "c/pubsub";
 
 export default class InternationalAddressSearchForm extends LightningElement {
@@ -19,29 +19,29 @@ export default class InternationalAddressSearchForm extends LightningElement {
     @api pobox;
     @api language;
     @api txtBoxVal;
-    @api country;
+    @api country = 'NLD';
 
     @api availableActions = [];
 
     @track selectOptions = [];
-    @track value = 'EN';
 
-    @wire(getCountries)// TODO: test if this doesn't constantly call the api
-    countries({ error, data }){
-        if(data){
-            for(var i=0; i < data.length; i++){
-                const option = {
-                    label: data[i],
-                    value: data[i]
-                };
-                this.selectOptions = [...this.selectOptions, option];
-            }
-        }
+    loadCountries() {
+        getIso3166Options()
+            .then(result => {
+                // result consists of an array of objects with country, alpha3Code and countryCode as fields
+                for (const resultElement of result) {
+                    this.selectOptions.push({value: resultElement.alpha3Code, label: resultElement.country});
+                }
+            })
+            .catch(error => {
+                this.error = error;
+            });
     }
 
     connectedCallback() {
         registerListener('validationRequest', this.handleValidationRequest, this);
         registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
+        this.loadCountries();
     }
 
     disconnectedCallback() {
@@ -59,7 +59,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
 
     @api
     allValid() {
-        this.hints = null; // remove the toast
+        // this.hints = null; // remove the toast
         let valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();

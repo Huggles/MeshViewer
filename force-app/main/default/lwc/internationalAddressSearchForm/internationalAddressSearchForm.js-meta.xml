@@ -4,11 +4,9 @@
     <description>Search International Address</description>
     <isExposed>true</isExposed>
     <masterLabel>Search International Address</masterLabel>
-
     <targets>
         <target>lightning__FlowScreen</target>
     </targets>
-
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="organization" type="String"  />
@@ -21,7 +19,6 @@
             <property name="province" type="String"/>
             <property name="language" type="String"/>
             <property name="country" type="String"/>
-
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
