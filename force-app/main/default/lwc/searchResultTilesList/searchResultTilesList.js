@@ -61,10 +61,10 @@ export default class SearchResultTilesList extends LightningElement {
     fieldSetName;
 
     /**
-     * The title of the search result tile. Defaults to the Name of the sObject
+     * The field containing the title of the card. Defaults to Name
      */
     @api
-    title;
+    titleField = 'Name';
 
 
     /**
@@ -102,11 +102,6 @@ export default class SearchResultTilesList extends LightningElement {
         return this.localKey;
     }
 
-    /**
-     * The error message to be shown as toast.
-     */
-    @track
-    error;
 
 
 
@@ -153,10 +148,6 @@ export default class SearchResultTilesList extends LightningElement {
         }
 
 
-    }
-
-    handleError(event) {
-        this.error = event.detail.error;
     }
 
 }
