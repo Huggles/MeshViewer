@@ -8,12 +8,5 @@
         <plural>true</plural>
         <value>ISO 3166 Entries</value>
     </caseValues>
-    <layouts>
-        <layout>CountryMapping Layout</layout>
-        <sections>
-            <label><!-- Custom Links --></label>
-            <section>Custom Links</section>
-        </sections>
-    </layouts>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>
