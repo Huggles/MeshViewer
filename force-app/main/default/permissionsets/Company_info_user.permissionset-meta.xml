@@ -2078,6 +2078,10 @@
         <enabled>true</enabled>
         <flow>Organisation_Search_Flow</flow>
     </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Search_International_Address</flow>
+    </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Company.info User</label>
     <objectPermissions>
