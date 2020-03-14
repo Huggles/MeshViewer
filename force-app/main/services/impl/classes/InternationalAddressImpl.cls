@@ -20,7 +20,7 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         InternationalAddressWSDL.InternationalAddressSearchV2Result userSearchResult = WsInternationalAddress.internationalAddressSearchV2(organization, building, street, housenr, pobox, locality, postcode, province, country, language, country_format);
 
         List<International_Address__c> resultArray = new List<International_Address__c>();
-        if (userSearchResult.result != null && userSearchResult.result.item != null) {
+        if (userSearchResult != null && userSearchResult.result != null && userSearchResult.result.item != null) {
             for (InternationalAddressWSDL.InternationalV2 resultItem : userSearchResult.result.item) {
                 resultArray.add(mapInternationalV2ToInternationalAddress(resultItem));
             }
@@ -87,17 +87,18 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
             address.put(fieldName, value);
         }
         // map the result status
-        String elementResultStatus = wsAddress.element_match_status;
+        String elementResultStatus = wsAddress.element_result_status;
         Map<String, String> resultStatusByFieldName = new Map<String, String>{
-                'Postcode_Match_Status__c' => elementResultStatus.substring(0,1),
-                'Locality_Match_Status__c' => elementResultStatus.substring(1,2),
-                'Province_Match_Status__c' => elementResultStatus.substring(2,3),
-                'Street_Match_Status__c' => elementResultStatus.substring(3,4),
-                'Building_Number_Match_Status__c' => elementResultStatus.substring(4,5),
-                'PO_Box_Match_Status__c' => elementResultStatus.substring(5,6),
-                'Building_Match_Status__c' => elementResultStatus.substring(6,7),
-                'Organization_Match_Status__c' => elementResultStatus.substring(7,8)
+                'Postcode_Result_Status__c' => elementResultStatus.substring(0,1),
+                'Locality_Result_Status__c' => elementResultStatus.substring(1,2),
+                'Province_Result_Status__c' => elementResultStatus.substring(2,3),
+                'Street_Result_Status__c' => elementResultStatus.substring(3,4),
+                'Building_Number_Result_Status__c' => elementResultStatus.substring(4,5),
+                'PO_Box_Result_Status__c' => elementResultStatus.substring(5,6),
+                'Building_Result_Status__c' => elementResultStatus.substring(6,7),
+                'Organization_Result_Status__c' => elementResultStatus.substring(7,8)
         };
+        System.debug(JSON.serializePretty(resultStatusByFieldName));
         for (String fieldName : resultStatusByFieldName.keySet()) {
             String value = null;
             switch on resultStatusByFieldName.get(fieldName) {
