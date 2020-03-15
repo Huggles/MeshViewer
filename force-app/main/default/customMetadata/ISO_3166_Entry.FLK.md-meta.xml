@@ -3,11 +3,15 @@
     <label>FLK</label>
     <protected>false</protected>
     <values>
+        <field>Alpha_2_Code__c</field>
+        <value xsi:type="xsd:string">FK</value>
+    </values>
+    <values>
         <field>Country_Code__c</field>
         <value xsi:type="xsd:string">238</value>
     </values>
     <values>
         <field>Country_Name__c</field>
-        <value xsi:type="xsd:string">Falkland Islands (Malvinas)</value>
+        <value xsi:type="xsd:string">Falkland Islands (the) [Malvinas]</value>
     </values>
 </CustomMetadata>

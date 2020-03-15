@@ -3,11 +3,15 @@
     <label>TWN</label>
     <protected>false</protected>
     <values>
+        <field>Alpha_2_Code__c</field>
+        <value xsi:type="xsd:string">TW</value>
+    </values>
+    <values>
         <field>Country_Code__c</field>
         <value xsi:type="xsd:string">158</value>
     </values>
     <values>
         <field>Country_Name__c</field>
-        <value xsi:type="xsd:string">&quot;Taiwan, Province of China&quot;</value>
+        <value xsi:type="xsd:string">Taiwan (Province of China)</value>
     </values>
 </CustomMetadata>

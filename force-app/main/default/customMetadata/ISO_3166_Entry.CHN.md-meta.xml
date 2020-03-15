@@ -3,6 +3,10 @@
     <label>CHN</label>
     <protected>false</protected>
     <values>
+        <field>Alpha_2_Code__c</field>
+        <value xsi:type="xsd:string">CN</value>
+    </values>
+    <values>
         <field>Country_Code__c</field>
         <value xsi:type="xsd:string">156</value>
     </values>

@@ -3,6 +3,10 @@
     <label>MTQ</label>
     <protected>false</protected>
     <values>
+        <field>Alpha_2_Code__c</field>
+        <value xsi:type="xsd:string">MQ</value>
+    </values>
+    <values>
         <field>Country_Code__c</field>
         <value xsi:type="xsd:string">474</value>
     </values>

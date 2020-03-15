@@ -3,6 +3,10 @@
     <label>LTU</label>
     <protected>false</protected>
     <values>
+        <field>Alpha_2_Code__c</field>
+        <value xsi:type="xsd:string">LT</value>
+    </values>
+    <values>
         <field>Country_Code__c</field>
         <value xsi:type="xsd:string">440</value>
     </values>

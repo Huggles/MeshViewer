@@ -3,11 +3,15 @@
     <label>TZA</label>
     <protected>false</protected>
     <values>
+        <field>Alpha_2_Code__c</field>
+        <value xsi:type="xsd:string">TZ</value>
+    </values>
+    <values>
         <field>Country_Code__c</field>
         <value xsi:type="xsd:string">834</value>
     </values>
     <values>
         <field>Country_Name__c</field>
-        <value xsi:type="xsd:string">&quot;Tanzania, United Republic of&quot;</value>
+        <value xsi:type="xsd:string">Tanzania (United Republic of)</value>
     </values>
 </CustomMetadata>

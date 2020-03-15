@@ -3,11 +3,15 @@
     <label>FRO</label>
     <protected>false</protected>
     <values>
+        <field>Alpha_2_Code__c</field>
+        <value xsi:type="xsd:string">FO</value>
+    </values>
+    <values>
         <field>Country_Code__c</field>
         <value xsi:type="xsd:string">234</value>
     </values>
     <values>
         <field>Country_Name__c</field>
-        <value xsi:type="xsd:string">Faroe Islands</value>
+        <value xsi:type="xsd:string">Faroe Islands (the)</value>
     </values>
 </CustomMetadata>
