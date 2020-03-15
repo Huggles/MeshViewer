@@ -9,9 +9,9 @@
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
-        <name>Search_and_complete_addresses</name>
-        <label>Search and complete addresses</label>
-        <locationX>564</locationX>
+        <name>Search_for_international_addresses</name>
+        <label>Search for international addresses</label>
+        <locationX>515</locationX>
         <locationY>60</locationY>
         <actionName>SearchForInternationalAddressInvocable</actionName>
         <actionType>apex</actionType>
@@ -89,7 +89,7 @@
         <locationX>356</locationX>
         <locationY>168</locationY>
         <defaultConnector>
-            <targetReference>Search_and_complete_addresses</targetReference>
+            <targetReference>Search_for_international_addresses</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
         <rules>
@@ -133,8 +133,8 @@
             <label>Cancel Pressed</label>
         </rules>
     </decisions>
+    <description>Searches for and/or completes/corrects international addresses. Returns a maximum of 20 addresses.</description>
     <interviewLabel>Search International Address {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Search International Address</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -166,7 +166,7 @@
     <screens>
         <name>International_Address</name>
         <label>International Address</label>
-        <locationX>251</locationX>
+        <locationX>252</locationX>
         <locationY>50</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -207,6 +207,18 @@
                 </value>
             </inputParameters>
             <inputParameters>
+                <name>locality</name>
+                <value>
+                    <elementReference>Locality</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>countryInAlpha2Code</name>
+                <value>
+                    <elementReference>countryAsAlpha2Code</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>country</name>
                 <value>
                     <elementReference>Country</elementReference>
@@ -222,12 +234,6 @@
                 <name>language</name>
                 <value>
                     <elementReference>Language</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>locality</name>
-                <value>
-                    <elementReference>Locality</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -282,7 +288,7 @@
     <screens>
         <name>Search_Results</name>
         <label>Search Results</label>
-        <locationX>774</locationX>
+        <locationX>773</locationX>
         <locationY>60</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -319,7 +325,7 @@
             <inputParameters>
                 <name>searchResults</name>
                 <value>
-                    <elementReference>Search_and_complete_addresses</elementReference>
+                    <elementReference>Search_for_international_addresses</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -374,19 +380,19 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>Housenr</name>
+        <description>The country to search for in the 2 letter ISO 3316 Alpha 2 code</description>
+        <name>countryAsAlpha2Code</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>internationalAddressInvocableData</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
+        <name>Housenr</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>true</isOutput>
-        <objectType>International_Address__c</objectType>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>Language</name>

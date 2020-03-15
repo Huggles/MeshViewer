@@ -3,7 +3,7 @@
     <fullName>Annual_Financial_Statement_Summary__c</fullName>
     <description>Financial summary from the last known annual financial statement DutchBusinessAnnualFinancialStatementSummary.</description>
     <externalId>false</externalId>
-    <label>Annual_Financial Statement Summary</label>
+    <label>DEPRECATED Annual Financial Stat Summary</label>
     <length>131072</length>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

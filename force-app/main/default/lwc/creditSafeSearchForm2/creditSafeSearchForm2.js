@@ -109,7 +109,8 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         Valid_GB_VAT_Number,
         Valid_Germany_CreditSafe_registration_id,
         Select_a_Registration_Type,
-        Valid_German_VAT_Number
+        Valid_German_VAT_Number,
+        CreditSafe_Validation_Message_Heading
     }
 
     get countries() {

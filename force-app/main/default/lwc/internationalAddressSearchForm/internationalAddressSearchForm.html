@@ -4,8 +4,13 @@
 <!-- TODO: beautify this form (add help text, labels etc) -->
 <!-- Search International Address -->
 <template>
-    <lightning-card title="Search International Address" icon-name="custom:custom14">
-        <div class="slds-m-around_medium">
+    <template if:true={error}>
+        <c-custom-toast class="error-message" show-on-load title={label.Validation_Error_Message_Toast_Title}>
+            <div>{error}</div>
+        </c-custom-toast>
+    </template>
+<!--    <lightning-card title="Search International Address" icon-name="custom:custom14">-->
+<!--        <div class="slds-m-around_medium">-->
             <lightning-combobox name="country"
                                 label="Country"
                                 value={country}
@@ -24,6 +29,6 @@
             <lightning-input name="province" label="Province" title="Province" value={province} onchange={handleOnChange}></lightning-input>  <br />
 <!--            <lightning-input name="language" label="Language" title="Language" value={language} onchange={handleOnChange}></lightning-input>  <br />-->
 
-        </div>
-    </lightning-card>
+<!--        </div>-->
+<!--    </lightning-card>-->
 </template>

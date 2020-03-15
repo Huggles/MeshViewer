@@ -42,11 +42,6 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
-        <field>House_Number__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
         <field>Language__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -58,16 +53,6 @@
     </availableFields>
     <availableFields>
         <field>Locality_Result_Status__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>Locality__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>Matchrate__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -107,22 +92,12 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
-        <field>Postcode__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
         <field>Province_Match_Status__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
         <field>Province_Result_Status__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
-        <field>Province__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
@@ -136,12 +111,12 @@
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
-    <availableFields>
-        <field>Street__c</field>
+    <description>Defines which fields in which order are shown for the International address search results.</description>
+    <displayedFields>
+        <field>Matchrate__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
-    </availableFields>
-    <description>Defines which fields in which order are shown for the International address search results.</description>
+    </displayedFields>
     <displayedFields>
         <field>Organization__c</field>
         <isFieldManaged>false</isFieldManaged>
@@ -153,7 +128,27 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>Formatted_Address__c</field>
+        <field>Province__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>Locality__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>Postcode__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>Street__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
+        <field>House_Number__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
