@@ -2,49 +2,51 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
-        <name>End</name>
-        <label>End</label>
-        <locationX>952</locationX>
-        <locationY>984</locationY>
-        <actionName>appsolutely:flowCancelEndPoint</actionName>
-        <actionType>component</actionType>
-    </actionCalls>
-    <actionCalls>
-        <name>Get_Creditsafe_Report</name>
-        <label>Get Creditsafe Report</label>
-        <locationX>528</locationX>
-        <locationY>1106</locationY>
-        <actionName>GetCreditsafeFullReportInvocable</actionName>
+        <name>Get_for_Company_IDs</name>
+        <label>Get for Company IDs</label>
+        <locationX>557</locationX>
+        <locationY>1144</locationY>
+        <actionName>GetCompanyIdsInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Update_the_Dossier_record</targetReference>
+            <targetReference>Get_Creditsafe_Report_For_Dossier</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Input_parameters</targetReference>
+            <targetReference>Error_Handling_Screen</targetReference>
         </faultConnector>
         <inputParameters>
-            <name>companyId</name>
+            <name>countries</name>
             <value>
-                <elementReference>CompanyId</elementReference>
+                <elementReference>Countries</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>language</name>
+            <name>registration_number</name>
             <value>
-                <elementReference>Language</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>reason</name>
-            <value>
-                <elementReference>Reason</elementReference>
+                <elementReference>Get_Buisness_Dossier_Record.Dossier_Number__c</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
-            <assignToReference>CreditsafeReport</assignToReference>
+            <assignToReference>CompanyId</assignToReference>
             <name>output</name>
         </outputParameters>
     </actionCalls>
+    <assignments>
+        <name>Assign_Country</name>
+        <label>Assign Country</label>
+        <locationX>333</locationX>
+        <locationY>1144</locationY>
+        <assignmentItems>
+            <assignToReference>Countries</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Buisness_Dossier_Record.Registration_Country__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_for_Company_IDs</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</name>
         <choiceText>&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel}&lt;/span&gt;</choiceText>
@@ -169,6 +171,13 @@
         </value>
     </constants>
     <constants>
+        <name>DutchBusinessRecordType</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Dutch_Business</stringValue>
+        </value>
+    </constants>
+    <constants>
         <name>English</name>
         <dataType>String</dataType>
         <value>
@@ -218,75 +227,57 @@
         </value>
     </constants>
     <decisions>
-        <name>Cancel_pressed_in_language_screen</name>
-        <label>Cancel pressed in language screen</label>
-        <locationX>733</locationX>
-        <locationY>1028</locationY>
+        <name>Type_of_Business_Dossier</name>
+        <label>Type of Business Dossier</label>
+        <locationX>325</locationX>
+        <locationY>930</locationY>
         <defaultConnector>
-            <targetReference>Get_Creditsafe_Report</targetReference>
+            <targetReference>Get_Creditsafe_Report_For_Dossier</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Not cancel pressed</defaultConnectorLabel>
+        <defaultConnectorLabel>Is Creditsafe Business Dossier</defaultConnectorLabel>
         <rules>
-            <name>Cancel_pressed</name>
+            <name>Is_Dutch_Business_Dossier_with_No_Company_Id</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CancelPressed</leftValueReference>
+                <leftValueReference>Get_Buisness_Dossier_Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>DutchBusinessRecordType</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Buisness_Dossier_Record.Company_Id__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue/>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>End</targetReference>
+                <targetReference>Assign_Country</targetReference>
             </connector>
-            <label>Cancel pressed</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>User_can_select_language</name>
-        <label>User can select language</label>
-        <locationX>249</locationX>
-        <locationY>954</locationY>
-        <defaultConnector>
-            <targetReference>Get_Creditsafe_Report</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>User cannot select language</defaultConnectorLabel>
-        <rules>
-            <name>User_can_select_language_outcome</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>UserCanSelectLanguageOutcome</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Input_parameters</targetReference>
-            </connector>
-            <label>User can select language</label>
+            <label>Is Dutch Business Dossier with No Company Id</label>
         </rules>
         <rules>
-            <name>User_cannot_select_language_but_German</name>
+            <name>Is_Dutch_Business_Dossier_with_Company_Id</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>User_can_select_language_outcome</leftValueReference>
+                <leftValueReference>Get_Buisness_Dossier_Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <elementReference>DutchBusinessRecordType</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>InputBusinessDossier.Registration_Country__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Get_Buisness_Dossier_Record.Company_Id__c</leftValueReference>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>DE</stringValue>
+                    <stringValue/>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Input_parameters</targetReference>
+                <targetReference>Get_Creditsafe_Report_For_Dossier</targetReference>
             </connector>
-            <label>User cannot select language but German</label>
+            <label>Is Dutch Business Dossier with Company Id</label>
         </rules>
     </decisions>
     <formulas>
@@ -315,11 +306,6 @@
         <expression>{!$Label.appsolutely__credit_decision}</expression>
     </formulas>
     <formulas>
-        <name>CreditsafeReportCreatedLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__creditsafe_report_created}</expression>
-    </formulas>
-    <formulas>
         <name>GoodsCreditInsuranceChoiceLabel</name>
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__goods_credit_insurance}</expression>
@@ -344,8 +330,8 @@
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__realisation_check_receivables_collection}</expression>
     </formulas>
-    <interviewLabel>Get Creditsafe Report {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Get Creditsafe Report</label>
+    <interviewLabel>Get Creditsafe Report Quick Action {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Get Creditsafe Report Quick Action</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -359,166 +345,69 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordUpdates>
-        <name>Update_the_Dossier_record</name>
-        <label>Update the Dossier record</label>
-        <locationX>744</locationX>
-        <locationY>1170</locationY>
+    <recordLookups>
+        <name>Get_Buisness_Dossier_Record</name>
+        <label>Get Buisness Dossier Record</label>
+        <locationX>192</locationX>
+        <locationY>928</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Navigation</targetReference>
+            <targetReference>Type_of_Business_Dossier</targetReference>
         </connector>
-        <filters>
-            <field>Company_Id__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>InputBusinessDossier.Id</elementReference>
+                <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>Company_Id__c</field>
-            <value>
-                <elementReference>CompanyId</elementReference>
-            </value>
-        </inputAssignments>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Business_Dossier__c</object>
-    </recordUpdates>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
-        <name>Input_parameters</name>
-        <label>Input parameters</label>
-        <locationX>586</locationX>
-        <locationY>942</locationY>
+        <name>Error_Handling_Screen</name>
+        <label>Error Handling Screen</label>
+        <locationX>751</locationX>
+        <locationY>1143</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Cancel_pressed_in_language_screen</targetReference>
-        </connector>
         <fields>
-            <name>ErrorMessage</name>
-            <extensionName>appsolutely:flowErrorHandler</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>message</name>
-                <value>
-                    <elementReference>$Flow.FaultMessage</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>$Flow.FaultMessage</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue/>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Language</name>
-            <choiceReferences>EnglishLanguage</choiceReferences>
-            <choiceReferences>DutchLanguage</choiceReferences>
-            <choiceReferences>GermanLanguage</choiceReferences>
-            <dataType>String</dataType>
-            <defaultSelectedChoiceReference>EnglishLanguage</defaultSelectedChoiceReference>
-            <fieldText>Language</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>UserCanSelectLanguageOutcome</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Reason</name>
-            <choiceReferences>CreditDecisionChoice</choiceReferences>
-            <choiceReferences>CreditAssessmentFutureBusinessConnectionChoice</choiceReferences>
-            <choiceReferences>CreditAssessmentExistingBusinessConnectionChoice</choiceReferences>
-            <choiceReferences>RealisationCheckReceivablesCollectionChoice</choiceReferences>
-            <choiceReferences>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</choiceReferences>
-            <choiceReferences>GoodsCreditInsuranceChoice</choiceReferences>
-            <choiceReferences>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</choiceReferences>
-            <choiceReferences>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Reason</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>or</conditionLogic>
-                <conditions>
-                    <leftValueReference>InputBusinessDossier.Registration_Country__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Germany</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>InputBusinessDossier.Registration_Country__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>DE</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>languageSelectionScreenFooter</name>
-            <extensionName>appsolutely:reportFlowFooter</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>CancelPressed</assignToReference>
-                <name>cancelPressed</name>
-            </outputParameters>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Navigation</name>
-        <label>Navigation</label>
-        <locationX>954</locationX>
-        <locationY>1170</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>NavigateToCreditsafeReport</name>
-            <extensionName>appsolutely:flowNavigation</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CreditsafeReport.Id</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
+            <name>Error</name>
+            <fieldText>&lt;p&gt;{!AnErrorOccured}&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>60</locationX>
-        <locationY>952</locationY>
+        <locationX>39</locationX>
+        <locationY>928</locationY>
         <connector>
-            <targetReference>User_can_select_language</targetReference>
+            <targetReference>Get_Buisness_Dossier_Record</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
+    <subflows>
+        <name>Get_Creditsafe_Report_For_Dossier</name>
+        <label>Get Creditsafe Report For Dossier</label>
+        <locationX>678</locationX>
+        <locationY>927</locationY>
+        <flowName>Get_Creditsafe_Report</flowName>
+        <inputAssignments>
+            <name>CompanyId</name>
+            <value>
+                <elementReference>Get_Buisness_Dossier_Record.Company_Id__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputBusinessDossier</name>
+            <value>
+                <elementReference>Get_Buisness_Dossier_Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>CancelPressed</name>
         <dataType>Boolean</dataType>
@@ -533,7 +422,7 @@
         <name>CompanyId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>true</isInput>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
@@ -544,16 +433,6 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>Countryparameter</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>InputBusinessDossier.Registration_Country__c</elementReference>
-        </value>
-    </variables>
-    <variables>
         <name>CreditsafeReport</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -562,12 +441,21 @@
         <objectType>Creditsafe_Company_Report_Full__c</objectType>
     </variables>
     <variables>
-        <name>InputBusinessDossier</name>
-        <dataType>SObject</dataType>
+        <name>DossierCountry</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>Get_Buisness_Dossier_Record.Country__c</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
         <name>UserCanSelectLanguageOutcome</name>

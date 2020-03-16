@@ -4,6 +4,8 @@
 
 import { LightningElement, track, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import Creditsafe_Report_Created from '@salesforce/label/c.Creditsafe_Report_Created';
 
 export default class FlowNavigation extends NavigationMixin(LightningElement) {
 
@@ -11,12 +13,22 @@ export default class FlowNavigation extends NavigationMixin(LightningElement) {
     recordId;
 
     connectedCallback() {
-        this[NavigationMixin.Navigate]({
+        new Promise((resolve, reject) => {this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
                 recordId: this.recordId,
                 actionName: 'view',
             },
         });
+            resolve("Success!")
+        }).then((successMessage) => {
+            const event = new ShowToastEvent({
+                "title": "Success!",
+                "message": Creditsafe_Report_Created,
+                "variant": "success"
+            });
+            this.dispatchEvent(event);
+        })
     }
+
 }

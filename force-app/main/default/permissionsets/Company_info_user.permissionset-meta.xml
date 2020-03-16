@@ -2032,6 +2032,10 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
+        <flow>Get_Creditsafe_Report_Quick_Action</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
         <flow>Organisation_Search_Flow</flow>
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>

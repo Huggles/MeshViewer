@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <flowDefinition>Get_Creditsafe_Report</flowDefinition>
+    <flowDefinition>Get_Creditsafe_Report_Quick_Action</flowDefinition>
     <label>Get Creditsafe Report</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>Flow</type>
