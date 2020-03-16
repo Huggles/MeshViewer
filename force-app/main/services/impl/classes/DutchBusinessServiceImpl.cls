@@ -295,7 +295,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
                 .get('Dutch_Business').getRecordTypeId();
         dossierDB.RecordTypeId = recordTypeId;
         dossierDB.Registration_Country__c = 'NL';
-        String trade_names = '';
+        String trade_names;
         // TODO: move this to a list of tradelist (seperate sObject)
         if (dataVendorDossier.trade_names != null && dataVendorDossier.trade_names.item != null && dataVendorDossier.trade_names.item.size() > 0) {
             // Condense all trade names into single field, seperated by new lines.

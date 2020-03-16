@@ -70,9 +70,8 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         dossier.Date_of_Last_Change__c = creditsafeCompanyV2.date_last_change;
         if (creditsafeCompanyV2.trade_names != null && creditsafeCompanyV2.trade_names.item != null) {
             for (Integer i = 0; i < creditsafeCompanyV2.trade_names.item.size(); i++) {
-                String tradeName = creditsafeCompanyV2.trade_names.item[i];
-                if (tradeName != null) {
-                    dossier.Trade_Names__c += tradeName;
+                dossier.Trade_Names__c = creditsafeCompanyV2.trade_names.item[i];
+                if (String.isNotEmpty(dossier.Trade_Names__c)) {
                     if (i < creditsafeCompanyV2.trade_names.item.size() - 1) {
                         dossier.Trade_Names__c += ', ';
                     }
@@ -697,14 +696,14 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         creditsafeCompany.Date_Last_Account__c = getDate(creditsafeCompanyV2.date_last_account);
         creditsafeCompany.Date_Last_Change__c = getDate(creditsafeCompanyV2.date_last_change);
         if (creditsafeCompanyV2.trade_names != null && creditsafeCompanyV2.trade_names.item != null) {
-            String trade_names = '';
+            String trade_names;
             for (Integer i = 0; i < creditsafeCompanyV2.trade_names.item.size(); i++) {
                 trade_names += creditsafeCompanyV2.trade_names.item[i] + (i == creditsafeCompanyV2.trade_names.item.size()-1 ? '' : ', ');
             }
             creditsafeCompany.Trade_Names__c = trade_names;
         }
         if (creditsafeCompanyV2.vat_numbers != null && creditsafeCompanyV2.vat_numbers.item != null) {
-            String vat_numbers = '';
+            String vat_numbers;
             for (Integer i = 0; i < creditsafeCompanyV2.vat_numbers.item.size(); i++) {
                 vat_numbers += creditsafeCompanyV2.vat_numbers.item[i] + (i == creditsafeCompanyV2.vat_numbers.item.size()-1 ? '' : ', ');
             }
