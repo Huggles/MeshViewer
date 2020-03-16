@@ -27,7 +27,7 @@ global with sharing class SearchForDutchDossiersInvocable {
         @InvocableVariable(label='Domain Name' description='Domain name or email address, when an email address is given the domain part of that address is used')
         global String domain_name;
         @InvocableVariable(label='Strict Search')
-        global Boolean strictSearch = true;
+        global Boolean strictSearch;
     }
 
     @InvocableMethod(label = 'Search for Dutch dossiers' description='Searches for Dutch dossiers based on the given arguments.' category='Company.info')
