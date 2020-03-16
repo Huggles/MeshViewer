@@ -71,7 +71,7 @@ private class DutchBusinessServiceImplTest {
             System.assert(businessDossier.Indication_Main_Establishment__c = true);
             System.assert(businessDossier.Correspondence_Street__c.startsWith('correspondence_street'));
             System.assert(businessDossier.Correspondence_City__c.startsWith('correspondence_city'));
-            System.assert(businessDossier.Establishment_street__c.startsWith('establishment_street'));
+            System.assert(businessDossier.Establishment_Street__c.startsWith('establishment_street'));
             System.assert(businessDossier.Establishment_City__c.startsWith('establishment_city'));
             System.assert(businessDossier.Name.startsWith('legal_name'));
             System.assert(businessDossier.Trade_Name_Full__c.startsWith('trade_name'));

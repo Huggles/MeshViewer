@@ -375,7 +375,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Business_Dossier__c.Establishment_street__c</field>
+        <field>Business_Dossier__c.Establishment_Street__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
