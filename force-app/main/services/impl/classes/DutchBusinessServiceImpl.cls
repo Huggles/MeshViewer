@@ -103,8 +103,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         Map<Id, Business_Dossier__c> dossiersByIds = new Map<Id, Business_Dossier__c>(dossiersToUpdate);
         List<Business_Data_SBI__c> oldSbiCodes = ((ISbiCodeSelector)Application.Selector.newInstance(Business_Data_SBI__c.SObjectType)).selectByDossierId(dossiersByIds.keySet());
         unitOfWork.registerDeleted(oldSbiCodes);
-        List<Dossier_Address__c> oldAddresses = ((IDossierAddressSelector)Application.Selector.newInstance(Dossier_Address__c.SObjectType)).selectByDossierId(dossiersByIds.keySet());
-        unitOfWork.registerDeleted(oldAddresses);
 
         // update the records or create new ones
         for (Business_Dossier__c businessDossier : dossiersToUpdate) {
@@ -292,6 +290,8 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
             }
             dossierDB.Trade_Names__c = trade_names;
         }
+        //If there is no legal name, set the name to the trade_name.
+        // TODO: discuss fallback option if both are empty?
         if(dataVendorDossier.legal_name != null && dataVendorDossier.legal_name != ''){
             dossierDB.Name = dataVendorDossier.legal_name;
         }else{
@@ -312,7 +312,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossierDB.Telephone_Number__c = dataVendorDossier.telephone_number;
         dossierDB.Mobile_Number__c = dataVendorDossier.mobile_number;
         dossierDB.Domain_Name__c = dataVendorDossier.domain_name;
-
         dossierDB.Authorized_Share_Capital__c = dataVendorDossier.authorized_share_capital;
         dossierDB.Authorized_Share_Capital_Currency__c = dataVendorDossier.authorized_share_capital_currency;
         dossierDB.Class_Personnel__c = convertToString(dataVendorDossier.class_personnel);
@@ -463,7 +462,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         }
         dossier.Trade_Name_Full__c = reference.trade_name;
         dossier.Establishment_City__c = reference.establishment_city;
-        //dossier.Establishment_Street__c = reference.establishment_street;
+        dossier.Establishment_Street__c = reference.establishment_street;
         dossier.Correspondence_City__c = reference.correspondence_city;
         dossier.Correspondence_Street__c = reference.correspondence_street;
         dossier.Indication_Main_Establishment__c = reference.indication_main_establishment;
