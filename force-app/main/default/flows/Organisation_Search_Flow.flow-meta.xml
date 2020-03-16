@@ -363,6 +363,12 @@
             <extensionName>appsolutely:flowHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>SEARCH_BUSINESS_RESULTS</stringValue>
+                </value>
+            </inputParameters>
         </fields>
         <fields>
             <name>flowErrorHandlerDutchResultsScreen</name>
@@ -461,7 +467,7 @@
             <inputParameters>
                 <name>title</name>
                 <value>
-                    <stringValue>Search for Organisations</stringValue>
+                    <stringValue>SEARCH_BUSINESS</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
