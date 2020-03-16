@@ -14,3 +14,6 @@ force-app/main/default/profiles/Custom%3A Marketing Profile.profile-meta.xml
 force-app/main/default/profiles/Custom%3A Sales Profile.profile-meta.xml
 force-app/main/default/profiles/Custom%3A Support Profile.profile-meta.xml
 force-app/main/default/layouts/Account-Account Layout.layout-meta.xml
+force-app/main/default/flexipages/Account_Record_Page1.flexipage-meta.xml
+force-app/main/default/flexipages/Business_Dossier_Record_Page.flexipage-meta.xml
+force-app/main/default/flexipages/Creditsafe_Company_Report_Record_Page.flexipage-meta.xml
