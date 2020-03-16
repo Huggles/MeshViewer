@@ -331,7 +331,6 @@
         <expression>{!$Label.appsolutely__realisation_check_receivables_collection}</expression>
     </formulas>
     <interviewLabel>Get Creditsafe Report Quick Action {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Get Creditsafe Report Quick Action</label>
     <processMetadataValues>
         <name>BuilderType</name>
