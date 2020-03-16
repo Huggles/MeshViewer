@@ -48,6 +48,9 @@
         <assignmentItems>
             <assignToReference>internationalAddressRecordId</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Account.International_Address_Data__c</elementReference>
+            </value>
         </assignmentItems>
         <connector>
             <targetReference>Show_International_Address</targetReference>
@@ -185,6 +188,7 @@
         </rules>
     </decisions>
     <interviewLabel>Enrich Account with International Address Data {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Enrich Account with International Address Data</label>
     <processMetadataValues>

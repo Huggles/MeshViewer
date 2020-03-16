@@ -120,7 +120,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
-                <value>Dutch CoC / CreditSafe</value>
+                <value>Business Data</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
@@ -131,7 +131,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>title</name>
-                <value>Company.info Address</value>
+                <value>International Address</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
