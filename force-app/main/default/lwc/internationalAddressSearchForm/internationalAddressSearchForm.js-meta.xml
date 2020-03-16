@@ -10,6 +10,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="organization" type="String" label="Organization"/>
+            <property name="organizationRequired" type="Boolean" role="inputOnly" label="Organization required" description="True if the user must fill the organization field"/>
             <property name="building" label="Building" type="String"/>
             <property name="street" label="Street" type="String"/>
             <property name="housenr" label="House Number" type="String"/>

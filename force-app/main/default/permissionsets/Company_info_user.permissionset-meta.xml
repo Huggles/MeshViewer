@@ -1873,6 +1873,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>International_Address__c.Alpha_2_Country_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.Building_Match_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2073,6 +2078,10 @@
     <flowAccesses>
         <enabled>true</enabled>
         <flow>Create_Account_based_on_Company_info_data</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Create_Account_based_on_International_Address_Data</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>

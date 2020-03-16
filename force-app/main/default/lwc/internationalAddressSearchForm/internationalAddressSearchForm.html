@@ -19,7 +19,7 @@
                                 spinner-active="true"
                                 onchange={handleSelectedCountryChange}>
             </lightning-combobox> <br />
-            <lightning-input name="organization" label="Organization" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input><br />
+            <lightning-input name="organization" required={organizationRequired} label="Organization" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input><br />
             <lightning-input name="building" label="Building" title="Building" value={building} onchange={handleOnChange}></lightning-input><br />
             <lightning-input name="street" label="Street" title="Street" value={street} onchange={handleOnChange}></lightning-input>  <br />
             <lightning-input name="housenr" label="House Number" title="House Number" value={housenr} onchange={handleOnChange}></lightning-input>  <br />

@@ -36,6 +36,9 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
             address.Matchrate__c = wsAddress.address.matchrate;
             address.Street__c = wsAddress.address.street;
             address.Country__c = wsAddress.address.country;
+            if (!String.isEmpty(address.Country__c)) {
+                address.Alpha_2_Country_Code__c = ([SELECT Alpha_2_Code__c FROM ISO_3166_Entry__mdt WHERE Label =: address.Country__c LIMIT 1]).Alpha_2_Code__c;
+            }
             address.Building__c = wsAddress.address.building;
             address.Contact__c = wsAddress.address.contact;
             address.Country_Specific_Locality__c = wsAddress.address.countryspecific_locality;

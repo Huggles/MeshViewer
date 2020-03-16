@@ -11,6 +11,7 @@ import {fireEvent, registerListener, unregisterAllListeners} from "c/pubsub";
 export default class InternationalAddressSearchForm extends LightningElement {
 
     @api organization;
+    @api organizationRequired = false;
     @api building;
     @api street;
     @api housenr;
