@@ -4,7 +4,7 @@
 
 public inherited sharing class Iso3166CountryPickListController {
 
-    public class Iso3166Option {
+    public inherited sharing class  Iso3166Option {
 
         @AuraEnabled
         public String country { get; set; }
@@ -50,6 +50,7 @@ public inherited sharing class Iso3166CountryPickListController {
      */
     @AuraEnabled(cacheable=true)
     public static Iso3166Option getIsO3166OptionByAlpha2Code(String alpha2Code) {
+        alpha2Code = alpha2Code.toUpperCase();
         ISO_3166_Entry__mdt o3166Entry = [SELECT Alpha_2_Code__c, Country_Code__c, Country_Name__c, Label FROM ISO_3166_Entry__mdt WHERE Alpha_2_Code__c =:alpha2Code LIMIT 1];
         return new Iso3166Option(o3166Entry.Country_Name__c, o3166Entry.Alpha_2_Code__c, o3166Entry.Label, o3166Entry.Country_Code__c);
     }
