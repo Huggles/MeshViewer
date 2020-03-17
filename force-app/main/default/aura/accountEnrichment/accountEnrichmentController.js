@@ -42,7 +42,10 @@
     },
     handleDossierDeleted : function(component, event, helper) {
         component.set("v.dossier", null);
-        //helper.startFlow(component);
+        //Reload all data to avoid caching issues.
+        component.find('accountLoader').reloadRecord(true);
+        component.find('dossierLoader').reloadRecord(true);
+
         window.location.reload();
     },
     getVAT : function(component, event, helper) {
