@@ -188,6 +188,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>strictSearch</name>
+            <value>
+                <elementReference>StrictSearch</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>telephone_number</name>
             <value>
                 <elementReference>PhoneNumber</elementReference>
@@ -430,8 +436,8 @@
     <screens>
         <name>Search</name>
         <label>Enter Search Criteria</label>
-        <locationX>209</locationX>
-        <locationY>379</locationY>
+        <locationX>210</locationX>
+        <locationY>377</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -572,6 +578,12 @@
                     <elementReference>CreditSafeRegistrationId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>strictSearch</name>
+                <value>
+                    <elementReference>StrictSearch</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>City</assignToReference>
@@ -636,6 +648,10 @@
             <outputParameters>
                 <assignToReference>CreditSafeRegistrationId</assignToReference>
                 <name>creditSafeId</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>StrictSearch</assignToReference>
+                <name>strictSearch</name>
             </outputParameters>
         </fields>
         <fields>
@@ -732,7 +748,7 @@
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>
@@ -928,6 +944,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>StrictSearch</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>The trade name to search for</description>

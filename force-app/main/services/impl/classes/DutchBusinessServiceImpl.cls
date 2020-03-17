@@ -103,8 +103,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         Map<Id, Business_Dossier__c> dossiersByIds = new Map<Id, Business_Dossier__c>(dossiersToUpdate);
         List<Business_Data_SBI__c> oldSbiCodes = ((ISbiCodeSelector)Application.Selector.newInstance(Business_Data_SBI__c.SObjectType)).selectByDossierId(dossiersByIds.keySet());
         unitOfWork.registerDeleted(oldSbiCodes);
-        List<Dossier_Address__c> oldAddresses = ((IDossierAddressSelector)Application.Selector.newInstance(Dossier_Address__c.SObjectType)).selectByDossierId(dossiersByIds.keySet());
-        unitOfWork.registerDeleted(oldAddresses);
 
         // update the records or create new ones
         for (Business_Dossier__c businessDossier : dossiersToUpdate) {
@@ -114,12 +112,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
             Business_Dossier__c dossier = mapDutchBusinessDossierV3ToDossier(dutchBusinessDossierV3, businessDossier);
             unitOfWork.registerDirty(dossier);
-
-            Dossier_Address__c establishmentAddress = mapDataVendorDataToEstablishmentAddress(dutchBusinessDossierV3, new Dossier_Address__c());
-            unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
-
-            Dossier_Address__c correspondenceAddress = mapDataVendorDataToCorrespondenceAddress(dutchBusinessDossierV3, new Dossier_Address__c());
-            unitOfWork.registerNew(correspondenceAddress, Dossier_Address__c.Business_Data__c, dossier);
 
             List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(dutchBusinessDossierV3, new List<Business_Data_SBI__c>());
             for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
@@ -157,12 +149,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
             unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, dossier);
         }
-        Dossier_Address__c correspondenceAddress = new Dossier_Address__c();
-        correspondenceAddress = mapDataVendorDataToCorrespondenceAddress(dossierV3, correspondenceAddress);
-        unitOfWork.registerNew(correspondenceAddress, Dossier_Address__c.Business_Data__c, dossier);
-        Dossier_Address__c establishmentAddress = new Dossier_Address__c();
-        establishmentAddress = mapDataVendorDataToEstablishmentAddress(dossierV3, establishmentAddress);
-        unitOfWork.registerNew(establishmentAddress, Dossier_Address__c.Business_Data__c, dossier);
 
         if(getVAT) {
             // try {
@@ -304,6 +290,8 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
             }
             dossierDB.Trade_Names__c = trade_names;
         }
+        //If there is no legal name, set the name to the trade_name.
+        // TODO: discuss fallback option if both are empty?
         if(dataVendorDossier.legal_name != null && dataVendorDossier.legal_name != ''){
             dossierDB.Name = dataVendorDossier.legal_name;
         }else{
@@ -324,7 +312,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossierDB.Telephone_Number__c = dataVendorDossier.telephone_number;
         dossierDB.Mobile_Number__c = dataVendorDossier.mobile_number;
         dossierDB.Domain_Name__c = dataVendorDossier.domain_name;
-
         dossierDB.Authorized_Share_Capital__c = dataVendorDossier.authorized_share_capital;
         dossierDB.Authorized_Share_Capital_Currency__c = dataVendorDossier.authorized_share_capital_currency;
         dossierDB.Class_Personnel__c = convertToString(dataVendorDossier.class_personnel);
@@ -380,37 +367,26 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
             dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure.parent;
             dossierDB.Ultimate_Parent_Chamber_Of_Commerce_Nr__c = dataVendorDossier.structure.ultimate_parent;
         }
+
+        if(dataVendorDossier.establishment_address != null && dataVendorDossier.establishment_address.formatted != null){
+            dossierDB.Establishment_Street__c = dataVendorDossier.establishment_address.formatted.street;
+            dossierDB.Establishment_House_Number__c = convertToString(dataVendorDossier.establishment_address.formatted.house_number);
+            dossierDB.Establishment_House_Number_Addition__c =  dataVendorDossier.establishment_address.formatted.house_number_addition;
+            dossierDB.Establishment_Postal_Code__c =  dataVendorDossier.establishment_address.formatted.postcode;
+            dossierDB.Establishment_City__c = dataVendorDossier.establishment_address.formatted.city;
+            dossierDB.Establishment_Country__c = dataVendorDossier.establishment_address.formatted.country;
+        }
+        if(dataVendorDossier.correspondence_address != null && dataVendorDossier.correspondence_address.formatted != null ){
+            dossierDB.Correspondence_Street__c = dataVendorDossier.correspondence_address.formatted.street;
+            dossierDB.Correspondence_House_Number__c = convertToString(dataVendorDossier.correspondence_address.formatted.house_number);
+            dossierDB.Correspondence_House_Number_Addition__c =  dataVendorDossier.correspondence_address.formatted.house_number_addition;
+            dossierDB.Correspondence_Postal_Code__c =  dataVendorDossier.correspondence_address.formatted.postcode;
+            dossierDB.Correspondence_City__c = dataVendorDossier.correspondence_address.formatted.city;
+            dossierDB.Correspondence_Country__c = dataVendorDossier.correspondence_address.formatted.country;
+        }
+
         return dossierDB;
     }
-
-    private Dossier_Address__c mapDataVendorDataToEstablishmentAddress(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Dossier_Address__c addressDB) {
-        if (dataVendorDossier.establishment_address != null && dataVendorDossier.establishment_address.original != null) {
-            addressDB.Name = dataVendorDossier.establishment_address.original.postcode + ' ' + dataVendorDossier.establishment_address.original.street; //dataVendorDossier.establishment_address.original.address;
-            addressDB.Postcode__c = dataVendorDossier.establishment_address.original.postcode;
-            addressDB.Street__c = dataVendorDossier.establishment_address.original.street;
-            addressDB.City__c = dataVendorDossier.establishment_address.original.city;
-            addressDB.House_Number__c = String.valueOf(dataVendorDossier.establishment_address.original.house_number);
-            addressDB.House_Number_Addition__c = dataVendorDossier.establishment_address.original.house_number_addition;
-            addressDB.Country__c = dataVendorDossier.establishment_address.original.country;
-            addressDB.Type__c = 'Establishment';
-        }
-        return addressDB;
-    }
-
-    private Dossier_Address__c mapDataVendorDataToCorrespondenceAddress(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, Dossier_Address__c addressDB) {
-        if (dataVendorDossier.correspondence_address != null && dataVendorDossier.correspondence_address.original != null) {
-            addressDB.Name = dataVendorDossier.correspondence_address.original.postcode + ' ' + dataVendorDossier.correspondence_address.original.street; //dataVendorDossiercorrespondence_address_original_address;
-            addressDB.Postcode__c = dataVendorDossier.correspondence_address.original.postcode;
-            addressDB.Street__c = dataVendorDossier.correspondence_address.original.street;
-            addressDB.City__c = dataVendorDossier.correspondence_address.original.city;
-            addressDB.House_Number__c = String.valueOf(dataVendorDossier.correspondence_address.original.house_number);
-            addressDB.House_Number_Addition__c = dataVendorDossier.correspondence_address.original.house_number_addition;
-            addressDB.Country__c = dataVendorDossier.correspondence_address.original.country;
-            addressDB.Type__c = 'Correspondence';
-        }
-        return addressDB;
-    }
-
     private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, List<Business_Data_SBI__c> sbiCodesDB) {
         if (sbiCodesDB == null) {
             sbiCodesDB = new List<Business_Data_SBI__c>();
@@ -461,7 +437,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossier.Name = reference.name;
         dossier.Indication_Economically_Active__c = reference.indication_economically_active;
         dossier.Establishment_City__c = reference.establishment_city;
-        dossier.Establishment_street__c = reference.establishment_street;
+        dossier.Establishment_Street__c = reference.establishment_street;
         dossier.Correspondence_City__c = reference.correspondence_city;
         dossier.Correspondence_Street__c = reference.correspondence_street;
         dossier.RecordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName().get('Dutch_Business').recordTypeId;
@@ -486,7 +462,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         }
         dossier.Trade_Name_Full__c = reference.trade_name;
         dossier.Establishment_City__c = reference.establishment_city;
-        dossier.Establishment_street__c = reference.establishment_street;
+        dossier.Establishment_Street__c = reference.establishment_street;
         dossier.Correspondence_City__c = reference.correspondence_city;
         dossier.Correspondence_Street__c = reference.correspondence_street;
         dossier.Indication_Main_Establishment__c = reference.indication_main_establishment;

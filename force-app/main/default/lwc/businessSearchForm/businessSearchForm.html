@@ -5,7 +5,10 @@
 <template>
     <lightning-combobox name="selectedCountry" class="slds-m-around_xxx-small" label={label.Country} options={countries} value={selectedCountry} placeholder={label.Select_a_Country} dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>
     <template if:true={isNlSelected}>
-        <c-dutch-business-search-form class="searchForm" dossier-number={dossierNumber} trade-name={tradeName} city={city} street={street} domain-name={domainName} house-number={houseNumber} house-number-addition={houseNumberAddition} phone-number={phoneNumber} postal-code={postalCode}></c-dutch-business-search-form>
+        <c-dutch-business-search-form class="searchForm" dossier-number={dossierNumber} trade-name={tradeName}
+                                      city={city} street={street} domain-name={domainName} house-number={houseNumber}
+                                      house-number-addition={houseNumberAddition} phone-number={phoneNumber}
+                                      postal-code={postalCode} strict-search={strictSearch}></c-dutch-business-search-form>
     </template>
     <template if:false={isNlSelected}>
         <c-credit-safe-search-form-2 class="searchForm" selected-country={selectedCountry} credit-safe-id={creditSafeId} name={tradeName} city={city} street={street} province={province} postal-code={postalCode} status={status} registration-number={registrationNumber} vat-number={vatNumber}></c-credit-safe-search-form-2>
