@@ -42,8 +42,8 @@
     },
     handleDossierDeleted : function(component, event, helper) {
         component.set("v.dossier", null);
-        helper.startFlow(component);
-        //$A.get('e.force:refreshView').fire();
+        //helper.startFlow(component);
+        window.location.reload();
     },
     getVAT : function(component, event, helper) {
         var callParams = {dossierId: component.get('v.accountRecord').appsolutely__Business_Dossier__c};
