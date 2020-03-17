@@ -34,6 +34,7 @@ export default class SearchAgainButton extends LightningElement {
 
     handleOnClick() {
         this.confirmDialogVisible = true; // would be better to encapsulate this in a method on the confirm dialog itself
+
     }
 
     handleOnClickConfirmationDialog(event) {
@@ -44,8 +45,9 @@ export default class SearchAgainButton extends LightningElement {
                 const recordDeletedEvent = new CustomEvent('dossierdeleted');
                 this.dispatchEvent(recordDeletedEvent);
             }
-            // we don't care about the other statuses (cancel).
-            // this.confirmDialogVisible = false;
+            if (event.detail.status === 'cancel') {
+                this.confirmDialogVisible = false;
+            }
         }
     }
 }
