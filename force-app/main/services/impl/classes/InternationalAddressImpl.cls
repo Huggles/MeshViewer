@@ -22,14 +22,14 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         List<International_Address__c> resultArray = new List<International_Address__c>();
         if (userSearchResult != null && userSearchResult.result != null && userSearchResult.result.item != null) {
             for (InternationalAddressWSDL.InternationalV2 resultItem : userSearchResult.result.item) {
-                resultArray.add(mapInternationalV2ToInternationalAddress(resultItem));
+                resultArray.add(mapInternationalV2ToInternationalAddress(resultItem, country));
             }
         }
 
         return resultArray;
     }
 
-    private International_Address__c mapInternationalV2ToInternationalAddress(InternationalAddressWsdl.InternationalV2 wsAddress) {
+    private International_Address__c mapInternationalV2ToInternationalAddress(InternationalAddressWsdl.InternationalV2 wsAddress, String searchCountryAlpha3Code) {
         International_Address__c address = new International_Address__c();
         // map the address fields
         if (wsAddress.address != null) {
@@ -37,7 +37,7 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
             address.Street__c = wsAddress.address.street;
             address.Country__c = wsAddress.address.country;
             if (!String.isEmpty(address.Country__c)) {
-                address.Alpha_2_Country_Code__c = ([SELECT Alpha_2_Code__c FROM ISO_3166_Entry__mdt WHERE Label =: address.Country__c LIMIT 1]).Alpha_2_Code__c;
+                address.Alpha_2_Country_Code__c = ([SELECT Alpha_2_Code__c FROM ISO_3166_Entry__mdt WHERE Label =: searchCountryAlpha3Code LIMIT 1]).Alpha_2_Code__c;
             }
             address.Building__c = wsAddress.address.building;
             address.Contact__c = wsAddress.address.contact;

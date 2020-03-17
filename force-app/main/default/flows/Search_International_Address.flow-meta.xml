@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <name>End</name>
         <label>End</label>
@@ -84,6 +83,23 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <assignments>
+        <description>Assign the organization field the user searched for to the selected international address</description>
+        <name>Assign_Organization_searched_for</name>
+        <label>Assign Organization searched for</label>
+        <locationX>1307</locationX>
+        <locationY>204</locationY>
+        <assignmentItems>
+            <assignToReference>SelectedInternationalAddress.Organization__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>searchInternationalAddress.organization</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_International_Address</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
@@ -115,7 +131,7 @@
         <locationX>888</locationX>
         <locationY>153</locationY>
         <defaultConnector>
-            <targetReference>Create_International_Address</targetReference>
+            <targetReference>Organization_found</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
         <rules>
@@ -134,8 +150,41 @@
             <label>Cancel Pressed</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Organization_found</name>
+        <label>International address with organization found?</label>
+        <locationX>1101</locationX>
+        <locationY>156</locationY>
+        <defaultConnector>
+            <targetReference>Create_International_Address</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Organization field filled</defaultConnectorLabel>
+        <rules>
+            <name>Organization_field_not_filled</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>SelectedInternationalAddress.Organization__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SelectedInternationalAddress.Organization__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue/>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Organization_searched_for</targetReference>
+            </connector>
+            <label>Organization field not filled</label>
+        </rules>
+    </decisions>
     <description>Searches for and/or completes/corrects international addresses. Returns a maximum of 20 addresses.</description>
     <interviewLabel>Search International Address {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Search International Address</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -153,8 +202,8 @@
     <recordCreates>
         <name>Create_International_Address</name>
         <label>Create International Address</label>
-        <locationX>1038</locationX>
-        <locationY>60</locationY>
+        <locationX>1422</locationX>
+        <locationY>58</locationY>
         <connector>
             <targetReference>End</targetReference>
         </connector>
@@ -179,6 +228,12 @@
             <name>searchFlowErrorHandler</name>
             <extensionName>appsolutely:flowErrorHandler</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>$Flow.FaultMessage</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -267,6 +322,12 @@
                     <elementReference>Street</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>organizationRequired</name>
+                <value>
+                    <elementReference>organizationRequired</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -301,6 +362,12 @@
             <name>flowErrorHandlerSearchScreen</name>
             <extensionName>appsolutely:flowErrorHandler</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>$Flow.FaultMessage</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -415,6 +482,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>organizationRequired</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>POBox</name>

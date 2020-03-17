@@ -83,8 +83,8 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>594</locationX>
-        <locationY>264</locationY>
+        <locationX>596</locationX>
+        <locationY>352</locationY>
         <defaultConnector>
             <targetReference>Create_International_Address</targetReference>
         </defaultConnector>
@@ -126,8 +126,8 @@
     <recordCreates>
         <name>Create_Account</name>
         <label>Create Account</label>
-        <locationX>1076</locationX>
-        <locationY>263</locationY>
+        <locationX>945</locationX>
+        <locationY>126</locationY>
         <connector>
             <targetReference>Assign_Record_Id</targetReference>
         </connector>
@@ -150,7 +150,7 @@
             <targetReference>Search_International_Address</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Search_International_Address</name>
         <label>Search International Address</label>
@@ -160,6 +160,12 @@
             <targetReference>Cancel_Pressed</targetReference>
         </connector>
         <flowName>Search_International_Address</flowName>
+        <inputAssignments>
+            <name>organizationRequired</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>cancelPressed</assignToReference>
             <name>cancelPressed</name>
