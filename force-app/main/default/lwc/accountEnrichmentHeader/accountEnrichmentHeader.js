@@ -53,18 +53,17 @@ export default class AccountEnrichmentHeader extends LightningElement {
         companyInfoLogoSmall,
     }
 
-    get showVAT() {
-        if(!businessDossierRecord.data.fields.VAT_Number__c.value && !businessDossierRecord.data.fields.No_VAT_Number__c.value){
-            return true;
+    get showVATButton() {
+        if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined)        {
+            //If there is no VAT Number and the No_VAT_Number__c(known) is false.
+            if(!this.businessDossierRecord.data.fields.appsolutely__VAT_Number__c.value &&
+                !this.businessDossierRecord.data.fields.appsolutely__No_VAT_Number__c.value){
+                return true;
+            }
         }
         return false;
     }
     onDossierDeleted(event) {
-        //Passing on the event
-        const recordDeletedEvent = new CustomEvent('dossierdeleted');
-        this.dispatchEvent(recordDeletedEvent);
-    }
-    onDossierUpdated(event) {
         //Passing on the event
         const recordDeletedEvent = new CustomEvent('dossierdeleted');
         this.dispatchEvent(recordDeletedEvent);
@@ -76,6 +75,8 @@ export default class AccountEnrichmentHeader extends LightningElement {
         })
             .then(data => {
                 console.log('result:'+ JSON.stringify(data));
+                const dossierUpdatedEvent = new CustomEvent('dossierupdated');
+                this.dispatchEvent(dossierUpdatedEvent);
                 if (data.appsolutely__VAT_Number__c !== undefined) {
                     this.showToast(this.label.Success, this.label.Dossier_Account_Update_Completed, 'success');
                 } else {
