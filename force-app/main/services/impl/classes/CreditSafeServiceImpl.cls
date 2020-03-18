@@ -69,8 +69,9 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         dossier.Date_of_Last_Account__c = creditsafeCompanyV2.date_last_account;
         dossier.Date_of_Last_Change__c = creditsafeCompanyV2.date_last_change;
         if (creditsafeCompanyV2.trade_names != null && creditsafeCompanyV2.trade_names.item != null) {
+            dossier.Trade_Names__c = '';
             for (Integer i = 0; i < creditsafeCompanyV2.trade_names.item.size(); i++) {
-                dossier.Trade_Names__c = creditsafeCompanyV2.trade_names.item[i];
+                dossier.Trade_Names__c += creditsafeCompanyV2.trade_names.item[i];
                 if (String.isNotEmpty(dossier.Trade_Names__c)) {
                     if (i < creditsafeCompanyV2.trade_names.item.size() - 1) {
                         dossier.Trade_Names__c += ', ';
