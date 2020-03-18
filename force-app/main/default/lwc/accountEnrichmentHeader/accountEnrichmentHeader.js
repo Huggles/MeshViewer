@@ -69,12 +69,10 @@ export default class AccountEnrichmentHeader extends LightningElement {
         this.dispatchEvent(recordDeletedEvent);
     }
     handleOnClickVAT(event) {
-        console.log('handleOnClickVAT');
         updateDossierWithVAT({
             dossierId: this.businessDossierId
         })
             .then(data => {
-                console.log('result:'+ JSON.stringify(data));
                 const dossierUpdatedEvent = new CustomEvent('dossierupdated');
                 this.dispatchEvent(dossierUpdatedEvent);
                 if (data.appsolutely__VAT_Number__c !== undefined) {
@@ -84,7 +82,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 }
             })
             .catch(error => {
-                console.log('error:'+error);
                 this.showToast(this.label.error, this.label.Error_Unknown, 'error');
             });
     }
