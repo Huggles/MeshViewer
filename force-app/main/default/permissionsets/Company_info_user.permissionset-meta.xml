@@ -345,10 +345,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_Street__c</field>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Business_Dossier__c.Correspondence_Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2302,8 +2298,8 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Error_Log__c</object>
