@@ -30,7 +30,9 @@
     <aura:if isTrue="{!and(v.dossier, v.dossier != null)}">
         <!-- show the title bar -->
         <c:accountEnrichmentHeader businessDossierId="{! v.accountRecord.appsolutely__Business_Dossier__c }"
+                                   accountRecord="{! v.accountRecord }"
                                    ondossierdeleted="{! c.handleDossierDeleted }"></c:accountEnrichmentHeader>
+
 
         <aura:if isTrue="{!and(v.dossier, v.dossier.Id != null)}">
             <force:recordView recordId="{!v.dossier.Id}"/>

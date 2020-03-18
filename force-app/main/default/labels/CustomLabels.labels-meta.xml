@@ -804,7 +804,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Search Again Confirmation Dialog Message</shortDescription>
-        <value>Are you sure you want to search again? This will remove the existing business dossier record and reload the page.</value>
+        <value>Are you sure you want to search again? This will remove the linked business dossier.</value>
     </labels>
     <labels>
         <fullName>Search_Again_Confirmation_Dialog_Title</fullName>

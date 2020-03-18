@@ -2,6 +2,6 @@
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>48.0</apiVersion>
     <description>Open Record Button</description>
-    <isExposed>true</isExposed>
+    <isExposed>false</isExposed>
     <masterLabel>Open Record Button</masterLabel>
 </LightningComponentBundle>

@@ -24,6 +24,11 @@
                         <c-search-again-button dossier-id={businessDossierId}
                                                ondossierdeleted={onDossierDeleted}></c-search-again-button>
                     </div>
+                    <div class="slds-m-around_xx-small slds-float_right">
+                        <template if:true={showVAT}>
+                            <lightning-button label={label.VAT_Retrieve} onclick={handleOnClickVAT}></lightning-button>
+                        </template>
+                    </div>
                 </div>
             </header>
         </div>
