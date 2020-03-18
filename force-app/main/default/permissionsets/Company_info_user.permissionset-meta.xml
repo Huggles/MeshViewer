@@ -315,12 +315,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_Street__c</field>
+        <field>Business_Dossier__c.Correspondence_City__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_House_Number__c</field>
+        <field>Business_Dossier__c.Correspondence_Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -330,7 +330,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_Street_and_House_Number__c</field>
+        <field>Business_Dossier__c.Correspondence_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -340,12 +340,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_City__c</field>
+        <field>Business_Dossier__c.Correspondence_Street__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_Country__c</field>
+        <field>Business_Dossier__c.Correspondence_Street_and_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -386,10 +386,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Establishment_City__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_Number__c</field>
+        <field>Business_Dossier__c.Establishment_Country__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -399,7 +400,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_Street__c</field>
+        <field>Business_Dossier__c.Establishment_House_Number_Addition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -409,12 +410,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_House_Number_Addition__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_Street_and_House_Number__c</field>
+        <field>Business_Dossier__c.Establishment_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -424,7 +420,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_Country__c</field>
+        <field>Business_Dossier__c.Establishment_Street__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Establishment_Street_and_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2081,7 +2082,15 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
+        <flow>Get_Creditsafe_Report_Global_Action</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
         <flow>Get_Creditsafe_Report_Quick_Action</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Get_Creditsafe_Report_Quick_Action_on_Account</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>

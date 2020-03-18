@@ -47,183 +47,11 @@
             <targetReference>Get_for_Company_IDs</targetReference>
         </connector>
     </assignments>
-    <choices>
-        <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</name>
-        <choiceText>&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel}&lt;/span&gt;</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>ContractIntentionOfSignatureOfLeasingOrRentContract</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>CreditAssessmentExistingBusinessConnectionChoice</name>
-        <choiceText>{!CreditAssessmentExistingBusinessConnectionChoiceLabel}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>CreditAssessmentExistingBusinessConnection</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>CreditAssessmentFutureBusinessConnectionChoice</name>
-        <choiceText>{!CreditAssessmentFutureBusinessConnectionChoiceLabel}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>CreditAssessmentFutureBusinessConnection</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>CreditDecisionChoice</name>
-        <choiceText>{!CreditDecisionChoiceLabel}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>CreditDecision</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>DutchLanguage</name>
-        <choiceText>{!Dutch}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>Dutch</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>EnglishLanguage</name>
-        <choiceText>{!English}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>English</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>GermanLanguage</name>
-        <choiceText>{!German}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>German</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>GoodsCreditInsuranceChoice</name>
-        <choiceText>{!GoodsCreditInsuranceChoiceLabel}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>GoodsCreditInsurance</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
-        <choiceText>{!InsuranceContractIntentionOfSignatureOfInsuranceContractChoiceLabel}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>InsuranceContractIntentionOfSignatureOfInsuranceContract</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</name>
-        <choiceText>{!PurchaseContractIntentionOfSignatureOfPurchaseContractChoiceLabel}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>PurchaseContractIntentionOfSignatureOfPurchaseContract</elementReference>
-        </value>
-    </choices>
-    <choices>
-        <name>RealisationCheckReceivablesCollectionChoice</name>
-        <choiceText>{!RealisationCheckReceivablesCollectionChoiceLabel}</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <elementReference>RealisationCheckReceivablesCollection</elementReference>
-        </value>
-    </choices>
-    <constants>
-        <name>ContractIntentionOfSignatureOfLeasingOrRentContract</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>7</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>CreditAssessmentExistingBusinessConnection</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>3</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>CreditAssessmentFutureBusinessConnection</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>2</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>CreditDecision</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>1</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>Dutch</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>NL</stringValue>
-        </value>
-    </constants>
     <constants>
         <name>DutchBusinessRecordType</name>
         <dataType>String</dataType>
         <value>
             <stringValue>Dutch_Business</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>English</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>EN</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>German</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>DE</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>Germany</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Germany</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>GoodsCreditInsurance</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>6</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>InsuranceContractIntentionOfSignatureOfInsuranceContract</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>8</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>PurchaseContractIntentionOfSignatureOfPurchaseContract</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>5</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>RealisationCheckReceivablesCollection</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>4</stringValue>
         </value>
     </constants>
     <decisions>
@@ -280,58 +108,14 @@
             <label>Is Dutch Business Dossier with Company Id</label>
         </rules>
     </decisions>
+    <description>This flow can be used as a quick action on the Business Dossier record.</description>
     <formulas>
-        <name>AnErrorOccured</name>
+        <name>AnErrorOccuredLabel</name>
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__an_error_occured}</expression>
     </formulas>
-    <formulas>
-        <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__contract_intention_of_signature_of_leasing_or_rent_contract}</expression>
-    </formulas>
-    <formulas>
-        <name>CreditAssessmentExistingBusinessConnectionChoiceLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__credit_assessment_existing_business_connection}</expression>
-    </formulas>
-    <formulas>
-        <name>CreditAssessmentFutureBusinessConnectionChoiceLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__credit_assessment_future_business_connection}</expression>
-    </formulas>
-    <formulas>
-        <name>CreditDecisionChoiceLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__credit_decision}</expression>
-    </formulas>
-    <formulas>
-        <name>GoodsCreditInsuranceChoiceLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__goods_credit_insurance}</expression>
-    </formulas>
-    <formulas>
-        <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoiceLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__insurance_contract_intention_of_signature_of_a_insurance_contract}</expression>
-    </formulas>
-    <formulas>
-        <name>NoCompanyIdFoundMessage</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__no_company_id_found}</expression>
-    </formulas>
-    <formulas>
-        <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoiceLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__purchase_contract_intention_of_signature_of_purchase_contract}</expression>
-    </formulas>
-    <formulas>
-        <name>RealisationCheckReceivablesCollectionChoiceLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__realisation_check_receivables_collection}</expression>
-    </formulas>
     <interviewLabel>Get Creditsafe Report Quick Action {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Get Creditsafe Report Quick Action</label>
+    <label>Get Creditsafe Report Quick Action on Business Dossier</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -368,14 +152,14 @@
     <screens>
         <name>Error_Handling_Screen</name>
         <label>Error Handling Screen</label>
-        <locationX>804</locationX>
-        <locationY>1301</locationY>
+        <locationX>811</locationX>
+        <locationY>1350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Error</name>
-            <fieldText>&lt;p&gt;{!AnErrorOccured}&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!AnErrorOccuredLabel}&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>false</showFooter>
@@ -409,16 +193,6 @@
         </inputAssignments>
     </subflows>
     <variables>
-        <name>CancelPressed</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
         <name>CompanyId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -434,24 +208,6 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>CreditsafeReport</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Creditsafe_Company_Report_Full__c</objectType>
-    </variables>
-    <variables>
-        <name>DossierCountry</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>Get_Buisness_Dossier_Record.Country__c</elementReference>
-        </value>
     </variables>
     <variables>
         <name>recordId</name>

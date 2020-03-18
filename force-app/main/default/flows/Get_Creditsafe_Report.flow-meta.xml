@@ -289,6 +289,7 @@
             <label>User cannot select language but German</label>
         </rules>
     </decisions>
+    <description>This flow can be used as subflows. For example, it can used to create another flow (which can be used as quick action) on specific object.</description>
     <formulas>
         <name>AnErrorOccured</name>
         <dataType>String</dataType>
@@ -542,16 +543,6 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Countryparameter</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>InputBusinessDossier.Registration_Country__c</elementReference>
-        </value>
     </variables>
     <variables>
         <name>CreditsafeReport</name>

@@ -790,6 +790,14 @@
         <value>No authentication data found. The app is not activated</value>
     </labels>
     <labels>
+        <fullName>No_Business_Dossier_Found</fullName>
+        <categories>Creditsafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Business Dossier Found</shortDescription>
+        <value>A Business Dossier related to the Account record cannot be found. Please make sure a Business dossier is available in order to fetch the report.</value>
+    </labels>
+    <labels>
         <fullName>No_Company_Id_Found</fullName>
         <categories>Creditsafe</categories>
         <language>en_US</language>
