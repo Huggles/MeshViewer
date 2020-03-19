@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="IlluminatedCloud" name="Illuminated Cloud">
       <configuration>
-        <option name="connectionName" value="test@cc" />
+        <option name="connectionName" value="demo1" />
         <option name="connectionType" value="SFDX" />
         <option name="defaultSourceRootUrl" value="file://$MODULE_DIR$" />
         <option name="moduleContents">
@@ -23,7 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/force-app/main" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.sfdx/typings" />
     </content>
-    <orderEntry type="jdk" jdkName="IlluminatedCloud (Company.info/test@cc)" jdkType="IlluminatedCloud" />
+    <orderEntry type="jdk" jdkName="IlluminatedCloud (Company.info/demo1)" jdkType="IlluminatedCloud" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
