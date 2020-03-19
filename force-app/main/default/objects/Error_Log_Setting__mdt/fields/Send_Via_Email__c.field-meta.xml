@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_Via_Email__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If True, errors will be sent to the email provided</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Send Via Email</label>
+    <type>Checkbox</type>
+</CustomField>

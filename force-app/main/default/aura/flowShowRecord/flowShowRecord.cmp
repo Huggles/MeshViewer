@@ -1,0 +1,8 @@
+<!--
+ - Created by jaapbranderhorst on 15/03/2020.
+ -->
+
+<aura:component description="flowShowRecord" implements="lightning:availableForFlowScreens" access="global">
+    <aura:attribute type="String" name="recordId" required="true" description="The record Id of the record to be shown" access="global"/>
+    <force:recordView recordId="{!v.recordId}" />
+</aura:component>

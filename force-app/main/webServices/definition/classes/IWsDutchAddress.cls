@@ -6,6 +6,4 @@
 public interface IWsDutchAddress {
 
     DutchAddressWsdl.DutchAddressPostcodeRange dutchAddressRangePostcodeSearch(String address);
-    String login(String username,String password);
-    void logout();
 }

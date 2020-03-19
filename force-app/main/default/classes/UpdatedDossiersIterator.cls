@@ -15,19 +15,29 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
     @TestVisible
     private List<Business_Dossier__c> dossiersOnCurrentPage;
     private List<String> updateTypes;
+    private UpdateDossiersBatch updateDossiersBatch;
+    private ProcessRemovedDutchDossiersBatch processRemovedDutchDossiersBatch;
 
 
-    public UpdatedDossiersIterator(List<String> updateTypes) {
-        if (updateTypes == null) {
-            CCInputException e = new CCInputException('UpdateTypes is null while trying to create an update dossiers iterator');
-            ErrorLogUtil.logException(e);
-            throw e;
+    public UpdatedDossiersIterator(List<String> updateTypes, UpdateDossiersBatch updateDossiersBatch, ProcessRemovedDutchDossiersBatch processRemovedDutchDossiersBatch) {
+        this.updateDossiersBatch = updateDossiersBatch;
+        this.processRemovedDutchDossiersBatch = processRemovedDutchDossiersBatch;
+        try {
+            if (updateTypes == null) {
+                CCInputException e = new CCInputException('UpdateTypes is null while trying to create an update dossiers iterator');
+                ErrorLogUtil.logException(e);
+                throw e;
+            }
+            this.updateTypes = updateTypes;
+            // let's get the first page
+            currentPageNr = 1;
+            dossiersOnCurrentPage = retrievePage(currentPageNr);
+            currentDossierPointer = 0;
         }
-        this.updateTypes = updateTypes;
-        // let's get the first page
-        currentPageNr = 1;
-        dossiersOnCurrentPage = retrievePage(currentPageNr);
-        currentDossierPointer = 0;
+        catch(Exception e) {
+            if(this.updateDossiersBatch != null) this.updateDossiersBatch.exceptions.add(e);
+            if(this.processRemovedDutchDossiersBatch != null) this.processRemovedDutchDossiersBatch.exceptions.add(e);
+        }
     }
 
     public Boolean hasNext() {
@@ -35,17 +45,26 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
     }
 
     public Business_Dossier__c next() {
-        if (!hasNextDossierOnCurrentPage() && hasNextPage()) { // turn the page
-            currentPageNr++;
-            dossiersOnCurrentPage = retrievePage(currentPageNr);
-            currentDossierPointer = 0;
+        Business_Dossier__c dossier;
+        try {
+            if (!hasNextDossierOnCurrentPage() && hasNextPage()) { // turn the page
+                currentPageNr++;
+                dossiersOnCurrentPage = retrievePage(currentPageNr);
+                currentDossierPointer = 0;
+            }
+            dossier = null;
+            if (hasNext()) {
+                currentDossierPointer++;
+                if (currentDossierPointer > 0 && dossiersOnCurrentPage.size() > 0) {
+                    dossier = dossiersOnCurrentPage[currentDossierPointer - 1];
+                }
+            } else {
+                dossier = null; // just to make it very clear;
+            }
         }
-        Business_Dossier__c dossier = null;
-        if (hasNext()) {
-            currentDossierPointer++;
-            dossier = dossiersOnCurrentPage[currentDossierPointer - 1];
-        } else {
-            dossier = null; // just to make it very clear;
+        catch(Exception e) {
+            if(this.updateDossiersBatch != null) this.updateDossiersBatch.exceptions.add(e);
+            if(this.processRemovedDutchDossiersBatch != null) this.processRemovedDutchDossiersBatch.exceptions.add(e);
         }
         return dossier;
     }
@@ -56,7 +75,7 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
      * @return
      */
     private Boolean hasNextDossierOnCurrentPage() {
-        return (currentDossierPointer < dossiersOnCurrentPage.size());
+        return (currentDossierPointer < (dossiersOnCurrentPage != null ? dossiersOnCurrentPage.size() : 0));
     }
 
     private Boolean hasNextPage() {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Empty</fullName>
+        <default>false</default>
+        <label>Empty</label>
+    </customValue>
+    <customValue>
+        <fullName>Not found</fullName>
+        <default>false</default>
+        <label>Not found</label>
+    </customValue>
+    <customValue>
+        <fullName>Not checked (no reference data or no chance of success)</fullName>
+        <default>false</default>
+        <label>Not checked (no reference data or no chance of success)</label>
+    </customValue>
+    <customValue>
+        <fullName>Matched with errors</fullName>
+        <default>false</default>
+        <label>Matched with errors</label>
+    </customValue>
+    <customValue>
+        <fullName>Matched without errors</fullName>
+        <default>false</default>
+        <label>Matched without errors</label>
+    </customValue>
+    <description>Describes how individual address element match against the available reference data</description>
+    <masterLabel>International Address Match  Status</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
