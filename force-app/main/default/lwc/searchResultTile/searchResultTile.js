@@ -19,10 +19,10 @@ export default class SearchResultTile extends LightningElement {
     searchResultId;
 
     /**
-     * The title of the card
+     * The field containing the title of the card. Defaults to Name
      */
     @api
-    title
+    titleField = 'Name';
 
     /**
      * An object containing a data structure with a label and a field
@@ -30,12 +30,8 @@ export default class SearchResultTile extends LightningElement {
     @api
     labelsAndFields;
 
-    get localTitle() {
-        if (this.title) {
-            return this.title;
-        } else {
-            return this.searchResult['Name'];
-        }
+    get title() {
+        return this.searchResult[this.titleField];
     }
 
     connectedCallback() {

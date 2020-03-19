@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <flowDefinition>Complete_Account_with_Dossier_Data</flowDefinition>
     <icon>companyInfoLogoSmall</icon>
-    <label>Enrich</label>
+    <label>Enrich with Business Information</label>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>Flow</type>
 </QuickAction>

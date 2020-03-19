@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
@@ -320,6 +319,7 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Organisation Search Flow</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -359,18 +359,6 @@
             <targetReference>Cancel_pressed_in_Dutch_search_results</targetReference>
         </connector>
         <fields>
-            <name>dutchSearchResultFlowHeader</name>
-            <extensionName>appsolutely:flowHeader</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <isRequired>true</isRequired>
-            <inputParameters>
-                <name>title</name>
-                <value>
-                    <stringValue>SEARCH_BUSINESS_RESULTS</stringValue>
-                </value>
-            </inputParameters>
-        </fields>
-        <fields>
             <name>flowErrorHandlerDutchResultsScreen</name>
             <extensionName>appsolutely:flowErrorHandler</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -391,6 +379,12 @@
                     </rightValue>
                 </conditions>
             </visibilityRule>
+        </fields>
+        <fields>
+            <name>searchResultFlowHeader_DutchBusiness</name>
+            <extensionName>appsolutely:searchResultFlowHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <isRequired>true</isRequired>
         </fields>
         <fields>
             <name>dutchDossiersResult</name>
@@ -461,15 +455,9 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>organisationSearchFormHeader</name>
-            <extensionName>appsolutely:flowHeader</extensionName>
+            <name>searchFlowHeader</name>
+            <extensionName>appsolutely:searchFlowHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>title</name>
-                <value>
-                    <stringValue>SEARCH_BUSINESS</stringValue>
-                </value>
-            </inputParameters>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -691,8 +679,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>creditSafeResultFlowHeader</name>
-            <extensionName>appsolutely:flowHeader</extensionName>
+            <name>searchResultFlowHeader_CreditSafe</name>
+            <extensionName>appsolutely:searchResultFlowHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
         </fields>

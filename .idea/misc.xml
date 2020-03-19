@@ -3,11 +3,7 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/force-app/main/default/classes/MappingUtility.cls" />
-    <file url="file://$PROJECT_DIR$/force-app/main/default/classes/MappingUtilityTest.cls" />
-  </component>
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="false" project-jdk-name="IlluminatedCloud (Customer.connect/InterNaAddress)" project-jdk-type="IlluminatedCloud">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
