@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <decisions>
         <name>Is_Business_Dossier_Related_to_Account</name>
         <label>Is Business Dossier Related to Account</label>
@@ -21,7 +20,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Business_Dossier_Related_to_Account</targetReference>
+                <targetReference>Get_Creditsafe_Report_Quick_Action</targetReference>
             </connector>
             <label>Business Dossier Related</label>
         </rules>
@@ -66,26 +65,6 @@
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_Business_Dossier_Related_to_Account</name>
-        <label>Get Business Dossier Related to Account</label>
-        <locationX>584</locationX>
-        <locationY>928</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Creditsafe_Report_Quick_Action</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Account_Record.Business_Dossier__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Business_Dossier__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <screens>
         <name>No_Business_Dossier_Found</name>
         <label>No Business Dossier Found</label>
@@ -113,13 +92,13 @@
     <subflows>
         <name>Get_Creditsafe_Report_Quick_Action</name>
         <label>Get Creditsafe Report Quick Action</label>
-        <locationX>765</locationX>
+        <locationX>635</locationX>
         <locationY>927</locationY>
         <flowName>Get_Creditsafe_Report_Quick_Action</flowName>
         <inputAssignments>
             <name>recordId</name>
             <value>
-                <elementReference>Get_Business_Dossier_Related_to_Account.Id</elementReference>
+                <elementReference>Get_Account_Record.Business_Dossier__c</elementReference>
             </value>
         </inputAssignments>
     </subflows>
