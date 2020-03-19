@@ -69,10 +69,6 @@
                 <elementReference>CreatedDossier.Id</elementReference>
             </value>
         </inputAssignments>
-        <outputAssignments>
-            <assignToReference>cancelPressed</assignToReference>
-            <name>CancelPressed</name>
-        </outputAssignments>
     </subflows>
     <subflows>
         <name>Search_Dossiers</name>
