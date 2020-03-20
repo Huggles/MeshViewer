@@ -24,6 +24,13 @@
         <value>Back to results</value>
     </labels>
     <labels>
+        <fullName>Building</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Building</shortDescription>
+        <value>Building</value>
+    </labels>
+    <labels>
         <fullName>Business_Data_Exists</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -662,6 +669,13 @@
         <value>House Number</value>
     </labels>
     <labels>
+        <fullName>Locality</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Locality</shortDescription>
+        <value>Locality</value>
+    </labels>
+    <labels>
         <fullName>Ltd</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -735,6 +749,20 @@
         <protected>true</protected>
         <shortDescription>Non Limited</shortDescription>
         <value>Non Limited</value>
+    </labels>
+    <labels>
+        <fullName>Organization</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Organization</shortDescription>
+        <value>Organization</value>
+    </labels>
+    <labels>
+        <fullName>POBox</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>POBox</shortDescription>
+        <value>POBox</value>
     </labels>
     <labels>
         <fullName>Phone_Number</fullName>
