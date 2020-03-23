@@ -737,14 +737,6 @@
         <value>Non Limited</value>
     </labels>
     <labels>
-        <fullName>Open_Business_Dossier</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Open Business Dossier</shortDescription>
-        <value>Open Business Dossier</value>
-    </labels>
-    <labels>
         <fullName>Phone_Number</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
