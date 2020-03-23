@@ -24,6 +24,7 @@
             <property name="vatNumber" type="String" label="VAT Number" description="The VAT number the user can search for. Not used in case of a.o. the Netherlands"/>
             <property name="status" type="String" label="CreditSafe status (Active/non-Acive(" description="Indicator if the company is economically active. Not used for the Netherlands."/>
             <property name="registrationType" type="String" label="CreditSafe registration type (Ltd/non-Ltd)" description="Indicator if this company has limited "/>
+            <property name="strictSearch" type="Boolean" label="Strict Search" description="Should strict search be used?"/>
         </targetConfig>
     </targetConfigs>
     <masterLabel>Business Search Form</masterLabel>

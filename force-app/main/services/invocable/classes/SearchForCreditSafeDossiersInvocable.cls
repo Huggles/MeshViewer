@@ -29,7 +29,7 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
         global String id;
     }
 
-    @InvocableMethod(label='Search for Credit Safe reports' description='Searches for credit safe reports based on the given arguments.' category='Company.info')
+    @InvocableMethod(label='Search for Credit Safe dossier' description='Searches for credit safe dossier based on the given arguments.' category='Company.info')
     global static List<List<Business_Dossier__c>> searchForCreditSafeDossier(List<SearchForCreditSafeDossiersArgument> arguments) {
         List<List<Business_Dossier__c>> dossierLists = new List<List<Business_Dossier__c>>();
         for (SearchForCreditSafeDossiersArgument argument : arguments) {

@@ -71,7 +71,7 @@ private class DutchBusinessServiceImplTest {
             System.assert(businessDossier.Indication_Main_Establishment__c = true);
             System.assert(businessDossier.Correspondence_Street__c.startsWith('correspondence_street'));
             System.assert(businessDossier.Correspondence_City__c.startsWith('correspondence_city'));
-            System.assert(businessDossier.Establishment_street__c.startsWith('establishment_street'));
+            System.assert(businessDossier.Establishment_Street__c.startsWith('establishment_street'));
             System.assert(businessDossier.Establishment_City__c.startsWith('establishment_city'));
             System.assert(businessDossier.Name.startsWith('legal_name'));
             System.assert(businessDossier.Trade_Name_Full__c.startsWith('trade_name'));
@@ -508,11 +508,23 @@ private class DutchBusinessServiceImplTest {
                         Contact_Title1__c,
                         Contact_Title2__c,
                         Continuation_Date__c,
+                        Correspondence_Street__c,
+                        Correspondence_Postal_Code__c,
+                        Correspondence_Country__c,
+                        Correspondence_City__c,
+                        Correspondence_House_Number_Addition__c,
+                        Correspondence_House_Number__c,
                         Discontinuation_Date__c,
                         Domain_Name__c,
                         Dossier_Number__c,
                         Establishment_Date__c,
                         Establishment_Number__c,
+                        Establishment_Street__c,
+                        Establishment_Postal_Code__c,
+                        Establishment_Country__c,
+                        Establishment_City__c,
+                        Establishment_House_Number_Addition__c,
+                        Establishment_House_Number__c,
                         Founding_Date__c,
                         Indication_Bankruptcy__c,
                         Indication_Dip__c,
@@ -637,24 +649,19 @@ private class DutchBusinessServiceImplTest {
         System.assertEquals(dossierDB.Indication_Main_Establishment__c , true);
         System.assertEquals(dossierDB.Indication_Non_Mailing__c , false);
 
-        Dossier_Address__c cAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Correspondence'];
+        System.assertEquals(dossierDB.Correspondence_Postal_Code__c, '3533AX');
+        System.assertEquals(dossierDB.Correspondence_Country__c, 'NL');
+        System.assertEquals(dossierDB.Correspondence_City__c, 'city');
+        System.assertEquals(dossierDB.Correspondence_Street__c, 'street');
+        System.assertEquals(dossierDB.Correspondence_House_Number_Addition__c, 'a');
+        System.assertEquals(dossierDB.Correspondence_House_Number__c, '10');
 
-        System.assertEquals(cAddress.Name, '3533AX street');
-        System.assertEquals(cAddress.Postcode__c, '3533AX');
-        System.assertEquals(cAddress.Country__c, 'NL');
-        System.assertEquals(cAddress.City__c, 'city');
-        System.assertEquals(cAddress.Street__c, 'street');
-        System.assertEquals(cAddress.House_Number_Addition__c, 'a');
-        System.assertEquals(cAddress.House_Number__c, '10');
-
-        Dossier_Address__c eAddress = [SELECT Name, City__c, Country__c, Postcode__c, Street__c, House_Number__c, House_Number_Addition__c FROM Dossier_Address__c WHERE Business_Data__c = :dossierDB.Id AND Type__c = 'Establishment'];
-        System.assertEquals(eAddress.Name, '3533AX street');
-        System.assertEquals(eAddress.Postcode__c, '3533AX');
-        System.assertEquals(eAddress.Country__c, 'NL');
-        System.assertEquals(eAddress.City__c, 'city');
-        System.assertEquals(eAddress.Street__c, 'street');
-        System.assertEquals(eAddress.House_Number_Addition__c, 'a');
-        System.assertEquals(eAddress.House_Number__c, '10');
+        System.assertEquals(dossierDB.Establishment_Postal_Code__c, '3533AX');
+        System.assertEquals(dossierDB.Establishment_Country__c, 'NL');
+        System.assertEquals(dossierDB.Establishment_City__c, 'city');
+        System.assertEquals(dossierDB.Establishment_Street__c, 'street');
+        System.assertEquals(dossierDB.Establishment_House_Number_Addition__c, 'a');
+        System.assertEquals(dossierDB.Establishment_House_Number__c, '10');
     }
 
     @IsTest
