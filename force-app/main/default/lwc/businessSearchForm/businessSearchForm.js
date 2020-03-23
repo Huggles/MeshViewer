@@ -66,6 +66,8 @@ export default class BusinessSearchForm extends LightningElement {
     @api
     creditSafeId;
     @api
+    strictSearch;
+    @api
     status;
     @api
     registrationNumber;
@@ -75,6 +77,7 @@ export default class BusinessSearchForm extends LightningElement {
     vatNumber;
     @api
     province;
+
     @api
     name;
 

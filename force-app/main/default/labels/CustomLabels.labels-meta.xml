@@ -17,6 +17,14 @@
         <value>Addition</value>
     </labels>
     <labels>
+        <fullName>An_Error_occured</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>An Error occured</shortDescription>
+        <value>An error occured!</value>
+    </labels>
+    <labels>
         <fullName>Back_To_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -200,6 +208,13 @@
         <value>Company.info Setup</value>
     </labels>
     <labels>
+        <fullName>Contract_Intention_of_signature_of_leasing_or_rent_contract</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contract Intention of signature of leasing or rent contract</shortDescription>
+        <value>Contract - Intention of signature of leasing or rent contract</value>
+    </labels>
+    <labels>
         <fullName>Country</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -270,6 +285,37 @@
         <protected>true</protected>
         <shortDescription>CreditSafe Validation Message Heading</shortDescription>
         <value>Please enter one of the following search criteria to search:</value>
+    </labels>
+    <labels>
+        <fullName>Credit_Assessment_Existing_business_connection</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Credit Assessment Existing business connection</shortDescription>
+        <value>Credit Assessment - Existing business connection</value>
+    </labels>
+    <labels>
+        <fullName>Credit_Assessment_Future_business_connection</fullName>
+        <categories>Creditsafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Credit Assessment Future business connection</shortDescription>
+        <value>Credit Assessment - Future business connection</value>
+    </labels>
+    <labels>
+        <fullName>Credit_Decision</fullName>
+        <categories>Creditsafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Credit Decision</shortDescription>
+        <value>Credit Decision</value>
+    </labels>
+    <labels>
+        <fullName>Creditsafe_Report_Created</fullName>
+        <categories>Creditsafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Creditsafe Report Created</shortDescription>
+        <value>Creditsafe Report has been created.</value>
     </labels>
     <labels>
         <fullName>Creditsafe_company_identifier</fullName>
@@ -647,11 +693,26 @@
         <value>Please enter at least two characters.</value>
     </labels>
     <labels>
+        <fullName>Get_Creditsafe_Report</fullName>
+        <categories>Creditsafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Get Creditsafe Report</shortDescription>
+        <value>Get Creditsafe Report</value>
+    </labels>
+    <labels>
         <fullName>Get_Dossier_Results_Help</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Get_Dossier_Results_Help</shortDescription>
         <value>Below is the detailed company dossier. Please press create account to proceed with account creation.</value>
+    </labels>
+    <labels>
+        <fullName>Goods_Credit_Insurance</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Goods Credit Insurance</shortDescription>
+        <value>Goods Credit Insurance</value>
     </labels>
     <labels>
         <fullName>House_Number</fullName>
@@ -660,6 +721,13 @@
         <protected>true</protected>
         <shortDescription>House Number</shortDescription>
         <value>House Number</value>
+    </labels>
+    <labels>
+        <fullName>Insurance_Contract_Intention_of_signature_of_a_insurance_contract</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Insurance Contract Intention of signature of a insurance contract</shortDescription>
+        <value>Insurance Contract - Intention of signature of a insurance contract</value>
     </labels>
     <labels>
         <fullName>Ltd</fullName>
@@ -722,6 +790,22 @@
         <value>No authentication data found. The app is not activated</value>
     </labels>
     <labels>
+        <fullName>No_Business_Dossier_Found</fullName>
+        <categories>Creditsafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Business Dossier Found</shortDescription>
+        <value>A Business Dossier related to the Account record cannot be found. Please make sure a Business dossier is available in order to fetch the report.</value>
+    </labels>
+    <labels>
+        <fullName>No_Company_Id_Found</fullName>
+        <categories>Creditsafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No Company Id Found</shortDescription>
+        <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
+    </labels>
+    <labels>
         <fullName>NonActive</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -766,6 +850,20 @@
         <protected>true</protected>
         <shortDescription>Province</shortDescription>
         <value>Province</value>
+    </labels>
+    <labels>
+        <fullName>Purchase_Contract_Intention_of_signature_of_purchase_contract</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Purchase Contract Intention of signature of purchase contract</shortDescription>
+        <value>Purchase Contract - Intention of signature of purchase contract</value>
+    </labels>
+    <labels>
+        <fullName>Realisation_check_receivables_collection</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Realisation check receivables collection</shortDescription>
+        <value>Realisation check receivables collection</value>
     </labels>
     <labels>
         <fullName>Registration_Number</fullName>
@@ -1118,6 +1216,13 @@
         <protected>true</protected>
         <shortDescription>Street</shortDescription>
         <value>Street</value>
+    </labels>
+    <labels>
+        <fullName>Strict_Search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Strict Search</shortDescription>
+        <value>Strict Search</value>
     </labels>
     <labels>
         <fullName>Success</fullName>

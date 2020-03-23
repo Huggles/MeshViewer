@@ -21,6 +21,7 @@ import Valid_Dutch_postal_code from '@salesforce/label/c.Valid_Dutch_postal_code
 import City from '@salesforce/label/c.City';
 import CreditSafe_Validation_Message_Heading from '@salesforce/label/c.CreditSafe_Validation_Message_Heading';
 import Dossier_Number from '@salesforce/label/c.Dossier_Number';
+import Strict_Search from '@salesforce/label/c.Strict_Search';
 
 export default class DutchBusinessSearchForm extends LightningElement {
     @api
@@ -41,6 +42,8 @@ export default class DutchBusinessSearchForm extends LightningElement {
     domainName;
     @api
     phoneNumber;
+    @api
+    strictSearch;
 
     @track
     hints;
@@ -59,7 +62,8 @@ export default class DutchBusinessSearchForm extends LightningElement {
         City,
         CreditSafe_Validation_Message_Heading,
         Validation_Error_Message_Toast_Title,
-        Dossier_Number
+        Dossier_Number,
+        Strict_Search
     }
 
 
@@ -85,6 +89,9 @@ export default class DutchBusinessSearchForm extends LightningElement {
     handleOnChange(event) {
         this.hints = null; // remove the toast
         this.dispatchAttributeChangeEvent(event.target.name, event.target.value);
+    }
+    handleOnCheckedChange(event){
+        this.dispatchAttributeChangeEvent(event.target.name, event.target.checked);
     }
 
     dispatchAttributeChangeEvent(name, value) {

@@ -69,10 +69,10 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         dossier.Date_of_Last_Account__c = creditsafeCompanyV2.date_last_account;
         dossier.Date_of_Last_Change__c = creditsafeCompanyV2.date_last_change;
         if (creditsafeCompanyV2.trade_names != null && creditsafeCompanyV2.trade_names.item != null) {
+            dossier.Trade_Names__c = '';
             for (Integer i = 0; i < creditsafeCompanyV2.trade_names.item.size(); i++) {
-                String tradeName = creditsafeCompanyV2.trade_names.item[i];
-                if (tradeName != null) {
-                    dossier.Trade_Names__c += tradeName;
+                dossier.Trade_Names__c += creditsafeCompanyV2.trade_names.item[i];
+                if (String.isNotEmpty(dossier.Trade_Names__c)) {
                     if (i < creditsafeCompanyV2.trade_names.item.size() - 1) {
                         dossier.Trade_Names__c += ', ';
                     }
@@ -92,6 +92,8 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         dossier.House_number__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.house_number : null;
         dossier.City__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.city : null;
         dossier.Full_Address__c = creditsafeCompanyV2.address != null ? creditsafeCompanyV2.address.full_address : null;
+        dossier.Registration_Country__c = dossier.Country__c;
+        dossier.Company_Id__c = creditsafeCompanyV2.id;
         dossier.RecordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByName().get('Creditsafe').getRecordTypeId();
         return dossier;
     }

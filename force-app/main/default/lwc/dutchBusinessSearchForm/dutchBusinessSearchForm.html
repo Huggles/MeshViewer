@@ -16,6 +16,7 @@
                 </ul>
         </c-custom-toast>
     </template>
+
     <!-- TODO: add validation. Must be 8 numbers -->
 
 
@@ -56,7 +57,9 @@
                              variant="standard" value={phoneNumber} pattern="^((\+31)|(0031)|0)(\(0\)|)(\d{1,3})(\s|\-|)(\d{8}|\d{4}\s\d{4}|\d{2}\s\d{2}\s\d{2}\s\d{2})$" message-when-pattern-mismatch={label.Valid_Dutch_phone_number} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
     </lightning-layout>
-
+    <lightning-input name="strictSearch" class="slds-m-around_x-small" label={label.Strict_Search} type="toggle"
+                     message-toggle-active="" message-toggle-inactive=""
+                     checked={strictSearch} variant="standard" onchange={handleOnCheckedChange}></lightning-input>
 
 
 

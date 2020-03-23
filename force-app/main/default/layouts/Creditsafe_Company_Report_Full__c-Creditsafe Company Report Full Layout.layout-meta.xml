@@ -20,7 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Business_Data__c</field>
+                <field>Business_Dossier__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

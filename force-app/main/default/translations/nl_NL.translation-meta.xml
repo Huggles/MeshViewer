@@ -613,6 +613,10 @@
         <name>Street</name>
     </customLabels>
     <customLabels>
+        <label>Zoek Exact</label>
+        <name>Strict_Search</name>
+    </customLabels>
+    <customLabels>
         <label>Gelukt</label>
         <name>Success</name>
     </customLabels>
