@@ -13,10 +13,9 @@
         <div class="logoContainer"><img src="{!$Resource.companyInfoLogoSmall}"/></div>
     </aura:attribute>
     <aura:attribute name="dossier" type="appsolutely__Business_Dossier__c"/>
-    <aura:attribute name="showVAT" type="Boolean"/>
+
 
     <aura:handler name="errorChange" value="{!v.error}" action="{!c.handleErrorChange}"/>
-
     <force:recordData aura:id="accountLoader" recordId="{!v.recordId}" targetFields="{!v.accountRecord}"
                       fields="appsolutely__Business_Dossier__c" targetError="{!v.error}" recordUpdated="{!c.handleAccountRecordUpdated}"/>
 
@@ -30,18 +29,14 @@
     <!-- if the business dossier is there show it -->
     <aura:if isTrue="{!and(v.dossier, v.dossier != null)}">
         <!-- show the title bar -->
-        <!-- TODO: migrate this to a lwc -->
-        <div class="slds-box slds-theme_default slds-m-bottom_small">
-            <lightning:card variant="Narrow" >
-                <aura:set attribute="title">{!v.myTitleName}</aura:set>
-                <aura:set attribute="actions">
-                    <aura:if isTrue="{!v.showVAT}">
-                        <lightning:button label="{!$Label.c.VAT_Retrieve}" onclick="{!c.getVAT}" />
-                    </aura:if>
-                   <c:searchAgainButton dossierId="{!v.accountRecord.appsolutely__Business_Dossier__c}" ondossierdeleted="{!c.handleDossierDeleted}"/>
-                </aura:set>
-            </lightning:card>
-        </div>
+
+
+        <c:accountEnrichmentHeader businessDossierId="{! v.accountRecord.appsolutely__Business_Dossier__c }"
+                                   accountRecord="{! v.accountRecord }"
+                                   ondossierdeleted="{! c.handleDossierDeleted }"
+                                   ondossierupdated="{! c.handleDossierVATUpdated }"></c:accountEnrichmentHeader>
+
+
         <aura:if isTrue="{!and(v.dossier, v.dossier.Id != null)}">
             <force:recordView recordId="{!v.dossier.Id}"/>
         </aura:if>

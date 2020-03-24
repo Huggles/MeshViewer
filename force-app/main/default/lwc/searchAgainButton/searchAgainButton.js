@@ -44,7 +44,7 @@ export default class SearchAgainButton extends LightningElement {
                 const recordDeletedEvent = new CustomEvent('dossierdeleted');
                 this.dispatchEvent(recordDeletedEvent);
             }
-            else if (event.detail.status === 'cancel') {
+            if (event.detail.status === 'cancel') {
                 this.confirmDialogVisible = false;
             }
         }

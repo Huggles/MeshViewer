@@ -338,12 +338,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_House_Number_Addition__c</field>
+        <field>Business_Dossier__c.Correspondence_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_House_Number__c</field>
+        <field>Business_Dossier__c.Correspondence_House_Number_Addition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -413,12 +413,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_House_Number_Addition__c</field>
+        <field>Business_Dossier__c.Establishment_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_House_Number__c</field>
+        <field>Business_Dossier__c.Establishment_House_Number_Addition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -429,7 +429,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Establishment_Postal_Code__c</field>
-
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -442,6 +441,12 @@
         <field>Business_Dossier__c.Establishment_Street_and_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Establishment_Street__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Founding_Date__c</field>
