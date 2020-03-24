@@ -23,7 +23,7 @@ private class UpdatedDossiersIteratorTest {
 
         // when
         Test.startTest();
-        UpdatedDossiersIterator iterator = new UpdatedDossiersIterator(updateMockStrings);
+        UpdatedDossiersIterator iterator = new UpdatedDossiersIterator(updateMockStrings, new UpdateDossiersBatch(), null);
         Test.stopTest();
 
         // then
@@ -64,7 +64,7 @@ private class UpdatedDossiersIteratorTest {
 
         // when
         Test.startTest();
-        UpdatedDossiersIterator iterator = new UpdatedDossiersIterator(updateMockStrings);
+        UpdatedDossiersIterator iterator = new UpdatedDossiersIterator(updateMockStrings, new UpdateDossiersBatch(), null);
         Test.stopTest();
 
         // then
@@ -107,7 +107,7 @@ private class UpdatedDossiersIteratorTest {
 
         // when
         Test.startTest();
-        UpdatedDossiersIterator iterator = new UpdatedDossiersIterator(updateMockStrings);
+        UpdatedDossiersIterator iterator = new UpdatedDossiersIterator(updateMockStrings, new UpdateDossiersBatch(), null);
         Test.stopTest();
 
         // then

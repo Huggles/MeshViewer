@@ -4,11 +4,6 @@
 
 <!-- Search Result Tiles List -->
 <template>
-    <template if:true={error}>
-        <c-custom-toast class="error-message" show-on-load>
-            {error}
-        </c-custom-toast>
-    </template>
     <template if:false={hasResults}>
         <div class="slds-illustration slds-illustration_small">
             <img src={desertIllustration} class="slds-medium-size_1-of-1" style="max-height: 300px;"/>
@@ -22,7 +17,7 @@
             <div class="grid">
                 <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="dossier">
                     <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}
-                                          title={title} onerror={handleError} oncardclicked={handleCardClicked}></c-search-result-tile>
+                                          title-field= {titleField} oncardclicked={handleCardClicked}></c-search-result-tile>
                 </template>
             </div>
             <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;">

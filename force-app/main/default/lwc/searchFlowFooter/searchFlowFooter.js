@@ -20,9 +20,9 @@ export default class SearchFlowFooter extends LightningElement {
         Previous
     }
 
-    @api showCancelButton;
-
     @api cancelPressed;
+
+    @api showCancelButton;
 
     registeredComponents = new Set();
 

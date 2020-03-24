@@ -45,4 +45,17 @@ private class ErrorLogUtilTest {
         System.assert(logs[0].Trace__c.contains('test'));
     }
 
+    @IsTest
+    static void testLogExceptionWithEmail() {
+        Test.startTest();
+        Exception ex = new TestException('test');
+        ErrorLogUtil.logExceptionWithEmail(new List<Exception>{ex});
+        Integer invocations = Limits.getEmailInvocations();
+        Test.stopTest();
+        Error_Log__c[] logs = [SELECT Trace__c FROM Error_Log__c];
+        System.assert(logs.size() == 1);
+        System.assert(logs[0].Trace__c.contains('test'));
+        System.assertEquals(1, invocations);
+    }
+
 }

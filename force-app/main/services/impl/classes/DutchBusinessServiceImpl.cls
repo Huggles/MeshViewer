@@ -252,7 +252,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     private List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchForDutchBusinessesInCompanyInfo(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchResults = new List<DutchBusinessWsdl.DutchBusinessEstablishmentReference>();
         DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult returnedResults = WsDutchBusiness.dutchBusinessSearch(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, 1);
-        if (returnedResults.results != null && returnedResults.results.item != null) {
+        if (returnedResults != null && returnedResults.results != null && returnedResults.results.item != null) {
             searchResults.addAll(returnedResults.results.item);
             Integer numPages = returnedResults.paging.numpages;
             for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {

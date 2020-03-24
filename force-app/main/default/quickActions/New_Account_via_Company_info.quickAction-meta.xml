@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Users can search for Company.info data and create an account based on that data.</description>
+    <description>Users can search for Business data in Company.info and create an account based on that data.</description>
     <height>250</height>
-    <label>New Account via Company.info</label>
+    <label>New Account based on Business Data</label>
     <lightningComponent>appsolutely__creatAccountBasedOnCompanyInfoAction</lightningComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>LightningComponent</type>
