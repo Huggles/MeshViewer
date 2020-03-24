@@ -9,26 +9,46 @@
             <div>{error}</div>
         </c-custom-toast>
     </template>
-<!--    <lightning-card title="Search International Address" icon-name="custom:custom14">-->
-<!--        <div class="slds-m-around_medium">-->
-            <lightning-combobox name="country"
-                                label="Country"
-                                value={country}
-                                placeholder="Select Country"
-                                options={selectOptions}
-                                spinner-active="true"
-                                onchange={handleSelectedCountryChange}>
-            </lightning-combobox> <br />
-            <lightning-input name="organization" required={organizationRequired} label="Organization" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input><br />
-            <lightning-input name="building" label="Building" title="Building" value={building} onchange={handleOnChange}></lightning-input><br />
-            <lightning-input name="street" label="Street" title="Street" value={street} onchange={handleOnChange}></lightning-input>  <br />
-            <lightning-input name="housenr" label="House Number" title="House Number" value={housenr} onchange={handleOnChange}></lightning-input>  <br />
-            <lightning-input name="pobox" label="POBox" title="POBox" value={pobox}  onchange={handleOnChange}></lightning-input>  <br />
-            <lightning-input name="locality" label="Locality" title="Locality" value={locality} onchange={handleOnChange}></lightning-input>  <br />
-            <lightning-input name="postcode" label="Postcode" title="Postcode" value={postcode} onchange={handleOnChange}></lightning-input>  <br />
-            <lightning-input name="province" label="Province" title="Province" value={province} onchange={handleOnChange}></lightning-input>  <br />
-<!--            <lightning-input name="language" label="Language" title="Language" value={language} onchange={handleOnChange}></lightning-input>  <br />-->
-
-<!--        </div>-->
-<!--    </lightning-card>-->
+    <lightning-combobox name="country"
+                        label={label.Country}
+                        value={country}
+                        placeholder="Select Country"
+                        options={selectOptions}
+                        spinner-active="true"
+                        onchange={handleSelectedCountryChange}>
+    </lightning-combobox>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="6">
+            <lightning-input name="organization" required={organizationRequired} label={label.Organization}
+                             class="slds-m-around_xxx-small" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-input name="building" label={label.Building} title="Building"
+                             class="slds-m-around_xxx-small" value={building} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="8">
+            <lightning-input name="street" label={label.Street} title="Street"
+                             class="slds-m-around_xxx-small" value={street} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="4">
+            <lightning-input name="housenr" label={label.House_Number} title="House Number"
+                             class="slds-m-around_xxx-small" value={housenr} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-input name="pobox" label={label.POBox} title="POBox"
+                             class="slds-m-around_xxx-small" value={pobox}  onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-input name="postcode" label={label.Postcode} title="Postcode"
+                             class="slds-m-around_xxx-small" value={postcode} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-input name="locality" label={label.Locality} title="Locality"
+                             class="slds-m-around_xxx-small" value={locality} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-input name="province" label={label.Province} title="Province"
+                             class="slds-m-around_xxx-small" value={province} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
 </template>

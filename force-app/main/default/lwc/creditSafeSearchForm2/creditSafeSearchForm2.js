@@ -163,18 +163,16 @@ export default class CreditSafeSearchForm2 extends LightningElement {
     get statuses() {
         let statuses;
         if (this.isFrSelected) {
-            // TODO: labels
             statuses = [
                 { label: Active, value: 'active' },
                 { label: NonActive, value: 'nonactive'},
-                { label: 'Active, NonActive', value: 'active, NonActive' }
+                { label: Active, NonActive, value: 'active, NonActive' }
             ];
         }
         if (this.isSeSelected || this.isIeSelected || this.isGbSelected || this.isDeSelected) {
-            // TODO: labels
             statuses = [
                 { label: Active, value: 'active' },
-                { label: 'Active, NonActive', value: 'Active, NonActive' }
+                { label: Active, NonActive, value: 'Active, NonActive' }
             ];
         }
         if (this.isBeSelected) {

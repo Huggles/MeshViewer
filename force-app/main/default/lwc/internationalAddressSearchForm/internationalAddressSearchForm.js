@@ -8,6 +8,16 @@ import getIso3166Options from '@salesforce/apex/Iso3166CountryPickListController
 import getIsO3166OptionByAlpha2Code from '@salesforce/apex/Iso3166CountryPickListController.getIsO3166OptionByAlpha2Code';
 import {fireEvent, registerListener, unregisterAllListeners} from "c/pubsub";
 
+import Organization from '@salesforce/label/c.Organization';
+import Building from '@salesforce/label/c.Building';
+import Street from '@salesforce/label/c.Street';
+import POBox from '@salesforce/label/c.POBox';
+import Locality from '@salesforce/label/c.Locality';
+import Postcode from '@salesforce/label/c.Postal_Code';
+import Province from '@salesforce/label/c.Province';
+import House_Number from '@salesforce/label/c.House_Number';
+import Country from '@salesforce/label/c.Country';
+
 export default class InternationalAddressSearchForm extends LightningElement {
 
     @api organization;
@@ -28,6 +38,18 @@ export default class InternationalAddressSearchForm extends LightningElement {
 
     @track selectOptions = [];
     @track error;
+
+    label = {
+        Organization,
+        Building,
+        Street,
+        House_Number,
+        POBox,
+        Locality,
+        Postcode,
+        Province,
+        Country
+    }
 
     /**
      * Loads all the countries according to Iso3166

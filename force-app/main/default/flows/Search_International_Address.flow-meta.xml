@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <name>End</name>
         <label>End</label>
@@ -113,7 +114,7 @@
             <name>Cancel_Pressed_Outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>searchFlowFooter.cancelPressed</leftValueReference>
+                <leftValueReference>cancelPressed</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -138,7 +139,7 @@
             <name>Cancel_Pressed_Search_Results_Outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>searchResultFlowFooter.cancelPressed</leftValueReference>
+                <leftValueReference>cancelPressed</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -184,7 +185,6 @@
     </decisions>
     <description>Searches for and/or completes/corrects international addresses. Returns a maximum of 20 addresses.</description>
     <interviewLabel>Search International Address {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Search International Address</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -342,7 +342,10 @@
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>cancelPressed</assignToReference>
+                <name>cancelPressed</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -413,7 +416,10 @@
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>cancelPressed</assignToReference>
+                <name>cancelPressed</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
