@@ -4,10 +4,10 @@
     <option name="connections">
       <list>
         <IlluminatedCloudConnection>
-          <option name="connectionName" value="test-shrgi8pmjpex@example.com" />
+          <option name="connectionName" value="PLDM" />
           <option name="connectionType" value="SFDX" />
           <option name="defaultModuleName" value="CompanyInfoComponents" />
-          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/test_shrgi8pmjpex_example_com/OfflineSymbolTable.zip" />
+          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/PLDM/OfflineSymbolTable.zip" />
         </IlluminatedCloudConnection>
       </list>
     </option>
