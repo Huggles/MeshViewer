@@ -1,7 +1,0 @@
-<!--
- - Created by jaapbranderhorst on 01/03/2020.
- -->
-
-<design:component label="Enrich with Company.info Data">
-    <design:attribute name="flowName" label="Flow API Name" default="Complete_Account_with_Dossier_Data" description="The API name of the Flow to search for the data to enrich the account. Ensure the flow updates the account and the related lookup to Account to function properly."/>
-</design:component>
