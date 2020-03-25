@@ -13,11 +13,19 @@
         <name>Addition</name>
     </customLabels>
     <customLabels>
+        <label>Er is een fout opgetreden!</label>
+        <name>An_Error_occured</name>
+    </customLabels>
+    <customLabels>
         <label>Terug naar resultaten</label>
         <name>Back_To_Search</name>
     </customLabels>
     <customLabels>
-        <label><!-- Business Data Exists --></label>
+        <label>Gebouw</label>
+        <name>Building</name>
+    </customLabels>
+    <customLabels>
+        <label>Het Company.info record bestaat al.</label>
         <name>Business_Data_Exists</name>
     </customLabels>
     <customLabels>
@@ -117,39 +125,43 @@
         <name>Config_Title</name>
     </customLabels>
     <customLabels>
+        <label>Contract - Intentie tot ondertekening van een lease-of huurcontract</label>
+        <name>Contract_Intention_of_signature_of_leasing_or_rent_contract</name>
+    </customLabels>
+    <customLabels>
         <label>Land</label>
         <name>Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country Belgium --></label>
+        <label>Belgie</label>
         <name>Country_Belgium</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country France --></label>
+        <label>Frankrijk</label>
         <name>Country_France</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country Germany --></label>
+        <label>Duitsland</label>
         <name>Country_Germany</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country Ireland --></label>
+        <label>Ierland</label>
         <name>Country_Ireland</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country Netherlands --></label>
+        <label>Nederland</label>
         <name>Country_Netherlands</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country Sweden --></label>
+        <label>Zweden</label>
         <name>Country_Sweden</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country United Kingdom --></label>
+        <label>Verenigd Koninkrijk</label>
         <name>Country_United_Kingdom</name>
     </customLabels>
     <customLabels>
-        <label><!-- Country to Search --></label>
+        <label>Zoeken naar land</label>
         <name>Country_to_Search</name>
     </customLabels>
     <customLabels>
@@ -157,27 +169,43 @@
         <name>CreditSafe_Validation_Message_Heading</name>
     </customLabels>
     <customLabels>
+        <label>Kredietbeoordeling - Bestaande zakelijke connectie</label>
+        <name>Credit_Assessment_Existing_business_connection</name>
+    </customLabels>
+    <customLabels>
+        <label>Kredietbeoordeling - Toekomstige zakelijke connectie</label>
+        <name>Credit_Assessment_Future_business_connection</name>
+    </customLabels>
+    <customLabels>
+        <label>Kredietbeslissing</label>
+        <name>Credit_Decision</name>
+    </customLabels>
+    <customLabels>
+        <label>Creditsafe rapport is aangemaakt.</label>
+        <name>Creditsafe_Report_Created</name>
+    </customLabels>
+    <customLabels>
         <label>Creditsafe bedrijfsnummer</label>
         <name>Creditsafe_company_identifier</name>
     </customLabels>
     <customLabels>
-        <label><!-- WSCall_Unknown_Exception --></label>
+        <label>Er is een fout opgetreden bij het controleren van duplicaten.</label>
         <name>DBSCall_AccountDupCheck_Exception</name>
     </customLabels>
     <customLabels>
-        <label><!-- WSCall_Unknown_Exception --></label>
+        <label>Er is een fout opgetreden bij het aanmaken van het account.</label>
         <name>DBSCall_AccountSave_Exception</name>
     </customLabels>
     <customLabels>
-        <label><!-- WSCall_Unknown_Exception --></label>
+        <label>Er is een fout opgetreden bij het zoeken naar het account.</label>
         <name>DBSCall_AccountSearch_Exception</name>
     </customLabels>
     <customLabels>
-        <label><!-- WSCall_Unknown_Exception --></label>
+        <label>Er is een fout opgetreden bij het opslaan van het dossier.</label>
         <name>DBSCall_DossierSave_Exception</name>
     </customLabels>
     <customLabels>
-        <label><!-- WSCall_Unknown_Exception --></label>
+        <label>Er is een fout opgetreden op BusinessService niveau.</label>
         <name>DBSCall_Unknown_Exception</name>
     </customLabels>
     <customLabels>
@@ -209,11 +237,11 @@
         <name>Dossier_Account_Update_Completed</name>
     </customLabels>
     <customLabels>
-        <label><!-- Dossier ID Access --></label>
+        <label>De gebruiker heeft geen toegang tot het dossier met ID:</label>
         <name>Dossier_ID_Access</name>
     </customLabels>
     <customLabels>
-        <label><!-- Dossier ID Missing --></label>
+        <label>DossierID moet ingevuld zijn wanneer het BTW nummer opgehaald wordt.</label>
         <name>Dossier_ID_Missing</name>
     </customLabels>
     <customLabels>
@@ -225,7 +253,7 @@
         <name>Dossier_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Dossier Number Missing --></label>
+        <label>Kon het BTW nummer niet ophalen om het Registratienummer mist.</label>
         <name>Dossier_Number_Missing</name>
     </customLabels>
     <customLabels>
@@ -249,11 +277,11 @@
         <name>Error_Client_Authentication_Password</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Client Authentication Username --></label>
+        <label>Authenticatie met Company.info is mislukt vanwege een incorrecte gebruikersnaam.</label>
         <name>Error_Client_Authentication_Username</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Client Authorization --></label>
+        <label>U bent geauthenticeerd voor Company.info maar u heeft geen toegang tot de gevraagde functionaliteit. Neem contact op met uw beheerder.</label>
         <name>Error_Client_Authorization</name>
     </customLabels>
     <customLabels>
@@ -261,23 +289,23 @@
         <name>Error_Client_Hostrestriction</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Client Input --></label>
+        <label>Er is een fout opgetreden vanwege een probleem met de opgegeven data. Controleer de data en probeer nogmaals.</label>
         <name>Error_Client_Input</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Client Input Format Incorrect --></label>
+        <label>De ingevoerde data is ongeldig omdat een van de parameters een syntax error bevat of een incorrect formaat heeft.</label>
         <name>Error_Client_Input_Format_Incorrect</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Client Input Incomplete --></label>
+        <label>De ingevoerde data is ongeldig omdat een van de verplichte parameters ontbreekt of niet volledig is.</label>
         <name>Error_Client_Input_Incomplete</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Client Input Invalid --></label>
+        <label>De ingevoerde data is ongeldig omdat een parameters een ongeldige of niet toegestane waarde bevat.</label>
         <name>Error_Client_Input_Invalid</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Client Payment --></label>
+        <label>The verzoek kan niet verwerkt worden, omdat de gebruiker (of zijn account) onvoldoende budget heeft.</label>
         <name>Error_Client_Payment</name>
     </customLabels>
     <customLabels>
@@ -297,35 +325,35 @@
         <name>Error_Remove_Dossier</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Server Data --></label>
+        <label>Een fout is opgetreden tijdens het ophalen van de gevraagde data.</label>
         <name>Error_Server_Data</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Server Data NotFound --></label>
+        <label>De gevraagde data is niet beschikbaar.</label>
         <name>Error_Server_Data_NotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Server Data NotFound Kadaster NotDeliverable --></label>
+        <label>Het gevraagde resultaat is niet beschikbaar (Het Kadaster kan vanwege juridische regels geen persoonsinformatie aanleveren).</label>
         <name>Error_Server_Data_NotFound_Kadaster_NotDeliverable</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Server Data NotFound Nbwo EstimateUnavailable --></label>
+        <label>Een accurate NBWO waarde kan niet berekend worden voor het opgegeven adres.</label>
         <name>Error_Server_Data_NotFound_Nbwo_EstimateUnavailable</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Server Data PageNotFound --></label>
+        <label>De opgevraagde resultaatpagina bestaat niet.</label>
         <name>Error_Server_Data_PageNotFound</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Server Unavailable --></label>
+        <label>Een fout is opgetreden waardoor Company.info niet bereikbaar is.</label>
         <name>Error_Server_Unavailable</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Server Unavailable InternalError --></label>
+        <label>De service is niet beschikbaar vanwege een intere serverfout.</label>
         <name>Error_Server_Unavailable_InternalError</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Server Unavailable Temporary --></label>
+        <label>De Company.info service is onbereikbaar vanwege een tijdelijk technisch probleem.</label>
         <name>Error_Server_Unavailable_Temporary</name>
     </customLabels>
     <customLabels>
@@ -333,7 +361,7 @@
         <name>Error_Unknown</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error Client --></label>
+        <label>Een onbekende fout heeft zich voorgedaan. Probeer het later nogmaals of neem contact op met uw beheerder.</label>
         <name>Error_Webservice_Client</name>
     </customLabels>
     <customLabels>
@@ -353,16 +381,32 @@
         <name>Establishment_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Fill minimum characters --></label>
+        <label>Voer ten minste twee karakters in.</label>
         <name>Fill_minimum_characters</name>
+    </customLabels>
+    <customLabels>
+        <label>Haal Creditsafe rapport op</label>
+        <name>Get_Creditsafe_Report</name>
     </customLabels>
     <customLabels>
         <label>Onderstaand de gedetailleerde organisatie gegevens. Druk op creeer organisatie om de organisatie (Account) aan te maken.</label>
         <name>Get_Dossier_Results_Help</name>
     </customLabels>
     <customLabels>
+        <label>Goederen kredietverzekering</label>
+        <name>Goods_Credit_Insurance</name>
+    </customLabels>
+    <customLabels>
         <label>Huisnummer</label>
         <name>House_Number</name>
+    </customLabels>
+    <customLabels>
+        <label>Verzekeringscontract - Intentie tot  ondertekening van een verzekeringscontract</label>
+        <name>Insurance_Contract_Intention_of_signature_of_a_insurance_contract</name>
+    </customLabels>
+    <customLabels>
+        <label>Plaats</label>
+        <name>Locality</name>
     </customLabels>
     <customLabels>
         <label>B.V.</label>
@@ -373,11 +417,11 @@
         <name>Matching_Companies</name>
     </customLabels>
     <customLabels>
-        <label><!-- Minimum registration number characters --></label>
+        <label>Vul een geldig registratienummer in van ten minste twee karakters.</label>
         <name>Minimum_registration_number_characters</name>
     </customLabels>
     <customLabels>
-        <label><!-- Minimum registration number length --></label>
+        <label>Vul een geldig Belgisch kenteken in, bestaande uit 9 cijfers.</label>
         <name>Minimum_registration_number_length</name>
     </customLabels>
     <customLabels>
@@ -397,12 +441,28 @@
         <name>NoAuthAppNotActive</name>
     </customLabels>
     <customLabels>
+        <label>Een Bedrijfsdossier die gerelateerd is aan dit Account kan niet worden gevonden. Zorg ervoor dat een bedrijfsdossier beschikbaar is om het rapport te halen.</label>
+        <name>No_Business_Dossier_Found</name>
+    </customLabels>
+    <customLabels>
+        <label>Creditsafe rapport kon niet worden gegenereerd omdat het Bedrijf ID niet beschikbaar is bij Company.info</label>
+        <name>No_Company_Id_Found</name>
+    </customLabels>
+    <customLabels>
         <label>Niet actief</label>
         <name>NonActive</name>
     </customLabels>
     <customLabels>
-        <label><!-- Non Limited --></label>
+        <label>niet-besloten vennootschap</label>
         <name>Non_Limited</name>
+    </customLabels>
+    <customLabels>
+        <label>Organisatie</label>
+        <name>Organization</name>
+    </customLabels>
+    <customLabels>
+        <label>Postbus</label>
+        <name>POBox</name>
     </customLabels>
     <customLabels>
         <label>Telefoonnummer</label>
@@ -419,6 +479,14 @@
     <customLabels>
         <label>Provincie</label>
         <name>Province</name>
+    </customLabels>
+    <customLabels>
+        <label>Koopcontract - Intentie tot ondertekening van de koopovereenkomst</label>
+        <name>Purchase_Contract_Intention_of_signature_of_purchase_contract</name>
+    </customLabels>
+    <customLabels>
+        <label>Realisatie check vorderingen collectie</label>
+        <name>Realisation_check_receivables_collection</name>
     </customLabels>
     <customLabels>
         <label>Registratienummer</label>
@@ -441,7 +509,7 @@
         <name>Search_Again_Confirmation_Dialog_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- International Address search building details --></label>
+        <label>Zoek Gebouw</label>
         <name>Search_Building</name>
     </customLabels>
     <customLabels>
@@ -517,15 +585,15 @@
         <name>Search_Help</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search House Nr --></label>
+        <label>Huisnummer</label>
         <name>Search_House_Nr</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search House Nr Addition --></label>
+        <label>Toevoeging</label>
         <name>Search_House_Nr_Addition</name>
     </customLabels>
     <customLabels>
-        <label><!-- International Address search house number details --></label>
+        <label>Zoek Huisnummer</label>
         <name>Search_Housenr</name>
     </customLabels>
     <customLabels>
@@ -537,11 +605,11 @@
         <name>Search_No_Results</name>
     </customLabels>
     <customLabels>
-        <label><!-- International Address search organization details --></label>
+        <label>Zoek Organisatie</label>
         <name>Search_Organization</name>
     </customLabels>
     <customLabels>
-        <label><!-- International Address search PObox details --></label>
+        <label>Zoek Postbus</label>
         <name>Search_PObox</name>
     </customLabels>
     <customLabels>
@@ -557,7 +625,7 @@
         <name>Search_Province</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search Registration Number --></label>
+        <label>Registratienummer</label>
         <name>Search_Registration_Number</name>
     </customLabels>
     <customLabels>
@@ -589,19 +657,19 @@
         <name>Search_Trade_Name</name>
     </customLabels>
     <customLabels>
-        <label><!-- Search VAT Number --></label>
+        <label>Btw-nummer</label>
         <name>Search_VAT_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Select a Country --></label>
+        <label>Selecteer een land</label>
         <name>Select_a_Country</name>
     </customLabels>
     <customLabels>
-        <label><!-- Select a Registration Type --></label>
+        <label>Selecteer een Registratietype</label>
         <name>Select_a_Registration_Type</name>
     </customLabels>
     <customLabels>
-        <label><!-- Select a Status --></label>
+        <label>Selecteer een Status</label>
         <name>Select_a_Status</name>
     </customLabels>
     <customLabels>
@@ -637,23 +705,23 @@
         <name>VAT_Not_Found</name>
     </customLabels>
     <customLabels>
-        <label><!-- VAT_Retrieve --></label>
+        <label>Haal BTW-gegevens op</label>
         <name>VAT_Retrieve</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid Belgian registration number --></label>
+        <label>Geef een geldig Belgisch BTW-nummer te beginnen met BE0 gevolgd door 9 cijfers.</label>
         <name>Valid_Belgian_registration_number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid CreditSafe France Registration Id --></label>
+        <label>Vul een geldig Creditsafe registratie id voor Frankrijk.</label>
         <name>Valid_CreditSafe_France_Registration_Id</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid CreditSafe registration number --></label>
+        <label>Vul een geldig Creditsafe registratienummer in.</label>
         <name>Valid_CreditSafe_registration_number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid Dutch phone number --></label>
+        <label>Geef een geldig Nederlands telefoonnummer op.</label>
         <name>Valid_Dutch_phone_number</name>
     </customLabels>
     <customLabels>
@@ -661,43 +729,43 @@
         <name>Valid_Dutch_postal_code</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid French VAT Number --></label>
+        <label>Geef een geldig Franse BTW-nummer op</label>
         <name>Valid_French_VAT_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid French registration number --></label>
+        <label>Vul een geldig Frans kenteken in.</label>
         <name>Valid_French_registration_number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid GB CreditSafe Identification Number --></label>
+        <label>Geen geldige Creditsafe Identification Number voor land Groot-Brittanni�</label>
         <name>Valid_GB_CreditSafe_Identification_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid GB VAT Number --></label>
+        <label>Geef een geldig BTW-nummer voor het Verenigd Koninkrijk op.</label>
         <name>Valid_GB_VAT_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid German VAT Number --></label>
+        <label>Geef een geldig Duitse BTW-nummer op te beginnen met DE gevolgd door 9 cijfers.</label>
         <name>Valid_German_VAT_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid Germany CreditSafe registration id --></label>
+        <label>Vul een geldig Creditsafe registratie id voor Duitsland in.</label>
         <name>Valid_Germany_CreditSafe_registration_id</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid Irish CreditSafe Identification Nr --></label>
+        <label>Vul een geldig Ierse Creditsafe Identification Number in.</label>
         <name>Valid_Irish_CreditSafe_Identification_Nr</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid Irish VAT Number --></label>
+        <label>Geef een geldig Ierse BTW-nummer op te beginnen met IE</label>
         <name>Valid_Irish_VAT_Number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid Swedish CreditSafe Identification Nr --></label>
+        <label>Vul een geldig Zweedse Creditsafe Identification Number in</label>
         <name>Valid_Swedish_CreditSafe_Identification_Nr</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid Swedish VAT Number --></label>
+        <label>Geef een geldig Zweedse BTW-nummer op beginnend met SE, gevolgd door 12 cijfers.</label>
         <name>Valid_Swedish_VAT_Number</name>
     </customLabels>
     <customLabels>
@@ -705,7 +773,7 @@
         <name>Valid_house_number</name>
     </customLabels>
     <customLabels>
-        <label><!-- Valid registration number --></label>
+        <label>Vul een geldig registratienummer in.</label>
         <name>Valid_registration_number</name>
     </customLabels>
     <customLabels>
@@ -733,47 +801,47 @@
         <name>Yes</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error when selecting a cross-object fieldsset is not allowed and attempted. --></label>
+        <label>&quot;Cross-object velden niet toegestaan __en gebied &quot;&quot;{0}&quot;&quot; is een cross-object veld.&quot;</label>
         <name>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Error when selecting a field set for a different sobject type. --></label>
+        <label>&quot;Field set &quot;&quot;{0}&quot;&quot; is niet voor SObject type &quot;&quot;{1}&quot;&quot;&quot;</label>
         <name>fflib_QueryFactory_fieldset_wrong_sobject_error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Presented when attempting to nest subqueries. --></label>
+        <label>Ongeldige oproep tot subselectQuery. Je kunt een subselect query toevoegen aan een __subselect query.</label>
         <name>fflib_QueryFactory_recursive_subquery_error</name>
     </customLabels>
     <customLabels>
-        <label><!-- Presented when attempting to create a subquery from an invalid relationship. --></label>
+        <label>Ongeldige oproep tot subselectQuery. Ongeldige relatie voor tabel.</label>
         <name>fflib_QueryFactory_subquery_invalid_relationship</name>
     </customLabels>
     <customLabels>
-        <label><!-- fflib_security_error_field_not_insertable --></label>
+        <label>Je hebt geen toestemming veld {1} toe te voegen aan {0}</label>
         <name>fflib_security_error_field_not_insertable</name>
     </customLabels>
     <customLabels>
-        <label><!-- fflib_security_error_field_not_readable --></label>
+        <label>Je hebt geen toestemming om het veld {1} te lezen op {0}</label>
         <name>fflib_security_error_field_not_readable</name>
     </customLabels>
     <customLabels>
-        <label><!-- fflib_security_error_field_not_updateable --></label>
+        <label>Je hebt geen toestemming om het veld {1} bij te werken op {0}</label>
         <name>fflib_security_error_field_not_updateable</name>
     </customLabels>
     <customLabels>
-        <label><!-- fflib_security_error_object_not_deletable --></label>
+        <label>Je hebt geen toestemming voor het verwijderen van {0}</label>
         <name>fflib_security_error_object_not_deletable</name>
     </customLabels>
     <customLabels>
-        <label><!-- fflib_security_error_object_not_insertable --></label>
+        <label>Je hebt geen toestemming voor het toevoegen van {0}</label>
         <name>fflib_security_error_object_not_insertable</name>
     </customLabels>
     <customLabels>
-        <label><!-- fflib_security_error_object_not_readable --></label>
+        <label>Je hebt geen toestemming voor het lezen van {0}</label>
         <name>fflib_security_error_object_not_readable</name>
     </customLabels>
     <customLabels>
-        <label><!-- fflib_security_error_object_not_updateable --></label>
+        <label>Je hebt geen toestemming voor het aanpassen van {0}</label>
         <name>fflib_security_error_object_not_updateable</name>
     </customLabels>
     <customTabs>
@@ -782,7 +850,232 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Search_International_Address</fullName>
+            <fullName>Complete_Account_with_Dossier_Data-4</fullName>
+            <screens>
+                <fields>
+                    <name>BudinessDossierRecord</name>
+                </fields>
+                <fields>
+                    <name>BusinessDossierHeader</name>
+                </fields>
+                <name>Show_Buisness_Dossier</name>
+            </screens>
+        </flows>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data-3</fullName>
+            <screens>
+                <fields>
+                    <name>BudinessDossierRecord</name>
+                </fields>
+                <fields>
+                    <name>BusinessDossierHeader</name>
+                </fields>
+                <name>Show_Buisness_Dossier</name>
+            </screens>
+        </flows>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data-5</fullName>
+            <screens>
+                <fields>
+                    <name>BudinessDossierRecord</name>
+                </fields>
+                <fields>
+                    <name>BusinessDossierHeader</name>
+                </fields>
+                <name>Show_Buisness_Dossier</name>
+            </screens>
+        </flows>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data-2</fullName>
+            <screens>
+                <fields>
+                    <name>BudinessDossierRecord</name>
+                </fields>
+                <name>Show_Buisness_Dossier</name>
+            </screens>
+        </flows>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data-1</fullName>
+            <label>Verrijk Account met dossier gegevens</label>
+        </flows>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data-9</fullName>
+            <screens>
+                <fields>
+                    <name>BusinessDossierHeader</name>
+                </fields>
+                <fields>
+                    <name>BusinessDossierRecord</name>
+                </fields>
+                <name>Show_Buisness_Dossier</name>
+            </screens>
+        </flows>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data-8</fullName>
+            <screens>
+                <fields>
+                    <name>BusinessDossierHeader</name>
+                </fields>
+                <fields>
+                    <name>BusinessDossierRecord</name>
+                </fields>
+                <name>Show_Buisness_Dossier</name>
+            </screens>
+        </flows>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data-6</fullName>
+            <screens>
+                <fields>
+                    <name>BudinessDossierRecord</name>
+                </fields>
+                <fields>
+                    <name>BusinessDossierHeader</name>
+                </fields>
+                <name>Show_Buisness_Dossier</name>
+            </screens>
+        </flows>
+        <flows>
+            <fullName>Complete_Account_with_Dossier_Data-7</fullName>
+            <screens>
+                <fields>
+                    <name>BusinessDossierHeader</name>
+                </fields>
+                <fields>
+                    <name>BusinessDossierRecord</name>
+                </fields>
+                <name>Show_Buisness_Dossier</name>
+            </screens>
+        </flows>
+        <fullName>Complete_Account_with_Dossier_Data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Account_based_on_Company_info_data-1</fullName>
+            <label>Account aanmaken op basis van Company.info data</label>
+        </flows>
+        <fullName>Create_Account_based_on_Company_info_data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Enrich_Account_with_International_Address_Data-1</fullName>
+            <label>Verrijk Account met internationale adresgegevens</label>
+            <screens>
+                <fields>
+                    <name>showInternationalAddressDetails</name>
+                </fields>
+                <name>Show_International_Address</name>
+            </screens>
+        </flows>
+        <fullName>Enrich_Account_with_International_Address_Data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Account_based_on_International_Address_Data-1</fullName>
+            <label>Maak een account aan op basis van internationale adresgegevens</label>
+        </flows>
+        <fullName>Create_Account_based_on_International_Address_Data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Get_Creditsafe_Report_Global_Action-1</fullName>
+            <label>Ophalen Creditsafe Rapport Global Action</label>
+        </flows>
+        <fullName>Get_Creditsafe_Report_Global_Action</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <choices>
+                <choiceText>&quot;&lt;span style=&quot;&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&quot;&gt;{!ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel}&lt;/span&gt;&quot;</choiceText>
+                <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</name>
+            </choices>
+            <choices>
+                <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</name>
+            </choices>
+            <choices>
+                <name>CreditAssessmentFutureBusinessConnectionChoice</name>
+            </choices>
+            <choices>
+                <name>CreditAssessmentExistingBusinessConnectionChoice</name>
+            </choices>
+            <choices>
+                <name>RealisationCheckReceivablesCollectionChoice</name>
+            </choices>
+            <choices>
+                <name>DutchLanguage</name>
+            </choices>
+            <choices>
+                <name>CreditDecisionChoice</name>
+            </choices>
+            <choices>
+                <name>GermanLanguage</name>
+            </choices>
+            <choices>
+                <name>EnglishLanguage</name>
+            </choices>
+            <choices>
+                <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
+            </choices>
+            <choices>
+                <name>GoodsCreditInsuranceChoice</name>
+            </choices>
+            <fullName>Get_Creditsafe_Report-1</fullName>
+            <label>Ophalen Creditsafe Rapport</label>
+            <screens>
+                <fields>
+                    <name>ErrorMessage</name>
+                </fields>
+                <fields>
+                    <fieldText>Taal</fieldText>
+                    <name>Language</name>
+                </fields>
+                <fields>
+                    <fieldText>Reden</fieldText>
+                    <name>Reason</name>
+                </fields>
+                <fields>
+                    <name>languageSelectionScreenFooter</name>
+                </fields>
+                <name>Input_parameters</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>NavigateToCreditsafeReport</name>
+                </fields>
+                <name>Navigation</name>
+            </screens>
+        </flows>
+        <fullName>Get_Creditsafe_Report</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account-1</fullName>
+            <label>Ophalen Creditsafe Rapport Quick Action op Account</label>
+            <screens>
+                <fields>
+                    <name>No_Business_Dossier_Found_Message</name>
+                </fields>
+                <name>No_Business_Dossier_Found</name>
+            </screens>
+        </flows>
+        <fullName>Get_Creditsafe_Report_Quick_Action_on_Account</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Get_Creditsafe_Report_Quick_Action-1</fullName>
+            <label>Ophalen Creditsafe Rapport Quick Action voor Zakelijk Dossier</label>
+            <screens>
+                <fields>
+                    <name>Error</name>
+                </fields>
+                <name>Error_Handling_Screen</name>
+            </screens>
+        </flows>
+        <fullName>Get_Creditsafe_Report_Quick_Action</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Search_International_Address-1</fullName>
+            <label>Zoeken Internationale Adressen</label>
             <screens>
                 <fields>
                     <name>searchFlowErrorHandler</name>
@@ -818,7 +1111,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow</fullName>
+            <fullName>Organisation_Search_Flow-1</fullName>
             <label>Organisatie Zoek Flow</label>
             <screens>
                 <fields>
@@ -868,18 +1161,10 @@
         </flows>
         <fullName>Organisation_Search_Flow</fullName>
     </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Create_Account_based_on_Company_info_data</fullName>
-        </flows>
-        <fullName>Create_Account_based_on_Company_info_data</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Complete_Account_with_Dossier_Data</fullName>
-        </flows>
-        <fullName>Complete_Account_with_Dossier_Data</fullName>
-    </flowDefinitions>
+    <quickActions>
+        <label>Ophalen Creditsafe Rapport</label>
+        <name>Get_Creditsafe_Report</name>
+    </quickActions>
     <quickActions>
         <label><!-- LogACall --></label>
         <name>LogACall</name>
@@ -921,7 +1206,11 @@
         <name>NewTask</name>
     </quickActions>
     <quickActions>
-        <label><!-- New Account via Company.info --></label>
+        <label>Nieuw account gebaseerd op International Adres</label>
+        <name>New_Account_based_on_International_Address</name>
+    </quickActions>
+    <quickActions>
+        <label>Nieuw account gebaseerd op Business Data</label>
         <name>New_Account_via_Company_info</name>
     </quickActions>
     <quickActions>
