@@ -10,6 +10,8 @@ import Yes from '@salesforce/label/c.Yes';
 import Search_Reset from '@salesforce/label/c.Search_Reset';
 import Search_Again_Confirmation_Dialog_Message from '@salesforce/label/c.Search_Again_Confirmation_Dialog_Message';
 import Search_Again_Confirmation_Dialog_Title from '@salesforce/label/c.Search_Again_Confirmation_Dialog_Title';
+import {ShowToastEvent} from "lightning/platformShowToastEvent";
+import {refreshApex} from "@salesforce/apex";
 
 export default class SearchAgainButton extends LightningElement {
 
@@ -27,6 +29,9 @@ export default class SearchAgainButton extends LightningElement {
     @api
     dossierId;
 
+    @api
+    searchAgainClicked = false;
+
     /**
      * True if the confirm dialog is shown
      */
@@ -40,9 +45,12 @@ export default class SearchAgainButton extends LightningElement {
         if (event.detail.status) {
             if (event.detail.status === 'confirm') {
                 // delete the record
-                deleteDossier({dossierId: this.dossierId});
-                const recordDeletedEvent = new CustomEvent('dossierdeleted');
-                this.dispatchEvent(recordDeletedEvent);
+                deleteDossier({dossierId: this.dossierId}).then(result => {
+                    this.searchAgainClicked = true;
+                    this.dispatchEvent(new CustomEvent('search_again_clicked'));
+                }).catch(error => {
+                    this.error = error;
+                })
             }
             if (event.detail.status === 'cancel') {
                 this.confirmDialogVisible = false;

@@ -13,7 +13,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
      * @param dossierId
      *
      */
-    public void deleteDossier(Id dossierId, Boolean checkPermissions) {
+    public Boolean deleteDossier(Id dossierId, Boolean checkPermissions) {
         List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{
                 dossierId
         });
@@ -26,11 +26,12 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             }
             unitOfWork.registerDeleted(dossierList[0]);
             unitOfWork.commitWork();
-
+            return true;
             // TODO: commented for now. Must be added back when we move to update lists
 //            //if dossier is deleted, then remove it from the update list of dossiers on the company.info server
 //            WsDutchBusiness.dutchBusinessUpdateRemoveDossier(dossierList[0].Dossier_Number__c, dossierList[0].Establishment_Number__c);
         }
+        return false;
     }
 
 

@@ -6,8 +6,8 @@ public inherited sharing class BusinessService {
      * @param dossierId
      *
      */
-    public static void deleteDossier(Id dossierId, Boolean checkPermissions) {
-        newInstance().deleteDossier(dossierId, checkPermissions);
+    public static Boolean deleteDossier(Id dossierId, Boolean checkPermissions) {
+        return newInstance().deleteDossier(dossierId, checkPermissions);
     }
 
     public static IBusinessService newInstance() {
