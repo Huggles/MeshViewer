@@ -5,8 +5,8 @@
 public with sharing class SearchAgainButtonController {
 
     @AuraEnabled
-    public static void deleteDossier(Id dossierId) {
-        BusinessService.deleteDossier(dossierId, false);
+    public static Boolean deleteDossier(Id dossierId) {
+        return BusinessService.deleteDossier(dossierId, false);
     }
 
 }

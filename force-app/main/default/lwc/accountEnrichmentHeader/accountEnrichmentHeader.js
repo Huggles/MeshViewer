@@ -2,9 +2,10 @@
  * Created by hugovankrimpen on 17/03/2020.
  */
 
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
+import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
 
 //Object fields
 import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Number__c';
@@ -35,10 +36,14 @@ export default class AccountEnrichmentHeader extends LightningElement {
     @api
     accountRecord;
 
+    @api
+    searchAgainClicked;
+
     @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT] })
     businessDossierRecord;
 
-    showVAT = false;
+    @track disableShowVAT = false;
+    @api VATUpdated = false;
 
     label = {
         VAT_Retrieve,
@@ -60,31 +65,38 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 !this.businessDossierRecord.data.fields.appsolutely__No_VAT_Number__c.value){
                 return true;
             }
+            else {
+                return false;
+            }
         }
-        return false;
     }
-    onDossierDeleted(event) {
-        //Passing on the event
-        const recordDeletedEvent = new CustomEvent('dossierdeleted');
-        this.dispatchEvent(recordDeletedEvent);
-    }
+
     handleOnClickVAT(event) {
         updateDossierWithVAT({
             dossierId: this.businessDossierId
         })
             .then(data => {
-                const dossierUpdatedEvent = new CustomEvent('dossierupdated');
-                this.dispatchEvent(dossierUpdatedEvent);
-                if (data.appsolutely__VAT_Number__c !== undefined) {
+                if (data.response.appsolutely__VAT_Number__c !== undefined) {
                     this.showToast(this.label.Success, this.label.Dossier_Account_Update_Completed, 'success');
+                    this.VATUpdated = true;
+                    this.disableShowVAT = true;
+                    //we throw an event because we want to refresh the Account details view after VAT is updated
+                    this.dispatchEvent(new FlowNavigationNextEvent());
                 } else {
-                    this.showToast(this.label.Success, this.label.VAT_Not_Found);
+                    this.showToast(this.label.error, this.label.VAT_Not_Found);
                 }
             })
             .catch(error => {
                 this.showToast(this.label.error, this.label.Error_Unknown, 'error');
             });
     }
+
+    handleSearchAgainClicked(event) {
+       this.searchAgainClicked = true;
+       //we throw an event because the flow needs to show a search form
+       this.dispatchEvent(new FlowNavigationNextEvent());
+    }
+
     showToast(title, message, type, mode) {
         const event = new ShowToastEvent({
             "title": title,
@@ -94,4 +106,5 @@ export default class AccountEnrichmentHeader extends LightningElement {
         });
         this.dispatchEvent(event);
     }
+
 }
