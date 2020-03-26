@@ -42,7 +42,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
     @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT] })
     businessDossierRecord;
 
-    @track disableShowVAT = false;
     @api VATUpdated = false;
 
     label = {
@@ -79,7 +78,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 if (data.response.appsolutely__VAT_Number__c !== undefined) {
                     this.showToast(this.label.Success, this.label.Dossier_Account_Update_Completed, 'success');
                     this.VATUpdated = true;
-                    this.disableShowVAT = true;
                     //we throw an event because we want to refresh the Account details view after VAT is updated
                     this.dispatchEvent(new FlowNavigationNextEvent());
                 } else {
