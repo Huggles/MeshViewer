@@ -13,25 +13,30 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
      * @param dossierId
      *
      */
-    public Boolean deleteDossier(Id dossierId, Boolean checkPermissions) {
-        List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{
-                dossierId
-        });
-        if (dossierList.size() == 1) {
-            fflib_ISObjectUnitOfWork unitOfWork = null;
-            if (checkPermissions) {
-                unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCRUD());
-            } else {
-                unitOfWork = Application.UnitOfWork.newInstance();
+    public void deleteDossier(Id dossierId, Boolean checkPermissions) {
+        if (String.isNotEmpty(dossierId)) {
+            List<Business_Dossier__c> dossierList = BusinessDossierSelector.newInstance().selectById(new Set<Id>{
+                    dossierId
+            });
+
+            if (dossierList.size() == 1) {
+                fflib_ISObjectUnitOfWork unitOfWork = null;
+                if (checkPermissions) {
+                    unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCRUD());
+                } else {
+                    unitOfWork = Application.UnitOfWork.newInstance();
+                }
+                unitOfWork.registerDeleted(dossierList[0]);
+                unitOfWork.commitWork();
+
+                // TODO: commented for now. Must be added back when we move to update lists
+                //if dossier is deleted, then remove it from the update list of dossiers on the company.info server
+                //WsDutchBusiness.dutchBusinessUpdateRemoveDossier(dossierList[0].Dossier_Number__c, dossierList[0].Establishment_Number__c);
             }
-            unitOfWork.registerDeleted(dossierList[0]);
-            unitOfWork.commitWork();
-            return true;
-            // TODO: commented for now. Must be added back when we move to update lists
-//            //if dossier is deleted, then remove it from the update list of dossiers on the company.info server
-//            WsDutchBusiness.dutchBusinessUpdateRemoveDossier(dossierList[0].Dossier_Number__c, dossierList[0].Establishment_Number__c);
         }
-        return false;
+        else {
+            throw new CCInputException(Label.Error_Input_Incorrect);
+        }
     }
 
 
