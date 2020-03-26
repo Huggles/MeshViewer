@@ -71,6 +71,22 @@
             <targetReference>Show_Buisness_Dossier</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Default_outcome_message</name>
+        <label>Default outcome message</label>
+        <locationX>805</locationX>
+        <locationY>474</locationY>
+        <assignmentItems>
+            <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Show_Buisness_Dossier</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Business_Dossier_Set</name>
         <label>Business Dossier Set</label>
@@ -124,8 +140,11 @@
     <decisions>
         <name>Search_Again_Clicked_Or_VAT_Updated</name>
         <label>Search Again Clicked Or VAT Updated</label>
-        <locationX>685</locationX>
-        <locationY>465</locationY>
+        <locationX>616</locationX>
+        <locationY>482</locationY>
+        <defaultConnector>
+            <targetReference>Default_outcome_message</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Search_Again_Is_Clicked</name>
@@ -269,13 +288,35 @@
             <targetReference>Search_Again_Clicked_Or_VAT_Updated</targetReference>
         </connector>
         <fields>
+            <name>ErrorMessage</name>
+            <extensionName>appsolutely:flowErrorHandler</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>DefaultOutcomeErrorMessage</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DefaultOutcomeErrorMessage</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue/>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>BusinessDossierHeader</name>
             <extensionName>appsolutely:accountEnrichmentHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>businessDossierId</name>
                 <value>
-                    <elementReference>Get_Account.Business_Dossier__c</elementReference>
+                    <elementReference>BusinessDossierRecordId</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -401,6 +442,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DefaultOutcomeErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>The record Id of the Account to complete</description>

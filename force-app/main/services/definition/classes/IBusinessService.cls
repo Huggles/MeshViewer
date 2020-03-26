@@ -7,6 +7,6 @@ public interface IBusinessService {
      * @param checkPermissions true if permissions need to be checked
      *
      */
-    Boolean deleteDossier(Id dossierId, Boolean checkPermissions);
+     void deleteDossier(Id dossierId, Boolean checkPermissions);
 
 }

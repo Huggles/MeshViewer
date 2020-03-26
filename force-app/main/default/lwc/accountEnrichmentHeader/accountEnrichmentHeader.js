@@ -83,11 +83,11 @@ export default class AccountEnrichmentHeader extends LightningElement {
                     //we throw an event because we want to refresh the Account details view after VAT is updated
                     this.dispatchEvent(new FlowNavigationNextEvent());
                 } else {
-                    this.showToast(this.label.error, this.label.VAT_Not_Found);
+                    this.showToast(this.label.Error, this.label.VAT_Not_Found);
                 }
             })
             .catch(error => {
-                this.showToast(this.label.error, this.label.Error_Unknown, 'error');
+                this.showToast(this.label.Error, this.label.Error_Unknown, 'error');
             });
     }
 
