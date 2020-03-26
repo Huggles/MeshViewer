@@ -18,11 +18,11 @@
                 <div class="slds-no-flex">
                     <div class="slds-m-around_xx-small slds-float_right">
                         <c-search-again-button dossier-id={businessDossierId}
-                                               ondossierdeleted={onDossierDeleted}></c-search-again-button>
+                                               onsearchagainclicked= {handleSearchAgainClicked}></c-search-again-button>
                     </div>
                     <div class="slds-m-around_xx-small slds-float_right">
                         <template if:true={showVATButton}>
-                            <lightning-button label={label.VAT_Retrieve} onclick={handleOnClickVAT}></lightning-button>
+                            <lightning-button label={label.VAT_Retrieve} onclick={handleOnClickVAT} ></lightning-button>
                         </template>
                     </div>
                 </div>
