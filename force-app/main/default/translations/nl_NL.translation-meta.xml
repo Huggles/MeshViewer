@@ -850,7 +850,7 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Complete_Account_with_Dossier_Data-1</fullName>
+            <fullName>Complete_Account_with_Dossier_Data</fullName>
             <label>Verrijk Account met dossier gegevens</label>
             <screens>
                 <fields>
@@ -866,14 +866,14 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Account_based_on_Company_info_data-1</fullName>
+            <fullName>Create_Account_based_on_Company_info_data</fullName>
             <label>Account aanmaken op basis van Company.info data</label>
         </flows>
         <fullName>Create_Account_based_on_Company_info_data</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Enrich_Account_with_International_Address_Data-1</fullName>
+            <fullName>Enrich_Account_with_International_Address_Data</fullName>
             <label>Verrijk Account met internationale adresgegevens</label>
             <screens>
                 <fields>
@@ -893,7 +893,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Get_Creditsafe_Report_Global_Action-1</fullName>
+            <fullName>Get_Creditsafe_Report_Global_Action</fullName>
             <label>Ophalen Creditsafe Rapport Global Action</label>
         </flows>
         <fullName>Get_Creditsafe_Report_Global_Action</fullName>
@@ -964,7 +964,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account-1</fullName>
+            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account</fullName>
             <label>Ophalen Creditsafe Rapport Quick Action op Account</label>
             <screens>
                 <fields>
@@ -977,7 +977,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Get_Creditsafe_Report_Quick_Action-1</fullName>
+            <fullName>Get_Creditsafe_Report_Quick_Action</fullName>
             <label>Ophalen Creditsafe Rapport Quick Action voor Zakelijk Dossier</label>
             <screens>
                 <fields>
@@ -990,7 +990,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Search_International_Address-1</fullName>
+            <fullName>Search_International_Address</fullName>
             <label>Zoeken Internationale Adressen</label>
             <screens>
                 <fields>
@@ -1027,7 +1027,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow-1</fullName>
+            <fullName>Organisation_Search_Flow</fullName>
             <label>Organisatie Zoek Flow</label>
             <screens>
                 <fields>
@@ -1082,55 +1082,11 @@
         <name>Get_Creditsafe_Report</name>
     </quickActions>
     <quickActions>
-        <label><!-- LogACall --></label>
-        <name>LogACall</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewAccount --></label>
-        <name>NewAccount</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewCase --></label>
-        <name>NewCase</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewContact --></label>
-        <name>NewContact</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewEvent --></label>
-        <name>NewEvent</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewGroup --></label>
-        <name>NewGroup</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewLead --></label>
-        <name>NewLead</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewNote --></label>
-        <name>NewNote</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewOpportunity --></label>
-        <name>NewOpportunity</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- NewTask --></label>
-        <name>NewTask</name>
-    </quickActions>
-    <quickActions>
         <label>Nieuw account gebaseerd op International Adres</label>
         <name>New_Account_based_on_International_Address</name>
     </quickActions>
     <quickActions>
         <label>Nieuw account gebaseerd op Business Data</label>
         <name>New_Account_via_Company_info</name>
-    </quickActions>
-    <quickActions>
-        <label><!-- SendEmail --></label>
-        <name>SendEmail</name>
     </quickActions>
 </Translations>
