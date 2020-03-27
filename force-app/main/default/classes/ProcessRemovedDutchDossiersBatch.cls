@@ -36,7 +36,9 @@ public without sharing class ProcessRemovedDutchDossiersBatch implements Databas
     }
 
     public void finish(Database.BatchableContext context) {
-        ErrorLogUtil.logExceptionWithEmail(exceptions);
+        for (Exception e : exceptions) {
+            ErrorLogUtil.logException(e, true);
+        }
     }
 
 }

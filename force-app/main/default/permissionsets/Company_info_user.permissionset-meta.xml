@@ -338,12 +338,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_House_Number__c</field>
+        <field>Business_Dossier__c.Correspondence_House_Number_Addition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Correspondence_House_Number_Addition__c</field>
+        <field>Business_Dossier__c.Correspondence_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -413,12 +413,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_House_Number__c</field>
+        <field>Business_Dossier__c.Establishment_House_Number_Addition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_House_Number_Addition__c</field>
+        <field>Business_Dossier__c.Establishment_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -441,12 +441,6 @@
         <field>Business_Dossier__c.Establishment_Street_and_House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Business_Dossier__c.Establishment_Street__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Founding_Date__c</field>
@@ -2049,7 +2043,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Error_Log__c.Trace__c</field>
+        <field>Error_Log__c.Cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Line_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Message__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Stacktrace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2262,6 +2276,14 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
+        <flow>Create_Account_based_on_International_Address_Data</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Enrich_Account_with_International_Address_Data</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
         <flow>Get_Creditsafe_Report</flow>
     </flowAccesses>
     <flowAccesses>
@@ -2275,14 +2297,6 @@
     <flowAccesses>
         <enabled>true</enabled>
         <flow>Get_Creditsafe_Report_Quick_Action_on_Account</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Create_Account_based_on_International_Address_Data</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
-        <flow>Enrich_Account_with_International_Address_Data</flow>
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
@@ -2507,15 +2521,6 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Error_Log__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>International_Address__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -2563,10 +2568,6 @@
     </tabSettings>
     <tabSettings>
         <tab>Creditsafe_Company_Report_Full__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>Error_Log__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

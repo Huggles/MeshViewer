@@ -35,7 +35,9 @@ public without sharing class UpdateDossiersBatch implements Database.Batchable<B
     }
 
     public void finish(Database.BatchableContext context) {
-        ErrorLogUtil.logExceptionWithEmail(exceptions);
+        for (Exception e : exceptions) {
+            ErrorLogUtil.logException(e, true);
+        }
     }
 
 }
