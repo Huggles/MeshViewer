@@ -7,19 +7,13 @@ CAREFULL: doesn't work when you rollback the transaction.
 
 public inherited sharing class ErrorLogUtil {
 
+    @TestVisible
     private final static String ERROR_LOG_SETTING_EMAIL = 'Error_Email_Address';
 
     private static String supportEmailAddress {
         get {
             if (String.isEmpty(supportEmailAddress)) {
-                List<Setting__mdt> emailSettings = [SELECT Value__c FROM Setting__mdt WHERE DeveloperName =: ERROR_LOG_SETTING_EMAIL LIMIT 1];
-                if (emailSettings != null && emailSettings.size() == 1) {
-                    supportEmailAddress = emailSettings.get(0).Value__c;
-                } else {
-                    Exception ex = new CIConfigurationException('No admin email address configured');
-                    logException(ex);
-                    throw ex;
-                }
+                supportEmailAddress = SettingUtils.getSetting(ERROR_LOG_SETTING_EMAIL);
             }
             return supportEmailAddress;
         }
