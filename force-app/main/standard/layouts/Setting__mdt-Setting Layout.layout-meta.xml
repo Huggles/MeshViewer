@@ -16,11 +16,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Email__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Send_Via_Email__c</field>
+                <field>Value__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

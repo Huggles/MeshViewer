@@ -2,9 +2,7 @@
  * Created by tejaswinidandi on 2019-07-19.
  */
 
-public without sharing class UpdateDossiersBatch implements Database.Batchable<Business_Dossier__c>, Database.AllowsCallouts, Database.Stateful {
-
-    public List<Exception> exceptions = new List<Exception>();
+public without sharing class UpdateDossiersBatch implements Database.Batchable<Business_Dossier__c>, Database.AllowsCallouts {
 
     @TestVisible
     private static final List<String> UPDATE_TYPES = new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress', 'Contact',
@@ -30,14 +28,11 @@ public without sharing class UpdateDossiersBatch implements Database.Batchable<B
             DutchBusinessService.updateDossiersWithVendorData(dossiersToUpdate);
         }
         catch(Exception e) {
-            exceptions.add(e);
+            ErrorLogUtil.logException(e, true);
         }
     }
 
     public void finish(Database.BatchableContext context) {
-        for (Exception e : exceptions) {
-            ErrorLogUtil.logException(e, true);
-        }
     }
 
 }

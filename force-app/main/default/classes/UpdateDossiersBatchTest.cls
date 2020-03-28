@@ -216,6 +216,30 @@ public class UpdateDossiersBatchTest {
         }
     }
 
+    @IsTest
+    public static void testErrorHandlingInitialization() {
+        // given
+        // the dutchBusinessUpdateGetChangedDossiers method throws an exception
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IDutchBusinessService dutchBusinessServiceMock = (IDutchBusinessService) mocks.mock(IDutchBusinessService.class);
+
+        mocks.startStubbing();
+
+        mocks.when(dutchBusinessServiceMock.getDutchBusinessUpdatedDossiersSince(fflib_Match.anyInteger(), (List<String>)fflib_Match.anyList(), fflib_Match.anyDate())).thenThrow(new CCException());
+        mocks.stopStubbing();
+        Application.Service.setMock(IDutchBusinessService.class, dutchBusinessServiceMock);
+
+        // when
+        Test.startTest();
+        Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
+        Database.executeBatch(batch, 100);
+        Test.stopTest();
+
+        // then
+
+
+    }
+
 
     @IsTest
     public static void testOnePage() {
@@ -435,7 +459,8 @@ public class UpdateDossiersBatchTest {
      *
      * @return
      */
-    public static DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult getDutchBusinessUpdateReferencePagedResultMock(Integer nrOfDossiersPerPage, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr, Integer maxPages) {
+    @TestVisible
+    private static DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult getDutchBusinessUpdateReferencePagedResultMock(Integer nrOfDossiersPerPage, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr, Integer maxPages) {
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
         output.paging = new DutchBusinessWsdl.ResultInfo();
         output.paging.numpages = maxPages;
@@ -464,7 +489,8 @@ public class UpdateDossiersBatchTest {
      *
      * @return
      */
-    public static List<Business_Dossier__c> getBusinessDossiersMock(Integer nrOfDossiers, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr) {
+    @TestVisible
+    private static List<Business_Dossier__c> getBusinessDossiersMock(Integer nrOfDossiers, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr) {
         List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
         for (Integer i = 0; i < nrOfDossiers / (nrOfEstablishmentsPerDossierNr == 0 ? 1 : nrOfEstablishmentsPerDossierNr); i++) {
             Business_Dossier__c dossier = new Business_Dossier__c(Name = '' + i, Dossier_Number__c = '' + (startDossierNr + i));
@@ -484,7 +510,8 @@ public class UpdateDossiersBatchTest {
      *
      * @return
      */
-    public static DutchBusinessWsdl.DutchBusinessDossierV3 getWsDutchBusinessDossierV3Mock(String dossierNumber, String establishmentNumber) {
+    @TestVisible
+    private static DutchBusinessWsdl.DutchBusinessDossierV3 getWsDutchBusinessDossierV3Mock(String dossierNumber, String establishmentNumber) {
         DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessDossierV3 = new DutchBusinessWsdl.DutchBusinessDossierV3();
         dutchBusinessDossierV3.dossier_number = dossierNumber;
         dutchBusinessDossierV3.establishment_number = establishmentNumber;

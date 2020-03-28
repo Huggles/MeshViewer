@@ -15,13 +15,9 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
     @TestVisible
     private List<Business_Dossier__c> dossiersOnCurrentPage;
     private List<String> updateTypes;
-    private UpdateDossiersBatch updateDossiersBatch;
-    private ProcessRemovedDutchDossiersBatch processRemovedDutchDossiersBatch;
 
 
     public UpdatedDossiersIterator(List<String> updateTypes, UpdateDossiersBatch updateDossiersBatch, ProcessRemovedDutchDossiersBatch processRemovedDutchDossiersBatch) {
-        this.updateDossiersBatch = updateDossiersBatch;
-        this.processRemovedDutchDossiersBatch = processRemovedDutchDossiersBatch;
         try {
             if (updateTypes == null) {
                 CCInputException e = new CCInputException('UpdateTypes is null while trying to create an update dossiers iterator');
@@ -35,8 +31,8 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
             currentDossierPointer = 0;
         }
         catch(Exception e) {
-            if(this.updateDossiersBatch != null) this.updateDossiersBatch.exceptions.add(e);
-            if(this.processRemovedDutchDossiersBatch != null) this.processRemovedDutchDossiersBatch.exceptions.add(e);
+            ErrorLogUtil.logException(e, true);
+            throw e; //execution should halt
         }
     }
 
@@ -63,8 +59,8 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
             }
         }
         catch(Exception e) {
-            if(this.updateDossiersBatch != null) this.updateDossiersBatch.exceptions.add(e);
-            if(this.processRemovedDutchDossiersBatch != null) this.processRemovedDutchDossiersBatch.exceptions.add(e);
+            ErrorLogUtil.logException(e);
+            throw e; // execution should halt
         }
         return dossier;
     }

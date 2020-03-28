@@ -7,15 +7,14 @@ CAREFULL: doesn't work when you rollback the transaction.
 
 public inherited sharing class ErrorLogUtil {
 
-    private final static String ERROR_LOG_SETTING_EMAIL = 'Incident_email';
+    private final static String ERROR_LOG_SETTING_EMAIL = 'Error_Email_Address';
 
     private static String supportEmailAddress {
         get {
             if (String.isEmpty(supportEmailAddress)) {
-                List<Error_Log_Setting__mdt> errorLogSettings = [SELECT Email__c
-                        FROM Error_Log_Setting__mdt WHERE DeveloperName =: ERROR_LOG_SETTING_EMAIL LIMIT 1];
-                if (errorLogSettings != null && errorLogSettings.size() == 1) {
-                    supportEmailAddress = errorLogSettings.get(0).Email__c;
+                List<Setting__mdt> emailSettings = [SELECT Value__c FROM Setting__mdt WHERE DeveloperName =: ERROR_LOG_SETTING_EMAIL LIMIT 1];
+                if (emailSettings != null && emailSettings.size() == 1) {
+                    supportEmailAddress = emailSettings.get(0).Value__c;
                 } else {
                     Exception ex = new CIConfigurationException('No admin email address configured');
                     logException(ex);
@@ -75,8 +74,9 @@ public inherited sharing class ErrorLogUtil {
     /**
     * Sends an exception email to the Appsolutely support
     *
-    * @param emailEvents
+    * @param emailEvents the platform events for which to send emails
     */
+    @TestVisible
     private static void sendSupportEmails(List<Error_Events__e> emailEvents) {
         List<String> messages = new List<String>();
         for (Error_Events__e e : emailEvents) {
