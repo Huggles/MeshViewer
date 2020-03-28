@@ -3,7 +3,7 @@
     <description>Users can search for Business data in Company.info and create an account based on that data.</description>
     <height>250</height>
     <label>New Account based on Business Data</label>
-    <lightningComponent>appsolutely__creatAccountBasedOnCompanyInfoAction</lightningComponent>
+    <lightningComponent>appsolutely__createAccountBasedOnCompanyInfoAction</lightningComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>LightningComponent</type>
     <width>-100</width>

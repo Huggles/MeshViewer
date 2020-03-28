@@ -29,8 +29,8 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
 
     public void execute(InstallContext context) {
         //get the time
-        String updateCronExpression = SettingUtils.getSetting(UPDATED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
-        String removeBatchScheduleCronExpression = SettingUtils.getSetting(REMOVED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String updateCronExpression = SettingUtils.getSubscriberSetting(UPDATED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String removeBatchScheduleCronExpression = SettingUtils.getSubscriberSetting(REMOVED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         List<Schedule_Update_Dossier__mdt> scheduleUpdateDossiers = [SELECT Hour__c, Label, MasterLabel, DeveloperName FROM Schedule_Update_Dossier__mdt LIMIT 1];
         String hour = String.valueOf(scheduleUpdateDossiers[0].Hour__c).substringBefore('.').substringBefore(',');
         String cronexpression = '0 0 '+ hour +' * * ?';
