@@ -4,6 +4,9 @@
 
 @IsTest
 private class SettingUtilsTest {
+
+    private final static String SUBSCRIBER_SETTING_TEST_SETTING_NAME = 'Test';
+
     @IsTest
     static void testGetSettingsHappyFlow() {
         // given
@@ -13,6 +16,21 @@ private class SettingUtilsTest {
         // when
         Test.startTest();
         String value = SettingUtils.getSetting(settingName);
+        Test.stopTest();
+
+        // then
+        System.assert(!String.isEmpty(value));
+    }
+
+    @IsTest
+    static void testGetSubscriberSettingsHappyFlow() {
+        // given
+        // an existing setting (from the ErrorLogUtil functionality)
+        String settingName = SUBSCRIBER_SETTING_TEST_SETTING_NAME;
+
+        // when
+        Test.startTest();
+        String value = SettingUtils.getSubscriberSetting(settingName);
         Test.stopTest();
 
         // then
