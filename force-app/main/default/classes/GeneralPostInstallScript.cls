@@ -29,8 +29,8 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
 
     public void execute(InstallContext context) {
         //get the schedule
-        String updateCronExpression = SettingUtils.getSubscriberSetting(UPDATED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
-        String removeBatchScheduleCronExpression = SettingUtils.getSubscriberSetting(REMOVED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String updateCronExpression = SettingUtils.getSetting(UPDATED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String removeBatchScheduleCronExpression = SettingUtils.getSetting(REMOVED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         // schedule the batches
         scheduleBatch(PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
         scheduleBatch(PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);
