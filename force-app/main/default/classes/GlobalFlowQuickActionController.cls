@@ -10,26 +10,25 @@ public with sharing class GlobalFlowQuickActionController {
     private static String FLOW_SETTING_KEY = 'Create_Account_Flow_API_Name';
 
     /**
-     * Returns the name of the flow as configured in the Flow_Setting with developername FLOW_SETTING_KEY.
+     * Returns the name of the flow as configured in the Subscriber settings with developername FLOW_SETTING_KEY.
      * Throws a CIConfigurationException if the Flow_Setting is not found or the value is null.
-     * @return
+     *
+     * @param flowSettingName the developer name of the subscriber setting
+     * @return either the found flow API name or an AuraResponseWrapper containing an error
      */
     @AuraEnabled(cacheable=true)
-    public static String getFlowAPIName(String flowSettingName) {
-        // TODO: move this to a Configuration Utility class.
+    public static Object getFlowAPIName(String flowSettingName) {
         try {
-            List<Flow_Settings__mdt> flowSettings = [SELECT Value__c FROM Flow_Settings__mdt WHERE DeveloperName = :flowSettingName LIMIT 1];
-            if (flowSettings != null && flowSettings.size() == 1 && !String.isEmpty(flowSettings[0].Value__c)) {
-                return flowSettings[0].Value__c;
-            } else {
-                // TODO: change Label
-                throw new CIConfigurationException(Label.Config_Account_ActivateDescription);
+            String value = SettingUtils.getSubscriberSetting(flowSettingName);
+            if (String.isEmpty(value)) {
+                Exception ex = new CIConfigurationException(Label.Config_Account_ActivateDescription);
+                throw ex;
             }
+            return value;
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex);
-            throw ex;
+            return new AuraResponseWrapper(ex, System.Label.Error);
         }
-
     }
 
 

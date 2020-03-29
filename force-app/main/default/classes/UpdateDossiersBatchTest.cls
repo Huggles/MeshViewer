@@ -21,7 +21,6 @@ public class UpdateDossiersBatchTest {
         insert dossiers;
         dossiers = [
                 SELECT
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,
@@ -118,7 +117,6 @@ public class UpdateDossiersBatchTest {
         // no dossiers in the DB should be changed
         List<Business_Dossier__c> dossiersToBeAsserted = [
                 SELECT
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,
@@ -216,6 +214,59 @@ public class UpdateDossiersBatchTest {
         }
     }
 
+    @IsTest
+    public static void testErrorHandlingInitialization() {
+        // given
+        // the dutchBusinessUpdateGetChangedDossiers method throws an exception
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IDutchBusinessService dutchBusinessServiceMock = (IDutchBusinessService) mocks.mock(IDutchBusinessService.class);
+
+        mocks.startStubbing();
+
+        mocks.when(dutchBusinessServiceMock.getDutchBusinessUpdatedDossiersSince(fflib_Match.anyInteger(), (List<String>)fflib_Match.anyList(), fflib_Match.anyDate())).thenThrow(new CCException());
+        mocks.stopStubbing();
+        Application.Service.setMock(IDutchBusinessService.class, dutchBusinessServiceMock);
+
+        // when
+        Test.startTest();
+        Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
+        Database.executeBatch(batch, 100);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(true, ErrorLogUtil.hasErrorsLogged());
+        // cannot test to see if an email has been send
+    }
+
+
+
+    @IsTest
+    public static void testErrorHandlingExecute() {
+        // given
+        // the dutchBusinessUpdateGetChangedDossiers method throws an exception
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IDutchBusinessService dutchBusinessServiceMock = (IDutchBusinessService) mocks.mock(IDutchBusinessService.class);
+
+        mocks.startStubbing();
+
+        mocks.when(dutchBusinessServiceMock.getDutchBusinessUpdatedDossiersSince(fflib_Match.integerBetween(1, true, 1, true), (List<String>)fflib_Match.anyList(), fflib_Match.anyDate())).thenReturn(getUpdateDossierReferenceDTOMocks(10, 1, 1, 1, 1));
+        ((IDutchBusinessService)mocks.doThrowWhen(new CCException(), dutchBusinessServiceMock)).updateDossiersWithVendorData((List<Business_Dossier__c>)fflib_Match.anyList());
+
+        List<Business_Dossier__c> dossiers = getBusinessDossiersMock(10, 1, 1, 1);
+        insert dossiers;
+        mocks.stopStubbing();
+        Application.Service.setMock(IDutchBusinessService.class, dutchBusinessServiceMock);
+
+        Test.startTest();
+        {
+            Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
+            Database.executeBatch(batch, 100);
+        }
+        Test.stopTest();
+        System.assertEquals(true, ErrorLogUtil.hasErrorsLogged());
+
+    }
+
 
     @IsTest
     public static void testOnePage() {
@@ -238,7 +289,6 @@ public class UpdateDossiersBatchTest {
         insert dossiers;
         dossiers = [
                 SELECT
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,
@@ -335,7 +385,6 @@ public class UpdateDossiersBatchTest {
         // the matching dossiers in the DB should be changed
         List<Business_Dossier__c> dossiersToBeAsserted = [
                 SELECT
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,
@@ -427,15 +476,16 @@ public class UpdateDossiersBatchTest {
     /**
      * Returns a mock DutchBusinessUpdateReferencePagedResult based on the given parameters
      *
-     * @param nrOfDossiersPerPage
-     * @param startDossierNr
-     * @param startEstablishmentNr
-     * @param nrOfEstablishmentsPerDossierNr
-     * @param maxPages
+     * @param nrOfDossiersPerPage the number of dossiers on the page
+     * @param startDossierNr the offset for the dossier number
+     * @param startEstablishmentNr the offset for the establishment number
+     * @param nrOfEstablishmentsPerDossierNr the number of establishments per dossier
+     * @param maxPages the max number of pages that can be returned
      *
-     * @return
+     * @return a mocked DutchBusinessUpdateReferencePagedResult
      */
-    public static DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult getDutchBusinessUpdateReferencePagedResultMock(Integer nrOfDossiersPerPage, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr, Integer maxPages) {
+    @TestVisible
+    private static DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult getDutchBusinessUpdateReferencePagedResultMock(Integer nrOfDossiersPerPage, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr, Integer maxPages) {
         DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult output = new DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult();
         output.paging = new DutchBusinessWsdl.ResultInfo();
         output.paging.numpages = maxPages;
@@ -455,16 +505,38 @@ public class UpdateDossiersBatchTest {
     }
 
     /**
+    * Mocks a list of UpdateDossierReferenceDTO
+    *
+    * @param nrOfDossiersPerPage the number of dossiers on the page
+    * @param startDossierNr the offset for the dossier number
+    * @param startEstablishmentNr the offset for the establishment number
+    * @param nrOfEstablishmentsPerDossierNr the number of establishments per dossier
+    * @param maxPages the max number of pages that can be returned
+    *
+    * @return a mocked list of UpdateDossierReferenceDTOs
+    */
+    private static List<UpdateDossierReferenceDTO> getUpdateDossierReferenceDTOMocks(Integer nrOfDossiersPerPage, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr, Integer maxPages) {
+        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = new List<UpdateDossierReferenceDTO>();
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateReferencePagedResult = getDutchBusinessUpdateReferencePagedResultMock(nrOfDossiersPerPage, startDossierNr, startEstablishmentNr, nrOfEstablishmentsPerDossierNr, maxPages);
+        for (DutchBusinessWsdl.DutchBusinessUpdateReference dutchBusinessUpdateReference : dutchBusinessUpdateReferencePagedResult.results.item) {
+            UpdateDossierReferenceDTO updateDossierReferenceDTO = new UpdateDossierReferenceDTO(dutchBusinessUpdateReference, maxPages);
+            updateDossierReferenceDTOS.add(updateDossierReferenceDTO);
+        }
+        return updateDossierReferenceDTOS;
+    }
+
+    /**
      * Returns a list of business dossiers with the given dossier and establishment numbers
      *
-     * @param nrOfDossiers
-     * @param startDossierNr
-     * @param startEstablishmentNr
-     * @param nrOfEstablishmentsPerDossierNr
+     * @param nrOfDossiers the number of dossiers to return
+     * @param startDossierNr the offset for the dossier number
+     * @param startEstablishmentNr the offset for the establishment number
+     * @param nrOfEstablishmentsPerDossierNr the number of establishments per dossier to return
      *
-     * @return
+     * @return a list of mocked business dossiers
      */
-    public static List<Business_Dossier__c> getBusinessDossiersMock(Integer nrOfDossiers, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr) {
+    @TestVisible
+    private static List<Business_Dossier__c> getBusinessDossiersMock(Integer nrOfDossiers, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr) {
         List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
         for (Integer i = 0; i < nrOfDossiers / (nrOfEstablishmentsPerDossierNr == 0 ? 1 : nrOfEstablishmentsPerDossierNr); i++) {
             Business_Dossier__c dossier = new Business_Dossier__c(Name = '' + i, Dossier_Number__c = '' + (startDossierNr + i));
@@ -479,12 +551,13 @@ public class UpdateDossiersBatchTest {
     /**
      * Returns a mock dutch business dossier with a trade name set to test
      *
-     * @param dossierNumber
-     * @param establishmentNumber
+     * @param dossierNumber the dossier number to get a mock for
+     * @param establishmentNumber the establisthment number to get a mock for
      *
-     * @return
+     * @return a mock DutchBusinessDossierV3
      */
-    public static DutchBusinessWsdl.DutchBusinessDossierV3 getWsDutchBusinessDossierV3Mock(String dossierNumber, String establishmentNumber) {
+    @TestVisible
+    private static DutchBusinessWsdl.DutchBusinessDossierV3 getWsDutchBusinessDossierV3Mock(String dossierNumber, String establishmentNumber) {
         DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessDossierV3 = new DutchBusinessWsdl.DutchBusinessDossierV3();
         dutchBusinessDossierV3.dossier_number = dossierNumber;
         dutchBusinessDossierV3.establishment_number = establishmentNumber;

@@ -5,6 +5,6 @@
 trigger ErrorEventTrigger on Error_Events__e (after insert) {
 
     if(Trigger.isInsert && Trigger.isAfter){
-        ErrorEventTriggerHandler.AfterInsert(Trigger.new);
+        ErrorLogUtil.handleAfterInsert(Trigger.new);
     }
 }

@@ -4,6 +4,9 @@
 
 public without sharing class GeneralPostInstallScript implements IInstallAction {
 
+    private final static String UPDATED_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Update_Dutch_Dossier_Batch_Cron_Schedule';
+    private final static String REMOVED_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Remove_Dutch_Dossier_Batch_Cron_Schedule';
+
     @TestVisible
     private final static String PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME = 'Process updated Dutch dossiers';
     @TestVisible
@@ -25,14 +28,12 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
     }
 
     public void execute(InstallContext context) {
-        //get the time
-        List<Schedule_Update_Dossier__mdt> scheduleUpdateDossiers = [SELECT Hour__c, Label, MasterLabel, DeveloperName FROM Schedule_Update_Dossier__mdt LIMIT 1];
-        String hour = String.valueOf(scheduleUpdateDossiers[0].Hour__c).substringBefore('.').substringBefore(',');
-        String cronexpression = '0 0 '+ hour +' * * ?';
+        //get the schedule
+        String updateCronExpression = SettingUtils.getSetting(UPDATED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String removeBatchScheduleCronExpression = SettingUtils.getSetting(REMOVED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         // schedule the batches
-        scheduleBatch(PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), cronexpression);
-        cronexpression = '0 0 '+ hour + 1 +' * * ?'; // offset of 1h
-        scheduleBatch(PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), cronexpression);
+        scheduleBatch(PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
+        scheduleBatch(PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);
     }
 
     private void scheduleBatch(String scheduleName, Schedulable schedulable, String cronExpression) {
@@ -47,7 +48,12 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
             }
 
         }
-        System.schedule(scheduleName, cronexpression, schedulable);
+        try {
+            System.schedule(scheduleName, cronExpression, schedulable);
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+        }
+
     }
 
 }

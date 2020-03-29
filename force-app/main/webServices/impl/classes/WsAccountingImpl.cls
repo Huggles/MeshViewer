@@ -4,6 +4,10 @@
 
 public inherited sharing class WsAccountingImpl implements IWsAccounting {
 
+    private final static String COMPANY_INFO_RESELLER_ACCOUNT_ID_SETTING_NAME = 'Company_info_Reseller_Account_Id';
+    private final static String COMPANY_INFO_ACCOUNT_ADMIN_USER_NAME_SETTING_NAME = 'Company_info_Account_Username';
+    private final static String COMPANY_INFO_ACCOUNT_PASSWORD_SETTING_NAME = 'Company_info_Account_Password';
+
     private inherited sharing class AccountingMethodCallOut extends MethodCallout {
 
         public Object call(String methodName, Map<String,Object> arguments) {
@@ -169,14 +173,9 @@ public inherited sharing class WsAccountingImpl implements IWsAccounting {
     public WsAccountingImpl() {
         port =  new AccountingWsdl.Webservices_nlPort();
         port.HeaderLogin = new AccountingWsdl.HeaderLoginType();
-        // TODO:  referral customers are stored as separate record in the mdt. The current query returns all records.
-        ApplicationProperty__mdt applicationProperty = [
-                SELECT
-                        DataProviderAdminPassword__c,
-                        DataProviderAdminUsername__c
-                FROM ApplicationProperty__mdt LIMIT 1];
-        port.HeaderLogin.username = applicationProperty.DataProviderAdminUsername__c;
-        port.HeaderLogin.password = applicationProperty.DataProviderAdminPassword__c;
+
+        port.HeaderLogin.username = SettingUtils.getSetting(COMPANY_INFO_ACCOUNT_ADMIN_USER_NAME_SETTING_NAME);
+        port.HeaderLogin.password = SettingUtils.getSetting(COMPANY_INFO_ACCOUNT_PASSWORD_SETTING_NAME);
 
         methodCallOut = new AccountingMethodCallOut(port);
 

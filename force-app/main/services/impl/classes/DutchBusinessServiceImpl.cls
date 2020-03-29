@@ -16,18 +16,18 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     /**
     * Searches for dutch business dossiers in Company.info backend (Dutch Business service)
     *
-    * @param dossier_number
-    * @param trade_name
-    * @param city
-    * @param street
-    * @param postcode
-    * @param house_number
-    * @param house_number_addition
-    * @param telephone_number
-    * @param domain_name
-    * @param strict_search
+    * @param dossier_number the dossier number to search for
+    * @param trade_name the trade name to search for
+    * @param city the city to search for
+    * @param street the street to search for
+    * @param postcode the postcode to search for
+    * @param house_number the house number to search for
+    * @param house_number_addition the house number addition to search for
+    * @param telephone_number the phone number to search for
+    * @param domain_name the domain or email to search for
+    * @param strict_search if true an 'and' construction is applied and the trade name needs to start with the given trade name
     *
-    * @return
+    * @return a list of business dossiers filled with the found results
     */
     public List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         // sanitize the input
@@ -50,7 +50,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     /**
     * Processes the dutch business dossiers that have been removed from the CI backend
     *
-    * @param removedDossiers
+    * @param removedDossiers the dossiers that have been removed from the Dutch chamber of commerce
     */
     public void processRemovedDutchDossiers(List<Business_Dossier__c> removedDossiers) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
@@ -67,7 +67,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
      * Stores the given dossiers in the database. If no id is present inserts the dossiers, otherwise updates them.
      *
      * @param dossiers the dossiers to be stored
-     * @param unitOfWork if null a new uow will be created and used to do the work
+     * @param originalInitOfWork if null a new uow will be created and used to do the work
      */
     public static void storeDossiers(List<Business_Dossier__c> dossiers, fflib_ISObjectUnitOfWork originalInitOfWork) {
         fflib_ISObjectUnitOfWork unitOfWork = null;
@@ -125,11 +125,11 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
      * Fetches the dutch business dossier with the given dossier number and establishment number and creates it in the database (incl. any related records)
      * If getVAT is true, also enriches the dossier with the VAT number (if available) before inserting it in the database.
      *
-     * @param dossierNumber
-     * @param establishmentNumber
-     * @param getVAT
+     * @param dossierNumber the dossier number to fetch and to create
+     * @param establishmentNumber the establishment number belonging to the dossier
+     * @param getVAT boolean indicating if it should be tried to fetch the VAT (true) or not (false). If no VAT can be found, the No VAT Found field is set to true (only when getVAT is true)
      *
-     * @return
+     * @return the dossier created.
      */
     public Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT) {
         if (dossierNumber == null || dossierNumber == '') {

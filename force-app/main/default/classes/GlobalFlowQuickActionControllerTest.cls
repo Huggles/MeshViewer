@@ -13,16 +13,13 @@ private class GlobalFlowQuickActionControllerTest {
         // when
         Boolean exceptionThrown = false;
         Test.startTest();
-        try {
-            GlobalFlowQuickActionController.getFlowAPIName(flowSettingName);
-        } catch (CIConfigurationException ex) {
-            exceptionThrown = true;
-        }
+        Object response = GlobalFlowQuickActionController.getFlowAPIName(flowSettingName);
         Test.stopTest();
 
         // then
         // an exception should be thrown
-        System.assert(exceptionThrown);
+        System.assert(response instanceof AuraResponseWrapper);
+        System.assert(!String.isEmpty(((AuraResponseWrapper)response).errorMsg));
     }
 
     @IsTest
@@ -36,7 +33,7 @@ private class GlobalFlowQuickActionControllerTest {
         String flowName = null;
         Test.startTest();
         try {
-            flowName = GlobalFlowQuickActionController.getFlowAPIName(flowSettingName);
+            flowName = (String)GlobalFlowQuickActionController.getFlowAPIName(flowSettingName);
         } catch (CIConfigurationException ex) {
             exceptionThrown = true;
         }

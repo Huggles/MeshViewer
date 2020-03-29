@@ -114,15 +114,6 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Street__c</fields>
-        <fields>House_Number__c</fields>
-        <fields>Postcode__c</fields>
-        <fields>City__c</fields>
-        <fields>Country__c</fields>
-        <relatedList>Dossier_Address__c.Business_Data__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

@@ -12,7 +12,6 @@ public inherited sharing class Application {
                     Account.SObjectType,
                     Business_Dossier__c.SObjectType,
                     Business_Data_SBI__c.SObjectType,
-                    Dossier_Address__c.SObjectType,
                     Creditsafe_Company_Report_Full__c.SObjectType,
                     Additional_Information_NL_Financial_Item__c.SObjectType,
                     Additional_Information_NL_Kvk_Filing__c.SObjectType,
@@ -59,7 +58,6 @@ public inherited sharing class Application {
             new Map < SObjectType, Type > {
                     Account.SObjectType => AccountSelector.class,
                     Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
-                    Dossier_Address__c.SObjectType => DossierAddressSelector.class,
                     Business_Data_SBI__c.SObjectType => SbiCodeSelector.class
             });
 

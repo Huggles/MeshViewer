@@ -10,24 +10,20 @@ private class ErrorLogUtilTest {
     }
 
     @IsTest
-    static void testLogMessageNoExceptionThrown() {
+    static void testLogException() {
         Test.startTest();
-        ErrorLogUtil.logMessage('test');
+        ErrorLogUtil.logException(new TestException('message'));
         Test.stopTest();
-        Error_Log__c[] logs = [SELECT Id, Trace__c FROM Error_Log__c];
-        System.assert(logs.size() == 1);
-        System.assert(logs[0].Trace__c == 'test');
-    }
-
-    @IsTest
-    static void testLogExceptionNoExceptionThrown() {
-        Test.startTest();
-        Exception ex = new TestException('test');
-        ErrorLogUtil.logException(ex);
-        Test.stopTest();
-        Error_Log__c[] logs = [SELECT Trace__c FROM Error_Log__c];
-        System.assert(logs.size() == 1);
-        System.assert(logs[0].Trace__c.contains('test'));
+        List<Error_Log__c> logs = [
+                SELECT
+                        Cause__c,
+                        Line_Number__c,
+                        Message__c,
+                        Stacktrace__c,
+                        Type__c
+                FROM Error_Log__c];
+        System.assertEquals(1, logs.size());
+        System.assertEquals('message', logs[0].Message__c);
     }
 
     @IsTest
@@ -40,22 +36,89 @@ private class ErrorLogUtilTest {
             ErrorLogUtil.logException(ex);
         }
         Test.stopTest();
-        Error_Log__c[] logs = [SELECT Trace__c FROM Error_Log__c];
+        List<Error_Log__c> logs = [
+                SELECT
+                        Cause__c,
+                        Line_Number__c,
+                        Message__c,
+                        Stacktrace__c,
+                        Type__c
+                FROM Error_Log__c];
         System.assertEquals(1, logs.size());
-        System.assert(logs[0].Trace__c.contains('test'));
+        System.assertEquals('test', logs[0].Message__c);
     }
 
     @IsTest
-    static void testLogExceptionWithEmail() {
+    static void testLogExceptionWithSystemEmail() {
         Test.startTest();
-        Exception ex = new TestException('test');
-        ErrorLogUtil.logExceptionWithEmail(new List<Exception>{ex});
+        ErrorLogUtil.logException(new TestException('test'), true);
+        Test.stopTest();
+        // System.assertEquals(1, invocations); // doesn't work since sending the email is done in a different thread
+        List<Error_Log__c> logs = [
+                SELECT
+                        Cause__c,
+                        Line_Number__c,
+                        Message__c,
+                        Stacktrace__c,
+                        Type__c
+                FROM Error_Log__c];
+        System.assertEquals(1, logs.size());
+        System.assertEquals('test', logs[0].Message__c);
+    }
+
+    @IsTest
+    static void testLogExceptionReThrown() {
+        Boolean exceptionThrown = false;
+        try {
+            Test.startTest();
+            try {
+                throw new TestException();
+            } catch (Exception ex) {
+                ErrorLogUtil.logException(ex);
+                throw ex;
+            }
+        } catch (Exception ex) {
+            Test.stopTest();
+            exceptionThrown = true;
+        }
+        System.assertEquals(true, ErrorLogUtil.hasErrorsLogged());
+        System.assert(exceptionThrown);
+    }
+
+    @IsTest
+    static void testSendSupportEmails() {
+        List<Error_Events__e> events = new List<Error_Events__e>();
+        for (Integer i = 0; i < 5; i++) {
+            events.add(new Error_Events__e(Message__c = 'test'));
+        }
+        Test.startTest();
+        ErrorLogUtil.sendSupportEmails(events);
         Integer invocations = Limits.getEmailInvocations();
         Test.stopTest();
-        Error_Log__c[] logs = [SELECT Trace__c FROM Error_Log__c];
-        System.assert(logs.size() == 1);
-        System.assert(logs[0].Trace__c.contains('test'));
         System.assertEquals(1, invocations);
     }
+
+    @IsTest
+    static void testHasErrorsLogged() {
+        Test.startTest();
+        ErrorLogUtil.logException(new TestException());
+        Test.stopTest();
+        Integer numbersOfErrorsLogged = ErrorLogUtil.getNumberOfErrorsLogged();
+        Boolean errorsLogged = ErrorLogUtil.hasErrorsLogged();
+        System.assertEquals(true, errorsLogged);
+        System.assertEquals(1, numbersOfErrorsLogged);
+    }
+
+    @IsTest
+    static void testHasNoErrorsLogged() {
+        Test.startTest();
+        Boolean errorsLogged = ErrorLogUtil.hasErrorsLogged();
+        Integer numbersOfErrorsLogged = ErrorLogUtil.getNumberOfErrorsLogged();
+        Test.stopTest();
+        System.assertEquals(false, errorsLogged);
+        System.assertEquals(0, numbersOfErrorsLogged);
+    }
+
+
 
 }
