@@ -2,8 +2,8 @@
     "packageDirectories": [
         {
             "path": "force-app",
-            "package": "Company.info",
-            "versionName": "R1.0 Beta 2",
+            "package": "Company.info for Salesforce",
+            "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
             "default": true
         }
@@ -12,6 +12,6 @@
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "48.0",
     "packageAliases": {
-        "Company.info": "0Ho0J0000004CA6SAM"
+        "Company.info for Salesforce": "0Ho0J0000004CABSA2"
     }
 }
