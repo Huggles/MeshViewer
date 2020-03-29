@@ -64,6 +64,24 @@ public inherited sharing class ErrorLogUtil {
         sendSupportEmails(emailEvents);
     }
 
+    /**
+    * Utility method to check if there are errors logged. Handy in test methods.
+    *
+    * @return true if there are any errors logged. Otherwise false.
+    */
+    public static Boolean hasErrorsLogged() {
+        List<Error_Log__c> errorLogs = [SELECT Id FROM Error_Log__c LIMIT 1];
+        return (errorLogs.size() == 1);
+    }
+
+    /**
+    * Utility method that returns the number of errors logged. Handy in test methods.
+    *
+    * @return the number of errors logged in the database
+    */
+    public static Integer getNumberOfErrorsLogged() {
+        return ([SELECT Id FROM Error_Log__c]).size();
+    }
 
     /**
     * Sends an exception email to the Appsolutely support

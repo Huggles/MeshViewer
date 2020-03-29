@@ -67,6 +67,25 @@ private class ErrorLogUtilTest {
     }
 
     @IsTest
+    static void testLogExceptionReThrown() {
+        Boolean exceptionThrown = false;
+        try {
+            Test.startTest();
+            try {
+                throw new TestException();
+            } catch (Exception ex) {
+                ErrorLogUtil.logException(ex);
+                throw ex;
+            }
+        } catch (Exception ex) {
+            Test.stopTest();
+            exceptionThrown = true;
+        }
+        System.assertEquals(true, ErrorLogUtil.hasErrorsLogged());
+        System.assert(exceptionThrown);
+    }
+
+    @IsTest
     static void testSendSupportEmails() {
         List<Error_Events__e> events = new List<Error_Events__e>();
         for (Integer i = 0; i < 5; i++) {
@@ -77,6 +96,27 @@ private class ErrorLogUtilTest {
         Integer invocations = Limits.getEmailInvocations();
         Test.stopTest();
         System.assertEquals(1, invocations);
+    }
+
+    @IsTest
+    static void testHasErrorsLogged() {
+        Test.startTest();
+        ErrorLogUtil.logException(new TestException());
+        Integer numbersOfErrorsLogged = ErrorLogUtil.getNumberOfErrorsLogged();
+        Test.stopTest();
+        Boolean errorsLogged = ErrorLogUtil.hasErrorsLogged();
+        System.assertEquals(true, errorsLogged);
+        System.assertEquals(1, numbersOfErrorsLogged);
+    }
+
+    @IsTest
+    static void testHasNoErrorsLogged() {
+        Test.startTest();
+        Boolean errorsLogged = ErrorLogUtil.hasErrorsLogged();
+        Integer numbersOfErrorsLogged = ErrorLogUtil.getNumberOfErrorsLogged();
+        Test.stopTest();
+        System.assertEquals(false, errorsLogged);
+        System.assertEquals(0, numbersOfErrorsLogged);
     }
 
 

@@ -18,23 +18,22 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
 
 
     public UpdatedDossiersIterator(List<String> updateTypes) {
+        if (updateTypes == null) {
+            CCInputException e = new CCInputException('UpdateTypes is null while trying to create an update dossiers iterator');
+            ErrorLogUtil.logException(e);
+            throw e;
+        }
+        this.updateTypes = updateTypes;
+        // let's get the first page
+        currentPageNr = 1;
         try {
-            if (updateTypes == null) {
-                CCInputException e = new CCInputException('UpdateTypes is null while trying to create an update dossiers iterator');
-                ErrorLogUtil.logException(e);
-                throw e;
-            }
-            this.updateTypes = updateTypes;
-            // let's get the first page
-            currentPageNr = 1;
             dossiersOnCurrentPage = retrievePage(currentPageNr);
-            currentDossierPointer = 0;
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true); // needs to be handled here and not in the batch since there is no way to catch these exceptions in the batch engine.
+            if (!Test.isRunningTest()) // since it is in a third asynchronous thread the Apex testing framework is not able to handle the transactions correct when testing, so not throwing it in test situations
+                throw ex;
         }
-        catch(Exception e) {
-            ErrorLogUtil.logException(e, true);
-            if (!Test.isRunningTest()) // since UpdateDossiersIterator is called in a batch context, this code will throw an uncatchable exception in a test situation
-                throw e; //execution should halt
-        }
+        currentDossierPointer = 0;
     }
 
     public Boolean hasNext() {
@@ -43,26 +42,24 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
 
     public Business_Dossier__c next() {
         Business_Dossier__c dossier;
-        try {
-            if (!hasNextDossierOnCurrentPage() && hasNextPage()) { // turn the page
-                currentPageNr++;
+        if (!hasNextDossierOnCurrentPage() && hasNextPage()) { // turn the page
+            currentPageNr++;
+            try {
                 dossiersOnCurrentPage = retrievePage(currentPageNr);
-                currentDossierPointer = 0;
+            } catch (Exception ex) {
+                ErrorLogUtil.logException(ex, true);
+                throw ex;
             }
-            dossier = null;
-            if (hasNext()) {
-                currentDossierPointer++;
-                if (currentDossierPointer > 0 && dossiersOnCurrentPage.size() > 0) {
-                    dossier = dossiersOnCurrentPage[currentDossierPointer - 1];
-                }
-            } else {
-                dossier = null; // just to make it very clear;
-            }
+            currentDossierPointer = 0;
         }
-        catch(Exception e) {
-            ErrorLogUtil.logException(e);
-            if (!Test.isRunningTest()) // since next is called in a batch context, this code will throw an uncatchable exception in a test situation
-                throw e; //execution should halt
+        dossier = null;
+        if (hasNext()) {
+            currentDossierPointer++;
+            if (currentDossierPointer > 0 && dossiersOnCurrentPage.size() > 0) {
+                dossier = dossiersOnCurrentPage[currentDossierPointer - 1];
+            }
+        } else {
+            dossier = null; // just to make it very clear;
         }
         return dossier;
     }
@@ -81,7 +78,6 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
     }
 
     private List<Business_Dossier__c> retrievePage(Integer pageNr) {
-
         // query the next page in CI
         List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = DutchBusinessService.getDutchBusinessUpdatedDossiersSince(currentPageNr, updateTypes, Date.today() - 1);
 

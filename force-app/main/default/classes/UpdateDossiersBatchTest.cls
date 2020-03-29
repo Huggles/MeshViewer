@@ -231,17 +231,41 @@ public class UpdateDossiersBatchTest {
 
         // when
         Test.startTest();
-        try {
-            Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
-            Database.executeBatch(batch, 100);
-        } catch (CCException e) {
-
-        }
+        Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
+        Database.executeBatch(batch, 100);
         Test.stopTest();
 
         // then
+        System.assertEquals(true, ErrorLogUtil.hasErrorsLogged());
+        // cannot test to see if an email has been send
+    }
 
 
+
+    @IsTest
+    public static void testErrorHandlingExecute() {
+        // given
+        // the dutchBusinessUpdateGetChangedDossiers method throws an exception
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IDutchBusinessService dutchBusinessServiceMock = (IDutchBusinessService) mocks.mock(IDutchBusinessService.class);
+
+        mocks.startStubbing();
+
+        mocks.when(dutchBusinessServiceMock.getDutchBusinessUpdatedDossiersSince(fflib_Match.integerBetween(1, true, 1, true), (List<String>)fflib_Match.anyList(), fflib_Match.anyDate())).thenReturn(getUpdateDossierReferenceDTOMocks(10, 1, 1, 1, 1));
+        ((IDutchBusinessService)mocks.doThrowWhen(new CCException(), dutchBusinessServiceMock)).updateDossiersWithVendorData((List<Business_Dossier__c>)fflib_Match.anyList());
+
+        List<Business_Dossier__c> dossiers = getBusinessDossiersMock(10, 1, 1, 1);
+        insert dossiers;
+        mocks.stopStubbing();
+        Application.Service.setMock(IDutchBusinessService.class, dutchBusinessServiceMock);
+
+        Test.startTest();
+        {
+            Database.Batchable<Business_Dossier__c> batch = new UpdateDossiersBatch();
+            Database.executeBatch(batch, 100);
+        }
+        Test.stopTest();
+        System.assertEquals(true, ErrorLogUtil.hasErrorsLogged());
 
     }
 
@@ -482,6 +506,27 @@ public class UpdateDossiersBatchTest {
             output.results.item.add(a1);
         }
         return output;
+    }
+
+    /**
+    * Mocks a list of UpdateDossierReferenceDTO
+    *
+    * @param nrOfDossiersPerPage the number of dossiers on the page
+    * @param startDossierNr the offset for the dossier number
+    * @param startEstablishmentNr the offset for the establishment number
+    * @param nrOfEstablishmentsPerDossierNr the number of establishments per dossier
+    * @param maxPages the max number of pages that can be returned
+    *
+    * @return a mocked list of UpdateDossierReferenceDTOs
+    */
+    private static List<UpdateDossierReferenceDTO> getUpdateDossierReferenceDTOMocks(Integer nrOfDossiersPerPage, Integer startDossierNr, Integer startEstablishmentNr, Integer nrOfEstablishmentsPerDossierNr, Integer maxPages) {
+        List<UpdateDossierReferenceDTO> updateDossierReferenceDTOS = new List<UpdateDossierReferenceDTO>();
+        DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateReferencePagedResult = getDutchBusinessUpdateReferencePagedResultMock(nrOfDossiersPerPage, startDossierNr, startEstablishmentNr, nrOfEstablishmentsPerDossierNr, maxPages);
+        for (DutchBusinessWsdl.DutchBusinessUpdateReference dutchBusinessUpdateReference : dutchBusinessUpdateReferencePagedResult.results.item) {
+            UpdateDossierReferenceDTO updateDossierReferenceDTO = new UpdateDossierReferenceDTO(dutchBusinessUpdateReference, maxPages);
+            updateDossierReferenceDTOS.add(updateDossierReferenceDTO);
+        }
+        return updateDossierReferenceDTOS;
     }
 
     /**
