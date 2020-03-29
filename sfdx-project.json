@@ -5,13 +5,16 @@
             "package": "Company.info for Salesforce",
             "versionName": "ver 0.1",
             "versionNumber": "0.1.0.NEXT",
-            "default": true
+            "default": true,
+            "definitionFile": "config/project-scratch-def.json",
+            "postInstallScript": "PostInstallScript"
         }
     ],
     "namespace": "appsolutely",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "48.0",
     "packageAliases": {
-        "Company.info for Salesforce": "0Ho0J0000004CABSA2"
+        "Company.info for Salesforce": "0Ho0J0000004CABSA2",
+        "Company.info for Salesforce@0.1.0-1": "04t0J000000M9oeQAC"
     }
 }
