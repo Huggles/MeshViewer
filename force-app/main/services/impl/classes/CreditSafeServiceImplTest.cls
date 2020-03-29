@@ -651,7 +651,6 @@ private class CreditSafeServiceImplTest {
                 SELECT
                         CreatedById,
                         CreatedDate,
-                        Address__c,
                         Company_Id__c,
                         Company_Type__c,
                         Country__c,
@@ -688,7 +687,6 @@ private class CreditSafeServiceImplTest {
                 SELECT
                         CreatedById,
                         CreatedDate,
-                        Address__c,
                         Company_Id__c,
                         Country__c,
                         Creditsafe_Company_Report_Full__c,
@@ -725,7 +723,6 @@ private class CreditSafeServiceImplTest {
                 SELECT
                         CreatedById,
                         CreatedDate,
-                        Address__c,
                         Company_Id__c,
                         Country__c,
                         Creditsafe_Company_Report_Full__c,
@@ -762,7 +759,6 @@ private class CreditSafeServiceImplTest {
                 SELECT
                         CreatedById,
                         CreatedDate,
-                        Address__c,
                         Company_Id__c,
                         Country__c,
                         Creditsafe_Company_Report_Full__c,
