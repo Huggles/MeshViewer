@@ -21,7 +21,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
         insert dossiers;
         dossiers = [
                 SELECT
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,
@@ -118,7 +117,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
         // no dossiers in the DB should be changed
         List<Business_Dossier__c> dossiersToBeAsserted = [
                 SELECT
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,
@@ -231,7 +229,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
         insert dossiers;
         dossiers = [
                 SELECT
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,
@@ -328,7 +325,6 @@ private class ProcessRemovedDutchDossiersBatchTest {
         // the matching dossiers in the DB should be changed
         List<Business_Dossier__c> dossiersToBeAsserted = [
                 SELECT
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,

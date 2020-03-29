@@ -492,7 +492,6 @@ private class DutchBusinessServiceImplTest {
                 SELECT
                         CreatedById,
                         CreatedDate,
-                        Annual_Financial_Statement_Summary__c,
                         Assets__c,
                         Authorized_Share_Capital__c,
                         Authorized_Share_Capital_Currency__c,
