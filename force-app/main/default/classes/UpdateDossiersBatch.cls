@@ -10,27 +10,22 @@ public without sharing class UpdateDossiersBatch implements Database.Batchable<B
             'SubscriptionDates', 'New', 'Establishment', 'RSIN', 'Tradenames'};
 
     public class UpdatedDossiersIterable implements Iterable<Business_Dossier__c> {
-        UpdateDossiersBatch updateDossiersBatchInstance;
-
-        public UpdatedDossiersIterable(UpdateDossiersBatch updateDossiersBatch){
-            updateDossiersBatchInstance = updateDossiersBatch;
-        }
 
         public Iterator<Business_Dossier__c> iterator() {
             return new UpdatedDossiersIterator(UPDATE_TYPES);
         }
+
     }
 
     public Iterable<Business_Dossier__c> start(Database.BatchableContext context) {
         UpdatedDossiersIterable iter = null;
         try {
-            iter = new UpdatedDossiersIterable(this);
+            iter = new UpdatedDossiersIterable();
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);
             if (!Test.isRunningTest()) // since it is in a third asynchronous thread the Apex testing framework is not able to handle the transactions correct when testing, so not throwing it in test situations
                 throw ex;
         }
-        System.debug(JSON.serializePretty(iter));
         return iter;
     }
 
@@ -40,7 +35,7 @@ public without sharing class UpdateDossiersBatch implements Database.Batchable<B
         }
         catch(Exception e) {
             ErrorLogUtil.logException(e, true);
-            if (!Test.isRunningTest())
+            if (!Test.isRunningTest()) // since it is in a third asynchronous thread the Apex testing framework is not able to handle the transactions correct when testing, so not throwing it in test situations
                 throw e;
         }
     }
