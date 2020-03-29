@@ -102,8 +102,8 @@ private class ErrorLogUtilTest {
     static void testHasErrorsLogged() {
         Test.startTest();
         ErrorLogUtil.logException(new TestException());
-        Integer numbersOfErrorsLogged = ErrorLogUtil.getNumberOfErrorsLogged();
         Test.stopTest();
+        Integer numbersOfErrorsLogged = ErrorLogUtil.getNumberOfErrorsLogged();
         Boolean errorsLogged = ErrorLogUtil.hasErrorsLogged();
         System.assertEquals(true, errorsLogged);
         System.assertEquals(1, numbersOfErrorsLogged);
