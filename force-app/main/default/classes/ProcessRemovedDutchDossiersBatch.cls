@@ -18,7 +18,7 @@ public without sharing class ProcessRemovedDutchDossiersBatch implements Databas
             processRemovedDutchDossiersBatchInstance = processRemovedDutchDossiersBatch;
         }
         public Iterator<Business_Dossier__c> iterator() {
-            return new UpdatedDossiersIterator(UPDATE_TYPES, null, processRemovedDutchDossiersBatchInstance);
+            return new UpdatedDossiersIterator(UPDATE_TYPES);
         }
     }
 

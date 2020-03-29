@@ -15,7 +15,7 @@ public without sharing class UpdateDossiersBatch implements Database.Batchable<B
             updateDossiersBatchInstance = updateDossiersBatch;
         }
         public Iterator<Business_Dossier__c> iterator() {
-            return new UpdatedDossiersIterator(UPDATE_TYPES, updateDossiersBatchInstance, null);
+            return new UpdatedDossiersIterator(UPDATE_TYPES);
         }
     }
 

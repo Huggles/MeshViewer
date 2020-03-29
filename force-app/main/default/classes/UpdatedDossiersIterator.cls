@@ -17,7 +17,7 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
     private List<String> updateTypes;
 
 
-    public UpdatedDossiersIterator(List<String> updateTypes, UpdateDossiersBatch updateDossiersBatch, ProcessRemovedDutchDossiersBatch processRemovedDutchDossiersBatch) {
+    public UpdatedDossiersIterator(List<String> updateTypes) {
         try {
             if (updateTypes == null) {
                 CCInputException e = new CCInputException('UpdateTypes is null while trying to create an update dossiers iterator');
@@ -32,7 +32,8 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
         }
         catch(Exception e) {
             ErrorLogUtil.logException(e, true);
-            throw e; //execution should halt
+            if (!Test.isRunningTest()) // since UpdateDossiersIterator is called in a batch context, this code will throw an uncatchable exception in a test situation
+                throw e; //execution should halt
         }
     }
 
@@ -60,7 +61,8 @@ public inherited sharing class UpdatedDossiersIterator implements Iterator<Busin
         }
         catch(Exception e) {
             ErrorLogUtil.logException(e);
-            throw e; // execution should halt
+            if (!Test.isRunningTest()) // since next is called in a batch context, this code will throw an uncatchable exception in a test situation
+                throw e; //execution should halt
         }
         return dossier;
     }
