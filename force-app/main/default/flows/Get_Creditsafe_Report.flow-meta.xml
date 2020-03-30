@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>952</locationX>
-        <locationY>984</locationY>
+        <locationX>963</locationX>
+        <locationY>841</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Get_Creditsafe_Report</name>
         <label>Get Creditsafe Report</label>
-        <locationX>528</locationX>
-        <locationY>1106</locationY>
+        <locationX>472</locationX>
+        <locationY>624</locationY>
         <actionName>GetCreditsafeFullReportInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Update_the_Dossier_record</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Input_parameters</targetReference>
+            <targetReference>Assign_Fault_Message</targetReference>
         </faultConnector>
         <inputParameters>
             <name>companyId</name>
@@ -45,6 +44,38 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
+    <assignments>
+        <name>Assign_Error_Message</name>
+        <label>Assign Error Message</label>
+        <locationX>797</locationX>
+        <locationY>131</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessageFromFlowOrInput</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LanguageInputError</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Input_parameters</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Fault_Message</name>
+        <label>Assign Fault Message</label>
+        <locationX>668</locationX>
+        <locationY>441</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessageFromFlowOrInput</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Input_parameters</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</name>
         <choiceText>&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel}&lt;/span&gt;</choiceText>
@@ -220,8 +251,8 @@
     <decisions>
         <name>Cancel_pressed_in_language_screen</name>
         <label>Cancel pressed in language screen</label>
-        <locationX>733</locationX>
-        <locationY>1028</locationY>
+        <locationX>951</locationX>
+        <locationY>608</locationY>
         <defaultConnector>
             <targetReference>Get_Creditsafe_Report</targetReference>
         </defaultConnector>
@@ -243,10 +274,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Language_Selected</name>
+        <label>Check Language Selected</label>
+        <locationX>952</locationX>
+        <locationY>234</locationY>
+        <defaultConnector>
+            <targetReference>Cancel_pressed_in_language_screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Correct Input</defaultConnectorLabel>
+        <rules>
+            <name>Is_Language_DE_and_Country_Not_DE</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Language</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>GermanLanguage</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>InputBusinessDossier.Registration_Country__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>DE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Error_Message</targetReference>
+            </connector>
+            <label>Is Language DE and Country Not DE</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>User_can_select_language</name>
         <label>User can select language</label>
-        <locationX>249</locationX>
-        <locationY>954</locationY>
+        <locationX>256</locationX>
+        <locationY>243</locationY>
         <defaultConnector>
             <targetReference>Get_Creditsafe_Report</targetReference>
         </defaultConnector>
@@ -331,6 +394,11 @@
         <expression>{!$Label.appsolutely__insurance_contract_intention_of_signature_of_a_insurance_contract}</expression>
     </formulas>
     <formulas>
+        <name>LanguageInputError</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__language_input_error}</expression>
+    </formulas>
+    <formulas>
         <name>NoCompanyIdFoundMessage</name>
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__no_company_id_found}</expression>
@@ -363,8 +431,8 @@
     <recordUpdates>
         <name>Update_the_Dossier_record</name>
         <label>Update the Dossier record</label>
-        <locationX>744</locationX>
-        <locationY>1170</locationY>
+        <locationX>472</locationX>
+        <locationY>829</locationY>
         <connector>
             <targetReference>Navigation</targetReference>
         </connector>
@@ -393,13 +461,13 @@
     <screens>
         <name>Input_parameters</name>
         <label>Input parameters</label>
-        <locationX>586</locationX>
-        <locationY>942</locationY>
+        <locationX>652</locationX>
+        <locationY>231</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Cancel_pressed_in_language_screen</targetReference>
+            <targetReference>Check_Language_Selected</targetReference>
         </connector>
         <fields>
             <name>ErrorMessage</name>
@@ -408,14 +476,14 @@
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <elementReference>$Flow.FaultMessage</elementReference>
+                    <elementReference>ErrorMessageFromFlowOrInput</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>$Flow.FaultMessage</leftValueReference>
+                    <leftValueReference>ErrorMessageFromFlowOrInput</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue/>
@@ -492,8 +560,8 @@
     <screens>
         <name>Navigation</name>
         <label>Navigation</label>
-        <locationX>954</locationX>
-        <locationY>1170</locationY>
+        <locationX>665</locationX>
+        <locationY>828</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -513,8 +581,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>60</locationX>
-        <locationY>952</locationY>
+        <locationX>50</locationX>
+        <locationY>241</locationY>
         <connector>
             <targetReference>User_can_select_language</targetReference>
         </connector>
@@ -551,6 +619,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Creditsafe_Company_Report_Full__c</objectType>
+    </variables>
+    <variables>
+        <name>ErrorMessageFromFlowOrInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>InputBusinessDossier</name>
