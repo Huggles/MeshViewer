@@ -10,6 +10,7 @@ import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowS
 //Object fields
 import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Number__c';
 import BUSINESS_DOSSIER_NO_VAT from '@salesforce/schema/Business_Dossier__c.No_VAT_Number__c';
+import BUSINESS_DOSSIER_COUNTRY from '@salesforce/schema/Business_Dossier__c.Registration_Country__c';
 
 //Apex controllers
 import updateDossierWithVAT from '@salesforce/apex/CompanyDetailsController.updateDossierWithVAT';
@@ -39,7 +40,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
     @api
     searchAgainClicked;
 
-    @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT] })
+    @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY] })
     businessDossierRecord;
 
     @api VATUpdated = false;
@@ -59,9 +60,10 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
     get showVATButton() {
         if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined)        {
-            //If there is no VAT Number and the No_VAT_Number__c(known) is false.
-            if(!this.businessDossierRecord.data.fields.appsolutely__VAT_Number__c.value &&
-                !this.businessDossierRecord.data.fields.appsolutely__No_VAT_Number__c.value){
+            //If there is no VAT Number and the No_VAT_Number__c(known) is false and only for NL companies
+            if(this.businessDossierRecord.data.fields.appsolutely__Registration_Country__c.value == 'NL' &&
+                !this.businessDossierRecord.data.fields.appsolutely__VAT_Number__c.value &&
+                !this.businessDossierRecord.data.fields.appsolutely__No_VAT_Number__c.value ){
                 return true;
             }
             else {
@@ -90,9 +92,9 @@ export default class AccountEnrichmentHeader extends LightningElement {
     }
 
     handleSearchAgainClicked(event) {
-       this.searchAgainClicked = true;
-       //we throw an event because the flow needs to show a search form
-       this.dispatchEvent(new FlowNavigationNextEvent());
+        this.searchAgainClicked = true;
+        //we throw an event because the flow needs to show a search form
+        this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
     showToast(title, message, type, mode) {
