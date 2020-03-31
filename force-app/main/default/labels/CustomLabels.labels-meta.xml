@@ -741,7 +741,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Language Input Error</shortDescription>
-        <value>DE language is not allowed for non German company</value>
+        <value>Selected language is not available for selected company&#39;s country. Please select another language.</value>
     </labels>
     <labels>
         <fullName>Locality</fullName>

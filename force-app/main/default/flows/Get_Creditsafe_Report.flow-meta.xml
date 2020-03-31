@@ -305,6 +305,28 @@
             </connector>
             <label>Is Language DE and Country Not DE</label>
         </rules>
+        <rules>
+            <name>Is_Language_NL_and_Country_Not_NL</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Language</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>DutchLanguage</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>InputBusinessDossier.Registration_Country__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>NL</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Error_Message</targetReference>
+            </connector>
+            <label>Is Language NL and Country Not NL</label>
+        </rules>
     </decisions>
     <decisions>
         <name>User_can_select_language</name>
