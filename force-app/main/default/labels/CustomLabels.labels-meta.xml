@@ -730,18 +730,25 @@
         <value>House Number</value>
     </labels>
     <labels>
-        <fullName>Locality</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Locality</shortDescription>
-        <value>Locality</value>
-    </labels>
-    <labels>
         <fullName>Insurance_Contract_Intention_of_signature_of_a_insurance_contract</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Insurance Contract Intention of signature of a insurance contract</shortDescription>
         <value>Insurance Contract - Intention of signature of a insurance contract</value>
+    </labels>
+    <labels>
+        <fullName>Language_Input_Error</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Language Input Error</shortDescription>
+        <value>Selected language is not available for selected company&#39;s country. Please select another language.</value>
+    </labels>
+    <labels>
+        <fullName>Locality</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Locality</shortDescription>
+        <value>Locality</value>
     </labels>
     <labels>
         <fullName>Ltd</fullName>

@@ -3,8 +3,8 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>602</locationX>
-        <locationY>464</locationY>
+        <locationX>606</locationX>
+        <locationY>527</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -12,8 +12,8 @@
         <description>Assign the Account Id to the recordId output field so the global action navigates to the newly created account</description>
         <name>Assign_Record_Id</name>
         <label>Assign Record Id</label>
-        <locationX>1233</locationX>
-        <locationY>263</locationY>
+        <locationX>749</locationX>
+        <locationY>522</locationY>
         <assignmentItems>
             <assignToReference>recordId</assignToReference>
             <operator>Assign</operator>
@@ -21,6 +21,9 @@
                 <elementReference>newAccount.Id</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>End</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Map_International_Address_Fields_to_Account</name>
@@ -127,7 +130,7 @@
         <name>Create_Account</name>
         <label>Create Account</label>
         <locationX>945</locationX>
-        <locationY>126</locationY>
+        <locationY>525</locationY>
         <connector>
             <targetReference>Assign_Record_Id</targetReference>
         </connector>
@@ -150,7 +153,7 @@
             <targetReference>Search_International_Address</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Search_International_Address</name>
         <label>Search International Address</label>
