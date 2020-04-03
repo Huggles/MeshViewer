@@ -470,14 +470,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Has_Bankruptcy__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Date_Of_Insolvency__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Trustee_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -500,6 +492,16 @@
                 <behavior>Edit</behavior>
                 <field>Trustee_City__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Has_Bankruptcy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Date_Of_Insolvency__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Trustee_Telephone_Number__c</field>
@@ -513,7 +515,6 @@
                 <field>Trustee_Email_Address__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
@@ -550,19 +551,31 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Company_Number__c</fields>
+        <fields>Financial_Year__c</fields>
+        <fields>Liability1_Start_Date__c</fields>
+        <fields>Liability1_Removal_Date__c</fields>
+        <fields>Liability2_Start_Date__c</fields>
+        <fields>Liability2_Removal_Date__c</fields>
         <relatedList>Additional_Info_NL_Letter_Of_Liability__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Current_Value__c</fields>
+        <fields>Previous_Value__c</fields>
+        <fields>Date__c</fields>
+        <fields>Type__c</fields>
         <relatedList>Additional_Information_Historical_Event__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Consolidated_Subsidiaries__c</fields>
+        <fields>Date_Year_End__c</fields>
+        <fields>Judgement__c</fields>
         <relatedList>Additional_Information_NL_Financial_Item__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Event__c</fields>
+        <fields>Date__c</fields>
         <relatedList>Additional_Information_NL_Kvk_Filing__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -571,11 +584,17 @@
         <relatedList>Creditsafe_Comp_Activity_Classifications__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Full_Address__c</fields>
+        <fields>Postcode__c</fields>
+        <fields>Street__c</fields>
+        <fields>City__c</fields>
+        <fields>Country__c</fields>
         <relatedList>Creditsafe_Address__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Sentiment__c</fields>
+        <fields>Text__c</fields>
+        <fields>Type__c</fields>
         <relatedList>Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -612,26 +631,40 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Reference_Number_Court__c</fields>
         <relatedList>Negative_Information_DE_Insolvency_Event__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Name__c</fields>
+        <fields>Code__c</fields>
+        <fields>Type__c</fields>
         <relatedList>Negative_Information_DE_Director_Event__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Bank_Code__c</fields>
+        <fields>Full_Address__c</fields>
+        <fields>Postcode__c</fields>
+        <fields>Street__c</fields>
+        <fields>City__c</fields>
+        <fields>Country__c</fields>
         <relatedList>Creditsafe_Company_Banker__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Auditor_Name__c</fields>
+        <fields>Solicitor_Name__c</fields>
         <relatedList>Creditsafe_Company_Advisor__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Year__c</fields>
+        <fields>Number_Of_Employees__c</fields>
         <relatedList>Creditsafe_Company_Employee_Information__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>Date_Of_Bankruptcy__c</fields>
+        <fields>Court_Action__c</fields>
+        <fields>Address__c</fields>
         <relatedList>Creditsafe_Company_Negative_Info_NL__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -640,7 +673,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1j000000zkGg</masterLabel>
+        <masterLabel>00h3N000000gLKL</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
