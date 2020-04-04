@@ -25,20 +25,7 @@ public inherited sharing abstract class MethodCallout implements Callable {
         try {
             returnValue = call(methodName, arguments);
         } catch(CalloutException calloutException) {
-            Boolean fallBack = handleCallOutException(calloutException);
-            if (fallBack && port instanceof FallBackableWebServicePort) {
-                ((FallBackableWebServicePort) port).doFallBack();
-                try {
-                    returnValue = call(methodName, arguments);
-                } catch (CalloutException calloutException2) {
-                    Boolean serverUnavailable = handleCallOutException(calloutException2);
-                    if (serverUnavailable) {
-                        ErrorLogUtil.logException(calloutException2);
-                        throw new CCWsServerUnavailableException(Label.Error_Server_Unavailable);
-                    }
-                }
-
-            }
+            handleCallOutException(calloutException);
         }
         return returnValue;
     }
@@ -60,97 +47,80 @@ public inherited sharing abstract class MethodCallout implements Callable {
      *
      * @return
      */
-    public Boolean handleCallOutException(CalloutException calloutException) {
-        Boolean fallBack = false;
+    public void handleCallOutException(CalloutException calloutException) {
         String message = calloutException.getMessage();
         String faultCode = getFaultCode(message);
         switch on faultCode {
             when 'Client' {
                 if (message.contains('Invalid authentication (You are not logged in)')) {
-                    throw new CCWsClientAuthenticationException(Label.Error_Client_Authentication);
+                    throw new CCWsClientAuthenticationException(Label.Error_Client_Authentication, calloutException);
                 }
-                ErrorLogUtil.logException(calloutException); // shouldn't happen because unexpected so we log.
-                throw new CCWsClientException(Label.Error_Webservice_Client); // TODO: rename label
+                throw new CCWsClientException(Label.Error_Webservice_Client, calloutException);
             }
             when 'Client.Authentication' {
-                ErrorLogUtil.logException(calloutException); // shouldn't happen so we log.
-                throw new CCWsClientAuthenticationException(Label.Error_Client_Authentication);
+                throw new CCWsClientAuthenticationException(Label.Error_Client_Authentication, calloutException);
             }
             when 'Client.Authentication.HostRestriction' {
-                ErrorLogUtil.logException(calloutException); // shouldn't happen so we log.
-                throw new CCWsClientAuthHostRestrictionException(Label.Error_Client_Hostrestriction); // TODO: rename label
+                throw new CCWsClientAuthHostRestrictionException(Label.Error_Client_Hostrestriction, calloutException);
             }
             when 'Client.Authentication.Password' {
-                throw new CCWsClientAuthPasswordException(Label.Error_Client_Authentication_Password);
+                throw new CCWsClientAuthPasswordException(Label.Error_Client_Authentication_Password, calloutException);
             }
             when 'Client.Authentication.Username' {
-                throw new CCWsClientAuthUserNameException(Label.Error_Client_Authentication_Username);
+                throw new CCWsClientAuthUserNameException(Label.Error_Client_Authentication_Username, calloutException);
             }
             when 'Client.Authorization' {
-                ErrorLogUtil.logException(calloutException); // shouldn't happen because the user should have the right access rights so we log.
-                throw new CCWsClientAuthorizationException(Label.Error_Client_Authorization);
+                throw new CCWsClientAuthorizationException(Label.Error_Client_Authorization, calloutException);
             }
             when 'Client.Input' {
-                ErrorLogUtil.logException(calloutException); // shouldn't happen because input needs to be checked on the UI and service layer so we log.
-                throw new CCWsClientInputException(Label.Error_Client_Input);
+                throw new CCWsClientInputException(Label.Error_Client_Input, calloutException);
             }
             when 'Client.Input.FormatIncorrect' {
-                ErrorLogUtil.logException(calloutException); // shouldn't happen because input needs to be checked on the UI and service layer so we log.
-                throw new CCWsClientInputFormatIncorrectException(Label.Error_Client_Input_Format_Incorrect);
+                throw new CCWsClientInputFormatIncorrectException(Label.Error_Client_Input_Format_Incorrect, calloutException);
             }
             when 'Client.Input.Incomplete' {
-                ErrorLogUtil.logException(calloutException); // shouldn't happen because input needs to be checked on the UI and service layer so we log.
-                throw new CCWsClientInputIncompleteException(Label.Error_Client_Input_Incomplete);
+                throw new CCWsClientInputIncompleteException(Label.Error_Client_Input_Incomplete, calloutException);
             }
             when 'Client.Input.Invalid' {
-                ErrorLogUtil.logException(calloutException); // shouldn't happen because input needs to be checked on the UI and service layer so we log.
-                throw new CCWsClientInputInvalidException(Label.Error_Client_Input_Invalid);
+                throw new CCWsClientInputInvalidException(Label.Error_Client_Input_Invalid, calloutException);
             }
             when 'Client.Input.Payment' {
-                throw new CCWsClientPaymentException(Label.Error_Client_Payment);
+                throw new CCWsClientPaymentException(Label.Error_Client_Payment, calloutException);
             }
             // ** SERVER **
             when 'Server' {
                 if (message.contains('Vat number for business not found')) {
-                    throw new CCWsServerDataNotFoundVatException(Label.VAT_Not_Found); // TODO: rename the label to Error_Server_Data_NotFound_VAT
+                    throw new CCWsServerDataNotFoundVatException(Label.VAT_Not_Found, calloutException);
                 }
-                ErrorLogUtil.logException(calloutException);
-                throw new CCWsServerException(Label.Error_Webservice_Server); // TODO: rename label
+                throw new CCWsServerException(Label.Error_Webservice_Server, calloutException);
             }
             when 'Server.Data' {
                 ErrorLogUtil.logException(calloutException);
-                throw new CCWsServerDataException(Label.Error_Server_Data);
+                throw new CCWsServerDataException(Label.Error_Server_Data, calloutException);
             }
             when 'Server.Data.NotFound' {
-                throw new CCWsServerDataNotFoundException(Label.Error_Server_Data_NotFound);
+                throw new CCWsServerDataNotFoundException(Label.Error_Server_Data_NotFound, calloutException);
             }
             when 'Server.Data.NotFound.Nbwo.EstimateUnavailable' {
-                throw new CCWsServerDataNotFoundNbwoException(Label.Error_Server_Data_NotFound_Nbwo_EstimateUnavailable);
+                throw new CCWsServerDataNotFoundNbwoException(Label.Error_Server_Data_NotFound_Nbwo_EstimateUnavailable, calloutException);
             }
             when 'Server.Data.NotFound.Kadaster.NotDeliverable' {
-                throw new CCWsServerDataNotFoundKadasterException(Label.Error_Server_Data_NotFound_Kadaster_NotDeliverable);
+                throw new CCWsServerDataNotFoundKadasterException(Label.Error_Server_Data_NotFound_Kadaster_NotDeliverable, calloutException);
             }
             when 'Server.Data.PageNotFound' {
-                throw new CCWsServerDataPageNotFoundException(Label.Error_Server_Data_PageNotFound);
+                throw new CCWsServerDataPageNotFoundException(Label.Error_Server_Data_PageNotFound, calloutException);
             }
             when 'Server.Unavailable' {
-                ErrorLogUtil.logException(calloutException); // unexpected unavailability of primary server
-                fallBack = true;
-                return fallBack;
+                throw new CCWsServerUnavailableException(Label.Error_Server_Unavailable, calloutException);
             }
             when 'Server.Unavailable.InternalError' {
-                ErrorLogUtil.logException(calloutException); // unexpected unavailability of primary server
-                fallBack = true;
-                return fallBack;
+                throw new CCWsServerUnavailableInternalException(Label.Error_Server_Unavailable_InternalError, calloutException);
             }
             when 'Server.Unavailable.Temporary' {
-                ErrorLogUtil.logException(calloutException); // unexpected unavailability of primary server
-                fallBack = true;
-                return fallBack;
+                throw new CCWsServerUnavailableTemporaryException(Label.Error_Server_Unavailable_Temporary, calloutException);
             }
             when else {
-                ErrorLogUtil.logException(calloutException); // ouch unknown exception
-                throw new CCWsException(getErrorMessage(message), calloutException); // TODO: fix the message.
+                throw new CCWsException(Label.Error_Unknown, calloutException);
             }
         }
     }
