@@ -86,7 +86,7 @@ public class VatWsdl {
         private String[] field_order_type_info = new String[]{'vat_number','valid'};
     }
     public class Webservices_nlPort {
-        public String endpoint_x = 'https://ws1.webservices.nl:443/vat/soap_doclit.php';
+        public String endpoint_x = 'https://api.webservices.nl:443/vat/soap_doclit.php';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -109,7 +109,7 @@ public class VatWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/vat/soap_doclit.php/vatValidate',
+              'https://api.webservices.nl/vat/soap_doclit.php/vatValidate',
               'http://www.webservices.nl/soap/',
               'vatValidate',
               'http://www.webservices.nl/soap/',
@@ -131,7 +131,7 @@ public class VatWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/vat/soap_doclit.php/login',
+              'https://api.webservices.nl/vat/soap_doclit.php/login',
               'http://www.webservices.nl/soap/',
               'login',
               'http://www.webservices.nl/soap/',
@@ -152,7 +152,7 @@ public class VatWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/vat/soap_doclit.php/vatViesProxyCheckVat',
+              'https://api.webservices.nl/vat/soap_doclit.php/vatViesProxyCheckVat',
               'http://www.webservices.nl/soap/',
               'vatViesProxyCheckVat',
               'http://www.webservices.nl/soap/',
@@ -172,7 +172,7 @@ public class VatWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/vat/soap_doclit.php/logout',
+              'https://api.webservices.nl/vat/soap_doclit.php/logout',
               'http://www.webservices.nl/soap/',
               'logout',
               'http://www.webservices.nl/soap/',
@@ -180,15 +180,6 @@ public class VatWsdl {
               'VatWsdl.logoutResponseType'}
             );
             response_x = response_map_x.get('response_x');
-        }
-
-        /***** METHODS NEEDED IN IMPL */
-
-        /**
-         * Sets all relevant properties on the port for fallback
-         */
-        public void doFallBack() {
-            endpoint_x = 'https://ws2.webservices.nl:443/accounting/soap_doclit.php';
         }
     }
 }

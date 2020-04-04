@@ -35,6 +35,26 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'token','include_source'};
     }
+    public class DutchBusinessAdditionalPosition {
+        public Date start_date;
+        public Date end_date;
+        public String end_date_source;
+        public String role;
+        public String function;
+        public String authorization_description;
+        public DutchBusinessWsdl.DutchBusinessPositionAuthorizationArray historical_authorizations;
+        public DutchBusinessWsdl.DutchBusinessPositionCompany company;
+        private String[] start_date_type_info = new String[]{'start_date','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] end_date_type_info = new String[]{'end_date','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] end_date_source_type_info = new String[]{'end_date_source','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] role_type_info = new String[]{'role','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] function_type_info = new String[]{'function','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] authorization_description_type_info = new String[]{'authorization_description','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] historical_authorizations_type_info = new String[]{'historical_authorizations','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] company_type_info = new String[]{'company','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'start_date','end_date','end_date_source','role','function','authorization_description','historical_authorizations','company'};
+    }
     public class dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType {
         public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 out;
         private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
@@ -96,6 +116,12 @@ public class DutchBusinessWsdl {
         private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'dossier_number'};
+    }
+    public class DutchBusinessPositionAuthorizationArray {
+        public DutchBusinessWsdl.DutchBusinessPositionAuthorization[] item;
+        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'item'};
     }
     public class dutchBusinessUBOCostsInvestigationResult {
         public String token;
@@ -268,6 +294,12 @@ public class DutchBusinessWsdl {
         private String[] include_source_type_info = new String[]{'include_source','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'dossier_number','include_source'};
+    }
+    public class DutchBusinessLookALikeCompanyArray {
+        public DutchBusinessWsdl.DutchBusinessLookALikeCompany[] item;
+        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'item'};
     }
     public class dutchBusinessGetLeiResponseType {
         public DutchBusinessWsdl.DutchBusinessGetLeiResult out;
@@ -511,6 +543,26 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'item'};
     }
+    public class DutchBusinessAdditionalPositionFunctionary {
+        public String full_name;
+        public String first_name;
+        public String initials;
+        public String last_name;
+        public Date date_deceased;
+        public Date date_of_birth;
+        public String place_of_birth;
+        public String country_of_birth;
+        private String[] full_name_type_info = new String[]{'full_name','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] first_name_type_info = new String[]{'first_name','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] initials_type_info = new String[]{'initials','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] last_name_type_info = new String[]{'last_name','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] date_deceased_type_info = new String[]{'date_deceased','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] date_of_birth_type_info = new String[]{'date_of_birth','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] place_of_birth_type_info = new String[]{'place_of_birth','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] country_of_birth_type_info = new String[]{'country_of_birth','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'full_name','first_name','initials','last_name','date_deceased','date_of_birth','place_of_birth','country_of_birth'};
+    }
     public class dutchBusinessGetExtractHistoryDocumentDataRequestType {
         public String extract_id;
         private String[] extract_id_type_info = new String[]{'extract_id','http://www.webservices.nl/soap/',null,'1','1','false'};
@@ -740,6 +792,20 @@ public class DutchBusinessWsdl {
         private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'out'};
+    }
+    public class DutchBusinessGetAdditionalPositionsResult {
+        public DutchBusinessWsdl.DutchBusinessAdditionalPositionFunctionary functionary;
+        public DutchBusinessWsdl.DutchBusinessAdditionalPositionArray current_positions;
+        public DutchBusinessWsdl.DutchBusinessAdditionalPositionArray previous_positions;
+        public DutchBusinessWsdl.DutchBusinessAdditionalPositionArray possible_current_positions;
+        public DutchBusinessWsdl.DutchBusinessAdditionalPositionArray possible_previous_positions;
+        private String[] functionary_type_info = new String[]{'functionary','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] current_positions_type_info = new String[]{'current_positions','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] previous_positions_type_info = new String[]{'previous_positions','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] possible_current_positions_type_info = new String[]{'possible_current_positions','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] possible_previous_positions_type_info = new String[]{'possible_previous_positions','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'functionary','current_positions','previous_positions','possible_current_positions','possible_previous_positions'};
     }
     public class DutchBusinessLeiLegalForm {
         public String legal_form_code;
@@ -989,6 +1055,18 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'paging','results'};
     }
+    public class dutchBusinessGetAdditionalPositionsRequestType {
+        public String first_name;
+        public String last_name;
+        public Date birth_date;
+        public String dossier_number;
+        private String[] first_name_type_info = new String[]{'first_name','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] last_name_type_info = new String[]{'last_name','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] birth_date_type_info = new String[]{'birth_date','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'first_name','last_name','birth_date','dossier_number'};
+    }
     public class DutchBusinessSbiCodeV3Array {
         public DutchBusinessWsdl.DutchBusinessSbiCodeV3[] item;
         private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
@@ -1079,6 +1157,20 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'token'};
     }
+    public class dutchBusinessGetNonMarketingIndicatorRequestType {
+        public String dossier_number;
+        public String establishment_number;
+        private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] establishment_number_type_info = new String[]{'establishment_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'dossier_number','establishment_number'};
+    }
+    public class dutchBusinessGetNonMarketingIndicatorResponseType {
+        public DutchBusinessWsdl.DutchBusinessNonMarketingIndicator out;
+        private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'out'};
+    }
     public class DutchBusinessUBOClassificationResult {
         public String token;
         public String scenario;
@@ -1088,6 +1180,12 @@ public class DutchBusinessWsdl {
         private String[] suspects_type_info = new String[]{'suspects','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'token','scenario','suspects'};
+    }
+    public class dutchBusinessGetAdditionalPositionsResponseType {
+        public DutchBusinessWsdl.DutchBusinessGetAdditionalPositionsResult out;
+        private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'out'};
     }
     public class DutchBusinessExtractDocument {
         public String document;
@@ -1144,6 +1242,20 @@ public class DutchBusinessWsdl {
         private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'out'};
+    }
+    public class DutchBusinessLookALikeCompany {
+        public String dossier_number;
+        public String name;
+        public Decimal similarity_score;
+        public DutchBusinessWsdl.DutchBusinessLookALikeIndividualFeatureArray individual_features;
+        public String profile_url;
+        private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] name_type_info = new String[]{'name','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] similarity_score_type_info = new String[]{'similarity_score','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] individual_features_type_info = new String[]{'individual_features','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] profile_url_type_info = new String[]{'profile_url','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'dossier_number','name','similarity_score','individual_features','profile_url'};
     }
     public class dutchBusinessSearchParametersV2RequestType {
         public String trade_name;
@@ -1246,6 +1358,12 @@ public class DutchBusinessWsdl {
         private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'out'};
+    }
+    public class DutchBusinessAdditionalPositionArray {
+        public DutchBusinessWsdl.DutchBusinessAdditionalPosition[] item;
+        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'item'};
     }
     public class DutchBusinessEnterpriseV3 {
         public String name;
@@ -1409,6 +1527,12 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'item'};
     }
+    public class dutchBusinessLookALikesResponseType {
+        public DutchBusinessWsdl.DutchBusinessLookALikeCompanyPagedResult out;
+        private String[] out_type_info = new String[]{'out','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'out'};
+    }
     public class DutchBusinessExtractChangeForecast {
         public DutchBusinessWsdl.DutchBusinessExtractChangeSet change_set;
         private String[] change_set_type_info = new String[]{'change_set','http://www.webservices.nl/soap/',null,'1','1','false'};
@@ -1557,6 +1681,18 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'dossier_number','reference_date','legal_entity','partnership','enterprise','establishments','positions','remarks'};
     }
+    public class DutchBusinessNonMarketingIndicator {
+        public String dossier_number;
+        public String establishment_number;
+        public Boolean non_marketing_indicator;
+        public Date since;
+        private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] establishment_number_type_info = new String[]{'establishment_number','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] non_marketing_indicator_type_info = new String[]{'non_marketing_indicator','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] since_type_info = new String[]{'since','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'dossier_number','establishment_number','non_marketing_indicator','since'};
+    }
     public class DutchBusinessExtractChangeSet {
         public DutchBusinessWsdl.DutchBusinessPeriod period;
         public DutchBusinessWsdl.stringArray changes;
@@ -1573,6 +1709,12 @@ public class DutchBusinessWsdl {
     }
     public class DutchBusinessPositionV2Array {
         public DutchBusinessWsdl.DutchBusinessPositionV2[] item;
+        private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'item'};
+    }
+    public class DutchBusinessLookALikeIndividualFeatureArray {
+        public DutchBusinessWsdl.DutchBusinessLookALikeIndividualFeature[] item;
         private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'item'};
@@ -1804,6 +1946,18 @@ public class DutchBusinessWsdl {
         private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'item'};
+    }
+    public class DutchBusinessPositionAuthorization {
+        public Date start_date;
+        public Date end_date;
+        public String end_date_source;
+        public String description;
+        private String[] start_date_type_info = new String[]{'start_date','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] end_date_type_info = new String[]{'end_date','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] end_date_source_type_info = new String[]{'end_date_source','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] description_type_info = new String[]{'description','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'start_date','end_date','end_date_source','description'};
     }
     public class dutchBusinessGetExtractHistoryDocumentDataV2RequestType {
         public String extract_id;
@@ -2094,6 +2248,22 @@ public class DutchBusinessWsdl {
         private String[] include_source_type_info = new String[]{'include_source','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'extract_id','include_source'};
+    }
+    public class dutchBusinessLookALikesRequestType {
+        public String dossier_number;
+        public Decimal geo_weight;
+        public Decimal nr_employees_weight;
+        public Decimal sbi_weight;
+        public Decimal web_weight;
+        public Integer page_x;
+        private String[] dossier_number_type_info = new String[]{'dossier_number','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] geo_weight_type_info = new String[]{'geo_weight','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] nr_employees_weight_type_info = new String[]{'nr_employees_weight','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] sbi_weight_type_info = new String[]{'sbi_weight','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] web_weight_type_info = new String[]{'web_weight','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] page_x_type_info = new String[]{'page','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'dossier_number','geo_weight','nr_employees_weight','sbi_weight','web_weight','page_x'};
     }
     public class dutchBusinessSearchSelectionRequestType {
         public DutchBusinessWsdl.stringArray city;
@@ -2535,6 +2705,14 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'dossier_number','reference_date','legal_entity'};
     }
+    public class DutchBusinessLookALikeCompanyPagedResult {
+        public DutchBusinessWsdl.ResultInfo paging;
+        public DutchBusinessWsdl.DutchBusinessLookALikeCompanyArray results;
+        private String[] paging_type_info = new String[]{'paging','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] results_type_info = new String[]{'results','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'paging','results'};
+    }
     public class dutchBusinessUpdateCheckDossierRequestType {
         public String dossier_number;
         public String establishment_number;
@@ -2572,6 +2750,16 @@ public class DutchBusinessWsdl {
         private String[] date_last_update_type_info = new String[]{'date_last_update','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'dossier_number','establishment_number','update_types','date_last_update'};
+    }
+    public class DutchBusinessLookALikeIndividualFeature {
+        public String name;
+        public Decimal score;
+        public Decimal weight;
+        private String[] name_type_info = new String[]{'name','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] score_type_info = new String[]{'score','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] weight_type_info = new String[]{'weight','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'name','score','weight'};
     }
     public class DutchBusinessPartnershipV3 {
         public String dossier_number;
@@ -3279,6 +3467,22 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'page_x'};
     }
+    public class DutchBusinessPositionCompany {
+        public String kvk;
+        public String establishment_number;
+        public String legal_name;
+        public String trade_name_full;
+        public Integer primary_sbi_code;
+        public String financial_status;
+        private String[] kvk_type_info = new String[]{'kvk','http://www.webservices.nl/soap/',null,'1','1','false'};
+        private String[] establishment_number_type_info = new String[]{'establishment_number','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] legal_name_type_info = new String[]{'legal_name','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] trade_name_full_type_info = new String[]{'trade_name_full','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] primary_sbi_code_type_info = new String[]{'primary_sbi_code','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] financial_status_type_info = new String[]{'financial_status','http://www.webservices.nl/soap/',null,'0','1','false'};
+        private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
+        private String[] field_order_type_info = new String[]{'kvk','establishment_number','legal_name','trade_name_full','primary_sbi_code','financial_status'};
+    }
     public class dutchBusinessGetSBIRequestType {
         public String dossier_number;
         public String establishment_number;
@@ -3299,8 +3503,8 @@ public class DutchBusinessWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'ultimate_parent','number_of_subsidiaries','parent'};
     }
-    public class Webservices_nlPort implements FallBackableWebServicePort {
-        public String endpoint_x = 'https://ws1.webservices.nl:443/dutchbusiness/soap_doclit.php';
+    public class Webservices_nlPort {
+        public String endpoint_x = 'https://api.webservices.nl:443/dutchbusiness/soap_doclit.php';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -3325,7 +3529,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistory',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistory',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetExtractHistory',
               'http://www.webservices.nl/soap/',
@@ -3335,27 +3539,31 @@ public class DutchBusinessWsdl {
             response_x = response_map_x.get('response_x');
             return response_x.out;
         }
-        public String login(String username,String password) {
-            DutchBusinessWsdl.loginRequestType request_x = new DutchBusinessWsdl.loginRequestType();
-            request_x.username = username;
-            request_x.password = password;
-            DutchBusinessWsdl.loginResponseType response_x;
-            Map<String, DutchBusinessWsdl.loginResponseType> response_map_x = new Map<String, DutchBusinessWsdl.loginResponseType>();
+        public DutchBusinessWsdl.DutchBusinessLookALikeCompanyPagedResult dutchBusinessLookALikes(String dossier_number,Decimal geo_weight,Decimal nr_employees_weight,Decimal sbi_weight,Decimal web_weight,Integer page_x) {
+            DutchBusinessWsdl.dutchBusinessLookALikesRequestType request_x = new DutchBusinessWsdl.dutchBusinessLookALikesRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.geo_weight = geo_weight;
+            request_x.nr_employees_weight = nr_employees_weight;
+            request_x.sbi_weight = sbi_weight;
+            request_x.web_weight = web_weight;
+            request_x.page_x = page_x;
+            DutchBusinessWsdl.dutchBusinessLookALikesResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessLookALikesResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessLookALikesResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/login',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessLookALikes',
               'http://www.webservices.nl/soap/',
-              'login',
+              'dutchBusinessLookALikes',
               'http://www.webservices.nl/soap/',
-              'loginResponse',
-              'DutchBusinessWsdl.loginResponseType'}
+              'dutchBusinessLookALikesResponse',
+              'DutchBusinessWsdl.dutchBusinessLookALikesResponseType'}
             );
             response_x = response_map_x.get('response_x');
-            return response_x.reactid;
+            return response_x.out;
         }
         public DutchBusinessWsdl.DutchBusinessExtractDocumentData dutchBusinessGetExtractHistoryDocumentData(String extract_id) {
             DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataRequestType();
@@ -3368,7 +3576,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentData',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentData',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetExtractHistoryDocumentData',
               'http://www.webservices.nl/soap/',
@@ -3390,35 +3598,12 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentData',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentData',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetExtractDocumentData',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetExtractDocumentDataResponse',
               'DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessUBOInvestigationToken dutchBusinessUBOStartInvestigation(String dossier_number,Date oldest_extract_date,Boolean use_updates) {
-            DutchBusinessWsdl.dutchBusinessUBOStartInvestigationRequestType request_x = new DutchBusinessWsdl.dutchBusinessUBOStartInvestigationRequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.oldest_extract_date = oldest_extract_date;
-            request_x.use_updates = use_updates;
-            DutchBusinessWsdl.dutchBusinessUBOStartInvestigationResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessUBOStartInvestigationResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUBOStartInvestigationResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOStartInvestigation',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUBOStartInvestigation',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUBOStartInvestigationResponse',
-              'DutchBusinessWsdl.dutchBusinessUBOStartInvestigationResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -3434,119 +3619,12 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalEntity',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalEntity',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetLegalEntity',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetLegalEntityResponse',
               'DutchBusinessWsdl.dutchBusinessGetLegalEntityResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetExtractDocumentDataV3(String dossier_number,Boolean include_source) {
-            DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3RequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.include_source = include_source;
-            DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3ResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3ResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentDataV3',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractDocumentDataV3',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractDocumentDataV3Response',
-              'DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3ResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV2 dutchBusinessGetExtractDocumentDataV2(String dossier_number) {
-            DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2RequestType();
-            request_x.dossier_number = dossier_number;
-            DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2ResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2ResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentDataV2',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractDocumentDataV2',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractDocumentDataV2Response',
-              'DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2ResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResult dutchBusinessUBOCostsInvestigation(String token) {
-            DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationRequestType request_x = new DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationRequestType();
-            request_x.token = token;
-            DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOCostsInvestigation',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUBOCostsInvestigation',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUBOCostsInvestigationResponse',
-              'DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessExtractDocument dutchBusinessGetExtractDocument(String dossier_number,Boolean allow_caching) {
-            DutchBusinessWsdl.dutchBusinessGetExtractDocumentRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractDocumentRequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.allow_caching = allow_caching;
-            DutchBusinessWsdl.dutchBusinessGetExtractDocumentResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocument',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractDocument',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractDocumentResponse',
-              'DutchBusinessWsdl.dutchBusinessGetExtractDocumentResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV2 dutchBusinessGetExtractHistoryDocumentDataV2(String extract_id) {
-            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2RequestType();
-            request_x.extract_id = extract_id;
-            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2ResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2ResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV2',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractHistoryDocumentDataV2',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractHistoryDocumentDataV2Response',
-              'DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2ResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -3563,34 +3641,12 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOPickupInvestigation',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOPickupInvestigation',
               'http://www.webservices.nl/soap/',
               'dutchBusinessUBOPickupInvestigation',
               'http://www.webservices.nl/soap/',
               'dutchBusinessUBOPickupInvestigationResponse',
               'DutchBusinessWsdl.dutchBusinessUBOPickupInvestigationResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetExtractHistoryDocumentDataV3(String extract_id,Boolean include_source) {
-            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3RequestType();
-            request_x.extract_id = extract_id;
-            request_x.include_source = include_source;
-            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV3',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractHistoryDocumentDataV3',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractHistoryDocumentDataV3Response',
-              'DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -3608,7 +3664,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateCheckDossier',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateCheckDossier',
               'http://www.webservices.nl/soap/',
               'dutchBusinessUpdateCheckDossier',
               'http://www.webservices.nl/soap/',
@@ -3628,7 +3684,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/logout',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/logout',
               'http://www.webservices.nl/soap/',
               'logout',
               'http://www.webservices.nl/soap/',
@@ -3636,49 +3692,6 @@ public class DutchBusinessWsdl {
               'DutchBusinessWsdl.logoutResponseType'}
             );
             response_x = response_map_x.get('response_x');
-        }
-        public DutchBusinessWsdl.DutchBusinessVatNumber dutchBusinessGetVatNumber(String dossier_number) {
-            DutchBusinessWsdl.dutchBusinessGetVatNumberRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetVatNumberRequestType();
-            request_x.dossier_number = dossier_number;
-            DutchBusinessWsdl.dutchBusinessGetVatNumberResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetVatNumberResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetVatNumberResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetVatNumber',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetVatNumber',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetVatNumberResponse',
-              'DutchBusinessWsdl.dutchBusinessGetVatNumberResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessDossier dutchBusinessGetDossier(String dossier_number,String establishment_number) {
-            DutchBusinessWsdl.dutchBusinessGetDossierRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetDossierRequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.establishment_number = establishment_number;
-            DutchBusinessWsdl.dutchBusinessGetDossierResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetDossierResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetDossierResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossier',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetDossier',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetDossierResponse',
-              'DutchBusinessWsdl.dutchBusinessGetDossierResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
         }
         public DutchBusinessWsdl.DutchBusinessSBICollection dutchBusinessGetSBI(String dossier_number,String establishment_number,String language) {
             DutchBusinessWsdl.dutchBusinessGetSBIRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetSBIRequestType();
@@ -3693,7 +3706,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetSBI',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetSBI',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetSBI',
               'http://www.webservices.nl/soap/',
@@ -3715,7 +3728,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetConcernRelationsDetails',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetConcernRelationsDetails',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetConcernRelationsDetails',
               'http://www.webservices.nl/soap/',
@@ -3740,7 +3753,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchNewsByDossier',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchNewsByDossier',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchNewsByDossier',
               'http://www.webservices.nl/soap/',
@@ -3763,7 +3776,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryChanged',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryChanged',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetExtractHistoryChanged',
               'http://www.webservices.nl/soap/',
@@ -3773,91 +3786,26 @@ public class DutchBusinessWsdl {
             response_x = response_map_x.get('response_x');
             return response_x.out;
         }
-        public DutchBusinessWsdl.DutchBusinessGetConcernRelationsOverviewResult dutchBusinessGetConcernRelationsOverview(String dossier_number) {
-            DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewRequestType();
+        public DutchBusinessWsdl.DutchBusinessGetAdditionalPositionsResult dutchBusinessGetAdditionalPositions(String first_name,String last_name,Date birth_date,String dossier_number) {
+            DutchBusinessWsdl.dutchBusinessGetAdditionalPositionsRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetAdditionalPositionsRequestType();
+            request_x.first_name = first_name;
+            request_x.last_name = last_name;
+            request_x.birth_date = birth_date;
             request_x.dossier_number = dossier_number;
-            DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewResponseType>();
+            DutchBusinessWsdl.dutchBusinessGetAdditionalPositionsResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetAdditionalPositionsResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetAdditionalPositionsResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
               this,
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetConcernRelationsOverview',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetAdditionalPositions',
               'http://www.webservices.nl/soap/',
-              'dutchBusinessGetConcernRelationsOverview',
+              'dutchBusinessGetAdditionalPositions',
               'http://www.webservices.nl/soap/',
-              'dutchBusinessGetConcernRelationsOverviewResponse',
-              'DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessDossierHistory dutchBusinessGetDossierHistory(String dossier_number,Date period_start_date,Date period_end_date) {
-            DutchBusinessWsdl.dutchBusinessGetDossierHistoryRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetDossierHistoryRequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.period_start_date = period_start_date;
-            request_x.period_end_date = period_end_date;
-            DutchBusinessWsdl.dutchBusinessGetDossierHistoryResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetDossierHistoryResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetDossierHistoryResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierHistory',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetDossierHistory',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetDossierHistoryResponse',
-              'DutchBusinessWsdl.dutchBusinessGetDossierHistoryResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessOrganizationTree dutchBusinessGetOrganizationTree(String dossier_number) {
-            DutchBusinessWsdl.dutchBusinessGetOrganizationTreeRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetOrganizationTreeRequestType();
-            request_x.dossier_number = dossier_number;
-            DutchBusinessWsdl.dutchBusinessGetOrganizationTreeResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetOrganizationTreeResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetOrganizationTreeResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetOrganizationTree',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetOrganizationTree',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetOrganizationTreeResponse',
-              'DutchBusinessWsdl.dutchBusinessGetOrganizationTreeResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult dutchBusinessSearchEstablishments(String dossier_number,String establishment_number,String rsin_number,Integer page_x) {
-            DutchBusinessWsdl.dutchBusinessSearchEstablishmentsRequestType request_x = new DutchBusinessWsdl.dutchBusinessSearchEstablishmentsRequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.establishment_number = establishment_number;
-            request_x.rsin_number = rsin_number;
-            request_x.page_x = page_x;
-            DutchBusinessWsdl.dutchBusinessSearchEstablishmentsResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessSearchEstablishmentsResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessSearchEstablishmentsResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchEstablishments',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessSearchEstablishments',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessSearchEstablishmentsResponse',
-              'DutchBusinessWsdl.dutchBusinessSearchEstablishmentsResponseType'}
+              'dutchBusinessGetAdditionalPositionsResponse',
+              'DutchBusinessWsdl.dutchBusinessGetAdditionalPositionsResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -3876,35 +3824,12 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchPostcode',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchPostcode',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchPostcode',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchPostcodeResponse',
               'DutchBusinessWsdl.dutchBusinessSearchPostcodeResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessAnnualFinancialStatement dutchBusinessGetAnnualFinancialStatement(String dossier_number,Integer year,String type_x) {
-            DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementRequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.year = year;
-            request_x.type_x = type_x;
-            DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetAnnualFinancialStatement',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetAnnualFinancialStatement',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetAnnualFinancialStatementResponse',
-              'DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -3923,42 +3848,12 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchDossierNumber',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchDossierNumber',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchDossierNumber',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchDossierNumberResponse',
               'DutchBusinessWsdl.dutchBusinessSearchDossierNumberResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchParameters(String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page_x) {
-            DutchBusinessWsdl.dutchBusinessSearchParametersRequestType request_x = new DutchBusinessWsdl.dutchBusinessSearchParametersRequestType();
-            request_x.trade_name = trade_name;
-            request_x.city = city;
-            request_x.street = street;
-            request_x.postcode = postcode;
-            request_x.house_number = house_number;
-            request_x.house_number_addition = house_number_addition;
-            request_x.telephone_number = telephone_number;
-            request_x.domain_name = domain_name;
-            request_x.strict_search = strict_search;
-            request_x.page_x = page_x;
-            DutchBusinessWsdl.dutchBusinessSearchParametersResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessSearchParametersResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessSearchParametersResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchParameters',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessSearchParameters',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessSearchParametersResponse',
-              'DutchBusinessWsdl.dutchBusinessSearchParametersResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -3974,7 +3869,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOCheckInvestigation',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOCheckInvestigation',
               'http://www.webservices.nl/soap/',
               'dutchBusinessUBOCheckInvestigation',
               'http://www.webservices.nl/soap/',
@@ -3996,7 +3891,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateRemoveDossier',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateRemoveDossier',
               'http://www.webservices.nl/soap/',
               'dutchBusinessUpdateRemoveDossier',
               'http://www.webservices.nl/soap/',
@@ -4026,7 +3921,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearch',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearch',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearch',
               'http://www.webservices.nl/soap/',
@@ -4048,7 +3943,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateAddDossier',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateAddDossier',
               'http://www.webservices.nl/soap/',
               'dutchBusinessUpdateAddDossier',
               'http://www.webservices.nl/soap/',
@@ -4056,72 +3951,6 @@ public class DutchBusinessWsdl {
               'DutchBusinessWsdl.dutchBusinessUpdateAddDossierResponseType'}
             );
             response_x = response_map_x.get('response_x');
-        }
-        public DutchBusinessWsdl.DutchBusinessGetLeiResult dutchBusinessGetLei(String dossier_number) {
-            DutchBusinessWsdl.dutchBusinessGetLeiRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetLeiRequestType();
-            request_x.dossier_number = dossier_number;
-            DutchBusinessWsdl.dutchBusinessGetLeiResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetLeiResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetLeiResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLei',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetLei',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetLeiResponse',
-              'DutchBusinessWsdl.dutchBusinessGetLeiResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetChangedDossiers(Date changed_since,DutchBusinessWsdl.stringArray update_types,Integer page_x) {
-            DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersRequestType request_x = new DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersRequestType();
-            request_x.changed_since = changed_since;
-            request_x.update_types = update_types;
-            request_x.page_x = page_x;
-            DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetChangedDossiers',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUpdateGetChangedDossiers',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUpdateGetChangedDossiersResponse',
-              'DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessUBOClassificationResult dutchBusinessUBOClassifyInvestigation(String token,String scenario) {
-            DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationRequestType request_x = new DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationRequestType();
-            request_x.token = token;
-            request_x.scenario = scenario;
-            DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOClassifyInvestigation',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUBOClassifyInvestigation',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUBOClassifyInvestigationResponse',
-              'DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
         }
         public DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchSelectionSimple(DutchBusinessWsdl.stringArray city,DutchBusinessWsdl.stringArray postcode,DutchBusinessWsdl.stringArray sbi,Boolean primary_sbi_only,DutchBusinessWsdl.intArray legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,DutchBusinessWsdl.stringArray provinces) {
             DutchBusinessWsdl.dutchBusinessSearchSelectionSimpleRequestType request_x = new DutchBusinessWsdl.dutchBusinessSearchSelectionSimpleRequestType();
@@ -4146,34 +3975,12 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchSelectionSimple',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchSelectionSimple',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchSelectionSimple',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchSelectionSimpleResponse',
               'DutchBusinessWsdl.dutchBusinessSearchSelectionSimpleResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetLegalExtractDocumentDataV3(String dossier_number,Boolean include_source) {
-            DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3RequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.include_source = include_source;
-            DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3ResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3ResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalExtractDocumentDataV3',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetLegalExtractDocumentDataV3',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetLegalExtractDocumentDataV3Response',
-              'DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3ResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -4190,12 +3997,613 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetSBIDescription',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetSBIDescription',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetSBIDescription',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetSBIDescriptionResponse',
               'DutchBusinessWsdl.dutchBusinessGetSBIDescriptionResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessDossierV2 dutchBusinessGetDossierV2(String dossier_number,String establishment_number) {
+            DutchBusinessWsdl.dutchBusinessGetDossierV2RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetDossierV2RequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.establishment_number = establishment_number;
+            DutchBusinessWsdl.dutchBusinessGetDossierV2ResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetDossierV2ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetDossierV2ResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierV2',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetDossierV2',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetDossierV2Response',
+              'DutchBusinessWsdl.dutchBusinessGetDossierV2ResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessGetDossierV3(String dossier_number,String establishment_number) {
+            DutchBusinessWsdl.dutchBusinessGetDossierV3RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetDossierV3RequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.establishment_number = establishment_number;
+            DutchBusinessWsdl.dutchBusinessGetDossierV3ResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetDossierV3ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetDossierV3ResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierV3',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetDossierV3',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetDossierV3Response',
+              'DutchBusinessWsdl.dutchBusinessGetDossierV3ResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetExtractHistoryDocumentDataV3ByDossier(String dossier_number,Boolean include_source,Date period_start,Date period_end) {
+            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.include_source = include_source;
+            request_x.period_start = period_start;
+            request_x.period_end = period_end;
+            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV3ByDossier',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractHistoryDocumentDataV3ByDossier',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponse',
+              'DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetDossiers(DutchBusinessWsdl.stringArray update_types,Integer page_x) {
+            DutchBusinessWsdl.dutchBusinessUpdateGetDossiersRequestType request_x = new DutchBusinessWsdl.dutchBusinessUpdateGetDossiersRequestType();
+            request_x.update_types = update_types;
+            request_x.page_x = page_x;
+            DutchBusinessWsdl.dutchBusinessUpdateGetDossiersResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetDossiersResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetDossiersResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetDossiers',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUpdateGetDossiers',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUpdateGetDossiersResponse',
+              'DutchBusinessWsdl.dutchBusinessUpdateGetDossiersResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessUpdateSubscriptionPagedResult dutchBusinessUpdateGetOverview(Integer page_x) {
+            DutchBusinessWsdl.dutchBusinessUpdateGetOverviewRequestType request_x = new DutchBusinessWsdl.dutchBusinessUpdateGetOverviewRequestType();
+            request_x.page_x = page_x;
+            DutchBusinessWsdl.dutchBusinessUpdateGetOverviewResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetOverviewResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetOverviewResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetOverview',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUpdateGetOverview',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUpdateGetOverviewResponse',
+              'DutchBusinessWsdl.dutchBusinessUpdateGetOverviewResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number) {
+            DutchBusinessWsdl.dutchBusinessGetPositionsRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetPositionsRequestType();
+            request_x.dossier_number = dossier_number;
+            DutchBusinessWsdl.dutchBusinessGetPositionsResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetPositionsResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetPositionsResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetPositions',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetPositions',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetPositionsResponse',
+              'DutchBusinessWsdl.dutchBusinessGetPositionsResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public String login(String username,String password) {
+            DutchBusinessWsdl.loginRequestType request_x = new DutchBusinessWsdl.loginRequestType();
+            request_x.username = username;
+            request_x.password = password;
+            DutchBusinessWsdl.loginResponseType response_x;
+            Map<String, DutchBusinessWsdl.loginResponseType> response_map_x = new Map<String, DutchBusinessWsdl.loginResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/login',
+              'http://www.webservices.nl/soap/',
+              'login',
+              'http://www.webservices.nl/soap/',
+              'loginResponse',
+              'DutchBusinessWsdl.loginResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.reactid;
+        }
+        public DutchBusinessWsdl.DutchBusinessNonMarketingIndicator dutchBusinessGetNonMarketingIndicator(String dossier_number,String establishment_number) {
+            DutchBusinessWsdl.dutchBusinessGetNonMarketingIndicatorRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetNonMarketingIndicatorRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.establishment_number = establishment_number;
+            DutchBusinessWsdl.dutchBusinessGetNonMarketingIndicatorResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetNonMarketingIndicatorResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetNonMarketingIndicatorResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetNonMarketingIndicator',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetNonMarketingIndicator',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetNonMarketingIndicatorResponse',
+              'DutchBusinessWsdl.dutchBusinessGetNonMarketingIndicatorResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessUBOInvestigationToken dutchBusinessUBOStartInvestigation(String dossier_number,Date oldest_extract_date,Boolean use_updates) {
+            DutchBusinessWsdl.dutchBusinessUBOStartInvestigationRequestType request_x = new DutchBusinessWsdl.dutchBusinessUBOStartInvestigationRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.oldest_extract_date = oldest_extract_date;
+            request_x.use_updates = use_updates;
+            DutchBusinessWsdl.dutchBusinessUBOStartInvestigationResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessUBOStartInvestigationResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUBOStartInvestigationResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOStartInvestigation',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUBOStartInvestigation',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUBOStartInvestigationResponse',
+              'DutchBusinessWsdl.dutchBusinessUBOStartInvestigationResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetExtractDocumentDataV3(String dossier_number,Boolean include_source) {
+            DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3RequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.include_source = include_source;
+            DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3ResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3ResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentDataV3',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractDocumentDataV3',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractDocumentDataV3Response',
+              'DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV3ResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV2 dutchBusinessGetExtractDocumentDataV2(String dossier_number) {
+            DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2RequestType();
+            request_x.dossier_number = dossier_number;
+            DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2ResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2ResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentDataV2',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractDocumentDataV2',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractDocumentDataV2Response',
+              'DutchBusinessWsdl.dutchBusinessGetExtractDocumentDataV2ResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResult dutchBusinessUBOCostsInvestigation(String token) {
+            DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationRequestType request_x = new DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationRequestType();
+            request_x.token = token;
+            DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOCostsInvestigation',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUBOCostsInvestigation',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUBOCostsInvestigationResponse',
+              'DutchBusinessWsdl.dutchBusinessUBOCostsInvestigationResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessExtractDocument dutchBusinessGetExtractDocument(String dossier_number,Boolean allow_caching) {
+            DutchBusinessWsdl.dutchBusinessGetExtractDocumentRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractDocumentRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.allow_caching = allow_caching;
+            DutchBusinessWsdl.dutchBusinessGetExtractDocumentResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractDocumentResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocument',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractDocument',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractDocumentResponse',
+              'DutchBusinessWsdl.dutchBusinessGetExtractDocumentResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV2 dutchBusinessGetExtractHistoryDocumentDataV2(String extract_id) {
+            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2RequestType();
+            request_x.extract_id = extract_id;
+            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2ResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2ResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV2',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractHistoryDocumentDataV2',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractHistoryDocumentDataV2Response',
+              'DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV2ResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetExtractHistoryDocumentDataV3(String extract_id,Boolean include_source) {
+            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3RequestType();
+            request_x.extract_id = extract_id;
+            request_x.include_source = include_source;
+            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV3',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractHistoryDocumentDataV3',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetExtractHistoryDocumentDataV3Response',
+              'DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessVatNumber dutchBusinessGetVatNumber(String dossier_number) {
+            DutchBusinessWsdl.dutchBusinessGetVatNumberRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetVatNumberRequestType();
+            request_x.dossier_number = dossier_number;
+            DutchBusinessWsdl.dutchBusinessGetVatNumberResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetVatNumberResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetVatNumberResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetVatNumber',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetVatNumber',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetVatNumberResponse',
+              'DutchBusinessWsdl.dutchBusinessGetVatNumberResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessDossier dutchBusinessGetDossier(String dossier_number,String establishment_number) {
+            DutchBusinessWsdl.dutchBusinessGetDossierRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetDossierRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.establishment_number = establishment_number;
+            DutchBusinessWsdl.dutchBusinessGetDossierResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetDossierResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetDossierResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossier',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetDossier',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetDossierResponse',
+              'DutchBusinessWsdl.dutchBusinessGetDossierResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessGetConcernRelationsOverviewResult dutchBusinessGetConcernRelationsOverview(String dossier_number) {
+            DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewRequestType();
+            request_x.dossier_number = dossier_number;
+            DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetConcernRelationsOverview',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetConcernRelationsOverview',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetConcernRelationsOverviewResponse',
+              'DutchBusinessWsdl.dutchBusinessGetConcernRelationsOverviewResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessDossierHistory dutchBusinessGetDossierHistory(String dossier_number,Date period_start_date,Date period_end_date) {
+            DutchBusinessWsdl.dutchBusinessGetDossierHistoryRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetDossierHistoryRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.period_start_date = period_start_date;
+            request_x.period_end_date = period_end_date;
+            DutchBusinessWsdl.dutchBusinessGetDossierHistoryResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetDossierHistoryResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetDossierHistoryResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierHistory',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetDossierHistory',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetDossierHistoryResponse',
+              'DutchBusinessWsdl.dutchBusinessGetDossierHistoryResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessOrganizationTree dutchBusinessGetOrganizationTree(String dossier_number) {
+            DutchBusinessWsdl.dutchBusinessGetOrganizationTreeRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetOrganizationTreeRequestType();
+            request_x.dossier_number = dossier_number;
+            DutchBusinessWsdl.dutchBusinessGetOrganizationTreeResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetOrganizationTreeResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetOrganizationTreeResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetOrganizationTree',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetOrganizationTree',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetOrganizationTreeResponse',
+              'DutchBusinessWsdl.dutchBusinessGetOrganizationTreeResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult dutchBusinessSearchEstablishments(String dossier_number,String establishment_number,String rsin_number,Integer page_x) {
+            DutchBusinessWsdl.dutchBusinessSearchEstablishmentsRequestType request_x = new DutchBusinessWsdl.dutchBusinessSearchEstablishmentsRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.establishment_number = establishment_number;
+            request_x.rsin_number = rsin_number;
+            request_x.page_x = page_x;
+            DutchBusinessWsdl.dutchBusinessSearchEstablishmentsResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessSearchEstablishmentsResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessSearchEstablishmentsResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchEstablishments',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessSearchEstablishments',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessSearchEstablishmentsResponse',
+              'DutchBusinessWsdl.dutchBusinessSearchEstablishmentsResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessAnnualFinancialStatement dutchBusinessGetAnnualFinancialStatement(String dossier_number,Integer year,String type_x) {
+            DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementRequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.year = year;
+            request_x.type_x = type_x;
+            DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetAnnualFinancialStatement',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetAnnualFinancialStatement',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetAnnualFinancialStatementResponse',
+              'DutchBusinessWsdl.dutchBusinessGetAnnualFinancialStatementResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchParameters(String trade_name,String city,String street,String postcode,Integer house_number,String house_number_addition,String telephone_number,String domain_name,Boolean strict_search,Integer page_x) {
+            DutchBusinessWsdl.dutchBusinessSearchParametersRequestType request_x = new DutchBusinessWsdl.dutchBusinessSearchParametersRequestType();
+            request_x.trade_name = trade_name;
+            request_x.city = city;
+            request_x.street = street;
+            request_x.postcode = postcode;
+            request_x.house_number = house_number;
+            request_x.house_number_addition = house_number_addition;
+            request_x.telephone_number = telephone_number;
+            request_x.domain_name = domain_name;
+            request_x.strict_search = strict_search;
+            request_x.page_x = page_x;
+            DutchBusinessWsdl.dutchBusinessSearchParametersResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessSearchParametersResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessSearchParametersResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchParameters',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessSearchParameters',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessSearchParametersResponse',
+              'DutchBusinessWsdl.dutchBusinessSearchParametersResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessGetLeiResult dutchBusinessGetLei(String dossier_number) {
+            DutchBusinessWsdl.dutchBusinessGetLeiRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetLeiRequestType();
+            request_x.dossier_number = dossier_number;
+            DutchBusinessWsdl.dutchBusinessGetLeiResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetLeiResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetLeiResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLei',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetLei',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetLeiResponse',
+              'DutchBusinessWsdl.dutchBusinessGetLeiResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetChangedDossiers(Date changed_since,DutchBusinessWsdl.stringArray update_types,Integer page_x) {
+            DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersRequestType request_x = new DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersRequestType();
+            request_x.changed_since = changed_since;
+            request_x.update_types = update_types;
+            request_x.page_x = page_x;
+            DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetChangedDossiers',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUpdateGetChangedDossiers',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUpdateGetChangedDossiersResponse',
+              'DutchBusinessWsdl.dutchBusinessUpdateGetChangedDossiersResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessUBOClassificationResult dutchBusinessUBOClassifyInvestigation(String token,String scenario) {
+            DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationRequestType request_x = new DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationRequestType();
+            request_x.token = token;
+            request_x.scenario = scenario;
+            DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOClassifyInvestigation',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUBOClassifyInvestigation',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessUBOClassifyInvestigationResponse',
+              'DutchBusinessWsdl.dutchBusinessUBOClassifyInvestigationResponseType'}
+            );
+            response_x = response_map_x.get('response_x');
+            return response_x.out;
+        }
+        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetLegalExtractDocumentDataV3(String dossier_number,Boolean include_source) {
+            DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3RequestType();
+            request_x.dossier_number = dossier_number;
+            request_x.include_source = include_source;
+            DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3ResponseType response_x;
+            Map<String, DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3ResponseType>();
+            response_map_x.put('response_x', response_x);
+            WebServiceCallout.invoke(
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalExtractDocumentDataV3',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetLegalExtractDocumentDataV3',
+              'http://www.webservices.nl/soap/',
+              'dutchBusinessGetLegalExtractDocumentDataV3Response',
+              'DutchBusinessWsdl.dutchBusinessGetLegalExtractDocumentDataV3ResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -4224,34 +4632,12 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchSelection',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchSelection',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchSelection',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchSelectionResponse',
               'DutchBusinessWsdl.dutchBusinessSearchSelectionResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessDossierV2 dutchBusinessGetDossierV2(String dossier_number,String establishment_number) {
-            DutchBusinessWsdl.dutchBusinessGetDossierV2RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetDossierV2RequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.establishment_number = establishment_number;
-            DutchBusinessWsdl.dutchBusinessGetDossierV2ResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetDossierV2ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetDossierV2ResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierV2',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetDossierV2',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetDossierV2Response',
-              'DutchBusinessWsdl.dutchBusinessGetDossierV2ResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -4276,34 +4662,12 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchParametersV2',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchParametersV2',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchParametersV2',
               'http://www.webservices.nl/soap/',
               'dutchBusinessSearchParametersV2Response',
               'DutchBusinessWsdl.dutchBusinessSearchParametersV2ResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessGetDossierV3(String dossier_number,String establishment_number) {
-            DutchBusinessWsdl.dutchBusinessGetDossierV3RequestType request_x = new DutchBusinessWsdl.dutchBusinessGetDossierV3RequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.establishment_number = establishment_number;
-            DutchBusinessWsdl.dutchBusinessGetDossierV3ResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetDossierV3ResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetDossierV3ResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierV3',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetDossierV3',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetDossierV3Response',
-              'DutchBusinessWsdl.dutchBusinessGetDossierV3ResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -4319,7 +4683,7 @@ public class DutchBusinessWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalExtractDocumentDataV2',
+              'https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalExtractDocumentDataV2',
               'http://www.webservices.nl/soap/',
               'dutchBusinessGetLegalExtractDocumentDataV2',
               'http://www.webservices.nl/soap/',
@@ -4328,103 +4692,6 @@ public class DutchBusinessWsdl {
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetExtractHistoryDocumentDataV3ByDossier(String dossier_number,Boolean include_source,Date period_start,Date period_end) {
-            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierRequestType();
-            request_x.dossier_number = dossier_number;
-            request_x.include_source = include_source;
-            request_x.period_start = period_start;
-            request_x.period_end = period_end;
-            DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV3ByDossier',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractHistoryDocumentDataV3ByDossier',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponse',
-              'DutchBusinessWsdl.dutchBusinessGetExtractHistoryDocumentDataV3ByDossierResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetDossiers(DutchBusinessWsdl.stringArray update_types,Integer page_x) {
-            DutchBusinessWsdl.dutchBusinessUpdateGetDossiersRequestType request_x = new DutchBusinessWsdl.dutchBusinessUpdateGetDossiersRequestType();
-            request_x.update_types = update_types;
-            request_x.page_x = page_x;
-            DutchBusinessWsdl.dutchBusinessUpdateGetDossiersResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetDossiersResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetDossiersResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetDossiers',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUpdateGetDossiers',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUpdateGetDossiersResponse',
-              'DutchBusinessWsdl.dutchBusinessUpdateGetDossiersResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessUpdateSubscriptionPagedResult dutchBusinessUpdateGetOverview(Integer page_x) {
-            DutchBusinessWsdl.dutchBusinessUpdateGetOverviewRequestType request_x = new DutchBusinessWsdl.dutchBusinessUpdateGetOverviewRequestType();
-            request_x.page_x = page_x;
-            DutchBusinessWsdl.dutchBusinessUpdateGetOverviewResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetOverviewResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessUpdateGetOverviewResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetOverview',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUpdateGetOverview',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessUpdateGetOverviewResponse',
-              'DutchBusinessWsdl.dutchBusinessUpdateGetOverviewResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-        public DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number) {
-            DutchBusinessWsdl.dutchBusinessGetPositionsRequestType request_x = new DutchBusinessWsdl.dutchBusinessGetPositionsRequestType();
-            request_x.dossier_number = dossier_number;
-            DutchBusinessWsdl.dutchBusinessGetPositionsResponseType response_x;
-            Map<String, DutchBusinessWsdl.dutchBusinessGetPositionsResponseType> response_map_x = new Map<String, DutchBusinessWsdl.dutchBusinessGetPositionsResponseType>();
-            response_map_x.put('response_x', response_x);
-            WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetPositions',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetPositions',
-              'http://www.webservices.nl/soap/',
-              'dutchBusinessGetPositionsResponse',
-              'DutchBusinessWsdl.dutchBusinessGetPositionsResponseType'}
-            );
-            response_x = response_map_x.get('response_x');
-            return response_x.out;
-        }
-
-        /***** METHODS NEEDED IN IMPL */
-
-        /**
-         * Sets all relevant properties on the port for fallback
-         */
-        public void doFallBack() {
-            endpoint_x = 'https://ws2.webservices.nl:443/accounting/soap_doclit.php';
         }
     }
 }

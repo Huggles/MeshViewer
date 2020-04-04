@@ -223,8 +223,8 @@ public class InternationalAddressWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'matchrate','street','housenr','pobox','locality','postcode','province','country'};
     }
-    public class Webservices_nlPort implements WebServicePort {
-        public String endpoint_x = 'https://ws1.webservices.nl:443/internationaladdress/soap_doclit.php';
+    public class Webservices_nlPort {
+        public String endpoint_x = 'https://api.webservices.nl:443/internationaladdress/soap_doclit.php';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -244,16 +244,16 @@ public class InternationalAddressWsdl {
             Map<String, InternationalAddressWsdl.loginResponseType> response_map_x = new Map<String, InternationalAddressWsdl.loginResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
-                    this,
-                    request_x,
-                    response_map_x,
-                    new String[]{endpoint_x,
-                            'https://ws1.webservices.nl/internationaladdress/soap_doclit.php/login',
-                            'http://www.webservices.nl/soap/',
-                            'login',
-                            'http://www.webservices.nl/soap/',
-                            'loginResponse',
-                            'InternationalAddressWsdl.loginResponseType'}
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/internationaladdress/soap_doclit.php/login',
+              'http://www.webservices.nl/soap/',
+              'login',
+              'http://www.webservices.nl/soap/',
+              'loginResponse',
+              'InternationalAddressWsdl.loginResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.reactid;
@@ -264,16 +264,16 @@ public class InternationalAddressWsdl {
             Map<String, InternationalAddressWsdl.logoutResponseType> response_map_x = new Map<String, InternationalAddressWsdl.logoutResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
-                    this,
-                    request_x,
-                    response_map_x,
-                    new String[]{endpoint_x,
-                            'https://ws1.webservices.nl/internationaladdress/soap_doclit.php/logout',
-                            'http://www.webservices.nl/soap/',
-                            'logout',
-                            'http://www.webservices.nl/soap/',
-                            'logoutResponse',
-                            'InternationalAddressWsdl.logoutResponseType'}
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/internationaladdress/soap_doclit.php/logout',
+              'http://www.webservices.nl/soap/',
+              'logout',
+              'http://www.webservices.nl/soap/',
+              'logoutResponse',
+              'InternationalAddressWsdl.logoutResponseType'}
             );
             response_x = response_map_x.get('response_x');
         }
@@ -294,16 +294,16 @@ public class InternationalAddressWsdl {
             Map<String, InternationalAddressWsdl.internationalAddressSearchV2ResponseType> response_map_x = new Map<String, InternationalAddressWsdl.internationalAddressSearchV2ResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
-                    this,
-                    request_x,
-                    response_map_x,
-                    new String[]{endpoint_x,
-                            'https://ws1.webservices.nl/internationaladdress/soap_doclit.php/internationalAddressSearchV2',
-                            'http://www.webservices.nl/soap/',
-                            'internationalAddressSearchV2',
-                            'http://www.webservices.nl/soap/',
-                            'internationalAddressSearchV2Response',
-                            'InternationalAddressWsdl.internationalAddressSearchV2ResponseType'}
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/internationaladdress/soap_doclit.php/internationalAddressSearchV2',
+              'http://www.webservices.nl/soap/',
+              'internationalAddressSearchV2',
+              'http://www.webservices.nl/soap/',
+              'internationalAddressSearchV2Response',
+              'InternationalAddressWsdl.internationalAddressSearchV2ResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -325,28 +325,19 @@ public class InternationalAddressWsdl {
             Map<String, InternationalAddressWsdl.internationalAddressSearchInteractiveResponseType> response_map_x = new Map<String, InternationalAddressWsdl.internationalAddressSearchInteractiveResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
-                    this,
-                    request_x,
-                    response_map_x,
-                    new String[]{endpoint_x,
-                            'https://ws1.webservices.nl/internationaladdress/soap_doclit.php/internationalAddressSearchInteractive',
-                            'http://www.webservices.nl/soap/',
-                            'internationalAddressSearchInteractive',
-                            'http://www.webservices.nl/soap/',
-                            'internationalAddressSearchInteractiveResponse',
-                            'InternationalAddressWsdl.internationalAddressSearchInteractiveResponseType'}
+              this,
+              request_x,
+              response_map_x,
+              new String[]{endpoint_x,
+              'https://api.webservices.nl/internationaladdress/soap_doclit.php/internationalAddressSearchInteractive',
+              'http://www.webservices.nl/soap/',
+              'internationalAddressSearchInteractive',
+              'http://www.webservices.nl/soap/',
+              'internationalAddressSearchInteractiveResponse',
+              'InternationalAddressWsdl.internationalAddressSearchInteractiveResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
-        }
-
-        /***** METHODS NEEDED IN IMPL */
-
-        /**
-         * Sets all relevant properties on the port for fallback
-         */
-        public void doFallBack() {
-            endpoint_x = 'https://ws2.webservices.nl:443/accounting/soap_doclit.php';
         }
     }
 }

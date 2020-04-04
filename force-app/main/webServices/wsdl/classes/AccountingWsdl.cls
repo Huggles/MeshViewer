@@ -767,8 +767,8 @@ public class AccountingWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'out'};
     }
-    public class Webservices_nlPort implements WebServicePort {
-        public String endpoint_x = 'https://ws1.webservices.nl:443/accounting/soap_doclit.php';
+    public class Webservices_nlPort {
+        public String endpoint_x = 'https://api.webservices.nl:443/accounting/soap_doclit.php';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -792,7 +792,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/login',
+              'https://api.webservices.nl/accounting/soap_doclit.php/login',
               'http://www.webservices.nl/soap/',
               'login',
               'http://www.webservices.nl/soap/',
@@ -814,7 +814,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userSessionList',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userSessionList',
               'http://www.webservices.nl/soap/',
               'userSessionList',
               'http://www.webservices.nl/soap/',
@@ -842,7 +842,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userEditV2',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userEditV2',
               'http://www.webservices.nl/soap/',
               'userEditV2',
               'http://www.webservices.nl/soap/',
@@ -862,7 +862,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userViewV2',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userViewV2',
               'http://www.webservices.nl/soap/',
               'userViewV2',
               'http://www.webservices.nl/soap/',
@@ -884,7 +884,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userEditBalance',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userEditBalance',
               'http://www.webservices.nl/soap/',
               'userEditBalance',
               'http://www.webservices.nl/soap/',
@@ -905,7 +905,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetOrderToken',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountGetOrderToken',
               'http://www.webservices.nl/soap/',
               'accountGetOrderToken',
               'http://www.webservices.nl/soap/',
@@ -926,7 +926,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewBalance',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountViewBalance',
               'http://www.webservices.nl/soap/',
               'accountViewBalance',
               'http://www.webservices.nl/soap/',
@@ -948,7 +948,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userEditHostRestrictions',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userEditHostRestrictions',
               'http://www.webservices.nl/soap/',
               'userEditHostRestrictions',
               'http://www.webservices.nl/soap/',
@@ -969,7 +969,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userRemoveGroup',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userRemoveGroup',
               'http://www.webservices.nl/soap/',
               'userRemoveGroup',
               'http://www.webservices.nl/soap/',
@@ -991,7 +991,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userChangePassword',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userChangePassword',
               'http://www.webservices.nl/soap/',
               'userChangePassword',
               'http://www.webservices.nl/soap/',
@@ -1018,7 +1018,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountEditV2',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountEditV2',
               'http://www.webservices.nl/soap/',
               'accountEditV2',
               'http://www.webservices.nl/soap/',
@@ -1037,7 +1037,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/logout',
+              'https://api.webservices.nl/accounting/soap_doclit.php/logout',
               'http://www.webservices.nl/soap/',
               'logout',
               'http://www.webservices.nl/soap/',
@@ -1057,7 +1057,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetCreationStatus',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountGetCreationStatus',
               'http://www.webservices.nl/soap/',
               'accountGetCreationStatus',
               'http://www.webservices.nl/soap/',
@@ -1078,7 +1078,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewHostRestrictions',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountViewHostRestrictions',
               'http://www.webservices.nl/soap/',
               'accountViewHostRestrictions',
               'http://www.webservices.nl/soap/',
@@ -1100,7 +1100,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountEditHostRestrictions',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountEditHostRestrictions',
               'http://www.webservices.nl/soap/',
               'accountEditHostRestrictions',
               'http://www.webservices.nl/soap/',
@@ -1121,7 +1121,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userNotify',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userNotify',
               'http://www.webservices.nl/soap/',
               'userNotify',
               'http://www.webservices.nl/soap/',
@@ -1143,7 +1143,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userListAssignableGroups',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userListAssignableGroups',
               'http://www.webservices.nl/soap/',
               'userListAssignableGroups',
               'http://www.webservices.nl/soap/',
@@ -1166,7 +1166,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountUserSearchV2',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountUserSearchV2',
               'http://www.webservices.nl/soap/',
               'accountUserSearchV2',
               'http://www.webservices.nl/soap/',
@@ -1176,7 +1176,7 @@ public class AccountingWsdl {
             response_x = response_map_x.get('response_x');
             return response_x.out;
         }
-        public AccountingWsdl.userCreateV2ResponseType userCreateV2(Integer accountid,String nickname,String password, AccountingWsdl.intArray usergroups,String email,String companyname,String address,String contactname,String contactemail,String telephone,String fax,String clientcode,String comments) {
+        public AccountingWsdl.userCreateV2ResponseType userCreateV2(Integer accountid,String nickname,String password,AccountingWsdl.intArray usergroups,String email,String companyname,String address,String contactname,String contactemail,String telephone,String fax,String clientcode,String comments) {
             AccountingWsdl.userCreateV2RequestType request_x = new AccountingWsdl.userCreateV2RequestType();
             request_x.accountid = accountid;
             request_x.nickname = nickname;
@@ -1199,7 +1199,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userCreateV2',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userCreateV2',
               'http://www.webservices.nl/soap/',
               'userCreateV2',
               'http://www.webservices.nl/soap/',
@@ -1234,7 +1234,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userEditExtendedV2',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userEditExtendedV2',
               'http://www.webservices.nl/soap/',
               'userEditExtendedV2',
               'http://www.webservices.nl/soap/',
@@ -1254,7 +1254,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userViewHostRestrictions',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userViewHostRestrictions',
               'http://www.webservices.nl/soap/',
               'userViewHostRestrictions',
               'http://www.webservices.nl/soap/',
@@ -1275,7 +1275,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userViewBalance',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userViewBalance',
               'http://www.webservices.nl/soap/',
               'userViewBalance',
               'http://www.webservices.nl/soap/',
@@ -1300,7 +1300,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/createTestUser',
+              'https://api.webservices.nl/accounting/soap_doclit.php/createTestUser',
               'http://www.webservices.nl/soap/',
               'createTestUser',
               'http://www.webservices.nl/soap/',
@@ -1321,7 +1321,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewV2',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountViewV2',
               'http://www.webservices.nl/soap/',
               'accountViewV2',
               'http://www.webservices.nl/soap/',
@@ -1342,7 +1342,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetCreationToken',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountGetCreationToken',
               'http://www.webservices.nl/soap/',
               'accountGetCreationToken',
               'http://www.webservices.nl/soap/',
@@ -1364,7 +1364,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/accountUserListV2',
+              'https://api.webservices.nl/accounting/soap_doclit.php/accountUserListV2',
               'http://www.webservices.nl/soap/',
               'accountUserListV2',
               'http://www.webservices.nl/soap/',
@@ -1385,7 +1385,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userRemove',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userRemove',
               'http://www.webservices.nl/soap/',
               'userRemove',
               'http://www.webservices.nl/soap/',
@@ -1406,7 +1406,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userSessionRemove',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userSessionRemove',
               'http://www.webservices.nl/soap/',
               'userSessionRemove',
               'http://www.webservices.nl/soap/',
@@ -1427,7 +1427,7 @@ public class AccountingWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/accounting/soap_doclit.php/userAddGroup',
+              'https://api.webservices.nl/accounting/soap_doclit.php/userAddGroup',
               'http://www.webservices.nl/soap/',
               'userAddGroup',
               'http://www.webservices.nl/soap/',
@@ -1436,15 +1436,5 @@ public class AccountingWsdl {
             );
             response_x = response_map_x.get('response_x');
         }
-
-        /***** METHODS NEEDED IN IMPL */
-
-        /**
-         * Sets all relevant properties on the port for fallback
-         */
-        public void doFallBack() {
-            endpoint_x = 'https://ws2.webservices.nl:443/accounting/soap_doclit.php';
-        }
-
     }
 }

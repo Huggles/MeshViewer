@@ -1525,7 +1525,7 @@ public class CreditsafeWsdl {
         public CreditsafeWsdl.CreditsafeCompanyShareHolderV2[] item;
         private String[] item_type_info = new String[]{'item','http://www.webservices.nl/soap/',null,'0','-1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
-        private String[] field_order_type_info =    new String[]{'item'};
+        private String[] field_order_type_info = new String[]{'item'};
     }
     public class CreditsafeCompanyEmployeeInformationV2 {
         public Integer number_of_employees;
@@ -2467,8 +2467,8 @@ public class CreditsafeWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'item'};
     }
-    public class Webservices_nlPort implements FallBackableWebServicePort {
-        public String endpoint_x = 'https://ws1.webservices.nl:443/creditsafe/soap_doclit.php';
+    public class Webservices_nlPort {
+        public String endpoint_x = 'https://api.webservices.nl:443/creditsafe/soap_doclit.php';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -2492,7 +2492,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorGetUpdatedCompanies',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorGetUpdatedCompanies',
               'http://www.webservices.nl/soap/',
               'creditsafeMonitorGetUpdatedCompanies',
               'http://www.webservices.nl/soap/',
@@ -2523,7 +2523,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchV2',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchV2',
               'http://www.webservices.nl/soap/',
               'creditsafeSearchV2',
               'http://www.webservices.nl/soap/',
@@ -2544,7 +2544,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchCriteria',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchCriteria',
               'http://www.webservices.nl/soap/',
               'creditsafeSearchCriteria',
               'http://www.webservices.nl/soap/',
@@ -2566,7 +2566,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/login',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/login',
               'http://www.webservices.nl/soap/',
               'login',
               'http://www.webservices.nl/soap/',
@@ -2589,7 +2589,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2',
               'http://www.webservices.nl/soap/',
               'creditsafeGetReportFullV2',
               'http://www.webservices.nl/soap/',
@@ -2625,7 +2625,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch',
               'http://www.webservices.nl/soap/',
               'creditsafeSearch',
               'http://www.webservices.nl/soap/',
@@ -2646,7 +2646,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorAddCompany',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorAddCompany',
               'http://www.webservices.nl/soap/',
               'creditsafeMonitorAddCompany',
               'http://www.webservices.nl/soap/',
@@ -2665,7 +2665,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/logout',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/logout',
               'http://www.webservices.nl/soap/',
               'logout',
               'http://www.webservices.nl/soap/',
@@ -2687,7 +2687,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFull',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFull',
               'http://www.webservices.nl/soap/',
               'creditsafeGetReportFull',
               'http://www.webservices.nl/soap/',
@@ -2708,7 +2708,7 @@ public class CreditsafeWsdl {
               request_x,
               response_map_x,
               new String[]{endpoint_x,
-              'https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorRemoveCompany',
+              'https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorRemoveCompany',
               'http://www.webservices.nl/soap/',
               'creditsafeMonitorRemoveCompany',
               'http://www.webservices.nl/soap/',
@@ -2716,14 +2716,6 @@ public class CreditsafeWsdl {
               'CreditsafeWsdl.creditsafeMonitorRemoveCompanyResponseType'}
             );
             response_x = response_map_x.get('response_x');
-        }
-        /***** METHODS NEEDED IN IMPL */
-
-        /**
-         * Sets all relevant properties on the port for fallback
-         */
-        public void doFallBack() {
-            endpoint_x = 'https://ws2.webservices.nl:443/accounting/soap_doclit.php';
         }
     }
 }
