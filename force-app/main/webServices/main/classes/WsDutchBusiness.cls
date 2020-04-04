@@ -20,16 +20,19 @@ public inherited sharing class WsDutchBusiness implements IWsDutchBusiness{
         return newInstance().dutchBusinessGetDossierV3(dossier_number, establishment_number);
     }
 
-    public static IWsDutchBusiness newInstance() {
-        return (IWsDutchBusiness) Application.Service.newInstance(IWsDutchBusiness.class);
+    public static void dutchBusinessUpdateRemoveDossier(String dossier_number,String establishment_number){
+        newInstance().dutchBusinessUpdateRemoveDossier(dossier_number, establishment_number);
     }
 
     public static DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetChangedDossiers(Date changed_since,DutchBusinessWsdl.stringArray update_types,Integer page_x) {
         return newInstance().dutchBusinessUpdateGetChangedDossiers(changed_since, update_types, page_x);
     }
 
-    public static void dutchBusinessUpdateRemoveDossier(String dossier_number,String establishment_number){
-
+    public static IWsDutchBusiness newInstance() {
+        return (IWsDutchBusiness) Application.Service.newInstance(IWsDutchBusiness.class);
     }
+
+
+
 
 }

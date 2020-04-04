@@ -48,7 +48,8 @@ public inherited sharing class Application {
                             ICreditSafeService.class => CreditSafeServiceImpl.class,
                             IDutchBusinessService.class => DutchBusinessServiceImpl.class,
                             IInternationalAddressService.class => InternationalAddressImpl.class,
-                            IWsInternationalAddress.class => WsInternationalAddressImpl.class
+                            IWsInternationalAddress.class => WsInternationalAddressImpl.class,
+                            IWsVat.class => WsVatImpl.class
 
                     });
 
