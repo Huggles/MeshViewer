@@ -95,7 +95,6 @@ public inherited sharing abstract class MethodCallout implements Callable {
                 throw new CCWsServerException(Label.Error_Webservice_Server, calloutException);
             }
             when 'Server.Data' {
-                ErrorLogUtil.logException(calloutException);
                 throw new CCWsServerDataException(Label.Error_Server_Data, calloutException);
             }
             when 'Server.Data.NotFound' {
