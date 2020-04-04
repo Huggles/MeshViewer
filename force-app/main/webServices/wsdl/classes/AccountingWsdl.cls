@@ -767,7 +767,7 @@ public class AccountingWsdl {
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
         private String[] field_order_type_info = new String[]{'out'};
     }
-    public class Webservices_nlPort {
+    public class Webservices_nlPort implements WebServicePort {
         public String endpoint_x = 'https://api.webservices.nl:443/accounting/soap_doclit.php';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;

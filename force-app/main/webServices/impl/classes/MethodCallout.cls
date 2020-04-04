@@ -51,7 +51,7 @@ public inherited sharing abstract class MethodCallout implements Callable {
      *
      * @return
      */
-    protected abstract Object call(String methodName, Map<String, Object> arguments);
+    private abstract Object call(String methodName, Map<String, Object> arguments);
 
     /**
      * Handles a callout exception that can occur when calling the data vendor.
