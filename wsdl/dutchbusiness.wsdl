@@ -924,6 +924,18 @@
    <xsd:element name="country_of_birth" type="xsd:string" minOccurs="0"/>
   </xsd:all>
  </xsd:complexType>
+ <xsd:complexType name="DutchBusinessAdditionalPositionFunctionary">
+  <xsd:all>
+   <xsd:element name="full_name" type="xsd:string"/>
+   <xsd:element name="first_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="initials" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="last_name" type="xsd:string"/>
+   <xsd:element name="date_deceased" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="date_of_birth" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="place_of_birth" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="country_of_birth" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
  <xsd:complexType name="DutchBusinessOrganizationReferenceV2">
   <xsd:all>
    <xsd:element name="dossier_number" type="xsd:string" minOccurs="0"/>
@@ -1550,6 +1562,95 @@
    <xsd:element name="lei_code" type="xsd:string" minOccurs="0"/>
   </xsd:all>
  </xsd:complexType>
+ <xsd:complexType name="DutchBusinessNonMarketingIndicator">
+  <xsd:all>
+   <xsd:element name="dossier_number" type="xsd:string" minOccurs="1"/>
+   <xsd:element name="establishment_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="non_marketing_indicator" type="xsd:boolean" minOccurs="1"/>
+   <xsd:element name="since" type="xsd:date" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessGetAdditionalPositionsResult">
+  <xsd:all>
+   <xsd:element name="functionary" type="tns:DutchBusinessAdditionalPositionFunctionary"/>
+   <xsd:element name="current_positions" type="tns:DutchBusinessAdditionalPositionArray"/>
+   <xsd:element name="previous_positions" type="tns:DutchBusinessAdditionalPositionArray"/>
+   <xsd:element name="possible_current_positions" type="tns:DutchBusinessAdditionalPositionArray"/>
+   <xsd:element name="possible_previous_positions" type="tns:DutchBusinessAdditionalPositionArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessAdditionalPosition">
+  <xsd:all>
+   <xsd:element name="start_date" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="end_date" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="end_date_source" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="role" type="xsd:string"/>
+   <xsd:element name="function" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="authorization_description" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="historical_authorizations" type="tns:DutchBusinessPositionAuthorizationArray"/>
+   <xsd:element name="company" type="tns:DutchBusinessPositionCompany"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessAdditionalPositionArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:DutchBusinessAdditionalPosition" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessPositionCompany">
+  <xsd:all>
+   <xsd:element name="kvk" type="xsd:string"/>
+   <xsd:element name="establishment_number" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="legal_name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="trade_name_full" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="primary_sbi_code" type="xsd:int" minOccurs="0"/>
+   <xsd:element name="financial_status" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessPositionAuthorization">
+  <xsd:all>
+   <xsd:element name="start_date" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="end_date" type="xsd:date" minOccurs="0"/>
+   <xsd:element name="end_date_source" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="description" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessPositionAuthorizationArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:DutchBusinessPositionAuthorization" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessLookALikeCompany">
+  <xsd:all>
+   <xsd:element name="dossier_number" type="xsd:string"/>
+   <xsd:element name="name" type="xsd:string" minOccurs="0"/>
+   <xsd:element name="similarity_score" type="xsd:decimal"/>
+   <xsd:element name="individual_features" type="tns:DutchBusinessLookALikeIndividualFeatureArray"/>
+   <xsd:element name="profile_url" type="xsd:string" minOccurs="0"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessLookALikeCompanyArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:DutchBusinessLookALikeCompany" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessLookALikeCompanyPagedResult">
+  <xsd:all>
+   <xsd:element name="paging" type="tns:ResultInfo"/>
+   <xsd:element name="results" type="tns:DutchBusinessLookALikeCompanyArray"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessLookALikeIndividualFeature">
+  <xsd:all>
+   <xsd:element name="name" type="xsd:string"/>
+   <xsd:element name="score" type="xsd:decimal"/>
+   <xsd:element name="weight" type="xsd:decimal"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="DutchBusinessLookALikeIndividualFeatureArray">
+  <xsd:sequence>
+   <xsd:element name="item" type="tns:DutchBusinessLookALikeIndividualFeature" minOccurs="0" maxOccurs="unbounded"/>
+  </xsd:sequence>
+ </xsd:complexType>
  <xsd:complexType name="loginRequestType">
   <xsd:all>
    <xsd:element name="username" type="xsd:string"/>
@@ -1646,6 +1747,17 @@
  <xsd:complexType name="dutchBusinessGetOrganizationTreeResponseType">
   <xsd:all>
    <xsd:element name="out" type="tns:DutchBusinessOrganizationTree"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="dutchBusinessGetNonMarketingIndicatorRequestType">
+  <xsd:all>
+   <xsd:element name="dossier_number" type="xsd:string"/>
+   <xsd:element name="establishment_number" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="dutchBusinessGetNonMarketingIndicatorResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:DutchBusinessNonMarketingIndicator"/>
   </xsd:all>
  </xsd:complexType>
  <xsd:complexType name="dutchBusinessSearchDossierNumberRequestType">
@@ -1813,6 +1925,34 @@
  <xsd:complexType name="dutchBusinessGetAnnualFinancialStatementResponseType">
   <xsd:all>
    <xsd:element name="out" type="tns:DutchBusinessAnnualFinancialStatement"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="dutchBusinessGetAdditionalPositionsRequestType">
+  <xsd:all>
+   <xsd:element name="first_name" type="xsd:string"/>
+   <xsd:element name="last_name" type="xsd:string"/>
+   <xsd:element name="birth_date" type="xsd:date"/>
+   <xsd:element name="dossier_number" type="xsd:string"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="dutchBusinessGetAdditionalPositionsResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:DutchBusinessGetAdditionalPositionsResult"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="dutchBusinessLookALikesRequestType">
+  <xsd:all>
+   <xsd:element name="dossier_number" type="xsd:string"/>
+   <xsd:element name="geo_weight" type="xsd:decimal"/>
+   <xsd:element name="nr_employees_weight" type="xsd:decimal"/>
+   <xsd:element name="sbi_weight" type="xsd:decimal"/>
+   <xsd:element name="web_weight" type="xsd:decimal"/>
+   <xsd:element name="page" type="xsd:int"/>
+  </xsd:all>
+ </xsd:complexType>
+ <xsd:complexType name="dutchBusinessLookALikesResponseType">
+  <xsd:all>
+   <xsd:element name="out" type="tns:DutchBusinessLookALikeCompanyPagedResult"/>
   </xsd:all>
  </xsd:complexType>
  <xsd:complexType name="dutchBusinessGetExtractDocumentRequestType">
@@ -2138,6 +2278,8 @@
  <xsd:element name="dutchBusinessGetLegalEntityResponse" type="tns:dutchBusinessGetLegalEntityResponseType"/>
  <xsd:element name="dutchBusinessGetOrganizationTree" type="tns:dutchBusinessGetOrganizationTreeRequestType"/>
  <xsd:element name="dutchBusinessGetOrganizationTreeResponse" type="tns:dutchBusinessGetOrganizationTreeResponseType"/>
+ <xsd:element name="dutchBusinessGetNonMarketingIndicator" type="tns:dutchBusinessGetNonMarketingIndicatorRequestType"/>
+ <xsd:element name="dutchBusinessGetNonMarketingIndicatorResponse" type="tns:dutchBusinessGetNonMarketingIndicatorResponseType"/>
  <xsd:element name="dutchBusinessSearchDossierNumber" type="tns:dutchBusinessSearchDossierNumberRequestType"/>
  <xsd:element name="dutchBusinessSearchDossierNumberResponse" type="tns:dutchBusinessSearchDossierNumberResponseType"/>
  <xsd:element name="dutchBusinessGetConcernRelationsOverview" type="tns:dutchBusinessGetConcernRelationsOverviewRequestType"/>
@@ -2160,6 +2302,10 @@
  <xsd:element name="dutchBusinessGetSBIDescriptionResponse" type="tns:dutchBusinessGetSBIDescriptionResponseType"/>
  <xsd:element name="dutchBusinessGetAnnualFinancialStatement" type="tns:dutchBusinessGetAnnualFinancialStatementRequestType"/>
  <xsd:element name="dutchBusinessGetAnnualFinancialStatementResponse" type="tns:dutchBusinessGetAnnualFinancialStatementResponseType"/>
+ <xsd:element name="dutchBusinessGetAdditionalPositions" type="tns:dutchBusinessGetAdditionalPositionsRequestType"/>
+ <xsd:element name="dutchBusinessGetAdditionalPositionsResponse" type="tns:dutchBusinessGetAdditionalPositionsResponseType"/>
+ <xsd:element name="dutchBusinessLookALikes" type="tns:dutchBusinessLookALikesRequestType"/>
+ <xsd:element name="dutchBusinessLookALikesResponse" type="tns:dutchBusinessLookALikesResponseType"/>
  <xsd:element name="dutchBusinessGetExtractDocument" type="tns:dutchBusinessGetExtractDocumentRequestType"/>
  <xsd:element name="dutchBusinessGetExtractDocumentResponse" type="tns:dutchBusinessGetExtractDocumentResponseType"/>
  <xsd:element name="dutchBusinessGetExtractDocumentData" type="tns:dutchBusinessGetExtractDocumentDataRequestType"/>
@@ -2259,6 +2405,10 @@
   <part name="parameters" element="tns:dutchBusinessGetOrganizationTree" /></message>
 <message name="dutchBusinessGetOrganizationTreeResponse">
   <part name="parameters" element="tns:dutchBusinessGetOrganizationTreeResponse" /></message>
+<message name="dutchBusinessGetNonMarketingIndicatorRequest">
+  <part name="parameters" element="tns:dutchBusinessGetNonMarketingIndicator" /></message>
+<message name="dutchBusinessGetNonMarketingIndicatorResponse">
+  <part name="parameters" element="tns:dutchBusinessGetNonMarketingIndicatorResponse" /></message>
 <message name="dutchBusinessSearchDossierNumberRequest">
   <part name="parameters" element="tns:dutchBusinessSearchDossierNumber" /></message>
 <message name="dutchBusinessSearchDossierNumberResponse">
@@ -2303,6 +2453,14 @@
   <part name="parameters" element="tns:dutchBusinessGetAnnualFinancialStatement" /></message>
 <message name="dutchBusinessGetAnnualFinancialStatementResponse">
   <part name="parameters" element="tns:dutchBusinessGetAnnualFinancialStatementResponse" /></message>
+<message name="dutchBusinessGetAdditionalPositionsRequest">
+  <part name="parameters" element="tns:dutchBusinessGetAdditionalPositions" /></message>
+<message name="dutchBusinessGetAdditionalPositionsResponse">
+  <part name="parameters" element="tns:dutchBusinessGetAdditionalPositionsResponse" /></message>
+<message name="dutchBusinessLookALikesRequest">
+  <part name="parameters" element="tns:dutchBusinessLookALikes" /></message>
+<message name="dutchBusinessLookALikesResponse">
+  <part name="parameters" element="tns:dutchBusinessLookALikesResponse" /></message>
 <message name="dutchBusinessGetExtractDocumentRequest">
   <part name="parameters" element="tns:dutchBusinessGetExtractDocument" /></message>
 <message name="dutchBusinessGetExtractDocumentResponse">
@@ -2462,6 +2620,11 @@
     <input message="tns:dutchBusinessGetOrganizationTreeRequest"/>
     <output message="tns:dutchBusinessGetOrganizationTreeResponse"/>
   </operation>
+  <operation name="dutchBusinessGetNonMarketingIndicator">
+    <documentation>Determine if a Company has non-marketing indicator</documentation>
+    <input message="tns:dutchBusinessGetNonMarketingIndicatorRequest"/>
+    <output message="tns:dutchBusinessGetNonMarketingIndicatorResponse"/>
+  </operation>
   <operation name="dutchBusinessSearchDossierNumber">
     <documentation>Search for business establishments using a known identifier</documentation>
     <input message="tns:dutchBusinessSearchDossierNumberRequest"/>
@@ -2516,6 +2679,16 @@
     <documentation>Get an annual financial statement for a dutch-business</documentation>
     <input message="tns:dutchBusinessGetAnnualFinancialStatementRequest"/>
     <output message="tns:dutchBusinessGetAnnualFinancialStatementResponse"/>
+  </operation>
+  <operation name="dutchBusinessGetAdditionalPositions">
+    <documentation>Retrieves the positions, current and historical, of a functionary.</documentation>
+    <input message="tns:dutchBusinessGetAdditionalPositionsRequest"/>
+    <output message="tns:dutchBusinessGetAdditionalPositionsResponse"/>
+  </operation>
+  <operation name="dutchBusinessLookALikes">
+    <documentation>Finds similar companies (dossier numbers) for a given company</documentation>
+    <input message="tns:dutchBusinessLookALikesRequest"/>
+    <output message="tns:dutchBusinessLookALikesResponse"/>
   </operation>
   <operation name="dutchBusinessGetExtractDocument">
     <documentation>Retrieve a Chamber of Commerce extract document (Dutch: Uittreksel Handelsregister)</documentation>
@@ -2656,249 +2829,264 @@
 <binding name="Webservices.nlBinding" type="tns:Webservices.nlPortType">
   <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
   <operation name="login">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/login" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/login" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="logout">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/logout" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/logout" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetDossier">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossier" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossier" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetDossierV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetDossierV3">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierV3" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierV3" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetSBI">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetSBI" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetSBI" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetVatNumber">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetVatNumber" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetVatNumber" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetPositions">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetPositions" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetPositions" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetLegalEntity">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalEntity" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalEntity" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetOrganizationTree">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetOrganizationTree" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetOrganizationTree" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="dutchBusinessGetNonMarketingIndicator">
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetNonMarketingIndicator" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearchDossierNumber">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchDossierNumber" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchDossierNumber" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetConcernRelationsOverview">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetConcernRelationsOverview" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetConcernRelationsOverview" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetConcernRelationsDetails">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetConcernRelationsDetails" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetConcernRelationsDetails" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearchParametersV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchParametersV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchParametersV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearch">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearch" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearch" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearchEstablishments">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchEstablishments" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchEstablishments" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearchPostcode">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchPostcode" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchPostcode" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearchSelection">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchSelection" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchSelection" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearchSelectionSimple">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchSelectionSimple" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchSelectionSimple" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetSBIDescription">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetSBIDescription" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetSBIDescription" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetAnnualFinancialStatement">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetAnnualFinancialStatement" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetAnnualFinancialStatement" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="dutchBusinessGetAdditionalPositions">
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetAdditionalPositions" style="document"/>
+    <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
+    <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
+  </operation>
+  <operation name="dutchBusinessLookALikes">
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessLookALikes" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractDocument">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocument" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocument" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractDocumentData">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentData" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentData" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractDocumentDataV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentDataV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentDataV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractDocumentDataV3">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentDataV3" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractDocumentDataV3" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetLegalExtractDocumentDataV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalExtractDocumentDataV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalExtractDocumentDataV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetLegalExtractDocumentDataV3">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalExtractDocumentDataV3" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLegalExtractDocumentDataV3" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractHistory">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistory" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistory" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractHistoryChanged">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryChanged" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryChanged" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractHistoryDocumentData">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentData" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentData" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractHistoryDocumentDataV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractHistoryDocumentDataV3">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV3" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV3" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetExtractHistoryDocumentDataV3ByDossier">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV3ByDossier" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetExtractHistoryDocumentDataV3ByDossier" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetDossierHistory">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierHistory" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetDossierHistory" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUpdateGetDossiers">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetDossiers" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetDossiers" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUpdateCheckDossier">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateCheckDossier" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateCheckDossier" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUpdateGetChangedDossiers">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetChangedDossiers" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetChangedDossiers" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUpdateAddDossier">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateAddDossier" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateAddDossier" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUpdateRemoveDossier">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateRemoveDossier" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateRemoveDossier" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUpdateGetOverview">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetOverview" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUpdateGetOverview" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearchNewsByDossier">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchNewsByDossier" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchNewsByDossier" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUBOStartInvestigation">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOStartInvestigation" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOStartInvestigation" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUBOCheckInvestigation">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOCheckInvestigation" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOCheckInvestigation" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUBOPickupInvestigation">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOPickupInvestigation" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOPickupInvestigation" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUBOCostsInvestigation">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOCostsInvestigation" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOCostsInvestigation" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessUBOClassifyInvestigation">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOClassifyInvestigation" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessUBOClassifyInvestigation" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessGetLei">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLei" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessGetLei" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchBusinessSearchParameters">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchParameters" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchbusiness/soap_doclit.php/dutchBusinessSearchParameters" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
 </binding>
 <service name="Webservices.nl">
   <port name="Webservices.nlPort" binding="tns:Webservices.nlBinding">
-    <soap:address location="https://ws1.webservices.nl:443/dutchbusiness/soap_doclit.php"/>
+    <soap:address location="https://api.webservices.nl:443/dutchbusiness/soap_doclit.php"/>
   </port>
 </service>
 </definitions>
