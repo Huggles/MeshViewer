@@ -32,7 +32,7 @@ private class CreditSafeServiceImplTest {
         searchResultV2.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
         for (Integer i = 0; i < 5; i++) {
             CreditsafeWsdl.CreditsafeCompanyV2 company  = new CreditsafeWsdl.CreditsafeCompanyV2();
-            company.country = 'NL';
+            company.country = 'BE';
             company.name = '' + i;
             company.registration_number = '123' + i;
             company.address = new CreditsafeWsdl.CreditsafeAddressV2();
@@ -66,12 +66,12 @@ private class CreditSafeServiceImplTest {
 
         Test.startTest();
         {
-            List<Business_Dossier__c> dossiers = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'NL'}, 'id', 'status', 'regnr', 'type', 'vat', 'province', 'city', 'street', 'postal_code', 'name');
-            System.assert(dossiers.size() == 5);
+            List<Business_Dossier__c> dossiers = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'BE'}, 'id', 'status', 'regnr', 'type', 'vat', 'province', 'city', 'street', 'postal_code', 'name');
+            System.assert(dossiers.size() == 20);
             for (Business_Dossier__c dossier : dossiers) {
                 System.assert(dossier.Name.isNumeric());
                 System.assert(dossier.Dossier_Number__c.startsWith('123'));
-                System.assert(dossier.Country__c == 'NL');
+                System.assert(dossier.Country__c == 'BE');
                 System.assert(dossier.Street__c == 'Braillelaan');
                 System.assert(dossier.City__c == 'Utrecht');
                 System.assert(dossier.Date_of_Last_Account__c != null && dossier.Date_of_Last_Account__c < Datetime.now());

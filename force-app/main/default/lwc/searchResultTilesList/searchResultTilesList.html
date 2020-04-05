@@ -13,21 +13,24 @@
         </div>
     </template>
     <template if:true= {hasResults}>
-        <div class="scrollable slds-box result-container" onscroll={resultsScrolled}>
-            <div class="grid">
-                <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="dossier">
-                    <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}
-                                          title-field= {titleField} oncardclicked={handleCardClicked}></c-search-result-tile>
-                </template>
+        <lightning-card>
+            <h3 slot="title" if:false= {isSearchCriteriaNameEmpty}>
+                <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+                {searchCriteriaName}
+            </h3>
+            <div class="scrollable slds-box result-container" onscroll={resultsScrolled}>
+                <div class="grid">
+                    <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="dossier">
+                        <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}
+                                              title-field= {titleField} oncardclicked={handleCardClicked}></c-search-result-tile>
+                    </template>
+                </div>
+                <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;">
+                    <template if:true={displayingMaxNumberOfResults}>
+                        <div class="slds-text-align_center" style="max-width: 80%;">{searchResultsLimited}</div>
+                    </template>
+                </div>
             </div>
-            <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;">
-
-                <template if:true={displayingMaxNumberOfResults}>
-                    <div class="slds-text-align_center" style="max-width: 80%;">{searchResultsLimited}</div>
-                </template>
-            </div>
-        </div>
+        </lightning-card>
     </template>
-
-
 </template>

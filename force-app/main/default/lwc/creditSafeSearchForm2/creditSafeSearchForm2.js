@@ -166,13 +166,13 @@ export default class CreditSafeSearchForm2 extends LightningElement {
             statuses = [
                 { label: Active, value: 'active' },
                 { label: NonActive, value: 'nonactive'},
-                { label: Active, NonActive, value: 'active, NonActive' }
+                { label: Active + ', ' + NonActive, value: 'active, NonActive' }
             ];
         }
         if (this.isSeSelected || this.isIeSelected || this.isGbSelected || this.isDeSelected) {
             statuses = [
                 { label: Active, value: 'active' },
-                { label: Active, NonActive, value: 'Active, NonActive' }
+                { label: Active + ', ' + NonActive, value: 'Active, NonActive' }
             ];
         }
         if (this.isBeSelected) {
@@ -303,6 +303,16 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     handleRegistrationTypeOnChange(event) {
         this.registrationType = event.target.value;
+        this.handleOnChange(event);
+    }
+
+    handleCreditSafeIdOnChange(event) {
+        this.creditSafeId = event.target.value;
+        this.handleOnChange(event);
+    }
+
+    handleRegistrationNumberOnChange(event) {
+        this.registrationNumber = event.target.value;
         this.handleOnChange(event);
     }
 
