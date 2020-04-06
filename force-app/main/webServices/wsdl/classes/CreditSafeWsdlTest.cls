@@ -272,10 +272,4 @@ private class CreditSafeWsdlTest {
         new CreditsafeWsdl.CreditsafeStreetAddressArray();
     }
 
-    @IsTest
-    private static void testDoFallBack() {
-        CreditsafeWsdl.Webservices_nlPort port = new CreditsafeWsdl.Webservices_nlPort();
-        port.doFallBack();
-        System.assert(port.endpoint_x == 'https://ws2.webservices.nl:443/accounting/soap_doclit.php');
-    }
 }
