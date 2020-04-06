@@ -827,6 +827,14 @@
         <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
     </labels>
     <labels>
+        <fullName>No_address_fields_filled_international_address</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No address fields filled international address</shortDescription>
+        <value>Please fill some address fields (street, postal code, PO box or locality) before searching.</value>
+    </labels>
+    <labels>
         <fullName>NonActive</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
