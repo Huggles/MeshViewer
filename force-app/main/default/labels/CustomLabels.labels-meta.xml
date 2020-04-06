@@ -330,7 +330,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Creditsafe company identifier</shortDescription>
-        <value>Creditsafe company identifier</value>
+        <value>Creditsafe Company Identifier</value>
     </labels>
     <labels>
         <fullName>DBSCall_AccountDupCheck_Exception</fullName>
