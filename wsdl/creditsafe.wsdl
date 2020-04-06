@@ -1780,59 +1780,59 @@
 <binding name="Webservices.nlBinding" type="tns:Webservices.nlPortType">
   <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
   <operation name="login">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/login" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/login" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="logout">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/logout" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/logout" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="creditsafeGetReportFull">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFull" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFull" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="creditsafeSearch">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearch" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="creditsafeSearchV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="creditsafeGetReportFullV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeGetReportFullV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="creditsafeSearchCriteria">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchCriteria" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeSearchCriteria" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="creditsafeMonitorAddCompany">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorAddCompany" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorAddCompany" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="creditsafeMonitorRemoveCompany">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorRemoveCompany" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorRemoveCompany" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="creditsafeMonitorGetUpdatedCompanies">
-    <soap:operation soapAction="https://ws1.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorGetUpdatedCompanies" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/creditsafe/soap_doclit.php/creditsafeMonitorGetUpdatedCompanies" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
 </binding>
 <service name="Webservices.nl">
   <port name="Webservices.nlPort" binding="tns:Webservices.nlBinding">
-    <soap:address location="https://ws1.webservices.nl:443/creditsafe/soap_doclit.php"/>
+    <soap:address location="https://api.webservices.nl:443/creditsafe/soap_doclit.php"/>
   </port>
 </service>
 </definitions>
