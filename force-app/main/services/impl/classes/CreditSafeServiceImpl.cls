@@ -92,7 +92,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         if (String.isNotEmpty(registration_number)) {
             List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
             resultValue1.addAll(doSearch(new List<String>{'BE'}, '', '', registration_number, '', '', '', '', '', '', ''));
-            resultValue1 = addSearchCriteria(resultValue, 'registration_number');
+            resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
             resultValue.addAll(resultValue1);
         }
 
@@ -222,9 +222,9 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         }
 
         //parameter4 - name, status, registration_type, street, city, postalcode
-        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code)) {
+        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code) || String.isNotEmpty(registration_type)) {
             List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
-            resultValue1.addAll(doSearch(new List<String>{'GB'}, '', status, '', '', '', '', city, street, postal_code, name));
+            resultValue1.addAll(doSearch(new List<String>{'GB'}, '', status, '', registration_type, '', '', city, street, postal_code, name));
             resultValue1 = addSearchCriteria(resultValue1, 'name, status, registration_type, street, city, postalcode');
             resultValue.addAll(resultValue1);
         }
@@ -282,9 +282,9 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         }
 
         //parameter3 - name, status, registration_type, street, city, postalcode
-        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code)) {
+        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code) || String.isNotEmpty(registration_type)) {
             List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
-            resultValue1.addAll(doSearch(new List<String>{'SE'}, '', status, '', '', '', '', city, street, postal_code, name));
+            resultValue1.addAll(doSearch(new List<String>{'SE'}, '', status, '', registration_type, '', '', city, street, postal_code, name));
             resultValue1 = addSearchCriteria(resultValue1, 'name, status, registration_type, street, city, postalcode');
             resultValue.addAll(resultValue1);
         }
