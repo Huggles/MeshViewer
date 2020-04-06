@@ -61,7 +61,7 @@
         </sections>
     </layouts>
     <layouts>
-        <layout>Credit Safe Page Layout</layout>
+        <layout>Creditsafe Page Layout</layout>
         <sections>
             <label><!-- Custom Links --></label>
             <section>Custom Links</section>
