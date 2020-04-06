@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <name>Get_for_Company_IDs</name>
         <label>Get for Company IDs</label>
@@ -115,6 +114,8 @@
         <expression>{!$Label.appsolutely__an_error_occured}</expression>
     </formulas>
     <interviewLabel>Get Creditsafe Report Quick Action {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <isTemplate>true</isTemplate>
     <label>Get Creditsafe Report Quick Action on Business Dossier</label>
     <processMetadataValues>
         <name>BuilderType</name>
