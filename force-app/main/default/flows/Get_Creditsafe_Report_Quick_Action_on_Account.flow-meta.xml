@@ -31,6 +31,7 @@
         <expression>{!$Label.appsolutely__no_business_dossier_found}</expression>
     </formulas>
     <interviewLabel>Get Creditsafe Report Quick Action on Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
     <label>Get Creditsafe Report Quick Action on Account</label>
     <processMetadataValues>
         <name>BuilderType</name>

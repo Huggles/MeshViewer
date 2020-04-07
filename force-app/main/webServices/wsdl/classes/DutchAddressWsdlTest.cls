@@ -28,14 +28,6 @@ private class DutchAddressWsdlTest {
     }
 
     @IsTest
-    private static void testDoFallBack() {
-        DutchAddressWsdl.Webservices_nlPort port = new DutchAddressWsdl.Webservices_nlPort();
-        port.doFallBack();
-        System.assert(port.endpoint_x == 'https://ws2.webservices.nl:443/accounting/soap_doclit.php');
-    }
-
-
-    @IsTest
     static void testCoverTypes() {
         new DutchAddressWsdl.DutchAddressPostcodeRange();
         new DutchAddressWsdl.HeaderLoginType();

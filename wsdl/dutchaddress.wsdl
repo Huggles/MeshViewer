@@ -101,24 +101,24 @@
 <binding name="Webservices.nlBinding" type="tns:Webservices.nlPortType">
   <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
   <operation name="login">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchaddress/soap_doclit.php/login" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchaddress/soap_doclit.php/login" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="logout">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchaddress/soap_doclit.php/logout" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchaddress/soap_doclit.php/logout" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="dutchAddressRangePostcodeSearch">
-    <soap:operation soapAction="https://ws1.webservices.nl/dutchaddress/soap_doclit.php/dutchAddressRangePostcodeSearch" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/dutchaddress/soap_doclit.php/dutchAddressRangePostcodeSearch" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
 </binding>
 <service name="Webservices.nl">
   <port name="Webservices.nlPort" binding="tns:Webservices.nlBinding">
-    <soap:address location="https://ws1.webservices.nl:443/dutchaddress/soap_doclit.php"/>
+    <soap:address location="https://api.webservices.nl:443/dutchaddress/soap_doclit.php"/>
   </port>
 </service>
 </definitions>

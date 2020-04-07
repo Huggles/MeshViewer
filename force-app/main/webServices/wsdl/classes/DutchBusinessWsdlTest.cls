@@ -182,15 +182,6 @@ private class DutchBusinessWsdlTest {
         new DutchBusinessWsdl.Webservices_nlPort().dutchBusinessUBOCheckInvestigation(null);
     }
 
-
-
-    @IsTest
-    private static void testDoFallBack() {
-        DutchBusinessWsdl.Webservices_nlPort port = new DutchBusinessWsdl.Webservices_nlPort();
-        port.doFallBack();
-        System.assert(port.endpoint_x == 'https://ws2.webservices.nl:443/accounting/soap_doclit.php');
-    }
-
     @IsTest
     static void testCoverTypes() {
         new DutchBusinessWsdl.DutchBusinessPositionV2();
