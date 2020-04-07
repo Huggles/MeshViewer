@@ -4,11 +4,18 @@
 <!-- TODO: beautify this form (add help text, labels etc) -->
 <!-- Search International Address -->
 <template>
-    <template if:true={error}>
-        <c-custom-toast class="error-message" show-on-load title={label.Validation_Error_Message_Toast_Title}>
-            <div>{error}</div>
-        </c-custom-toast>
-    </template>
+<!--    <template if:true={hints}>-->
+<!--        <c-custom-toast class="error-message" show-on-load title={label.Validation_Error_Message_Toast_Title}>-->
+<!--            <div>{label.CreditSafe_Validation_Message_Heading}</div>-->
+<!--            <ul class="slds-list_dotted">-->
+<!--                <template for:each={hints} for:item="hint">-->
+<!--                    <li key={hint}>-->
+<!--                        {hint}-->
+<!--                    </li>-->
+<!--                </template>-->
+<!--            </ul>-->
+<!--        </c-custom-toast>-->
+<!--    </template>-->
     <lightning-combobox name="country"
                         label={label.Country}
                         value={country}
