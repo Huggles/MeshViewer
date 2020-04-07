@@ -3,7 +3,7 @@
  */
 
 public inherited sharing class CreditSafeServiceImpl implements ICreditSafeService{
-    
+
     public List<Business_Dossier__c> searchForCreditSafeDossiers(List<String> countries, String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
         // check the input
         if (countries == null || countries.isEmpty()) {
@@ -135,12 +135,20 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             resultValue.addAll(resultValue1);
         }
 
-        //parameter4 - registration_number, registration_type, city
-        if (String.isNotEmpty(registration_number) || String.isNotEmpty(registration_type) || String.isNotEmpty(city)) {
-            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
-            resultValue1.addAll(doSearch(new List<String>{'DE'}, '', '', registration_number, registration_type, '', '', city, '', '', ''));
-            resultValue1 = addSearchCriteria(resultValue1, 'registration_number, registration_type, city');
-            resultValue.addAll(resultValue1);
+        //parameter4 - registration_number - required, registration_type, city
+        if (String.isNotEmpty(registration_number)) {
+            if (String.isNotEmpty(registration_type) || String.isNotEmpty(city)) {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'DE'}, '', '', registration_number, registration_type, '', '', city, '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number, registration_type, city');
+                resultValue.addAll(resultValue1);
+            }
+            else {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'DE'}, '', '', registration_number, '', '', '', '', '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number, registration_type, city');
+                resultValue.addAll(resultValue1);
+            }
         }
 
         //parameter5 - name, status, registration_type, street, city, postalcode
@@ -166,12 +174,20 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
 
         //parameter2 - creditsafe_unique_id - not available as input parameter
 
-        //parameter3 - registration_number, status, postalcode
-        if (String.isNotEmpty(registration_number) || String.isNotEmpty(status) || String.isNotEmpty(postal_code)) {
-            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
-            resultValue1.addAll(doSearch(new List<String>{'FR'}, '', status, registration_number, '', '', '', '', '', postal_code, ''));
-            resultValue1 = addSearchCriteria(resultValue1, 'registration_number, status, postalcode');
-            resultValue.addAll(resultValue1);
+        //parameter3 - registration_number - required, status, postalcode
+        if (String.isNotEmpty(registration_number)) {
+            if(String.isNotEmpty(status) || String.isNotEmpty(postal_code)) {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'FR'}, '', status, registration_number, '', '', '', '', '', postal_code, ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number, status, postalcode');
+                resultValue.addAll(resultValue1);
+            }
+            else {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'FR'}, '', '', registration_number, '', '', '', '', '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number, status, postalcode');
+                resultValue.addAll(resultValue1);
+            }
         }
 
         //parameter4 - vat_number
@@ -274,11 +290,19 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         }
 
         //parameter2 - registration_number, registration_type
-        if (String.isNotEmpty(registration_number) || String.isNotEmpty(registration_type)) {
-            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
-            resultValue1.addAll(doSearch(new List<String>{'SE'}, '', '', registration_number, registration_type, '', '', '', '', '', ''));
-            resultValue1 = addSearchCriteria(resultValue1, 'registration_number, registration_type');
-            resultValue.addAll(resultValue1);
+        if (String.isNotEmpty(registration_number)) {
+            if(String.isNotEmpty(registration_type)) {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'SE'}, '', '', registration_number, registration_type, '', '', '', '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number, registration_type');
+                resultValue.addAll(resultValue1);
+            }
+            else {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'SE'}, '', '', registration_number, '', '', '', '', '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number, registration_type');
+                resultValue.addAll(resultValue1);
+            }
         }
 
         //parameter3 - name, status, registration_type, street, city, postalcode
@@ -347,7 +371,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         dossier.RecordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByName().get('Creditsafe').getRecordTypeId();
         return dossier;
     }
-    
+
     private Creditsafe_Company_Report_Full__c mapPaymentData(Creditsafe_Company_Report_Full__c companyReportFull, CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2, fflib_ISObjectUnitOfWork unitOfWork) {
         if (reportFullV2.payment_data != null && reportFullV2.payment_data.generic != null && reportFullV2.payment_data.generic.item != null) {
             for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 :reportFullV2.payment_data.generic.item) {
