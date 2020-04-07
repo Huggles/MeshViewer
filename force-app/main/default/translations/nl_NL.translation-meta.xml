@@ -917,28 +917,12 @@
                 <name>GoodsCreditInsuranceChoice</name>
             </choices>
             <choices>
-                <name>GermanLanguage</name>
-            </choices>
-            <choices>
-                <choiceText>&quot;&lt;span style=&quot;&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&quot;&gt;{!ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel}&lt;/span&gt;&quot;</choiceText>
-                <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</name>
-            </choices>
-            <choices>
                 <name>DutchLanguage</name>
             </choices>
             <choices>
-                <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</name>
-            </choices>
-            <choices>
                 <name>RealisationCheckReceivablesCollectionChoice</name>
             </choices>
-            <choices>
-                <name>RealisationCheckReceivablesCollectionChoice</name>
-            </choices>
-            <choices>
-                <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
-            </choices>
-            <fullName>Get_Creditsafe_Report-1</fullName>
+            <fullName>Get_Creditsafe_Report</fullName>
             <label>Ophalen Creditsafe Rapport</label>
             <screens>
                 <fields>
@@ -1007,29 +991,11 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Search_International_Address</fullName>
+            <fullName>Search_International_Address-1</fullName>
             <label>Zoeken Internationale Adressen</label>
             <screens>
                 <fields>
-                    <name>dutchDossiersResult</name>
-                </fields>
-                <fields>
-                    <name>dutchSearchResultFlowFooter</name>
-                </fields>
-                <fields>
-                    <name>flowErrorHandlerDutchResultsScreen</name>
-                </fields>
-                <fields>
-                    <name>searchResultFlowHeader_DutchBusiness</name>
-                </fields>
-                <name>Dutch_Dossiers_Search_Results</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>BusinessSearchForm</name>
-                </fields>
-                <fields>
-                    <name>flowErrorHandlerSearchScreen</name>
+                    <name>searchFlowErrorHandler</name>
                 </fields>
                 <fields>
                     <name>searchFlowFooter</name>
@@ -1037,7 +1003,25 @@
                 <fields>
                     <name>searchFlowHeader</name>
                 </fields>
-                <name>Search</name>
+                <fields>
+                    <name>searchInternationalAddress</name>
+                </fields>
+                <name>International_Address</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>InternationalAddressSearchResults</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerSearchScreen</name>
+                </fields>
+                <fields>
+                    <name>searchResultFlowFooter</name>
+                </fields>
+                <fields>
+                    <name>searchResultFlowHeader</name>
+                </fields>
+                <name>Search_Results</name>
             </screens>
         </flows>
         <fullName>Search_International_Address</fullName>

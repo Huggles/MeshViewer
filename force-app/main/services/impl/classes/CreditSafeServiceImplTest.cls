@@ -205,8 +205,8 @@ private class CreditSafeServiceImplTest {
             }
 
             //test for DEWith name, status, registration_type, street, city, postalcode
-            List<Business_Dossier__c> dossiers4 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'DE'}, '', 'status', '', '', '', '', 'city', 'street', 'postal_code', 'name');
-            System.assertEquals(dossiers4.size() , 10);
+            List<Business_Dossier__c> dossiers4 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'DE'}, '', 'status', '', 'registration_type', '', '', 'city', 'street', 'postal_code', 'name');
+            System.assertEquals(dossiers4.size() , 5);
             for (Business_Dossier__c dossier : dossiers4) {
                 System.assert(dossier.Name.isNumeric());
                 System.assert(dossier.Street__c == 'Braillelaan');
@@ -304,7 +304,7 @@ private class CreditSafeServiceImplTest {
 
             //test for FRWith name, status, street, city, postalcode
             List<Business_Dossier__c> dossiers4 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'FR'}, '', 'status', '', '', '', '', 'city', 'street', 'postal_code', 'name');
-            System.assertEquals(dossiers4.size() , 10);
+            System.assertEquals(dossiers4.size() , 5);
             for (Business_Dossier__c dossier : dossiers4) {
                 System.assert(dossier.Postal_Code__c.startsWith('123'));
                 System.assert(dossier.Status__c == 'status');
@@ -579,7 +579,7 @@ private class CreditSafeServiceImplTest {
 
             //test for IEWith name, status, registration_type, street, city, postalcode
             List<Business_Dossier__c> dossiers4 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'SE'}, '', 'status', '', 'registration_type', '', '', 'city', 'street', 'postal_code', 'name');
-            System.assertEquals(dossiers4.size() , 10);
+            System.assertEquals(dossiers4.size() , 5);
             for (Business_Dossier__c dossier : dossiers4) {
                 System.assert(dossier.Name.isNumeric());
                 System.assert(dossier.Postal_Code__c.startsWith('123'));
