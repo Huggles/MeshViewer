@@ -429,6 +429,10 @@
         <name>Minimum_registration_number_length</name>
     </customLabels>
     <customLabels>
+        <label>Meer dan 20 resultaten gevonden! Verfijn uw zoek criteria.</label>
+        <name>More_than_20_results_message</name>
+    </customLabels>
+    <customLabels>
         <label>Naam</label>
         <name>Name</name>
     </customLabels>

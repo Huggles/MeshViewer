@@ -782,6 +782,14 @@
         <value>Please enter a valid Belgian registration number consisting of 9 digits.</value>
     </labels>
     <labels>
+        <fullName>More_than_20_results_message</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>More than 20 results message</shortDescription>
+        <value>More than 20 results found! Refine your search criteria.</value>
+    </labels>
+    <labels>
         <fullName>Name</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
