@@ -862,7 +862,7 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Get_Creditsafe_Report_Quick_Action-1</fullName>
+            <fullName>Get_Creditsafe_Report_Quick_Action</fullName>
             <label>Ophalen Creditsafe Rapport Quick Action voor Zakelijk Dossier</label>
             <screens>
                 <fields>
@@ -875,7 +875,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Get_Creditsafe_Report_Global_Action-1</fullName>
+            <fullName>Get_Creditsafe_Report_Global_Action</fullName>
             <label>Ophalen Creditsafe Rapport Global Action</label>
         </flows>
         <fullName>Get_Creditsafe_Report_Global_Action</fullName>
@@ -886,7 +886,19 @@
                 <name>CreditAssessmentExistingBusinessConnectionChoice</name>
             </choices>
             <choices>
+                <name>EnglishLanguage</name>
+            </choices>
+            <choices>
+                <name>DutchLanguage</name>
+            </choices>
+            <choices>
+                <name>CreditDecisionChoice</name>
+            </choices>
+            <choices>
                 <name>CreditAssessmentFutureBusinessConnectionChoice</name>
+            </choices>
+            <choices>
+                <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</name>
             </choices>
             <choices>
                 <choiceText>&quot;&lt;span style=&quot;&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&quot;&gt;{!ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel}&lt;/span&gt;&quot;</choiceText>
@@ -899,24 +911,18 @@
                 <name>GermanLanguage</name>
             </choices>
             <choices>
-                <name>CreditDecisionChoice</name>
-            </choices>
-            <choices>
-                <name>DutchLanguage</name>
-            </choices>
-            <choices>
-                <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</name>
-            </choices>
-            <choices>
-                <name>RealisationCheckReceivablesCollectionChoice</name>
+                <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
             </choices>
             <choices>
                 <name>GoodsCreditInsuranceChoice</name>
             </choices>
             <choices>
-                <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
+                <name>DutchLanguage</name>
             </choices>
-            <fullName>Get_Creditsafe_Report-1</fullName>
+            <choices>
+                <name>RealisationCheckReceivablesCollectionChoice</name>
+            </choices>
+            <fullName>Get_Creditsafe_Report</fullName>
             <label>Ophalen Creditsafe Rapport</label>
             <screens>
                 <fields>
@@ -946,7 +952,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Enrich_Account_with_International_Address_Data-1</fullName>
+            <fullName>Enrich_Account_with_International_Address_Data</fullName>
             <label>Verrijk Account met internationale adresgegevens</label>
             <screens>
                 <fields>
@@ -959,14 +965,14 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Account_based_on_Company_info_data-1</fullName>
+            <fullName>Create_Account_based_on_Company_info_data</fullName>
             <label>Account aanmaken op basis van Company.info data</label>
         </flows>
         <fullName>Create_Account_based_on_Company_info_data</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Complete_Account_with_Dossier_Data-1</fullName>
+            <fullName>Complete_Account_with_Dossier_Data</fullName>
             <label>Verrijk Account met dossier gegevens</label>
             <screens>
                 <fields>
@@ -1022,41 +1028,35 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow-1</fullName>
+            <fullName>Organisation_Search_Flow</fullName>
             <label>Organisatie Zoek Flow</label>
             <screens>
                 <fields>
-                    <name>dutchDossiersResult</name>
+                    <name>NoResults</name>
                 </fields>
                 <fields>
-                    <name>dutchSearchResultFlowFooter</name>
+                    <name>ResultsByCompanyId</name>
                 </fields>
                 <fields>
-                    <name>flowErrorHandlerDutchResultsScreen</name>
+                    <name>ResultsByNameStatusRegistration_typeStreetCityPostalcode</name>
                 </fields>
                 <fields>
-                    <name>searchResultFlowHeader_DutchBusiness</name>
-                </fields>
-                <name>Dutch_Dossiers_Search_Results</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>BusinessSearchForm</name>
+                    <name>ResultsByNameStatusStreetCityPostalcode</name>
                 </fields>
                 <fields>
-                    <name>flowErrorHandlerSearchScreen</name>
+                    <name>ResultsByNameStatusStreetCityProvincePostalcode</name>
                 </fields>
                 <fields>
-                    <name>searchFlowFooter</name>
+                    <name>ResultsByRegistrationNumber</name>
                 </fields>
                 <fields>
-                    <name>searchFlowHeader</name>
+                    <name>ResultsByRegistration_NumberRegistration_TypeCity</name>
                 </fields>
-                <name>Search</name>
-            </screens>
-            <screens>
                 <fields>
-                    <name>creditSafeDossierSearchResults</name>
+                    <name>ResultsByRegistration_numberStatusPostalcode</name>
+                </fields>
+                <fields>
+                    <name>ResultsByVatNumber</name>
                 </fields>
                 <fields>
                     <name>creditSafeSearchResultFlowErrorHandler</name>
@@ -1074,7 +1074,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account-1</fullName>
+            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account</fullName>
             <label>Ophalen Creditsafe Rapport Quick Action op Account</label>
             <screens>
                 <fields>

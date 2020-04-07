@@ -15,7 +15,7 @@ public class SearchForCreditSafeDossiersInvocableTest {
         searchResultV2.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
         for (Integer i = 0; i < 1; i++) {
             CreditsafeWsdl.CreditsafeCompanyV2 company  = new CreditsafeWsdl.CreditsafeCompanyV2();
-            company.country = 'NL';
+            company.country = 'BE';
             company.name = '' + i;
             searchResultV2.companies.item.add(company);
         }
@@ -31,7 +31,7 @@ public class SearchForCreditSafeDossiersInvocableTest {
         Application.Service.setMock(IWsCreditsafe.class, wsCreditsafeService);
         List<SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument> arguments = new List<SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument>();
         SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument argument = new SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument();
-        argument.countries = new List<String>{'NL'};
+        argument.countries = new List<String>{'BE'};
         argument.id = 'id';
         argument.status = 'status';
         argument.registration_number = 'regnr';
@@ -48,7 +48,7 @@ public class SearchForCreditSafeDossiersInvocableTest {
         {
             List<List<Business_Dossier__c>> dossiers= SearchForCreditSafeDossiersInvocable.searchForCreditSafeDossier(arguments);
             System.assert(dossiers.size() == 1);
-            System.assert(dossiers.get(0).size() == 1);
+            System.assert(dossiers.get(0).size() == 4);
         }
         Test.stopTest();
     }
