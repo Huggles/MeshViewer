@@ -49,7 +49,7 @@ private class SearchForDutchDossiersInvocableTest {
         SearchForDutchDossiersInvocable.SearchForDutchDossiersArgument argument = new SearchForDutchDossiersInvocable.SearchForDutchDossiersArgument();
         argument.street = 'street';
         argument.city = 'city';
-        argument.house_number = 1;
+        argument.house_number = '1';
         argument.telephone_number = '123123123';
         argument.domain_name = 'domain';
         argument.dossier_number = '1';
