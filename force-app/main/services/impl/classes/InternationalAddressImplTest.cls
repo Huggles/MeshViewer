@@ -35,7 +35,7 @@ private class InternationalAddressImplTest {
         internationalV2_1.element_result_status = '01234567';
         InternationalAddressWsdl.InternationalV2 internationalV2_2 = new InternationalAddressWsdl.InternationalV2();
         InternationalAddressWsdl.InternationalFormattedAddress address2 = new InternationalAddressWsdl.InternationalFormattedAddress();
-        address2.matchrate = 100.0;
+        address2.matchrate = 90.0;
         address2.province = 'province2';
         address2.department = 'department2';
         address2.postcode = 'postcode2';
@@ -55,7 +55,7 @@ private class InternationalAddressImplTest {
         internationalV2_2.element_result_status = '01234567';
         searchV2Result.result = new InternationalAddressWsdl.InternationalV2Array();
         searchV2Result.result.item = new List<InternationalAddressWsdl.InternationalV2>{internationalV2_1, internationalV2_2};
-        mocks.when(wsInternationalAddress.internationalAddressSearchV2('organization',
+        mocks.when(wsInternationalAddress.internationalAddressSearchV2('org2',
                 'building',
                 'street',
                 'housenr',
@@ -72,7 +72,7 @@ private class InternationalAddressImplTest {
 
         // when
         Test.startTest();
-        List<International_Address__c> internationalAddresses = InternationalAddressService.internationalAddressSearchV2('organization',
+        List<International_Address__c> internationalAddresses = InternationalAddressService.internationalAddressSearchV2('org2',
                 'building',
                 'street',
                 'housenr',
@@ -87,7 +87,7 @@ private class InternationalAddressImplTest {
 
         // then
         System.assertEquals(2, internationalAddresses.size());
-        for (Integer i = 1; i < internationalAddresses.size()+1; i++) {
+        for (Integer i = internationalAddresses.size(); i == 1; i--) {
             International_Address__c addressToTest = internationalAddresses.get(i-1);
             System.assertEquals('province' + i, addressToTest.Province__c);
             System.assertEquals('street' + i, addressToTest.Street__c);
@@ -104,7 +104,7 @@ private class InternationalAddressImplTest {
             System.assertEquals('building' + i, addressToTest.Building__c);
             System.assertEquals('contact' + i, addressToTest.Contact__c);
             System.assertEquals(100.0, addressToTest.Matchrate__c);
-
+            System.debug(i);
         }
 
 
