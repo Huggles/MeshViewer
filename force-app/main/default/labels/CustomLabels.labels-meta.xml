@@ -647,6 +647,14 @@
         <value>The data vendor service is unavailable due to a temporary technical problem.</value>
     </labels>
     <labels>
+        <fullName>Error_String_Not_Numeric</fullName>
+        <categories>Error,dutchBusiness,creditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error String Not Numeric</shortDescription>
+        <value>A non-numeric value has been entered. Numeric value expected.</value>
+    </labels>
+    <labels>
         <fullName>Error_Unknown</fullName>
         <language>en_US</language>
         <protected>true</protected>

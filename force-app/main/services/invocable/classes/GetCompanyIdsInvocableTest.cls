@@ -15,7 +15,7 @@ public with sharing class GetCompanyIdsInvocableTest {
         searchResultV2.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
         for (Integer i = 0; i < 2; i++) {
             CreditsafeWsdl.CreditsafeCompanyV2 company  = new CreditsafeWsdl.CreditsafeCompanyV2();
-            company.country = 'NL';
+            company.country = 'BE';
             company.name = '' + i;
             company.registration_number = '123' + i;
             company.id = '' + i;
@@ -36,7 +36,7 @@ public with sharing class GetCompanyIdsInvocableTest {
         {
             List<SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument> arguments = new List<SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument>();
             SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument argument = new SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument();
-            argument.countries = new List<String>{'NL'};
+            argument.countries = new List<String>{'BE'};
             argument.id = 'id';
             argument.status = 'status';
             argument.registration_number = 'regnr';
@@ -50,7 +50,7 @@ public with sharing class GetCompanyIdsInvocableTest {
             arguments.add(argument);
 
             List<String> companyIds= GetCompanyIdsInvocable.getForCompanyId(arguments);
-            System.assert(companyIds.size() == 2);
+            System.assert(companyIds.size() == 8);
             System.assert(companyIds.get(0) == '0');
         }
         Test.stopTest();
