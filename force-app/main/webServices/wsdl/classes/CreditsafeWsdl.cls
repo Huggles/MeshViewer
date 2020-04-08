@@ -1508,7 +1508,7 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'item'};
     }
     public class CreditsafeEmployeeInformation {
-        public Long year;
+        public Integer year;
         public String number_of_employees;
         private String[] year_type_info = new String[]{'year','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] number_of_employees_type_info = new String[]{'number_of_employees','http://www.webservices.nl/soap/',null,'1','1','false'};
@@ -1528,8 +1528,8 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'item'};
     }
     public class CreditsafeCompanyEmployeeInformationV2 {
-        public Long number_of_employees;
-        public Long year;
+        public Integer number_of_employees;
+        public Integer year;
         private String[] number_of_employees_type_info = new String[]{'number_of_employees','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] year_type_info = new String[]{'year','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
