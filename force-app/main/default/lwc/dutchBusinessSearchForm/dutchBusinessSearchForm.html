@@ -29,13 +29,6 @@
             <lightning-input name="dossierNumber" class="slds-m-around_xxx-small" label={label.Dossier_Number} type="text" variant="standard"
                              value={dossierNumber} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
-        <lightning-layout-item size="4">
-            <lightning-input name="postalCode" class="slds-m-around_xxx-small" label={label.Postal_Code} type="text" variant="standard"
-                              value={postalCode} pattern="^(?:NL-)?(?:[1-9]\d{3} ?(?:[A-EGHJ-NPRTVWXZ][A-EGHJ-NPRSTVWXZ]|S[BCEGHJ-NPRTVWXZ]))" message-when-pattern-mismatch={label.Valid_Dutch_postal_code} onchange={handleOnChange}></lightning-input>
-        </lightning-layout-item>
-        <lightning-layout-item size="8">
-            <lightning-input name="city" class="slds-m-around_xxx-small" label={label.City} type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
-        </lightning-layout-item>
         <lightning-layout-item size="6">
             <lightning-input name="street" class="slds-m-around_xxx-small" label={label.Street} type="text"
                              variant="standard" value={street} onchange={handleOnChange}></lightning-input>
@@ -48,6 +41,14 @@
             <lightning-input name="houseNumberAddition" class="slds-m-around_xxx-small" label={label.Addition} type="text"
                              variant="standard" value={houseNumberAddition} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
+        <lightning-layout-item size="4">
+            <lightning-input name="postalCode" class="slds-m-around_xxx-small" label={label.Postal_Code} type="text" variant="standard"
+                              value={postalCode} pattern="^(?:NL-)?(?:[1-9]\d{3} ?(?:[A-EGHJ-NPRTVWXZ][A-EGHJ-NPRSTVWXZ]|S[BCEGHJ-NPRTVWXZ]))" message-when-pattern-mismatch={label.Valid_Dutch_postal_code} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="8">
+            <lightning-input name="city" class="slds-m-around_xxx-small" label={label.City} type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+
         <lightning-layout-item size="6">
             <lightning-input name="domainName" class="slds-m-around_xxx-small" label={label.Domain_Name} type="text"
                              variant="standard" value={domainName} onchange={handleOnChange}></lightning-input>
@@ -59,7 +60,8 @@
     </lightning-layout>
     <lightning-input name="strictSearch" class="slds-m-around_x-small" label={label.Strict_Search} type="toggle"
                      message-toggle-active="" message-toggle-inactive=""
-                     checked={strictSearch} variant="standard" onchange={handleOnCheckedChange}></lightning-input>
+                     checked={strictSearch} variant="standard" onchange={handleOnCheckedChange}>
+    </lightning-input>
 
 
 
