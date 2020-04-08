@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
@@ -16,6 +15,12 @@
             <targetReference>Dutch_Dossiers_Search_Results</targetReference>
         </faultConnector>
         <inputParameters>
+            <name>dossierNumber</name>
+            <value>
+                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>getVat</name>
             <value>
                 <elementReference>VATEnrichmentRequired</elementReference>
@@ -25,12 +30,6 @@
             <name>establishmentNumber</name>
             <value>
                 <elementReference>selectedDossier.Establishment_Number__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>dossierNumber</name>
-            <value>
-                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -63,7 +62,7 @@
         <inputParameters>
             <name>city</name>
             <value>
-                <elementReference>City</elementReference>
+                <elementReference>BusinessSearchForm.city</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -75,61 +74,58 @@
         <inputParameters>
             <name>id</name>
             <value>
-                <elementReference>CreditSafeRegistrationId</elementReference>
+                <elementReference>BusinessSearchForm.creditSafeId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>Name</name>
             <value>
-                <elementReference>TradeName</elementReference>
+                <elementReference>BusinessSearchForm.tradeName</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>postal_code</name>
             <value>
-                <elementReference>PostalCode</elementReference>
+                <elementReference>BusinessSearchForm.postalCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>province</name>
             <value>
-                <elementReference>Province</elementReference>
+                <elementReference>BusinessSearchForm.province</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>registration_number</name>
             <value>
-                <elementReference>RegistrationNumber</elementReference>
+                <elementReference>BusinessSearchForm.registrationNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>registration_type</name>
             <value>
-                <elementReference>RegistrationType</elementReference>
+                <elementReference>BusinessSearchForm.registrationType</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>status</name>
             <value>
-                <elementReference>Status</elementReference>
+                <elementReference>BusinessSearchForm.status</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>street</name>
             <value>
-                <elementReference>Street</elementReference>
+                <elementReference>BusinessSearchForm.street</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>vat_number</name>
             <value>
-                <elementReference>VATNumber</elementReference>
+                <elementReference>BusinessSearchForm.vatNumber</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>foundBusinessDossiers</assignToReference>
-            <name>output</name>
-        </outputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
@@ -148,67 +144,64 @@
         <inputParameters>
             <name>dossier_number</name>
             <value>
-                <elementReference>RegistrationNumber</elementReference>
+                <elementReference>BusinessSearchForm.registrationNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>city</name>
             <value>
-                <elementReference>City</elementReference>
+                <elementReference>BusinessSearchForm.city</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>domain_name</name>
             <value>
-                <elementReference>DomainName</elementReference>
+                <elementReference>BusinessSearchForm.domainName</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>house_number</name>
             <value>
-                <elementReference>HouseNumberAsIntConversion</elementReference>
+                <elementReference>BusinessSearchForm.houseNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>house_number_addition</name>
             <value>
-                <elementReference>HouseNumberAddition</elementReference>
+                <elementReference>BusinessSearchForm.houseNumberAddition</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>postcode</name>
             <value>
-                <elementReference>PostalCode</elementReference>
+                <elementReference>BusinessSearchForm.postalCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>street</name>
             <value>
-                <elementReference>Street</elementReference>
+                <elementReference>BusinessSearchForm.street</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>strictSearch</name>
             <value>
-                <elementReference>StrictSearch</elementReference>
+                <elementReference>BusinessSearchForm.strictSearch</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>telephone_number</name>
             <value>
-                <elementReference>PhoneNumber</elementReference>
+                <elementReference>BusinessSearchForm.phoneNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>trade_name</name>
             <value>
-                <elementReference>TradeName</elementReference>
+                <elementReference>BusinessSearchForm.tradeName</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>foundBusinessDossiers</assignToReference>
-            <name>output</name>
-        </outputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
         <description>Assigns the country selected in the search screen to a list</description>
@@ -220,7 +213,7 @@
             <assignToReference>Countries</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>SelectedCountry</elementReference>
+                <elementReference>BusinessSearchForm.selectedCountry</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -499,7 +492,7 @@
             <name>Search_for_Dutch_Dossiers_Outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SelectedCountry</leftValueReference>
+                <leftValueReference>BusinessSearchForm.selectedCountry</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>NL</stringValue>
@@ -649,6 +642,7 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Organisation Search Flow</label>
     <loops>
         <name>Separate_Search_Results</name>
@@ -656,7 +650,7 @@
         <locationX>418</locationX>
         <locationY>575</locationY>
         <assignNextValueToReference>LoopVariableBusinessDossier</assignNextValueToReference>
-        <collectionReference>foundBusinessDossiers</collectionReference>
+        <collectionReference>Search_for_Credit_Safe_Dossiers</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Filter_Search_Results</targetReference>
@@ -737,7 +731,7 @@
             <inputParameters>
                 <name>searchResults</name>
                 <value>
-                    <elementReference>foundBusinessDossiers</elementReference>
+                    <elementReference>Search_for_Dutch_Dossiers</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -911,74 +905,7 @@
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>City</assignToReference>
-                <name>city</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>DomainName</assignToReference>
-                <name>domainName</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>HouseNumber</assignToReference>
-                <name>houseNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>HouseNumberAddition</assignToReference>
-                <name>houseNumberAddition</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>PhoneNumber</assignToReference>
-                <name>phoneNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>PostalCode</assignToReference>
-                <name>postalCode</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>SelectedCountry</assignToReference>
-                <name>selectedCountry</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Street</assignToReference>
-                <name>street</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>TradeName</assignToReference>
-                <name>tradeName</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>RegistrationNumber</assignToReference>
-                <name>registrationNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>RegistrationType</assignToReference>
-                <name>registrationType</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Status</assignToReference>
-                <name>status</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>RegistrationNumber</assignToReference>
-                <name>dossierNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Province</assignToReference>
-                <name>province</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>VATNumber</assignToReference>
-                <name>vatNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>CreditSafeRegistrationId</assignToReference>
-                <name>creditSafeId</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>StrictSearch</assignToReference>
-                <name>strictSearch</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>searchFlowFooter</name>

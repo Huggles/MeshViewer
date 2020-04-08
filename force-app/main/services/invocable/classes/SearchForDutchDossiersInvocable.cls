@@ -19,7 +19,7 @@ global with sharing class SearchForDutchDossiersInvocable {
         @InvocableVariable(label='Postal Code')
         global String postcode;
         @InvocableVariable(label='House Number')
-        global Integer house_number;
+        global String house_number;
         @InvocableVariable(label='House Number Addition')
         global String house_number_addition;
         @InvocableVariable(label='Telephone Number')
@@ -34,7 +34,14 @@ global with sharing class SearchForDutchDossiersInvocable {
     global static List<List<Business_Dossier__c>> searchForDutchDossiers(List<SearchForDutchDossiersArgument> arguments) {
         List<List<Business_Dossier__c>> returnList = new List<List<Business_Dossier__c>>();
         for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
+            // input check
+            if (!String.isEmpty(searchForDutchDossiersArgument.house_number) && !searchForDutchDossiersArgument.house_number.isNumeric()) {
+                Exception ex = new CCInputException(Label.Error_String_Not_Numeric);
+                ErrorLogUtil.logException(ex);
+                throw ex;
+            }
             List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
+            System.debug(searchForDutchDossiersArgument.house_number);
             businessDossiers.addAll(
                     DutchBusinessService.searchForDutchDossiersSObject(
                             searchForDutchDossiersArgument.dossier_number,
@@ -42,7 +49,7 @@ global with sharing class SearchForDutchDossiersInvocable {
                             searchForDutchDossiersArgument.city,
                             searchForDutchDossiersArgument.street,
                             searchForDutchDossiersArgument.postcode,
-                            searchForDutchDossiersArgument.house_number,
+                            String.isEmpty(searchForDutchDossiersArgument.house_number) ? null : Integer.valueOf(searchForDutchDossiersArgument.house_number),
                             searchForDutchDossiersArgument.house_number_addition,
                             searchForDutchDossiersArgument.telephone_number,
                             searchForDutchDossiersArgument.domain_name,
