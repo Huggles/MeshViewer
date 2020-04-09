@@ -146,20 +146,20 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'name','address','bank_code'};
     }
     public class CreditsafeCompanyProfitAndLossV2 {
-        public Integer depreciation;
-        public Integer dividends;
-        public Integer financial_expenses;
-        public Integer financial_income;
-        public Integer operating_costs;
-        public Integer operating_profit;
-        public Integer other_appropriations;
-        public Integer pension_costs;
-        public Integer profit_after_tax;
-        public Integer profit_before_tax;
-        public Integer retained_profit;
-        public Integer revenue;
-        public Integer tax;
-        public Integer wages_and_salaries;
+        public Long depreciation;
+        public Long dividends;
+        public Long financial_expenses;
+        public Long financial_income;
+        public Long operating_costs;
+        public Long operating_profit;
+        public Long other_appropriations;
+        public Long pension_costs;
+        public Long profit_after_tax;
+        public Long profit_before_tax;
+        public Long retained_profit;
+        public Long revenue;
+        public Long tax;
+        public Long wages_and_salaries;
         private String[] depreciation_type_info = new String[]{'depreciation','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] dividends_type_info = new String[]{'dividends','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] financial_expenses_type_info = new String[]{'financial_expenses','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -247,8 +247,8 @@ public class CreditsafeWsdl {
     }
     public class CreditsafeOtherFinancials {
         public String contingent_liabilities;
-        public Decimal working_capital;
-        public Decimal net_worth;
+        public Double working_capital;
+        public Double net_worth;
         private String[] contingent_liabilities_type_info = new String[]{'contingent_liabilities','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] working_capital_type_info = new String[]{'working_capital','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] net_worth_type_info = new String[]{'net_worth','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -272,7 +272,7 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'court_action','date_of_bankruptcy','details'};
     }
     public class CreditsafeBeEvent {
-        public Integer serial_number;
+        public Long serial_number;
         public String description;
         private String[] serial_number_type_info = new String[]{'serial_number','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] description_type_info = new String[]{'description','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -460,7 +460,7 @@ public class CreditsafeWsdl {
         public String importer;
         public String rsin_number;
         public String branch_number;
-        public Integer negative_rating;
+        public Long negative_rating;
         private String[] date_of_legal_form_type_info = new String[]{'date_of_legal_form','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] date_of_cessation_trading_type_info = new String[]{'date_of_cessation_trading','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] exporter_type_info = new String[]{'exporter','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -972,20 +972,20 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'out'};
     }
     public class CreditsafeFinancialRatios {
-        public Decimal pre_tax_profit_margin;
-        public Decimal return_on_capital_employed;
-        public Decimal return_on_total_assets_employed;
-        public Decimal return_on_net_assets_employed;
-        public Decimal sales_or_net_working_capital;
-        public Decimal stock_turnover_ratio;
-        public Decimal debtor_days;
-        public Decimal creditor_days;
-        public Decimal current_ratio;
-        public Decimal liquidity_ratio_or_acid_test;
-        public Decimal current_debt_ratio;
-        public Decimal gearing;
-        public Decimal equity_in_percentage;
-        public Decimal total_debt_ratio;
+        public Double pre_tax_profit_margin;
+        public Double return_on_capital_employed;
+        public Double return_on_total_assets_employed;
+        public Double return_on_net_assets_employed;
+        public Double sales_or_net_working_capital;
+        public Double stock_turnover_ratio;
+        public Double debtor_days;
+        public Double creditor_days;
+        public Double current_ratio;
+        public Double liquidity_ratio_or_acid_test;
+        public Double current_debt_ratio;
+        public Double gearing;
+        public Double equity_in_percentage;
+        public Double total_debt_ratio;
         private String[] pre_tax_profit_margin_type_info = new String[]{'pre_tax_profit_margin','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] return_on_capital_employed_type_info = new String[]{'return_on_capital_employed','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] return_on_total_assets_employed_type_info = new String[]{'return_on_total_assets_employed','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -1104,8 +1104,8 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'address','creditsafe_number','date_last_account','date_last_change','trade_names','vat_numbers','country','registration_number','name','id','type_x','status','office_type'};
     }
     public class CreditsafeBePaymentExpectationsSummary {
-        public Decimal payment_expectation_days;
-        public Decimal day_sales_outstanding;
+        public Double payment_expectation_days;
+        public Double day_sales_outstanding;
         private String[] payment_expectation_days_type_info = new String[]{'payment_expectation_days','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] day_sales_outstanding_type_info = new String[]{'day_sales_outstanding','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
@@ -1158,24 +1158,24 @@ public class CreditsafeWsdl {
         public Integer number_of_weeks;
         public String currency_x;
         public Boolean consolidated_accounts;
-        public Decimal revenue;
-        public Decimal operating_costs;
-        public Decimal operating_profit;
-        public Decimal wages_and_salaries;
-        public Decimal pension_costs;
-        public Decimal depreciation;
-        public Decimal amortisation;
-        public Decimal financial_income;
-        public Decimal financial_expenses;
-        public Decimal extraordinary_income;
-        public Decimal extraordinary_costs;
-        public Decimal profit_before_tax;
-        public Decimal tax;
-        public Decimal profit_after_tax;
-        public Decimal dividends;
-        public Decimal minority_interests;
-        public Decimal other_appropriations;
-        public Decimal retained_profit;
+        public Double revenue;
+        public Double operating_costs;
+        public Double operating_profit;
+        public Double wages_and_salaries;
+        public Double pension_costs;
+        public Double depreciation;
+        public Double amortisation;
+        public Double financial_income;
+        public Double financial_expenses;
+        public Double extraordinary_income;
+        public Double extraordinary_costs;
+        public Double profit_before_tax;
+        public Double tax;
+        public Double profit_after_tax;
+        public Double dividends;
+        public Double minority_interests;
+        public Double other_appropriations;
+        public Double retained_profit;
         private String[] year_end_date_type_info = new String[]{'year_end_date','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] number_of_weeks_type_info = new String[]{'number_of_weeks','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] currency_x_type_info = new String[]{'currency','http://www.webservices.nl/soap/',null,'1','1','false'};
@@ -1208,52 +1208,52 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'item'};
     }
     public class CreditsafeCompanyBalanceSheetV2 {
-        public Integer bank_liabilities;
-        public Integer bank_liabilities_due_after1year;
-        public Integer called_up_share_capital;
-        public Integer cash;
-        public Integer consolidated_accounts;
-        public Integer finished_goods;
-        public Integer goodwill;
-        public Integer group_payables;
-        public Integer group_payables_due_after1year;
-        public Integer group_receivables;
-        public Integer investments;
-        public Integer land_and_buildings;
-        public Integer loans_to_group;
-        public Integer miscellaneous_fixed_assets;
-        public Integer miscellaneous_liabilities;
-        public Integer miscellaneous_liabilities_due_after1_year;
-        public Integer miscellaneous_receivables;
-        public Integer other_current_assets;
-        public Integer other_intangible_assets;
-        public Integer other_inventories;
-        public Integer other_loans;
-        public Integer other_loans_or_finance;
-        public Integer other_loans_or_finance_due_after1_year;
-        public Integer other_reserves;
-        public Integer other_tangible_assets;
-        public Integer plant_and_machinery;
-        public Integer raw_materials;
-        public Integer receivables_due_after1year;
-        public Integer revenue_reserves;
-        public Integer share_premium;
-        public Integer total_assets;
-        public Integer total_current_assets;
-        public Integer total_current_liabilities;
-        public Integer total_fixed_assets;
-        public Integer total_intangible_assets;
-        public Integer total_inventories;
-        public Integer total_liabilities;
-        public Integer total_long_term_liabilities;
-        public Integer total_other_fixed_assets;
-        public Integer total_receivables;
-        public Integer total_shareholders_equity;
-        public Integer total_tangible_assets;
-        public Integer trade_payables;
-        public Integer trade_payables_due_after1year;
-        public Integer trade_receivables;
-        public Integer work_in_progress;
+        public Long bank_liabilities;
+        public Long bank_liabilities_due_after1year;
+        public Long called_up_share_capital;
+        public Long cash;
+        public Long consolidated_accounts;
+        public Long finished_goods;
+        public Long goodwill;
+        public Long group_payables;
+        public Long group_payables_due_after1year;
+        public Long group_receivables;
+        public Long investments;
+        public Long land_and_buildings;
+        public Long loans_to_group;
+        public Long miscellaneous_fixed_assets;
+        public Long miscellaneous_liabilities;
+        public Long miscellaneous_liabilities_due_after1_year;
+        public Long miscellaneous_receivables;
+        public Long other_current_assets;
+        public Long other_intangible_assets;
+        public Long other_inventories;
+        public Long other_loans;
+        public Long other_loans_or_finance;
+        public Long other_loans_or_finance_due_after1_year;
+        public Long other_reserves;
+        public Long other_tangible_assets;
+        public Long plant_and_machinery;
+        public Long raw_materials;
+        public Long receivables_due_after1year;
+        public Long revenue_reserves;
+        public Long share_premium;
+        public Long total_assets;
+        public Long total_current_assets;
+        public Long total_current_liabilities;
+        public Long total_fixed_assets;
+        public Long total_intangible_assets;
+        public Long total_inventories;
+        public Long total_liabilities;
+        public Long total_long_term_liabilities;
+        public Long total_other_fixed_assets;
+        public Long total_receivables;
+        public Long total_shareholders_equity;
+        public Long total_tangible_assets;
+        public Long trade_payables;
+        public Long trade_payables_due_after1year;
+        public Long trade_receivables;
+        public Long work_in_progress;
         private String[] bank_liabilities_type_info = new String[]{'bank_liabilities','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] bank_liabilities_due_after1year_type_info = new String[]{'bank_liabilities_due_after1year','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] called_up_share_capital_type_info = new String[]{'called_up_share_capital','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -1310,9 +1310,9 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'companies'};
     }
     public class CreditsafeQuartiles {
-        public Decimal lower;
-        public Decimal median;
-        public Decimal upper;
+        public Double lower;
+        public Double median;
+        public Double upper;
         private String[] lower_type_info = new String[]{'lower','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] median_type_info = new String[]{'median','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] upper_type_info = new String[]{'upper','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -1320,7 +1320,7 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'lower','median','upper'};
     }
     public class CreditsafeBeRegisteredContractor {
-        public Integer registration_number;
+        public Long registration_number;
         public String contractor_description;
         public DateTime striking_off_date;
         private String[] registration_number_type_info = new String[]{'registration_number','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -1337,10 +1337,10 @@ public class CreditsafeWsdl {
     }
     public class CreditsafeCompanyAdditionalInformationNLPaymentExpectationsSummaryV2 {
         public String suspension_of_payments_mora;
-        public Integer payment_expectation_days;
-        public Integer day_sales_outstanding;
-        public Integer industry_average_payment_expectation_days;
-        public Integer industry_average_day_sales_outstanding;
+        public Long payment_expectation_days;
+        public Long day_sales_outstanding;
+        public Long industry_average_payment_expectation_days;
+        public Long industry_average_day_sales_outstanding;
         private String[] suspension_of_payments_mora_type_info = new String[]{'suspension_of_payments_mora','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] payment_expectation_days_type_info = new String[]{'payment_expectation_days','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] day_sales_outstanding_type_info = new String[]{'day_sales_outstanding','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -1449,7 +1449,7 @@ public class CreditsafeWsdl {
         public String current_credit_rating;
         public String current_rating_description;
         public String current_credit_limit;
-        public Decimal current_contract_limit;
+        public Double current_contract_limit;
         public String previous_credit_limit;
         public String previous_credit_rating;
         public String previous_rating_description;
@@ -1583,7 +1583,7 @@ public class CreditsafeWsdl {
     }
     public class CreditsafeCompanyShareHolderV2 {
         public CreditsafeWsdl.CreditsafeAddressV2 address;
-        public Integer share_percent;
+        public Long share_percent;
         public String name;
         private String[] address_type_info = new String[]{'address','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] share_percent_type_info = new String[]{'share_percent','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -1712,7 +1712,7 @@ public class CreditsafeWsdl {
     public class CreditsafeNlLettersOfLiabilityInformation403 {
         public Integer financial_year;
         public String company_name;
-        public Integer company_number;
+        public Long company_number;
         public DateTime date_submitted;
         public CreditsafeWsdl.CreditsafeNlLettersOfLiabilityArray letters_of_liability;
         public CreditsafeWsdl.CreditsafeNlLettersOfLiabilityArray letters_of_liability_2nd_parent;
@@ -1754,8 +1754,8 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'name','title','first_name','last_name','code','city','telephone_number','fax_number','email_address'};
     }
     public class CreditsafeLtdShareCapitalStructure {
-        public Decimal nominal_share_capital;
-        public Decimal issued_share_capital;
+        public Double nominal_share_capital;
+        public Double issued_share_capital;
         public CreditsafeWsdl.CreditsafeShareHolderArray share_holders;
         private String[] nominal_share_capital_type_info = new String[]{'nominal_share_capital','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] issued_share_capital_type_info = new String[]{'issued_share_capital','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -1816,8 +1816,8 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'item'};
     }
     public class CreditsafeCompanyOtherFinancialsV2 {
-        public Integer net_worth;
-        public Integer working_capital;
+        public Long net_worth;
+        public Long working_capital;
         private String[] net_worth_type_info = new String[]{'net_worth','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] working_capital_type_info = new String[]{'working_capital','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] apex_schema_type_info = new String[]{'http://www.webservices.nl/soap/','true','false'};
@@ -1886,51 +1886,51 @@ public class CreditsafeWsdl {
         public Integer number_of_weeks;
         public String currency_x;
         public Boolean consolidated_accounts;
-        public Decimal land_and_buildings;
-        public Decimal plant_and_machinery;
-        public Decimal other_tangible_assets;
-        public Decimal total_tangible_assets;
-        public Decimal goodwill;
-        public Decimal other_intangible_assets;
-        public Decimal total_intangible_assets;
-        public Decimal investments;
-        public Decimal loans_to_group;
-        public Decimal other_loans;
-        public Decimal miscellaneous_fixed_assets;
-        public Decimal total_other_fixed_assets;
-        public Decimal total_fixed_assets;
-        public Decimal raw_materials;
-        public Decimal work_in_progress;
-        public Decimal finished_goods;
-        public Decimal other_inventories;
-        public Decimal total_inventories;
-        public Decimal trade_receivables;
-        public Decimal group_receivables;
-        public Decimal receivables_due_after1year;
-        public Decimal miscellaneous_receivables;
-        public Decimal total_receivables;
-        public Decimal cash;
-        public Decimal other_current_assets;
-        public Decimal total_current_assets;
-        public Decimal total_assets;
-        public Decimal trade_payables;
-        public Decimal bank_liabilities;
-        public Decimal other_loans_or_finance;
-        public Decimal group_payables;
-        public Decimal miscellaneous_liabilities;
-        public Decimal total_current_liabilities;
-        public Decimal trade_payables_due_after1year;
-        public Decimal bank_liabilities_due_after1year;
-        public Decimal other_loans_or_finance_due_after1year;
-        public Decimal group_payables_due_after1year;
-        public Decimal miscellaneous_liabilities_due_after1year;
-        public Decimal total_long_term_liabilities;
-        public Decimal total_liabilities;
-        public Decimal called_up_share_capital;
-        public Decimal share_premium;
-        public Decimal revenue_reserves;
-        public Decimal other_reserves;
-        public Decimal total_shareholders_equity;
+        public Double land_and_buildings;
+        public Double plant_and_machinery;
+        public Double other_tangible_assets;
+        public Double total_tangible_assets;
+        public Double goodwill;
+        public Double other_intangible_assets;
+        public Double total_intangible_assets;
+        public Double investments;
+        public Double loans_to_group;
+        public Double other_loans;
+        public Double miscellaneous_fixed_assets;
+        public Double total_other_fixed_assets;
+        public Double total_fixed_assets;
+        public Double raw_materials;
+        public Double work_in_progress;
+        public Double finished_goods;
+        public Double other_inventories;
+        public Double total_inventories;
+        public Double trade_receivables;
+        public Double group_receivables;
+        public Double receivables_due_after1year;
+        public Double miscellaneous_receivables;
+        public Double total_receivables;
+        public Double cash;
+        public Double other_current_assets;
+        public Double total_current_assets;
+        public Double total_assets;
+        public Double trade_payables;
+        public Double bank_liabilities;
+        public Double other_loans_or_finance;
+        public Double group_payables;
+        public Double miscellaneous_liabilities;
+        public Double total_current_liabilities;
+        public Double trade_payables_due_after1year;
+        public Double bank_liabilities_due_after1year;
+        public Double other_loans_or_finance_due_after1year;
+        public Double group_payables_due_after1year;
+        public Double miscellaneous_liabilities_due_after1year;
+        public Double total_long_term_liabilities;
+        public Double total_liabilities;
+        public Double called_up_share_capital;
+        public Double share_premium;
+        public Double revenue_reserves;
+        public Double other_reserves;
+        public Double total_shareholders_equity;
         private String[] year_end_date_type_info = new String[]{'year_end_date','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] number_of_weeks_type_info = new String[]{'number_of_weeks','http://www.webservices.nl/soap/',null,'1','1','false'};
         private String[] currency_x_type_info = new String[]{'currency','http://www.webservices.nl/soap/',null,'1','1','false'};
@@ -1992,9 +1992,9 @@ public class CreditsafeWsdl {
     public class CreditsafeBeProtestedBill {
         public String drawee_name;
         public String drawee_address;
-        public Decimal bill_amount;
+        public Double bill_amount;
         public String bill_currency;
-        public Decimal maturity_of_bill_in_months;
+        public Double maturity_of_bill_in_months;
         public Date payment_date;
         public String name_of_drawer;
         public String city_of_drawer;
@@ -2173,10 +2173,10 @@ public class CreditsafeWsdl {
     }
     public class CreditsafeNlPaymentExpectationsSummary {
         public Boolean suspension_of_payments_mora;
-        public Decimal payment_expectation_days;
-        public Decimal day_sales_outstanding;
-        public Decimal industry_average_payment_expectation_days;
-        public Decimal industry_average_day_sales_outstanding;
+        public Double payment_expectation_days;
+        public Double day_sales_outstanding;
+        public Double industry_average_payment_expectation_days;
+        public Double industry_average_day_sales_outstanding;
         private String[] suspension_of_payments_mora_type_info = new String[]{'suspension_of_payments_mora','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] payment_expectation_days_type_info = new String[]{'payment_expectation_days','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] day_sales_outstanding_type_info = new String[]{'day_sales_outstanding','http://www.webservices.nl/soap/',null,'0','1','false'};
@@ -2298,8 +2298,8 @@ public class CreditsafeWsdl {
         public String company_registration_number;
         public CreditsafeWsdl.CreditsafeCompanyActivity main_activity;
         public String company_status;
-        public Decimal latest_turnover_figure;
-        public Decimal latest_shareholders_equity_figure;
+        public Double latest_turnover_figure;
+        public Double latest_shareholders_equity_figure;
         public String credit_rating;
         public String credit_limit;
         public String rating_description;
@@ -2380,8 +2380,8 @@ public class CreditsafeWsdl {
     public class CreditsafeCompanySummaryV2 {
         public CreditsafeWsdl.CreditsafeCompanyStatusV2 company_status;
         public CreditsafeWsdl.CreditsafeCompanyCreditRatingV2 credit_rating;
-        public Integer latest_shareholders_equity_figure;
-        public Integer latest_turnover_figure;
+        public Long latest_shareholders_equity_figure;
+        public Long latest_turnover_figure;
         public CreditsafeWsdl.CreditsafeCompanyActivityV2 main_activity;
         public String country;
         public String number_x;
@@ -2422,11 +2422,11 @@ public class CreditsafeWsdl {
         private String[] field_order_type_info = new String[]{'paging','results'};
     }
     public class CreditsafeBeIndustryComparison {
-        public Integer activity_code;
+        public Long activity_code;
         public String activity_description;
-        public Decimal industry_average_payment_expectation_days;
-        public Decimal industry_average_day_sales_outstanding;
-        public Decimal industry_average_credit_rating;
+        public Double industry_average_payment_expectation_days;
+        public Double industry_average_day_sales_outstanding;
+        public Double industry_average_credit_rating;
         private String[] activity_code_type_info = new String[]{'activity_code','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] activity_description_type_info = new String[]{'activity_description','http://www.webservices.nl/soap/',null,'0','1','false'};
         private String[] industry_average_payment_expectation_days_type_info = new String[]{'industry_average_payment_expectation_days','http://www.webservices.nl/soap/',null,'0','1','false'};

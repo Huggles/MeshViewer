@@ -203,7 +203,7 @@ public inherited sharing abstract class MethodCallout implements Callable {
     private String getErrorMessage(String message) {
         String returnValue = '';
         returnValue = message.removeStart('Web service callout failed: WebService returned a SOAP Fault: ');
-        returnValue = message.substring(0, message.indexOf(' faultcode'));
+        returnValue = message.indexOf(' faultcode') > 0 ? message.substring(0, message.indexOf(' faultcode')): returnValue;
         return returnValue;
     }
 
