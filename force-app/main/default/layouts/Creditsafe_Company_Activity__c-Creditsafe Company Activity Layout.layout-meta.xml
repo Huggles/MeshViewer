@@ -11,11 +11,11 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Activity_Code__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Activity_Description__c</field>
             </layoutItems>
         </layoutColumns>
@@ -25,7 +25,7 @@
                 <field>Creditsafe_Comp_Activity_Classification__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Classification__c</field>
             </layoutItems>
         </layoutColumns>
