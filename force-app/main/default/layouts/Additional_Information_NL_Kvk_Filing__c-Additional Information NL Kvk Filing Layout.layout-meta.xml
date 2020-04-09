@@ -11,7 +11,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Event__c</field>
             </layoutItems>
         </layoutColumns>
@@ -21,7 +21,7 @@
                 <field>Creditsafe_Company_Report_Full__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Date__c</field>
             </layoutItems>
         </layoutColumns>
