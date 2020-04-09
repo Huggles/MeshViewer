@@ -749,7 +749,7 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     for (CreditsafeWsdl.CreditsafeCompanyActivityV2 companyActivityV2 : activityClassificationV2.activities.item) {
                         Creditsafe_Company_Activity__c companyActivity = new Creditsafe_Company_Activity__c();
                         companyActivity.Classification__c = companyActivityV2.classification;
-                        companyActivity.Activity_Code__c = companyActivityV2.activity_code;
+                        companyActivity.Activity_Code__c = companyActivityV2.activity_code.abbreviate(255);
                         companyActivity.Activity_Description__c = companyActivityV2.activity_description;
                         //companyActivity.Creditsafe_Comp_Activity_Classification__c = activityClassification.Id;
                         unitOfWork.registerNew(companyActivity, Creditsafe_Company_Activity__c.Creditsafe_Comp_Activity_Classification__c, activityClassification);
