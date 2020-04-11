@@ -1,14 +1,14 @@
 public interface IBusinessAccountingService {
 
-    /**
-     * Creates a new resell trial user and adds trial budget
-     *
-     * @param username
-     * @param password
-     */
-    void onboardCustomer(String username, String password);
+//    /**
+//     * Creates a new resell trial user and adds trial budget
+//     *
+//     * @param username
+//     * @param password
+//     */
+//    void onboardCustomer(String username, String password);
 
-    boolean getUserOnboarded();
+//    boolean getUserOnboarded();
 
     /**
      * Saves the credentials of the data user and retrieves + saves the userid for the given user
@@ -18,12 +18,12 @@ public interface IBusinessAccountingService {
      */
     void saveDataUserCredentials(String username, String password);
 
-    /**
-     * Adds budget to the Company info user. TODO: research if this should also be added to the account if it is a referall account
-     *
-     * @param amount
-     */
-    void addBudget(Double amount);
+//    /**
+//     * Adds budget to the Company info user. TODO: research if this should also be added to the account if it is a referall account
+//     *
+//     * @param amount
+//     */
+//    void addBudget(Double amount);
 
     /**
      * Returns the balance of the current user

@@ -286,6 +286,14 @@
         <value>Country to Search</value>
     </labels>
     <labels>
+        <fullName>Credentials_successfully_updated_message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Credentials successfully updated message</shortDescription>
+        <value>Credentials safed!</value>
+    </labels>
+    <labels>
         <fullName>CreditSafe_Validation_Message_Heading</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -479,7 +487,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error Client Authentication</shortDescription>
-        <value>The authentication for the data vendor has failed. You are not logged in and cannot retrieve data. Please contact your administrator and check the username, password and account id we provided.</value>
+        <value>Please check your username and password. If you still can&#39;t log in, contact Company.info.</value>
     </labels>
     <labels>
         <fullName>Error_Client_Authentication_Password</fullName>
