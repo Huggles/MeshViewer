@@ -9,6 +9,10 @@
         <name>Active</name>
     </customLabels>
     <customLabels>
+        <label>Gebruikersnaam en wachtwoord succesvol veranderd!</label>
+        <name>Credentials_successfully_updated_message</name>
+    </customLabels>
+    <customLabels>
         <label>Toevoeging</label>
         <name>Addition</name>
     </customLabels>
