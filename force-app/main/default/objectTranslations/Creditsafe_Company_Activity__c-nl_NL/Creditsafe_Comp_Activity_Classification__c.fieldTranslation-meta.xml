@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Creditsafe Company Activiteit Classif.</label>
+    <name>Creditsafe_Comp_Activity_Classification__c</name>
+    <relationshipLabel>Creditsafe Company Activiteiten</relationshipLabel>
+</CustomFieldTranslation>

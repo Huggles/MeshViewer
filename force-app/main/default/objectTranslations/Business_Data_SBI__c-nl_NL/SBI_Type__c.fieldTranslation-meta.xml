@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- SBI Type --></label>
+    <name>SBI_Type__c</name>
+    <picklistValues>
+        <masterLabel>company_info</masterLabel>
+        <translation>Company.info</translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>original</masterLabel>
+        <translation>Origineel</translation>
+    </picklistValues>
+</CustomFieldTranslation>

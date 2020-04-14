@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help><!-- The registration number under which the organisation is registered in the company&apos;s country. For the Netherlands the Chamber of Commerce Number. --></help>
+    <help>Het registratienummer waaronder de organisatie is geregistreerd in het land van de onderneming. Voor Nederland is dit het Kamer van Koophandel nummer.</help>
     <label>KvK Nummer</label>
     <name>Dossier_Number__c</name>
 </CustomFieldTranslation>

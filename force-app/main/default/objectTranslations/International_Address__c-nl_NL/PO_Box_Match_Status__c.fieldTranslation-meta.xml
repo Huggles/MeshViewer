@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Beschrijft hoe het postbus element overeenkomt met de beschikbare referentiegegevens.</help>
+    <label>Postbus Match Status</label>
+    <name>PO_Box_Match_Status__c</name>
+</CustomFieldTranslation>

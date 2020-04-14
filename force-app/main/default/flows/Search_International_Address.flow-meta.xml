@@ -185,7 +185,6 @@
     <description>Searches for and/or completes/corrects international addresses. Returns a maximum of 20 addresses.</description>
     <interviewLabel>Search International Address {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <isTemplate>true</isTemplate>
     <label>Search International Address</label>
     <processMetadataValues>
         <name>BuilderType</name>

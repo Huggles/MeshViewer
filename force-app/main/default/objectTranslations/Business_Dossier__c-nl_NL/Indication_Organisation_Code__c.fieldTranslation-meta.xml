@@ -4,18 +4,18 @@
     <name>Indication_Organisation_Code__c</name>
     <picklistValues>
         <masterLabel>Association</masterLabel>
-        <translation><!-- Association --></translation>
+        <translation>Vereniging</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Business</masterLabel>
-        <translation><!-- Business --></translation>
+        <translation>Bedrijf</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Church community</masterLabel>
-        <translation><!-- Church community --></translation>
+        <translation>Kerkgemeenschap</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Non-profit organisation</masterLabel>
-        <translation><!-- Non-profit organisation --></translation>
+        <translation>Non-profit organisatie</translation>
     </picklistValues>
 </CustomFieldTranslation>
