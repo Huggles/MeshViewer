@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Beschrijft hoe het organisatie element overeenkomt met de beschikbare referentiegegevens.</help>
+    <label>Organisatie Match Status</label>
+    <name>Organization_Match_Status__c</name>
+</CustomFieldTranslation>

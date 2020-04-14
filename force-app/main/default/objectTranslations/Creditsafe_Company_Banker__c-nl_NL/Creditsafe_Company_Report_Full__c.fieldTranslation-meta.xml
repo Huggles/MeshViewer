@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Creditsafe Company Rapport</label>
+    <name>Creditsafe_Company_Report_Full__c</name>
+    <relationshipLabel>Bankiers</relationshipLabel>
+</CustomFieldTranslation>

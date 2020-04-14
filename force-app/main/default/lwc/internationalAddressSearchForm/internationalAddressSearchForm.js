@@ -8,6 +8,7 @@ import getIso3166Options from '@salesforce/apex/Iso3166CountryPickListController
 import getIsO3166OptionByAlpha2Code from '@salesforce/apex/Iso3166CountryPickListController.getIsO3166OptionByAlpha2Code';
 import {fireEvent, registerListener, unregisterAllListeners} from "c/pubsub";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import {sanitizeStreet} from "c/inputSanitization";
 
 import Organization from '@salesforce/label/c.Organization';
 import Building from '@salesforce/label/c.Building';
@@ -109,6 +110,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
         registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
         this.loadCountries();
         this.getDefaultCountry();
+        if (this.street) this.assignStreetAndHouseNumber(this.street);
     }
 
     disconnectedCallback() {
@@ -162,5 +164,13 @@ export default class InternationalAddressSearchForm extends LightningElement {
     dispatchFlowAttributeChangeEvent(attributeName, attributeValue) {
         const attributeChangeEvent = new FlowAttributeChangeEvent(attributeName, attributeValue);
         this.dispatchEvent(attributeChangeEvent);
+    }
+
+    assignStreetAndHouseNumber(street) {
+        var streetWithHouseNumber = sanitizeStreet(this.street);
+        if (streetWithHouseNumber) {
+            if (this.housenr == null || this.housenr == undefined) this.housenr = streetWithHouseNumber.number;
+            this.street = streetWithHouseNumber.street;
+        }
     }
 }

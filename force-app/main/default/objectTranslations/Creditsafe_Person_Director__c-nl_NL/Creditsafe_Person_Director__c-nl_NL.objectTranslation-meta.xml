@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Creditsafe Person Director --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Creditsafe Person Director --></value>
+    </caseValues>
+    <gender><!-- Neuter --></gender>
+    <layouts>
+        <layout>Creditsafe Person Director Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Creditsafe Person Directors Name --></nameFieldLabel>
+    <recordTypes>
+        <description>Huidig __directeur</description>
+        <label>Huidig __directeur</label>
+        <name>Current_Director</name>
+    </recordTypes>
+    <recordTypes>
+        <description>Vorige Director</description>
+        <label>Vorige Director</label>
+        <name>Previous_Director</name>
+    </recordTypes>
+</CustomObjectTranslation>

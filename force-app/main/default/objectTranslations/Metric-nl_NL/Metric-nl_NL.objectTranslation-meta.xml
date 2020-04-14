@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <recordTypes>
+        <description>Meet de prestatie gebaseerd op of de metriek afgerond is of niet. Ideaal voor het bijhouden van mijlpalen, of wanneer u geen statistieken op basis van harde cijfers heeft. Bijvoorbeeld: Word Salesforce gecertificeerd.</description>
+        <label>Voltooiing</label>
+        <name>Completion</name>
+    </recordTypes>
+    <recordTypes>
+        <description>Meet prestatie gebaseerd op hoeveel is bereikd in vergelijking met een vastgestelde waarde. Ideaal voor het bijhouden van harde cijfers en percentages. Bijvoorbeeld: Converteer 50 Leads of Behaal 100% klanttevredenheid.</description>
+        <label>Vooruitgang</label>
+        <name>Progress</name>
+    </recordTypes>
+</CustomObjectTranslation>
