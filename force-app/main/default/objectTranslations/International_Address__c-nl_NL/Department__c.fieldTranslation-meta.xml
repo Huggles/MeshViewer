@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Naam of beschrijving van de afdeling, indien beschikbaar.</help>
+    <label>Afdeling</label>
+    <name>Department__c</name>
+</CustomFieldTranslation>

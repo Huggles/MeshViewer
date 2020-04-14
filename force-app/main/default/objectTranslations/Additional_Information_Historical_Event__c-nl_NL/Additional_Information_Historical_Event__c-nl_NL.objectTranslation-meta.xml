@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value><!-- Additional Information Historical  Event --></value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value><!-- Additional Information Historical  Event --></value>
+    </caseValues>
+    <gender><!-- Neuter --></gender>
+    <layouts>
+        <layout>Additional Information Historical  Event Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel><!-- Creditsafe Company Additional Info Event --></nameFieldLabel>
+</CustomObjectTranslation>

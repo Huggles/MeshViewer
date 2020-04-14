@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>Hierin wordt beschreven hoe de plaats element is gewijzigd</help>
+    <label>Plaats Resultaat Status</label>
+    <name>Locality_Result_Status__c</name>
+</CustomFieldTranslation>
