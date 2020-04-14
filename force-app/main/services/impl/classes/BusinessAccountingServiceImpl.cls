@@ -104,27 +104,27 @@ public inherited sharing class BusinessAccountingServiceImpl implements IBusines
 //        // TODO: ensure we get an order in our PBO !!!
 //    }
 
-    public Double getBalance(){
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        Double currentBalance;
-        if (cs != null && cs.CompanyConnectUserId__c != null) {
-            currentBalance = WsAccounting.userViewBalance(Integer.valueOf(cs.CompanyConnectUserId__c));
-        }
-        return currentBalance;
-    }
-
-    public Boolean userCheckActive(){
-        Boolean returnValue = false;
-        Credentials__c cs = Credentials__c.getOrgDefaults();
-        if (cs != null && cs.CompanyConnectUserId__c != null) {
-            try {
-                AccountingWsdl.UserV2 user = WsAccounting.userViewV2(Integer.valueOf(cs.CompanyConnectUserId__c));
-                returnValue = user.active;
-            } catch(Exception ex) {
-                ErrorLogUtil.logException(ex);
-                throw ex;
-            }
-        }
-        return returnValue;
-    }
+//    public Double getBalance(){
+//        Credentials__c cs = Credentials__c.getOrgDefaults();
+//        Double currentBalance;
+//        if (cs != null && cs.CompanyConnectUserId__c != null) {
+//            currentBalance = WsAccounting.userViewBalance(Integer.valueOf(cs.CompanyConnectUserId__c));
+//        }
+//        return currentBalance;
+//    }
+//
+//    public Boolean userCheckActive(){
+//        Boolean returnValue = false;
+//        Credentials__c cs = Credentials__c.getOrgDefaults();
+//        if (cs != null && cs.CompanyConnectUserId__c != null) {
+//            try {
+//                AccountingWsdl.UserV2 user = WsAccounting.userViewV2(Integer.valueOf(cs.CompanyConnectUserId__c));
+//                returnValue = user.active;
+//            } catch(Exception ex) {
+//                ErrorLogUtil.logException(ex);
+//                throw ex;
+//            }
+//        }
+//        return returnValue;
+//    }
 }

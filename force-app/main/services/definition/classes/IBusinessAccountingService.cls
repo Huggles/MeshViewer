@@ -25,12 +25,12 @@ public interface IBusinessAccountingService {
 //     */
 //    void addBudget(Double amount);
 
-    /**
-     * Returns the balance of the current user
-     *
-     * @return
-     */
-    Double getBalance(); // get balance for currently active CompanyConnect user in the app
-
-    Boolean userCheckActive(); // determine if the CompanyConnect user is currently active
+//    /**
+//     * Returns the balance of the current user
+//     *
+//     * @return
+//     */
+//    Double getBalance(); // get balance for currently active CompanyConnect user in the app
+//
+//    Boolean userCheckActive(); // determine if the CompanyConnect user is currently active
 }

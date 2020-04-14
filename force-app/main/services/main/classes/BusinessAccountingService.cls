@@ -17,13 +17,13 @@ public inherited sharing class BusinessAccountingService {
 //        newInstance().addBudget(amount);
 //    }
     
-    public static Double getBalance(){ // get balance for currently active CompanyConnect user in the app
-        return newInstance().getBalance();
-    }
-
-    public static Boolean userCheckActive(){ // get balance for currently active CompanyConnect user in the app
-        return newInstance().userCheckActive();
-    }
+//    public static Double getBalance(){ // get balance for currently active CompanyConnect user in the app
+//        return newInstance().getBalance();
+//    }
+//
+//    public static Boolean userCheckActive(){ // get balance for currently active CompanyConnect user in the app
+//        return newInstance().userCheckActive();
+//    }
     
     public static IBusinessAccountingService newInstance() {
         return (IBusinessAccountingService) Application.Service.newInstance(IBusinessAccountingService.class);
