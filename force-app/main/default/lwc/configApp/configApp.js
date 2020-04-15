@@ -4,7 +4,7 @@ import { LightningElement, track, wire } from 'lwc';
 // import { refreshApex } from '@salesforce/apex';
 // import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 // import Config_Account_AwaitingActivation from '@salesforce/label/c.Config_Account_AwaitingActivation';
-// import Config_Title from '@salesforce/label/c.Config_Title';
+import Config_Title from '@salesforce/label/c.Config_Title';
 // import Config_Page_Title from '@salesforce/label/c.Config_Page_Title';
 // import Config_Loading from '@salesforce/label/c.Config_Loading';
 
@@ -19,12 +19,12 @@ export default class configApp extends LightningElement {
     //
     // activeData;
     //
-    // label = {
-    //     Config_Account_AwaitingActivation,
-    //     Config_Title,
-    //     Config_Page_Title,
-    //     Config_Loading
-    // };
+    label = {
+        //Config_Account_AwaitingActivation,
+        Config_Title,
+        // Config_Page_Title,
+        // Config_Loading
+    };
     //
     // @wire(getUserOnboarded)
     // wiredUserOnboarded(result){
