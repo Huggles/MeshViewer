@@ -15,6 +15,7 @@
     "sourceApiVersion": "48.0",
     "packageAliases": {
         "Company.info for Salesforce": "0Ho0J0000004CABSA2",
-        "Company.info for Salesforce@0.1.0-1": "04t0J000000M9oeQAC"
+        "Company.info for Salesforce@0.1.0-1": "04t0J000000M9oeQAC",
+        "Company.info for Salesforce@0.1.0-1-release/R1": "04t0J000000M9ooQAC"
     }
 }
