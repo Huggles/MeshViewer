@@ -33,6 +33,8 @@
             <label>Cancel Pressed</label>
         </rules>
     </decisions>
+    <description>This flow provides all the steps from searching the Business dossier to getting the creditsafe report as a global action.
+        First, the user can search for Business Dossier, then save it and then fetch the creditsafe report in one flow.</description>
     <interviewLabel>Get Creditsafe Report Global Action {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>

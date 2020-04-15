@@ -14,6 +14,9 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         Map<String, List<Business_Dossier__c>> businessDossiersByParameters = new Map<String, List<Business_Dossier__c>>();
 
         switch on countries.get(0) {
+            when 'NL' {     // when country is Netherlands
+                resultValue.addAll(searchCriteriaNL(id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name));
+            }
             when 'BE' {		// when country is Belgium
                 resultValue.addAll(searchCriteriaBE(id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name));
             }
@@ -75,6 +78,34 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
     /*********************************
      * IMPLEMENTATION METHODS
      ***********************************/
+
+    private List<Business_Dossier__c> searchCriteriaNL(String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+        List<Business_Dossier__c> resultValue = new List<Business_Dossier__c>();
+        //parameter1 - companyid
+        if (String.isNotEmpty(id)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'NL'}, id, '', '', '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'companyid');
+            resultValue.addAll(resultValue1);
+        }
+        //parameter2 - creditsafe_unique_id - not available as input parameter
+
+        //parameter3 - registration_number
+        if (String.isNotEmpty(registration_number)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'NL'}, '', '', registration_number, '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
+            resultValue.addAll(resultValue1);
+        }
+        //parameter4 - name, status, street, city, postalcode
+        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'NL'}, '', status, '', '', '', '', city, street, postal_code, name));
+            resultValue1 = addSearchCriteria(resultValue1, 'name, status, street, city, postalcode');
+            resultValue.addAll(resultValue1);
+        }
+        return resultValue;
+    }
 
     private List<Business_Dossier__c> searchCriteriaBE(String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
         List<Business_Dossier__c> resultValue = new List<Business_Dossier__c>();

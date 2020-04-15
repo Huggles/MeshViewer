@@ -23,6 +23,97 @@ private class CreditSafeServiceImplTest {
     }
 
     @IsTest
+    static void testSearchForCreditSafeDossiersForNL() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsCreditsafe wsCreditsafeService = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
+
+        CreditsafeWsdl.CreditsafeSearchResultV2 searchResultV2 = new CreditsafeWsdl.CreditsafeSearchResultV2();
+        searchResultV2.companies = new CreditsafeWsdl.CreditsafeCompanyV2Array();
+        searchResultV2.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
+        for (Integer i = 0; i < 5; i++) {
+            CreditsafeWsdl.CreditsafeCompanyV2 company  = new CreditsafeWsdl.CreditsafeCompanyV2();
+            company.country = 'NL';
+            company.name = '' + i;
+            company.registration_number = '123' + i;
+            company.address = new CreditsafeWsdl.CreditsafeAddressV2();
+            company.address.city = 'Utrecht';
+            company.address.street = 'Braillelaan';
+            company.address.telephone = '' + i;
+            company.address.postal_code = '123' + i;
+            company.status = 'status';
+            company.trade_names = new CreditsafeWsdl.stringArray();
+            company.trade_names.item = new List<String>();
+            for (Integer i2 = 0; i2 < 3; i2++) {
+                company.trade_names.item.add('' + i + '_' + i2);
+            }
+            company.id = '' + i;
+            company.date_last_account = Datetime.now();
+            company.date_last_change = Datetime.now();
+            company.office_type = 'Headoffice';
+            company.creditsafe_number = '' + i;
+            company.vat_numbers = new CreditsafeWsdl.stringArray();
+            company.vat_numbers.item = new List<String>();
+            for (Integer i3 = 0; i3 < 3; i3++) {
+                company.vat_numbers.item.add('' + i + '_' + i3);
+            }
+            searchResultV2.companies.item.add(company);
+        }
+
+        mocks.startStubbing();
+        mocks.when(wsCreditsafeService.creditsafeSearchV2(
+                (CreditsafeWsdl.stringArray)fflib_Match.anyObject(),
+                fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),
+                fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString()
+                ,fflib_Match.anyString(),fflib_Match.anyString())).thenReturn(searchResultV2);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsCreditsafe.class, wsCreditsafeService);
+
+        Test.startTest();
+        {
+            List<Business_Dossier__c> dossiers = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'NL'}, 'id', 'status', 'regnr', 'type', 'vat', 'province', 'city', 'street', 'postal_code', 'name');
+            System.assert(dossiers.size() == 15);
+            for (Business_Dossier__c dossier : dossiers) {
+                System.assert(dossier.Name.isNumeric());
+                System.assert(dossier.Dossier_Number__c.startsWith('123'));
+                System.assert(dossier.Country__c == 'NL');
+                System.assert(dossier.Street__c == 'Braillelaan');
+                System.assert(dossier.City__c == 'Utrecht');
+                System.assert(dossier.Date_of_Last_Account__c != null && dossier.Date_of_Last_Account__c < Datetime.now());
+                System.assert(dossier.Date_of_Last_Change__c != null && dossier.Date_of_Last_Change__c < Datetime.now());
+                System.assert(dossier.Office_Type__c == 'Headoffice');
+                System.assert(dossier.Trade_Names__c != null);
+                System.assert(dossier.Telephone_Number__c.isNumeric());
+            }
+
+            //test for NLWithCompanyId
+            List<Business_Dossier__c> dossiers1 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'NL'}, 'id', '', '', '', '', '', '', '', '', '');
+            System.assert(dossiers1.size() == 5);
+            for (Business_Dossier__c dossier : dossiers1) {
+                System.assert(dossier.Company_Id__c.isNumeric());
+            }
+
+            //test for NLWithRegistrationNumber
+            List<Business_Dossier__c> dossiers2 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'NL'}, '', '', 'registration_number', '', '', '', '', '', '', '');
+            System.assertEquals(dossiers2.size() , 5);
+            for (Business_Dossier__c dossier : dossiers2) {
+                System.assert(dossier.Dossier_Number__c.startsWith('123'));
+            }
+
+
+            //test for NLWith name, status, street, city, postalcode
+            List<Business_Dossier__c> dossiers4 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'NL'}, '', 'status', '', '', '', '', 'city', 'street', 'postal_code', 'name');
+            System.assertEquals(dossiers4.size() , 5);
+            for (Business_Dossier__c dossier : dossiers4) {
+                System.assert(dossier.Name.isNumeric());
+                System.assert(dossier.Street__c == 'Braillelaan');
+                System.assert(dossier.City__c == 'Utrecht');
+            }
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
     static void testSearchForCreditSafeDossiersForBE() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsCreditsafe wsCreditsafeService = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
