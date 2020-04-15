@@ -51,7 +51,7 @@ public inherited sharing abstract class MethodCallout implements Callable {
         String faultCode = getFaultCode(message);
         switch on faultCode {
             when 'Client' {
-                if (message.contains('Invalid authentication (You are not logged in)')) {
+                if (message.contains('(You are not logged in)')) { // Company.info should improve this...
                     throw new CCWsClientAuthenticationException(Label.Error_Client_Authentication, calloutException);
                 }
                 // general error caused by the client but unexpected so we log
