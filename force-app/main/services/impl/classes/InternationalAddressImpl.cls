@@ -4,6 +4,49 @@
 
 public inherited sharing class InternationalAddressImpl implements IInternationalAddressService{
 
+    private inherited sharing class InternationalAddressComparableWrapper implements Comparable {
+
+        public International_Address__c address { get; set; }
+
+        private String organization { get; set; }
+
+        private Integer organizationLevenshteinDistance { get; set; }
+
+        private InternationalAddressComparableWrapper(International_Address__c address, String organization) {
+            this.address = address;
+            if (organization != null) {
+                this.organization = organization;
+                this.organizationLevenshteinDistance = address.Organization__c != null ? address.Organization__c.getLevenshteinDistance(organization) : null; // optimization so we don't need to do this for every compareTo call
+            }
+        }
+
+        public Integer compareTo(Object param1) {
+            International_Address__c addressToCompare = ((InternationalAddressComparableWrapper)param1).address;
+            Integer returnValue = 0;
+            if (this.organization != null && this.organizationLevenshteinDistance != null && addressToCompare.Organization__c != null) {
+                Integer addressToCompareOrganizationLevenshteinDistance = addressToCompare.Organization__c.getLevenshteinDistance(this.organization);
+                if (this.organizationLevenshteinDistance < addressToCompareOrganizationLevenshteinDistance) {
+                    returnValue = -1;
+                } else {
+                    if (this.organizationLevenshteinDistance > addressToCompareOrganizationLevenshteinDistance) {
+                        returnValue = 1;
+                    }
+                }
+            }
+            if (returnValue == 0 && address.Matchrate__c != null && addressToCompare.Matchrate__c != null) {
+                if (address.Matchrate__c < addressToCompare.Matchrate__c) {
+                    returnValue = -1;
+                } else {
+                    if (address.Matchrate__c > addressToCompare.Matchrate__c) {
+                        returnValue = 1;
+                    }
+                }
+            }
+            return returnValue;
+        }
+
+    }
+
     public List<International_Address__c> internationalAddressSearchV2(String organization,String building,String street,String housenr,String pobox,String locality,String postcode,String province,String country,String language,String country_format) {
 
         // check and complete the input
@@ -24,6 +67,18 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
             for (InternationalAddressWSDL.InternationalV2 resultItem : userSearchResult.result.item) {
                 resultArray.add(mapInternationalV2ToInternationalAddress(resultItem, country));
             }
+        }
+
+        // sort the results on how well the organization matches and then on the matchrate. If there is no organization, just sorts on matchrate
+        List<InternationalAddressComparableWrapper> wrappedInternationalAddresses = new List<InternationalAddressImpl.InternationalAddressComparableWrapper>();
+        for (International_Address__c internationalAddress : resultArray) {
+            wrappedInternationalAddresses.add(new InternationalAddressComparableWrapper(internationalAddress, organization));
+        }
+        wrappedInternationalAddresses.sort();
+        // and back to the resultArray
+        resultArray = new List<International_Address__c>();
+        for (InternationalAddressComparableWrapper internationalAddressComparableWrapper : wrappedInternationalAddresses) {
+            resultArray.add(internationalAddressComparableWrapper.address);
         }
 
         return resultArray;

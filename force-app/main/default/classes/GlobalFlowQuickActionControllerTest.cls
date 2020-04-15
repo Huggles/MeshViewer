@@ -42,6 +42,6 @@ private class GlobalFlowQuickActionControllerTest {
         // then
         // no exception should be thrown
         System.assert(!exceptionThrown);
-        System.assert(flowName == 'Create_Account_based_on_Company_info_data');
+        System.assert(flowName == 'appsolutely__Create_Account_based_on_Company_info_data');
     }
 }

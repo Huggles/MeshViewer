@@ -9,6 +9,10 @@
         <name>Active</name>
     </customLabels>
     <customLabels>
+        <label>Gebruikersnaam en wachtwoord succesvol veranderd!</label>
+        <name>Credentials_successfully_updated_message</name>
+    </customLabels>
+    <customLabels>
         <label>Toevoeging</label>
         <name>Addition</name>
     </customLabels>
@@ -357,6 +361,10 @@
         <name>Error_Server_Unavailable_Temporary</name>
     </customLabels>
     <customLabels>
+        <label>Een niet numerieke waarde is ingevoerd terwijl er een numerieke waarde verwacht wordt.</label>
+        <name>Error_String_Not_Numeric</name>
+    </customLabels>
+    <customLabels>
         <label>Fout 102 ontvangen van Company.info. Neem contact op met support.</label>
         <name>Error_Unknown</name>
     </customLabels>
@@ -405,6 +413,10 @@
         <name>Insurance_Contract_Intention_of_signature_of_a_insurance_contract</name>
     </customLabels>
     <customLabels>
+        <label><!-- Language Input Error --></label>
+        <name>Language_Input_Error</name>
+    </customLabels>
+    <customLabels>
         <label>Plaats</label>
         <name>Locality</name>
     </customLabels>
@@ -423,6 +435,10 @@
     <customLabels>
         <label>Vul een geldig Belgisch kenteken in, bestaande uit 9 cijfers.</label>
         <name>Minimum_registration_number_length</name>
+    </customLabels>
+    <customLabels>
+        <label>Meer dan 20 resultaten gevonden! Verfijn uw zoek criteria.</label>
+        <name>More_than_20_results_message</name>
     </customLabels>
     <customLabels>
         <label>Naam</label>
@@ -447,6 +463,10 @@
     <customLabels>
         <label>Creditsafe rapport kon niet worden gegenereerd omdat het Bedrijf ID niet beschikbaar is bij Company.info</label>
         <name>No_Company_Id_Found</name>
+    </customLabels>
+    <customLabels>
+        <label>Vul alstublieft tenminste een van de adres velden (straat, postcode, postbus of stad)</label>
+        <name>No_address_fields_filled_international_address</name>
     </customLabels>
     <customLabels>
         <label>Niet actief</label>
@@ -850,134 +870,7 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Complete_Account_with_Dossier_Data</fullName>
-            <label>Verrijk Account met dossier gegevens</label>
-            <screens>
-                <fields>
-                    <name>BusinessDossierHeader</name>
-                </fields>
-                <fields>
-                    <name>BusinessDossierRecord</name>
-                </fields>
-                <name>Show_Buisness_Dossier</name>
-            </screens>
-        </flows>
-        <fullName>Complete_Account_with_Dossier_Data</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Create_Account_based_on_Company_info_data</fullName>
-            <label>Account aanmaken op basis van Company.info data</label>
-        </flows>
-        <fullName>Create_Account_based_on_Company_info_data</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Enrich_Account_with_International_Address_Data</fullName>
-            <label>Verrijk Account met internationale adresgegevens</label>
-            <screens>
-                <fields>
-                    <name>showInternationalAddressDetails</name>
-                </fields>
-                <name>Show_International_Address</name>
-            </screens>
-        </flows>
-        <fullName>Enrich_Account_with_International_Address_Data</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Create_Account_based_on_International_Address_Data-1</fullName>
-            <label>Maak een account aan op basis van internationale adresgegevens</label>
-        </flows>
-        <fullName>Create_Account_based_on_International_Address_Data</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Get_Creditsafe_Report_Global_Action</fullName>
-            <label>Ophalen Creditsafe Rapport Global Action</label>
-        </flows>
-        <fullName>Get_Creditsafe_Report_Global_Action</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <choices>
-                <choiceText>&quot;&lt;span style=&quot;&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&quot;&gt;{!ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel}&lt;/span&gt;&quot;</choiceText>
-                <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</name>
-            </choices>
-            <choices>
-                <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</name>
-            </choices>
-            <choices>
-                <name>CreditAssessmentFutureBusinessConnectionChoice</name>
-            </choices>
-            <choices>
-                <name>CreditAssessmentExistingBusinessConnectionChoice</name>
-            </choices>
-            <choices>
-                <name>RealisationCheckReceivablesCollectionChoice</name>
-            </choices>
-            <choices>
-                <name>DutchLanguage</name>
-            </choices>
-            <choices>
-                <name>CreditDecisionChoice</name>
-            </choices>
-            <choices>
-                <name>GermanLanguage</name>
-            </choices>
-            <choices>
-                <name>EnglishLanguage</name>
-            </choices>
-            <choices>
-                <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
-            </choices>
-            <choices>
-                <name>GoodsCreditInsuranceChoice</name>
-            </choices>
-            <fullName>Get_Creditsafe_Report-1</fullName>
-            <label>Ophalen Creditsafe Rapport</label>
-            <screens>
-                <fields>
-                    <name>ErrorMessage</name>
-                </fields>
-                <fields>
-                    <fieldText>Taal</fieldText>
-                    <name>Language</name>
-                </fields>
-                <fields>
-                    <fieldText>Reden</fieldText>
-                    <name>Reason</name>
-                </fields>
-                <fields>
-                    <name>languageSelectionScreenFooter</name>
-                </fields>
-                <name>Input_parameters</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>NavigateToCreditsafeReport</name>
-                </fields>
-                <name>Navigation</name>
-            </screens>
-        </flows>
-        <fullName>Get_Creditsafe_Report</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account</fullName>
-            <label>Ophalen Creditsafe Rapport Quick Action op Account</label>
-            <screens>
-                <fields>
-                    <name>No_Business_Dossier_Found_Message</name>
-                </fields>
-                <name>No_Business_Dossier_Found</name>
-            </screens>
-        </flows>
-        <fullName>Get_Creditsafe_Report_Quick_Action_on_Account</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows>
-            <fullName>Get_Creditsafe_Report_Quick_Action</fullName>
+            <fullName>Get_Creditsafe_Report_Quick_Action-1</fullName>
             <label>Ophalen Creditsafe Rapport Quick Action voor Zakelijk Dossier</label>
             <screens>
                 <fields>
@@ -990,7 +883,103 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Search_International_Address</fullName>
+            <fullName>Get_Creditsafe_Report_Global_Action-1</fullName>
+            <label>Ophalen Creditsafe Rapport Global Action</label>
+        </flows>
+        <fullName>Get_Creditsafe_Report_Global_Action</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Organisation_Search_Flow-1</fullName>
+            <label>Organisatie Zoek Flow</label>
+            <screens>
+                <fields>
+                    <name>dutchDossiersResult</name>
+                </fields>
+                <fields>
+                    <name>dutchSearchResultFlowFooter</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerDutchResultsScreen</name>
+                </fields>
+                <fields>
+                    <name>searchResultFlowHeader_DutchBusiness</name>
+                </fields>
+                <name>Dutch_Dossiers_Search_Results</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>BusinessSearchForm</name>
+                </fields>
+                <fields>
+                    <name>flowErrorHandlerSearchScreen</name>
+                </fields>
+                <fields>
+                    <name>searchFlowFooter</name>
+                </fields>
+                <fields>
+                    <name>searchFlowHeader</name>
+                </fields>
+                <name>Search</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>NoResults</name>
+                </fields>
+                <fields>
+                    <name>ResultsByCompanyId</name>
+                </fields>
+                <fields>
+                    <name>ResultsByNameStatusRegistration_typeStreetCityPostalcode</name>
+                </fields>
+                <fields>
+                    <name>ResultsByNameStatusStreetCityPostalcode</name>
+                </fields>
+                <fields>
+                    <name>ResultsByNameStatusStreetCityProvincePostalcode</name>
+                </fields>
+                <fields>
+                    <name>ResultsByRegistrationNumber</name>
+                </fields>
+                <fields>
+                    <name>ResultsByRegistration_NumberRegistration_TypeCity</name>
+                </fields>
+                <fields>
+                    <name>ResultsByRegistration_numberStatusPostalcode</name>
+                </fields>
+                <fields>
+                    <name>ResultsByVatNumber</name>
+                </fields>
+                <fields>
+                    <name>creditSafeSearchResultFlowErrorHandler</name>
+                </fields>
+                <fields>
+                    <name>creditSafeSearchResultFlowFooter</name>
+                </fields>
+                <fields>
+                    <name>searchResultFlowHeader_CreditSafe</name>
+                </fields>
+                <name>Show_Credit_Safe_Search_Results</name>
+            </screens>
+        </flows>
+        <fullName>Organisation_Search_Flow</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account-1</fullName>
+            <label>Ophalen Creditsafe Rapport Quick Action op Account</label>
+            <screens>
+                <fields>
+                    <name>No_Business_Dossier_Found_Message</name>
+                </fields>
+                <name>No_Business_Dossier_Found</name>
+            </screens>
+        </flows>
+        <fullName>Get_Creditsafe_Report_Quick_Action_on_Account</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Search_International_Address-1</fullName>
             <label>Zoeken Internationale Adressen</label>
             <screens>
                 <fields>
@@ -1027,59 +1016,157 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow</fullName>
-            <label>Organisatie Zoek Flow</label>
+            <fullName>Complete_Account_with_Dossier_Data-1</fullName>
+            <label>Verrijk Account met dossier gegevens</label>
             <screens>
                 <fields>
-                    <name>dutchDossiersResult</name>
+                    <name>BusinessDossierHeader</name>
                 </fields>
                 <fields>
-                    <name>dutchSearchResultFlowFooter</name>
+                    <name>BusinessDossierRecord</name>
                 </fields>
                 <fields>
-                    <name>flowErrorHandlerDutchResultsScreen</name>
+                    <name>ErrorMessage</name>
                 </fields>
-                <fields>
-                    <name>searchResultFlowHeader_DutchBusiness</name>
-                </fields>
-                <name>Dutch_Dossiers_Search_Results</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>BusinessSearchForm</name>
-                </fields>
-                <fields>
-                    <name>flowErrorHandlerSearchScreen</name>
-                </fields>
-                <fields>
-                    <name>searchFlowFooter</name>
-                </fields>
-                <fields>
-                    <name>searchFlowHeader</name>
-                </fields>
-                <name>Search</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>creditSafeDossierSearchResults</name>
-                </fields>
-                <fields>
-                    <name>creditSafeSearchResultFlowErrorHandler</name>
-                </fields>
-                <fields>
-                    <name>creditSafeSearchResultFlowFooter</name>
-                </fields>
-                <fields>
-                    <name>searchResultFlowHeader_CreditSafe</name>
-                </fields>
-                <name>Show_Credit_Safe_Search_Results</name>
+                <name>Show_Buisness_Dossier</name>
             </screens>
         </flows>
-        <fullName>Organisation_Search_Flow</fullName>
+        <fullName>Complete_Account_with_Dossier_Data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Account_based_on_International_Address_Data-1</fullName>
+            <label>Maak een account aan op basis van internationale adresgegevens</label>
+        </flows>
+        <fullName>Create_Account_based_on_International_Address_Data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Account_based_on_Company_info_data-1</fullName>
+            <label>Account aanmaken op basis van Company.info data</label>
+        </flows>
+        <fullName>Create_Account_based_on_Company_info_data</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <choices>
+                <name>EnglishLanguage</name>
+            </choices>
+            <choices>
+                <name>DutchLanguage</name>
+            </choices>
+            <choices>
+                <name>GoodsCreditInsuranceChoice</name>
+            </choices>
+            <choices>
+                <name>GermanLanguage</name>
+            </choices>
+            <choices>
+                <name>CreditAssessmentExistingBusinessConnectionChoice</name>
+            </choices>
+            <choices>
+                <choiceText>&quot;&lt;span style=&quot;&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&quot;&gt;{!ContractIntentionOfSignatureOfLeasingOrRentContractChoiceLabel}&lt;/span&gt;&quot;</choiceText>
+                <name>ContractIntentionOfSignatureOfLeasingOrRentContractChoice</name>
+            </choices>
+            <choices>
+                <name>RealisationCheckReceivablesCollectionChoice</name>
+            </choices>
+            <choices>
+                <name>CreditDecisionChoice</name>
+            </choices>
+            <choices>
+                <name>CreditAssessmentFutureBusinessConnectionChoice</name>
+            </choices>
+            <choices>
+                <name>PurchaseContractIntentionOfSignatureOfPurchaseContractChoice</name>
+            </choices>
+            <choices>
+                <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
+            </choices>
+            <fullName>Get_Creditsafe_Report-1</fullName>
+            <label>Ophalen Creditsafe Rapport</label>
+            <screens>
+                <fields>
+                    <name>ErrorMessage</name>
+                </fields>
+                <fields>
+                    <fieldText>Taal</fieldText>
+                    <name>Language</name>
+                </fields>
+                <fields>
+                    <fieldText>Reden</fieldText>
+                    <name>Reason</name>
+                </fields>
+                <fields>
+                    <name>languageSelectionScreenFooter</name>
+                </fields>
+                <name>Input_parameters</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>NavigateToCreditsafeReport</name>
+                </fields>
+                <name>Navigation</name>
+            </screens>
+        </flows>
+        <fullName>Get_Creditsafe_Report</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Enrich_Account_with_International_Address_Data-1</fullName>
+            <label>Verrijk Account met internationale adresgegevens</label>
+            <screens>
+                <fields>
+                    <name>showInternationalAddressDetails</name>
+                </fields>
+                <name>Show_International_Address</name>
+            </screens>
+        </flows>
+        <fullName>Enrich_Account_with_International_Address_Data</fullName>
     </flowDefinitions>
     <quickActions>
         <label>Ophalen Creditsafe Rapport</label>
         <name>Get_Creditsafe_Report</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- LogACall --></label>
+        <name>LogACall</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewAccount --></label>
+        <name>NewAccount</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewCase --></label>
+        <name>NewCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewContact --></label>
+        <name>NewContact</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewEvent --></label>
+        <name>NewEvent</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewGroup --></label>
+        <name>NewGroup</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewLead --></label>
+        <name>NewLead</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewNote --></label>
+        <name>NewNote</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewOpportunity --></label>
+        <name>NewOpportunity</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewTask --></label>
+        <name>NewTask</name>
     </quickActions>
     <quickActions>
         <label>Nieuw account gebaseerd op International Adres</label>
@@ -1088,5 +1175,9 @@
     <quickActions>
         <label>Nieuw account gebaseerd op Business Data</label>
         <name>New_Account_via_Company_info</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- SendEmail --></label>
+        <name>SendEmail</name>
     </quickActions>
 </Translations>

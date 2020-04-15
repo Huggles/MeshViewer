@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label><!-- Currency For Paid Up Share Capital --></label>
+    <label>Munteenheid gestort aandelen kapitaal</label>
     <name>Paid_Up_Share_Capital_Currency__c</name>
 </CustomFieldTranslation>

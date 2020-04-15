@@ -843,154 +843,154 @@
 <binding name="Webservices.nlBinding" type="tns:Webservices.nlPortType">
   <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
   <operation name="login">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/login" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/login" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="logout">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/logout" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/logout" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountGetCreationToken">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetCreationToken" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountGetCreationToken" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountGetCreationStatus">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetCreationStatus" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountGetCreationStatus" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountGetOrderToken">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountGetOrderToken" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountGetOrderToken" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userSessionRemove">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userSessionRemove" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userSessionRemove" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userSessionList">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userSessionList" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userSessionList" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userViewBalance">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userViewBalance" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userViewBalance" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userEditBalance">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userEditBalance" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userEditBalance" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountViewBalance">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewBalance" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountViewBalance" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userViewV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userViewV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userViewV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userEditV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userEditV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userEditV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userEditExtendedV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userEditExtendedV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userEditExtendedV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userCreateV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userCreateV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userCreateV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="createTestUser">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/createTestUser" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/createTestUser" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userChangePassword">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userChangePassword" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userChangePassword" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userRemove">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userRemove" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userRemove" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userNotify">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userNotify" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userNotify" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userListAssignableGroups">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userListAssignableGroups" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userListAssignableGroups" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userAddGroup">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userAddGroup" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userAddGroup" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userRemoveGroup">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userRemoveGroup" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userRemoveGroup" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountViewV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountViewV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountEditV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountEditV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountEditV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountUserListV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountUserListV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountUserListV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountUserSearchV2">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountUserSearchV2" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountUserSearchV2" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountEditHostRestrictions">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountEditHostRestrictions" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountEditHostRestrictions" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="accountViewHostRestrictions">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/accountViewHostRestrictions" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/accountViewHostRestrictions" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userEditHostRestrictions">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userEditHostRestrictions" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userEditHostRestrictions" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
   <operation name="userViewHostRestrictions">
-    <soap:operation soapAction="https://ws1.webservices.nl/accounting/soap_doclit.php/userViewHostRestrictions" style="document"/>
+    <soap:operation soapAction="https://api.webservices.nl/accounting/soap_doclit.php/userViewHostRestrictions" style="document"/>
     <input><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderLogin" use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></input>
     <output><soap:body use="literal"/><soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/></output>
   </operation>
 </binding>
 <service name="Webservices.nl">
   <port name="Webservices.nlPort" binding="tns:Webservices.nlBinding">
-    <soap:address location="https://ws1.webservices.nl:443/accounting/soap_doclit.php"/>
+    <soap:address location="https://api.webservices.nl:443/accounting/soap_doclit.php"/>
   </port>
 </service>
 </definitions>

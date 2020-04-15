@@ -286,6 +286,14 @@
         <value>Country to Search</value>
     </labels>
     <labels>
+        <fullName>Credentials_successfully_updated_message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Credentials successfully updated message</shortDescription>
+        <value>Credentials safed!</value>
+    </labels>
+    <labels>
         <fullName>CreditSafe_Validation_Message_Heading</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -330,7 +338,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Creditsafe company identifier</shortDescription>
-        <value>Creditsafe company identifier</value>
+        <value>Creditsafe Company Identifier</value>
     </labels>
     <labels>
         <fullName>DBSCall_AccountDupCheck_Exception</fullName>
@@ -479,7 +487,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error Client Authentication</shortDescription>
-        <value>The authentication for the data vendor has failed. You are not logged in and cannot retrieve data. Please contact your administrator and check the username, password and account id we provided.</value>
+        <value>Please check your username and password. If you still can&#39;t log in, contact Company.info.</value>
     </labels>
     <labels>
         <fullName>Error_Client_Authentication_Password</fullName>
@@ -647,6 +655,14 @@
         <value>The data vendor service is unavailable due to a temporary technical problem.</value>
     </labels>
     <labels>
+        <fullName>Error_String_Not_Numeric</fullName>
+        <categories>Error,dutchBusiness,creditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error String Not Numeric</shortDescription>
+        <value>A non-numeric value has been entered. Numeric value expected.</value>
+    </labels>
+    <labels>
         <fullName>Error_Unknown</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -782,6 +798,14 @@
         <value>Please enter a valid Belgian registration number consisting of 9 digits.</value>
     </labels>
     <labels>
+        <fullName>More_than_20_results_message</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>More than 20 results message</shortDescription>
+        <value>More than 20 results found! Refine your search criteria.</value>
+    </labels>
+    <labels>
         <fullName>Name</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -825,6 +849,14 @@
         <protected>true</protected>
         <shortDescription>No Company Id Found</shortDescription>
         <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
+    </labels>
+    <labels>
+        <fullName>No_address_fields_filled_international_address</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No address fields filled international address</shortDescription>
+        <value>Please fill some address fields (street, postal code, PO box or locality) before searching.</value>
     </labels>
     <labels>
         <fullName>NonActive</fullName>

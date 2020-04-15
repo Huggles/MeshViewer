@@ -7,6 +7,8 @@ import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowS
 import getIso3166Options from '@salesforce/apex/Iso3166CountryPickListController.getIso3166Options';
 import getIsO3166OptionByAlpha2Code from '@salesforce/apex/Iso3166CountryPickListController.getIsO3166OptionByAlpha2Code';
 import {fireEvent, registerListener, unregisterAllListeners} from "c/pubsub";
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import {sanitizeStreet} from "c/inputSanitization";
 
 import Organization from '@salesforce/label/c.Organization';
 import Building from '@salesforce/label/c.Building';
@@ -17,6 +19,8 @@ import Postcode from '@salesforce/label/c.Postal_Code';
 import Province from '@salesforce/label/c.Province';
 import House_Number from '@salesforce/label/c.House_Number';
 import Country from '@salesforce/label/c.Country';
+import Validation_Error_Message_Toast_Title from '@salesforce/label/c.Validation_Error_Message_Toast_Title';
+import No_address_fields_filled_international_address from '@salesforce/label/c.No_address_fields_filled_international_address';
 
 export default class InternationalAddressSearchForm extends LightningElement {
 
@@ -37,7 +41,8 @@ export default class InternationalAddressSearchForm extends LightningElement {
     @api availableActions = [];
 
     @track selectOptions = [];
-    @track error;
+
+    @track errorMessage;
 
     label = {
         Organization,
@@ -48,7 +53,9 @@ export default class InternationalAddressSearchForm extends LightningElement {
         Locality,
         Postcode,
         Province,
-        Country
+        Country,
+        No_address_fields_filled_international_address,
+        Validation_Error_Message_Toast_Title
     }
 
     /**
@@ -65,7 +72,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
                 this.selectOptions = localSelectOptions;
             })
             .catch(error => {
-                this.error = error;
+                this.hints = error;
             });
     }
 
@@ -82,11 +89,11 @@ export default class InternationalAddressSearchForm extends LightningElement {
                         this.dispatchFlowAttributeChangeEvent('country', this.country);
                     }
                     else {
-                        this.error = "Invalid country alpha 2 code: " + this.countryInAlpha2Code;
+                        this.hints = "Invalid country alpha 2 code: " + this.countryInAlpha2Code;
                     }
                 })
                 .catch(error => {
-                    this.error = error;
+                    this.hints = error;
                 });
 
         } else {
@@ -103,6 +110,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
         registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
         this.loadCountries();
         this.getDefaultCountry();
+        if (this.street) this.assignStreetAndHouseNumber(this.street);
     }
 
     disconnectedCallback() {
@@ -115,18 +123,33 @@ export default class InternationalAddressSearchForm extends LightningElement {
     }
 
     handleValidationRequest() {
-        fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: this.allValid()});
-    }
-
-    @api
-    allValid() {
-        // this.hints = null; // remove the toast
+        // TODO: move this to a module to make it generic
+        // check if the fields are valid based on the html
         let valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
                 inputCmp.reportValidity();
                 return validSoFar && inputCmp.checkValidity();
             }, true);
-        return valid;
+        // do the javascript based validation checks. Set the error message at the same time
+        this.errorMessage = null; // just to be certain. Should be null or not defined anyway
+        if (valid) { // only when the input on a field level is valid
+            if (!(this.street || this.postcode || this.pobox || this.locality)) {
+                valid = false;
+                this.errorMessage = No_address_fields_filled_international_address;
+            }
+            // show the toast with the error message. Field level error messages are already handled in the check for field validity
+            if (!valid) {
+                const event = new ShowToastEvent({
+                    title: Validation_Error_Message_Toast_Title,
+                    message: this.errorMessage,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(event);
+                this.errorMessage = null;
+            }
+        }
+        fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: valid});
     }
 
     handleOnChange(event) {
@@ -141,5 +164,13 @@ export default class InternationalAddressSearchForm extends LightningElement {
     dispatchFlowAttributeChangeEvent(attributeName, attributeValue) {
         const attributeChangeEvent = new FlowAttributeChangeEvent(attributeName, attributeValue);
         this.dispatchEvent(attributeChangeEvent);
+    }
+
+    assignStreetAndHouseNumber(street) {
+        var streetWithHouseNumber = sanitizeStreet(this.street);
+        if (streetWithHouseNumber) {
+            if (this.housenr == null || this.housenr == undefined) this.housenr = streetWithHouseNumber.number;
+            this.street = streetWithHouseNumber.street;
+        }
     }
 }

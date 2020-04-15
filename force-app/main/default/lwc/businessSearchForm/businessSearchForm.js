@@ -5,6 +5,8 @@
 import {LightningElement, api, track} from 'lwc';
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 import {fireEvent, registerListener, unregisterAllListeners} from 'c/pubsub';
+import {sanitizeStreet} from "c/inputSanitization";
+
 import Country_Belgium from '@salesforce/label/c.Country_Belgium';
 import Country_France from '@salesforce/label/c.Country_France';
 import Country_Germany from '@salesforce/label/c.Country_Germany';
@@ -14,8 +16,6 @@ import Country_United_Kingdom from '@salesforce/label/c.Country_United_Kingdom';
 import Country_Sweden from '@salesforce/label/c.Country_Sweden';
 import Country from '@salesforce/label/c.Country';
 import Select_a_Country from '@salesforce/label/c.Select_a_Country';
-
-
 
 export default class BusinessSearchForm extends LightningElement {
 
@@ -33,15 +33,16 @@ export default class BusinessSearchForm extends LightningElement {
 
     get countries() {
         return [
-            { label: Country_Netherlands, value: 'NL' },
-            { label: Country_Belgium, value: 'BE' },
-            { label: Country_Germany, value: 'DE' },
-            { label: Country_France, value: 'FR' },
-            { label: Country_United_Kingdom, value: 'GB' },
-            { label: Country_Ireland, value: 'IE' },
-            { label: Country_Sweden, value: 'SE' }
+            {label: Country_Netherlands, value: 'NL'},
+            {label: Country_Belgium, value: 'BE'},
+            {label: Country_Germany, value: 'DE'},
+            {label: Country_France, value: 'FR'},
+            {label: Country_United_Kingdom, value: 'GB'},
+            {label: Country_Ireland, value: 'IE'},
+            {label: Country_Sweden, value: 'SE'}
         ];
     }
+
     // TODO: make NL configurable depending on a user custom setting
     @api
     selectedCountry;
@@ -85,26 +86,32 @@ export default class BusinessSearchForm extends LightningElement {
     get isNlSelected() {
         return this.selectedCountry === 'NL';
     }
+
     @api
     get isGbSelected() {
         return this.selectedCountry === 'GB';
     }
+
     @api
     get isBeSelected() {
         return this.selectedCountry === 'BE';
     }
+
     @api
     get isDeSelected() {
         return this.selectedCountry === 'DE';
     }
+
     @api
     get isFrSelected() {
         return this.selectedCountry === 'FR';
     }
+
     @api
     get isSeSelected() {
         return this.selectedCountry === 'SE';
     }
+
     @api
     get isIeSelected() {
         return this.selectedCountry === 'IE';
@@ -113,6 +120,7 @@ export default class BusinessSearchForm extends LightningElement {
     connectedCallback() {
         registerListener('validationRequest', this.handleValidationRequest, this);
         registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
+        if (this.street) this.assignStreetAndHouseNumber(this.street);
     }
 
     disconnectedCallback() {
@@ -145,6 +153,15 @@ export default class BusinessSearchForm extends LightningElement {
         // validate per search form
         valid = valid && this.template.querySelector('.searchForm').allValid();
         return valid;
+    }
+
+    assignStreetAndHouseNumber(street) {
+        var streetWithHouseNumber = sanitizeStreet(this.street);
+        if (streetWithHouseNumber) {
+            if (this.houseNumber == null || this.houseNumber == undefined) this.houseNumber = streetWithHouseNumber.number;
+            this.street = streetWithHouseNumber.street;
+            if (this.houseNumberAddition == null || this.houseNumberAddition == undefined)this.houseNumberAddition = streetWithHouseNumber.addition;
+        }
     }
 
 }

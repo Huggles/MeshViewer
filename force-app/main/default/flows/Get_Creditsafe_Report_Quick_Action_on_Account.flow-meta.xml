@@ -30,7 +30,9 @@
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__no_business_dossier_found}</expression>
     </formulas>
+    <description>Template that can be used to get creditsafe report as quick actions on Account.</description>
     <interviewLabel>Get Creditsafe Report Quick Action on Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
     <label>Get Creditsafe Report Quick Action on Account</label>
     <processMetadataValues>
         <name>BuilderType</name>

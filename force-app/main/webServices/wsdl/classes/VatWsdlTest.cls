@@ -31,14 +31,6 @@ private class VatWsdlTest {
     }
 
     @IsTest
-    private static void testDoFallBack() {
-        VatWsdl.Webservices_nlPort port = new VatWsdl.Webservices_nlPort();
-        port.doFallBack();
-        System.assert(port.endpoint_x == 'https://ws2.webservices.nl:443/accounting/soap_doclit.php');
-    }
-
-
-    @IsTest
     static void testCoverTypes() {
         new VatWsdl.vatValidateRequestType();
         new VatWsdl.vatViesProxyCheckVatResponseType();

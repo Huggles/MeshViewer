@@ -12,9 +12,15 @@ public inherited sharing class WsAccountingImpl implements IWsAccounting {
 
         public Object call(String methodName, Map<String,Object> arguments) {
             AccountingWsdl.Webservices_nlPort port = (AccountingWsdl.Webservices_nlPort)this.port;
+            System.debug('port HeaderLogin: ' + port.HeaderLogin);
             switch on methodName {
                 when 'login' {
-                    return port.login((String)arguments.get('username'), (String)arguments.get('password'));
+                    AccountingWsdl.HeaderLoginType headerLoginTypeTemp = port.HeaderLogin;
+                    port.HeaderLogin = null;
+                    System.debug('in login');
+                    Object returnValue = port.login((String)arguments.get('username'), (String)arguments.get('password'));
+                    port.HeaderLogin = headerLoginTypeTemp;
+                    return returnValue;
                 }
                 when 'userSessionList' {
                     return port.userSessionList((Integer)arguments.get('userid'), (Integer)arguments.get('page_x'));
