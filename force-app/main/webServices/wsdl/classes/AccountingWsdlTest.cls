@@ -118,14 +118,6 @@ private class AccountingWsdlTest {
     }
 
     @IsTest
-    private static void testDoFallBack() {
-        AccountingWsdl.Webservices_nlPort port = new AccountingWsdl.Webservices_nlPort();
-        port.doFallBack();
-        System.assert(port.endpoint_x == 'https://ws2.webservices.nl:443/accounting/soap_doclit.php');
-    }
-
-
-    @IsTest
     static void testCoverTypes() {
         new AccountingWsdl.Account();
         new AccountingWsdl.userSessionRemoveRequestType();

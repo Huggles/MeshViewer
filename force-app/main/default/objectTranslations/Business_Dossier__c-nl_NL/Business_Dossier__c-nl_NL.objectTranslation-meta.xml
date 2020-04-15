@@ -9,22 +9,26 @@
         <value>Business Dossiers</value>
     </caseValues>
     <fieldSets>
-        <label><!-- Creditsafe search result fields --></label>
+        <label>Creditsafe zoekresultaat velden</label>
         <name>Creditsafe_search_result_fields</name>
     </fieldSets>
     <fieldSets>
-        <label><!-- Dutch Business search result fields --></label>
+        <label>Nederlandse bedrijven zoekresultaat velden</label>
         <name>Dutch_Business_search_result_fields</name>
     </fieldSets>
     <gender>Neuter</gender>
     <layouts>
         <layout>Business Dossier Layout</layout>
         <sections>
-            <label><!-- Annual Financial Statement --></label>
+            <label>Adressen</label>
+            <section>Addresses</section>
+        </sections>
+        <sections>
+            <label>Jaarrekening</label>
             <section>Annual Financial Statement</section>
         </sections>
         <sections>
-            <label><!-- Contact Information --></label>
+            <label>Contactgegevens</label>
             <section>Contact Information</section>
         </sections>
         <sections>
@@ -32,19 +36,23 @@
             <section>Custom Links</section>
         </sections>
         <sections>
-            <label><!-- Dates --></label>
+            <label>Data</label>
             <section>Dates</section>
         </sections>
         <sections>
-            <label><!-- Employees Information --></label>
+            <label>Medewerkers informatie</label>
             <section>Employees Information</section>
         </sections>
         <sections>
-            <label><!-- SBI Information --></label>
+            <label>nieuwe sectie</label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label>SBI Informatie</label>
             <section>SBI Information</section>
         </sections>
         <sections>
-            <label><!-- Share Capital --></label>
+            <label>Aandelenkapitaal</label>
             <section>Share Capital</section>
         </sections>
         <sections>
@@ -52,16 +60,16 @@
             <section>Status</section>
         </sections>
         <sections>
-            <label><!-- Structure --></label>
+            <label>Structuur</label>
             <section>Structure</section>
         </sections>
         <sections>
-            <label><!-- Trade Information --></label>
+            <label>Handelsinformatie</label>
             <section>Trade Information</section>
         </sections>
     </layouts>
     <layouts>
-        <layout>Credit Safe Page Layout</layout>
+        <layout>Creditsafe Page Layout</layout>
         <sections>
             <label><!-- Custom Links --></label>
             <section>Custom Links</section>
@@ -80,14 +88,18 @@
         </sections>
     </layouts>
     <nameFieldLabel>Juridische naam</nameFieldLabel>
+    <quickActions>
+        <label>Ophalen Creditsafe Rapport</label>
+        <name>Get_Creditsafe_Report</name>
+    </quickActions>
     <recordTypes>
-        <description><!-- Record type for dossiers coming from CreditSafe itself. --></description>
+        <description>Record type voor de dossiers afkomstig van Creditsafe.</description>
         <label><!-- Creditsafe --></label>
         <name>Creditsafe</name>
     </recordTypes>
     <recordTypes>
-        <description><!-- Record type for dossiers coming from Company Info itself. --></description>
-        <label><!-- Dutch Business --></label>
+        <description>Record type voor dossiers uit Bedrijfsgegevens.</description>
+        <label>Nederlands bedrijf</label>
         <name>Dutch_Business</name>
     </recordTypes>
 </CustomObjectTranslation>

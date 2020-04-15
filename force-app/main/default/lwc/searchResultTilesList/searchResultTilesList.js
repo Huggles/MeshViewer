@@ -3,13 +3,12 @@
  */
 
 import {LightningElement, api, track, wire} from 'lwc';
-import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
+import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 import {fireEvent} from "c/pubsub";
 
 import searchResultsLimitedCL from '@salesforce/label/c.Search_Results_Limited';
 import searchNoResultsCL from '@salesforce/label/c.Search_No_Results';
-
 
 import DESERT_ILLUSTRATION from '@salesforce/resourceUrl/Desert';
 
@@ -26,7 +25,7 @@ export default class SearchResultTilesList extends LightningElement {
     /**
      * Are there any results?
      */
-    get hasResults(){
+    get hasResults() {
         return this.searchResults != null && this.searchResults.length > 0;
     }
 
@@ -34,7 +33,6 @@ export default class SearchResultTilesList extends LightningElement {
      * Illustration initialization
      */
     desertIllustration = DESERT_ILLUSTRATION + '#desert';
-
 
     /**
      * Label for when no results have been found.
@@ -66,6 +64,8 @@ export default class SearchResultTilesList extends LightningElement {
     @api
     titleField = 'Name';
 
+    @api
+    searchCriteriaName;
 
     /**
      * Lazy Loading Attributes
@@ -75,35 +75,46 @@ export default class SearchResultTilesList extends LightningElement {
     numberOfResults = this.numberOfResultsIncrement;
     searchResultsLimited = searchResultsLimitedCL;
 
+    /**
+     *
+     * @returns true if search criteria name is undefined
+     */
+    get isSearchCriteriaNameEmpty() {
+        if (this.searchResults[0].appsolutely__Search_Criteria_Name__c) {
+            this.searchCriteriaName = 'Results by ' + this.searchResults[0].appsolutely__Search_Criteria_Name__c;
+            return false;
+        }
+        else
+            return true;
+    }
+
     @api
     get lazyloadedSearchResults() {
         if (this.searchResults)
-            return this.searchResults.slice(0,this.numberOfResults);
+            return this.searchResults.slice(0, this.numberOfResults);
         else {
             return null;
         }
     }
+
     /**
      * True when the number of results displayed is limited by maxNumberOfResults.
      */
-    get displayingMaxNumberOfResults(){
+    get displayingMaxNumberOfResults() {
         return (
             this.numberOfResults === this.maxNumberOfResults &&
-            this.numberOfResults < (this.searchResults ? this.searchResults.length : 0) );
+            this.numberOfResults < (this.searchResults ? this.searchResults.length : 0));
     }
 
     /**
      * Local key attributes
      */
     localKey = -1;
-    get ourKey()
-    {
+
+    get ourKey() {
         this.localKey++;
         return this.localKey;
     }
-
-
-
 
     /**
      * Loads the label/fieldname combination from the fieldset
@@ -135,18 +146,17 @@ export default class SearchResultTilesList extends LightningElement {
         }
         tileClicked.selected = !tileClicked.selected; // select or unselect the card
     }
-    resultsScrolled(event){
+
+    resultsScrolled(event) {
         var element = event.target;
-        if (element.scrollHeight - element.scrollTop === element.clientHeight)
-        {
-            if((this.numberOfResults + this.numberOfResultsIncrement) < this.maxNumberOfResults){
+        if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+            if ((this.numberOfResults + this.numberOfResultsIncrement) < this.maxNumberOfResults) {
                 this.numberOfResults += this.numberOfResultsIncrement;
-            }else{
+            } else {
                 this.numberOfResults = this.maxNumberOfResults;
             }
 
         }
-
 
     }
 

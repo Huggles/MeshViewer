@@ -47,13 +47,13 @@ export default class SearchResultTile extends LightningElement {
     fieldValues = [];
 
     /**
-     * The icon to be shown
+     * The icon state to be shown
      */
-    get icon() {
+    get iconState() {
         if (!this.selected) {
-            return 'action:record';
+            return false;
         } else {
-            return 'action:approval';
+            return true;
         }
     }
 

@@ -5,7 +5,7 @@
         <name>Create_Dutch_Dossiers</name>
         <label>Create Dutch Dossiers</label>
         <locationX>811</locationX>
-        <locationY>648</locationY>
+        <locationY>1193</locationY>
         <actionName>CreateDutchDossierInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -14,6 +14,12 @@
         <faultConnector>
             <targetReference>Dutch_Dossiers_Search_Results</targetReference>
         </faultConnector>
+        <inputParameters>
+            <name>dossierNumber</name>
+            <value>
+                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>getVat</name>
             <value>
@@ -26,12 +32,6 @@
                 <elementReference>selectedDossier.Establishment_Number__c</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>dossierNumber</name>
-            <value>
-                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
-            </value>
-        </inputParameters>
         <outputParameters>
             <assignToReference>selectedDossier</assignToReference>
             <name>output</name>
@@ -41,8 +41,8 @@
         <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &#39;normal&#39; end flow.</description>
         <name>End</name>
         <label>End</label>
-        <locationX>811</locationX>
-        <locationY>379</locationY>
+        <locationX>940</locationX>
+        <locationY>921</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -50,11 +50,11 @@
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
         <locationX>212</locationX>
-        <locationY>42</locationY>
+        <locationY>587</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Show_Credit_Safe_Search_Results</targetReference>
+            <targetReference>Separate_Search_Results</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Search</targetReference>
@@ -62,7 +62,7 @@
         <inputParameters>
             <name>city</name>
             <value>
-                <elementReference>City</elementReference>
+                <elementReference>BusinessSearchForm.city</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -74,68 +74,65 @@
         <inputParameters>
             <name>id</name>
             <value>
-                <elementReference>CreditSafeRegistrationId</elementReference>
+                <elementReference>BusinessSearchForm.creditSafeId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>Name</name>
             <value>
-                <elementReference>TradeName</elementReference>
+                <elementReference>BusinessSearchForm.tradeName</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>postal_code</name>
             <value>
-                <elementReference>PostalCode</elementReference>
+                <elementReference>BusinessSearchForm.postalCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>province</name>
             <value>
-                <elementReference>Province</elementReference>
+                <elementReference>BusinessSearchForm.province</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>registration_number</name>
             <value>
-                <elementReference>RegistrationNumber</elementReference>
+                <elementReference>BusinessSearchForm.registrationNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>registration_type</name>
             <value>
-                <elementReference>RegistrationType</elementReference>
+                <elementReference>BusinessSearchForm.registrationType</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>status</name>
             <value>
-                <elementReference>Status</elementReference>
+                <elementReference>BusinessSearchForm.status</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>street</name>
             <value>
-                <elementReference>Street</elementReference>
+                <elementReference>BusinessSearchForm.street</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>vat_number</name>
             <value>
-                <elementReference>VATNumber</elementReference>
+                <elementReference>BusinessSearchForm.vatNumber</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>foundBusinessDossiers</assignToReference>
-            <name>output</name>
-        </outputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
         <locationX>413</locationX>
-        <locationY>579</locationY>
+        <locationY>1124</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -147,90 +144,280 @@
         <inputParameters>
             <name>dossier_number</name>
             <value>
-                <elementReference>RegistrationNumber</elementReference>
+                <elementReference>BusinessSearchForm.registrationNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>city</name>
             <value>
-                <elementReference>City</elementReference>
+                <elementReference>BusinessSearchForm.city</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>domain_name</name>
             <value>
-                <elementReference>DomainName</elementReference>
+                <elementReference>BusinessSearchForm.domainName</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>house_number</name>
             <value>
-                <elementReference>HouseNumberAsIntConversion</elementReference>
+                <elementReference>BusinessSearchForm.houseNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>house_number_addition</name>
             <value>
-                <elementReference>HouseNumberAddition</elementReference>
+                <elementReference>BusinessSearchForm.houseNumberAddition</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>postcode</name>
             <value>
-                <elementReference>PostalCode</elementReference>
+                <elementReference>BusinessSearchForm.postalCode</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>street</name>
             <value>
-                <elementReference>Street</elementReference>
+                <elementReference>BusinessSearchForm.street</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>strictSearch</name>
             <value>
-                <elementReference>StrictSearch</elementReference>
+                <elementReference>BusinessSearchForm.strictSearch</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>telephone_number</name>
             <value>
-                <elementReference>PhoneNumber</elementReference>
+                <elementReference>BusinessSearchForm.phoneNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>trade_name</name>
             <value>
-                <elementReference>TradeName</elementReference>
+                <elementReference>BusinessSearchForm.tradeName</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>foundBusinessDossiers</assignToReference>
-            <name>output</name>
-        </outputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
         <description>Assigns the country selected in the search screen to a list</description>
         <name>Assign_Selected_Country_to_List</name>
         <label>Assign Selected Country to List</label>
-        <locationX>410</locationX>
-        <locationY>135</locationY>
+        <locationX>415</locationX>
+        <locationY>721</locationY>
         <assignmentItems>
             <assignToReference>Countries</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>SelectedCountry</elementReference>
+                <elementReference>BusinessSearchForm.selectedCountry</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>Search_for_Credit_Safe_Dossiers</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Count_Dossier_Lists</name>
+        <label>Count Dossier Lists</label>
+        <locationX>562</locationX>
+        <locationY>646</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByCompanyIDCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DossiersByCompanyID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DossiersByNameStatusRegistration_typeStreetCityPostalcodeCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DossiersByNameStatusRegistration_typeStreetCityPostalcode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DossiersByNameStatusStreetCityPostalcodeCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DossiersByNameStatusStreetCityPostalcode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DossiersByNameStatusStreetCityProvincePostalcodeCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DossiersByNameStatusStreetCityProvincePostalcode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DossiersByRegistration_NumberRegistration_TypeCityCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DossiersByRegistration_NumberRegistration_TypeCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DossiersByRegistration_numberStatusPostalcodeCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DossiersByRegistration_numberStatusPostalcode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DossiersByRegistrationNumberCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DossiersByRegistrationNumber</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>DossiersByVatNumberCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>DossiersByVatNumber</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Show_Credit_Safe_Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dossiers_Filtered_By_Company_ID</name>
+        <label>Dossiers Filtered By Company ID</label>
+        <locationX>214</locationX>
+        <locationY>465</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByCompanyID</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopVariableBusinessDossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Separate_Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dossiers_Filtered_By_Name_Status_Registration_type_Street_City_Postalcode</name>
+        <label>Dossiers Filtered By Name, Status, Registration_type, Street, City, Postalcode</label>
+        <locationX>659</locationX>
+        <locationY>209</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByNameStatusRegistration_typeStreetCityPostalcode</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopVariableBusinessDossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Separate_Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dossiers_Filtered_By_Name_Status_Street_City_Postalcode</name>
+        <label>Dossiers Filtered By Name, Status, Street, City, Postalcode</label>
+        <locationX>193</locationX>
+        <locationY>217</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByNameStatusStreetCityPostalcode</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopVariableBusinessDossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Separate_Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dossiers_Filtered_By_Name_Status_Street_City_Province_Postalcode</name>
+        <label>Dossiers Filtered By Name, Status, Street, City, Province, Postalcode</label>
+        <locationX>667</locationX>
+        <locationY>475</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByNameStatusStreetCityProvincePostalcode</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopVariableBusinessDossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Separate_Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dossiers_Filtered_By_Registration_Number</name>
+        <label>Dossiers Filtered By Registration Number</label>
+        <locationX>198</locationX>
+        <locationY>346</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByRegistrationNumber</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopVariableBusinessDossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Separate_Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dossiers_Filtered_By_Registration_Number_Registration_Type_City</name>
+        <label>Dossiers Filtered By Registration_Number, Registration_Type, City</label>
+        <locationX>495</locationX>
+        <locationY>72</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByRegistration_NumberRegistration_TypeCity</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopVariableBusinessDossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Separate_Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dossiers_Filtered_By_Registration_number_Status_Postalcode</name>
+        <label>Dossiers Filtered By Registration_number, Status, Postalcode</label>
+        <locationX>665</locationX>
+        <locationY>331</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByRegistration_numberStatusPostalcode</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopVariableBusinessDossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Separate_Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Dossiers_Filtered_By_Vat_Number</name>
+        <label>Dossiers Filtered By Vat Number</label>
+        <locationX>341</locationX>
+        <locationY>119</locationY>
+        <assignmentItems>
+            <assignToReference>DossiersByVatNumber</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopVariableBusinessDossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Separate_Search_Results</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Cancel_pressed_in_CreditSafe_search_results</name>
         <label>Cancel pressed in CreditSafe search results</label>
-        <locationX>574</locationX>
-        <locationY>235</locationY>
+        <locationX>699</locationX>
+        <locationY>764</locationY>
         <defaultConnector>
             <targetReference>Create_Credit_Safe_dossier</targetReference>
         </defaultConnector>
@@ -255,7 +442,7 @@
         <name>Cancel_pressed_in_Dutch_search_results</name>
         <label>Cancel pressed in Dutch search results</label>
         <locationX>696</locationX>
-        <locationY>515</locationY>
+        <locationY>1060</locationY>
         <defaultConnector>
             <targetReference>Create_Dutch_Dossiers</targetReference>
         </defaultConnector>
@@ -281,7 +468,7 @@
         <name>Decide_search_method</name>
         <label>Decide search method</label>
         <locationX>403</locationX>
-        <locationY>380</locationY>
+        <locationY>925</locationY>
         <defaultConnector>
             <targetReference>Assign_Selected_Country_to_List</targetReference>
         </defaultConnector>
@@ -305,7 +492,7 @@
             <name>Search_for_Dutch_Dossiers_Outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>SelectedCountry</leftValueReference>
+                <leftValueReference>BusinessSearchForm.selectedCountry</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>NL</stringValue>
@@ -315,6 +502,136 @@
                 <targetReference>Search_for_Dutch_Dossiers</targetReference>
             </connector>
             <label>Search for Dutch Dossiers</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Filter_Search_Results</name>
+        <label>Filter Search Results</label>
+        <locationX>413</locationX>
+        <locationY>362</locationY>
+        <defaultConnector>
+            <targetReference>Show_Credit_Safe_Search_Results</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Filter_By_Company_ID</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopVariableBusinessDossier.Search_Criteria_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>companyid</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dossiers_Filtered_By_Company_ID</targetReference>
+            </connector>
+            <label>Filter By Company ID</label>
+        </rules>
+        <rules>
+            <name>Filter_By_Registration_Number</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopVariableBusinessDossier.Search_Criteria_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>registration_number</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dossiers_Filtered_By_Registration_Number</targetReference>
+            </connector>
+            <label>Filter By Registration Number</label>
+        </rules>
+        <rules>
+            <name>Filter_By_Name_Status_Street_City_Postalcode</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopVariableBusinessDossier.Search_Criteria_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>name, status, street, city, postalcode</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dossiers_Filtered_By_Name_Status_Street_City_Postalcode</targetReference>
+            </connector>
+            <label>Filter By Name, Status, Street, City, Postalcode</label>
+        </rules>
+        <rules>
+            <name>Filter_By_Vat_Number</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopVariableBusinessDossier.Search_Criteria_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>vat_number</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dossiers_Filtered_By_Vat_Number</targetReference>
+            </connector>
+            <label>Filter By Vat Number</label>
+        </rules>
+        <rules>
+            <name>Filter_By_Registration_Number_Registration_Type_City</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopVariableBusinessDossier.Search_Criteria_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>registration_number, registration_type, city</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dossiers_Filtered_By_Registration_Number_Registration_Type_City</targetReference>
+            </connector>
+            <label>Filter By Registration_Number, Registration_Type, City</label>
+        </rules>
+        <rules>
+            <name>Filter_By_Name_Status_Registration_type_Street_City_Postalcode</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopVariableBusinessDossier.Search_Criteria_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>name, status, registration_type, street, city, postalcode</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dossiers_Filtered_By_Name_Status_Registration_type_Street_City_Postalcode</targetReference>
+            </connector>
+            <label>Filter By Name, Status, Registration_type, Street, City, Postalcode</label>
+        </rules>
+        <rules>
+            <name>Filter_By_Registration_number_Status_Postalcode</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopVariableBusinessDossier.Search_Criteria_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>registration_number, status, postalcode</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dossiers_Filtered_By_Registration_number_Status_Postalcode</targetReference>
+            </connector>
+            <label>Filter By Registration_number, Status, Postalcode</label>
+        </rules>
+        <rules>
+            <name>Filter_By_Name_Status_Street_City_Province_Postalcode</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopVariableBusinessDossier.Search_Criteria_Name__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>name, status, street, city, province, postalcode</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dossiers_Filtered_By_Name_Status_Street_City_Province_Postalcode</targetReference>
+            </connector>
+            <label>Filter By Name, Status, Street, City, Province, Postalcode</label>
         </rules>
     </decisions>
     <description>Search for organisations through CreditSafe or through the Dutch Chamber of Commerce. When an organisation has been found and selected fetches this organisation and inserts it into Salesforce as a Business Dossier.</description>
@@ -327,6 +644,21 @@
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Organisation Search Flow</label>
+    <loops>
+        <name>Separate_Search_Results</name>
+        <label>Separate Search Results</label>
+        <locationX>418</locationX>
+        <locationY>575</locationY>
+        <assignNextValueToReference>LoopVariableBusinessDossier</assignNextValueToReference>
+        <collectionReference>Search_for_Credit_Safe_Dossiers</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Filter_Search_Results</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Count_Dossier_Lists</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -343,8 +675,8 @@
     <recordCreates>
         <name>Create_Credit_Safe_dossier</name>
         <label>Create Credit Safe dossier</label>
-        <locationX>810</locationX>
-        <locationY>41</locationY>
+        <locationX>941</locationX>
+        <locationY>589</locationY>
         <connector>
             <targetReference>End</targetReference>
         </connector>
@@ -357,7 +689,7 @@
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
         <locationX>567</locationX>
-        <locationY>579</locationY>
+        <locationY>1124</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -399,7 +731,7 @@
             <inputParameters>
                 <name>searchResults</name>
                 <value>
-                    <elementReference>foundBusinessDossiers</elementReference>
+                    <elementReference>Search_for_Dutch_Dossiers</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -431,7 +763,7 @@
         <name>Search</name>
         <label>Enter Search Criteria</label>
         <locationX>210</locationX>
-        <locationY>377</locationY>
+        <locationY>922</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -573,74 +905,7 @@
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>City</assignToReference>
-                <name>city</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>DomainName</assignToReference>
-                <name>domainName</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>HouseNumber</assignToReference>
-                <name>houseNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>HouseNumberAddition</assignToReference>
-                <name>houseNumberAddition</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>PhoneNumber</assignToReference>
-                <name>phoneNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>PostalCode</assignToReference>
-                <name>postalCode</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>SelectedCountry</assignToReference>
-                <name>selectedCountry</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Street</assignToReference>
-                <name>street</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>TradeName</assignToReference>
-                <name>tradeName</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>RegistrationNumber</assignToReference>
-                <name>registrationNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>RegistrationType</assignToReference>
-                <name>registrationType</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Status</assignToReference>
-                <name>status</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>RegistrationNumber</assignToReference>
-                <name>dossierNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>Province</assignToReference>
-                <name>province</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>VATNumber</assignToReference>
-                <name>vatNumber</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>CreditSafeRegistrationId</assignToReference>
-                <name>creditSafeId</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>StrictSearch</assignToReference>
-                <name>strictSearch</name>
-            </outputParameters>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>searchFlowFooter</name>
@@ -664,8 +929,8 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>582</locationX>
-        <locationY>34</locationY>
+        <locationX>705</locationX>
+        <locationY>595</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -701,13 +966,13 @@
             <isRequired>true</isRequired>
         </fields>
         <fields>
-            <name>creditSafeDossierSearchResults</name>
+            <name>ResultsByRegistrationNumber</name>
             <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>searchResults</name>
                 <value>
-                    <elementReference>foundBusinessDossiers</elementReference>
+                    <elementReference>DossiersByRegistrationNumber</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -715,6 +980,273 @@
                 <assignToReference>selectedDossier</assignToReference>
                 <name>selectedResult</name>
             </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByRegistrationNumberCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ResultsByCompanyId</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>DossiersByCompanyID</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByCompanyIDCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ResultsByVatNumber</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>DossiersByVatNumber</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByVatNumberCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ResultsByRegistration_NumberRegistration_TypeCity</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>DossiersByRegistration_NumberRegistration_TypeCity</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByRegistration_NumberRegistration_TypeCityCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ResultsByNameStatusRegistration_typeStreetCityPostalcode</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>DossiersByNameStatusRegistration_typeStreetCityPostalcode</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByNameStatusRegistration_typeStreetCityPostalcodeCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ResultsByNameStatusStreetCityPostalcode</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>DossiersByNameStatusStreetCityPostalcode</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByNameStatusStreetCityPostalcodeCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ResultsByNameStatusStreetCityProvincePostalcode</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>DossiersByNameStatusStreetCityProvincePostalcode</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByNameStatusStreetCityProvincePostalcodeCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ResultsByRegistration_numberStatusPostalcode</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>DossiersByRegistration_numberStatusPostalcode</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByRegistration_numberStatusPostalcodeCount</leftValueReference>
+                    <operator>GreaterThan</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NoResults</name>
+            <extensionName>appsolutely:creditSafeDossierSearchResults</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchResults</name>
+                <value>
+                    <elementReference>DossiersByCompanyID</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>selectedDossier</assignToReference>
+                <name>selectedResult</name>
+            </outputParameters>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DossiersByCompanyIDCount</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DossiersByNameStatusRegistration_typeStreetCityPostalcodeCount</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DossiersByNameStatusStreetCityPostalcodeCount</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DossiersByNameStatusStreetCityProvincePostalcodeCount</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DossiersByRegistration_NumberRegistration_TypeCityCount</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DossiersByRegistration_numberStatusPostalcodeCount</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DossiersByRegistrationNumberCount</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>DossiersByVatNumberCount</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>ZeroCount</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>creditSafeSearchResultFlowFooter</name>
@@ -731,12 +1263,12 @@
     </screens>
     <start>
         <locationX>49</locationX>
-        <locationY>378</locationY>
+        <locationY>923</locationY>
         <connector>
             <targetReference>Search</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AddressCountry</name>
         <dataType>String</dataType>
@@ -774,6 +1306,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>creditSafeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>CreditSafeRegistrationId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -800,6 +1339,158 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>DossiersByCompanyID</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossiersByCompanyIDCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DossiersByNameStatusRegistration_typeStreetCityPostalcode</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossiersByNameStatusRegistration_typeStreetCityPostalcodeCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DossiersByNameStatusStreetCityPostalcode</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossiersByNameStatusStreetCityPostalcodeCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DossiersByNameStatusStreetCityProvincePostalcode</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossiersByNameStatusStreetCityProvincePostalcodeCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DossiersByRegistration_NumberRegistration_TypeCity</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossiersByRegistration_NumberRegistration_TypeCityCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DossiersByRegistration_numberStatusPostalcode</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossiersByRegistration_numberStatusPostalcodeCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DossiersByRegistrationNumber</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossiersByRegistrationNumberCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>DossiersByVatNumber</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossiersByVatNumberCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>foundBusinessDossiers</name>
@@ -846,6 +1537,14 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LoopVariableBusinessDossier</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
         <name>NextButtonTitle</name>
@@ -919,6 +1618,17 @@
         <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
+        <name>size</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>Status</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -988,5 +1698,16 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ZeroCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
 </Flow>

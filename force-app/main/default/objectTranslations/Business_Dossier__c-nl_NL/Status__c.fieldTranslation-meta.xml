@@ -4,15 +4,15 @@
     <name>Status__c</name>
     <picklistValues>
         <masterLabel>Active</masterLabel>
-        <translation><!-- Active --></translation>
+        <translation>Actief</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Active, NonActive</masterLabel>
-        <translation><!-- Active, NonActive --></translation>
+        <translation>Actief, Nonactief</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Bankruptcy</masterLabel>
-        <translation><!-- Bankruptcy --></translation>
+        <translation>Faillissement</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>DIP</masterLabel>
@@ -20,15 +20,15 @@
     </picklistValues>
     <picklistValues>
         <masterLabel>Economically Active</masterLabel>
-        <translation><!-- Economically Active --></translation>
+        <translation>Economisch actief</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Export</masterLabel>
-        <translation><!-- Export --></translation>
+        <translation>Exporteert</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Import</masterLabel>
-        <translation><!-- Import --></translation>
+        <translation>Importeert</translation>
     </picklistValues>
     <picklistValues>
         <masterLabel>Non Mailing</masterLabel>
@@ -36,6 +36,6 @@
     </picklistValues>
     <picklistValues>
         <masterLabel>NonActive</masterLabel>
-        <translation><!-- NonActive --></translation>
+        <translation>Nonactief</translation>
     </picklistValues>
 </CustomFieldTranslation>
