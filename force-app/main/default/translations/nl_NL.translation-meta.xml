@@ -1102,12 +1102,6 @@
                 </fields>
                 <name>Input_parameters</name>
             </screens>
-            <screens>
-                <fields>
-                    <name>NavigateToCreditsafeReport</name>
-                </fields>
-                <name>Navigation</name>
-            </screens>
         </flows>
         <fullName>Get_Creditsafe_Report</fullName>
     </flowDefinitions>
