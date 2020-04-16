@@ -437,7 +437,6 @@
     </formulas>
     <interviewLabel>Get Creditsafe Report {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <isTemplate>true</isTemplate>
     <label>Get Creditsafe Report</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -458,7 +457,7 @@
         <locationX>472</locationX>
         <locationY>829</locationY>
         <connector>
-            <targetReference>Navigation</targetReference>
+            <targetReference>End</targetReference>
         </connector>
         <filters>
             <field>Company_Id__c</field>
@@ -581,29 +580,6 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Navigation</name>
-        <label>Navigation</label>
-        <locationX>665</locationX>
-        <locationY>828</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>NavigateToCreditsafeReport</name>
-            <extensionName>appsolutely:flowNavigation</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CreditsafeReport.Id</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>241</locationY>
@@ -641,7 +617,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Creditsafe_Company_Report_Full__c</objectType>
     </variables>
     <variables>
