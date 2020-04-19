@@ -291,7 +291,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Credentials successfully updated message</shortDescription>
-        <value>Credentials safed!</value>
+        <value>Credentials saved!</value>
     </labels>
     <labels>
         <fullName>CreditSafe_Validation_Message_Heading</fullName>

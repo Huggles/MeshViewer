@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Get_for_Company_IDs</name>
         <label>Get for Company IDs</label>
-        <locationX>806</locationX>
-        <locationY>1143</locationY>
+        <locationX>924</locationX>
+        <locationY>283</locationY>
         <actionName>GetCompanyIdsInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -22,7 +22,7 @@
         <inputParameters>
             <name>registration_number</name>
             <value>
-                <elementReference>Get_Buisness_Dossier_Record.Dossier_Number__c</elementReference>
+                <elementReference>Get_Business_Dossier_Record.Dossier_Number__c</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
@@ -33,13 +33,13 @@
     <assignments>
         <name>Assign_Country</name>
         <label>Assign Country</label>
-        <locationX>333</locationX>
-        <locationY>1144</locationY>
+        <locationX>513</locationX>
+        <locationY>283</locationY>
         <assignmentItems>
             <assignToReference>Countries</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_Buisness_Dossier_Record.Registration_Country__c</elementReference>
+                <elementReference>Get_Business_Dossier_Record.Registration_Country__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -56,8 +56,8 @@
     <decisions>
         <name>Type_of_Business_Dossier</name>
         <label>Type of Business Dossier</label>
-        <locationX>325</locationX>
-        <locationY>930</locationY>
+        <locationX>506</locationX>
+        <locationY>57</locationY>
         <defaultConnector>
             <targetReference>Get_Creditsafe_Report_For_Dossier</targetReference>
         </defaultConnector>
@@ -66,14 +66,14 @@
             <name>Is_Dutch_Business_Dossier_with_No_Company_Id</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Buisness_Dossier_Record.RecordType.DeveloperName</leftValueReference>
+                <leftValueReference>Get_Business_Dossier_Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>DutchBusinessRecordType</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Buisness_Dossier_Record.Company_Id__c</leftValueReference>
+                <leftValueReference>Get_Business_Dossier_Record.Company_Id__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -88,14 +88,14 @@
             <name>Is_Dutch_Business_Dossier_with_Company_Id</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Buisness_Dossier_Record.RecordType.DeveloperName</leftValueReference>
+                <leftValueReference>Get_Business_Dossier_Record.RecordType.DeveloperName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>DutchBusinessRecordType</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Buisness_Dossier_Record.Company_Id__c</leftValueReference>
+                <leftValueReference>Get_Business_Dossier_Record.Company_Id__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -131,10 +131,10 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>Get_Buisness_Dossier_Record</name>
-        <label>Get Buisness Dossier Record</label>
-        <locationX>192</locationX>
-        <locationY>928</locationY>
+        <name>Get_Business_Dossier_Record</name>
+        <label>Get Business Dossier Record</label>
+        <locationX>282</locationX>
+        <locationY>55</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Type_of_Business_Dossier</targetReference>
@@ -153,8 +153,8 @@
     <screens>
         <name>Error_Handling_Screen</name>
         <label>Error Handling Screen</label>
-        <locationX>811</locationX>
-        <locationY>1350</locationY>
+        <locationX>923</locationX>
+        <locationY>511</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -166,19 +166,45 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Navigation</name>
+        <label>Navigation</label>
+        <locationX>1101</locationX>
+        <locationY>49</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NavigateToCreditsafeReport</name>
+            <extensionName>appsolutely:flowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CreditsafeReport.Id</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>39</locationX>
-        <locationY>928</locationY>
+        <locationX>50</locationX>
+        <locationY>57</locationY>
         <connector>
-            <targetReference>Get_Buisness_Dossier_Record</targetReference>
+            <targetReference>Get_Business_Dossier_Record</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Get_Creditsafe_Report_For_Dossier</name>
         <label>Get Creditsafe Report For Dossier</label>
-        <locationX>806</locationX>
-        <locationY>926</locationY>
+        <locationX>923</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Navigation</targetReference>
+        </connector>
         <flowName>Get_Creditsafe_Report</flowName>
         <inputAssignments>
             <name>CompanyId</name>
@@ -189,9 +215,13 @@
         <inputAssignments>
             <name>InputBusinessDossier</name>
             <value>
-                <elementReference>Get_Buisness_Dossier_Record</elementReference>
+                <elementReference>Get_Business_Dossier_Record</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>CreditsafeReport</assignToReference>
+            <name>CreditsafeReport</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>CompanyId</name>
@@ -200,7 +230,7 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <elementReference>Get_Buisness_Dossier_Record.Company_Id__c</elementReference>
+            <elementReference>Get_Business_Dossier_Record.Company_Id__c</elementReference>
         </value>
     </variables>
     <variables>
@@ -209,6 +239,14 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CreditsafeReport</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Creditsafe_Company_Report_Full__c</objectType>
     </variables>
     <variables>
         <name>recordId</name>
