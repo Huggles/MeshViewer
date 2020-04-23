@@ -52,6 +52,13 @@
                 <elementReference>Get_Account.International_Address_Data__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SearchAgainClicked</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Show_International_Address</targetReference>
         </connector>
@@ -66,6 +73,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>SelectedInternationalAddress.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SearchAgainClicked</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -230,6 +244,7 @@
     </decisions>
     <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
     <interviewLabel>Enrich Account with International Address Data {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Enrich Account with International Address Data</label>
     <processMetadataValues>
