@@ -1,0 +1,7 @@
+<!--
+ - Created by jaapbranderhorst on 16/02/2020.
+ -->
+
+<aura:event type="COMPONENT" description="event thrown by the flow encapsulated in the global flow quick action whenever the status of the flow changes.">
+    <aura:attribute type="String" name="status" description="event value (FINISHED, NEXT etc)"/>
+</aura:event>
