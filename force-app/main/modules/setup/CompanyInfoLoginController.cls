@@ -5,8 +5,13 @@
 public inherited sharing class CompanyInfoLoginController {
 
     @AuraEnabled
-    public static void safeUsernamePassword(String username, String password) {
+    public static void saveUsernamePassword(String username, String password) {
         BusinessAccountingService.saveDataUserCredentials(username, password);
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Credentials__c getCredentials(){
+        return BusinessAccountingService.getCredentials();
     }
 
 }

@@ -18,6 +18,11 @@ public interface IBusinessAccountingService {
      */
     void saveDataUserCredentials(String username, String password);
 
+    /**
+     * Get the org default value for Credentials__c
+    */
+    Credentials__c getCredentials();
+
 //    /**
 //     * Adds budget to the Company info user. TODO: research if this should also be added to the account if it is a referall account
 //     *
