@@ -61,6 +61,13 @@
         <value>City</value>
     </labels>
     <labels>
+        <fullName>City_Help_Text</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>City Help Text</shortDescription>
+        <value>Please fill the city name in Country&#39;s native language</value>
+    </labels>
+    <labels>
         <fullName>Config_Account_ActivateDescription</fullName>
         <language>en_US</language>
         <protected>true</protected>
