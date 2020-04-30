@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <decisions>
         <name>Is_Business_Dossier_Related_to_Account</name>
         <label>Is Business Dossier Related to Account</label>
-        <locationX>345</locationX>
-        <locationY>933</locationY>
+        <locationX>557</locationX>
+        <locationY>123</locationY>
         <defaultConnector>
             <targetReference>No_Business_Dossier_Found</targetReference>
         </defaultConnector>
@@ -25,12 +26,12 @@
             <label>Business Dossier Related</label>
         </rules>
     </decisions>
+    <description>Template that can be used to get creditsafe report as quick actions on Account.</description>
     <formulas>
         <name>NoBusinessDossierFoundLabel</name>
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__no_business_dossier_found}</expression>
     </formulas>
-    <description>Template that can be used to get creditsafe report as quick actions on Account.</description>
     <interviewLabel>Get Creditsafe Report Quick Action on Account {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Get Creditsafe Report Quick Action on Account</label>
@@ -50,8 +51,8 @@
     <recordLookups>
         <name>Get_Account_Record</name>
         <label>Get Account Record</label>
-        <locationX>178</locationX>
-        <locationY>930</locationY>
+        <locationX>328</locationX>
+        <locationY>119</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Business_Dossier_Related_to_Account</targetReference>
@@ -70,8 +71,8 @@
     <screens>
         <name>No_Business_Dossier_Found</name>
         <label>No Business Dossier Found</label>
-        <locationX>353</locationX>
-        <locationY>1129</locationY>
+        <locationX>824</locationX>
+        <locationY>197</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -85,7 +86,7 @@
     </screens>
     <start>
         <locationX>50</locationX>
-        <locationY>930</locationY>
+        <locationY>120</locationY>
         <connector>
             <targetReference>Get_Account_Record</targetReference>
         </connector>
@@ -94,8 +95,8 @@
     <subflows>
         <name>Get_Creditsafe_Report_Quick_Action</name>
         <label>Get Creditsafe Report Quick Action</label>
-        <locationX>635</locationX>
-        <locationY>927</locationY>
+        <locationX>814</locationX>
+        <locationY>43</locationY>
         <flowName>Get_Creditsafe_Report_Quick_Action</flowName>
         <inputAssignments>
             <name>recordId</name>
@@ -103,6 +104,10 @@
                 <elementReference>Get_Account_Record.Business_Dossier__c</elementReference>
             </value>
         </inputAssignments>
+        <outputAssignments>
+            <assignToReference>CancelPressed</assignToReference>
+            <name>CancelPressed</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>CancelPressed</name>

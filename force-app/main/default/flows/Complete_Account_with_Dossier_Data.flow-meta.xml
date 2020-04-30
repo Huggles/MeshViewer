@@ -28,8 +28,8 @@
     <assignments>
         <name>Assign_Business_Dossier_Id_And_Search_Again</name>
         <label>Assign Business Dossier Id And Search Again</label>
-        <locationX>357</locationX>
-        <locationY>472</locationY>
+        <locationX>356</locationX>
+        <locationY>435</locationY>
         <assignmentItems>
             <assignToReference>BusinessDossierRecordId</assignToReference>
             <operator>Assign</operator>
@@ -51,8 +51,8 @@
     <assignments>
         <name>Assign_New_Business_Dossier_Id_And_Search_Again</name>
         <label>Assign New Business Dossier Id And Search Again</label>
-        <locationX>1080</locationX>
-        <locationY>473</locationY>
+        <locationX>1196</locationX>
+        <locationY>425</locationY>
         <assignmentItems>
             <assignToReference>BusinessDossierRecordId</assignToReference>
             <operator>Assign</operator>
@@ -74,8 +74,8 @@
     <assignments>
         <name>Default_outcome_message</name>
         <label>Default outcome message</label>
-        <locationX>805</locationX>
-        <locationY>474</locationY>
+        <locationX>1013</locationX>
+        <locationY>530</locationY>
         <assignmentItems>
             <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
             <operator>Assign</operator>
@@ -138,10 +138,35 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Search_Again_Clicked_Or_VAT_Updated</name>
-        <label>Search Again Clicked Or VAT Updated</label>
-        <locationX>616</locationX>
-        <locationY>482</locationY>
+        <name>Cancel_Pressed1</name>
+        <label>Cancel Pressed</label>
+        <locationX>875</locationX>
+        <locationY>716</locationY>
+        <defaultConnector>
+            <targetReference>Default_outcome_message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_is_Pressed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>cancelPressed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Show_Buisness_Dossier</targetReference>
+            </connector>
+            <label>Cancel is Pressed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Search_Again_Clicked_Or_VAT_Updated_or_Get_Creditsafe_Report_Clicked</name>
+        <label>Search Again Clicked Or VAT Updated or Get Creditsafe Report Clicked</label>
+        <locationX>591</locationX>
+        <locationY>502</locationY>
         <defaultConnector>
             <targetReference>Default_outcome_message</targetReference>
         </defaultConnector>
@@ -175,6 +200,21 @@
                 <targetReference>Show_Buisness_Dossier</targetReference>
             </connector>
             <label>VAT Updated</label>
+        </rules>
+        <rules>
+            <name>Get_Creditsafe_Report_is_Clicked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCreditsafeReportClicked</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Creditsafe_Report</targetReference>
+            </connector>
+            <label>Get Creditsafe Report is Clicked</label>
         </rules>
     </decisions>
     <decisions>
@@ -279,13 +319,13 @@
     <screens>
         <name>Show_Buisness_Dossier</name>
         <label>Show Buisness Dossier</label>
-        <locationX>694</locationX>
-        <locationY>731</locationY>
+        <locationX>890</locationX>
+        <locationY>405</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Search_Again_Clicked_Or_VAT_Updated</targetReference>
+            <targetReference>Search_Again_Clicked_Or_VAT_Updated_or_Get_Creditsafe_Report_Clicked</targetReference>
         </connector>
         <fields>
             <name>ErrorMessage</name>
@@ -328,6 +368,10 @@
                 <assignToReference>VATUpdated</assignToReference>
                 <name>VATUpdated</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>GetCreditsafeReportClicked</assignToReference>
+                <name>getCreditsafeReportClicked</name>
+            </outputParameters>
         </fields>
         <fields>
             <name>BusinessDossierRecord</name>
@@ -353,6 +397,26 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Get_Creditsafe_Report</name>
+        <label>Get Creditsafe Report</label>
+        <locationX>601</locationX>
+        <locationY>714</locationY>
+        <connector>
+            <targetReference>Cancel_Pressed1</targetReference>
+        </connector>
+        <flowName>Get_Creditsafe_Report_Quick_Action_on_Account</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Account.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>cancelPressed</assignToReference>
+            <name>CancelPressed</name>
+        </outputAssignments>
+    </subflows>
     <subflows>
         <description>Searches for organisations. Uses the input values as defaults to search on.</description>
         <name>Organisation_Search_Flow</name>
@@ -449,6 +513,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>GetCreditsafeReportClicked</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>The record Id of the Account to complete</description>

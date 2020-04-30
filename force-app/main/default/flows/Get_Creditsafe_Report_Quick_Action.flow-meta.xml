@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
+    <actionCalls>
+        <name>End_Flow</name>
+        <label>End Flow</label>
+        <locationX>1269</locationX>
+        <locationY>50</locationY>
+        <actionName>appsolutely:flowCancelEndPoint</actionName>
+        <actionType>component</actionType>
+    </actionCalls>
     <actionCalls>
         <name>Get_for_Company_IDs</name>
         <label>Get for Company IDs</label>
@@ -53,6 +62,31 @@
             <stringValue>Dutch_Business</stringValue>
         </value>
     </constants>
+    <decisions>
+        <name>Cancel_Pressed</name>
+        <label>Cancel Pressed</label>
+        <locationX>1072</locationX>
+        <locationY>52</locationY>
+        <defaultConnector>
+            <targetReference>Navigation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_is_Pressed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CancelPressed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End_Flow</targetReference>
+            </connector>
+            <label>Cancel is Pressed</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Type_of_Business_Dossier</name>
         <label>Type of Business Dossier</label>
@@ -114,7 +148,6 @@
         <expression>{!$Label.appsolutely__an_error_occured}</expression>
     </formulas>
     <interviewLabel>Get Creditsafe Report Quick Action {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Get Creditsafe Report Quick Action on Business Dossier</label>
     <processMetadataValues>
@@ -169,8 +202,8 @@
     <screens>
         <name>Navigation</name>
         <label>Navigation</label>
-        <locationX>1101</locationX>
-        <locationY>49</locationY>
+        <locationX>1085</locationX>
+        <locationY>261</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -203,7 +236,7 @@
         <locationX>923</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Navigation</targetReference>
+            <targetReference>Cancel_Pressed</targetReference>
         </connector>
         <flowName>Get_Creditsafe_Report</flowName>
         <inputAssignments>
@@ -219,10 +252,24 @@
             </value>
         </inputAssignments>
         <outputAssignments>
+            <assignToReference>CancelPressed</assignToReference>
+            <name>CancelPressed</name>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>CreditsafeReport</assignToReference>
             <name>CreditsafeReport</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>CancelPressed</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>CompanyId</name>
         <dataType>String</dataType>

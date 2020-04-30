@@ -26,6 +26,7 @@ import VAT_Not_Found from '@salesforce/label/c.VAT_Not_Found';
 import Error from '@salesforce/label/c.Error';
 import Error_Unknown from '@salesforce/label/c.Error_Unknown';
 import Error_Incomplete from '@salesforce/label/c.Error_Incomplete';
+import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
 
 
 
@@ -40,6 +41,9 @@ export default class AccountEnrichmentHeader extends LightningElement {
     @api
     searchAgainClicked;
 
+    @api
+    getCreditsafeReportClicked = false;
+
     @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY] })
     businessDossierRecord;
 
@@ -52,7 +56,8 @@ export default class AccountEnrichmentHeader extends LightningElement {
         VAT_Not_Found,
         Error,
         Error_Unknown,
-        Error_Incomplete
+        Error_Incomplete,
+        Get_Creditsafe_Report
     }
     staticResource = {
         companyInfoLogoSmall,
@@ -105,6 +110,12 @@ export default class AccountEnrichmentHeader extends LightningElement {
             "mode": (mode == null ? ((type == 'info' || type == 'success' || type == null) ? 'dismissable' : 'sticky') : mode)
         });
         this.dispatchEvent(event);
+    }
+
+    handleOnGetCreditsafeReport(event) {
+        this.getCreditsafeReportClicked = true;
+        //we throw an event because the flow needs to show a search form
+        this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
 }
