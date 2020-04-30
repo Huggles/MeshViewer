@@ -774,6 +774,13 @@
         <value>Locality</value>
     </labels>
     <labels>
+        <fullName>Locality_Help_Text</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Locality Help Text</shortDescription>
+        <value>District or municipality search phrase</value>
+    </labels>
+    <labels>
         <fullName>Ltd</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
