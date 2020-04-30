@@ -21,7 +21,6 @@ import House_Number from '@salesforce/label/c.House_Number';
 import Country from '@salesforce/label/c.Country';
 import Validation_Error_Message_Toast_Title from '@salesforce/label/c.Validation_Error_Message_Toast_Title';
 import No_address_fields_filled_international_address from '@salesforce/label/c.No_address_fields_filled_international_address';
-import Locality_Help_Text from '@salesforce/label/c.Locality_Help_Text';
 
 export default class InternationalAddressSearchForm extends LightningElement {
 
@@ -56,8 +55,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
         Province,
         Country,
         No_address_fields_filled_international_address,
-        Validation_Error_Message_Toast_Title,
-        Locality_Help_Text
+        Validation_Error_Message_Toast_Title
     }
 
     /**
