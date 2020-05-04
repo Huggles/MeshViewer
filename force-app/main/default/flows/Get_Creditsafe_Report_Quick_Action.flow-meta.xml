@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
-    <actionCalls>
-        <name>End_Flow</name>
-        <label>End Flow</label>
-        <locationX>1269</locationX>
-        <locationY>50</locationY>
-        <actionName>appsolutely:flowCancelEndPoint</actionName>
-        <actionType>component</actionType>
-    </actionCalls>
     <actionCalls>
         <name>Get_for_Company_IDs</name>
         <label>Get for Company IDs</label>
@@ -20,7 +11,7 @@
             <targetReference>Get_Creditsafe_Report_For_Dossier</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_Handling_Screen</targetReference>
+            <targetReference>Default_Outcome_Message</targetReference>
         </faultConnector>
         <inputParameters>
             <name>countries</name>
@@ -55,6 +46,22 @@
             <targetReference>Get_for_Company_IDs</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Default_Outcome_Message</name>
+        <label>Default Outcome Message</label>
+        <locationX>1113</locationX>
+        <locationY>288</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_Handling_Screen</targetReference>
+        </connector>
+    </assignments>
     <constants>
         <name>DutchBusinessRecordType</name>
         <dataType>String</dataType>
@@ -62,31 +69,6 @@
             <stringValue>Dutch_Business</stringValue>
         </value>
     </constants>
-    <decisions>
-        <name>Cancel_Pressed</name>
-        <label>Cancel Pressed</label>
-        <locationX>1072</locationX>
-        <locationY>52</locationY>
-        <defaultConnector>
-            <targetReference>Navigation</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Cancel_is_Pressed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>CancelPressed</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>End_Flow</targetReference>
-            </connector>
-            <label>Cancel is Pressed</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Type_of_Business_Dossier</name>
         <label>Type of Business Dossier</label>
@@ -186,38 +168,15 @@
     <screens>
         <name>Error_Handling_Screen</name>
         <label>Error Handling Screen</label>
-        <locationX>923</locationX>
-        <locationY>511</locationY>
+        <locationX>1114</locationX>
+        <locationY>467</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Error</name>
-            <fieldText>&lt;p&gt;{!AnErrorOccuredLabel}&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!AnErrorOccuredLabel}&lt;/p&gt;&lt;p&gt;{!ErrorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Navigation</name>
-        <label>Navigation</label>
-        <locationX>1085</locationX>
-        <locationY>261</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>NavigateToCreditsafeReport</name>
-            <extensionName>appsolutely:flowNavigation</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CreditsafeReport.Id</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -235,9 +194,6 @@
         <label>Get Creditsafe Report For Dossier</label>
         <locationX>923</locationX>
         <locationY>50</locationY>
-        <connector>
-            <targetReference>Cancel_Pressed</targetReference>
-        </connector>
         <flowName>Get_Creditsafe_Report</flowName>
         <inputAssignments>
             <name>CompanyId</name>
@@ -292,8 +248,15 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Creditsafe_Company_Report_Full__c</objectType>
+    </variables>
+    <variables>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>recordId</name>

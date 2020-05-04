@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <decisions>
         <name>Is_Business_Dossier_Related_to_Account</name>
         <label>Is Business Dossier Related to Account</label>
@@ -71,8 +70,8 @@
     <screens>
         <name>No_Business_Dossier_Found</name>
         <label>No Business Dossier Found</label>
-        <locationX>824</locationX>
-        <locationY>197</locationY>
+        <locationX>814</locationX>
+        <locationY>260</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -108,6 +107,10 @@
             <assignToReference>CancelPressed</assignToReference>
             <name>CancelPressed</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>CreditsafeReport</assignToReference>
+            <name>CreditsafeReport</name>
+        </outputAssignments>
     </subflows>
     <variables>
         <name>CancelPressed</name>
@@ -118,6 +121,14 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>CreditsafeReport</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Creditsafe_Company_Report_Full__c</objectType>
     </variables>
     <variables>
         <name>recordId</name>

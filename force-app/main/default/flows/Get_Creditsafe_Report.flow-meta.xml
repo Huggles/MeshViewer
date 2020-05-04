@@ -436,7 +436,6 @@
         <expression>{!$Label.appsolutely__realisation_check_receivables_collection}</expression>
     </formulas>
     <interviewLabel>Get Creditsafe Report {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Get Creditsafe Report</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -460,13 +459,6 @@
             <targetReference>End</targetReference>
         </connector>
         <filters>
-            <field>Company_Id__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
@@ -477,6 +469,12 @@
             <field>Company_Id__c</field>
             <value>
                 <elementReference>CompanyId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Creditsafe_Company_Report__c</field>
+            <value>
+                <elementReference>CreditsafeReport.Id</elementReference>
             </value>
         </inputAssignments>
         <object>Business_Dossier__c</object>

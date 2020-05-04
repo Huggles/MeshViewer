@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <name>End</name>
         <label>End</label>
@@ -72,10 +71,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Creditsafe_Report_Created_Message</name>
+        <label>Creditsafe Report Created Message</label>
+        <locationX>1136</locationX>
+        <locationY>601</locationY>
+        <assignmentItems>
+            <assignToReference>LookupCreationMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CreditsafeReportCreatedLabel</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Show_Buisness_Dossier</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Default_outcome_message</name>
         <label>Default outcome message</label>
-        <locationX>1013</locationX>
-        <locationY>530</locationY>
+        <locationX>822</locationX>
+        <locationY>572</locationY>
         <assignmentItems>
             <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
             <operator>Assign</operator>
@@ -140,8 +155,8 @@
     <decisions>
         <name>Cancel_Pressed1</name>
         <label>Cancel Pressed</label>
-        <locationX>875</locationX>
-        <locationY>716</locationY>
+        <locationX>993</locationX>
+        <locationY>766</locationY>
         <defaultConnector>
             <targetReference>Default_outcome_message</targetReference>
         </defaultConnector>
@@ -160,6 +175,21 @@
                 <targetReference>Show_Buisness_Dossier</targetReference>
             </connector>
             <label>Cancel is Pressed</label>
+        </rules>
+        <rules>
+            <name>Creditsafe_Report_Created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CreditsafeReport.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Creditsafe_Report_Created_Message</targetReference>
+            </connector>
+            <label>Creditsafe Report Created</label>
         </rules>
     </decisions>
     <decisions>
@@ -250,6 +280,11 @@
         </rules>
     </decisions>
     <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
+    <formulas>
+        <name>CreditsafeReportCreatedLabel</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__creditsafe_report_created}</expression>
+    </formulas>
     <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Enrich Account with Dossier Data</label>
@@ -320,7 +355,7 @@
         <name>Show_Buisness_Dossier</name>
         <label>Show Buisness Dossier</label>
         <locationX>890</locationX>
-        <locationY>405</locationY>
+        <locationY>406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -339,12 +374,40 @@
             </inputParameters>
             <isRequired>true</isRequired>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>DefaultOutcomeErrorMessage</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue/>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SuccessMessage</name>
+            <extensionName>appsolutely:flowErrorHandler</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>LookupCreationMessage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Success</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LookupCreationMessage</leftValueReference>
+                    <operator>StartsWith</operator>
+                    <rightValue>
+                        <elementReference>CreditsafeReportCreatedLabel</elementReference>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -401,7 +464,7 @@
         <name>Get_Creditsafe_Report</name>
         <label>Get Creditsafe Report</label>
         <locationX>601</locationX>
-        <locationY>714</locationY>
+        <locationY>771</locationY>
         <connector>
             <targetReference>Cancel_Pressed1</targetReference>
         </connector>
@@ -415,6 +478,10 @@
         <outputAssignments>
             <assignToReference>cancelPressed</assignToReference>
             <name>CancelPressed</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>CreditsafeReport</assignToReference>
+            <name>CreditsafeReport</name>
         </outputAssignments>
     </subflows>
     <subflows>
@@ -508,6 +575,14 @@
         <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
+        <name>CreditsafeReport</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Creditsafe_Company_Report_Full__c</objectType>
+    </variables>
+    <variables>
         <name>DefaultOutcomeErrorMessage</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -522,6 +597,16 @@
         <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>LookupCreationMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue/>
         </value>
     </variables>
     <variables>
