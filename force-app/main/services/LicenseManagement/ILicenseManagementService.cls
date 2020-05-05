@@ -13,7 +13,7 @@ public interface ILicenseManagementService {
      * @param licenseType the name of the license type to check
      * @return the users who have the license type assigned
     */
-    User[] getAssignedUsersForLicenseType(String licenseType);
+    User[] getAssignedUsersForLicenseType(LicenseType licenseType);
 
     /**
      *  Unassigns the given license type of the given users. If the license type is not assigned to the user, fails silently.
@@ -21,14 +21,23 @@ public interface ILicenseManagementService {
      *  @param licenseType the name of the license type
      *  @param users the list of users to remove the license type assignment from
     */
-    void unassignLicenseType(String licenseType, User[] users);
+    void unassignLicenseType(LicenseType licenseType, User[] users);
 
     /**
      * Assigns the given license type to the given users.
      *
      * @param licenseType the name of the license type
-     *  @param users the list of users to assign the license type to
+     * @param users the list of users to assign the license type to
     */
-    void assignLicenseType(String licenseType, User[] users);
+    void assignLicenseType(LicenseType licenseType, User[] users);
+
+    /**
+     * Returns the number of seats still available for the given license type
+     *
+     * @param licenseType the License Type for which the number of available seats should be determined
+     * @return the number of available seats
+    */
+    Integer getNumberOfAvailableSeats(LicenseType licenseType);
+
 
 }
