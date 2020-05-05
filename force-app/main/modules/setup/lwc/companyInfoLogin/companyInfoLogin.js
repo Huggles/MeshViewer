@@ -2,8 +2,9 @@
  * Created by jaapbranderhorst on 09/04/2020.
  */
 
-import {LightningElement, track} from 'lwc';
-import safeUsernamePassword from '@salesforce/apex/CompanyInfoLoginController.safeUsernamePassword';
+import {LightningElement, track, wire} from 'lwc';
+import saveUsernamePassword from '@salesforce/apex/CompanyInfoLoginController.saveUsernamePassword';
+import getCredentials from '@salesforce/apex/CompanyInfoLoginController.getCredentials';
 import showToastEvent, {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 import Config_Account_Password from '@salesforce/label/c.Config_Account_Password';
@@ -21,10 +22,26 @@ export default class CompanyInfoLogin extends LightningElement {
         SubmitButtonLabel
     }
 
+    @track loaded = true;
+
+    @wire(getCredentials)
+    wiredGetCredentials(result){
+        if(result.error){
+            this.error = result.error;
+        }else{
+            if (result && result.data) {
+                this.template.querySelector(".username").value = result.data.appsolutely__Username__c;
+                this.template.querySelector(".password").value = result.data.appsolutely__Password__c;
+                this.error = undefined;
+            }
+        }
+    }
+
     /**
      * Handles the click on the submit button by saving the username and password
      */
     handleSubmitButtonClick() {
+        this.loaded = false;
         // first validate the input
         let valid = [...this.template.querySelectorAll('lightning-input')]
             .reduce((validSoFar, inputCmp) => {
@@ -33,7 +50,7 @@ export default class CompanyInfoLogin extends LightningElement {
             }, true);
         if (valid) {
             // then submit
-            safeUsernamePassword({"username": this.template.querySelector(".username").value, "password": this.template.querySelector(".password").value})
+            saveUsernamePassword({"username": this.template.querySelector(".username").value, "password": this.template.querySelector(".password").value})
                 .then(result => {
                     const event = new ShowToastEvent({
                         title: Success,
@@ -41,6 +58,7 @@ export default class CompanyInfoLogin extends LightningElement {
                         variant: 'success'
                     });
                     this.dispatchEvent(event);
+                    this.loaded = true;
                 })
                 .catch(error => {
                     const event = new ShowToastEvent({
@@ -50,6 +68,7 @@ export default class CompanyInfoLogin extends LightningElement {
                         mode: 'sticky'
                     });
                     this.dispatchEvent(event);
+                    this.loaded = true;
                 });
         }
 
