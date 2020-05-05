@@ -18,13 +18,18 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
                 User.Id,
                 User.FirstName,
                 User.LastName,
-                User.ProfileId.Name,
+                User.ProfileId,
                 User.UserRoleId
         };
     }
 
-    public List<User> selectByPermissionSetGroup(String permissionSetGroup, Boolean enforceFLS) {
-        return null;
+    public List<User> selectByPermissionSetGroup(String permissionSetGroup) {
+        List<PermissionSetAssignment> assignments = [SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetGroup.DeveloperName = :permissionSetGroup];
+        Set<Id> ids = new Set<Id>();
+        for (PermissionSetAssignment permissionSetAssignment : assignments) {
+            ids.add(permissionSetAssignment.AssigneeId);
+        }
+        return [SELECT Id, FirstName, LastName, ProfileId, Profile.Name, UserRole.Name FROM User WHERE Id IN :ids]; // don't use the queryfactory. Too complex
     }
 
 

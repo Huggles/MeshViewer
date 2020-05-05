@@ -58,8 +58,9 @@ public inherited sharing class Application {
         new fflib_Application.SelectorFactory(
             new Map < SObjectType, Type > {
                     Account.SObjectType => AccountSelector.class,
-                    Business_Dossier__c.SObjectType => BusinessDossierSelector.class
-                    // Business_Data_SBI__c.SObjectType => SbiCodeSelector.class
+                    Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
+                    Business_Data_SBI__c.SObjectType => SbiCodeSelector.class,
+                    User.SObjectType => UserSelector.class
             });
 
 }
