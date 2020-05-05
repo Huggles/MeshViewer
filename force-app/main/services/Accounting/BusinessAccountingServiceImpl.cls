@@ -53,6 +53,11 @@ public inherited sharing class BusinessAccountingServiceImpl implements IBusines
 
     }
 
+    public Credentials__c getCredentials(){
+        Credentials__c cs = Credentials__c.getOrgDefaults();
+        return cs;
+    }
+
 //    // Onboarding of the new customer. First new user is created and then the trial budged is added; username is the only param required
 //    public void onboardCustomer(String username, String password){
 //
