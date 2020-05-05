@@ -10,7 +10,7 @@ private class GetCreditsafeFullReportInvocableTest {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsCreditsafe wsCreditsafeService = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
 
-        CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2 = TestUtils.createCompanyReportFullV2Mock();
+        CreditsafeWsdl.CreditsafeCompanyReportFullV2 reportFullV2 = CreditSafeServiceImplTest.createCompanyReportFullV2Mock();
 
         mocks.startStubbing();
         mocks.when(wsCreditsafeService.creditsafeGetReportFullV2(fflib_Match.anyString(), fflib_Match.anyString(),fflib_Match.anyString())).thenReturn(reportFullV2);
