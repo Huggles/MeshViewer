@@ -54,6 +54,7 @@ import Valid_GB_VAT_Number from '@salesforce/label/c.Valid_GB_VAT_Number';
 import Valid_Germany_CreditSafe_registration_id from '@salesforce/label/c.Valid_Germany_CreditSafe_registration_id';
 import Select_a_Registration_Type from '@salesforce/label/c.Select_a_Registration_Type';
 import Valid_German_VAT_Number from '@salesforce/label/c.Valid_German_VAT_Number';
+import City_Help_Text from '@salesforce/label/c.City_Help_Text';
 
 export default class CreditSafeSearchForm2 extends LightningElement {
 
@@ -110,7 +111,8 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         Valid_Germany_CreditSafe_registration_id,
         Select_a_Registration_Type,
         Valid_German_VAT_Number,
-        CreditSafe_Validation_Message_Heading
+        CreditSafe_Validation_Message_Heading,
+        City_Help_Text
     }
 
     get countries() {
