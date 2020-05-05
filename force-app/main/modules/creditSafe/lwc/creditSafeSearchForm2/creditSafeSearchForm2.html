@@ -75,7 +75,8 @@
     </lightning-layout>
     <lightning-layout>
         <lightning-layout-item size="6">
-            <lightning-input name="city" class="slds-m-around_xxx-small" label={label.Search_City} type="text" variant="standard" value={city} onchange={handleOnChange}></lightning-input>
+            <lightning-input name="city" class="slds-m-around_xxx-small" label={label.Search_City} type="text" variant="standard" value={city} onchange={handleOnChange}
+                                 field-level-help={label.City_Help_Text}></lightning-input>
         </lightning-layout-item>
         <!-- province field should only be shown for FR -->
         <template if:true={showProvince}>
