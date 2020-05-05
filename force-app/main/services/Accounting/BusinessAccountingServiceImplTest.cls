@@ -62,6 +62,21 @@ public with sharing class BusinessAccountingServiceImplTest {
         System.assertEquals(exceptionThrown, true);
     }
 
+    @isTest
+    public static void testGetCredentials(){
+        Credentials__c cs1 = new Credentials__c(Username__c = 'test1', Password__c = 'password');
+        insert cs1;
+
+        Test.startTest();
+        Credentials__c cs2 = BusinessAccountingService.getCredentials();
+        Test.stopTest();
+
+        System.assert(cs2 != null);
+        System.assert(cs2.Username__c == 'test1');
+        System.assert(cs2.Password__c == 'password');
+
+    }
+
 //    @isTest
 //    public static void onboardCustomerHappyTest(){
 //        fflib_ApexMocks mocks = new fflib_ApexMocks();
