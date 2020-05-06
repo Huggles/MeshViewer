@@ -4,8 +4,10 @@
 
 public with sharing class LicenseManagementServiceImpl implements ILicenseManagementService {
 
+    @TestVisible
     private static final String NAMESPACE_PREFIX ='appsolutely';
 
+    @TestVisible
     private static final Map<LicenseType, String> PERMISSION_GROUPS_BY_LICENSE_TYPE = new Map<LicenseType, String>{
             LicenseType.COMPANY_INFO_FOR_BUSINESS => 'Companyinfo_for_Business'
     };
@@ -17,14 +19,15 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     private static PackageLicense packageLicense {
         get {
             if (packageLicense == null) {
-                packageLicense = [SELECT Id, UsedLicenses, AllowedLicenses FROM PackageLicense WHERE NamespacePrefix = :NAMESPACE_PREFIX];
+                // TODO: we assume there is only one package with this namespace installed. Should be fixed
+                packageLicense = PackageLicenseSelector.newInstance().selectByNamespacePrefix(NAMESPACE_PREFIX).get(0);
             }
             return packageLicense;
         }
         set;
     }
 
-    private static Map<LicenseType, Id> permissionGroupIdsByLicenseTypes = new Map<LicenseType, Id>();
+    private static Map<LicenseType, PermissionSetGroup> permissionGroupsByLicenseTypes = new Map<LicenseType, PermissionSetGroup>();
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType) {
         return UserSelector.newInstance().selectByPermissionSetGroup(PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType));
@@ -33,8 +36,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     public void unassignLicenseType(LicenseType licenseType, User[] users) {
         // delete all relevant permission set assignments
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        Map<Id, User> usersByIds = new Map<Id, User>(users);
-        PermissionSetAssignment[] permissionSetAssignments = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSetGroupId = :getPermissionSetGroupIdForLicenseType(licenseType) AND AssigneeId IN :usersByIds.keySet()];
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupForLicenseType(licenseType), users);
         unitOfWork.registerDeleted(permissionSetAssignments);
         // check if the user has other license types assigned
         Set<LicenseType> otherLicenseTypes = PERMISSION_GROUPS_BY_LICENSE_TYPE.keySet();
@@ -48,7 +50,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
 
         // if no other license types, remove the LMA license
-        usersByIds = new Map<Id, User>(users);
+        Map<Id, User> usersByIds = new Map<Id, User>(users);
         UserPackageLicense[] userPackageLicenses = [SELECT Id FROM UserPackageLicense WHERE PackageLicenseId = :packageLicense.Id AND UserId IN :usersByIds.keySet()];
         unitOfWork.registerDeleted(userPackageLicenses);
 
@@ -77,7 +79,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         // assign the permission set group
         List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
         for (User user : users) {
-            assignments.add(new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = getPermissionSetGroupIdForLicenseType(licenseType)));
+            assignments.add(new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = getPermissionSetGroupForLicenseType(licenseType).Id));
         }
         unitOfWork.registerNew(assignments);
         unitOfWork.commitWork();
@@ -103,8 +105,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     private User[] filterUsersWithoutLicenseTypeAssignment(LicenseType licenseType, User[] users) {
         // get all the users who already have a License Type assigned
-        Map<Id, User> usersByIds = new Map<Id, User>(users); // trick to quickly create a set from Ids
-        PermissionSetAssignment[] permissionSetAssignments = [SELECT Id, AssigneeId FROM PermissionSetAssignment WHERE AssigneeId IN :usersByIds.keySet() AND PermissionSetGroupId = :getPermissionSetGroupIdForLicenseType(licenseType)];
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupForLicenseType(licenseType), users);
         Set<Id> userIdsWithLicenseTypeAssignment = new Set<Id>();
         for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
             userIdsWithLicenseTypeAssignment.add(permissionSetAssignment.AssigneeId);
@@ -138,17 +139,17 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return usersWithoutLMA;
     }
 
-    private Id getPermissionSetGroupIdForLicenseType(LicenseType licenseType) {
-        Id permissionSetGroupId = permissionGroupIdsByLicenseTypes.get(licenseType);
-        if (permissionSetGroupId == null) {
-            PermissionSetGroup permissionSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = :PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType) LIMIT 1];
+    @TestVisible
+    private static PermissionSetGroup getPermissionSetGroupForLicenseType(LicenseType licenseType) {
+        PermissionSetGroup permissionSetGroup = permissionGroupsByLicenseTypes.get(licenseType);
+        if (permissionSetGroup == null) {
+            permissionSetGroup = [SELECT Id, DeveloperName, Description FROM PermissionSetGroup WHERE DeveloperName = :PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType) LIMIT 1];
             if (permissionSetGroup == null) {
                 throw new CCInputException('License type without permission set group');
             }
-            permissionSetGroupId = permissionSetGroup.Id;
-            permissionGroupIdsByLicenseTypes.put(licenseType, permissionSetGroupId);
+            permissionGroupsByLicenseTypes.put(licenseType, permissionSetGroup);
         }
-        return permissionSetGroupId;
+        return permissionSetGroup;
     }
 
 

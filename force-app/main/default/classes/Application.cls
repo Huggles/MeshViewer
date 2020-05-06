@@ -60,7 +60,10 @@ public inherited sharing class Application {
                     Account.SObjectType => AccountSelector.class,
                     Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
                     Business_Data_SBI__c.SObjectType => SbiCodeSelector.class,
-                    User.SObjectType => UserSelector.class
+                    User.SObjectType => UserSelector.class,
+                    PackageLicense.SObjectType => PackageLicenseSelector.class,
+                    PermissionSetAssignment.SObjectType => PermissionSetAssignmentSelector.class,
+                    PermissionSetGroup.SObjectType => PermissionSetGroupSelector.class
             });
 
 }
