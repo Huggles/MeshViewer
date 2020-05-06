@@ -4,7 +4,7 @@
         <name>End</name>
         <label>End</label>
         <locationX>606</locationX>
-        <locationY>527</locationY>
+        <locationY>521</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -12,7 +12,7 @@
         <description>Assign the Account Id to the recordId output field so the global action navigates to the newly created account</description>
         <name>Assign_Record_Id</name>
         <label>Assign Record Id</label>
-        <locationX>749</locationX>
+        <locationX>759</locationX>
         <locationY>522</locationY>
         <assignmentItems>
             <assignToReference>recordId</assignToReference>
@@ -28,8 +28,8 @@
     <assignments>
         <name>Map_International_Address_Fields_to_Account</name>
         <label>Map International Address Fields to Account</label>
-        <locationX>945</locationX>
-        <locationY>263</locationY>
+        <locationX>943</locationX>
+        <locationY>260</locationY>
         <assignmentItems>
             <assignToReference>newAccount.Name</assignToReference>
             <operator>Assign</operator>
@@ -86,10 +86,10 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>596</locationX>
-        <locationY>352</locationY>
+        <locationX>594</locationX>
+        <locationY>265</locationY>
         <defaultConnector>
-            <targetReference>Create_International_Address</targetReference>
+            <targetReference>Map_International_Address_Fields_to_Account</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Cancel Not Pressed</defaultConnectorLabel>
         <rules>
@@ -110,7 +110,6 @@
     </decisions>
     <description>Template to create an account based on international data. The organization field of the international address will be used as Account Name.</description>
     <interviewLabel>Create Account based on International Address Data {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Account based on International Address Data</label>
     <processMetadataValues>
@@ -129,22 +128,12 @@
     <recordCreates>
         <name>Create_Account</name>
         <label>Create Account</label>
-        <locationX>945</locationX>
-        <locationY>525</locationY>
+        <locationX>944</locationX>
+        <locationY>521</locationY>
         <connector>
             <targetReference>Assign_Record_Id</targetReference>
         </connector>
         <inputReference>newAccount</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <name>Create_International_Address</name>
-        <label>Create International Address</label>
-        <locationX>801</locationX>
-        <locationY>263</locationY>
-        <connector>
-            <targetReference>Map_International_Address_Fields_to_Account</targetReference>
-        </connector>
-        <inputReference>SelectedInternationalAddress</inputReference>
     </recordCreates>
     <start>
         <locationX>272</locationX>
