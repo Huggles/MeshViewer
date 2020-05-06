@@ -286,6 +286,7 @@
         <expression>{!$Label.appsolutely__creditsafe_report_created}</expression>
     </formulas>
     <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Enrich Account with Dossier Data</label>
     <processMetadataValues>
@@ -386,18 +387,12 @@
         </fields>
         <fields>
             <name>SuccessMessage</name>
-            <extensionName>appsolutely:flowErrorHandler</extensionName>
+            <extensionName>appsolutely:flowSuccessHandler</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>message</name>
                 <value>
                     <elementReference>LookupCreationMessage</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>title</name>
-                <value>
-                    <stringValue>Success</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

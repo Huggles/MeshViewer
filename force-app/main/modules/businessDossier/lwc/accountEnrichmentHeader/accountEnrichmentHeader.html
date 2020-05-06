@@ -17,7 +17,9 @@
                 </div>
                 <div class="slds-no-flex">
                     <div class="slds-m-around_xx-small slds-float_right">
-                        <lightning-button label={label.Get_Creditsafe_Report} onclick={handleOnGetCreditsafeReport} ></lightning-button>
+                        <template if:true={showGetCreditsafeReportButton}>
+                            <lightning-button label={label.Get_Creditsafe_Report} onclick={handleOnGetCreditsafeReport} ></lightning-button>
+                        </template>
                     </div>
                     <div class="slds-m-around_xx-small slds-float_right">
                         <c-search-again-button dossier-id={businessDossierId}

@@ -11,6 +11,7 @@ import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowS
 import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Number__c';
 import BUSINESS_DOSSIER_NO_VAT from '@salesforce/schema/Business_Dossier__c.No_VAT_Number__c';
 import BUSINESS_DOSSIER_COUNTRY from '@salesforce/schema/Business_Dossier__c.Registration_Country__c';
+import BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT from '@salesforce/schema/Business_Dossier__c.Creditsafe_Company_Report__c';
 
 //Apex controllers
 import updateDossierWithVAT from '@salesforce/apex/CompanyDetailsController.updateDossierWithVAT';
@@ -44,7 +45,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
     @api
     getCreditsafeReportClicked = false;
 
-    @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY] })
+    @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY, BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT] })
     businessDossierRecord;
 
     @api VATUpdated = false;
@@ -64,7 +65,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
     }
 
     get showVATButton() {
-        if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined)        {
+        if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
             //If there is no VAT Number and the No_VAT_Number__c(known) is false and only for NL companies
             if(this.businessDossierRecord.data.fields.appsolutely__Registration_Country__c.value == 'NL' &&
                 !this.businessDossierRecord.data.fields.appsolutely__VAT_Number__c.value &&
@@ -73,6 +74,19 @@ export default class AccountEnrichmentHeader extends LightningElement {
             }
             else {
                 return false;
+            }
+        }
+    }
+
+    get showGetCreditsafeReportButton() {
+        if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
+            //if there is already a relation, then do not show the button
+            if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
+                this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
+                return false;
+            }
+            else {
+                return true;
             }
         }
     }
