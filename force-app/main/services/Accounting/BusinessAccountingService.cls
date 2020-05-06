@@ -9,6 +9,10 @@ public inherited sharing class BusinessAccountingService {
 //        return newInstance().getUserOnboarded();
 //    }
 
+    public static Credentials__c getCredentials(){
+        return newInstance().getCredentials();
+    }
+
     public static void saveDataUserCredentials(String username, String password) {
         newInstance().saveDataUserCredentials(username, password);
     }

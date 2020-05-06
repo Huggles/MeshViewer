@@ -4,6 +4,9 @@
 
 <!-- Company Info Login -->
 <template>
+    <template if:false={loaded}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" flexibility="no-flex">
             <lightning-input label={label.Config_Account_Username} required type="text" class="slds-col slds-p-around_xx-small slds-size_3-of-12 username"></lightning-input>
@@ -12,7 +15,9 @@
             <lightning-input label={label.Config_Account_Password} required type="password" class="slds-col slds-p-around_xx-small slds-size_3-of-12  password"></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="3">
-            <lightning-button onclick={handleSubmitButtonClick} label={label.SubmitButtonLabel} variant="brand" class="slds-p-around_xx-small slds-button_stretch"></lightning-button>
+            <div class="slds-float_right">
+                <lightning-button onclick={handleSubmitButtonClick} label={label.SubmitButtonLabel} variant="brand" class="slds-p-around_xx-small slds-button_stretch"></lightning-button>
+            </div>
         </lightning-layout-item>
     </lightning-layout>
 </template>
