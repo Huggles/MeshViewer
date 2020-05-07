@@ -12,6 +12,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             LicenseType.COMPANY_INFO_FOR_BUSINESS => 'Companyinfo_for_Business'
     };
 
+    @TestVisible
     private static final Map<LicenseType, String> FEATURE_PARAM_NAMES_BY_LICENSETYPE = new Map<LicenseType, String>{
             LicenseType.COMPANY_INFO_FOR_BUSINESS => 'CompanyInfoForBusinessNrOfSeats'
     };
@@ -30,7 +31,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     private static Map<LicenseType, PermissionSetGroup> permissionGroupsByLicenseTypes = new Map<LicenseType, PermissionSetGroup>();
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType) {
-        return UserSelector.newInstance().selectByPermissionSetGroup(PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType));
+        return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupForLicenseType(licenseType));
     }
 
     public void unassignLicenseType(LicenseType licenseType, User[] users) {

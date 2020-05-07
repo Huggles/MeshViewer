@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 06/05/2020.
  */
 
-public interface IUserPackageSelector {
+public interface IUserPackageSelector extends fflib_ISObjectSelector {
 
     /**
      * Returns all user package licenses assigned to the given user for the given package license

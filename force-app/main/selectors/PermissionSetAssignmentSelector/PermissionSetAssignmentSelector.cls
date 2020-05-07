@@ -37,4 +37,13 @@ public inherited sharing class PermissionSetAssignmentSelector extends fflib_SOb
         return result;
     }
 
+    public PermissionSetAssignment[] selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup) {
+        fflib_QueryFactory queryFactory = newQueryFactory();
+        List<PermissionSetAssignment> result = new List<PermissionSetAssignment>();
+        Id groupId = permissionSetGroup.Id;
+        queryFactory.setCondition('PermissionSetGroupId = :groupId');
+        result = Database.query(queryFactory.toSOQL());
+        return result;
+    }
+
 }

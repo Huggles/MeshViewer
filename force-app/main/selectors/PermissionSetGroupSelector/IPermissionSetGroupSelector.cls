@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 06/05/2020.
  */
 
-public interface IPermissionSetGroupSelector {
+public interface IPermissionSetGroupSelector extends fflib_ISObjectSelector {
 
     /**
      * Returns the permission set group with the given developer name
