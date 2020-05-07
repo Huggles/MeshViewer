@@ -63,7 +63,8 @@ public inherited sharing class Application {
                     User.SObjectType => UserSelector.class,
                     PackageLicense.SObjectType => PackageLicenseSelector.class,
                     PermissionSetAssignment.SObjectType => PermissionSetAssignmentSelector.class,
-                    PermissionSetGroup.SObjectType => PermissionSetGroupSelector.class
+                    PermissionSetGroup.SObjectType => PermissionSetGroupSelector.class,
+                    UserPackageLicense.SObjectType => UserPackageSelector.class
             });
 
 }

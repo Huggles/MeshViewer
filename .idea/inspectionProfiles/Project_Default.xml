@@ -3,7 +3,16 @@
     <option name="myName" value="Project Default" />
     <inspection_tool class="AmdModulesDependencies" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="ApexControlFlowStatementWithoutBraces" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="ApexDocValidation" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="validateMissingParamTag" value="false" />
+      <option name="validateMissingParamTagName" value="false" />
+      <option name="validateMissingParamTagDescription" value="false" />
+      <option name="validateIncorrectlyOrderedParamTag" value="false" />
+      <option name="validateUnresolvableParamTag" value="false" />
+      <option name="validateMisattributedParamTag" value="false" />
+    </inspection_tool>
     <inspection_tool class="ApexKeywordCaseMatchesPreferredCase" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="ApexModifierAgreement" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="ApexReferenceCaseMatchesDeclarationCase" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ApexUnusedDeclaration" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="BadExpressionStatementJS" enabled="false" level="WARNING" enabled_by_default="false" />
@@ -45,7 +54,6 @@
     <inspection_tool class="JSCommentMatchesSignature" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="JSComparisonWithNaN" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="JSConsecutiveCommasInArrayLiteral" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="JSConstructorReturnsPrimitive" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="JSDeprecatedSymbols" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="JSDuplicatedDeclaration" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="JSEqualityComparisonWithCoercion" enabled="false" level="WARNING" enabled_by_default="false" />
@@ -131,9 +139,6 @@
     </inspection_tool>
     <inspection_tool class="UnnecessaryReturnJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="UnreachableCodeJS" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="UnterminatedStatementJS" enabled="false" level="WARNING" enabled_by_default="false">
-      <option name="ignoreSemicolonAtEndOfBlock" value="true" />
-    </inspection_tool>
     <inspection_tool class="WebpackConfigHighlighting" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="WithStatementJS" enabled="false" level="WARNING" enabled_by_default="false" />
   </profile>

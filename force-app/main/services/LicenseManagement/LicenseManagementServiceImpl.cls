@@ -50,8 +50,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
 
         // if no other license types, remove the LMA license
-        Map<Id, User> usersByIds = new Map<Id, User>(users);
-        UserPackageLicense[] userPackageLicenses = [SELECT Id FROM UserPackageLicense WHERE PackageLicenseId = :packageLicense.Id AND UserId IN :usersByIds.keySet()];
+        UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(packageLicense, users);
         unitOfWork.registerDeleted(userPackageLicenses);
 
         unitOfWork.commitWork();
@@ -124,7 +123,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     private User[] filterUsersWithoutLMALicense(User[] users) {
         // get all the users who already have a LMA license assigned
         Map<Id, User> usersByIds = new Map<Id, User>(users); // trick to quickly create a set from Ids
-        UserPackageLicense[] userPackageLicenses = [SELECT Id, UserId FROM UserPackageLicense WHERE PackageLicenseId = :packageLicense.Id AND UserId IN :usersByIds.keySet()];
+        UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(packageLicense, users);
         Set<Id> userIdsWithLMA = new Set<Id>();
         for (UserPackageLicense userPackageLicense : userPackageLicenses) {
             userIdsWithLMA.add(userPackageLicense.UserId);
@@ -143,10 +142,11 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     private static PermissionSetGroup getPermissionSetGroupForLicenseType(LicenseType licenseType) {
         PermissionSetGroup permissionSetGroup = permissionGroupsByLicenseTypes.get(licenseType);
         if (permissionSetGroup == null) {
-            permissionSetGroup = [SELECT Id, DeveloperName, Description FROM PermissionSetGroup WHERE DeveloperName = :PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType) LIMIT 1];
-            if (permissionSetGroup == null) {
-                throw new CCInputException('License type without permission set group');
+            PermissionSetGroup[] groups = PermissionSetGroupSelector.newInstance().selectByDeveloperName(PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType));
+            if (groups.size() == 0) {
+                throw new CCInputException('License type ' + LicenseType.name() + ' without permission set group');
             }
+            permissionSetGroup = groups.get(0);
             permissionGroupsByLicenseTypes.put(licenseType, permissionSetGroup);
         }
         return permissionSetGroup;
