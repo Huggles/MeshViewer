@@ -24,7 +24,10 @@ public inherited sharing class PermissionSetAssignmentSelector extends fflib_SOb
 
 
     public static IPermissionSetAssignmentSelector newInstance() {
-        return (IPermissionSetAssignmentSelector) Application.Selector.newInstance(PermissionSetAssignment.SObjectType);
+        SObjectType op = PermissionSetAssignment.SObjectType;
+        System.debug(op);
+        return (IPermissionSetAssignmentSelector)Application.Selector.newInstance(PermissionSetAssignment.SObjectType);
+        // return (IPermissionSetAssignmentSelector) Application.Selector.newInstance(op);
     }
 
     public PermissionSetAssignment[] selectByPermissionSetGroupAndUsers(PermissionSetGroup permissionSetGroup, List<User> users) {

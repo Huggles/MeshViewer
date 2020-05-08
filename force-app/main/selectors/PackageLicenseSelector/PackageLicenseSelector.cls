@@ -4,7 +4,6 @@
 
 public inherited sharing class PackageLicenseSelector  extends fflib_SObjectSelector implements IPackageLicenseSelector  {
 
-    @SuppressWarnings('ApexModifierAgreement')
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
                 PackageLicense.Id,
@@ -22,11 +21,14 @@ public inherited sharing class PackageLicenseSelector  extends fflib_SObjectSele
         return (IPackageLicenseSelector) Application.Selector.newInstance(PackageLicense.SObjectType);
     }
 
-    public PackageLicense[] selectByNamespacePrefix(String namespacePrefix) {
+    public PackageLicenseWrapper[] selectByNamespacePrefix(String namespacePrefix) {
         fflib_QueryFactory queryFactory = newQueryFactory();
-        List<PackageLicense> result = new List<PackageLicense>();
+        List<PackageLicenseWrapper> result = new List<PackageLicenseWrapper>();
         queryFactory.setCondition('NamespacePrefix = :namespacePrefix');
-        result = Database.query(queryFactory.toSOQL());
+        List<PackageLicense> packageLicenses = Database.query(queryFactory.toSOQL());
+        for (PackageLicense packageLicense : packageLicenses) {
+            result.add(new PackageLicenseWrapper(packageLicense));
+        }
         return result;
     }
 

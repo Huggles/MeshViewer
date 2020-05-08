@@ -13,7 +13,7 @@ public with sharing class PackageLicenseSelectorTest {
 
         // when
         Test.startTest();
-        PackageLicense[] packageLicenses = PackageLicenseSelector.newInstance().selectByNamespacePrefix(namespace);
+        PackageLicenseWrapper[] packageLicenses = PackageLicenseSelector.newInstance().selectByNamespacePrefix(namespace);
         Test.stopTest();
 
         // then

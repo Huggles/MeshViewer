@@ -17,11 +17,17 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             LicenseType.COMPANY_INFO_FOR_BUSINESS => 'CompanyInfoForBusinessNrOfSeats'
     };
 
-    private static PackageLicense packageLicense {
+    private PackageLicenseWrapper packageLicense {
         get {
             if (packageLicense == null) {
                 // TODO: we assume there is only one package with this namespace installed. Should be fixed
-                packageLicense = PackageLicenseSelector.newInstance().selectByNamespacePrefix(NAMESPACE_PREFIX).get(0);
+                List<PackageLicenseWrapper> packageLicenseWrappers = PackageLicenseSelector.newInstance().selectByNamespacePrefix(NAMESPACE_PREFIX);
+                if (packageLicenseWrappers.size() == 0) { // we are in a scratch org otherwise we would have had the package license
+                    packageLicenseWrappers = new List<PackageLicenseWrapper>{
+                            new PackageLicenseWrapper(fflib_IDGenerator.generate(Schema.PackageLicense.SObjectType), 0, 20, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
+                    };
+                }
+                packageLicense = packageLicenseWrappers.get(0);
             }
             return packageLicense;
         }
@@ -51,6 +57,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
 
         // if no other license types, remove the LMA license
+        // if we are in a scratch org, there is no real packagelicense which is not a problem since this call won't return any userPackageLicenses in that case
         UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(packageLicense, users);
         unitOfWork.registerDeleted(userPackageLicenses);
 
@@ -63,19 +70,23 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         if (users.size() > getNumberOfAvailableSeats(licenseType)) {
             throw new NotEnoughSeatsAvailableException('Not enough seats of license type ' + licenseType.name() + ' available');
         }
-        // calculate if we have enough LMA licenses available
-        User[] usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
-        if (usersWithoutLMALicense.size() > getNumberOfUnassignedLMALicenses()) {
-            throw new NotEnoughLMALicensesException('Not enough LMA licenses available');
+
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+
+        if (!isScratchOrg() || Test.isRunningTest()) { // in a scratch org we don't have a package installed so this doesn't work outside a unit test
+            // calculate if we have enough LMA licenses available
+            User[] usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
+            if (usersWithoutLMALicense.size() > getNumberOfUnassignedLMALicenses()) {
+                throw new NotEnoughLMALicensesException('Not enough LMA licenses available');
+            }
+            // assign the user a LMA license if he doesn't have one
+            UserPackageLicense[] userPackageLicenses = new List<UserPackageLicense>();
+            for (User user : usersWithoutLMALicense) {
+                userPackageLicenses.add(new UserPackageLicense(UserId = user.Id, PackageLicenseId = packageLicense.Id));
+            }
+            unitOfWork.registerNew(userPackageLicenses);
         }
 
-        // assign the user a LMA license if he doesn't have one
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        UserPackageLicense[] userPackageLicenses = new List<UserPackageLicense>();
-        for (User user : usersWithoutLMALicense) {
-            userPackageLicenses.add(new UserPackageLicense(UserId = user.Id, PackageLicenseId = packageLicense.Id));
-        }
-        unitOfWork.registerNew(userPackageLicenses);
         // assign the permission set group
         List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
         for (User user : users) {
@@ -86,7 +97,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public Integer getNumberOfAvailableSeats(LicenseType licenseType) {
-        Integer numberOfSeatsBought = FeatureManagement.checkPackageIntegerValue(FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(licenseType));
+        Integer numberOfSeatsBought = 20;
+        if (!isScratchOrg() || Test.isRunningTest()) { // in a scratch org outside a unit test the feature param is not available
+            numberOfSeatsBought = FeatureManagement.checkPackageIntegerValue(FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(licenseType));
+        }
         Integer numberOfSeatsAssigned = getAssignedUsersForLicenseType(licenseType).size();
         Integer numberOfAvailableSeats = numberOfSeatsBought - numberOfSeatsAssigned;
         return numberOfAvailableSeats;
@@ -124,7 +138,8 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     private User[] filterUsersWithoutLMALicense(User[] users) {
         // get all the users who already have a LMA license assigned
         Map<Id, User> usersByIds = new Map<Id, User>(users); // trick to quickly create a set from Ids
-        UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(packageLicense, users);
+        PackageLicenseWrapper pl = packageLicense;
+        UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(pl, users);
         Set<Id> userIdsWithLMA = new Set<Id>();
         for (UserPackageLicense userPackageLicense : userPackageLicenses) {
             userIdsWithLMA.add(userPackageLicense.UserId);
@@ -137,6 +152,12 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             }
         }
         return usersWithoutLMA;
+    }
+
+    private Boolean isScratchOrg() {
+        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
+        Boolean isScratchOrg = org.IsSandbox && org.TrialExpirationDate != null;
+        return isScratchOrg;
     }
 
     @TestVisible

@@ -14,7 +14,7 @@ private class UserPackageSelectorTest {
         }
         insert users;
         // we cannot insert a packagelicense so this is kind of a bogus test
-        PackageLicense packageLicense = new PackageLicense(Id = fflib_IDGenerator.generate(PackageLicense.SObjectType));
+        PackageLicenseWrapper packageLicense = new PackageLicenseWrapper(new PackageLicense(Id = fflib_IDGenerator.generate(PackageLicense.SObjectType)));
 
         // when
         Test.startTest();

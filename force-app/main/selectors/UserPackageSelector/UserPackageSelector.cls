@@ -22,7 +22,7 @@ public inherited sharing class UserPackageSelector extends fflib_SObjectSelector
         return UserPackageLicense.SObjectType;
     }
 
-    public UserPackageLicense[] selectByPackageLicenseAndUsers(PackageLicense packageLicense, User[] users) {
+    public UserPackageLicense[] selectByPackageLicenseAndUsers(PackageLicenseWrapper packageLicense, User[] users) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<UserPackageLicense> result = new List<UserPackageLicense>();
         String packageLicenseId = packageLicense.Id;

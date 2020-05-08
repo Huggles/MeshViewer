@@ -10,6 +10,6 @@ public interface IUserPackageSelector extends fflib_ISObjectSelector {
      * @param users the users to search for
      * @return the user package licenses assigned to the users for this package license
     */
-    UserPackageLicense[] selectByPackageLicenseAndUsers(PackageLicense packageLicense, User[] users);
+    UserPackageLicense[] selectByPackageLicenseAndUsers(PackageLicenseWrapper packageLicense, User[] users);
 
 }
