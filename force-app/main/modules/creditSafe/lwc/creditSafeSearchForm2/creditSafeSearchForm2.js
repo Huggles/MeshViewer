@@ -252,10 +252,12 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                 }
             }
             if (this.isSeSelected) {
-                if (!this.registrationNumber &&
+                if (!this.creditSafeId &&
+                    !this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
                     this.hints =
-                        [Search_Criterium_Registration_Number_Description,
+                        [Search_Criterium_CreditSafe_Id_Description,
+                            Search_Criterium_Registration_Number_Description,
                             Search_Criterium_Name_Status_Registration_type_Address_Description
                         ];
                 }

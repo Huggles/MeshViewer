@@ -325,13 +325,13 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             if(String.isNotEmpty(registration_type)) {
                 List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
                 resultValue1.addAll(doSearch(new List<String>{'SE'}, '', '', registration_number, registration_type, '', '', '', '', '', ''));
-                resultValue1 = addSearchCriteria(resultValue1, 'registration_number, registration_type');
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
                 resultValue.addAll(resultValue1);
             }
             else {
                 List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
                 resultValue1.addAll(doSearch(new List<String>{'SE'}, '', '', registration_number, '', '', '', '', '', '', ''));
-                resultValue1 = addSearchCriteria(resultValue1, 'registration_number, registration_type');
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
                 resultValue.addAll(resultValue1);
             }
         }
