@@ -41,6 +41,16 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public void unassignLicenseType(LicenseType licenseType, User[] users) {
+        // check if the users have a license and throw an exception if they don't
+        List<User> usersWithoutLicenseTypes = filterUsersWithoutLicenseTypeAssignment(licenseType, users);
+        if (usersWithoutLicenseTypes.size() > 0) {
+            throw new NoSeatAssignedException('No seats of license type ' + licenseType.name() + ' have been assigned to the given users');
+        }
+        List<User> usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
+        if (usersWithoutLMALicense.size() > 0) {
+            throw new NoLMALicenseAssignedException('No LMA License has been assigned to the given users');
+        }
+
         // delete all relevant permission set assignments
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupForLicenseType(licenseType), users);

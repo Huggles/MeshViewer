@@ -6,6 +6,285 @@
 private class LicenseManagementServiceImplTest {
 
     @IsTest
+    static void testUnassignLicenseTypeHappyFlow() {
+        // happy flow: license seats have been assigned to users and the users only have this license type
+
+        // given
+        // a fake packagelicense with 10 used licenses
+        List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
+                new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 10, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
+        };
+
+        // 10 users with license assignments
+        User[] users = new List<User>();
+        for (Integer i = 0; i < 10; i++) {
+            users.add(new User(Id = fflib_IDGenerator.generate(User.SObjectType)));
+        }
+
+        List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
+        List<UserPackageLicense> userPackageLicenses = new List<UserPackageLicense>();
+        for (Integer i = 0; i < 10; i++) {
+            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
+        }
+
+        // 5 who need to be unassigned
+        User[] usersToUnassign = new List<User>();
+        List<PermissionSetAssignment> permissionSetAssignmentsToRemove = new List<PermissionSetAssignment>();
+        List<UserPackageLicense> userPackageLicensesToRemove = new List<UserPackageLicense>();
+        for (Integer i = 0; i < 5; i++) {
+            usersToUnassign.add(users.get(i));
+            permissionSetAssignmentsToRemove.add(permissionSetAssignments.get(i));
+            userPackageLicensesToRemove.add(userPackageLicenses.get(i));
+        }
+
+        // short hand for the permission set group
+        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+
+        // start stubbing
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+
+        IPermissionSetAssignmentSelector  permissionSetAssignmentSelectorMock = (IPermissionSetAssignmentSelector)mocks.mock(IPermissionSetAssignmentSelector.class);
+        IPackageLicenseSelector packageLicenseSelectorMock = (IPackageLicenseSelector)mocks.mock(IPackageLicenseSelector.class);
+        IUserPackageSelector userPackageSelectorMock = (IUserPackageSelector)mocks.mock(IUserPackageSelector.class);
+        IUserSelector userSelectorMock = (IUserSelector)mocks.mock(IUserSelector.class);
+        fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
+
+        mocks.startStubbing();
+        // sobject types for the selectors (otherwise the mock cannot be found by the Application.Selector factory)
+        mocks.when(permissionSetAssignmentSelectorMock.sObjectType()).thenReturn(PermissionSetAssignment.SObjectType);
+        mocks.when(packageLicenseSelectorMock.sObjectType()).thenReturn(PackageLicense.SObjectType);
+        mocks.when(userPackageSelectorMock.sObjectType()).thenReturn(UserPackageLicense.SObjectType);
+        mocks.when(userSelectorMock.sObjectType()).thenReturn(User.SObjectType);
+
+        // ensure the fake package license wrapper is used
+        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
+
+        // ensure the right permission set assignments are returned
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(permissionSetGroup, users)).thenReturn(permissionSetAssignments);
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(permissionSetGroup, usersToUnassign)).thenReturn(permissionSetAssignmentsToRemove);
+
+        // and the package licenses
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), users)).thenReturn(userPackageLicenses);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersToUnassign)).thenReturn(userPackageLicensesToRemove);
+
+        // users
+        mocks.when(userSelectorMock.selectByPermissionSetGroup(permissionSetGroup)).thenReturn(userPackageLicensesToRemove); // need to check
+        mocks.stopStubbing();
+
+        Application.Selector.setMock(permissionSetAssignmentSelectorMock);
+        Application.Selector.setMock(packageLicenseSelectorMock);
+        Application.Selector.setMock(userPackageSelectorMock);
+        Application.Selector.setMock(userSelectorMock);
+        Application.UnitOfWork.setMock(unitOfWorkMock);
+
+        // when
+        Test.startTest();
+        LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, usersToUnassign);
+        Test.stopTest();
+
+        // then
+        // all permission set assignments should be deleted
+        List<Map<Schema.SObjectField, Object>> permissionSetAssignmentsToAssert = new List<Map<SObjectField, Object>>();
+        for (Integer i = 0; i < 5; i++) {
+            permissionSetAssignmentsToAssert.add(new Map<Schema.SObjectField, Object>{
+                    PermissionSetAssignment.PermissionSetGroupId => permissionSetGroup.Id,
+                    PermissionSetAssignment.AssigneeId => usersToUnassign.get(i).Id
+            });
+        }
+        ((fflib_ISObjectUnitOfWork)mocks.verify(unitOfWorkMock)).registerDeleted(fflib_Match.sObjectsWith(permissionSetAssignmentsToAssert, false));
+
+        // all user package licenses should be deleted
+        List<Map<Schema.SObjectField, Object>> userPackageLicensesToAssert = new List<Map<SObjectField, Object>>();
+        for (Integer i = 0; i < 5; i++) {
+            userPackageLicensesToAssert.add(new Map<Schema.SObjectField, Object>{
+                    UserPackageLicense.PackageLicenseId => packageLicenseWrappers.get(0).Id,
+                    UserPackageLicense.UserId => usersToUnassign.get(i).Id
+            });
+        }
+        ((fflib_ISObjectUnitOfWork)mocks.verify(unitOfWorkMock)).registerDeleted(fflib_Match.sObjectsWith(userPackageLicensesToAssert, false));
+
+        // unit of work commit work should be called
+        ((fflib_ISObjectUnitOfWork)mocks.verify(unitOfWorkMock)).commitWork();
+
+
+    }
+
+    @IsTest
+    static void testUnassignLicenseTypeUsersNotAssigned() {
+        // the users to remove do not have a license type assigned to them but do have package licenses
+
+        // given
+        // a fake packagelicense with 10 used licenses
+        List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
+                new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 10, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
+        };
+
+        // 10 users without license assignments
+        User[] users = new List<User>();
+        for (Integer i = 0; i < 10; i++) {
+            users.add(new User(Id = fflib_IDGenerator.generate(User.SObjectType)));
+        }
+
+        List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
+        List<UserPackageLicense> userPackageLicenses = new List<UserPackageLicense>();
+        for (Integer i = 0; i < 10; i++) {
+//            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
+        }
+
+        // 5 who need to be unassigned
+        User[] usersToUnassign = new List<User>();
+        List<PermissionSetAssignment> permissionSetAssignmentsToRemove = new List<PermissionSetAssignment>();
+        List<UserPackageLicense> userPackageLicensesToRemove = new List<UserPackageLicense>();
+        for (Integer i = 0; i < 5; i++) {
+            usersToUnassign.add(users.get(i));
+//            permissionSetAssignmentsToRemove.add(permissionSetAssignments.get(i));
+            userPackageLicensesToRemove.add(userPackageLicenses.get(i));
+        }
+
+        // short hand for the permission set group
+        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+
+        // start stubbing
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+
+        IPermissionSetAssignmentSelector  permissionSetAssignmentSelectorMock = (IPermissionSetAssignmentSelector)mocks.mock(IPermissionSetAssignmentSelector.class);
+        IPackageLicenseSelector packageLicenseSelectorMock = (IPackageLicenseSelector)mocks.mock(IPackageLicenseSelector.class);
+        IUserPackageSelector userPackageSelectorMock = (IUserPackageSelector)mocks.mock(IUserPackageSelector.class);
+        IUserSelector userSelectorMock = (IUserSelector)mocks.mock(IUserSelector.class);
+        fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
+
+        mocks.startStubbing();
+        // sobject types for the selectors (otherwise the mock cannot be found by the Application.Selector factory)
+        mocks.when(permissionSetAssignmentSelectorMock.sObjectType()).thenReturn(PermissionSetAssignment.SObjectType);
+        mocks.when(packageLicenseSelectorMock.sObjectType()).thenReturn(PackageLicense.SObjectType);
+        mocks.when(userPackageSelectorMock.sObjectType()).thenReturn(UserPackageLicense.SObjectType);
+        mocks.when(userSelectorMock.sObjectType()).thenReturn(User.SObjectType);
+
+        // ensure the fake package license wrapper is used
+        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
+
+        // ensure the right permission set assignments are returned
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(permissionSetGroup, users)).thenReturn(permissionSetAssignments);
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(permissionSetGroup, usersToUnassign)).thenReturn(permissionSetAssignmentsToRemove);
+
+        // and the package licenses
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), users)).thenReturn(userPackageLicenses);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersToUnassign)).thenReturn(userPackageLicensesToRemove);
+
+        // users
+        mocks.when(userSelectorMock.selectByPermissionSetGroup(permissionSetGroup)).thenReturn(userPackageLicensesToRemove);
+        mocks.stopStubbing();
+
+        Application.Selector.setMock(permissionSetAssignmentSelectorMock);
+        Application.Selector.setMock(packageLicenseSelectorMock);
+        Application.Selector.setMock(userPackageSelectorMock);
+        Application.Selector.setMock(userSelectorMock);
+        Application.UnitOfWork.setMock(unitOfWorkMock);
+
+        // when
+        Test.startTest();
+        Boolean exceptionThrown = false;
+        try {
+            LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, usersToUnassign);
+        } catch (NoSeatAssignedException ex) {
+            exceptionThrown = true;
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(true, exceptionThrown);
+    }
+
+    @IsTest
+    static void testUnassignNoLMALicensesAssigned() {
+        // the users to remove do not have a LMA license assigned to them but do have license type licenses assigned
+
+        // given
+        // a fake packagelicense with 10 used licenses
+        List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
+                new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 10, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
+        };
+
+        // 10 users without license assignments
+        User[] users = new List<User>();
+        for (Integer i = 0; i < 10; i++) {
+            users.add(new User(Id = fflib_IDGenerator.generate(User.SObjectType)));
+        }
+
+        List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
+        List<UserPackageLicense> userPackageLicenses = new List<UserPackageLicense>();
+        for (Integer i = 0; i < 10; i++) {
+            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+//            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
+        }
+
+        // 5 who need to be unassigned
+        User[] usersToUnassign = new List<User>();
+        List<PermissionSetAssignment> permissionSetAssignmentsToRemove = new List<PermissionSetAssignment>();
+        List<UserPackageLicense> userPackageLicensesToRemove = new List<UserPackageLicense>();
+        for (Integer i = 0; i < 5; i++) {
+            usersToUnassign.add(users.get(i));
+            permissionSetAssignmentsToRemove.add(permissionSetAssignments.get(i));
+//            userPackageLicensesToRemove.add(userPackageLicenses.get(i));
+        }
+
+        // short hand for the permission set group
+        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+
+        // start stubbing
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+
+        IPermissionSetAssignmentSelector  permissionSetAssignmentSelectorMock = (IPermissionSetAssignmentSelector)mocks.mock(IPermissionSetAssignmentSelector.class);
+        IPackageLicenseSelector packageLicenseSelectorMock = (IPackageLicenseSelector)mocks.mock(IPackageLicenseSelector.class);
+        IUserPackageSelector userPackageSelectorMock = (IUserPackageSelector)mocks.mock(IUserPackageSelector.class);
+        IUserSelector userSelectorMock = (IUserSelector)mocks.mock(IUserSelector.class);
+        fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
+
+        mocks.startStubbing();
+        // sobject types for the selectors (otherwise the mock cannot be found by the Application.Selector factory)
+        mocks.when(permissionSetAssignmentSelectorMock.sObjectType()).thenReturn(PermissionSetAssignment.SObjectType);
+        mocks.when(packageLicenseSelectorMock.sObjectType()).thenReturn(PackageLicense.SObjectType);
+        mocks.when(userPackageSelectorMock.sObjectType()).thenReturn(UserPackageLicense.SObjectType);
+        mocks.when(userSelectorMock.sObjectType()).thenReturn(User.SObjectType);
+
+        // ensure the fake package license wrapper is used
+        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
+
+        // ensure the right permission set assignments are returned
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(permissionSetGroup, users)).thenReturn(permissionSetAssignments);
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(permissionSetGroup, usersToUnassign)).thenReturn(permissionSetAssignmentsToRemove);
+
+        // and the package licenses
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), users)).thenReturn(userPackageLicenses);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersToUnassign)).thenReturn(userPackageLicensesToRemove);
+
+        // users
+        mocks.when(userSelectorMock.selectByPermissionSetGroup(permissionSetGroup)).thenReturn(userPackageLicensesToRemove);
+        mocks.stopStubbing();
+
+        Application.Selector.setMock(permissionSetAssignmentSelectorMock);
+        Application.Selector.setMock(packageLicenseSelectorMock);
+        Application.Selector.setMock(userPackageSelectorMock);
+        Application.Selector.setMock(userSelectorMock);
+        Application.UnitOfWork.setMock(unitOfWorkMock);
+
+        // when
+        Test.startTest();
+        Boolean exceptionThrown = false;
+        try {
+            LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, usersToUnassign);
+        } catch (NoLMALicenseAssignedException ex) {
+            exceptionThrown = true;
+        }
+
+        Test.stopTest();
+
+        System.assertEquals(true, exceptionThrown);
+    }
+
+    @IsTest
     public static void testGetAssignedUsersForLicenseTypeHappyFlow() {
         // given
         User[] users = new List<User>();
