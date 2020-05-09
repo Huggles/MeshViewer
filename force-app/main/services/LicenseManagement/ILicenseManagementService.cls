@@ -39,5 +39,24 @@ public interface ILicenseManagementService {
     */
     Integer getNumberOfAvailableSeats(LicenseType licenseType);
 
+    /**
+     * Fetches the right LicenseType enum by its API name
+    */
+    LicenseType getLicenseTypeByName(String name);
+
+    /**
+     * Fetches the name/title of the license type given. This is the human readable name and not the API name. Can be used in the UI.
+     * @param licenseType the license type for which we want the title
+     * @return the title/name of the License Type
+    */
+    String getLicenseTypeName(LicenseType licenseType);
+
+    /**
+     * Fetches the total number of seats available for this license type in the subscriber org.
+     * @param licenseType the license type for which we want to know the total number of seats
+     * @return the total number of seats for this License type
+    */
+    Integer getTotalNumberOfSeats(LicenseType licenseType);
+
 
 }

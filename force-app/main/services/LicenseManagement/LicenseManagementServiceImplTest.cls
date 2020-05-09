@@ -6,6 +6,132 @@
 private class LicenseManagementServiceImplTest {
 
     @IsTest
+    static void testGetLicenseTypeNameHappyFlow() {
+        // given
+        // an existing LicenseType with a name defined
+
+        // when
+        Test.startTest();
+        String name = LicenseManagementService.getLicenseTypeName(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(LicenseManagementServiceImpl.LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_BUSINESS), name);
+    }
+
+    @IsTest
+    static void testGetLicenseTypeNameNoNameDefined() {
+        // given
+        // an existing LicenseType with no name defined
+
+        // when
+        Test.startTest();
+        Boolean exceptionThrown = false;
+        try {
+            String name = LicenseManagementService.getLicenseTypeName(LicenseType.TEST_NO_NAME);
+        } catch(NoNameDefinedForLicenseTypeException ex) {
+            exceptionThrown = true;
+        }
+
+        Test.stopTest();
+
+        // then
+        System.assertEquals(true, exceptionThrown);
+    }
+
+    @IsTest
+    static void testGetTotalNumberOfSeatsHappyFlow() {
+        // given
+        // an existing LicenseType with a feature param defined
+
+        // when
+        Test.startTest();
+        Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(10, nrOfSeats);
+    }
+
+    @IsTest
+    static void testGetTotalNumberOfSeatsNoFeatureParamNameDefined() {
+        // given
+        // an existing LicenseType with no feature param API name defined
+
+        // when
+        Test.startTest();
+        Boolean exceptionThrown = false;
+        try {
+            Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.TEST_NO_NAME);
+        } catch(NoFeatureParamForLicenseTypeException ex) {
+            exceptionThrown = true;
+        }
+
+        Test.stopTest();
+
+        // then
+        System.assertEquals(true, exceptionThrown);
+    }
+
+    @IsTest
+    static void testGetTotalNumberOfSeatsNoFeatureParamDefined() {
+        // given
+        // an existing LicenseType with no feature param API name defined
+
+        // when
+        Test.startTest();
+        Boolean exceptionThrown = false;
+        try {
+            Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.TEST_NO_FEATURE_PARAM);
+        } catch(NoFeatureParamForLicenseTypeException ex) {
+            exceptionThrown = true;
+        }
+
+        Test.stopTest();
+
+        // then
+        System.assertEquals(true, exceptionThrown);
+    }
+
+    @IsTest
+    static void testGetLicenseTypeByNameHappyFlow() {
+        // given
+        // an existing license type name
+        String name = LicenseType.COMPANY_INFO_FOR_BUSINESS.name();
+
+        // when
+        Test.startTest();
+        LicenseType type = LicenseManagementService.getLicenseTypeByName(name);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(LicenseType.COMPANY_INFO_FOR_BUSINESS, type);
+    }
+
+    @IsTest
+    static void testGetLicenseTypeByNameNoSuchLicenseType() {
+        // given
+        // a non-existing license type name
+        String name = 'bogus';
+
+        // when
+        Test.startTest();
+        Boolean exceptionThrown = false;
+        try {
+            LicenseType type = LicenseManagementService.getLicenseTypeByName(name);
+        } catch(NoSuchLicenseTypeException ex) {
+            exceptionThrown = true;
+        }
+
+        Test.stopTest();
+
+        // then
+        System.assertEquals(true, exceptionThrown);
+    }
+
+
+
+    @IsTest
     static void testUnassignLicenseTypeHappyFlow() {
         // happy flow: license seats have been assigned to users and the users only have this license type
 

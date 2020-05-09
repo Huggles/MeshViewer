@@ -14,31 +14,62 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     @TestVisible
     private static final Map<LicenseType, String> FEATURE_PARAM_NAMES_BY_LICENSETYPE = new Map<LicenseType, String>{
-            LicenseType.COMPANY_INFO_FOR_BUSINESS => 'CompanyInfoForBusinessNrOfSeats'
+            LicenseType.COMPANY_INFO_FOR_BUSINESS => 'CompanyInfoForBusinessNrOfSeats',
+            LicenseType.TEST_NO_FEATURE_PARAM => 'bogus' // TODO: refactor so no test code in implementation code
     };
 
-    private PackageLicenseWrapper packageLicense {
-        get {
-            if (packageLicense == null) {
-                // TODO: we assume there is only one package with this namespace installed. Should be fixed
-                List<PackageLicenseWrapper> packageLicenseWrappers = PackageLicenseSelector.newInstance().selectByNamespacePrefix(NAMESPACE_PREFIX);
-                if (packageLicenseWrappers.size() == 0) { // we are in a scratch org otherwise we would have had the package license
-                    packageLicenseWrappers = new List<PackageLicenseWrapper>{
-                            new PackageLicenseWrapper(fflib_IDGenerator.generate(Schema.PackageLicense.SObjectType), 0, 20, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
-                    };
-                }
-                packageLicense = packageLicenseWrappers.get(0);
-            }
-            return packageLicense;
-        }
-        set;
-    }
+    /**
+     * The title/name definition of the license modules
+    */
+    @TestVisible
+    private static final Map<LicenseType, String> LICENCE_TYPE_NAMES_BY_LICENSETYPE = new Map<LicenseType, String>{
+            LicenseType.COMPANY_INFO_FOR_BUSINESS => 'Company.info for Business'
+    };
 
     private static Map<LicenseType, PermissionSetGroup> permissionGroupsByLicenseTypes = new Map<LicenseType, PermissionSetGroup>();
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType) {
         return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupForLicenseType(licenseType));
     }
+
+    public String getLicenseTypeName(LicenseType licenseType) {
+        String returnValue = LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(licenseType);
+        if (returnValue == null) {
+            throw new NoNameDefinedForLicenseTypeException('No name/title defined for ' + LicenseType.name());
+        }
+        return returnValue;
+    }
+
+    public Integer getTotalNumberOfSeats(LicenseType licenseType) {
+        String featureParamName = FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(licenseType);
+        if (featureParamName == null) {
+            throw new NoFeatureParamForLicenseTypeException('No feature parameter name defined for ' + licenseType.name());
+        }
+        Integer returnValue = null;
+        try {
+            returnValue = FeatureManagement.checkPackageIntegerValue(featureParamName);
+        } catch (NoDataFoundException ex) {
+            throw new NoFeatureParamForLicenseTypeException('No feature parameter defined for ' + licenseType.name());
+        }
+        return returnValue;
+    }
+
+
+    public LicenseType getLicenseTypeByName(String name) {
+        LicenseType[] licenseTypes = LicenseType.values();
+        LicenseType returnValue = null;
+        for (LicenseType licenseType : licenseTypes) {
+            if (name == licenseType.name()) {
+                returnValue = licenseType;
+                break;
+            }
+        }
+        if (returnValue == null) {
+            throw new NoSuchLicenseTypeException('No license type with name ' + name);
+        }
+        return returnValue;
+    }
+
 
     public void unassignLicenseType(LicenseType licenseType, User[] users) {
         // check if the users have a license and throw an exception if they don't
@@ -144,7 +175,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return usersWithoutLicenseTypeAssigned;
     }
 
-
     private User[] filterUsersWithoutLMALicense(User[] users) {
         // get all the users who already have a LMA license assigned
         Map<Id, User> usersByIds = new Map<Id, User>(users); // trick to quickly create a set from Ids
@@ -182,6 +212,23 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             permissionGroupsByLicenseTypes.put(licenseType, permissionSetGroup);
         }
         return permissionSetGroup;
+    }
+
+    private PackageLicenseWrapper packageLicense {
+        get {
+            if (packageLicense == null) {
+                // TODO: we assume there is only one package with this namespace installed. Should be fixed
+                List<PackageLicenseWrapper> packageLicenseWrappers = PackageLicenseSelector.newInstance().selectByNamespacePrefix(NAMESPACE_PREFIX);
+                if (packageLicenseWrappers.size() == 0) { // we are in a scratch org otherwise we would have had the package license
+                    packageLicenseWrappers = new List<PackageLicenseWrapper>{
+                            new PackageLicenseWrapper(fflib_IDGenerator.generate(Schema.PackageLicense.SObjectType), 0, 20, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
+                    };
+                }
+                packageLicense = packageLicenseWrappers.get(0);
+            }
+            return packageLicense;
+        }
+        set;
     }
 
 
