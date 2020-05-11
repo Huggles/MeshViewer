@@ -47,7 +47,7 @@
         <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
         <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard"  pattern="^(IE)-(0|1)-.+$" message-when-pattern-mismatch={label.Valid_Irish_CreditSafe_Identification_Nr} value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
         <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" minlength=2 message-when-too-short={label.Minimum_registration_number_characters} value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
-        <lightning-input label={label.Search_VAT_Number} name="vatNumber" class="slds-m-around_xxx-small" pattern="(IE)?[0-9]S[0-9]{5}L" message-when-pattern-mismatch={label.Valid_Irish_VAT_Number} value={vatNumber} onchange={handleOnChange}></lightning-input>
+        <lightning-input label={label.Search_VAT_Number} name="vatNumber" class="slds-m-around_xxx-small" pattern="((IE)?[0-9]{7}[A-Z]{1,2})|((IE)?[0-9][A-Z][0-9]{5}[A-Z])" message-when-pattern-mismatch={label.Valid_Irish_VAT_Number} value={vatNumber} onchange={handleOnChange}></lightning-input>
     </template>
     <!-- UK specific -->
     <template if:true={isGbSelected}>
