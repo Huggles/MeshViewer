@@ -439,6 +439,47 @@ private class LicenseManagementServiceImplTest {
     }
 
     @IsTest
+    public static void testGetAssignedUsersForLicenseTypeWithConditionsHappyFlow() {
+
+        // given
+        // 10 users
+        List<User> users = new List<User>();
+        for (Integer i = 0; i < 10; i++) {
+            User u = TestUtils.getUser('Standard User');
+            u.FirstName = 'first' + i;
+            u.LastName = 'last' + i;
+            u.Id = fflib_IDGenerator.generate(User.SObjectType);
+            users.add(u);
+        }
+
+        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+
+        // order on first name and last name
+        List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
+                new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
+                new fflib_QueryFactory.Ordering(User.LastName, fflib_QueryFactory.SortOrder.ASCENDING, true)
+        };
+
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IUserSelector userSelector = (IUserSelector)mocks.mock(IUserSelector.class);
+
+        mocks.startStubbing();
+        mocks.when(userSelector.selectByPermissionSetGroup(permissionSetGroup, 10, 10, orderings)).thenReturn(users);
+        mocks.when(userSelector.sObjectType()).thenReturn(User.SObjectType);
+        mocks.stopStubbing();
+
+        Application.Selector.setMock(userSelector);
+
+        // when
+        Test.startTest();
+        User[] usersToAssess = LicenseManagementService.getAssignedUsersForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, 10, 10, orderings);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(10, usersToAssess.size());
+    }
+
+    @IsTest
     public static void testGetNumberOfAvailableSeatsSeatsAvailable() {
         // given
         // 10 seats available

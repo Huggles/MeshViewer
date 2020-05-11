@@ -16,6 +16,15 @@ public interface ILicenseManagementService {
     User[] getAssignedUsersForLicenseType(LicenseType licenseType);
 
     /**
+     * Returns a list of users who have the given license type assigned.
+     *
+     * @param licenseType the name of the license type to check
+     * @param offSet from which row number onwards to fetch the data
+     * @return the users who have the license type assigned
+    */
+    User[] getAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+
+    /**
      *  Unassigns the given license type of the given users. If the license type is not assigned to the user, fails silently.
      *
      *  @param licenseType the name of the license type

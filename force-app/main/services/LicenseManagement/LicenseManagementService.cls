@@ -8,6 +8,10 @@ public with sharing class LicenseManagementService {
         return newInstance().getAssignedUsersForLicenseType(licenseType);
     }
 
+    public static User[] getAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
+        return newInstance().getAssignedUsersForLicenseType(licenseType, offSet, nrOfRows, ordering);
+    }
+
     public static void unassignLicenseType(LicenseType licenseType, User[] users) {
         newInstance().unassignLicenseType(licenseType, users);
     }

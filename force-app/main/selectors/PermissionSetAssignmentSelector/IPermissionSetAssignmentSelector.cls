@@ -19,4 +19,14 @@ public interface IPermissionSetAssignmentSelector extends fflib_ISObjectSelector
     */
     PermissionSetAssignment[] selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup);
 
+    /**
+     * Selects all permission set assignments for the given permission set group. Returns them ordered and only the requested rows
+     * @param permissionSetGroup the permission set group
+     * @param offSet the offset. Maximum of 2000 (limit Salesforce)
+     * @param nrOfRows the number of rows to retrieve
+     * @param ordering the ordering of the result set. By manipulating the ordering, it is possible to go around the offset limitation. See https://help.salesforce.com/articleView?id=000339353&type=1&mode=1
+     * @return the permission set assignments that adhere to the rest of the search criteria
+     */
+    PermissionSetAssignment[] selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+
 }

@@ -14,6 +14,15 @@ public inherited sharing class TestUtils {
 
     private static Map<String, Id> permissionSetGroupIdsByName = new Map<String, Id>();
 
+    private static Map<String, Profile> profilesByName = new Map<String, Profile>();
+
+    static {
+        Profile[] profiles = [SELECT Name, Id FROM Profile];
+        for (Profile profile : profiles) {
+            profilesByName.put(profile.Name, profile);
+        }
+    }
+
     /**
      * Returns a unique user with the given profile. For every profile there is one unique user.
      * If the user doesn't exist, a new user is created.
@@ -47,7 +56,7 @@ public inherited sharing class TestUtils {
     private static User getUser(String profileName) {
         Double d = Math.random() * SIZE;
         Integer randomInt = d.intValue();
-        Profile p = [SELECT Id FROM Profile WHERE Name = :profileName];
+        Profile p = profilesByName.get(profileName);
         User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
                 EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
                 LocaleSidKey='en_US', ProfileId = p.Id,

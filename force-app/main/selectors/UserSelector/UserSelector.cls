@@ -29,8 +29,24 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
         for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
             ids.add(permissionSetAssignment.AssigneeId);
         }
-        return [SELECT Id, FirstName, LastName, ProfileId, Profile.Name, UserRole.Name FROM User WHERE Id IN :ids]; // don't use the queryfactory. Too complex
+        return [SELECT Id, Name, Alias, FirstName, LastName, ProfileId, Profile.Name, UserRole.Name FROM User WHERE Id IN :ids]; // don't use the queryfactory. Too complex
     }
+
+    public List<User> selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
+        List<fflib_QueryFactory.Ordering> permissionSetAssignmentOrderings = new List<fflib_QueryFactory.Ordering>();
+        for (fflib_QueryFactory.Ordering ordering : orderings) {
+            permissionSetAssignmentOrderings.add(new fflib_QueryFactory.Ordering('Assignee.' + ordering.getField(), ordering.getDirection(), ordering.isNullsLast()));
+        }
+
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroup(permissionSetGroup, offSet, nrOfRows, permissionSetAssignmentOrderings);
+        List<User> result = new List<User>();
+        for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
+            result.add(permissionSetAssignment.Assignee);
+        }
+        return result;
+    }
+
+
 
 
 }

@@ -32,6 +32,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupForLicenseType(licenseType));
     }
 
+    public User[] getAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
+        return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupForLicenseType(licenseType), offSet, nrOfRows, ordering);
+    }
+
     public String getLicenseTypeName(LicenseType licenseType) {
         String returnValue = LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(licenseType);
         if (returnValue == null) {
@@ -138,10 +142,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public Integer getNumberOfAvailableSeats(LicenseType licenseType) {
-        Integer numberOfSeatsBought = 20;
-        if (!isScratchOrg() || Test.isRunningTest()) { // in a scratch org outside a unit test the feature param is not available
-            numberOfSeatsBought = FeatureManagement.checkPackageIntegerValue(FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(licenseType));
-        }
+//        Integer numberOfSeatsBought = 20;
+//        if (!isScratchOrg() || Test.isRunningTest()) { // in a scratch org outside a unit test the feature param is not available
+        Integer numberOfSeatsBought = FeatureManagement.checkPackageIntegerValue(FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(licenseType));
+        // }
         Integer numberOfSeatsAssigned = getAssignedUsersForLicenseType(licenseType).size();
         Integer numberOfAvailableSeats = numberOfSeatsBought - numberOfSeatsAssigned;
         return numberOfAvailableSeats;

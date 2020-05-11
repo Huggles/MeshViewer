@@ -49,4 +49,24 @@ public inherited sharing class PermissionSetAssignmentSelector extends fflib_SOb
         return result;
     }
 
+    public PermissionSetAssignment[] selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
+        fflib_QueryFactory queryFactory = newQueryFactory();
+        List<PermissionSetAssignment> result = new List<PermissionSetAssignment>();
+        Id groupId = permissionSetGroup.Id;
+        queryFactory.setCondition('PermissionSetGroupId = :groupId');
+        for (fflib_QueryFactory.Ordering ordering : orderings) {
+            queryFactory.addOrdering(ordering);
+        }
+        queryFactory.setOffset(offSet);
+        queryFactory.setLimit(nrOfRows);
+        queryFactory.selectFields(new List<String>{
+                'Assignee.FirstName',
+                'Assignee.LastName',
+                'Assignee.Profile.Name',
+                'Assignee.UserRole.Name'
+        });
+        result = Database.query(queryFactory.toSOQL());
+        return result;
+    }
+
 }
