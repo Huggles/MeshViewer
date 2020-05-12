@@ -19,7 +19,7 @@ private class UserSelectorTest {
         for (Integer i = 0; i < 5; i++) {
             TestUtils.giveUserPermissionSetGroup('Companyinfo_for_Business', users[i]);
         }
-        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
 
         // when
 
@@ -30,6 +30,40 @@ private class UserSelectorTest {
         // then
         System.assertEquals(5, usersToAssert.size());
         System.assert(usersToAssert[0].Profile.Name == 'Standard User');
+
+    }
+
+    @IsTest
+    static void testSelectUsersWithoutPermissionSetGroupHappyFlow() {
+        // given
+        // 5 users without a permission set group and 5 with
+        List<User> users = new List<User>();
+        for (Integer i = 0; i < 10; i++) {
+            users.add(TestUtils.getUser('Standard User'));
+        }
+        System.runAs(TestUtils.getUser('System Administrator')) {
+            insert users;
+        }
+        for (Integer i = 0; i < 4; i++) {
+            TestUtils.giveUserPermissionSetGroup('Companyinfo_for_Business', users[i]);
+        }
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+
+        // order on first name and last name
+        List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
+                new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
+                new fflib_QueryFactory.Ordering(User.LastName, fflib_QueryFactory.SortOrder.ASCENDING, true)
+        };
+
+        // when
+
+        Test.startTest();
+        User[] usersToAssert = UserSelector.newInstance().selectUsersWithoutPermissionSetGroup(permissionSetGroup, 0, 30, orderings);
+        Test.stopTest();
+
+        // then
+        Integer currentNrOfUsers = ([SELECT Id FROM User]).size(); // the user object is strange since it doesn't respect the test boundary (acts like SeeAllData is true)
+        System.assertEquals(currentNrOfUsers - 4, usersToAssert.size());
 
     }
 
@@ -47,7 +81,7 @@ private class UserSelectorTest {
         }
         insert users;
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
 
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         for (Integer i = 0; i < 95; i++) {

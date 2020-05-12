@@ -29,19 +29,21 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     private static Map<LicenseType, PermissionSetGroup> permissionGroupsByLicenseTypes = new Map<LicenseType, PermissionSetGroup>();
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType) {
-        return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupForLicenseType(licenseType));
+        return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupByLicenseType(licenseType));
     }
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
-        return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupForLicenseType(licenseType), offSet, nrOfRows, ordering);
+        return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupByLicenseType(licenseType), offSet, nrOfRows, ordering);
     }
 
-    public String getLicenseTypeName(LicenseType licenseType) {
-        String returnValue = LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(licenseType);
-        if (returnValue == null) {
-            throw new NoNameDefinedForLicenseTypeException('No name/title defined for ' + LicenseType.name());
-        }
-        return returnValue;
+    public User[] getUnAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
+        return UserSelector.newInstance().selectUsersWithoutPermissionSetGroup(getPermissionSetGroupByLicenseType(licenseType), offSet, nrOfRows, ordering);
+    }
+
+    public Integer getUnAssignedUsersForLicenseTypeCount(LicenseType licenseType) {
+        Integer numberOfSeatsAssigned = getAssignedUsersForLicenseType(licenseType).size();
+        Integer totalNumberOfUsers = [SELECT Count() FROM User];
+        return totalNumberOfUsers - numberOfSeatsAssigned;
     }
 
     public Integer getTotalNumberOfSeats(LicenseType licenseType) {
@@ -88,7 +90,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
         // delete all relevant permission set assignments
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupForLicenseType(licenseType), users);
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupByLicenseType(licenseType), users);
         unitOfWork.registerDeleted(permissionSetAssignments);
         // check if the user has other license types assigned
         Set<LicenseType> otherLicenseTypes = PERMISSION_GROUPS_BY_LICENSE_TYPE.keySet();
@@ -135,7 +137,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         // assign the permission set group
         List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
         for (User user : users) {
-            assignments.add(new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = getPermissionSetGroupForLicenseType(licenseType).Id));
+            assignments.add(new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = getPermissionSetGroupByLicenseType(licenseType).Id));
         }
         unitOfWork.registerNew(assignments);
         unitOfWork.commitWork();
@@ -151,6 +153,23 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return numberOfAvailableSeats;
     }
 
+    public PermissionSetGroup getPermissionSetGroupByLicenseType(LicenseType licenseType) {
+        PermissionSetGroup permissionSetGroup = permissionGroupsByLicenseTypes.get(licenseType);
+        if (permissionSetGroup == null) {
+            PermissionSetGroup[] groups = PermissionSetGroupSelector.newInstance().selectByDeveloperName(PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType));
+            if (groups.size() == 0) {
+                throw new NoPermSetGroupForLicenseTypeException('No permission set group defined for license type ' + licenseType.name());
+            }
+            permissionSetGroup = groups.get(0);
+            permissionGroupsByLicenseTypes.put(licenseType, permissionSetGroup);
+        }
+        return permissionSetGroup;
+    }
+
+    public String getLicenseTypeName(LicenseType licenseType) {
+        return licenseType.name();
+    }
+
     /*****************************************
      * IMPLEMENTATION METHODS AFTER THIS POINT
     ******************************************/
@@ -164,7 +183,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     private User[] filterUsersWithoutLicenseTypeAssignment(LicenseType licenseType, User[] users) {
         // get all the users who already have a License Type assigned
-        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupForLicenseType(licenseType), users);
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupByLicenseType(licenseType), users);
         Set<Id> userIdsWithLicenseTypeAssignment = new Set<Id>();
         for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
             userIdsWithLicenseTypeAssignment.add(permissionSetAssignment.AssigneeId);
@@ -204,20 +223,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return isScratchOrg;
     }
 
-    @TestVisible
-    private static PermissionSetGroup getPermissionSetGroupForLicenseType(LicenseType licenseType) {
-        PermissionSetGroup permissionSetGroup = permissionGroupsByLicenseTypes.get(licenseType);
-        if (permissionSetGroup == null) {
-            PermissionSetGroup[] groups = PermissionSetGroupSelector.newInstance().selectByDeveloperName(PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType));
-            if (groups.size() == 0) {
-                throw new CCInputException('License type ' + LicenseType.name() + ' without permission set group');
-            }
-            permissionSetGroup = groups.get(0);
-            permissionGroupsByLicenseTypes.put(licenseType, permissionSetGroup);
-        }
-        return permissionSetGroup;
-    }
-
     private PackageLicenseWrapper packageLicense {
         get {
             if (packageLicense == null) {
@@ -234,6 +239,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
         set;
     }
+
 
 
 }

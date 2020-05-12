@@ -37,17 +37,29 @@ public inherited sharing class LicenseTypeManagementCardController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static User[] getAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer endRow, List<Ordering> orderings) {
-        System.debug('licenseTypeAPIName ' + licenseTypeAPIName);
-        System.debug('startRow ' + startRow);
-        System.debug('endrow ' + endRow);
-        System.debug('orderings ' + orderings);
+    public static User[] getAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
         LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
         List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
         for (Ordering ordering : orderings) {
             queryOrderings.add(new fflib_QueryFactory.Ordering(ordering.fieldName, ordering.sortOrder == 'asc' ? fflib_QueryFactory.SortOrder.ASCENDING : fflib_QueryFactory.SortOrder.DESCENDING, false));
         }
-        return LicenseManagementService.getAssignedUsersForLicenseType(licenseType, startRow, endRow - startRow, queryOrderings);
+        return LicenseManagementService.getAssignedUsersForLicenseType(licenseType, startRow, nrOfRows, queryOrderings);
+    }
+
+    @AuraEnabled(Cacheable=true)
+    public static User[] getUnAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
+        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+        List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
+        for (Ordering ordering : orderings) {
+            queryOrderings.add(new fflib_QueryFactory.Ordering(ordering.fieldName, ordering.sortOrder == 'asc' ? fflib_QueryFactory.SortOrder.ASCENDING : fflib_QueryFactory.SortOrder.DESCENDING, false));
+        }
+        return LicenseManagementService.getUnAssignedUsersForLicenseType(licenseType, startRow, nrOfRows, queryOrderings);
+    }
+
+    @AuraEnabled(Cacheable=true)
+    public static Integer getUnAssignedUserCount(String licenseTypeAPIName) {
+        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+        return LicenseManagementService.getUnAssignedUsersForLicenseTypeCount(licenseType);
     }
 
 }

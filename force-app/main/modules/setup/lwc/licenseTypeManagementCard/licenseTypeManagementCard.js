@@ -6,17 +6,6 @@ import {track, api, wire, LightningElement} from 'lwc';
 import getLicenseTypeInfo from '@salesforce/apex/LicenseTypeManagementCardController.getLicenseTypeInfo';
 import getAssignedUsers from '@salesforce/apex/LicenseTypeManagementCardController.getAssignedUsers';
 
-/**
- * the column definition of the assigned user table
- */
-// TODO: use custom labels
-const columns = [
-    {label: 'First Name', fieldName: 'FirstName', type: 'text', sortable: true},
-    {label: 'Last Name', fieldName: 'LastName', type: 'text', sortable: true},
-    {label: 'Profile', fieldName: 'Profile.Name', type: 'text', sortable:  true},
-    {label: 'Role', fieldName: 'UserRole.Name', type: 'text', sortable: true}
-];
-
 const numberOfRowsToLoad = 20;
 
 export default class LicenseTypeManagementCard extends LightningElement {
@@ -91,11 +80,6 @@ export default class LicenseTypeManagementCard extends LightningElement {
     noAssignedUsers = 'No Users Assigned';
 
     /**
-     * The column  of the data table with users
-     */
-    columns = columns;
-
-    /**
      * Enable infinite loading on the table
      */
     enableInfiniteLoading = true;
@@ -130,15 +114,9 @@ export default class LicenseTypeManagementCard extends LightningElement {
         let startRow;
         if (!this.assignedUsers || (sortedBy && this.sortedBy !== sortedBy) || (sortDirection && this.sortDirection !== sortDirection) ) {
             startRow = 0;
+            this.assignedUsers = undefined;
         } else {
             startRow = this.assignedUsers.length;
-        }
-        let endRow;
-        if (this.assignedNorOfSeats >= startRow + numberOfRowsToLoad) {
-            endRow = startRow + numberOfRowsToLoad;
-        } else {
-            endRow = this.assignedNorOfSeats - startRow;
-            this.enableInfiniteLoading = false;
         }
         if (sortedBy) {
             this.sortedBy = sortedBy;
@@ -146,13 +124,16 @@ export default class LicenseTypeManagementCard extends LightningElement {
         if (sortDirection) {
             this.sortDirection = sortDirection;
         }
-        getAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: startRow, endRow: endRow, orderings: [{fieldName: this.sortedBy, sortOrder: this.sortDirection}]})
+        getAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: startRow, nrOfRows: numberOfRowsToLoad, orderings: [{fieldName: this.sortedBy, sortOrder: this.sortDirection}]})
             .then(result => {
                 if (result && result.length > 0) {
                     if (this.assignedUsers) {
                         const currentAssignedUsers = this.assignedUsers;
                         const newCurrentAssignedUsers = currentAssignedUsers.concat(result);
                         this.assignedUsers = newCurrentAssignedUsers;
+                        if (this.totalNrOfSeats <= (startRow + numberOfRowsToLoad)) {
+                            this.enableInfiniteLoading = false;
+                        }
                     } else {
                         this.assignedUsers = result;
                     }

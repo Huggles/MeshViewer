@@ -24,11 +24,7 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
     }
 
     public List<User> selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup) {
-        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroup(permissionSetGroup);
-        Set<Id> ids = new Set<Id>();
-        for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
-            ids.add(permissionSetAssignment.AssigneeId);
-        }
+        Set<Id> ids = selectUserIdsByPermissionSetGroup(permissionSetGroup);
         return [SELECT Id, Name, Alias, FirstName, LastName, ProfileId, Profile.Name, UserRole.Name FROM User WHERE Id IN :ids]; // don't use the queryfactory. Too complex
     }
 
@@ -44,6 +40,32 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
             result.add(permissionSetAssignment.Assignee);
         }
         return result;
+    }
+
+    public List<User> selectUsersWithoutPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
+        Set<Id> usersWithPermissionSetGroupIds = selectUserIdsByPermissionSetGroup(permissionSetGroup);
+        fflib_QueryFactory queryFactory = newQueryFactory();
+        queryFactory.setCondition('Id NOT IN :usersWithPermissionSetGroupIds');
+        for (fflib_QueryFactory.Ordering ordering : orderings) {
+            queryFactory.addOrdering(ordering);
+        }
+        queryFactory.setOffset(offSet);
+        queryFactory.setLimit(nrOfRows);
+        List<User> result = Database.query(queryFactory.toSOQL());
+        return result;
+    }
+
+    /**
+     * IMPLEMENTATION METHODS
+    */
+
+    private Set<Id> selectUserIdsByPermissionSetGroup(PermissionSetGroup permissionSetGroup) {
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroup(permissionSetGroup);
+        Set<Id> ids = new Set<Id>();
+        for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
+            ids.add(permissionSetAssignment.AssigneeId);
+        }
+        return ids;
     }
 
 

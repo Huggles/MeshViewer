@@ -25,6 +25,22 @@ public interface ILicenseManagementService {
     User[] getAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
 
     /**
+     * Returns a list of users who have not been assigned the license type.
+     *
+     * @param licenseType the name of the license type to check
+     * @param offSet from which row number onwards to fetch the data
+     * @return the users who have don't have the license type assigned
+    */
+    User[] getUnAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+
+    /**
+     * Returns the total number of users that do not have the license type given assigned
+     * @param licenseType the license type for which we want to get the number of unassigned users
+     * @return the number of unassigned users
+    */
+    Integer getUnAssignedUsersForLicenseTypeCount(LicenseType licenseType);
+
+    /**
      *  Unassigns the given license type of the given users. If the license type is not assigned to the user, fails silently.
      *
      *  @param licenseType the name of the license type
@@ -66,6 +82,13 @@ public interface ILicenseManagementService {
      * @return the total number of seats for this License type
     */
     Integer getTotalNumberOfSeats(LicenseType licenseType);
+
+    /**
+     *  Fetches the permission set group related to the given license type
+     *  @param licenseType the license type for which to fetch the permission set group
+     * @return the permission set group belonging to the license type
+    */
+    PermissionSetGroup getPermissionSetGroupByLicenseType(LicenseType licenseType);
 
 
 }

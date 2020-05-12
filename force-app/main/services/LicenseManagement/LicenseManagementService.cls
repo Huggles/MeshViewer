@@ -12,6 +12,10 @@ public with sharing class LicenseManagementService {
         return newInstance().getAssignedUsersForLicenseType(licenseType, offSet, nrOfRows, ordering);
     }
 
+    public static User[] getUnAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
+        return newInstance().getUnAssignedUsersForLicenseType(licenseType, offSet, nrOfRows, ordering);
+    }
+
     public static void unassignLicenseType(LicenseType licenseType, User[] users) {
         newInstance().unassignLicenseType(licenseType, users);
     }
@@ -24,6 +28,10 @@ public with sharing class LicenseManagementService {
         return newInstance().getNumberOfAvailableSeats(licenseType);
     }
 
+    public static Integer getUnAssignedUsersForLicenseTypeCount(LicenseType licenseType) {
+        return newInstance().getUnAssignedUsersForLicenseTypeCount(licenseType);
+    }
+
     public static LicenseType getLicenseTypeByName(String name) {
         return newInstance().getLicenseTypeByName(name);
     }
@@ -34,6 +42,10 @@ public with sharing class LicenseManagementService {
 
     public static Integer getTotalNumberOfSeats(LicenseType licenseType) {
         return newInstance().getTotalNumberOfSeats(licenseType);
+    }
+
+    public static PermissionSetGroup getPermissionSetGroupByLicenseType(LicenseType licenseType) {
+        return newInstance().getPermissionSetGroupByLicenseType(licenseType);
     }
 
     public static ILicenseManagementService newInstance() {

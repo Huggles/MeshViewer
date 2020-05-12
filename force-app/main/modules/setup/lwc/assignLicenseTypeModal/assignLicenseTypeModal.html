@@ -16,7 +16,6 @@
                     <c-user-data-table
                             users={users}
                             is-loading={isLoading}
-                            selected-rows={selectedRows}
                             default-sort-direction={defaultSortDirection}
                             enable-infinite-loading={enableInfiniteLoading}
                             onsort={handleSort}
@@ -25,7 +24,7 @@
                     </c-user-data-table>
                 </div>
                 <footer class="slds-modal__footer">
-                    <lightning-button class="slds-m-right_xx-small slds-theme_neutral slds-align_absolute-center" variant="neutral" label="Cancel" onclick={handleCancelClicked}></lightning-button>
+                    <lightning-button class="slds-m-right_xx-small slds-theme_neutral" variant="neutral" label="Cancel" onclick={handleCancelClicked}></lightning-button>
                     <lightning-button class="slds-theme_brand" variant="brand" label="Assign"></lightning-button>
                 </footer>
             </div>

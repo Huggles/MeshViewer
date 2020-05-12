@@ -15,7 +15,7 @@ private class PermissionSetAssignmentSelectorTest {
         }
         insert users;
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
 
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         for (Integer i = 0; i < 5; i++) {
@@ -45,7 +45,7 @@ private class PermissionSetAssignmentSelectorTest {
         }
         insert users;
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
 
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         for (Integer i = 0; i < 5; i++) {
@@ -77,7 +77,7 @@ private class PermissionSetAssignmentSelectorTest {
         }
         insert users;
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementServiceImpl.getPermissionSetGroupForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
 
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         for (Integer i = 0; i < 95; i++) {

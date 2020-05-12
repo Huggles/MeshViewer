@@ -22,4 +22,14 @@ public interface IUserSelector extends fflib_ISObjectSelector {
      * @return the users who have the permission set group assigned to them and adhere to the rest of the search criteria
      */
     List<User> selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+
+    /**
+     *  Selects users that do not have the given permission set group assigned.
+     *
+     * @param permissionSetGroup the permission set group
+     * @param nrOfRows the number of rows to retrieve
+     * @param ordering the ordering of the result set. By manipulating the ordering, it is possible to go around the offset limitation. See https://help.salesforce.com/articleView?id=000339353&type=1&mode=1
+     * @return the users who do not have the permission set group assigned to them and adhere to the rest of the search criteria
+    */
+    List<User> selectUsersWithoutPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
 }

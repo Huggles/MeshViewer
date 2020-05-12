@@ -14,9 +14,10 @@ public inherited sharing class PermissionSetGroupSelector extends fflib_SObjectS
 
     public PermissionSetGroup[] selectByDeveloperName(String developerName) {
         // When checking on CRUD access, the framework returns that a system admin doesn't have access. Therefore overridden the access check.
-        fflib_QueryFactory queryFactory = newQueryFactory(false, false, false);
+        fflib_QueryFactory queryFactory = newQueryFactory(false, false, true);
         List<PermissionSetGroup> result = new List<PermissionSetGroup>();
         queryFactory.setCondition('DeveloperName = :developerName');
+        System.debug(queryFactory.toSOQL());
         result = Database.query(queryFactory.toSOQL());
         return result;
     }
