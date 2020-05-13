@@ -64,6 +64,7 @@ export default class UserDataTable extends LightningElement {
     /**
      * The selected rows in the table
      */
+    @api
     selectedRows;
 
     /**
@@ -129,15 +130,6 @@ export default class UserDataTable extends LightningElement {
         return userRoleName;
     }
 
-    /**
-     * Returns the selected rows
-     * @returns {*}
-     */
-    @api
-    getSelectedRows() {
-        return this.selectedRows;
-    }
-
     handleLoadMore(event) {
         this.dispatchEvent(new CustomEvent('loadmore', {detail: {offset: this.localUsers ? this.localUsers.length : 0, limit: this.limit}}));
     }
@@ -149,14 +141,14 @@ export default class UserDataTable extends LightningElement {
             this.localUsers = undefined;
             reload = true;
         } else {
-            this.sortUsers(event.detail.fieldName, event.detail.sortDirection);
+            this.sortLocalUsers(event.detail.fieldName, event.detail.sortDirection);
         }
         this.sortedBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
-        this.dispatchEvent(new CustomEvent('sort', {detail : {reload: reload}}));
+        this.dispatchEvent(new CustomEvent('sort', {detail : {reload: reload, limit: this.limit}}));
     }
 
-    sortUsers(sortedBy, sortDirection) {
+    sortLocalUsers(sortedBy, sortDirection) {
         if (this.localUsers) {
             let currentLocalUsers = [...this.localUsers];
             if (sortDirection === 'asc') {
@@ -169,6 +161,7 @@ export default class UserDataTable extends LightningElement {
     }
 
     handleRowSelection(event) {
+        this.selectedRows = event.target.getSelectedRows();
         this.dispatchEvent(new CustomEvent('rowselection'));
     }
 }

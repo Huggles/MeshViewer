@@ -8,8 +8,14 @@
         <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open slds-modal_large">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
-                    <lightning-button-icon icon-name="utility:close" class="slds-float_right" onclick={handleCancelClicked} alternative-text="close"></lightning-button-icon>
-                    <div class="slds-text-heading_medium">Assign Licenses</div>
+                    <lightning-button-icon
+                            class="slds-modal__close"
+                            title="Close"
+                            icon-name="utility:close"
+                            icon-class="slds-button_icon-inverse"
+                            onclick={handleDialogClose}>
+                    </lightning-button-icon>
+                    <div class="slds-text-heading_medium slds-hyphenate header-string">Assign Licenses</div>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
                     <c-user-data-table

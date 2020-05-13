@@ -56,25 +56,51 @@ export default class AssignLicenseTypeModal extends LightningElement {
         this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
     }
 
+    /**
+     * Called when the modal close button is clicked (cross on the upper right)
+     */
+    handleDialogClose() {
+        this.dispatchEvent(new CustomEvent('close'));
+    }
+
+    /**
+     * Called when the cancel button is clicked
+     */
     handleCancelClicked() {
         this.dispatchEvent(new CustomEvent('close'));
     }
 
+    /**
+     * Called when the user data table has been sorted
+     * @param event
+     */
     handleSort(event) {
-        if (event.detail.reload)
-            this.fetchUnAssignedUsers(0, numberOfRowsToLoad, event.target.sortedBy, event.target.sortDirection);
+        if (event.detail.reload) // if not all data is loaded, the sort field or the direction of the sort has been swapped reload the data
+            this.fetchUnAssignedUsers(0, event.detail.limit, event.target.sortedBy, event.target.sortDirection);
     }
 
+    /**
+     * Called when rows in the user data table have been selected
+     * @param event
+     */
     handleRowSelection(event) {
-        this.selectedRows = template.querySelector('c-user-data-table').getSelectedRows();
+        this.selectedRows = event.target.selectedRows;
     }
 
+    handleAssignButtonClicked(event) {
+        
+    }
+
+    /**
+     * Called when the user data table needs to load more data
+     * @param event
+     */
     handleLoadMore(event) {
         this.fetchUnAssignedUsers(event.detail.offset, event.detail.limit, this.target.sortedBy, this.target.sortDirection);
     }
 
     /**
-     * Fetches a new set of users. Appends them to the assignedUsers.
+     * Fetches a new set of unassigned users. Appends them to the sObjectUsers or initializes the property.
      */
     fetchUnAssignedUsers(offset, limit, sortedBy, sortDirection) {
         // TODO: refactor so there is no code duplication with licenseTypeManagementCard
