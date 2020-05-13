@@ -18,15 +18,25 @@
             </div>
             <template if:true={assignedUsers}>
                 <c-user-data-table
-                        users={assignedUsers}
+                        users={sObjectUsers}
+                        max-number-of-users={maxUsers}
                         is-loading={isLoading}
                         default-sort-direction={defaultSortDirection}
                         enable-infinite-loading={enableInfiniteLoading}
-                        sorted-by={sortedBy}
                         onsort={handleSort}
                         onrowselection={handleRowSelection}
                         onloadmore={handleLoadMore}>
                 </c-user-data-table>
+<!--                <c-user-data-table-->
+<!--                        users={assignedUsers}-->
+<!--                        is-loading={isLoading}-->
+<!--                        default-sort-direction={defaultSortDirection}-->
+<!--                        enable-infinite-loading={enableInfiniteLoading}-->
+<!--                        sorted-by={sortedBy}-->
+<!--                        onsort={handleSort}-->
+<!--                        onrowselection={handleRowSelection}-->
+<!--                        onloadmore={handleLoadMore}>-->
+<!--                </c-user-data-table>-->
             </template>
             <template if:false={assignedUsers}>
                 <c-no-result-image no-data-label={noAssignedUsers}></c-no-result-image>

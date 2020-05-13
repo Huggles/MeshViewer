@@ -17,9 +17,9 @@ export default class AssignLicenseTypeModal extends LightningElement {
     licenseTypeApiName = '';
 
     /**
-     * The loaded users
+     * The loaded users as SObjects
      */
-    users;
+    sObjectUsers;
 
     /**
      * The maximum number of users
@@ -40,25 +40,29 @@ export default class AssignLicenseTypeModal extends LightningElement {
     /**
      * The default sort direction
      */
-    defaultSortDirection;
+    defaultSortDirection = 'asc';
 
     /**
      * True if more results can be loaded
      */
     enableInfiniteLoading;
 
+    /**
+     * Column FieldName on which to sort the table
+     */
+    defaultSortedBy = 'Name';
+
     connectedCallback() {
-        this.fetchUnAssignedUsers(this.sortedBy, this.sortDirection);
+        this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
     }
-
-
 
     handleCancelClicked() {
         this.dispatchEvent(new CustomEvent('close'));
     }
 
     handleSort(event) {
-        this.fetchUnAssignedUsers(event.target.sortedBy, event.target.sortDirection);
+        if (event.detail.reload)
+            this.fetchUnAssignedUsers(0, numberOfRowsToLoad, event.target.sortedBy, event.target.sortDirection);
     }
 
     handleRowSelection(event) {
@@ -66,40 +70,27 @@ export default class AssignLicenseTypeModal extends LightningElement {
     }
 
     handleLoadMore(event) {
-        this.fetchUnAssignedUsers(this.sortedBy, this.sortDirection);
+        this.fetchUnAssignedUsers(event.detail.offset, event.detail.limit, this.target.sortedBy, this.target.sortDirection);
     }
 
     /**
      * Fetches a new set of users. Appends them to the assignedUsers.
      */
-    fetchUnAssignedUsers(sortedBy, sortDirection) {
+    fetchUnAssignedUsers(offset, limit, sortedBy, sortDirection) {
         // TODO: refactor so there is no code duplication with licenseTypeManagementCard
         this.isLoading = true;
-        let startRow;
-        if (!this.users || (sortedBy && this.sortedBy !== sortedBy) || (sortDirection && this.sortDirection !== sortDirection) ) {
-            startRow = 0;
-            this.users = undefined;
-        } else {
-            startRow = this.users.length;
+        if (this.maxUsers <= (offset + limit)) {
+            this.enableInfiniteLoading = false;
         }
-        if (sortedBy) {
-            this.sortedBy = sortedBy;
-        }
-        if (sortDirection) {
-            this.sortDirection = sortDirection;
-        }
-        getUnAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: startRow, nrOfRows: numberOfRowsToLoad, orderings: [{fieldName: this.sortedBy, sortOrder: this.sortDirection}]})
+        getUnAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
             .then(result => {
                 if (result && result.length > 0) {
-                    if (this.users) {
-                        const currentUsers = this.users;
-                        const newCurrentUsers = currentUsers.concat(result);
-                        this.users = newCurrentUsers;
-                        if (this.maxUsers <= (startRow + numberOfRowsToLoad)) {
-                            this.enableInfiniteLoading = false;
-                        }
+                    if (this.sObjectUsers) {
+                        const currentSObjectUsers = this.sObjectUsers;
+                        const newSObjectUsers = currentSObjectUsers.concat(result);
+                        this.sObjectUsers = newSObjectUsers;
                     } else {
-                        this.users = result;
+                        this.sObjectUsers = result;
                     }
                 }
                 this.isLoading = false;
@@ -109,6 +100,5 @@ export default class AssignLicenseTypeModal extends LightningElement {
                 this.isLoading = false;
             })
     }
-
 
 }

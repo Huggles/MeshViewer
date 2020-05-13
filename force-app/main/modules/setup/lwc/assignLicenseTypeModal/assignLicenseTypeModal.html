@@ -12,9 +12,9 @@
                     <div class="slds-text-heading_medium">Assign Licenses</div>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
-                    Test
                     <c-user-data-table
-                            users={users}
+                            users={sObjectUsers}
+                            max-number-of-users={maxUsers}
                             is-loading={isLoading}
                             default-sort-direction={defaultSortDirection}
                             enable-infinite-loading={enableInfiniteLoading}

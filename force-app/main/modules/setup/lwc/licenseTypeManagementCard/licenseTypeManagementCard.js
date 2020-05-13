@@ -50,7 +50,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
         return new Promise((resolve, reject) =>
             getLicenseTypeInfo({ licenseTypeAPIName: this.licenseTypeApiName })
                 .then(result => {
-                    this.title = result.title;
+                    this.title = result.name;
                     this.totalNrOfSeats = result.totalNrOfSeats;
                     this.availableNrOfSeats = result.availableNrOfSeats;
                     this.assignedNorOfSeats = this.totalNrOfSeats - this.availableNrOfSeats;
@@ -66,7 +66,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
     /**
      * The users assigned to the license type
      */
-    assignedUsers;
+    sObjectUsers;
 
     /**
      * The selected rows in the table
@@ -109,33 +109,20 @@ export default class LicenseTypeManagementCard extends LightningElement {
     /**
      * Fetches a new set of users. Appends them to the assignedUsers.
      */
-    fetchAssignedUsers(sortedBy, sortDirection) {
+    fetchAssignedUsers(offset, limit, sortedBy, sortDirection) {
         this.isLoading = true;
-        let startRow;
-        if (!this.assignedUsers || (sortedBy && this.sortedBy !== sortedBy) || (sortDirection && this.sortDirection !== sortDirection) ) {
-            startRow = 0;
-            this.assignedUsers = undefined;
-        } else {
-            startRow = this.assignedUsers.length;
+        if (this.maxUsers <= (offset + limit)) {
+            this.enableInfiniteLoading = false;
         }
-        if (sortedBy) {
-            this.sortedBy = sortedBy;
-        }
-        if (sortDirection) {
-            this.sortDirection = sortDirection;
-        }
-        getAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: startRow, nrOfRows: numberOfRowsToLoad, orderings: [{fieldName: this.sortedBy, sortOrder: this.sortDirection}]})
+        getAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
             .then(result => {
                 if (result && result.length > 0) {
-                    if (this.assignedUsers) {
-                        const currentAssignedUsers = this.assignedUsers;
-                        const newCurrentAssignedUsers = currentAssignedUsers.concat(result);
-                        this.assignedUsers = newCurrentAssignedUsers;
-                        if (this.totalNrOfSeats <= (startRow + numberOfRowsToLoad)) {
-                            this.enableInfiniteLoading = false;
-                        }
+                    if (this.sObjectUsers) {
+                        const currentSObjectUsers = this.sObjectUsers;
+                        const newSObjectUsers = currentSObjectUsers.concat(result);
+                        this.sObjectUsers = newSObjectUsers;
                     } else {
-                        this.assignedUsers = result;
+                        this.sObjectUsers = result;
                     }
                 }
                 this.isLoading = false;
@@ -149,7 +136,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
     connectedCallback() {
         this.fetchLicenseTypeInfo()
             .then(result => {
-                this.fetchAssignedUsers();
+                this.fetchAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
             })
     }
 
@@ -158,7 +145,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
     }
 
     handleSort(event) {
-        this.fetchAssignedUsers(event.target.sortedBy, event.target.sortDirection);
+        this.fetchAssignedUsers(0, numberOfRowsToLoad, event.target.sortedBy, event.target.sortDirection);
     }
 
     handleRowSelection(event) {

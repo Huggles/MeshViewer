@@ -74,7 +74,7 @@ public interface ILicenseManagementService {
      * @param licenseType the license type for which we want the title
      * @return the title/name of the License Type
     */
-    String getLicenseTypeName(LicenseType licenseType);
+    String getLicenseTypename(LicenseType licenseType);
 
     /**
      * Fetches the total number of seats available for this license type in the subscriber org.

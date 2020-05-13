@@ -16,16 +16,21 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
                 User.Id,
-                User.FirstName,
-                User.LastName,
-                User.ProfileId,
-                User.UserRoleId
+                User.Alias,
+                User.Name,
+                User.IsActive,
+                User.Username
         };
     }
 
+    public override String getOrderBy() { // no default ordering
+        return null;
+    }
+
+
     public List<User> selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup) {
         Set<Id> ids = selectUserIdsByPermissionSetGroup(permissionSetGroup);
-        return [SELECT Id, Name, Alias, FirstName, LastName, ProfileId, Profile.Name, UserRole.Name FROM User WHERE Id IN :ids]; // don't use the queryfactory. Too complex
+        return selectSObjectsById(ids);
     }
 
     public List<User> selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
@@ -35,22 +40,24 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
         }
 
         PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroup(permissionSetGroup, offSet, nrOfRows, permissionSetAssignmentOrderings);
-        List<User> result = new List<User>();
+        Set<Id> userIds = new Set<Id>();
         for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
-            result.add(permissionSetAssignment.Assignee);
+            userIds.add(permissionSetAssignment.AssigneeId);
         }
-        return result;
+        fflib_QueryFactory queryFactory = newQueryFactory().selectField('Profile.Name').selectField('UserRole.Name').setCondition('Id IN :userIds');
+        return Database.query(queryFactory.toSOQL());
     }
 
     public List<User> selectUsersWithoutPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
         Set<Id> usersWithPermissionSetGroupIds = selectUserIdsByPermissionSetGroup(permissionSetGroup);
-        fflib_QueryFactory queryFactory = newQueryFactory();
+        fflib_QueryFactory queryFactory = newQueryFactory().selectField('Profile.Name').selectField('UserRole.Name');
         queryFactory.setCondition('Id NOT IN :usersWithPermissionSetGroupIds');
         for (fflib_QueryFactory.Ordering ordering : orderings) {
             queryFactory.addOrdering(ordering);
         }
         queryFactory.setOffset(offSet);
         queryFactory.setLimit(nrOfRows);
+        System.debug('******* QUery: ' + queryFactory.toSOQL());
         List<User> result = Database.query(queryFactory.toSOQL());
         return result;
     }

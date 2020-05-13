@@ -23,6 +23,7 @@ public inherited sharing class LicenseTypeManagementCardController {
 
         @AuraEnabled
         public String name { get; set; }
+
     }
 
     @AuraEnabled
@@ -32,11 +33,10 @@ public inherited sharing class LicenseTypeManagementCardController {
         info.availableNrOfSeats = LicenseManagementService.getNumberOfAvailableSeats(licenseType);
         info.name = LicenseManagementService.getLicenseTypeName(licenseType);
         info.totalNrOfSeats = LicenseManagementService.getTotalNumberOfSeats(licenseType);
-        System.debug('info ' + info);
         return info;
     }
 
-    @AuraEnabled(Cacheable=true)
+    @AuraEnabled
     public static User[] getAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
         LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
         List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
@@ -46,8 +46,9 @@ public inherited sharing class LicenseTypeManagementCardController {
         return LicenseManagementService.getAssignedUsersForLicenseType(licenseType, startRow, nrOfRows, queryOrderings);
     }
 
-    @AuraEnabled(Cacheable=true)
+    @AuraEnabled
     public static User[] getUnAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
+        System.debug('orderings: ' + orderings);
         LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
         List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
         for (Ordering ordering : orderings) {

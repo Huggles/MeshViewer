@@ -167,7 +167,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public String getLicenseTypeName(LicenseType licenseType) {
-        return licenseType.name();
+        return LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(licenseType); // this is the human readable name, not the API name
     }
 
     /*****************************************
