@@ -4,6 +4,34 @@
 
 public with sharing class LicenseManagementServiceImpl implements ILicenseManagementService {
 
+    /**
+     * The list of Salesforce license definition keys that can be used to provision a license type to
+    */
+    public static final Set<String> ALLOWED_LICENCE_DEFINITION_KEYS = new Set<String>{
+            'SFDC',
+            'PID_COMPANY_COMMUNITIES',
+            'AUL',
+            'PID_Customer_Community_Login',
+            'PID_Customer_Community_Plus',
+            'FDC_SUB',
+            'PID_Customer_Community_Plus_Login',
+            'FDC_ISV_SUB',
+            'PID_Partner_Community',
+            'PID_Partner_Community_Login',
+            'PID_Customer_Community',
+            'PID_FDC_FREE'
+    };
+
+    public static Set<Id> allowedUserLicenseIds {
+        get {
+            if (allowedUserLicenseIds == null) {
+                allowedUserLicenseIds = (new Map<Id, UserLicense>([SELECT Id FROM UserLicense WHERE LicenseDefinitionKey IN :ALLOWED_LICENCE_DEFINITION_KEYS])).keySet();
+            }
+            return allowedUserLicenseIds;
+        }
+        set;
+    }
+
     @TestVisible
     private static final String NAMESPACE_PREFIX ='appsolutely';
 
@@ -83,9 +111,11 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         if (usersWithoutLicenseTypes.size() > 0) {
             throw new NoSeatAssignedException('No seats of license type ' + licenseType.name() + ' have been assigned to the given users');
         }
-        List<User> usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
-        if (usersWithoutLMALicense.size() > 0) {
-            throw new NoLMALicenseAssignedException('No LMA License has been assigned to the given users');
+        if (!isScratchOrg()) { // in a scratch org outside a unit test the feature param is not available
+            List<User> usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
+            if (usersWithoutLMALicense.size() > 0) {
+                throw new NoLMALicenseAssignedException('No LMA License has been assigned to the given users');
+            }
         }
 
         // delete all relevant permission set assignments
@@ -112,8 +142,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public void assignLicenseType(LicenseType licenseType, User[] users) {
+        System.debug('users: ' + JSON.serializePretty(users));
         // calculate if we have enough seats available
         users = filterUsersWithoutLicenseTypeAssignment(licenseType, users);
+        System.debug('users filtered: ' + JSON.serializePretty(users));
         if (users.size() > getNumberOfAvailableSeats(licenseType)) {
             throw new NotEnoughSeatsAvailableException('Not enough seats of license type ' + licenseType.name() + ' available');
         }
@@ -135,19 +167,22 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
 
         // assign the permission set group
+        PermissionSetGroup permissionSetGroup = getPermissionSetGroupByLicenseType(licenseType);
+        System.debug('Permissionsetgroup: ' + permissionSetGroup);
         List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
         for (User user : users) {
-            assignments.add(new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetGroupId = getPermissionSetGroupByLicenseType(licenseType).Id));
+            System.debug('in user loop');
+            PermissionSetAssignment permissionSetAssignment = new PermissionSetAssignment(PermissionSetGroupId = permissionSetGroup.Id, AssigneeId = user.Id);
+            assignments.add(permissionSetAssignment);
         }
-        unitOfWork.registerNew(assignments);
+        System.debug('assignments: ' + JSON.serializePretty(assignments));
+        insert assignments;
+        // unitOfWork.registerNew(assignments);
         unitOfWork.commitWork();
     }
 
     public Integer getNumberOfAvailableSeats(LicenseType licenseType) {
-//        Integer numberOfSeatsBought = 20;
-//        if (!isScratchOrg() || Test.isRunningTest()) { // in a scratch org outside a unit test the feature param is not available
         Integer numberOfSeatsBought = FeatureManagement.checkPackageIntegerValue(FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(licenseType));
-        // }
         Integer numberOfSeatsAssigned = getAssignedUsersForLicenseType(licenseType).size();
         Integer numberOfAvailableSeats = numberOfSeatsBought - numberOfSeatsAssigned;
         return numberOfAvailableSeats;
@@ -219,6 +254,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     private Boolean isScratchOrg() {
         Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
+        System.debug('organization: ' + org);
         Boolean isScratchOrg = org.IsSandbox && org.TrialExpirationDate != null;
         return isScratchOrg;
     }

@@ -4,6 +4,16 @@
 
 public inherited sharing class UserSelector  extends fflib_SObjectSelector implements IUserSelector  {
 
+    private static Set<Id> profileIds {
+        get {
+            if (profileIds == null) {
+                profileIds = (new Map<Id, Profile>([SELECT Id FROM Profile WHERE UserLicenseId IN: LicenseManagementServiceImpl.allowedUserLicenseIds])).keySet();
+            }
+            return profileIds;
+        }
+        set;
+    }
+
     public static IUserSelector newInstance() {
         return (IUserSelector) Application.Selector.newInstance(User.SObjectType);
     }
@@ -44,14 +54,14 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
         for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
             userIds.add(permissionSetAssignment.AssigneeId);
         }
-        fflib_QueryFactory queryFactory = newQueryFactory().selectField('Profile.Name').selectField('UserRole.Name').setCondition('Id IN :userIds');
+        fflib_QueryFactory queryFactory = newQueryFactory().selectField('Profile.Name').selectField('UserRole.Name').setCondition('Id IN :userIds AND ProfileId IN :profileIds');
         return Database.query(queryFactory.toSOQL());
     }
 
     public List<User> selectUsersWithoutPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
         Set<Id> usersWithPermissionSetGroupIds = selectUserIdsByPermissionSetGroup(permissionSetGroup);
         fflib_QueryFactory queryFactory = newQueryFactory().selectField('Profile.Name').selectField('UserRole.Name');
-        queryFactory.setCondition('Id NOT IN :usersWithPermissionSetGroupIds');
+        queryFactory.setCondition('Id NOT IN :usersWithPermissionSetGroupIds AND ProfileId IN :profileIds');
         for (fflib_QueryFactory.Ordering ordering : orderings) {
             queryFactory.addOrdering(ordering);
         }

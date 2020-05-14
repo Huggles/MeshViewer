@@ -19,7 +19,7 @@ public inherited sharing class PermissionSetAssignmentSelector extends fflib_SOb
 
     // need to override this because the PermissionSetAssignment 'SObject' doesn't have a createddate or name
     public override String getOrderBy() {
-        return 'Id';
+        return null;
     }
 
 

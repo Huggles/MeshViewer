@@ -5,6 +5,7 @@
 import {LightningElement, wire, api} from 'lwc';
 import getUnAssignedUsers from '@salesforce/apex/LicenseTypeManagementCardController.getUnAssignedUsers';
 import getUnAssignedUserCount from '@salesforce/apex/LicenseTypeManagementCardController.getUnAssignedUserCount';
+import assignUsers from '@salesforce/apex/LicenseTypeManagementCardController.assignUsers';
 
 const numberOfRowsToLoad = 20;
 
@@ -52,6 +53,18 @@ export default class AssignLicenseTypeModal extends LightningElement {
      */
     defaultSortedBy = 'Name';
 
+
+    /**
+     * The current sort field of the data table
+     */
+    sortedBy = this.defaultSortedBy;
+
+    /**
+     * The current sort direction of the table
+     * @type {string}
+     */
+    sortDirection = this.defaultSortDirection;
+
     connectedCallback() {
         this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
     }
@@ -70,11 +83,34 @@ export default class AssignLicenseTypeModal extends LightningElement {
         this.dispatchEvent(new CustomEvent('close'));
     }
 
+    handleAssignAndCloseButtonClicked() {
+        this.handleAssignUsers();
+        this.handleDialogClose();
+    }
+
+    handleAssignButtonClicked(event) {
+        this.handleAssignUsers();
+        // this.sObjectUsers = undefined;
+        // this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.sortedBy, this.sortDirection);
+    }
+
+    handleAssignUsers() {
+        if (this.selectedRows && this.selectedRows.length > 0) {
+            const selectedIds = this.selectedRows.map(a => a.Id);
+            assignUsers({licenseTypeAPIName: this.licenseTypeApiName, usersToAssign: this.selectedRows.map(a => a.Id)});
+            const filteredsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );
+            this.sObjectUsers = filteredsObjectUsers;
+            this.selectedRows = [];
+        }
+    }
+
     /**
      * Called when the user data table has been sorted
      * @param event
      */
     handleSort(event) {
+        this.sortDirection = event.target.sortDirection;
+        this.sortedBy = event.target.sortedBy;
         if (event.detail.reload) // if not all data is loaded, the sort field or the direction of the sort has been swapped reload the data
             this.fetchUnAssignedUsers(0, event.detail.limit, event.target.sortedBy, event.target.sortDirection);
     }
@@ -87,9 +123,7 @@ export default class AssignLicenseTypeModal extends LightningElement {
         this.selectedRows = event.target.selectedRows;
     }
 
-    handleAssignButtonClicked(event) {
-        
-    }
+
 
     /**
      * Called when the user data table needs to load more data
@@ -105,9 +139,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
     fetchUnAssignedUsers(offset, limit, sortedBy, sortDirection) {
         // TODO: refactor so there is no code duplication with licenseTypeManagementCard
         this.isLoading = true;
-        if (this.maxUsers <= (offset + limit)) {
-            this.enableInfiniteLoading = false;
-        }
         getUnAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
             .then(result => {
                 if (result && result.length > 0) {
@@ -117,6 +148,9 @@ export default class AssignLicenseTypeModal extends LightningElement {
                         this.sObjectUsers = newSObjectUsers;
                     } else {
                         this.sObjectUsers = result;
+                    }
+                    if (this.sObjectUsers && this.sObjectUsers.length >= this.maxUsers) {
+                        this.enableInfiniteLoading = false;
                     }
                 }
                 this.isLoading = false;

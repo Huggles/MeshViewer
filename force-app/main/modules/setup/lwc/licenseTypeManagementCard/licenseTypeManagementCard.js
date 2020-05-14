@@ -5,6 +5,7 @@
 import {track, api, wire, LightningElement} from 'lwc';
 import getLicenseTypeInfo from '@salesforce/apex/LicenseTypeManagementCardController.getLicenseTypeInfo';
 import getAssignedUsers from '@salesforce/apex/LicenseTypeManagementCardController.getAssignedUsers';
+import unAssignUsers from '@salesforce/apex/LicenseTypeManagementCardController.unAssignUsers';
 
 const numberOfRowsToLoad = 20;
 
@@ -71,7 +72,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
     /**
      * The selected rows in the table
      */
-    selectedRows;
+    selectedRows = [];
 
     /**
      * The label to be shown if there are no users assigned
@@ -107,13 +108,15 @@ export default class LicenseTypeManagementCard extends LightningElement {
     defaultSortDirection = 'asc';
 
     /**
+     * The default field on which to sort the results
+     */
+    defaultSortedBy = 'Name';
+
+    /**
      * Fetches a new set of users. Appends them to the assignedUsers.
      */
     fetchAssignedUsers(offset, limit, sortedBy, sortDirection) {
         this.isLoading = true;
-        if (this.maxUsers <= (offset + limit)) {
-            this.enableInfiniteLoading = false;
-        }
         getAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
             .then(result => {
                 if (result && result.length > 0) {
@@ -124,6 +127,9 @@ export default class LicenseTypeManagementCard extends LightningElement {
                     } else {
                         this.sObjectUsers = result;
                     }
+                }
+                if (this.sObjectUsers && this.sObjectUsers.length >= this.assignedNorOfSeats) {
+                    this.enableInfiniteLoading = false;
                 }
                 this.isLoading = false;
             })
@@ -136,6 +142,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
     connectedCallback() {
         this.fetchLicenseTypeInfo()
             .then(result => {
+                this.showAssignLicensesButton = this.availableNrOfSeats > 0; // TODO: should take into account how many users there are in the org
                 this.fetchAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
             })
     }
@@ -149,17 +156,38 @@ export default class LicenseTypeManagementCard extends LightningElement {
     }
 
     handleRowSelection(event) {
-        this.selectedRows = this.template.querySelector('c-user-data-table').getSelectedRows();
+        this.selectedRows = event.target.selectedRows;
     }
 
     handleRemoveAssignmentClicked(event) {
-        // TODO
+        if (this.selectedRows && this.selectedRows.length > 0) {
+            const selectedIds = this.selectedRows.map(a => a.Id);
+            unAssignUsers({licenseTypeAPIName: this.licenseTypeApiName, usersToUnAssign: selectedIds})
+                .then(result => {
+                    const filteredsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );
+                    if (filteredsObjectUsers && filteredsObjectUsers.length > 0) {
+                        this.sObjectUsers = filteredsObjectUsers;
+                    } else {
+                        this.sObjectUsers = undefined;
+                    }
+                    this.selectedRows = [];
+                })
+                .catch(error => {
+                    this.error = error;
+                    this.selectedRows = [];
+                });
+        }
     }
 
     /**
      * True if the assign licenses button has been clicked
      */
     showAssignLicensesModal;
+
+    /**
+     * If true show the assign licenses button
+     */
+    showAssignLicensesButton;
 
     /**
      * Handles the click on the assign licenses button
@@ -175,6 +203,13 @@ export default class LicenseTypeManagementCard extends LightningElement {
      */
     handleCloseAssignLicensesModal(event) {
         this.showAssignLicensesModal = false;
+        this.fetchLicenseTypeInfo()
+            .then(result => {
+                this.showAssignLicensesButton = this.availableNrOfSeats > 0; // TODO: should take into account how many users there are in the org
+                this.sObjectUsers = undefined;
+                this.fetchAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
+            })
+
     }
 
 }

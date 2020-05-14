@@ -48,7 +48,6 @@ public inherited sharing class LicenseTypeManagementCardController {
 
     @AuraEnabled
     public static User[] getUnAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
-        System.debug('orderings: ' + orderings);
         LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
         List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
         for (Ordering ordering : orderings) {
@@ -61,6 +60,26 @@ public inherited sharing class LicenseTypeManagementCardController {
     public static Integer getUnAssignedUserCount(String licenseTypeAPIName) {
         LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
         return LicenseManagementService.getUnAssignedUsersForLicenseTypeCount(licenseType);
+    }
+
+    @AuraEnabled
+    public static void assignUsers(String licenseTypeAPIName, List<Id> usersToAssign) {
+        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+        List<User> users = new List<User>();
+        for (Id id : usersToAssign) {
+            users.add(new User(Id = id));
+        }
+        LicenseManagementService.assignLicenseType(licenseType, users);
+    }
+
+    @AuraEnabled
+    public static void unAssignUsers(String licenseTypeAPIName, List<Id> usersToUnAssign) {
+        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+        List<User> users = new List<User>();
+        for (Id id : usersToUnAssign) {
+            users.add(new User(Id = id));
+        }
+        LicenseManagementService.unassignLicenseType(licenseType, users);
     }
 
 }
