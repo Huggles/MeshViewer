@@ -62,7 +62,7 @@ private class UserSelectorTest {
         Test.stopTest();
 
         // then
-        Integer currentNrOfUsers = ([SELECT Id FROM User]).size(); // the user object is strange since it doesn't respect the test boundary (acts like SeeAllData is true)
+        Integer currentNrOfUsers = ([SELECT Id FROM User WHERE Profile.UserLicense.LicenseDefinitionKey IN :LicenseManagementServiceImpl.ALLOWED_LICENCE_DEFINITION_KEYS]).size(); // the user object is strange since it doesn't respect the test boundary (acts like SeeAllData is true)
         System.assertEquals(currentNrOfUsers - 4, usersToAssert.size());
 
     }
@@ -103,8 +103,7 @@ private class UserSelectorTest {
         // then
         System.assertEquals(10, usersToAssert.size());
         for (Integer i = 0; i < 10; i++) {
-            System.assertEquals('first' + (10 + i), usersToAssert.get(i).FirstName);
-            System.assertEquals('last' + (10 + i), usersToAssert.get(i).LastName);
+            System.assertEquals('Standard User', usersToAssert.get(i).Profile.Name);
         }
     }
 }

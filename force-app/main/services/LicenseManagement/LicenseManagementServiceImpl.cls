@@ -111,7 +111,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         if (usersWithoutLicenseTypes.size() > 0) {
             throw new NoSeatAssignedException('No seats of license type ' + licenseType.name() + ' have been assigned to the given users');
         }
-        if (!isScratchOrg()) { // in a scratch org outside a unit test the feature param is not available
+        if (!isScratchOrg() || Test.isRunningTest()) { // in a scratch org outside a unit test the feature param is not available
             List<User> usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
             if (usersWithoutLMALicense.size() > 0) {
                 throw new NoLMALicenseAssignedException('No LMA License has been assigned to the given users');
@@ -176,8 +176,8 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             assignments.add(permissionSetAssignment);
         }
         System.debug('assignments: ' + JSON.serializePretty(assignments));
-        insert assignments;
-        // unitOfWork.registerNew(assignments);
+        // insert assignments;
+        unitOfWork.registerNew(assignments);
         unitOfWork.commitWork();
     }
 
@@ -202,7 +202,11 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public String getLicenseTypeName(LicenseType licenseType) {
-        return LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(licenseType); // this is the human readable name, not the API name
+        String returnValue = LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(licenseType);
+        if (returnValue == null) {
+            throw new NoNameDefinedForLicenseTypeException('No name defined for ' + licenseType.name());
+        }
+        return returnValue; // this is the human readable name, not the API name
     }
 
     /*****************************************

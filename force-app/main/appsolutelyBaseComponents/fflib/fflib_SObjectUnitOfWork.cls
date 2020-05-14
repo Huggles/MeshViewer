@@ -93,7 +93,7 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
 
     public class SimpleDML implements IDML
     {
-        public void dmlInsert(List<SObject> objList)
+        public void dmlInsert(List<PermissionSetAssignment> objList)
         {
             System.debug('objects to insert: ' + JSON.serializePretty(objList));
             insert objList;
@@ -214,8 +214,9 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
      *
      * @param records A list of newly created SObject instances to be inserted during commitWork
      **/
-    public void registerNew(List<SObject> records)
+    public void registerNew(List<PermissionSetAssignment> records)
     {
+        System.debug('records ' + records);
         for (SObject record : records)
         {
             registerNew(record, null, null);
@@ -235,13 +236,11 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
         if (record.Id != null)
             throw new UnitOfWorkException('Only new records can be registered as new');
         String sObjectType = record.getSObjectType().getDescribe().getName();
-        System.debug('SObjectType found: ' + sObjectType);
 
 		assertForNonEventSObjectType(sObjectType);
 		assertForSupportedSObjectType(m_newListByType, sObjectType);
 
         m_newListByType.get(sObjectType).add(record);
-        System.debug('m_newListByType: ' + JSON.serializePretty(m_newListByType));
         if (relatedToParentRecord!=null && relatedToParentField!=null)
             registerRelationship(record, relatedToParentField, relatedToParentRecord);
     }

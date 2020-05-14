@@ -40,7 +40,8 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
 
     public List<User> selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup) {
         Set<Id> ids = selectUserIdsByPermissionSetGroup(permissionSetGroup);
-        return selectSObjectsById(ids);
+        fflib_QueryFactory queryFactory = newQueryFactory().selectField('Profile.Name').selectField('UserRole.Name').setCondition('Id IN :ids AND ProfileId IN :profileIds');
+        return Database.query(queryFactory.toSOQL());
     }
 
     public List<User> selectByPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
@@ -67,7 +68,6 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
         }
         queryFactory.setOffset(offSet);
         queryFactory.setLimit(nrOfRows);
-        System.debug('******* QUery: ' + queryFactory.toSOQL());
         List<User> result = Database.query(queryFactory.toSOQL());
         return result;
     }
