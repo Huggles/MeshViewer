@@ -33,7 +33,8 @@ public inherited sharing class Application {
                     Creditsafe_Company_Share_Holder__c.SObjectType,
                     Creditsafe_Address__c.SObjectType,
                     Creditsafe_Company_Key_Value__c.SObjectType,
-                    International_Address__c.SObjectType
+                    International_Address__c.SObjectType,
+                    Dutch_Address_Postcode_Range__c.SObjectType
             });
 
     // Configure and create the ServiceFactory for this Application

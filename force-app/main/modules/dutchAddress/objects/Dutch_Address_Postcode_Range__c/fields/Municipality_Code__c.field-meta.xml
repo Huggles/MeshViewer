@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Municipality_Code__c</fullName>
+    <description>Code given for municipalities as defined by the Ministry of Home Affairs ‘Ministerie van binnenlandse zaken’</description>
+    <externalId>false</externalId>
+    <label>Municipality Code</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>
