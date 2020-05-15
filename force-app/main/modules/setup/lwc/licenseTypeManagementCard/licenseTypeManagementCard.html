@@ -6,7 +6,7 @@
 <template>
     <lightning-card title={title} variant="base">
         <template if:true={showAssignLicensesModal}>
-            <c-assign-license-type-modal license-type-api-name={licenseTypeApiName} onclose={handleCloseAssignLicensesModal}></c-assign-license-type-modal>
+            <c-assign-license-type-modal license-type-api-name={licenseTypeApiName} onusersassigned={handleUsersAssigned} onclose={handleCloseAssignLicensesModal}></c-assign-license-type-modal>
         </template>
         <div slot="actions">
             <template if:true={showAssignLicensesButton}>

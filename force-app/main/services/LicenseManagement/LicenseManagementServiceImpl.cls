@@ -142,10 +142,8 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public void assignLicenseType(LicenseType licenseType, User[] users) {
-        System.debug('users: ' + JSON.serializePretty(users));
         // calculate if we have enough seats available
         users = filterUsersWithoutLicenseTypeAssignment(licenseType, users);
-        System.debug('users filtered: ' + JSON.serializePretty(users));
         if (users.size() > getNumberOfAvailableSeats(licenseType)) {
             throw new NotEnoughSeatsAvailableException('Not enough seats of license type ' + licenseType.name() + ' available');
         }
@@ -168,15 +166,11 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
         // assign the permission set group
         PermissionSetGroup permissionSetGroup = getPermissionSetGroupByLicenseType(licenseType);
-        System.debug('Permissionsetgroup: ' + permissionSetGroup);
         List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
         for (User user : users) {
-            System.debug('in user loop');
             PermissionSetAssignment permissionSetAssignment = new PermissionSetAssignment(PermissionSetGroupId = permissionSetGroup.Id, AssigneeId = user.Id);
             assignments.add(permissionSetAssignment);
         }
-        System.debug('assignments: ' + JSON.serializePretty(assignments));
-        // insert assignments;
         unitOfWork.registerNew(assignments);
         unitOfWork.commitWork();
     }

@@ -5,16 +5,6 @@
 @IsTest
 private class LicenseManagementServiceImplTest {
 
-    public interface fake {
-        void fakeNew(List<SObject> records);
-    }
-
-    public class fakeClass implements fake {
-        public void fakeNew(List<SObject> records) {
-            System.debug(' records in fake ' + records);
-        }
-    }
-
     @IsTest
     static void testGetPermissionSetGroupByLicenseTypeHappyFlow() {
         // given
@@ -384,12 +374,8 @@ private class LicenseManagementServiceImplTest {
         List<PermissionSetAssignment> permissionSetAssignments2 = new List<PermissionSetAssignment>();
         for (User user : users) {
             PermissionSetAssignment assignment = new PermissionSetAssignment(PermissionSetGroupId = permissionSetGroup.Id, AssigneeId = user.Id);
-            System.debug('assignment: ' + assignment);
             permissionSetAssignments2.add(assignment);
         }
-        System.debug('assignments: ' + permissionSetAssignments2);
-        fake newFake = new fakeClass();
-        newFake.fakeNew(permissionSetAssignments2);
         fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{PermissionSetAssignment.SObjectType});
         uow.registerNew(permissionSetAssignments2);
         uow.commitWork();

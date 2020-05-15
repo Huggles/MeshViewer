@@ -32,6 +32,7 @@ export default class UserDataTable extends LightningElement {
         else {
             this.localUsers = undefined;
         }
+        this.sortLocalUsers(this.sortedBy, this.sortDirection);
     }
 
     @track

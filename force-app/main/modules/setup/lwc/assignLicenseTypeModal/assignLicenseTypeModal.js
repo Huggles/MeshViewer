@@ -97,10 +97,20 @@ export default class AssignLicenseTypeModal extends LightningElement {
     handleAssignUsers() {
         if (this.selectedRows && this.selectedRows.length > 0) {
             const selectedIds = this.selectedRows.map(a => a.Id);
-            assignUsers({licenseTypeAPIName: this.licenseTypeApiName, usersToAssign: this.selectedRows.map(a => a.Id)});
-            const filteredsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );
-            this.sObjectUsers = filteredsObjectUsers;
-            this.selectedRows = [];
+            assignUsers({licenseTypeAPIName: this.licenseTypeApiName, usersToAssign: selectedIds})
+                .then(result => {
+                    const newlyAssignedUsers = this.sObjectUsers.filter(sObjectUser => selectedIds.includes(sObjectUser.Id));
+                    this.dispatchEvent(new CustomEvent('usersassigned', {detail: newlyAssignedUsers}));
+                    const notYetAssignedsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );
+                    if (notYetAssignedsObjectUsers && notYetAssignedsObjectUsers.length > 0) {
+                        this.sObjectUsers = notYetAssignedsObjectUsers;
+                    } else { // if no sObjectUsers are there to be assigned, make this.sObjectUsers undefined so the data table is not shown
+                        this.sObjectUsers = undefined;
+                    }
+                    this.selectedRows = [];
+                })
+                .catch(error => this.error = error);
+
         }
     }
 

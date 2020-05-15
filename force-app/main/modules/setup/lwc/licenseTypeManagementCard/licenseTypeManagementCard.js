@@ -55,6 +55,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
                     this.totalNrOfSeats = result.totalNrOfSeats;
                     this.availableNrOfSeats = result.availableNrOfSeats;
                     this.assignedNorOfSeats = this.totalNrOfSeats - this.availableNrOfSeats;
+                    this.showAssignLicensesButton = this.availableNrOfSeats > 0;
                     resolve('license type info fetched');
                 })
                 .catch(error => {
@@ -198,18 +199,27 @@ export default class LicenseTypeManagementCard extends LightningElement {
     }
 
     /**
+     * Handles the assignment of users in the assign license type modal
+     * @param event
+     */
+    handleUsersAssigned(event) {
+        const assignedUsers = event.detail;
+        if (this.sObjectUsers) {
+            const oldSObjectUsers = this.sObjectUsers;
+            const newAndOldsObjectUsers = oldSObjectUsers.concat(assignedUsers);
+            this.sObjectUsers = newAndOldsObjectUsers;
+        } else {
+            this.sObjectUsers = assignedUsers;
+        }
+    }
+
+    /**
      * Handles closing the assign licenses modal
      * @param event
      */
     handleCloseAssignLicensesModal(event) {
         this.showAssignLicensesModal = false;
-        this.fetchLicenseTypeInfo()
-            .then(result => {
-                this.showAssignLicensesButton = this.availableNrOfSeats > 0; // TODO: should take into account how many users there are in the org
-                this.sObjectUsers = undefined;
-                this.fetchAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
-            })
-
+        this.fetchLicenseTypeInfo();
     }
 
 }

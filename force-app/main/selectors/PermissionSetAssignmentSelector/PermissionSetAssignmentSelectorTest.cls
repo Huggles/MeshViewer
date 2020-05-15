@@ -36,6 +36,7 @@ private class PermissionSetAssignmentSelectorTest {
 
     @IsTest
     static void testSelectByPermissionSetGroup() {
+
         // given
         // 10 users
         // 5 with a permission set group assignment and 5 without
@@ -46,6 +47,9 @@ private class PermissionSetAssignmentSelectorTest {
         insert users;
 
         PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+
+        // since permission set groups don't stick to the encapsulations of the test context (they act like SeeAllData=true) we need to take into account existing assignments
+        Integer nrOfPermissionSetsAssignedBefore = [SELECT Count() FROM PermissionSetAssignment WHERE PermissionSetGroupId = :permissionSetGroup.Id];
 
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         for (Integer i = 0; i < 5; i++) {
@@ -60,7 +64,7 @@ private class PermissionSetAssignmentSelectorTest {
         Test.stopTest();
 
         // then
-        System.assertEquals(5, permissionSetAssignments2.size());
+        System.assertEquals(5 + nrOfPermissionSetsAssignedBefore, permissionSetAssignments2.size());
     }
 
     @IsTest
@@ -99,9 +103,9 @@ private class PermissionSetAssignmentSelectorTest {
 
         // then
         System.assertEquals(10, permissionSetAssignments2.size());
+        Set<Id> userIds = (new Map<Id, User>(users)).keySet();
         for (Integer i = 0; i < 10; i++) {
-            System.assertEquals('first' + (10 + i), permissionSetAssignments2.get(i).Assignee.FirstName);
-            System.assertEquals('last' + (10 + i), permissionSetAssignments2.get(i).Assignee.LastName);
+            System.assertEquals(true, userIds.contains(permissionSetAssignments2.get(i).AssigneeId));
         }
     }
 
