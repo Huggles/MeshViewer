@@ -244,6 +244,13 @@
         <value>Belgium</value>
     </labels>
     <labels>
+        <fullName>Country_Denmark</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Denmark</shortDescription>
+        <value>Denmark</value>
+    </labels>
+    <labels>
         <fullName>Country_France</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -265,11 +272,32 @@
         <value>Ireland</value>
     </labels>
     <labels>
+        <fullName>Country_Italy</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Italy</shortDescription>
+        <value>Italy</value>
+    </labels>
+    <labels>
         <fullName>Country_Netherlands</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Country Netherlands</shortDescription>
         <value>The Netherlands</value>
+    </labels>
+    <labels>
+        <fullName>Country_Norway</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Norway</shortDescription>
+        <value>Norway</value>
+    </labels>
+    <labels>
+        <fullName>Country_Spain</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Spain</shortDescription>
+        <value>Spain</value>
     </labels>
     <labels>
         <fullName>Country_Sweden</fullName>
@@ -1373,6 +1401,13 @@
         <value>Please enter a valid CreditSafe registration number.</value>
     </labels>
     <labels>
+        <fullName>Valid_Denmark_VAT_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid Denmark VAT Number</shortDescription>
+        <value>Please enter a valid Danish VAT Number.</value>
+    </labels>
+    <labels>
         <fullName>Valid_Dutch_phone_number</fullName>
         <categories>Error</categories>
         <language>en_US</language>
@@ -1450,6 +1485,20 @@
         <protected>true</protected>
         <shortDescription>Valid Irish VAT Number</shortDescription>
         <value>Please enter a valid Irish VAT Number starting with IE</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Italian_VAT_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid Italian VAT Number</shortDescription>
+        <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Spanish_VAT_Number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid Spanish VAT Number</shortDescription>
+        <value>Please enter a valid Spanish VAT Number.</value>
     </labels>
     <labels>
         <fullName>Valid_Swedish_CreditSafe_Identification_Nr</fullName>
