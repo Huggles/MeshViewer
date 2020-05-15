@@ -4,7 +4,7 @@
 
 global with sharing class GetCompanyIdsInvocable {
 
-    @InvocableMethod(label='Get for Company IDs' description='Get for company Ids based on the given arguments.' category='Company.info')
+    @InvocableMethod(label='Get for Company IDs' description='Get company Ids based on the input arguments.' category='Company.info')
     global static List<String> getForCompanyId(List<SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument> arguments) {
         List<SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument> newArguments = new List<SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument>();
         for (SearchForCreditSafeDossiersInvocable.SearchForCreditSafeDossiersArgument argument : arguments) {
