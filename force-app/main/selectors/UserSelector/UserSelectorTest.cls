@@ -19,7 +19,7 @@ private class UserSelectorTest {
         for (Integer i = 0; i < 5; i++) {
             TestUtils.giveUserPermissionSetGroup('Companyinfo_for_Business', users[i]);
         }
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         // when
 
@@ -47,7 +47,7 @@ private class UserSelectorTest {
         for (Integer i = 0; i < 4; i++) {
             TestUtils.giveUserPermissionSetGroup('Companyinfo_for_Business', users[i]);
         }
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         // order on first name and last name
         List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
@@ -81,7 +81,7 @@ private class UserSelectorTest {
         }
         insert users;
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         for (Integer i = 0; i < 95; i++) {

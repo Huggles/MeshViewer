@@ -9,7 +9,7 @@ private class LicenseManagementServiceImplTest {
     static void testGetPermissionSetGroupByLicenseTypeHappyFlow() {
         // given
         // an existing license type with a permission set group defined
-        LicenseType licenseType = LicenseType.COMPANY_INFO_FOR_BUSINESS;
+        LicenseType licenseType = LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS;
 
         // when
         Test.startTest();
@@ -49,11 +49,11 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        String name = LicenseManagementService.getLicenseTypeName(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        String name = LicenseManagementService.getLicenseTypeName(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
         Test.stopTest();
 
         // then
-        System.assertEquals(LicenseManagementServiceImpl.LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_BUSINESS), name);
+        System.assertEquals(LicenseManagementServiceImpl.LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), name);
     }
 
     @IsTest
@@ -83,7 +83,7 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
         Test.stopTest();
 
         // then
@@ -134,7 +134,7 @@ private class LicenseManagementServiceImplTest {
     static void testGetLicenseTypeByNameHappyFlow() {
         // given
         // an existing license type name
-        String name = LicenseType.COMPANY_INFO_FOR_BUSINESS.name();
+        String name = LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS.name();
 
         // when
         Test.startTest();
@@ -142,7 +142,7 @@ private class LicenseManagementServiceImplTest {
         Test.stopTest();
 
         // then
-        System.assertEquals(LicenseType.COMPANY_INFO_FOR_BUSINESS, type);
+        System.assertEquals(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, type);
     }
 
     @IsTest
@@ -187,7 +187,7 @@ private class LicenseManagementServiceImplTest {
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         List<UserPackageLicense> userPackageLicenses = new List<UserPackageLicense>();
         for (Integer i = 0; i < 10; i++) {
-            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id));
             userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
         }
 
@@ -202,7 +202,7 @@ private class LicenseManagementServiceImplTest {
         }
 
         // short hand for the permission set group
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         // start stubbing
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -243,7 +243,7 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, usersToUnassign);
+        LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersToUnassign);
         Test.stopTest();
 
         // then
@@ -292,7 +292,7 @@ private class LicenseManagementServiceImplTest {
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         List<UserPackageLicense> userPackageLicenses = new List<UserPackageLicense>();
         for (Integer i = 0; i < 10; i++) {
-//            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+//            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id));
             userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
         }
 
@@ -307,7 +307,7 @@ private class LicenseManagementServiceImplTest {
         }
 
         // short hand for the permission set group
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         // start stubbing
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -350,7 +350,7 @@ private class LicenseManagementServiceImplTest {
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
-            LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, usersToUnassign);
+            LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersToUnassign);
         } catch (NoSeatAssignedException ex) {
             exceptionThrown = true;
         }
@@ -370,7 +370,7 @@ private class LicenseManagementServiceImplTest {
         System.runAs(TestUtils.getUser('System Administrator')) {
             insert users;
         }
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
         List<PermissionSetAssignment> permissionSetAssignments2 = new List<PermissionSetAssignment>();
         for (User user : users) {
             PermissionSetAssignment assignment = new PermissionSetAssignment(PermissionSetGroupId = permissionSetGroup.Id, AssigneeId = user.Id);
@@ -380,7 +380,6 @@ private class LicenseManagementServiceImplTest {
         uow.registerNew(permissionSetAssignments2);
         uow.commitWork();
     }
-
 
     @IsTest
     static void testUnassignNoLMALicensesAssigned() {
@@ -401,7 +400,7 @@ private class LicenseManagementServiceImplTest {
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         List<UserPackageLicense> userPackageLicenses = new List<UserPackageLicense>();
         for (Integer i = 0; i < 10; i++) {
-            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id));
 //            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
         }
 
@@ -416,7 +415,7 @@ private class LicenseManagementServiceImplTest {
         }
 
         // short hand for the permission set group
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         // start stubbing
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -459,7 +458,7 @@ private class LicenseManagementServiceImplTest {
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
-            LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, usersToUnassign);
+            LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersToUnassign);
         } catch (NoLMALicenseAssignedException ex) {
             exceptionThrown = true;
         }
@@ -479,7 +478,7 @@ private class LicenseManagementServiceImplTest {
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IUserSelector userSelector = (IUserSelector)mocks.mock(IUserSelector.class);
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         mocks.startStubbing();
         mocks.when(userSelector.selectByPermissionSetGroup(permissionSetGroup)).thenReturn(users);
@@ -490,7 +489,7 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        User[] usersToAssess = LicenseManagementService.getAssignedUsersForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        User[] usersToAssess = LicenseManagementService.getAssignedUsersForLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
         Test.stopTest();
 
         // then
@@ -507,7 +506,7 @@ private class LicenseManagementServiceImplTest {
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IUserSelector userSelector = (IUserSelector)mocks.mock(IUserSelector.class);
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
                 new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
@@ -523,7 +522,7 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        User[] usersToAssess = LicenseManagementService.getUnAssignedUsersForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, 0, 100, orderings);
+        User[] usersToAssess = LicenseManagementService.getUnAssignedUsersForLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 100, orderings);
         Test.stopTest();
 
         // then
@@ -544,7 +543,7 @@ private class LicenseManagementServiceImplTest {
             users.add(u);
         }
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         // order on first name and last name
         List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
@@ -564,7 +563,7 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        User[] usersToAssess = LicenseManagementService.getAssignedUsersForLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, 10, 10, orderings);
+        User[] usersToAssess = LicenseManagementService.getAssignedUsersForLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 10, 10, orderings);
         Test.stopTest();
 
         // then
@@ -575,7 +574,7 @@ private class LicenseManagementServiceImplTest {
     public static void testGetNumberOfAvailableSeatsSeatsAvailable() {
         // given
         // 10 seats available
-        // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_BUSINESS), 20);
+        // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), 20);
         // 5 seats already assigned
         User[] users = new List<User>();
         for (Integer i = 0; i < 5; i++) {
@@ -584,7 +583,7 @@ private class LicenseManagementServiceImplTest {
 
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IUserSelector userSelector = (IUserSelector)mocks.mock(IUserSelector.class);
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         mocks.startStubbing();
         mocks.when(userSelector.selectByPermissionSetGroup(permissionSetGroup)).thenReturn(users);
@@ -596,7 +595,7 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        Integer numberOfSeatsAvailable = LicenseManagementService.getNumberOfAvailableSeats(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        Integer numberOfSeatsAvailable = LicenseManagementService.getNumberOfAvailableSeats(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
         Test.stopTest();
 
         // then
@@ -630,7 +629,7 @@ private class LicenseManagementServiceImplTest {
         mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
 
         // 10 seats total
-        // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_BUSINESS), 20);
+        // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), 20);
 
         // 5 new users and 5 existing
         User[] users = new List<User>();
@@ -644,15 +643,15 @@ private class LicenseManagementServiceImplTest {
         List<User> usersWithPermissionsetGroup = new List<User>();
         List<User> usersWithoutPermissionSetGroup = new List<User>();
         for (Integer i = 0; i < 5; i++) {
-            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id));
             userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
             usersWithPermissionsetGroup.add(users.get(i));
             usersWithoutPermissionSetGroup.add(users.get(i+5));
         }
-        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS), users)).thenReturn(permissionSetAssignments);
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), users)).thenReturn(permissionSetAssignments);
         mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithPermissionsetGroup)).thenReturn(userPackageLicenses);
         mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithoutPermissionSetGroup)).thenReturn(new List<UserPackageLicense>());
-        mocks.when(userSelectorMock.selectByPermissionSetGroup(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS))).thenReturn(usersWithPermissionsetGroup);
+        mocks.when(userSelectorMock.selectByPermissionSetGroup(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS))).thenReturn(usersWithPermissionsetGroup);
         mocks.stopStubbing();
 
         Application.Selector.setMock(permissionSetAssignmentSelectorMock);
@@ -663,7 +662,7 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, users);
+        LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users);
         Test.stopTest();
 
         // then
@@ -672,7 +671,7 @@ private class LicenseManagementServiceImplTest {
         List<Map<Schema.SObjectField, Object>> permissionSetAssignmentsToAssert = new List<Map<SObjectField, Object>>();
         for (Integer i = 5; i < 10; i++) {
             permissionSetAssignmentsToAssert.add(new Map<Schema.SObjectField, Object>{
-                    PermissionSetAssignment.PermissionSetGroupId => LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id,
+                    PermissionSetAssignment.PermissionSetGroupId => LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id,
                     PermissionSetAssignment.AssigneeId => users.get(i).Id
             });
         }
@@ -715,7 +714,7 @@ private class LicenseManagementServiceImplTest {
         mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
 
         // 10 seats total
-        // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_BUSINESS), 20);
+        // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), 20);
 
         // 10 new users and 5 existing
         User[] users = new List<User>();
@@ -729,7 +728,7 @@ private class LicenseManagementServiceImplTest {
         List<User> usersWithPermissionsetGroup = new List<User>();
 
         for (Integer i = 0; i < 5; i++) {
-            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id));
             userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
             usersWithPermissionsetGroup.add(users.get(i));
         }
@@ -740,10 +739,10 @@ private class LicenseManagementServiceImplTest {
             usersWithoutPermissionSetGroup.add(users.get(i));
         }
 
-        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS), users)).thenReturn(permissionSetAssignments);
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), users)).thenReturn(permissionSetAssignments);
         mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithPermissionsetGroup)).thenReturn(userPackageLicenses);
         mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithoutPermissionSetGroup)).thenReturn(new List<UserPackageLicense>());
-        mocks.when(userSelectorMock.selectByPermissionSetGroup(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS))).thenReturn(usersWithPermissionsetGroup);
+        mocks.when(userSelectorMock.selectByPermissionSetGroup(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS))).thenReturn(usersWithPermissionsetGroup);
         mocks.stopStubbing();
 
         Application.Selector.setMock(permissionSetAssignmentSelectorMock);
@@ -756,7 +755,7 @@ private class LicenseManagementServiceImplTest {
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
-            LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, users);
+            LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users);
         } catch(NotEnoughSeatsAvailableException ex) {
             exceptionThrown = true;
         }
@@ -793,7 +792,7 @@ private class LicenseManagementServiceImplTest {
         mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
 
         // 10 seats total
-        // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_BUSINESS), 30);
+        // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), 30);
 
         // 5 new users and 5 existing
         User[] users = new List<User>();
@@ -807,7 +806,7 @@ private class LicenseManagementServiceImplTest {
         List<User> usersWithPermissionsetGroup = new List<User>();
 
         for (Integer i = 0; i < 5; i++) {
-            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS).Id));
+            permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetGroupId = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id));
             userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
             usersWithPermissionsetGroup.add(users.get(i));
         }
@@ -818,10 +817,10 @@ private class LicenseManagementServiceImplTest {
             usersWithoutPermissionSetGroup.add(users.get(i));
         }
 
-        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS), users)).thenReturn(permissionSetAssignments);
+        mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), users)).thenReturn(permissionSetAssignments);
         mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithPermissionsetGroup)).thenReturn(userPackageLicenses);
         mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithoutPermissionSetGroup)).thenReturn(new List<UserPackageLicense>());
-        mocks.when(userSelectorMock.selectByPermissionSetGroup(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS))).thenReturn(usersWithPermissionsetGroup);
+        mocks.when(userSelectorMock.selectByPermissionSetGroup(LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS))).thenReturn(usersWithPermissionsetGroup);
         mocks.stopStubbing();
 
         Application.Selector.setMock(permissionSetAssignmentSelectorMock);
@@ -834,7 +833,7 @@ private class LicenseManagementServiceImplTest {
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
-            LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS, users);
+            LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users);
         } catch(NotEnoughLMALicensesException ex) {
             exceptionThrown = true;
         }

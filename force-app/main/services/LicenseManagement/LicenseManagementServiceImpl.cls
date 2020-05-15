@@ -37,12 +37,16 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     @TestVisible
     private static final Map<LicenseType, String> PERMISSION_GROUPS_BY_LICENSE_TYPE = new Map<LicenseType, String>{
-            LicenseType.COMPANY_INFO_FOR_BUSINESS => 'Companyinfo_for_Business'
+            LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS => 'Companyinfo_for_Dutch_Business',
+            LicenseType.COMPANY_INFO_FOR_INTERNATIONAL_BUSINESS => 'Companyinfo_for_international_business',
+            LicenseType.COMPANY_INFO_FOR_SALES => 'Companyinfo_for_sales'
     };
 
     @TestVisible
     private static final Map<LicenseType, String> FEATURE_PARAM_NAMES_BY_LICENSETYPE = new Map<LicenseType, String>{
-            LicenseType.COMPANY_INFO_FOR_BUSINESS => 'CompanyInfoForBusinessNrOfSeats',
+            LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS => 'CompanyInfoForDutchBusinessNrOfSeats',
+            LicenseType.COMPANY_INFO_FOR_INTERNATIONAL_BUSINESS => 'CompanyInfoForInternationalBusinessNrOfSeats',
+            LicenseType.COMPANY_INFO_FOR_SALES => 'CompanyInfoForSalesNrOfSeats',
             LicenseType.TEST_NO_FEATURE_PARAM => 'bogus' // TODO: refactor so no test code in implementation code
     };
 
@@ -51,7 +55,9 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     */
     @TestVisible
     private static final Map<LicenseType, String> LICENCE_TYPE_NAMES_BY_LICENSETYPE = new Map<LicenseType, String>{
-            LicenseType.COMPANY_INFO_FOR_BUSINESS => 'Company.info for Business'
+            LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS => 'Company.info for Dutch Business',
+            LicenseType.COMPANY_INFO_FOR_INTERNATIONAL_BUSINESS => 'Company.info for International Business',
+            LicenseType.COMPANY_INFO_FOR_SALES => 'Company.info for Sales'
     };
 
     private static Map<LicenseType, PermissionSetGroup> permissionGroupsByLicenseTypes = new Map<LicenseType, PermissionSetGroup>();

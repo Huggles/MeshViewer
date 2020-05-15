@@ -15,7 +15,7 @@ private class PermissionSetAssignmentSelectorTest {
         }
         insert users;
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         for (Integer i = 0; i < 5; i++) {
@@ -46,7 +46,7 @@ private class PermissionSetAssignmentSelectorTest {
         }
         insert users;
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         // since permission set groups don't stick to the encapsulations of the test context (they act like SeeAllData=true) we need to take into account existing assignments
         Integer nrOfPermissionSetsAssignedBefore = [SELECT Count() FROM PermissionSetAssignment WHERE PermissionSetGroupId = :permissionSetGroup.Id];
@@ -81,7 +81,7 @@ private class PermissionSetAssignmentSelectorTest {
         }
         insert users;
 
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_BUSINESS);
+        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
         List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
         for (Integer i = 0; i < 95; i++) {
