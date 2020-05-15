@@ -132,7 +132,7 @@
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
         <locationX>413</locationX>
-        <locationY>1124</locationY>
+        <locationY>1125</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -144,7 +144,7 @@
         <inputParameters>
             <name>dossier_number</name>
             <value>
-                <elementReference>BusinessSearchForm.registrationNumber</elementReference>
+                <elementReference>BusinessSearchForm.dossierNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
