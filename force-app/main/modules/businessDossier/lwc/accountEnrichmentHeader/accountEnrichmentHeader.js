@@ -11,6 +11,7 @@ import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowS
 import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Number__c';
 import BUSINESS_DOSSIER_NO_VAT from '@salesforce/schema/Business_Dossier__c.No_VAT_Number__c';
 import BUSINESS_DOSSIER_COUNTRY from '@salesforce/schema/Business_Dossier__c.Registration_Country__c';
+import BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT from '@salesforce/schema/Business_Dossier__c.Creditsafe_Company_Report__c';
 
 //Apex controllers
 import updateDossierWithVAT from '@salesforce/apex/CompanyDetailsController.updateDossierWithVAT';
@@ -26,6 +27,7 @@ import VAT_Not_Found from '@salesforce/label/c.VAT_Not_Found';
 import Error from '@salesforce/label/c.Error';
 import Error_Unknown from '@salesforce/label/c.Error_Unknown';
 import Error_Incomplete from '@salesforce/label/c.Error_Incomplete';
+import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
 
 
 
@@ -40,7 +42,10 @@ export default class AccountEnrichmentHeader extends LightningElement {
     @api
     searchAgainClicked;
 
-    @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY] })
+    @api
+    getCreditsafeReportClicked = false;
+
+    @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY, BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT] })
     businessDossierRecord;
 
     @api VATUpdated = false;
@@ -52,14 +57,15 @@ export default class AccountEnrichmentHeader extends LightningElement {
         VAT_Not_Found,
         Error,
         Error_Unknown,
-        Error_Incomplete
+        Error_Incomplete,
+        Get_Creditsafe_Report
     }
     staticResource = {
         companyInfoLogoSmall,
     }
 
     get showVATButton() {
-        if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined)        {
+        if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
             //If there is no VAT Number and the No_VAT_Number__c(known) is false and only for NL companies
             if(this.businessDossierRecord.data.fields.appsolutely__Registration_Country__c.value == 'NL' &&
                 !this.businessDossierRecord.data.fields.appsolutely__VAT_Number__c.value &&
@@ -68,6 +74,19 @@ export default class AccountEnrichmentHeader extends LightningElement {
             }
             else {
                 return false;
+            }
+        }
+    }
+
+    get showGetCreditsafeReportButton() {
+        if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
+            //if there is already a relation, then do not show the button
+            if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
+                this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
+                return false;
+            }
+            else {
+                return true;
             }
         }
     }
@@ -105,6 +124,12 @@ export default class AccountEnrichmentHeader extends LightningElement {
             "mode": (mode == null ? ((type == 'info' || type == 'success' || type == null) ? 'dismissable' : 'sticky') : mode)
         });
         this.dispatchEvent(event);
+    }
+
+    handleOnGetCreditsafeReport(event) {
+        this.getCreditsafeReportClicked = true;
+        //we throw an event because the flow needs to show a search form
+        this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
 }
