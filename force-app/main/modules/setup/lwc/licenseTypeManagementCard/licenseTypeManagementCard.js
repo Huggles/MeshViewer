@@ -168,9 +168,12 @@ export default class LicenseTypeManagementCard extends LightningElement {
                     const filteredsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );
                     if (filteredsObjectUsers && filteredsObjectUsers.length > 0) {
                         this.sObjectUsers = filteredsObjectUsers;
+                        this.assignedNorOfSeats = this.sObjectUsers.length;
                     } else {
                         this.sObjectUsers = undefined;
+                        this.assignedNorOfSeats = 0;
                     }
+                    this.availableNrOfSeats = this.totalNrOfSeats - this.assignedNorOfSeats;
                     this.selectedRows = [];
                 })
                 .catch(error => {
@@ -211,6 +214,8 @@ export default class LicenseTypeManagementCard extends LightningElement {
         } else {
             this.sObjectUsers = assignedUsers;
         }
+        this.assignedNorOfSeats = this.sObjectUsers.length;
+        this.availableNrOfSeats = this.totalNrOfSeats - this.assignedNorOfSeats;
     }
 
     /**
