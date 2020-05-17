@@ -11,6 +11,7 @@
         <targetConfig targets="lightning__FlowScreen">
             <property name="businessDossierId" type="String" label="Id of the Business Dossier" role="inputOnly"/>
             <property name="searchAgainClicked" type="Boolean" label="True, when search again is clicked" role="outputOnly"/>
+            <property name="getCreditsafeReportClicked" type="Boolean" label="True, when get creditsafe report is clicked" role="outputOnly"/>
             <property name="VATUpdated" type="Boolean" label="True, when VAT is updated" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>
