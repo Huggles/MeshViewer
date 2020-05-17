@@ -4,8 +4,9 @@
 
 public without sharing class GeneralPostInstallScript implements IInstallAction {
 
-    private final static String UPDATED_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Update_Dutch_Dossier_Batch_Cron_Schedule';
-    private final static String REMOVED_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Remove_Dutch_Dossier_Batch_Cron_Schedule';
+    private final static String UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Update_Dutch_Dossier_Batch_Cron_Schedule';
+    private final static String REMOVED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Remove_Dutch_Dossier_Batch_Cron_Schedule';
+    private final static String COMPLIANCY_CHECK_SCHEDULE_CRON_SETTING_NAME = 'Compliancy_Check_Cron_Schedule';
 
     @TestVisible
     private final static String PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME = 'Process updated Dutch dossiers';
@@ -28,15 +29,16 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
     }
 
     public void execute(InstallContext context) {
-        //get the schedule
-        String updateCronExpression = SettingUtils.getSetting(UPDATED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
-        String removeBatchScheduleCronExpression = SettingUtils.getSetting(REMOVED_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        //get the schedule for the update/remove batches for dutch dossier
+        String updateCronExpression = SettingUtils.getSetting(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String removeBatchScheduleCronExpression = SettingUtils.getSetting(REMOVED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         // schedule the batches
-        scheduleBatch(PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
-        scheduleBatch(PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);
+        schedule(PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
+        schedule(PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);
+
     }
 
-    private void scheduleBatch(String scheduleName, Schedulable schedulable, String cronExpression) {
+    private void schedule(String scheduleName, Schedulable schedulable, String cronExpression) {
         // check if there is an existing scheduled job, if so abort it and restart (to ensure no 'stale' jobs run)
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger
             WHERE CronJobDetail.Name =: scheduleName];
