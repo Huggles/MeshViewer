@@ -4,5 +4,9 @@
 
 <!-- License Management Tab -->
 <template>
-    <c-license-type-management-card license-type-api-name="COMPANY_INFO_FOR_DUTCH_BUSINESS"></c-license-type-management-card>
+    <template for:each={licenseTypes} for:item=licenseType>
+        <div key={licenseType.id} class="slds-m-around_small">
+            <c-license-type-management-card license-type-api-name={licenseType.name}></c-license-type-management-card>
+        </div>
+    </template>
 </template>
