@@ -17,7 +17,7 @@ private class UserSelectorTest {
             insert users;
         }
         for (Integer i = 0; i < 5; i++) {
-            TestUtils.giveUserPermissionSetGroup('Companyinfo_for_Business', users[i]);
+            TestUtils.giveUserPermissionSetGroup('Companyinfo_for_Dutch_Business', users[i]);
         }
         PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 
@@ -45,7 +45,7 @@ private class UserSelectorTest {
             insert users;
         }
         for (Integer i = 0; i < 4; i++) {
-            TestUtils.giveUserPermissionSetGroup('Companyinfo_for_Business', users[i]);
+            TestUtils.giveUserPermissionSetGroup('Companyinfo_for_Dutch_Business', users[i]);
         }
         PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
 

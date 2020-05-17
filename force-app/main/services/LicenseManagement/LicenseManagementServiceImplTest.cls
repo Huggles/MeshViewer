@@ -225,6 +225,11 @@ private class LicenseManagementServiceImplTest {
 
         // ensure the right permission set assignments are returned
         mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(permissionSetGroup, users)).thenReturn(permissionSetAssignments);
+        Set<LicenseType> otherLicenseTypes = LicenseManagementServiceImpl.PERMISSION_GROUPS_BY_LICENSE_TYPE.keySet();
+        otherLicenseTypes.remove(licenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
+        for (LicenseType licenseType : otherLicenseTypes) {
+            mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(LicenseManagementService.getPermissionSetGroupByLicenseType(licenseType), usersToUnassign)).thenReturn(new List<PermissionSetAssignment>());
+        }
         mocks.when(permissionSetAssignmentSelectorMock.selectByPermissionSetGroupAndUsers(permissionSetGroup, usersToUnassign)).thenReturn(permissionSetAssignmentsToRemove);
 
         // and the package licenses
