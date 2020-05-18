@@ -35,6 +35,18 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             when 'SE' {		  // when country is Sweden
                 resultValue.addAll(searchCriteriaSE(id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name));
             }
+            when 'DK' {		  // when country is Denmark
+                resultValue.addAll(searchCriteriaDK(id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name));
+            }
+            when 'IT' {		  // when country is Italy
+                resultValue.addAll(searchCriteriaIT(id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name));
+            }
+            when 'ES' {		  // when country is Spain
+                resultValue.addAll(searchCriteriaES(id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name));
+            }
+            when 'NO' {		  // when country is Norway
+                resultValue.addAll(searchCriteriaNO(id, status, registration_number, registration_type, vat_number, province, city, street, postal_code, name));
+            }
         }
 
         return resultValue;
@@ -340,6 +352,162 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code) || String.isNotEmpty(registration_type)) {
             List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
             resultValue1.addAll(doSearch(new List<String>{'SE'}, '', status, '', registration_type, '', '', city, street, postal_code, name));
+            resultValue1 = addSearchCriteria(resultValue1, 'name, status, registration_type, street, city, postalcode');
+            resultValue.addAll(resultValue1);
+        }
+
+        return resultValue;
+    }
+
+    private List<Business_Dossier__c> searchCriteriaIT(String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+        List<Business_Dossier__c> resultValue = new List<Business_Dossier__c>();
+        //parameter1 - companyid
+        if (String.isNotEmpty(id)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'IT'}, id, '', '', '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'companyid');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter2 - registration_number
+        if (String.isNotEmpty(registration_number)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'IT'}, '', '', registration_number, '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter3 - vat_number, status, registration type
+        if (String.isNotEmpty(vat_number)) {
+            if (String.isNotEmpty(status) || String.isNotEmpty(registration_type)) {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'IT'}, '', status, '', registration_type, vat_number, '', '', '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'vat_number');
+                resultValue.addAll(resultValue1);
+            }
+            else {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'IT'}, '', '', '', '', vat_number, '', '', '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'vat_number');
+                resultValue.addAll(resultValue1);
+            }
+        }
+
+        //parameter4 - name, status, registration_type, street, city, postalcode, province
+        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code) || String.isNotEmpty(registration_type) || String.isNotEmpty(province)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'IT'}, '', status, '', registration_type, '', province, city, street, postal_code, name));
+            resultValue1 = addSearchCriteria(resultValue1, 'name, status, registration_type, street, city, postalcode');
+            resultValue.addAll(resultValue1);
+        }
+
+        return resultValue;
+    }
+
+    private List<Business_Dossier__c> searchCriteriaDK(String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+        List<Business_Dossier__c> resultValue = new List<Business_Dossier__c>();
+        //parameter1 - companyid
+        if (String.isNotEmpty(id)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'DK'}, id, '', '', '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'companyid');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter2 - registration_number
+        if (String.isNotEmpty(registration_number)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'DK'}, '', '', registration_number, '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter3 - vat_number
+        if (String.isNotEmpty(vat_number)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'DK'}, '', '', '', '', vat_number, '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'vat_number');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter4 - name, status, street, city, postalcode, province
+        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code) || String.isNotEmpty(province)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'DK'}, '', status, '', '', '', province, city, street, postal_code, name));
+            resultValue1 = addSearchCriteria(resultValue1, 'name, status, street, city, province, postalcode');
+            resultValue.addAll(resultValue1);
+        }
+
+        return resultValue;
+    }
+
+    private List<Business_Dossier__c> searchCriteriaNO(String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+        List<Business_Dossier__c> resultValue = new List<Business_Dossier__c>();
+        //parameter1 - companyid
+        if (String.isNotEmpty(id)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'NO'}, id, '', '', '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'companyid');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter2 - registration_number, registration_type
+        if (String.isNotEmpty(registration_number)) {
+            if(String.isNotEmpty(registration_type)) {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'NO'}, '', '', registration_number, registration_type, '', '', '', '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
+                resultValue.addAll(resultValue1);
+            }
+            else {
+                List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+                resultValue1.addAll(doSearch(new List<String>{'NO'}, '', '', registration_number, '', '', '', '', '', '', ''));
+                resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
+                resultValue.addAll(resultValue1);
+            }
+        }
+
+        //parameter3 - name, status, registration_type, street, city, postalcode
+        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code) || String.isNotEmpty(registration_type)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'NO'}, '', status, '', registration_type, '', '', city, street, postal_code, name));
+            resultValue1 = addSearchCriteria(resultValue1, 'name, status, registration_type, street, city, postalcode');
+            resultValue.addAll(resultValue1);
+        }
+
+        return resultValue;
+    }
+
+    private List<Business_Dossier__c> searchCriteriaES(String id, String status, String registration_number, String registration_type, String vat_number, String province, String city, String street, String postal_code, String name) {
+        List<Business_Dossier__c> resultValue = new List<Business_Dossier__c>();
+        //parameter1 - companyid
+        if (String.isNotEmpty(id)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'ES'}, id, '', '', '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'companyid');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter2 - registration_number
+        if (String.isNotEmpty(registration_number)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'ES'}, '', '', registration_number, '', '', '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'registration_number');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter3 - vat_number
+        if (String.isNotEmpty(vat_number)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'ES'}, '', '', '', '', vat_number, '', '', '', '', ''));
+            resultValue1 = addSearchCriteria(resultValue1, 'vat_number');
+            resultValue.addAll(resultValue1);
+        }
+
+        //parameter4 - name, status, registration_type, street, city, postalcode, province
+        if (String.isNotEmpty(name) || String.isNotEmpty(status) || String.isNotEmpty(street) || String.isNotEmpty(city) || String.isNotEmpty(postal_code) || String.isNotEmpty(registration_type) || String.isNotEmpty(province)) {
+            List<Business_Dossier__c> resultValue1 = new List<Business_Dossier__c>();
+            resultValue1.addAll(doSearch(new List<String>{'ES'}, '', status, '', registration_type, '', province, city, street, postal_code, name));
             resultValue1 = addSearchCriteria(resultValue1, 'name, status, registration_type, street, city, postalcode');
             resultValue.addAll(resultValue1);
         }

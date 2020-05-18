@@ -33,7 +33,6 @@
         <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
         <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard" pattern="^(SE)-(0|1)-((0|1)/)?\d{10,13}$" message-when-pattern-mismatch={label.Valid_Swedish_CreditSafe_Identification_Nr} value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
         <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" pattern="\d{10,12}" message-when-pattern-mismatch="Valid_registration_number" value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
-        <lightning-input label={label.Search_VAT_Number} name="vatNumber" class="slds-m-around_xxx-small" pattern="(SE)?[0-9]{12}" message-when-pattern-mismatch="Valid_Swedish_VAT_Number" value={vatNumber} onchange={handleOnChange}></lightning-input>
     </template>
     <!-- France specific -->
     <template if:true={isFrSelected}>
@@ -47,13 +46,13 @@
         <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
         <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard"  pattern="^(IE)-(0|1)-.+$" message-when-pattern-mismatch={label.Valid_Irish_CreditSafe_Identification_Nr} value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
         <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" minlength=2 message-when-too-short={label.Minimum_registration_number_characters} value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
-        <lightning-input label={label.Search_VAT_Number} name="vatNumber" class="slds-m-around_xxx-small" pattern="((IE)?[0-9]{7}[A-Z]{1,2})|((IE)?[0-9][A-Z][0-9]{5}[A-Z])" message-when-pattern-mismatch={label.Valid_Irish_VAT_Number} value={vatNumber} onchange={handleOnChange}></lightning-input>
     </template>
     <!-- UK specific -->
     <template if:true={isGbSelected}>
         <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
         <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard" pattern="^(GB)-(0|1)-.+$" message-when-pattern-mismatch={label.Valid_GB_CreditSafe_Identification_Number} value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
         <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" minlength=2 message-when-too-short={label.Minimum_registration_number_characters} value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
+        <lightning-combobox name="registrationType" class="slds-m-around_xxx-small" label={label.Registration_Type} options={registrationTypes} value={registrationType} placeholder={label.Select_a_Registration_Type} dropdown-alignment="left" variant="standard" onchange={handleRegistrationTypeOnChange}></lightning-combobox>
         <lightning-input label={label.Search_VAT_Number} name="vatNumber" class="slds-m-around_xxx-small" pattern="(GB)?([0-9]{9}([0-9]{3})?|[A-Z]{2}[0-9]{3})" message-when-pattern-mismatch="Valid_GB_VAT_Number" value={vatNumber} onchange={handleOnChange}></lightning-input>
     </template>
     <!-- DE specific -->
@@ -63,6 +62,36 @@
         <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" pattern="^(?!^\s*HR\s*$)(?!^\s*HRB\s*$)(?!^\s*HRA\s*$)(?!^\s*GnR\s*$)(?!^\s*PR\s*$)(?!^\s*IN\s*$).*$" message-when-pattern-mismatch={label.Valid_registration_number} value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
         <lightning-combobox name="registrationType" class="slds-m-around_xxx-small" label={label.Registration_Type} options={registrationTypes} value={registrationType} placeholder={label.Select_a_Registration_Type} dropdown-alignment="left" variant="standard" onchange={handleRegistrationTypeOnChange}></lightning-combobox>
         <lightning-input name="vatNumber" label={label.Search_VAT_Number} class="slds-m-around_xxx-small" pattern="(DE)?[0-9]{9}" message-when-pattern-mismatch={label.Valid_German_VAT_Number} value={vatNumber} onchange={handleOnChange}></lightning-input>
+    </template>
+    <!--  DK specific   -->
+    <template if:true={isDkSelected}>
+        <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
+        <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard" value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
+        <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
+        <lightning-input name="vatNumber" label={label.Search_VAT_Number} class="slds-m-around_xxx-small" pattern="(DK)?[0-9]{8}" message-when-pattern-mismatch={label.Valid_Denmark_VAT_Number} value={vatNumber} onchange={handleOnChange}></lightning-input>
+    </template>
+    <!--  NO specific   -->
+    <template if:true={isNoSelected}>
+        <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
+        <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard" value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
+        <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" minlength=2 message-when-too-short={label.Minimum_registration_number_characters} value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
+        <lightning-combobox name="registrationType" class="slds-m-around_xxx-small" label={label.Registration_Type} options={registrationTypes} value={registrationType} placeholder={label.Select_a_Registration_Type} dropdown-alignment="left" variant="standard" onchange={handleRegistrationTypeOnChange}></lightning-combobox>
+    </template>
+    <!--  IT specific   -->
+    <template if:true={isItSelected}>
+        <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
+        <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard" value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
+        <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" value={registrationNumber}  minlength=2 message-when-too-short={label.Minimum_registration_number_characters} onchange={handleRegistrationNumberOnChange}></lightning-input>
+        <lightning-combobox name="registrationType" class="slds-m-around_xxx-small" label={label.Registration_Type} options={registrationTypes} value={registrationType} placeholder={label.Select_a_Registration_Type} dropdown-alignment="left" variant="standard" onchange={handleRegistrationTypeOnChange}></lightning-combobox>
+        <lightning-input name="vatNumber" label={label.Search_VAT_Number} class="slds-m-around_xxx-small" pattern="(IT)?[0-9]{11}" message-when-pattern-mismatch={label.Valid_Italian_VAT_Number} value={vatNumber} onchange={handleOnChange}></lightning-input>
+    </template>
+    <!--  ES specific   -->
+    <template if:true={isEsSelected}>
+        <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
+        <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard" value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
+        <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" minlength=2 message-when-too-short={label.Minimum_registration_number_characters} value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
+        <lightning-combobox name="registrationType" class="slds-m-around_xxx-small" label={label.Registration_Type} options={registrationTypes} value={registrationType} placeholder={label.Select_a_Registration_Type} dropdown-alignment="left" variant="standard" onchange={handleRegistrationTypeOnChange}></lightning-combobox>
+        <lightning-input name="vatNumber" label={label.Search_VAT_Number} class="slds-m-around_xxx-small" pattern="(ES)?[A-Z][0-9]{7}(?:[0-9]|[A-Z])" message-when-pattern-mismatch={label.Valid_Spanish_VAT_Number} value={vatNumber} onchange={handleOnChange}></lightning-input>
     </template>
     <!-- Address -->
     <lightning-layout>

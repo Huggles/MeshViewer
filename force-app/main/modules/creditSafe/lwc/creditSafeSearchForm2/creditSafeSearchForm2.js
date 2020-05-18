@@ -12,6 +12,10 @@ import Country_Ireland from '@salesforce/label/c.Country_Ireland';
 import Country_Netherlands from '@salesforce/label/c.Country_Netherlands';
 import Country_United_Kingdom from '@salesforce/label/c.Country_United_Kingdom';
 import Country_Sweden from '@salesforce/label/c.Country_Sweden';
+import Country_Denmark from '@salesforce/label/c.Country_Denmark';
+import Country_Italy from '@salesforce/label/c.Country_Italy';
+import Country_Norway from '@salesforce/label/c.Country_Norway';
+import Country_Spain from '@salesforce/label/c.Country_Spain';
 import Active from '@salesforce/label/c.Active';
 import NonActive from '@salesforce/label/c.NonActive';
 import Status from '@salesforce/label/c.Status';
@@ -55,6 +59,9 @@ import Valid_Germany_CreditSafe_registration_id from '@salesforce/label/c.Valid_
 import Select_a_Registration_Type from '@salesforce/label/c.Select_a_Registration_Type';
 import Valid_German_VAT_Number from '@salesforce/label/c.Valid_German_VAT_Number';
 import City_Help_Text from '@salesforce/label/c.City_Help_Text';
+import Valid_Italian_VAT_Number from '@salesforce/label/c.Valid_Italian_VAT_Number';
+import Valid_Denmark_VAT_Number from '@salesforce/label/c.Valid_Denmark_VAT_Number';
+import Valid_Spanish_VAT_Number from '@salesforce/label/c.Valid_Spanish_VAT_Number';
 
 export default class CreditSafeSearchForm2 extends LightningElement {
 
@@ -112,18 +119,25 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         Select_a_Registration_Type,
         Valid_German_VAT_Number,
         CreditSafe_Validation_Message_Heading,
-        City_Help_Text
+        City_Help_Text,
+        Valid_Italian_VAT_Number,
+        Valid_Denmark_VAT_Number,
+        Valid_Spanish_VAT_Number
     }
 
     get countries() {
         return [
-            { label: Country_Netherlands, value: 'NL'},
             { label: Country_Belgium, value: 'BE' },
-            { label: Country_Germany, value: 'DE' },
+            { label: Country_Denmark, value: 'DK' },
             { label: Country_France, value: 'FR' },
-            { label: Country_United_Kingdom, value: 'GB' },
+            { label: Country_Germany, value: 'DE' },
             { label: Country_Ireland, value: 'IE' },
-            { label: Country_Sweden, value: 'SE' }
+            { label: Country_Italy, value: 'IT' },
+            { label: Country_Netherlands, value: 'NL'},
+            { label: Country_Norway, value: 'NO' },
+            { label: Country_Spain, value: 'ES' },
+            { label: Country_Sweden, value: 'SE' },
+            { label: Country_United_Kingdom, value: 'GB' }
         ];
     }
 
@@ -158,8 +172,24 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         return this.selectedCountry === 'IE';
     }
 
+    get isItSelected() {
+        return this.selectedCountry === 'IT';
+    }
+
+    get isNoSelected() {
+        return this.selectedCountry === 'NO';
+    }
+
+    get isDkSelected() {
+        return this.selectedCountry === 'DK';
+    }
+
+    get isEsSelected() {
+        return this.selectedCountry === 'ES';
+    }
+
     get showProvince() {
-        return this.isFrSelected;
+        return this.isFrSelected || this.isEsSelected || this.isItSelected || this.isDkSelected;
     }
 
     get statuses() {
@@ -214,7 +244,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                         ];
                 }
             }
-            if (this.isDeSelected) {
+            if (this.isGbSelected || this.isDeSelected) {
                 if (!this.creditSafeId &&
                     !this.registrationNumber &&
                     !this.vatNumber &&
@@ -240,7 +270,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                         ];
                 }
             }
-            if (this.isGbSelected || this.isIeSelected) {
+            if (this.isIeSelected || this.isSeSelected) {
                 if (!this.creditSafeId &&
                     !this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
@@ -251,7 +281,33 @@ export default class CreditSafeSearchForm2 extends LightningElement {
                         ];
                 }
             }
-            if (this.isSeSelected) {
+            if (this.isDkSelected) {
+                if (!this.creditSafeId &&
+                    !this.registrationNumber &&
+                    !this.vatNumber &&
+                    !(this.name || this.status || this.street || this.city || this.postalCode || this.province)) { // apparently this is how it should work but you can get a lot of results
+                    this.hints =
+                        [Search_Criterium_CreditSafe_Id_Description,
+                            Search_Criterium_Registration_Number_Description,
+                            Search_Criterium_VAT_Number_Description,
+                            Search_Criterium_Name_Status_Address_Province_Description
+                        ];
+                }
+            }
+            if (this.isItSelected || this.isEsSelected) {
+                if (!this.creditSafeId &&
+                    !this.registrationNumber &&
+                    !this.vatNumber && // status or registrationType are optional so we don't check
+                    !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType || this.province)) { // apparently this is how it should work but you can get a lot of results
+                    this.hints =
+                        [Search_Criterium_CreditSafe_Id_Description,
+                            Search_Criterium_Registration_Number_Description,
+                            Search_Criterium_VAT_Number_Description,
+                            Search_Criterium_Name_Status_Registration_type_Address_Description
+                        ];
+                }
+            }
+            if (this.isNoSelected) {
                 if (!this.creditSafeId &&
                     !this.registrationNumber &&
                     !(this.name || this.status || this.street || this.city || this.postalCode || this.registrationType)) { // apparently this is how it should work but you can get a lot of results
