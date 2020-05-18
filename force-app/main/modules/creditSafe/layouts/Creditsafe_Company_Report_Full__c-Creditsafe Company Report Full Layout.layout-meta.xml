@@ -553,8 +553,16 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Classification__c</fields>
-        <relatedList>Creditsafe_Comp_Activity_Classifications__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <relatedList>Business_Dossier__c.Creditsafe_Company_Report__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Company_Number__c</fields>
+        <fields>Financial_Year__c</fields>
+        <fields>Liability1_Start_Date__c</fields>
+        <fields>Liability1_Removal_Date__c</fields>
+        <fields>Liability2_Start_Date__c</fields>
+        <fields>Liability2_Removal_Date__c</fields>
+        <relatedList>Additional_Info_NL_Letter_Of_Liability__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -696,7 +704,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N0000013SlK</masterLabel>
+        <masterLabel>00h3N000000rzLP</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
