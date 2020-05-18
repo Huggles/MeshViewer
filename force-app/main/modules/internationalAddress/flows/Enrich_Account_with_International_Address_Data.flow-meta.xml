@@ -11,8 +11,8 @@
     <assignments>
         <name>Assign_Account_Name_to_Organization</name>
         <label>Assign Account Name to Organization</label>
-        <locationX>1401</locationX>
-        <locationY>41</locationY>
+        <locationX>1437</locationX>
+        <locationY>15</locationY>
         <assignmentItems>
             <assignToReference>SelectedInternationalAddress.Organization__c</assignToReference>
             <operator>Assign</operator>
@@ -129,7 +129,7 @@
         <locationX>1275</locationX>
         <locationY>266</locationY>
         <defaultConnector>
-            <targetReference>Update_Account</targetReference>
+            <targetReference>Get_International_Address</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Organization is not empty</defaultConnectorLabel>
         <rules>
@@ -225,11 +225,31 @@
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_International_Address</name>
+        <label>Get International Address</label>
+        <locationX>1471</locationX>
+        <locationY>267</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Account</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SelectedInternationalAddress.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>International_Address__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Update_Account</name>
         <label>Update Account</label>
-        <locationX>1518</locationX>
-        <locationY>269</locationY>
+        <locationX>1620</locationX>
+        <locationY>268</locationY>
         <connector>
             <targetReference>Assign_new_International_Address_record_Id</targetReference>
         </connector>
@@ -243,37 +263,37 @@
         <inputAssignments>
             <field>BillingCity</field>
             <value>
-                <elementReference>SelectedInternationalAddress.Locality__c</elementReference>
+                <elementReference>Get_International_Address.Locality__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingCountry</field>
             <value>
-                <elementReference>SelectedInternationalAddress.Country__c</elementReference>
+                <elementReference>Get_International_Address.Country__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingPostalCode</field>
             <value>
-                <elementReference>SelectedInternationalAddress.Postcode__c</elementReference>
+                <elementReference>Get_International_Address.Postcode__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingState</field>
             <value>
-                <elementReference>SelectedInternationalAddress.Province__c</elementReference>
+                <elementReference>Get_International_Address.Province__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingStreet</field>
             <value>
-                <elementReference>SelectedInternationalAddress.Street__c</elementReference>
+                <elementReference>Get_International_Address.Street__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>International_Address_Data__c</field>
             <value>
-                <elementReference>SelectedInternationalAddress.Id</elementReference>
+                <elementReference>Get_International_Address.Id</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
