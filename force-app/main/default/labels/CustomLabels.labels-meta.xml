@@ -363,7 +363,7 @@
         <fullName>Creditsafe_Report_Created</fullName>
         <categories>Creditsafe</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Creditsafe Report Created</shortDescription>
         <value>Creditsafe Report has been created.</value>
     </labels>

@@ -549,6 +549,10 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Business_Dossier__c.Creditsafe_Company_Report__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>Company_Number__c</fields>
         <fields>Financial_Year__c</fields>
         <fields>Liability1_Start_Date__c</fields>
@@ -671,7 +675,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000000UQcV</masterLabel>
+        <masterLabel>00h3N000000rzLP</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
