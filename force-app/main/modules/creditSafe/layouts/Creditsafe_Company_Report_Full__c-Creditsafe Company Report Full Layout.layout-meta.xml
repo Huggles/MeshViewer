@@ -593,17 +593,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Date_Submitted__c</fields>
-        <fields>Financial_Year__c</fields>
-        <fields>Company_Name__c</fields>
-        <fields>Liability1_Start_Date__c</fields>
-        <fields>Liability1_Removal_Date__c</fields>
-        <fields>Liability2_Start_Date__c</fields>
-        <fields>Liability2_Removal_Date__c</fields>
-        <relatedList>Additional_Info_NL_Letter_Of_Liability__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <fields>Auditor_Name__c</fields>
         <fields>Solicitor_Name__c</fields>
         <relatedList>Creditsafe_Company_Advisor__c.Creditsafe_Company_Report_Full__c</relatedList>
