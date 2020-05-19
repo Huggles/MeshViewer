@@ -3,8 +3,8 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>1060</locationX>
-        <locationY>462</locationY>
+        <locationX>1058</locationX>
+        <locationY>47</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -52,6 +52,13 @@
                 <elementReference>Get_Account.International_Address_Data__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SearchAgainClicked</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Show_International_Address</targetReference>
         </connector>
@@ -59,13 +66,36 @@
     <assignments>
         <name>Assign_new_International_Address_record_Id</name>
         <label>Assign new International Address record Id</label>
-        <locationX>1518</locationX>
-        <locationY>475</locationY>
+        <locationX>1302</locationX>
+        <locationY>481</locationY>
         <assignmentItems>
             <assignToReference>internationalAddressRecordId</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>SelectedInternationalAddress.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SearchAgainClicked</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Show_International_Address</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Default_outcome_message</name>
+        <label>Default outcome message</label>
+        <locationX>942</locationX>
+        <locationY>459</locationY>
+        <assignmentItems>
+            <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -153,6 +183,31 @@
                 <targetReference>Assign_Account_Name_to_Organization</targetReference>
             </connector>
             <label>Organization is empty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Search_Again_Clicked</name>
+        <label>Search Again Clicked</label>
+        <locationX>763</locationX>
+        <locationY>459</locationY>
+        <defaultConnector>
+            <targetReference>Default_outcome_message</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Search_Again_Is_Clicked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SearchAgainClicked</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selected_country_is_empty</targetReference>
+            </connector>
+            <label>Search Again Is Clicked</label>
         </rules>
     </decisions>
     <decisions>
@@ -281,11 +336,52 @@
     <screens>
         <name>Show_International_Address</name>
         <label>Show International Address</label>
-        <locationX>1063</locationX>
-        <locationY>658</locationY>
+        <locationX>837</locationX>
+        <locationY>694</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Search_Again_Clicked</targetReference>
+        </connector>
+        <fields>
+            <name>ErrorMessage</name>
+            <extensionName>appsolutely:flowErrorHandler</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>DefaultOutcomeErrorMessage</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>DefaultOutcomeErrorMessage</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue/>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>InternationalAddressHeader</name>
+            <extensionName>appsolutely:accountEnrichmentHeaderInternationalAddress</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>internationalAddressId</name>
+                <value>
+                    <elementReference>internationalAddressRecordId</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SearchAgainClicked</assignToReference>
+                <name>searchAgainClicked</name>
+            </outputParameters>
+        </fields>
         <fields>
             <name>showInternationalAddressDetails</name>
             <extensionName>appsolutely:flowShowRecord</extensionName>
@@ -372,6 +468,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>DefaultOutcomeErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>internationalAddressRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -385,6 +488,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SearchAgainClicked</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <description>The address selected in the flow</description>

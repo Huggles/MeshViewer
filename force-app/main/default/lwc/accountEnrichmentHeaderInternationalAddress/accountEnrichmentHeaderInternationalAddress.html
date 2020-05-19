@@ -1,0 +1,27 @@
+<!--
+ - Created by tejaswinidandi on 17/04/2020.
+ -->
+
+<!-- Account Enrichment Header International Address -->
+<template>
+    <article class="slds-card slds-card_boundary slds-m-bottom_x-small">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <div class="logoContainer">
+                        <img src={staticResource.companyInfoLogoSmall} />
+                    </div>
+                </div>
+                <div class="slds-media__body">
+
+                </div>
+                <div class="slds-no-flex">
+                    <div class="slds-m-around_xx-small slds-float_right">
+                        <c-search-again-button international-address-id= {internationalAddressId}
+                                               onsearchagainclicked= {handleSearchAgainClicked}></c-search-again-button>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </article>
+</template>
