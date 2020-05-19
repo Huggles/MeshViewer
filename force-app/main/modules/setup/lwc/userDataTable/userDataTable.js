@@ -38,18 +38,6 @@ export default class UserDataTable extends LightningElement {
     @track
     localUsers;
 
-    // /**
-    //  * The users in the table
-    //  */
-    // get users() {
-    //     if (!this.localUsers && this.sObjectUsers) {
-    //         this.localUsers = this.convertsObjectUsers(this.sObjectUsers);
-    //     }
-    //     return this.localUsers;
-    // };
-    //
-    // localUsers;
-
     /**
      * The maximum number of users
      */

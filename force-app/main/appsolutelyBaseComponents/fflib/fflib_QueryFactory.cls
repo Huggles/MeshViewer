@@ -343,7 +343,6 @@ public inherited sharing class fflib_QueryFactory { //No explicit sharing declar
 	 * @param o an instance of {@link fflib_QueryFactory.Ordering} to remove all existing (for instance defaults) and be added to the query's ORDER BY clause.
 	 **/
 	public fflib_QueryFactory setOrdering(Ordering o){
-		System.debug('in set ordering. Ordering: ' + o);
 		this.order = new List<Ordering>{ o };
 		return this;
 	}
@@ -665,7 +664,6 @@ public inherited sharing class fflib_QueryFactory { //No explicit sharing declar
 			result += ' WHERE '+conditionExpression;
 
 		if(order.size() > 0){
-			System.debug('order in tosoql: ' + order);
 			result += ' ORDER BY ';
 			for(Ordering o:order)
 				result += o.toSOQL() +', ';

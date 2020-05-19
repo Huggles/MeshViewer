@@ -258,7 +258,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     private Boolean isScratchOrg() {
         Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
-        System.debug('organization: ' + org);
         Boolean isScratchOrg = org.IsSandbox && org.TrialExpirationDate != null;
         return isScratchOrg;
     }

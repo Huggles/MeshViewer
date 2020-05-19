@@ -12,6 +12,8 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
     private final static String PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME = 'Process updated Dutch dossiers';
     @TestVisible
     private final static String PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME = 'Process removed Dutch dossiers';
+    @TestVisible
+    private final static String PROCESS_COMPLIANCY_CHECK = 'Check license compliancy';
 
     private inherited sharing class BatchScheduler implements Schedulable {
 
@@ -32,10 +34,11 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
         //get the schedule for the update/remove batches for dutch dossier
         String updateCronExpression = SettingUtils.getSetting(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         String removeBatchScheduleCronExpression = SettingUtils.getSetting(REMOVED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String compliancyCheckScheduleCronExpression = SettingUtils.getSetting(COMPLIANCY_CHECK_SCHEDULE_CRON_SETTING_NAME);
         // schedule the batches
         schedule(PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
         schedule(PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);
-
+        schedule(PROCESS_COMPLIANCY_CHECK, new EnforceLicensesSchedulable(), compliancyCheckScheduleCronExpression);
     }
 
     private void schedule(String scheduleName, Schedulable schedulable, String cronExpression) {

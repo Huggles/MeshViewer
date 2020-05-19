@@ -95,7 +95,6 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
     {
         public void dmlInsert(List<PermissionSetAssignment> objList)
         {
-            System.debug('objects to insert: ' + JSON.serializePretty(objList));
             insert objList;
         }
         public void dmlUpdate(List<SObject> objList)
@@ -216,7 +215,6 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
      **/
     public void registerNew(List<PermissionSetAssignment> records)
     {
-        System.debug('records ' + records);
         for (SObject record : records)
         {
             registerNew(record, null, null);

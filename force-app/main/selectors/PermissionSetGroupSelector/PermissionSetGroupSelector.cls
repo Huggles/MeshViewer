@@ -17,7 +17,6 @@ public inherited sharing class PermissionSetGroupSelector extends fflib_SObjectS
         fflib_QueryFactory queryFactory = newQueryFactory(false, false, true);
         List<PermissionSetGroup> result = new List<PermissionSetGroup>();
         queryFactory.setCondition('DeveloperName = :developerName');
-        System.debug(queryFactory.toSOQL());
         result = Database.query(queryFactory.toSOQL());
         return result;
     }
