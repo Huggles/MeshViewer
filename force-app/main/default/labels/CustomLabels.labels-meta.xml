@@ -321,6 +321,13 @@
         <value>Country to Search</value>
     </labels>
     <labels>
+        <fullName>Create_Business_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Business Dossier</shortDescription>
+        <value>The Account does not have a related Business Dossier, please create/link a Business Dossier to Account and retry.</value>
+    </labels>
+    <labels>
         <fullName>Credentials_successfully_updated_message</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
@@ -416,6 +423,13 @@
         <protected>true</protected>
         <shortDescription>BDS DML Manager Error</shortDescription>
         <value>DMLManager ERROR:  An existing record could not be found for object with Id =</value>
+    </labels>
+    <labels>
+        <fullName>Deeplink_Only_for_NL_Dossiers</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Deeplink Only for NL Dossiers</shortDescription>
+        <value>The Deeplink is only available for Dutch businesses</value>
     </labels>
     <labels>
         <fullName>Details_Help</fullName>
