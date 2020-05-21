@@ -366,27 +366,6 @@ private class LicenseManagementServiceImplTest {
     }
 
     @IsTest
-    static void testPermissionSetAssignmentInsertForReal() {
-        // 10 users without license assignments
-        List<User> users = new List<User>();
-        for (Integer i = 0; i < 10; i++) {
-            users.add(TestUtils.getUser('Standard User'));
-        }
-        System.runAs(TestUtils.getUser('System Administrator')) {
-            insert users;
-        }
-        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
-        List<PermissionSetAssignment> permissionSetAssignments2 = new List<PermissionSetAssignment>();
-        for (User user : users) {
-            PermissionSetAssignment assignment = new PermissionSetAssignment(PermissionSetGroupId = permissionSetGroup.Id, AssigneeId = user.Id);
-            permissionSetAssignments2.add(assignment);
-        }
-        fflib_ISObjectUnitOfWork uow = Application.UnitOfWork.newInstance(new List<SObjectType>{PermissionSetAssignment.SObjectType});
-        uow.registerNew(permissionSetAssignments2);
-        uow.commitWork();
-    }
-
-    @IsTest
     static void testUnassignNoLMALicensesAssigned() {
         // the users to remove do not have a LMA license assigned to them but do have license type licenses assigned
 

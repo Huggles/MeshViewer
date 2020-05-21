@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Feature permission to retrieve look-a-like business for a given Dutch business</description>
+    <label>Dutch look-a-like service</label>
+</CustomPermission>

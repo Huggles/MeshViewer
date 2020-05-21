@@ -3,11 +3,12 @@
         {
             "path": "force-app",
             "package": "Company.info for Salesforce",
-            "versionName": "ver 0.1",
-            "versionNumber": "0.1.0.NEXT",
+            "versionName": "R1.1 Alpha 1",
+            "versionNumber": "1.1.0.NEXT",
             "default": true,
-            "definitionFile": "config/project-scratch-def.json",
-            "postInstallScript": "PostInstallScript"
+            "definitionFile": "config/package-scratch-def.json",
+            "postInstallScript": "PostInstallScript",
+            "ancestorVersion": "0.1.0.4"
         }
     ],
     "namespace": "appsolutely",
