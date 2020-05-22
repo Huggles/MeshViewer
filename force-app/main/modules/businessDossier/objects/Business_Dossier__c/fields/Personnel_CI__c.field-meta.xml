@@ -3,7 +3,7 @@
     <fullName>Personnel_CI__c</fullName>
     <description>The total number of employees as recorded by the company.info software</description>
     <externalId>false</externalId>
-    <label>Number Of Employees wrt Company Info</label>
+    <label>Number Of Employees (by CI)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

@@ -3,7 +3,7 @@
     <fullName>Personnel_CI_Reference_Date__c</fullName>
     <description>A DutchBusinessDateV3.  The reference date (peildatum) of the number of employees recorded by company.info</description>
     <externalId>false</externalId>
-    <label>Reference Date Of Nr Of Employees wrt CI</label>
+    <label>Date Number Of Employees (by CI)</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
