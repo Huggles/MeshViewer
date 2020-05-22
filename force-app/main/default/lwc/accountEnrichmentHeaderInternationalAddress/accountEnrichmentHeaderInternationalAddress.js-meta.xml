@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Account Enrichment Header International Address</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Account Enrichment Header International Address</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="internationalAddressId" type="String" label="Id of the International Address" role="inputOnly"/>
+            <property name="searchAgainClicked" type="Boolean" label="True, when search again is clicked" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

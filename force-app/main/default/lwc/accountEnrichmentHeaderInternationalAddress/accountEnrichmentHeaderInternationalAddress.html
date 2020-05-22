@@ -1,8 +1,8 @@
 <!--
- - Created by hugovankrimpen on 17/03/2020.
+ - Created by tejaswinidandi on 17/04/2020.
  -->
 
-<!-- Account Enrichment Header -->
+<!-- Account Enrichment Header International Address -->
 <template>
     <article class="slds-card slds-card_boundary slds-m-bottom_x-small">
         <div class="slds-card__header slds-grid">
@@ -17,18 +17,8 @@
                 </div>
                 <div class="slds-no-flex">
                     <div class="slds-m-around_xx-small slds-float_right">
-                        <template if:true={showGetCreditsafeReportButton}>
-                            <lightning-button label={label.Get_Creditsafe_Report} onclick={handleOnGetCreditsafeReport} ></lightning-button>
-                        </template>
-                    </div>
-                    <div class="slds-m-around_xx-small slds-float_right">
-                        <c-search-again-button dossier-id={businessDossierId}
+                        <c-search-again-button international-address-id= {internationalAddressId}
                                                onsearchagainclicked= {handleSearchAgainClicked}></c-search-again-button>
-                    </div>
-                    <div class="slds-m-around_xx-small slds-float_right">
-                        <template if:true={showVATButton}>
-                            <lightning-button label={label.VAT_Retrieve} onclick={handleOnClickVAT} ></lightning-button>
-                        </template>
                     </div>
                 </div>
             </header>
