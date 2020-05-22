@@ -19,7 +19,8 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             'PID_Partner_Community',
             'PID_Partner_Community_Login',
             'PID_Customer_Community',
-            'PID_FDC_FREE'
+            'PID_FDC_FREE',
+            'PID_Guest_User' // so guest users can get a license too
     };
 
     public static Set<Id> allowedUserLicenseIds {
