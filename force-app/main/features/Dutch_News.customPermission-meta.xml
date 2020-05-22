@@ -2,4 +2,5 @@
 <CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Feature permission to retrieve and see Dutch news</description>
     <label>Dutch News</label>
+    <protected>true</protected>
 </CustomPermission>

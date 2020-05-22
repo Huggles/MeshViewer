@@ -2,4 +2,5 @@
 <CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Feature permission to retrieve positions for Dutch businesses</description>
     <label>Dutch Business Positions</label>
+    <protected>true</protected>
 </CustomPermission>

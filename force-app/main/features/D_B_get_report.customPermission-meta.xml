@@ -2,4 +2,5 @@
 <CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Feature permission to retrieve a D&amp;B credit report</description>
     <label>D&amp;B get report</label>
+    <protected>true</protected>
 </CustomPermission>
