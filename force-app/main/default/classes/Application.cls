@@ -59,7 +59,8 @@ public inherited sharing class Application {
             new Map < SObjectType, Type > {
                     Account.SObjectType => AccountSelector.class,
                     Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
-                    Business_Data_SBI__c.SObjectType => SbiCodeSelector.class
+                    Business_Data_SBI__c.SObjectType => SbiCodeSelector.class,
+                    International_Address__c.SObjectType => InternationalAddressSelector.class
             });
 
 }

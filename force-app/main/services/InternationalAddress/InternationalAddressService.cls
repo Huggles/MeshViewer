@@ -10,4 +10,7 @@ public inherited sharing class InternationalAddressService {
     public static IInternationalAddressService newInstance() {
         return (IInternationalAddressService)Application.Service.newInstance(IInternationalAddressService.class);
     }
+    public static void deleteInternationalAddress(Id internationalAddressId, Boolean checkPermissions) {
+        newInstance().deleteInternationalAddress(internationalAddressId, checkPermissions);
+    }
 }
