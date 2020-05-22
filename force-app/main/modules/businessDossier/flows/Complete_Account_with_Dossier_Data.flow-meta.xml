@@ -133,7 +133,7 @@
         <locationX>966</locationX>
         <locationY>269</locationY>
         <defaultConnector>
-            <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
+            <targetReference>Get_Business_Dossier</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Cancel Not Pressed</defaultConnectorLabel>
         <rules>
@@ -322,12 +322,32 @@
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Business_Dossier</name>
+        <label>Get Business Dossier</label>
+        <locationX>1165</locationX>
+        <locationY>262</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CreatedDossier.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Business_Dossier__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <description>Updates an account with the details of a dutch business dossier</description>
         <name>Update_Account_for_Dutch_Dossier</name>
         <label>Update Account for Dutch Dossier</label>
-        <locationX>1197</locationX>
-        <locationY>265</locationY>
+        <locationX>1312</locationX>
+        <locationY>262</locationY>
         <connector>
             <targetReference>Assign_New_Business_Dossier_Id_And_Search_Again</targetReference>
         </connector>
@@ -341,13 +361,13 @@
         <inputAssignments>
             <field>Business_Dossier__c</field>
             <value>
-                <elementReference>CreatedDossier.Id</elementReference>
+                <elementReference>Get_Business_Dossier.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Name</field>
             <value>
-                <elementReference>CreatedDossier.Name</elementReference>
+                <elementReference>Get_Business_Dossier.Name</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
