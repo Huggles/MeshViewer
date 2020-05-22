@@ -4,6 +4,7 @@
 
 import {LightningElement, api} from 'lwc';
 import deleteDossier from '@salesforce/apex/SearchAgainButtonController.deleteDossier';
+import deleteInternationalAddress from '@salesforce/apex/SearchAgainButtonController.deleteInternationalAddress';
 
 import No from '@salesforce/label/c.No';
 import Yes from '@salesforce/label/c.Yes';
@@ -31,6 +32,12 @@ export default class SearchAgainButton extends LightningElement {
     @api
     dossierId;
 
+    /**
+     * The record id of the international address to remove
+     */
+    @api
+    internationalAddressId;
+
     @api
     searchAgainClicked = false;
 
@@ -47,19 +54,36 @@ export default class SearchAgainButton extends LightningElement {
         if (event.detail.status) {
             if (event.detail.status === 'confirm') {
                 // delete the record
-                deleteDossier({dossierId: this.dossierId}).then(result => {
-                    this.searchAgainClicked = true;
-                    this.dispatchEvent(new CustomEvent('searchagainclicked'));
-                }).catch(error => {
-                    this.error = error;
-                    const event = new ShowToastEvent({
-                        "title": this.label.Error,
-                        "message": this.error,
-                        "variant": 'error',
-                        "mode": 'sticky'
-                    });
-                    this.dispatchEvent(event);
-                })
+                if (this.dossierId) {
+                    deleteDossier({dossierId: this.dossierId}).then(result => {
+                        this.searchAgainClicked = true;
+                        this.dispatchEvent(new CustomEvent('searchagainclicked'));
+                    }).catch(error => {
+                        this.error = error;
+                        const event = new ShowToastEvent({
+                            "title": this.label.Error,
+                            "message": this.error,
+                            "variant": 'error',
+                            "mode": 'sticky'
+                        });
+                        this.dispatchEvent(event);
+                    })
+                }
+                if (this.internationalAddressId) {
+                    deleteInternationalAddress({internationalAddressId: this.internationalAddressId}).then(result => {
+                        this.searchAgainClicked = true;
+                        this.dispatchEvent(new CustomEvent('searchagainclicked'));
+                    }).catch(error => {
+                        this.error = error;
+                        const event = new ShowToastEvent({
+                            "title": this.label.Error,
+                            "message": this.error,
+                            "variant": 'error',
+                            "mode": 'sticky'
+                        });
+                        this.dispatchEvent(event);
+                    })
+                }
             }
             if (event.detail.status === 'cancel') {
                 this.confirmDialogVisible = false;

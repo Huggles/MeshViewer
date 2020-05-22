@@ -27,7 +27,7 @@
         </lightning-layout-item>
         <lightning-layout-item size="6">
             <lightning-input name="dossierNumber" class="slds-m-around_xxx-small" label={label.Dossier_Number} type="text" variant="standard"
-                             value={dossierNumber} onchange={handleOnChange}></lightning-input>
+                             value={dossierNumber} onchange={handleOnChange} pattern="(\d{8}|\d{12})" message-when-pattern-mismatch={label.Valid_NL_registration_number}></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="6">
             <lightning-input name="street" class="slds-m-around_xxx-small" label={label.Street} type="text"
