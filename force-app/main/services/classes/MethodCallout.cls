@@ -55,7 +55,7 @@ public inherited sharing abstract class MethodCallout implements Callable {
                     throw new CCWsClientAuthenticationException(Label.Error_Client_Authentication, calloutException);
                 }
                 // general error caused by the client but unexpected so we log
-                Exception ex = new CCWsClientException(Label.Error_Webservice_Client, calloutException);
+                Exception ex = new CCWsClientException(getErrorMessage(message) + '.' + Label.Error_Webservice_Client, calloutException);
                 ErrorLogUtil.logException(ex, true);
                 throw ex;
             }
