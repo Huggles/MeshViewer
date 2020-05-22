@@ -109,4 +109,34 @@ private class InternationalAddressImplTest {
 
 
     }
+
+    @IsTest
+    public static void testDeleteInternationalAddressHappyFlow() {
+        International_Address__c internationalAddress = new International_Address__c(Country__c = 'test');
+        insert internationalAddress;
+
+        Test.startTest();
+        InternationalAddressService.deleteInternationalAddress(internationalAddress.Id, false);
+        Test.stopTest();
+
+        System.assert([SELECT Id FROM International_Address__c].size() == 0);
+
+    }
+
+    @IsTest
+    public static void testDeleteInternationalAddressErrorFlow() {
+        Exception ex;
+        Test.startTest();
+        try {
+            InternationalAddressService.deleteInternationalAddress(null, false);
+        }catch (Exception e) {
+            ex = e;
+        }
+        Test.stopTest();
+
+        System.assert([SELECT Id FROM International_Address__c].size() == 0);
+        System.assert(ex != null);
+        System.assert(ex.getMessage() == 'Incorrect input. Please correct your input and try again.');
+
+    }
 }
