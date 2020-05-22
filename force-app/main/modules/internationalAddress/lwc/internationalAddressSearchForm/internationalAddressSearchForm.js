@@ -42,6 +42,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
     @api availableActions = [];
 
     @track selectOptions = [];
+    countryAlpha2codeByAlpha3code = new Map();
 
     @track errorMessage;
 
@@ -70,6 +71,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
                 let localSelectOptions = [];
                 for (const resultElement of result) {
                     localSelectOptions.push({value: resultElement.alpha3Code, label: resultElement.country});
+                    this.countryAlpha2codeByAlpha3code.set(resultElement.alpha3Code, resultElement.alpha2Code);
                 }
                 this.selectOptions = localSelectOptions;
             })
@@ -161,6 +163,8 @@ export default class InternationalAddressSearchForm extends LightningElement {
     handleSelectedCountryChange(event) {
         this.country = event.target.value;
         this.handleOnChange(event);
+        this.countryInAlpha2Code = this.countryAlpha2codeByAlpha3code.get(this.country);
+        this.dispatchFlowAttributeChangeEvent('countryInAlpha2Code', this.countryInAlpha2Code);
     }
 
     dispatchFlowAttributeChangeEvent(attributeName, attributeValue) {
