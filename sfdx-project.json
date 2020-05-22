@@ -7,7 +7,7 @@
             "versionNumber": "1.1.0.NEXT",
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
-            "postInstallScript": "PostInstallScript",
+            "postInstallScript": "PostInstallScript"
         }
     ],
     "namespace": "appsolutely",
