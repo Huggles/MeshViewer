@@ -90,5 +90,13 @@ public interface ILicenseManagementService {
     */
     PermissionSetGroup getPermissionSetGroupByLicenseType(LicenseType licenseType);
 
+    /**
+     * Checks if the current user has access to the given feature
+     * @param feature the feature to check
+     *
+     * @return true if the user has access, false if not
+     */
+    Boolean userHasAccess(Feature feature);
+
 
 }

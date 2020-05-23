@@ -210,6 +210,61 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return returnValue; // this is the human readable name, not the API name
     }
 
+    private static Map<Feature, Map<Id, Boolean>> userHasAccessPerFeature = new Map<Feature, Map<Id, Boolean>>();
+
+    private static Map<String, Id> customPermissionIdsByDeveloperName {
+        get {
+            if (customPermissionIdsByDeveloperName == null) {
+                customPermissionIdsByDeveloperName = new Map<String, Id>();
+                List<CustomPermission> customPermissions = [SELECT Id, DeveloperName FROM CustomPermission];
+                for (CustomPermission customPermission : customPermissions) {
+                    customPermissionIdsByDeveloperName.put(customPermission.DeveloperName, customPermission.Id);
+                }
+            }
+            return customPermissionIdsByDeveloperName;
+        }
+        set;
+    }
+
+    private static Map<Id, Set<Id>> permissionSetGroupAndSetIdsByCustomPermissionId = new Map<Id, Set<Id>>();
+
+    private static Set<Id> getPermissionSetGroupAndSetIds(Id customPermissionId) {
+        Set<Id> returnValue = permissionSetGroupAndSetIdsByCustomPermissionId.get(customPermissionId);
+        if (returnValue == null) {
+            returnValue = new Set<Id>();
+            SetupEntityAccess[] setupEntityAccesses = [SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityType = 'CustomPermission' AND SetupEntityId =:customPermissionId];
+            for (SetupEntityAccess setupEntityAccess : setupEntityAccesses) {
+                returnValue.add(setupEntityAccess.ParentId);
+            }
+            permissionSetGroupAndSetIdsByCustomPermissionId.put(customPermissionId, returnValue);
+        }
+        return returnValue;
+    }
+
+
+    public boolean userHasAccess(Feature feature) {
+        Map<Id, Boolean> userHasAccess = userHasAccessPerFeature.get(feature);
+        if (userHasAccess == null) {
+            userHasAccess = new Map<Id, Boolean>();
+            userHasAccessPerFeature.put(feature, userHasAccess);
+        }
+        Id userId = UserInfo.getUserId();
+        Boolean returnValue = userHasAccess.get(userId);
+        if (returnValue == null) {
+            String featureName = feature.name();
+            Feature_Definition__mdt featureDefinition = [SELECT DeveloperName FROM Feature_Definition__mdt WHERE DeveloperName = : featureName LIMIT 1]; // featureName is in capitals but a SOQL search is case insensitive so this returns the right mdt
+            Id customPermissionId = customPermissionIdsByDeveloperName.get(featureDefinition.DeveloperName); // a get is case sensitive so we need the Feature_Definition_mdt here
+            //System.debug('customPermissionIdsByDeveloperName: ' + JSON.serializePretty(customPermissionIdsByDeveloperName));
+            //System.debug('featureName ' + featureName);
+            System.debug('customPermissionId ' + customPermissionId);
+            Set<Id> permissionSetGroupAndSetIds = getPermissionSetGroupAndSetIds(customPermissionId);
+            PermissionSetAssignment[] permissionSetAssignments = [SELECT PermissionSetGroupId, PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :userId AND (PermissionSetGroupId IN :permissionSetGroupAndSetIds OR PermissionSetId IN:permissionSetGroupAndSetIds)];
+            returnValue = permissionSetAssignments.size() > 0;
+            userHasAccess.put(userId, returnValue);
+        }
+        return returnValue;
+    }
+
     /*****************************************
      * IMPLEMENTATION METHODS AFTER THIS POINT
     ******************************************/

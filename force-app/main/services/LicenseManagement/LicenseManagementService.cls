@@ -48,6 +48,10 @@ public with sharing class LicenseManagementService {
         return newInstance().getPermissionSetGroupByLicenseType(licenseType);
     }
 
+    public static Boolean userHasAccess(Feature feature) {
+        return newInstance().userHasAccess(feature);
+    }
+
     public static ILicenseManagementService newInstance() {
         return (ILicenseManagementService)Application.Service.newInstance(ILicenseManagementService.class);
     }

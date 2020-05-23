@@ -751,6 +751,60 @@ private class LicenseManagementServiceImplTest {
     }
 
     @IsTest
+    public static void testUserHasNoAccess() {
+        // given
+        // an existing feature
+        Feature feature = Feature.DUTCH_BUSINESS_GET_DOSSIER;
+        // a new user
+        User user = TestUtils.getUser('Standard User');
+        System.runAs(TestUtils.getUser('System Administrator')) {
+            insert user;
+        }
+
+        // when
+        Test.startTest();
+        Boolean hasAccess = true;
+        System.runAs(user) {
+            hasAccess = LicenseManagementService.userHasAccess(feature);
+        }
+        Test.stopTest();
+
+        // then
+        // the user should have no access to the feature
+        System.assertEquals(false, hasAccess);
+    }
+
+    @IsTest
+    public static void testUserHasAccess() {
+        // given
+        // an existing feature
+        Feature feature = Feature.DUTCH_BUSINESS_GET_DOSSIER;
+        // a new user
+        User user = TestUtils.getUser('Standard User');
+        System.runAs(TestUtils.getUser('System Administrator')) {
+            insert user;
+        }
+        // with the feature assigned (is part of the given permission set group)
+        PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :'Company_info_for_Dutch_Business_permission_set'];
+        PermissionSetAssignment permissionSetAssignment = new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetId = permissionSet.Id);
+        System.runAs(TestUtils.getUser('System Administrator')) {
+            insert permissionSetAssignment;
+        }
+
+        // when
+        Test.startTest();
+        Boolean hasAccess = false;
+        System.runAs(user) {
+            hasAccess = LicenseManagementService.userHasAccess(feature);
+        }
+        Test.stopTest();
+
+        // then
+        // the user should have access to the feature
+        System.assertEquals(true, hasAccess);
+    }
+
+    @IsTest
     public static void testAssignLicenseTypeNotEnoughLMASeats() {
 
         // mock creation
