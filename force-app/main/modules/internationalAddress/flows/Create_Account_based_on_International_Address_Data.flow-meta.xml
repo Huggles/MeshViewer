@@ -4,7 +4,7 @@
         <name>End</name>
         <label>End</label>
         <locationX>606</locationX>
-        <locationY>527</locationY>
+        <locationY>521</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -12,7 +12,7 @@
         <description>Assign the Account Id to the recordId output field so the global action navigates to the newly created account</description>
         <name>Assign_Record_Id</name>
         <label>Assign Record Id</label>
-        <locationX>749</locationX>
+        <locationX>759</locationX>
         <locationY>522</locationY>
         <assignmentItems>
             <assignToReference>recordId</assignToReference>
@@ -28,55 +28,55 @@
     <assignments>
         <name>Map_International_Address_Fields_to_Account</name>
         <label>Map International Address Fields to Account</label>
-        <locationX>945</locationX>
-        <locationY>263</locationY>
+        <locationX>950</locationX>
+        <locationY>264</locationY>
         <assignmentItems>
             <assignToReference>newAccount.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelectedInternationalAddress.Organization__c</elementReference>
+                <elementReference>Get_International_Address.Organization__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingCity</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelectedInternationalAddress.Locality__c</elementReference>
+                <elementReference>Get_International_Address.Locality__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingCountry</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelectedInternationalAddress.Alpha_2_Country_Code__c</elementReference>
+                <elementReference>Get_International_Address.Alpha_2_Country_Code__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingPostalCode</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelectedInternationalAddress.Postcode__c</elementReference>
+                <elementReference>Get_International_Address.Postcode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingState</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelectedInternationalAddress.Province__c</elementReference>
+                <elementReference>Get_International_Address.Province__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingStreet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelectedInternationalAddress.Street__c</elementReference>
+                <elementReference>Get_International_Address.Street__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.International_Address_Data__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>SelectedInternationalAddress.Id</elementReference>
+                <elementReference>Get_International_Address.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -86,10 +86,10 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>596</locationX>
-        <locationY>352</locationY>
+        <locationX>594</locationX>
+        <locationY>265</locationY>
         <defaultConnector>
-            <targetReference>Create_International_Address</targetReference>
+            <targetReference>Get_International_Address</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Cancel Not Pressed</defaultConnectorLabel>
         <rules>
@@ -129,23 +129,33 @@
     <recordCreates>
         <name>Create_Account</name>
         <label>Create Account</label>
-        <locationX>945</locationX>
-        <locationY>525</locationY>
+        <locationX>951</locationX>
+        <locationY>521</locationY>
         <connector>
             <targetReference>Assign_Record_Id</targetReference>
         </connector>
         <inputReference>newAccount</inputReference>
     </recordCreates>
-    <recordCreates>
-        <name>Create_International_Address</name>
-        <label>Create International Address</label>
-        <locationX>801</locationX>
-        <locationY>263</locationY>
+    <recordLookups>
+        <name>Get_International_Address</name>
+        <label>Get International Address</label>
+        <locationX>786</locationX>
+        <locationY>264</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Map_International_Address_Fields_to_Account</targetReference>
         </connector>
-        <inputReference>SelectedInternationalAddress</inputReference>
-    </recordCreates>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SelectedInternationalAddress.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>International_Address__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>272</locationX>
         <locationY>262</locationY>
