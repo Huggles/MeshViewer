@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Company.info for Sales</label>
+    <protected>true</protected>
+    <values>
+        <field>Nr_Of_Seats_Feature_Param_API_Name__c</field>
+        <value xsi:type="xsd:string">CompanyInfoForSalesNrOfSeats</value>
+    </values>
+    <values>
+        <field>Title__c</field>
+        <value xsi:type="xsd:string">Company.info for Sales</value>
+    </values>
+</CustomMetadata>

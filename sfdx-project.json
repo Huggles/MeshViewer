@@ -7,7 +7,8 @@
             "versionNumber": "1.1.0.NEXT",
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
-            "postInstallScript": "PostInstallScript"
+            "postInstallScript": "PostInstallScript",
+            "ancestorId": "Company.info for Salesforce@R1"
         }
     ],
     "namespace": "appsolutely",
@@ -19,6 +20,7 @@
         "Company.info for Salesforce@R1-Beta-2": "04t0J000000M9ojQAC",
         "Company.info for Salesforce@R1-Beta-3": "04t0J000000M9ooQAC",
         "Company.info for Salesforce@R1-Beta-4": "04t0J000000M9oyQAC",
-        "Company.info for Salesforce@Restructure source tree": "04t0J000000M9p3QAC"
+        "Company.info for Salesforce@Restructure source tree": "04t0J000000M9p3QAC",
+        "Company.info for Salesforce@R1": "04t0J000000M9pIQAS"
     }
 }
