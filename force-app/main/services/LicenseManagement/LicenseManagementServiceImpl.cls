@@ -242,15 +242,15 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
 
-    public boolean userHasAccess(Feature feature) {
+    public void userHasAccess(Feature feature) {
         Map<Id, Boolean> userHasAccess = userHasAccessPerFeature.get(feature);
         if (userHasAccess == null) {
             userHasAccess = new Map<Id, Boolean>();
             userHasAccessPerFeature.put(feature, userHasAccess);
         }
         Id userId = UserInfo.getUserId();
-        Boolean returnValue = userHasAccess.get(userId);
-        if (returnValue == null) {
+        Boolean hasAccessToThisFeature = userHasAccess.get(userId);
+        if (hasAccessToThisFeature == null) {
             String featureName = feature.name();
             Feature_Definition__mdt featureDefinition = [SELECT DeveloperName FROM Feature_Definition__mdt WHERE DeveloperName = : featureName LIMIT 1]; // featureName is in capitals but a SOQL search is case insensitive so this returns the right mdt
             Id customPermissionId = customPermissionIdsByDeveloperName.get(featureDefinition.DeveloperName); // a get is case sensitive so we need the Feature_Definition_mdt here
@@ -259,10 +259,12 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             System.debug('customPermissionId ' + customPermissionId);
             Set<Id> permissionSetGroupAndSetIds = getPermissionSetGroupAndSetIds(customPermissionId);
             PermissionSetAssignment[] permissionSetAssignments = [SELECT PermissionSetGroupId, PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :userId AND (PermissionSetGroupId IN :permissionSetGroupAndSetIds OR PermissionSetId IN:permissionSetGroupAndSetIds)];
-            returnValue = permissionSetAssignments.size() > 0;
-            userHasAccess.put(userId, returnValue);
+            hasAccessToThisFeature = permissionSetAssignments.size() > 0;
+            userHasAccess.put(userId, hasAccessToThisFeature);
         }
-        return returnValue;
+        if (!hasAccessToThisFeature) {
+            throw new NoAccessToFeatureException('User ' + UserInfo.getUserId() + ' does not have access to ' + feature.name());
+        }
     }
 
     /*****************************************
