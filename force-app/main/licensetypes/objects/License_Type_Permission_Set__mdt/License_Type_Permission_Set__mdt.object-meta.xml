@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Junction object between Permission Sets and the Licence Type Definition Custom Metadata Type indicating which Permission Sets belong to a certain License Type.</description>
-    <label>License Type Permission Set</label>
-    <pluralLabel>License Type Permission Sets</pluralLabel>
-    <visibility>Protected</visibility>
-</CustomObject>

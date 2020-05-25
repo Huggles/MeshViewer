@@ -72,6 +72,21 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
         return result;
     }
 
+    public List<User> selectByLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering){
+        // TODO: implement this
+        return null;
+    }
+
+    public List<User> selectByLicenseType(LicenseType licenseType) {
+        // TODO: implement this
+        return null;
+    }
+
+    public List<User> selectUsersWithoutLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
+        // TODO: implement this
+        return null;
+    }
+
     /**
      * IMPLEMENTATION METHODS
     */

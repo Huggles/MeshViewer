@@ -4,6 +4,9 @@
 
 public with sharing class LicenseManagementServiceImpl implements ILicenseManagementService {
 
+    @TestVisible
+    private static final String NAMESPACE_PREFIX ='appsolutely';
+
     /**
      * The list of Salesforce license definition keys that can be used to provision a license type to
     */
@@ -23,6 +26,18 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             'PID_Guest_User' // so guest users can get a license too
     };
 
+    @TestVisible
+    // TODO: to be refactored so no more permission set groups
+    private static final Map<LicenseType, String> PERMISSION_GROUPS_BY_LICENSE_TYPE = new Map<LicenseType, String>{
+            LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS => 'Companyinfo_for_Dutch_Business',
+            LicenseType.COMPANY_INFO_FOR_INTERNATIONAL_BUSINESS => 'Companyinfo_for_international_business',
+            LicenseType.COMPANY_INFO_FOR_SALES => 'Companyinfo_for_sales'
+    };
+
+    /**
+     * The Ids of all Salesforce licenses that can receive a license
+     */
+    // TODO: why public?
     public static Set<Id> allowedUserLicenseIds {
         get {
             if (allowedUserLicenseIds == null) {
@@ -33,46 +48,37 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         set;
     }
 
-    @TestVisible
-    private static final String NAMESPACE_PREFIX ='appsolutely';
-
-    @TestVisible
-    private static final Map<LicenseType, String> PERMISSION_GROUPS_BY_LICENSE_TYPE = new Map<LicenseType, String>{
-            LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS => 'Companyinfo_for_Dutch_Business',
-            LicenseType.COMPANY_INFO_FOR_INTERNATIONAL_BUSINESS => 'Companyinfo_for_international_business',
-            LicenseType.COMPANY_INFO_FOR_SALES => 'Companyinfo_for_sales'
-    };
-
-    @TestVisible
-    private static final Map<LicenseType, String> FEATURE_PARAM_NAMES_BY_LICENSETYPE = new Map<LicenseType, String>{
-            LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS => 'CompanyInfoForDutchBusinessNrOfSeats',
-            LicenseType.COMPANY_INFO_FOR_INTERNATIONAL_BUSINESS => 'CompanyInfoForInternationalBusinessNrOfSeats',
-            LicenseType.COMPANY_INFO_FOR_SALES => 'CompanyInfoForSalesNrOfSeats',
-            LicenseType.TEST_NO_FEATURE_PARAM => 'bogus' // TODO: refactor so no test code in implementation code
-    };
+    // TODO: to be refactored so no more permission set groups
+    private static Map<LicenseType, PermissionSetGroup> permissionGroupsByLicenseTypes = new Map<LicenseType, PermissionSetGroup>();
 
     /**
-     * The title/name definition of the license modules
-    */
-    @TestVisible
-    private static final Map<LicenseType, String> LICENCE_TYPE_NAMES_BY_LICENSETYPE = new Map<LicenseType, String>{
-            LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS => 'Company.info for Dutch Business',
-            LicenseType.COMPANY_INFO_FOR_INTERNATIONAL_BUSINESS => 'Company.info for International Business',
-            LicenseType.COMPANY_INFO_FOR_SALES => 'Company.info for Sales'
-    };
-
-    private static Map<LicenseType, PermissionSetGroup> permissionGroupsByLicenseTypes = new Map<LicenseType, PermissionSetGroup>();
+     * True if for the namespace appsolutely a user based LMA license model instead of an org wide model is used
+     */
+    private static Boolean userBasedLmaLicenseModel {
+        get {
+            if (userBasedLmaLicenseModel == null) {
+                PackageLicense packageLicense = [SELECT AllowedLicenses FROM PackageLicense WHERE NamespacePrefix =:NAMESPACE_PREFIX LIMIT 1];
+                if (packageLicense != null && packageLicense.AllowedLicenses >=0) { // in scratch orgs/development situations there is no package license, in sandboxes an org wide model is used so the allowedlicense = -1
+                    userBasedLmaLicenseModel = true;
+                } else {
+                    userBasedLmaLicenseModel = false;
+                }
+            }
+            return userBasedLmaLicenseModel;
+        }
+        set;
+    }
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType) {
         return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupByLicenseType(licenseType));
     }
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
-        return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupByLicenseType(licenseType), offSet, nrOfRows, ordering);
+        return UserSelector.newInstance().selectByLicenseType(licenseType, offSet, nrOfRows, ordering);
     }
 
     public User[] getUnAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
-        return UserSelector.newInstance().selectUsersWithoutPermissionSetGroup(getPermissionSetGroupByLicenseType(licenseType), offSet, nrOfRows, ordering);
+        return UserSelector.newInstance().selectUsersWithoutLicenseType(licenseType, offSet, nrOfRows, ordering);
     }
 
     public Integer getUnAssignedUsersForLicenseTypeCount(LicenseType licenseType) {
@@ -82,13 +88,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public Integer getTotalNumberOfSeats(LicenseType licenseType) {
-        String featureParamName = FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(licenseType);
-        if (featureParamName == null) {
-            throw new NoFeatureParamForLicenseTypeException('No feature parameter name defined for ' + licenseType.name());
-        }
+        License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
         Integer returnValue = null;
         try {
-            returnValue = FeatureManagement.checkPackageIntegerValue(featureParamName);
+            returnValue = FeatureManagement.checkPackageIntegerValue(licenseTypeDefinition.Nr_Of_Seats_Feature_Param_API_Name__c);
         } catch (NoDataFoundException ex) {
             throw new NoFeatureParamForLicenseTypeException('No feature parameter defined for ' + licenseType.name());
         }
@@ -157,7 +160,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
 
-        if (!isScratchOrg() || Test.isRunningTest()) { // in a scratch org we don't have a package installed so this doesn't work outside a unit test
+        if (userBasedLmaLicenseModel) {
             // calculate if we have enough LMA licenses available
             User[] usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
             if (usersWithoutLMALicense.size() > getNumberOfUnassignedLMALicenses()) {
@@ -183,7 +186,8 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public Integer getNumberOfAvailableSeats(LicenseType licenseType) {
-        Integer numberOfSeatsBought = FeatureManagement.checkPackageIntegerValue(FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(licenseType));
+        License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
+        Integer numberOfSeatsBought = FeatureManagement.checkPackageIntegerValue(licenseTypeDefinition.Nr_Of_Seats_Feature_Param_API_Name__c);
         Integer numberOfSeatsAssigned = getAssignedUsersForLicenseType(licenseType).size();
         Integer numberOfAvailableSeats = numberOfSeatsBought - numberOfSeatsAssigned;
         return numberOfAvailableSeats;
@@ -203,11 +207,8 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public String getLicenseTypeName(LicenseType licenseType) {
-        String returnValue = LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(licenseType);
-        if (returnValue == null) {
-            throw new NoNameDefinedForLicenseTypeException('No name defined for ' + licenseType.name());
-        }
-        return returnValue; // this is the human readable name, not the API name
+        License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
+        return licenseTypeDefinition.Title__c; // this is the human readable name, not the API name
     }
 
     private static Map<Feature, Map<Id, Boolean>> userHasAccessPerFeature = new Map<Feature, Map<Id, Boolean>>();
@@ -270,6 +271,56 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     /*****************************************
      * IMPLEMENTATION METHODS AFTER THIS POINT
     ******************************************/
+
+    private PermissionSet[] getPermissionSets(LicenseType licenseType) {
+//        // first get the license type definition
+//        License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
+//
+//        // then get the license type permission set definitions
+//        License_Type_Permission_Set__mdt[] licenseTypePermissionSets = [
+//                SELECT
+//                        License_Type_Definition__c,
+//                        Permission_Set_API_Name__c,
+//                        DeveloperName,
+//                        Id,
+//                        Label,
+//                        Language,
+//                        MasterLabel,
+//                        NamespacePrefix,
+//                        QualifiedApiName
+//                FROM License_Type_Permission_Set__mdt WHERE License_Type_Definition__c = :licenseTypeDefinition.Id];
+//
+//        // query the permission sets
+//        Set<String> permissionSetApiNames = new Set<String>();
+//        for (License_Type_Permission_Set__mdt licenseTypePermissionSet : licenseTypePermissionSets) {
+//            permissionSetApiNames.add(licenseTypePermissionSet.Permission_Set_API_Name__c);
+//        }
+//        PermissionSet[] result = [
+//                SELECT
+//                        Id
+//                FROM PermissionSet WHERE Name IN :permissionSetApiNames];
+//
+//        // return them
+//        return result;
+        // TODO: implement this
+        return null;
+    }
+
+    private License_Type_Definition__mdt getLicenseTypeDefinition(LicenseType licenseType) {
+        License_Type_Definition__mdt[] licenseTypeDefinitions = [
+                SELECT
+                        Nr_Of_Seats_Feature_Param_API_Name__c,
+                        Title__c,
+                        DeveloperName,
+                        Id,
+                        Label,
+                        Language,
+                        MasterLabel,
+                        NamespacePrefix,
+                        QualifiedApiName
+                FROM License_Type_Definition__mdt WHERE DeveloperName =:licenseType.name()];
+        return licenseTypeDefinitions.get(0);
+    }
 
     private Integer getNumberOfUnassignedLMALicenses() {
         Integer numberOfSeatsBought = packageLicense.AllowedLicenses;

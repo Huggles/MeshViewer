@@ -32,4 +32,40 @@ public interface IUserSelector extends fflib_ISObjectSelector {
      * @return the users who do not have the permission set group assigned to them and adhere to the rest of the search criteria
     */
     List<User> selectUsersWithoutPermissionSetGroup(PermissionSetGroup permissionSetGroup, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+
+    /**
+     * Selects users that do not have the license type. Returns the users ordered by the given ordering
+     *
+     * @param licenseType the license type to search for
+     * @param offSet the starting row
+     * @param nrOfRows the number of users (rows) to retrieve
+     * @param orderings the orderings of the returned users
+     *
+     * @return the users who do not have the license type assigned to them and adhere to the rest of the search criteria
+     */
+    List<User> selectUsersWithoutLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings);
+
+
+    /**
+     * Selects users that have the license type assigned to them. Returns the users ordered by the given ordering
+     *
+     * @param licenseType the license type to search for
+     * @param offSet the starting row
+     * @param nrOfRows the number of users (rows) to retrieve
+     * @param orderings the orderings of the returned users
+     *
+     * @return the users who have the license type assigned to them and adhere to the rest of the search criteria
+     */
+    List<User> selectByLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+
+    /**
+     * Selects users that have the license type assigned to them
+     *
+     * @param licenseType the license type to search for
+     *
+     * @return the users who have the license type assigned to them
+     */
+    List<User> selectByLicenseType(LicenseType licenseType);
+
+
 }

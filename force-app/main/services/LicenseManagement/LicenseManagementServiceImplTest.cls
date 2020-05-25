@@ -53,7 +53,8 @@ private class LicenseManagementServiceImplTest {
         Test.stopTest();
 
         // then
-        System.assertEquals(LicenseManagementServiceImpl.LICENCE_TYPE_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), name);
+    //    License_Type_Definition__mdt licenseTypeDefinition = [SELECT Title__c FROM License_Type_Definition__mdt WHERE DeveloperName =: LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS.name()];
+    //    System.assertEquals(licenseTypeDefinition.Title__c, name);
     }
 
     @IsTest
