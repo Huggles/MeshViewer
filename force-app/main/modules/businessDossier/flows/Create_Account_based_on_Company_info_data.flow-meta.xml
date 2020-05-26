@@ -237,7 +237,7 @@
             <field>Business_Dossier__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>selectedDossier.Id</elementReference>
+                <elementReference>Get_Business_Dossier.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
