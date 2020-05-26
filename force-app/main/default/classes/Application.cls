@@ -66,9 +66,9 @@ public inherited sharing class Application {
                     User.SObjectType => UserSelector.class,
                     PackageLicense.SObjectType => PackageLicenseSelector.class,
                     PermissionSetAssignment.SObjectType => PermissionSetAssignmentSelector.class,
-                    PermissionSetGroup.SObjectType => PermissionSetGroupSelector.class,
                     UserPackageLicense.SObjectType => UserPackageSelector.class,
-                    International_Address__c.SObjectType => InternationalAddressSelector.class
+                    International_Address__c.SObjectType => InternationalAddressSelector.class,
+                    PermissionSet.SObjectType => PermissionSetSelector.class
             });
 
 }

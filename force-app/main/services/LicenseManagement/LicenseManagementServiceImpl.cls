@@ -26,14 +26,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             'PID_Guest_User' // so guest users can get a license too
     };
 
-    @TestVisible
-    // TODO: to be refactored so no more permission set groups
-    private static final Map<LicenseType, String> PERMISSION_GROUPS_BY_LICENSE_TYPE = new Map<LicenseType, String>{
-            LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS => 'Companyinfo_for_Dutch_Business',
-            LicenseType.COMPANY_INFO_FOR_INTERNATIONAL_BUSINESS => 'Companyinfo_for_international_business',
-            LicenseType.COMPANY_INFO_FOR_SALES => 'Companyinfo_for_sales'
-    };
-
     /**
      * The Ids of all Salesforce licenses that can receive a license
      */
@@ -48,17 +40,14 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         set;
     }
 
-    // TODO: to be refactored so no more permission set groups
-    private static Map<LicenseType, PermissionSetGroup> permissionGroupsByLicenseTypes = new Map<LicenseType, PermissionSetGroup>();
-
     /**
      * True if for the namespace appsolutely a user based LMA license model instead of an org wide model is used
      */
     private static Boolean userBasedLmaLicenseModel {
         get {
             if (userBasedLmaLicenseModel == null) {
-                PackageLicense packageLicense = [SELECT AllowedLicenses FROM PackageLicense WHERE NamespacePrefix =:NAMESPACE_PREFIX LIMIT 1];
-                if (packageLicense != null && packageLicense.AllowedLicenses >=0) { // in scratch orgs/development situations there is no package license, in sandboxes an org wide model is used so the allowedlicense = -1
+                PackageLicense[] packageLicenses = [SELECT AllowedLicenses FROM PackageLicense WHERE NamespacePrefix =:NAMESPACE_PREFIX LIMIT 1];
+                if (packageLicenses != null && packageLicenses.size() == 1 && packageLicenses.get(0).AllowedLicenses >=0) { // in scratch orgs/development situations there is no package license, in sandboxes an org wide model is used so the allowedlicense = -1
                     userBasedLmaLicenseModel = true;
                 } else {
                     userBasedLmaLicenseModel = false;
@@ -69,8 +58,26 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         set;
     }
 
+    private static Map<Feature, Map<Id, Boolean>> userHasAccessPerFeature = new Map<Feature, Map<Id, Boolean>>();
+
+    private static Map<String, Id> customPermissionIdsByDeveloperName {
+        get {
+            if (customPermissionIdsByDeveloperName == null) {
+                customPermissionIdsByDeveloperName = new Map<String, Id>();
+                List<CustomPermission> customPermissions = [SELECT Id, DeveloperName FROM CustomPermission];
+                for (CustomPermission customPermission : customPermissions) {
+                    customPermissionIdsByDeveloperName.put(customPermission.DeveloperName, customPermission.Id);
+                }
+            }
+            return customPermissionIdsByDeveloperName;
+        }
+        set;
+    }
+
+    private static Map<Id, Set<Id>> permissionSetGroupAndSetIdsByCustomPermissionId = new Map<Id, Set<Id>>();
+
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType) {
-        return UserSelector.newInstance().selectByPermissionSetGroup(getPermissionSetGroupByLicenseType(licenseType));
+        return UserSelector.newInstance().selectByLicenseType(licenseType);
     }
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
@@ -98,7 +105,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return returnValue;
     }
 
-
     public LicenseType getLicenseTypeByName(String name) {
         LicenseType[] licenseTypes = LicenseType.values();
         LicenseType returnValue = null;
@@ -115,13 +121,13 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
 
-    public void unassignLicenseType(LicenseType licenseType, User[] users) {
+    public void unassignLicenseType(LicenseType license, User[] users) {
         // check if the users have a license and throw an exception if they don't
-        List<User> usersWithoutLicenseTypes = filterUsersWithoutLicenseTypeAssignment(licenseType, users);
+        List<User> usersWithoutLicenseTypes = filterUsersWithoutLicenseTypeAssignment(license, users);
         if (usersWithoutLicenseTypes.size() > 0) {
-            throw new NoSeatAssignedException('No seats of license type ' + licenseType.name() + ' have been assigned to the given users');
+            throw new NoSeatAssignedException('No seats of license type ' + license.name() + ' have been assigned to the given users');
         }
-        if (!isScratchOrg() || Test.isRunningTest()) { // in a scratch org outside a unit test the feature param is not available
+        if (userBasedLmaLicenseModel) { // in a scratch org outside a unit test the feature param is not available
             List<User> usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
             if (usersWithoutLMALicense.size() > 0) {
                 throw new NoLMALicenseAssignedException('No LMA License has been assigned to the given users');
@@ -130,24 +136,25 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
         // delete all relevant permission set assignments
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupByLicenseType(licenseType), users);
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByLicenseTypeAndUsers(license, users);
         unitOfWork.registerDeleted(permissionSetAssignments);
-        // check if the user has other license types assigned
-        Set<LicenseType> otherLicenseTypes = PERMISSION_GROUPS_BY_LICENSE_TYPE.keySet();
-        otherLicenseTypes.remove(licenseType);
-        for (LicenseType licenseType2 : otherLicenseTypes) {
-            if (users.size() > 0) {
-                users = filterUsersWithoutLicenseTypeAssignment(licenseType2, users);
-            } else {
-                break;
+
+        // remove the user LMA license if needed
+        if (userBasedLmaLicenseModel) {
+            // check if the user has other license types assigned
+            Set<LicenseType> otherLicenseTypes = new Set<LicenseType>(LicenseType.values());
+            otherLicenseTypes.remove(license);
+            for (LicenseType otherLicenseType : otherLicenseTypes) {
+                if (users.size() > 0) {
+                    // if there are users that do NOT have the license type assigned, filter them out
+                    users = filterUsersWithoutLicenseTypeAssignment(otherLicenseType, users);
+                } else {
+                    break;
+                }
             }
+            UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(packageLicense, users);
+            unitOfWork.registerDeleted(userPackageLicenses);
         }
-
-        // if no other license types, remove the LMA license
-        // if we are in a scratch org, there is no real packagelicense which is not a problem since this call won't return any userPackageLicenses in that case
-        UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(packageLicense, users);
-        unitOfWork.registerDeleted(userPackageLicenses);
-
         unitOfWork.commitWork();
     }
 
@@ -174,12 +181,12 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             unitOfWork.registerNew(userPackageLicenses);
         }
 
-        // assign the permission set group
-        PermissionSetGroup permissionSetGroup = getPermissionSetGroupByLicenseType(licenseType);
+        // assign the permission set(s)
+        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
         List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
         for (User user : users) {
-            PermissionSetAssignment permissionSetAssignment = new PermissionSetAssignment(PermissionSetGroupId = permissionSetGroup.Id, AssigneeId = user.Id);
-            assignments.add(permissionSetAssignment);
+            PermissionSetAssignment permAssignment = new PermissionSetAssignment(PermissionSetId = permissionSet.Id, AssigneeId = user.Id);
+            assignments.add(permAssignment);
         }
         unitOfWork.registerNew(assignments);
         unitOfWork.commitWork();
@@ -193,41 +200,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return numberOfAvailableSeats;
     }
 
-    public PermissionSetGroup getPermissionSetGroupByLicenseType(LicenseType licenseType) {
-        PermissionSetGroup permissionSetGroup = permissionGroupsByLicenseTypes.get(licenseType);
-        if (permissionSetGroup == null) {
-            PermissionSetGroup[] groups = PermissionSetGroupSelector.newInstance().selectByDeveloperName(PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType));
-            if (groups.size() == 0) {
-                throw new NoPermSetGroupForLicenseTypeException('No permission set group defined for license type ' + licenseType.name());
-            }
-            permissionSetGroup = groups.get(0);
-            permissionGroupsByLicenseTypes.put(licenseType, permissionSetGroup);
-        }
-        return permissionSetGroup;
-    }
-
     public String getLicenseTypeName(LicenseType licenseType) {
         License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
         return licenseTypeDefinition.Title__c; // this is the human readable name, not the API name
     }
-
-    private static Map<Feature, Map<Id, Boolean>> userHasAccessPerFeature = new Map<Feature, Map<Id, Boolean>>();
-
-    private static Map<String, Id> customPermissionIdsByDeveloperName {
-        get {
-            if (customPermissionIdsByDeveloperName == null) {
-                customPermissionIdsByDeveloperName = new Map<String, Id>();
-                List<CustomPermission> customPermissions = [SELECT Id, DeveloperName FROM CustomPermission];
-                for (CustomPermission customPermission : customPermissions) {
-                    customPermissionIdsByDeveloperName.put(customPermission.DeveloperName, customPermission.Id);
-                }
-            }
-            return customPermissionIdsByDeveloperName;
-        }
-        set;
-    }
-
-    private static Map<Id, Set<Id>> permissionSetGroupAndSetIdsByCustomPermissionId = new Map<Id, Set<Id>>();
 
     private static Set<Id> getPermissionSetGroupAndSetIds(Id customPermissionId) {
         Set<Id> returnValue = permissionSetGroupAndSetIdsByCustomPermissionId.get(customPermissionId);
@@ -272,44 +248,18 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
      * IMPLEMENTATION METHODS AFTER THIS POINT
     ******************************************/
 
-    private PermissionSet[] getPermissionSets(LicenseType licenseType) {
-//        // first get the license type definition
-//        License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
-//
-//        // then get the license type permission set definitions
-//        License_Type_Permission_Set__mdt[] licenseTypePermissionSets = [
-//                SELECT
-//                        License_Type_Definition__c,
-//                        Permission_Set_API_Name__c,
-//                        DeveloperName,
-//                        Id,
-//                        Label,
-//                        Language,
-//                        MasterLabel,
-//                        NamespacePrefix,
-//                        QualifiedApiName
-//                FROM License_Type_Permission_Set__mdt WHERE License_Type_Definition__c = :licenseTypeDefinition.Id];
-//
-//        // query the permission sets
-//        Set<String> permissionSetApiNames = new Set<String>();
-//        for (License_Type_Permission_Set__mdt licenseTypePermissionSet : licenseTypePermissionSets) {
-//            permissionSetApiNames.add(licenseTypePermissionSet.Permission_Set_API_Name__c);
-//        }
-//        PermissionSet[] result = [
-//                SELECT
-//                        Id
-//                FROM PermissionSet WHERE Name IN :permissionSetApiNames];
-//
-//        // return them
-//        return result;
-        // TODO: implement this
-        return null;
+    private PermissionSet getPermissionSets(LicenseType licenseType) {
+        License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
+        PermissionSet result = [SELECT Id FROM PermissionSet WHERE Name =: licenseTypeDefinition.Permission_Set_API_Name__c LIMIT 1];
+        return result;
     }
 
-    private License_Type_Definition__mdt getLicenseTypeDefinition(LicenseType licenseType) {
+    private License_Type_Definition__mdt getLicenseTypeDefinition(LicenseType licenseTp) {
+        String licenseTypeName = licenseTp.name();
         License_Type_Definition__mdt[] licenseTypeDefinitions = [
                 SELECT
                         Nr_Of_Seats_Feature_Param_API_Name__c,
+                        Licence_Type_Name__c,
                         Title__c,
                         DeveloperName,
                         Id,
@@ -318,7 +268,8 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
                         MasterLabel,
                         NamespacePrefix,
                         QualifiedApiName
-                FROM License_Type_Definition__mdt WHERE DeveloperName =:licenseType.name()];
+                FROM License_Type_Definition__mdt WHERE Licence_Type_Name__c =:licenseTypeName];
+        System.debug('license type name: ' + licenseTypeName);
         return licenseTypeDefinitions.get(0);
     }
 
@@ -331,7 +282,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     private User[] filterUsersWithoutLicenseTypeAssignment(LicenseType licenseType, User[] users) {
         // get all the users who already have a License Type assigned
-        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByPermissionSetGroupAndUsers(getPermissionSetGroupByLicenseType(licenseType), users);
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByLicenseTypeAndUsers(licenseType, users);
         Set<Id> userIdsWithLicenseTypeAssignment = new Set<Id>();
         for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
             userIdsWithLicenseTypeAssignment.add(permissionSetAssignment.AssigneeId);
@@ -365,12 +316,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return usersWithoutLMA;
     }
 
-    private Boolean isScratchOrg() {
-        Organization org = [SELECT IsSandbox, TrialExpirationDate FROM Organization];
-        Boolean isScratchOrg = org.IsSandbox && org.TrialExpirationDate != null;
-        return isScratchOrg;
-    }
-
     private PackageLicenseWrapper packageLicense {
         get {
             if (packageLicense == null) {
@@ -387,7 +332,5 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
         set;
     }
-
-
 
 }

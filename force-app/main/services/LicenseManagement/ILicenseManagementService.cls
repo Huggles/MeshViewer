@@ -84,13 +84,6 @@ public interface ILicenseManagementService {
     Integer getTotalNumberOfSeats(LicenseType licenseType);
 
     /**
-     *  Fetches the permission set group related to the given license type
-     *  @param licenseType the license type for which to fetch the permission set group
-     * @return the permission set group belonging to the license type
-    */
-    PermissionSetGroup getPermissionSetGroupByLicenseType(LicenseType licenseType);
-
-    /**
      * Checks if the current user has access to the given feature. Throws
      * @param feature the feature to check
      *

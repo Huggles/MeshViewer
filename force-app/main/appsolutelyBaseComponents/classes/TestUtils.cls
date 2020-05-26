@@ -83,26 +83,5 @@ public inherited sharing class TestUtils {
         insert permissionSetAssignment;
     }
 
-
-    /**
-     * Assigns a permission set group with the given developer name to the user. The user must be inserted (exist).
-     * In Testvisible context so this is not used outside of test context
-     *
-     * @param u the user who needs to get the permission set group assigned.
-     * @param permissionSetGroupName the name of the permission set group
-     */
-    @TestVisible
-    private static void giveUserPermissionSetGroup(String permissionSetGroupName, User u) {
-        Id permissionSetGroupId = permissionSetGroupIdsByName.get(permissionSetGroupName);
-        if (permissionSetGroupId == null) {
-            PermissionSetGroup permissionSetGroup = [SELECT Id FROM PermissionSetGroup WHERE DeveloperName = :permissionSetGroupName LIMIT 1];
-            permissionSetGroupIdsByName.put(permissionSetGroupName, permissionSetGroup.Id);
-            permissionSetGroupId = permissionSetGroup.Id;
-        }
-        PermissionSetAssignment permissionSetAssignment = new PermissionSetAssignment(PermissionSetGroupId = permissionSetGroupId, AssigneeId = u.Id);
-        insert permissionSetAssignment;
-
-    }
-
 }
 

@@ -44,10 +44,6 @@ public with sharing class LicenseManagementService {
         return newInstance().getTotalNumberOfSeats(licenseType);
     }
 
-    public static PermissionSetGroup getPermissionSetGroupByLicenseType(LicenseType licenseType) {
-        return newInstance().getPermissionSetGroupByLicenseType(licenseType);
-    }
-
     public static void userHasAccess(Feature feature) {
          newInstance().userHasAccess(feature);
     }

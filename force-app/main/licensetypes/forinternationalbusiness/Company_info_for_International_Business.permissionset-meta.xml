@@ -13,6 +13,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CreditSafeService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>DutchBusinessService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -25,18 +29,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>SearchAgainButtonController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>SearchForDutchDossiersInvocable</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CreditSafeService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>InternationalAddressService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -45,13 +37,50 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SearchAgainButtonController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SearchForCreditSafeDossiersInvocable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>SearchForDutchDossiersInvocable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>SearchForInternationalAddressInvocable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Company_info_online</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_Addresses</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_Business_Get_Dossier</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_Business_Search</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_VAT</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>International_Addresses</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>International_Business_Search</name>
+    </customPermissions>
+    <description>Permission set for Company.info for International Business. Adds permissions that are needed to extend the functionality of Company.info to international businesses.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Business_Dossier__c</field>
@@ -697,10 +726,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
-        <flow>Organisation_Search_Flow</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
         <flow>Create_Account_based_on_International_Address_Data</flow>
     </flowAccesses>
     <flowAccesses>
@@ -709,8 +734,14 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
+        <flow>Organisation_Search_Flow</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
         <flow>Search_International_Address</flow>
     </flowAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Company.info for International Business</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -737,35 +768,4 @@
         <tab>Business_Dossier__c</tab>
         <visibility>Available</visibility>
     </tabSettings>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>International_Addresses</name>
-    </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>International_Business_Search</name>
-    </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Company_info_online</name>
-    </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Dutch_Addresses</name>
-    </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Dutch_Business_Get_Dossier</name>
-    </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Dutch_Business_Search</name>
-    </customPermissions>
-    <customPermissions>
-        <enabled>true</enabled>
-        <name>Dutch_VAT</name>
-    </customPermissions>
-    <description>Permission set for Company.info for International Business. Adds permissions that are needed to extend the functionality of Company.info to international businesses.</description>
-    <hasActivationRequired>false</hasActivationRequired>
-    <label>Company.info for International Business permission set</label>
 </PermissionSet>
