@@ -193,4 +193,29 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         return address;
     }
 
+    /**
+     * Deletes the international address with the given id with all related objects
+     *
+     * @param internationalAddressId
+     * @param checkPermissions true if permissions need to be checked
+     */
+    public void deleteInternationalAddress(Id internationalAddressId, Boolean checkPermissions) {
+        if (String.isNotEmpty(internationalAddressId)) {
+            List<International_Address__c> internationalAddresses = InternationalAddressSelector.newInstance().selectById(new Set<Id>{internationalAddressId});
+
+            if (internationalAddresses.size() == 1) {
+                fflib_ISObjectUnitOfWork unitOfWork = null;
+                if (checkPermissions) {
+                    unitOfWork = Application.UnitOfWork.newInstance(new DMLWithCRUD());
+                } else {
+                    unitOfWork = Application.UnitOfWork.newInstance();
+                }
+                unitOfWork.registerDeleted(internationalAddresses[0]);
+                unitOfWork.commitWork();
+            }
+        }
+        else {
+            throw new CCInputException(Label.Error_Input_Incorrect);
+        }
+    }
 }

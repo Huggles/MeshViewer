@@ -92,15 +92,6 @@
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
-        <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Information</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
@@ -246,6 +237,14 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Exporter__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Rsin_Number__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Suspension_Of_Payments_Mora__c</field>
             </layoutItems>
             <layoutItems>
@@ -274,26 +273,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Exporter__c</field>
+                <field>NL_Negative_Rating__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Importer__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Rsin_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Branch_Number__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NL_Negative_Rating__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Industry_Average_Credit_Rating__c</field>
@@ -517,7 +508,7 @@
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>false</detailHeading>
+        <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>System Information</label>
         <layoutColumns>
@@ -531,6 +522,9 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
@@ -548,6 +542,15 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>false</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Information</label>
+        <layoutColumns/>
+        <layoutColumns/>
+        <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Business_Dossier__c.Creditsafe_Company_Report__c</relatedList>
@@ -562,95 +565,31 @@
         <relatedList>Additional_Info_NL_Letter_Of_Liability__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Date__c</fields>
+        <fields>Description__c</fields>
         <fields>Current_Value__c</fields>
         <fields>Previous_Value__c</fields>
-        <fields>Date__c</fields>
-        <fields>Type__c</fields>
         <relatedList>Additional_Information_Historical_Event__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <sortField>Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
-        <fields>Consolidated_Subsidiaries__c</fields>
+        <fields>NAME</fields>
+        <fields>Date__c</fields>
+        <fields>Event__c</fields>
+        <relatedList>Additional_Information_NL_Kvk_Filing__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <sortField>Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Date_Year_End__c</fields>
+        <fields>Consolidated_Subsidiaries__c</fields>
         <fields>Judgement__c</fields>
         <relatedList>Additional_Information_NL_Financial_Item__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Event__c</fields>
-        <fields>Date__c</fields>
-        <relatedList>Additional_Information_NL_Kvk_Filing__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Classification__c</fields>
-        <relatedList>Creditsafe_Comp_Activity_Classifications__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Full_Address__c</fields>
-        <fields>Postcode__c</fields>
-        <fields>Street__c</fields>
-        <fields>City__c</fields>
-        <fields>Country__c</fields>
-        <relatedList>Creditsafe_Address__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Sentiment__c</fields>
-        <fields>Text__c</fields>
-        <fields>Type__c</fields>
-        <relatedList>Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Creditsafe_Person_Director__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Creditsafe_Number__c</fields>
-        <fields>Name__c</fields>
-        <fields>Registration_Number__c</fields>
-        <fields>Type__c</fields>
-        <relatedList>Creditsafe_Company__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Type__c</fields>
-        <fields>Number_Of_Weeks__c</fields>
-        <fields>Net_Worth__c</fields>
-        <fields>Currency__c</fields>
-        <relatedList>Creditsafe_Company_Financial_Statement__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Key__c</fields>
-        <fields>Value__c</fields>
-        <relatedList>Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Name__c</fields>
-        <fields>Share_Percent__c</fields>
-        <relatedList>Creditsafe_Company_Share_Holder__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Reference_Number_Court__c</fields>
-        <relatedList>Negative_Information_DE_Insolvency_Event__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Name__c</fields>
-        <fields>Code__c</fields>
-        <fields>Type__c</fields>
-        <relatedList>Negative_Information_DE_Director_Event__c.Creditsafe_Company_Report_Full__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Bank_Code__c</fields>
-        <fields>Full_Address__c</fields>
-        <fields>Postcode__c</fields>
-        <fields>Street__c</fields>
-        <fields>City__c</fields>
-        <fields>Country__c</fields>
-        <relatedList>Creditsafe_Company_Banker__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <sortField>Date_Year_End__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -659,15 +598,94 @@
         <relatedList>Creditsafe_Company_Advisor__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Name__c</fields>
+        <fields>Bank_Code__c</fields>
+        <fields>Country__c</fields>
+        <relatedList>Creditsafe_Company_Banker__c.Creditsafe_Company_Report_Full__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Full_Address__c</fields>
+        <relatedList>Creditsafe_Address__c.Creditsafe_Company_Report_Full__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Name__c</fields>
+        <fields>Creditsafe_Number__c</fields>
+        <fields>Registration_Number__c</fields>
+        <relatedList>Creditsafe_Company__c.Creditsafe_Company_Report_Full__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Sentiment__c</fields>
+        <fields>Text__c</fields>
+        <fields>Type__c</fields>
+        <relatedList>Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Report_Full__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Year__c</fields>
         <fields>Number_Of_Employees__c</fields>
         <relatedList>Creditsafe_Company_Employee_Information__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <sortField>Year__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Year_End_Date__c</fields>
+        <fields>Net_Worth__c</fields>
+        <fields>Total_Tangible_Assets__c</fields>
+        <relatedList>Creditsafe_Company_Financial_Statement__c.Creditsafe_Company_Report_Full__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Value__c</fields>
+        <fields>Key__c</fields>
+        <relatedList>Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Created_At__c</fields>
+        <fields>Reference_Number_Court__c</fields>
+        <relatedList>Negative_Information_DE_Insolvency_Event__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <sortField>Created_At__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Date__c</fields>
+        <fields>Name__c</fields>
+        <fields>Description__c</fields>
+        <fields>Type__c</fields>
+        <fields>Code__c</fields>
+        <relatedList>Negative_Information_DE_Director_Event__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <sortField>Date__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>Date_Of_Bankruptcy__c</fields>
         <fields>Court_Action__c</fields>
         <fields>Address__c</fields>
         <relatedList>Creditsafe_Company_Negative_Info_NL__c.Creditsafe_Company_Report_Full__c</relatedList>
+        <sortField>Date_Of_Bankruptcy__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Director_Type__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Resignation_Date__c</fields>
+        <relatedList>Creditsafe_Person_Director__c.Creditsafe_Company_Report_Full__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Name__c</fields>
+        <fields>Share_Percent__c</fields>
+        <relatedList>Creditsafe_Company_Share_Holder__c.Creditsafe_Company_Report_Full__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

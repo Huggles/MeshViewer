@@ -1501,6 +1501,13 @@
         <value>Please enter a valid Irish VAT Number starting with IE</value>
     </labels>
     <labels>
+        <fullName>Valid_NL_registration_number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid NL registration number</shortDescription>
+        <value>Please enter a value with either 8 or 12 digits</value>
+    </labels>
+    <labels>
         <fullName>Valid_Italian_VAT_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>

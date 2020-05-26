@@ -356,6 +356,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Personnel_Reference_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Personnel__c</field>
             </layoutItems>
             <layoutItems>
@@ -364,14 +368,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Personnel_CI__c</field>
+                <field>Personnel_CI_Reference_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Personnel_Reference_Date__c</field>
+                <field>Personnel_CI__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Class_Personnel__c</field>
@@ -381,12 +388,11 @@
                 <field>Class_Personnel_Fulltime__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Class_Personnel_CI__c</field>
+                <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Personnel_CI_Reference_Date__c</field>
+                <field>Class_Personnel_CI__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
