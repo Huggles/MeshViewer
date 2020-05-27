@@ -5,6 +5,9 @@
 public with sharing class LicenseManagementServiceImpl implements ILicenseManagementService {
 
     @TestVisible
+    private static Boolean isTestingLicenseManagement = false;
+
+    @TestVisible
     private static final String NAMESPACE_PREFIX ='appsolutely';
 
     /**
@@ -127,7 +130,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         if (usersWithoutLicenseTypes.size() > 0) {
             throw new NoSeatAssignedException('No seats of license type ' + license.name() + ' have been assigned to the given users');
         }
-        if (userBasedLmaLicenseModel) { // in a scratch org outside a unit test the feature param is not available
+        if (userBasedLmaLicenseModel || isTestingLicenseManagement) { // in a scratch org outside a unit test the feature param is not available
             List<User> usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
             if (usersWithoutLMALicense.size() > 0) {
                 throw new NoLMALicenseAssignedException('No LMA License has been assigned to the given users');
@@ -140,7 +143,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         unitOfWork.registerDeleted(permissionSetAssignments);
 
         // remove the user LMA license if needed
-        if (userBasedLmaLicenseModel) {
+        if (userBasedLmaLicenseModel || isTestingLicenseManagement) {
             // check if the user has other license types assigned
             Set<LicenseType> otherLicenseTypes = new Set<LicenseType>(LicenseType.values());
             otherLicenseTypes.remove(license);
@@ -167,7 +170,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
 
-        if (userBasedLmaLicenseModel) {
+        if (userBasedLmaLicenseModel || isTestingLicenseManagement) {
             // calculate if we have enough LMA licenses available
             User[] usersWithoutLMALicense = filterUsersWithoutLMALicense(users);
             if (usersWithoutLMALicense.size() > getNumberOfUnassignedLMALicenses()) {
@@ -268,8 +271,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
                         MasterLabel,
                         NamespacePrefix,
                         QualifiedApiName
-                FROM License_Type_Definition__mdt WHERE Licence_Type_Name__c =:licenseTypeName];
-        System.debug('license type name: ' + licenseTypeName);
+                FROM License_Type_Definition__mdt WHERE Licence_Type_Name__c =:licenseTypeName LIMIT 1];
+        if (licenseTypeDefinitions == null || licenseTypeDefinitions.size() == 0) {
+            throw new NoLicenseDefinitionException('No License Definition for LicenseType ' +licenseTp.name());
+        }
         return licenseTypeDefinitions.get(0);
     }
 

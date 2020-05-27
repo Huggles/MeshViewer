@@ -5,43 +5,6 @@
 @IsTest
 private class LicenseManagementServiceImplTest {
 
-//    @IsTest
-//    static void testGetPermissionSetGroupByLicenseTypeHappyFlow() {
-//        // given
-//        // an existing license type with a permission set group defined
-//        LicenseType licenseType = LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS;
-//
-//        // when
-//        Test.startTest();
-//        PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(licenseType);
-//        Test.stopTest();
-//
-//        // then
-//        System.assertEquals(LicenseManagementServiceImpl.PERMISSION_GROUPS_BY_LICENSE_TYPE.get(licenseType), (permissionSetGroup.DeveloperName));
-//
-//    }
-
-//    @IsTest
-//    static void testGetPermissionSetGroupByLicenseTypeNoPermissionSetGroupDefined() {
-//        // given
-//        // an existing license type with a permission set group defined
-//        LicenseType licenseType = LicenseType.TEST_NO_FEATURE_PARAM; // misuse but ok
-//
-//        // when
-//        Test.startTest();
-//        Boolean exceptionThrown = false;
-//        try {
-//            PermissionSetGroup permissionSetGroup = LicenseManagementService.getPermissionSetGroupByLicenseType(licenseType);
-//        } catch (NoPermSetGroupForLicenseTypeException ex) {
-//            exceptionThrown = true;
-//        }
-//        Test.stopTest();
-//
-//        // then
-//        System.assertEquals(true, exceptionThrown);
-//
-//    }
-
     @IsTest
     static void testGetLicenseTypeNameHappyFlow() {
         // given
@@ -53,28 +16,8 @@ private class LicenseManagementServiceImplTest {
         Test.stopTest();
 
         // then
-    //    License_Type_Definition__mdt licenseTypeDefinition = [SELECT Title__c FROM License_Type_Definition__mdt WHERE DeveloperName =: LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS.name()];
-    //    System.assertEquals(licenseTypeDefinition.Title__c, name);
-    }
-
-    @IsTest
-    static void testGetLicenseTypeNameNoNameDefined() {
-        // given
-        // an existing LicenseType with no name defined
-
-        // when
-        Test.startTest();
-        Boolean exceptionThrown = false;
-        try {
-            String name = LicenseManagementService.getLicenseTypeName(LicenseType.TEST_NO_NAME);
-        } catch(NoNameDefinedForLicenseTypeException ex) {
-            exceptionThrown = true;
-        }
-
-        Test.stopTest();
-
-        // then
-        System.assertEquals(true, exceptionThrown);
+        License_Type_Definition__mdt licenseTypeDefinition = [SELECT Title__c FROM License_Type_Definition__mdt WHERE Licence_Type_Name__c =: LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS.name()];
+        System.assertEquals(licenseTypeDefinition.Title__c, name);
     }
 
     @IsTest
@@ -100,7 +43,7 @@ private class LicenseManagementServiceImplTest {
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
-            Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.TEST_NO_NAME);
+            Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.TEST_LICENSE_TYPE);
         } catch(NoFeatureParamForLicenseTypeException ex) {
             exceptionThrown = true;
         }
@@ -120,7 +63,7 @@ private class LicenseManagementServiceImplTest {
         Test.startTest();
         Boolean exceptionThrown = false;
         try {
-            Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.TEST_NO_FEATURE_PARAM);
+            Integer nrOfSeats = LicenseManagementService.getTotalNumberOfSeats(LicenseType.TEST_LICENSE_TYPE);
         } catch(NoFeatureParamForLicenseTypeException ex) {
             exceptionThrown = true;
         }
@@ -248,6 +191,7 @@ private class LicenseManagementServiceImplTest {
         Application.Selector.setMock(userSelectorMock);
         Application.UnitOfWork.setMock(unitOfWorkMock);
 
+        LicenseManagementServiceImpl.isTestingLicenseManagement = true;
         // when
         Test.startTest();
         LicenseManagementService.unassignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersToUnassign);
@@ -258,7 +202,7 @@ private class LicenseManagementServiceImplTest {
         List<Map<Schema.SObjectField, Object>> permissionSetAssignmentsToAssert = new List<Map<SObjectField, Object>>();
         for (Integer i = 0; i < 5; i++) {
             permissionSetAssignmentsToAssert.add(new Map<Schema.SObjectField, Object>{
-                    PermissionSetAssignment.PermissionSetGroupId => permissionSetGroup.Id,
+                    PermissionSetAssignment.PermissionSetId => permissionSetId,
                     PermissionSetAssignment.AssigneeId => usersToUnassign.get(i).Id
             });
         }
@@ -434,6 +378,8 @@ private class LicenseManagementServiceImplTest {
         Application.Selector.setMock(userPackageSelectorMock);
         Application.Selector.setMock(userSelectorMock);
         Application.UnitOfWork.setMock(unitOfWorkMock);
+
+        LicenseManagementServiceImpl.isTestingLicenseManagement = true;
 
         // when
         Test.startTest();
@@ -637,6 +583,8 @@ private class LicenseManagementServiceImplTest {
         Application.Selector.setMock(userSelectorMock);
         Application.UnitOfWork.setMock(unitOfWorkMock);
 
+        // we want to test the user license assignment
+        LicenseManagementServiceImpl.isTestingLicenseManagement = true;
         // when
         Test.startTest();
         LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users);
@@ -728,6 +676,8 @@ private class LicenseManagementServiceImplTest {
         Application.Selector.setMock(userSelectorMock);
         Application.UnitOfWork.setMock(unitOfWorkMock);
 
+        LicenseManagementServiceImpl.isTestingLicenseManagement = true;
+
         // when
         Test.startTest();
         Boolean exceptionThrown = false;
@@ -782,7 +732,7 @@ private class LicenseManagementServiceImplTest {
             insert user;
         }
         // with the feature assigned (is part of the given permission set group)
-        PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :'Company_info_for_Dutch_Business_permission_set'];
+        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
         PermissionSetAssignment permissionSetAssignment = new PermissionSetAssignment(AssigneeId = user.Id, PermissionSetId = permissionSet.Id);
         System.runAs(TestUtils.getUser('System Administrator')) {
             insert permissionSetAssignment;
@@ -869,6 +819,8 @@ private class LicenseManagementServiceImplTest {
         Application.Selector.setMock(userPackageSelectorMock);
         Application.Selector.setMock(userSelectorMock);
         Application.UnitOfWork.setMock(unitOfWorkMock);
+
+        LicenseManagementServiceImpl.isTestingLicenseManagement = true;
 
         // when
         Test.startTest();
