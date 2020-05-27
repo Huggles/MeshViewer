@@ -18,6 +18,6 @@ public interface IPermissionSetSelector {
      *
      * @return the permission sets that have another license type related to them then the given one
      */
-    PermissionSet[] selectPermissionSetsExcludingLicenseType(LicenseType licenseType);
+    PermissionSet[] selectLicenseTypePermissionSetsExcludingLicenseType(LicenseType licenseType);
 
 }

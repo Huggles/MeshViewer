@@ -6,7 +6,7 @@
 private class UserSelectorTest {
 
     @IsTest
-    static void testselectByLicenseTypeGroupHappyFlow() {
+    static void testselectByLicenseTypeHappyFlow() {
         // given
         // 5 users without a license type seat and 5 with
         List<User> users = new List<User>();
@@ -50,6 +50,10 @@ private class UserSelectorTest {
         }
         LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersWithLicenseType);
 
+        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
+
+        System.assertEquals(4, permissionSetAssignments.size());
+
         // order on first name and last name
         List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
                 new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
@@ -59,9 +63,9 @@ private class UserSelectorTest {
         // when
 
         Test.startTest();
-        User[] usersToAssert = UserSelector.newInstance().selectUsersWithoutLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 30, orderings);
+        System.assertEquals(4, PermissionSetAssignmentSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).size());
+        User[] usersToAssert = UserSelector.newInstance().selectUsersWithoutLicenseTypeSeat(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 30, orderings);
         Test.stopTest();
-
         // then
         Integer currentNrOfUsers = ([SELECT Id FROM User WHERE Profile.UserLicense.LicenseDefinitionKey IN :LicenseManagementServiceImpl.ALLOWED_LICENCE_DEFINITION_KEYS]).size(); // the user object is strange since it doesn't respect the test boundary (acts like SeeAllData is true)
         System.assertEquals(currentNrOfUsers - 4, usersToAssert.size());
@@ -86,16 +90,25 @@ private class UserSelectorTest {
         for (Integer i = 0; i < 95; i++) {
             usersWithLicenseType.add(users.get(i));
         }
-        LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersWithLicenseType);
+        // cannot assign users for real because the default number of seats available is 10 and this will throw exceptions
+        // LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersWithLicenseType);
 
+        // alternative: just assign the right permissions
+        List<PermissionSetAssignment> permissionSetAssignments = new List<PermissionSetAssignment>();
+        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id;
+        for (User user : usersWithLicenseType) {
+            permissionSetAssignments.add(new PermissionSetAssignment(PermissionSetId = permissionSetId, AssigneeId = user.Id));
+        }
+        insert permissionSetAssignments;
+
+        // when
+        Test.startTest();
         // order on first name and last name
         List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
                 new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
                 new fflib_QueryFactory.Ordering(User.LastName, fflib_QueryFactory.SortOrder.ASCENDING, true)
         };
 
-        // when
-        Test.startTest();
         User[] usersToAssert = UserSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 10, 10, orderings);
         Test.stopTest();
 

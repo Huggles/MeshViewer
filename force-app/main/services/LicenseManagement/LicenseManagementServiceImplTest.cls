@@ -493,7 +493,7 @@ private class LicenseManagementServiceImplTest {
         };
 
         mocks.startStubbing();
-        mocks.when(userSelector.selectUsersWithoutLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 100, orderings)).thenReturn(users);
+        mocks.when(userSelector.selectUsersWithoutLicenseTypeSeat(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 100, orderings)).thenReturn(users);
         mocks.when(userSelector.sObjectType()).thenReturn(User.SObjectType);
         mocks.stopStubbing();
 

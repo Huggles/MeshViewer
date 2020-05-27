@@ -85,7 +85,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public User[] getUnAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
-        return UserSelector.newInstance().selectUsersWithoutLicenseType(licenseType, offSet, nrOfRows, ordering);
+        return UserSelector.newInstance().selectUsersWithoutLicenseTypeSeat(licenseType, offSet, nrOfRows, ordering);
     }
 
     public Integer getUnAssignedUsersForLicenseTypeCount(LicenseType licenseType) {

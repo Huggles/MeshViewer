@@ -53,18 +53,21 @@ public inherited sharing class PermissionSetAssignmentSelector extends fflib_SOb
         return result;
     }
 
-    public PermissionSetAssignment[] selectExcludingLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
-        Set<Id> permissionSetIds = (new Map<Id, PermissionSet>(PermissionSetSelector.newInstance().selectPermissionSetsExcludingLicenseType(licenseType))).keySet();
+    public PermissionSetAssignment[] selectLicenseTypePermissionSetAssignmentsExcludingLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
+        // Set<Id> permissionSetIds = (new Map<Id, PermissionSet>(PermissionSetSelector.newInstance().selectLicenseTypePermissionSetsExcludingLicenseType(licenseType))).keySet();
+        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
         fflib_QueryFactory queryFactory = newQueryFactory(false, false, true);
         List<PermissionSetAssignment> result = new List<PermissionSetAssignment>();
-        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
-        queryFactory.setCondition('PermissionSetId IN :permissionSetIds');
+        queryFactory.setCondition('PermissionSetId != permissionSetId');
+        queryFactory.selectField('PermissionSet.Name');
+        queryFactory.selectField('Assignee.Profile.Name');
         for (fflib_QueryFactory.Ordering ordering : orderings) {
             queryFactory.addOrdering(ordering);
         }
         queryFactory.setOffset(offSet);
         queryFactory.setLimit(nrOfRows);
         result = Database.query(queryFactory.toSOQL());
+        System.debug('permission set assignments: ' + JSON.serializePretty(result));
         return result;
     }
 

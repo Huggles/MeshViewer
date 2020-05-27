@@ -57,13 +57,15 @@ public with sharing class PermissionSetSelector extends fflib_SObjectSelector im
         return permissionSetByLicenseTypes.get(licenseType);
     }
 
-    public PermissionSet[] selectPermissionSetsExcludingLicenseType(LicenseType licenseTp) {
+    public PermissionSet[] selectLicenseTypePermissionSetsExcludingLicenseType(LicenseType licenseTp) {
         Set<LicenseType> otherLicenseTypes = new Set<LicenseType>(LicenseType.values());
         otherLicenseTypes.remove(licenseTp);
         PermissionSet[] returnValue = new List<PermissionSet>();
         for (LicenseType licenseType2 : otherLicenseTypes) {
-            returnValue.add(permissionSetByLicenseTypes.get(licenseType2));
+            if (permissionSetByLicenseTypes.get(licenseType2) != null) // test license type values don't have permission sets related to them and will return null therefore
+                returnValue.add(permissionSetByLicenseTypes.get(licenseType2));
         }
+        System.debug('permission sets with exclusion: ' + JSON.serializePretty(returnValue));
         return returnValue;
     }
 
