@@ -10,6 +10,8 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="recordId" type="String" role="inputOnly"/>
+            <property name="message" type="String" label="Message" role="inputOnly"/>
+            <property name="variant" type="String" label="Variant" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

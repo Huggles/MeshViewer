@@ -9,8 +9,9 @@ import Creditsafe_Report_Created from '@salesforce/label/c.Creditsafe_Report_Cre
 
 export default class FlowNavigation extends NavigationMixin(LightningElement) {
 
-    @api
-    recordId;
+    @api recordId;
+    @api message;
+    @api variant;
 
     connectedCallback() {
         new Promise((resolve, reject) => {this[NavigationMixin.Navigate]({
@@ -23,9 +24,8 @@ export default class FlowNavigation extends NavigationMixin(LightningElement) {
             resolve("Success!")
         }).then((successMessage) => {
             const event = new ShowToastEvent({
-                "title": "Success!",
-                "message": Creditsafe_Report_Created,
-                "variant": "success"
+                "message": this.message,
+                "variant": this.variant
             });
             this.dispatchEvent(event);
         })
