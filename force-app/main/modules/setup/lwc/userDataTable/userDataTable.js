@@ -27,12 +27,32 @@ export default class UserDataTable extends LightningElement {
         return this.localUsers;
     }
     set users(theSObjectUsers) {
-        if (theSObjectUsers)
+        if (this.isChangedSObjectList(theSObjectUsers)) {
             this.localUsers = this.convertsObjectUsers(theSObjectUsers);
-        else {
-            this.localUsers = undefined;
+            this.sortLocalUsers(this.sortedBy, this.sortDirection);
         }
-        this.sortLocalUsers(this.sortedBy, this.sortDirection);
+    }
+
+    isChangedSObjectList(theSObjectUsers) {
+        // localUsers not yet defined
+        if (!this.localUsers && theSObjectUsers) {
+            return true;
+        }
+        // length of the arrays
+        if (this.localUsers.length != theSObjectUsers.length) {
+            return true;
+        }
+        // ids
+        let sObjectUsersByIds = new Map();
+        for (const theSObjectUser of theSObjectUsers) {
+            sObjectUsersByIds.set(theSObjectUser.Id, theSObjectUser);
+        }
+        for (const localUser of this.localUsers) {
+            if (!sObjectUsersByIds.get(localUser.Id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @track
@@ -126,7 +146,7 @@ export default class UserDataTable extends LightningElement {
     handleSort(event) {
         // switch in sort direction and number of rows loaded is less than total number of rows
         let reload = false;
-        if (this.sortDirection != event.detail.sortDirection && this.localUsers && this.localUsers.length <= this.maxNumberOfUsers) {
+        if (this.sortDirection != event.detail.sortDirection && this.localUsers && this.localUsers.length < this.maxNumberOfUsers) {
             this.localUsers = undefined;
             reload = true;
         } else {

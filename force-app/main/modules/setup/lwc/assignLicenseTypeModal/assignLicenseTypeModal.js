@@ -6,6 +6,7 @@ import {LightningElement, wire, api} from 'lwc';
 import getUnAssignedUsers from '@salesforce/apex/LicenseTypeManagementCardController.getUnAssignedUsers';
 import getUnAssignedUserCount from '@salesforce/apex/LicenseTypeManagementCardController.getUnAssignedUserCount';
 import assignUsers from '@salesforce/apex/LicenseTypeManagementCardController.assignUsers';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const numberOfRowsToLoad = 20;
 
@@ -99,6 +100,11 @@ export default class AssignLicenseTypeModal extends LightningElement {
             const selectedIds = this.selectedRows.map(a => a.Id);
             assignUsers({licenseTypeAPIName: this.licenseTypeApiName, usersToAssign: selectedIds})
                 .then(result => {
+                    const event = new ShowToastEvent({
+                        title: 'Success',
+                        message: 'User assignment successful'
+                    });
+                    this.dispatchEvent(event);
                     const newlyAssignedUsers = this.sObjectUsers.filter(sObjectUser => selectedIds.includes(sObjectUser.Id));
                     this.dispatchEvent(new CustomEvent('usersassigned', {detail: newlyAssignedUsers}));
                     const notYetAssignedsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );

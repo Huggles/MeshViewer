@@ -6,6 +6,7 @@ import {track, api, wire, LightningElement} from 'lwc';
 import getLicenseTypeInfo from '@salesforce/apex/LicenseTypeManagementCardController.getLicenseTypeInfo';
 import getAssignedUsers from '@salesforce/apex/LicenseTypeManagementCardController.getAssignedUsers';
 import unAssignUsers from '@salesforce/apex/LicenseTypeManagementCardController.unAssignUsers';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const numberOfRowsToLoad = 20;
 
@@ -165,6 +166,11 @@ export default class LicenseTypeManagementCard extends LightningElement {
             const selectedIds = this.selectedRows.map(a => a.Id);
             unAssignUsers({licenseTypeAPIName: this.licenseTypeApiName, usersToUnAssign: selectedIds})
                 .then(result => {
+                    const event = new ShowToastEvent({
+                        title: 'Success',
+                        message: 'User assignment removal successful'
+                    });
+                    this.dispatchEvent(event);
                     const filteredsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );
                     if (filteredsObjectUsers && filteredsObjectUsers.length > 0) {
                         this.sObjectUsers = filteredsObjectUsers;
