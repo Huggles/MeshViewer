@@ -3,33 +3,16 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>606</locationX>
-        <locationY>521</locationY>
+        <locationX>852</locationX>
+        <locationY>259</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <assignments>
-        <description>Assign the Account Id to the recordId output field so the global action navigates to the newly created account</description>
-        <name>Assign_Record_Id</name>
-        <label>Assign Record Id</label>
-        <locationX>759</locationX>
-        <locationY>522</locationY>
-        <assignmentItems>
-            <assignToReference>recordId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>newAccount.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>End</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Map_International_Address_Fields_to_Account</name>
         <label>Map International Address Fields to Account</label>
-        <locationX>950</locationX>
-        <locationY>264</locationY>
+        <locationX>800</locationX>
+        <locationY>470</locationY>
         <assignmentItems>
             <assignToReference>newAccount.Name</assignToReference>
             <operator>Assign</operator>
@@ -80,7 +63,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Account</targetReference>
+            <targetReference>Duplicate_Management_For_Account_and_International_Address</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -110,7 +93,6 @@
     </decisions>
     <description>Template to create an account based on international data. The organization field of the international address will be used as Account Name.</description>
     <interviewLabel>Create Account based on International Address Data {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Account based on International Address Data</label>
     <processMetadataValues>
@@ -126,25 +108,18 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Account</name>
-        <label>Create Account</label>
-        <locationX>951</locationX>
-        <locationY>521</locationY>
-        <connector>
-            <targetReference>Assign_Record_Id</targetReference>
-        </connector>
-        <inputReference>newAccount</inputReference>
-    </recordCreates>
     <recordLookups>
         <name>Get_International_Address</name>
         <label>Get International Address</label>
-        <locationX>786</locationX>
-        <locationY>264</locationY>
+        <locationX>603</locationX>
+        <locationY>470</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Map_International_Address_Fields_to_Account</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Flow_Fault_Message_Screen</targetReference>
+        </faultConnector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -156,6 +131,22 @@
         <object>International_Address__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <screens>
+        <name>Flow_Fault_Message_Screen</name>
+        <label>Flow Fault Message Screen</label>
+        <locationX>411</locationX>
+        <locationY>472</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>FlowFaultMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>272</locationX>
         <locationY>262</locationY>
@@ -165,10 +156,35 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Duplicate_Management_For_Account_and_International_Address</name>
+        <label>Duplicate Management For Account and International Address</label>
+        <locationX>956</locationX>
+        <locationY>469</locationY>
+        <flowName>Duplicate_Management_For_Account_and_International_Address</flowName>
+        <inputAssignments>
+            <name>AccountToBeCreated</name>
+            <value>
+                <elementReference>newAccount</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>DuplicateFound</name>
+            <value>
+                <elementReference>DuplicateFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>SelectedInternationalAddress</name>
+            <value>
+                <elementReference>SelectedInternationalAddress</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Search_International_Address</name>
         <label>Search International Address</label>
         <locationX>436</locationX>
-        <locationY>262</locationY>
+        <locationY>263</locationY>
         <connector>
             <targetReference>Cancel_Pressed</targetReference>
         </connector>
@@ -184,6 +200,10 @@
             <name>cancelPressed</name>
         </outputAssignments>
         <outputAssignments>
+            <assignToReference>DuplicateFound</assignToReference>
+            <name>DuplicateInternationalFound</name>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>SelectedInternationalAddress</assignToReference>
             <name>SelectedInternationalAddress</name>
         </outputAssignments>
@@ -194,6 +214,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>DuplicateFound</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>internationalAddressRecordId</name>
