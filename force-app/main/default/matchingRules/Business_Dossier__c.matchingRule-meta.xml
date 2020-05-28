@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MatchingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <matchingRules>
-        <fullName>Based_on_Registration_Number_or_Creditsafe_Id</fullName>
+        <fullName>Matching_rule_for_Business_Dossier</fullName>
         <booleanFilter>(1 AND 2) OR 3 OR 4</booleanFilter>
         <description>Checks Duplicate if there are Business Dossiers with same Registration number and Establishment number or Creditsafe Id</description>
-        <label>Based on Registration Number or Creditsafe Id</label>
+        <label>Matching rule for Business Dossier</label>
         <matchingRuleItems>
             <blankValueBehavior>NullNotAllowed</blankValueBehavior>
             <fieldName>appsolutely__Dossier_Number__c</fieldName>
