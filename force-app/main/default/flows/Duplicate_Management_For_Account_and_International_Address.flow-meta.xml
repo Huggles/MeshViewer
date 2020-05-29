@@ -75,7 +75,7 @@
             <assignToReference>TextMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>You are redirected to the duplicate account found for the searched company address..</stringValue>
+                <elementReference>RedirectToAccount</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -105,7 +105,7 @@
             <assignToReference>TextMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>A new Account has been created for the searched company address.</stringValue>
+                <elementReference>CreateNewAccount</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -135,7 +135,7 @@
             <assignToReference>TextMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>The selected duplicate Account has been updated.</stringValue>
+                <elementReference>UpdatedAccount</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -256,8 +256,22 @@
             <label>Related Account Found</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>CreateNewAccount</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__new_account_with_international_address}</expression>
+    </formulas>
+    <formulas>
+        <name>RedirectToAccount</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__redirect_to_duplicate_account_with_address}</expression>
+    </formulas>
+    <formulas>
+        <name>UpdatedAccount</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__updated_account}</expression>
+    </formulas>
     <interviewLabel>Duplicate Management For Account and International Address {!$Flow.CurrentDateTime}</interviewLabel>
-    <isTemplate>true</isTemplate>
     <label>Duplicate Management For Account and International Address</label>
     <processMetadataValues>
         <name>BuilderType</name>

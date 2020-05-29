@@ -69,13 +69,13 @@
     <assignments>
         <name>Assign_Toast_Message_and_Variant_and_Account_Id</name>
         <label>Assign Toast Message and Variant and Account Id</label>
-        <locationX>888</locationX>
-        <locationY>483</locationY>
+        <locationX>889</locationX>
+        <locationY>484</locationY>
         <assignmentItems>
             <assignToReference>TextMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>You are redirected to the duplicate account found for the searched company.</stringValue>
+                <elementReference>RedirectToAccount</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -105,7 +105,7 @@
             <assignToReference>TextMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>A new Account has been created for the searched company.</stringValue>
+                <elementReference>CreateNewAccount</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -130,12 +130,12 @@
         <name>Assign_Toast_Message_and_Variant_and_Account_Id_For_Update</name>
         <label>Assign Toast Message and Variant and Account Id For Update</label>
         <locationX>1498</locationX>
-        <locationY>607</locationY>
+        <locationY>608</locationY>
         <assignmentItems>
             <assignToReference>TextMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>The selected duplicate Account has been updated.</stringValue>
+                <elementReference>UpdatedAccount</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -232,7 +232,7 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Account</name>
+        <name>Is_Account_Related_To_Dossier</name>
         <label>Is Account Related To Dossier</label>
         <locationX>654</locationX>
         <locationY>487</locationY>
@@ -256,8 +256,22 @@
             <label>Related Account Found</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>CreateNewAccount</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__new_account_with_business_dossier}</expression>
+    </formulas>
+    <formulas>
+        <name>RedirectToAccount</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__redirect_to_duplicate_account}</expression>
+    </formulas>
+    <formulas>
+        <name>UpdatedAccount</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__updated_account}</expression>
+    </formulas>
     <interviewLabel>Duplicate Management For Account and Business Dossier {!$Flow.CurrentDateTime}</interviewLabel>
-    <isTemplate>true</isTemplate>
     <label>Duplicate Management For Account and Business Dossier</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -293,7 +307,7 @@
         <locationY>705</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Account</targetReference>
+            <targetReference>Is_Account_Related_To_Dossier</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Flow_Fault_Message_Screen</targetReference>

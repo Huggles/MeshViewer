@@ -65,7 +65,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>City Help Text</shortDescription>
-        <value>Please fill the city name in Country&#39;s native language</value>
+        <value>Please fill the city name in Country&apos;s native language</value>
     </labels>
     <labels>
         <fullName>Config_Account_ActivateDescription</fullName>
@@ -465,7 +465,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier ID Access</shortDescription>
-        <value>User doesn&#39;t have access to dossier with ID:</value>
+        <value>User doesn&apos;t have access to dossier with ID:</value>
     </labels>
     <labels>
         <fullName>Dossier_ID_Missing</fullName>
@@ -510,6 +510,13 @@
         <value>Company.info data Removed</value>
     </labels>
     <labels>
+        <fullName>Duplicates_Found_Message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicates Found Message</shortDescription>
+        <value>The following duplicate Accounts have been found for the selected Company, please select any of them if you want to update the existing Account data with the Company data</value>
+    </labels>
+    <labels>
         <fullName>Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -522,7 +529,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error Client Authentication</shortDescription>
-        <value>Please check your username and password. If you still can&#39;t log in, contact Company.info.</value>
+        <value>Please check your username and password. If you still can&apos;t log in, contact Company.info.</value>
     </labels>
     <labels>
         <fullName>Error_Client_Authentication_Password</fullName>
@@ -792,7 +799,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Language Input Error</shortDescription>
-        <value>Selected language is not available for selected company&#39;s country. Please select another language.</value>
+        <value>Selected language is not available for selected company&apos;s country. Please select another language.</value>
     </labels>
     <labels>
         <fullName>Locality</fullName>
@@ -861,6 +868,20 @@
         <protected>true</protected>
         <shortDescription>New_Account_CC</shortDescription>
         <value>New Account with Company.info</value>
+    </labels>
+    <labels>
+        <fullName>New_Account_with_Business_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Account with Business Dossier</shortDescription>
+        <value>A new Account has been created for the searched company.</value>
+    </labels>
+    <labels>
+        <fullName>New_Account_with_International_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Account with International Address</shortDescription>
+        <value>A new Account has been created for the searched company address.</value>
     </labels>
     <labels>
         <fullName>No</fullName>
@@ -973,6 +994,20 @@
         <protected>true</protected>
         <shortDescription>Realisation check receivables collection</shortDescription>
         <value>Realisation check receivables collection</value>
+    </labels>
+    <labels>
+        <fullName>Redirect_to_duplicate_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Redirect to duplicate Account</shortDescription>
+        <value>You are redirected to the duplicate account found for the searched company.</value>
+    </labels>
+    <labels>
+        <fullName>Redirect_to_duplicate_Account_with_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Redirect to duplicate Account with Address</shortDescription>
+        <value>You are redirected to the duplicate account found for the searched company address.</value>
     </labels>
     <labels>
         <fullName>Registration_Number</fullName>
@@ -1363,6 +1398,13 @@
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>Updated_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Updated Account</shortDescription>
+        <value>The selected duplicate Account has been updated.</value>
+    </labels>
+    <labels>
         <fullName>VAT_Not_Found</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1487,18 +1529,18 @@
         <value>Please enter a valid Irish VAT Number starting with IE</value>
     </labels>
     <labels>
-        <fullName>Valid_NL_registration_number</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid NL registration number</shortDescription>
-        <value>Please enter a value with either 8 or 12 digits</value>
-    </labels>
-    <labels>
         <fullName>Valid_Italian_VAT_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Italian VAT Number</shortDescription>
         <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
+    </labels>
+    <labels>
+        <fullName>Valid_NL_registration_number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid NL registration number</shortDescription>
+        <value>Please enter a value with either 8 or 12 digits</value>
     </labels>
     <labels>
         <fullName>Valid_Spanish_VAT_Number</fullName>

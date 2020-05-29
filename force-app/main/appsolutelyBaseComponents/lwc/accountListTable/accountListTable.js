@@ -5,6 +5,7 @@
 import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 import {registerListener} from "c/pubsub";
+import Duplicates_Found_Message from '@salesforce/label/c.Duplicates_Found_Message';
 
 export default class AccountListTable extends LightningElement {
 
