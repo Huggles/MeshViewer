@@ -11,6 +11,10 @@
         <value xsi:type="xsd:string">Fake_Feature_param_name</value>
     </values>
     <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">-1.0</value>
+    </values>
+    <values>
         <field>Permission_Set_API_Name__c</field>
         <value xsi:type="xsd:string">Fake_Permission_set_name</value>
     </values>

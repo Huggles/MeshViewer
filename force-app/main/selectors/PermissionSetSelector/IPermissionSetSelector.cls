@@ -20,4 +20,10 @@ public interface IPermissionSetSelector {
      */
     PermissionSet[] selectLicenseTypePermissionSetsExcludingLicenseType(LicenseType licenseType);
 
+    /**
+     * Gets all permission sets related to all license types
+     * @return all permission sets that are related to the license types
+     */
+    PermissionSet[] selectAllLicenseTypePermissionSets();
+
 }

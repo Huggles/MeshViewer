@@ -28,10 +28,20 @@ public interface IUserSelector extends fflib_ISObjectSelector {
      *
      * @param licenseType the licensetype for which we search the users
      * @param offSet the offset. Maximum of 2000 (limit Salesforce)
-     * @param nrOfRows the number of rows to retrieve
+     * @param nrOfRows the number of rows to retrieve. Max 50k (limit Salesforce)
      * @param ordering the ordering of the result set. By manipulating the ordering, it is possible to go around the offset limitation. See https://help.salesforce.com/articleView?id=000339353&type=1&mode=1
      * @return the users who do not have the permission set belonging to the license type assigned to them and adhere to the rest of the search criteria
      */
     List<User> selectUsersWithoutLicenseTypeSeat(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+
+    /**
+     * Select users that do not have any seat of any type assigned to them
+     * @param offSet the offset. Maximum of 2000 (limit Salesforce)
+     * @param nrOfRows the number of rows to retrieve. Max 50k (limit Salesforce)
+     * @param ordering the ordering of the result set. By manipulating the ordering, it is possible to go around the offset limitation. See https://help.salesforce.com/articleView?id=000339353&type=1&mode=1
+     *
+     * @return the users who do not have the permission set belonging to one of the license types
+     */
+    List<User> selectUsersWithoutSeat(Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
 
 }

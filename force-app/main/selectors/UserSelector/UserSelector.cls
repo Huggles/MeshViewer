@@ -73,28 +73,29 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
     public List<User> selectUsersWithoutLicenseTypeSeat(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
         // only users with the right profiles/license types. Only users that do not have the seat (so not in permission set).
         Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
-        System.debug('permissionSetId: ' + permissionSetId);
         // List<User> users = [SELECT Id FROM User WHERE ProfileId IN :profileIds AND Id IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE )]
-
-//        List<fflib_QueryFactory.Ordering> permissionSetAssignmentOrderings = new List<fflib_QueryFactory.Ordering>();
-//        for (fflib_QueryFactory.Ordering ordering : orderings) {
-//            permissionSetAssignmentOrderings.add(new fflib_QueryFactory.Ordering('Assignee.' + ordering.getField(), ordering.getDirection(), ordering.isNullsLast()));
-//        }
-//        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectLicenseTypePermissionSetAssignmentsExcludingLicenseType(licenseType, offSet, nrOfRows, permissionSetAssignmentOrderings);
-//        Set<Id> userIds = new Set<Id>();
-//        for (PermissionSetAssignment permissionSetAssignment : permissionSetAssignments) {
-//            userIds.add(permissionSetAssignment.AssigneeId);
-//        }
         fflib_QueryFactory queryFactory = newQueryFactory().selectField('Profile.Name').selectField('UserRole.Name').setCondition('Id IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId != :permissionSetId) AND ProfileId IN :profileIds' +
             ' AND Id NOT IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId = :permissionSetId)');
         // TODO: check the ordering
         for (fflib_QueryFactory.Ordering ordering : orderings) {
             queryFactory.addOrdering(ordering);
         }
-        System.debug('query: ' + queryFactory.toSOQL());
         User[] rawResults = Database.query(queryFactory.toSOQL());
         Map<Id, User> usersByIds = new Map<Id, User>(rawResults);
         return usersByIds.values();
+    }
+
+    public List<User> selectUsersWithoutSeat(Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings)  {
+        PermissionSet[] permissionSets = PermissionSetSelector.newInstance().selectAllLicenseTypePermissionSets();
+        Set<Id> permissionSetIds = (new Map<Id, PermissionSet>(permissionSets)).keySet();
+        fflib_QueryFactory queryFactory = newQueryFactory().
+                selectField('Profile.Name').
+                selectField('UserRole.Name').
+                setCondition('Id NOT IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId IN :permissionSetIds) AND ProfileId IN :profileIds');
+        for (fflib_QueryFactory.Ordering ordering : orderings) {
+            queryFactory.addOrdering(ordering);
+        }
+        return Database.query(queryFactory.toSOQL());
     }
 
 }

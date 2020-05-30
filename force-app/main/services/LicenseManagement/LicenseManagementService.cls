@@ -48,6 +48,10 @@ public with sharing class LicenseManagementService {
          newInstance().userHasAccess(feature);
     }
 
+    public static User[] getUsersWithoutSeat(Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
+        return newInstance().getUsersWithoutSeat(offSet, nrOfRows, ordering);
+    }
+
     public static ILicenseManagementService newInstance() {
         return (ILicenseManagementService)Application.Service.newInstance(ILicenseManagementService.class);
     }

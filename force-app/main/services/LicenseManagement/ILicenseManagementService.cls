@@ -25,13 +25,22 @@ public interface ILicenseManagementService {
     User[] getAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
 
     /**
-     * Returns a list of users who have not been assigned the license type.
+     * Returns a list of users who have not been assigned the license type and not to another license type.
      *
      * @param licenseType the name of the license type to check
      * @param offSet from which row number onwards to fetch the data
      * @return the users who have don't have the license type assigned
     */
     User[] getUnAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+
+    /**
+     * Returns a list of all users who have not been assigned a seat at all
+     *
+     * @param licenseType the name of the license type to check
+     * @param offSet from which row number onwards to fetch the data
+     * @return the users who have don't have a seat
+    */
+    User[] getUsersWithoutSeat(Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
 
     /**
      * Returns the total number of users that do not have the license type given assigned
@@ -90,6 +99,8 @@ public interface ILicenseManagementService {
      * @exception NoAccessToFeatureException whenever the user tries to access a feature he doesn't have access to
      */
     void userHasAccess(Feature feature);
+
+
 
 
 }

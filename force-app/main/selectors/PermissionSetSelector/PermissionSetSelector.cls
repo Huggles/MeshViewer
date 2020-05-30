@@ -13,18 +13,16 @@ public with sharing class PermissionSetSelector extends fflib_SObjectSelector im
                 for (LicenseType licenseType : LicenseType.values()) {
                     licenseTypesByName.put(licenseType.name(), licenseType);
                 }
-                System.debug('license type names: ' + JSON.serializePretty(licenseTypesByName));
                 License_Type_Definition__mdt[] licenseTypeDefinitions = [SELECT Permission_Set_API_Name__c, DeveloperName, Licence_Type_Name__c FROM License_Type_Definition__mdt];
                 Set<String> permissionSetApiNames = new Set<String>();
                 Map<String, LicenseType> licenseTypesByPermissionSetApiName = new Map<String, LicenseType>();
                 for (License_Type_Definition__mdt licenseTypeDefinition : licenseTypeDefinitions) {
-                    permissionSetApiNames.add(licenseTypeDefinition.Permission_Set_API_Name__c);
-                    licenseTypesByPermissionSetApiName.put(licenseTypeDefinition.Permission_Set_API_Name__c, licenseTypesByName.get(licenseTypeDefinition.Licence_Type_Name__c));
+                    if (!String.isEmpty(licenseTypeDefinition.Permission_Set_API_Name__c) && (!String.isEmpty(licenseTypeDefinition.Licence_Type_Name__c))) {
+                        permissionSetApiNames.add(licenseTypeDefinition.Permission_Set_API_Name__c);
+                        licenseTypesByPermissionSetApiName.put(licenseTypeDefinition.Permission_Set_API_Name__c, licenseTypesByName.get(licenseTypeDefinition.Licence_Type_Name__c));
+                    }
                 }
-                System.debug('permission set names: ' + JSON.serializePretty(permissionSetApiNames));
                 PermissionSet[] permissionSets = [SELECT Name, Id, Label, NamespacePrefix FROM PermissionSet WHERE Name IN : permissionSetApiNames];
-                System.debug('permission sets: ' + JSON.serializePretty(permissionSets));
-
                 for (PermissionSet permissionSet : permissionSets) {
                     LicenseType licenseType = licenseTypesByName.get(permissionSet.Name.toUpperCase());
                     permissionSetByLicenseTypes.put(licenseType, permissionSet);
@@ -67,6 +65,10 @@ public with sharing class PermissionSetSelector extends fflib_SObjectSelector im
         }
         System.debug('permission sets with exclusion: ' + JSON.serializePretty(returnValue));
         return returnValue;
+    }
+
+    public PermissionSet[] selectAllLicenseTypePermissionSets() {
+        return permissionSetByLicenseTypes.values();
     }
 
 

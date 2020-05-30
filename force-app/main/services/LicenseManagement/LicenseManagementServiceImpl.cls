@@ -91,6 +91,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return UserSelector.newInstance().selectUsersWithoutLicenseTypeSeat(licenseType, offSet, nrOfRows, ordering);
     }
 
+    public User[] getUsersWithoutSeat(Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
+        return UserSelector.newInstance().selectUsersWithoutSeat(offSet, nrOfRows, ordering);
+    }
+
     public Integer getUnAssignedUsersForLicenseTypeCount(LicenseType licenseType) {
         Integer numberOfSeatsAssigned = getAssignedUsersForLicenseType(licenseType).size();
         Integer totalNumberOfUsers = [SELECT Count() FROM User];
@@ -109,7 +113,9 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public LicenseType getLicenseTypeByName(String name) {
+        System.debug('license type name: ' + name);
         LicenseType[] licenseTypes = LicenseType.values();
+        System.debug('license types: ' + licenseTypes);
         LicenseType returnValue = null;
         for (LicenseType licenseType : licenseTypes) {
             if (name == licenseType.name()) {

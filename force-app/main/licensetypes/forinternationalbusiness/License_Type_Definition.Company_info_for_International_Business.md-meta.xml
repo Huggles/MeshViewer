@@ -11,6 +11,10 @@
         <value xsi:type="xsd:string">CompanyInfoForInternationalBusinessNrOfSeats</value>
     </values>
     <values>
+        <field>Order__c</field>
+        <value xsi:type="xsd:double">2.0</value>
+    </values>
+    <values>
         <field>Permission_Set_API_Name__c</field>
         <value xsi:type="xsd:string">Company_info_for_International_Business</value>
     </values>
