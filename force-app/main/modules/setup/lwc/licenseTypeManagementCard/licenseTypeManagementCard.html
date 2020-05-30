@@ -5,40 +5,44 @@
 <!-- License Type Management Card -->
 <template>
     <lightning-card title={title} variant="base">
-        <template if:true={showAssignLicensesModal}>
-            <c-assign-license-type-modal license-type-api-name={licenseTypeApiName} onusersassigned={handleUsersAssigned} onclose={handleCloseAssignLicensesModal}></c-assign-license-type-modal>
-        </template>
-        <div slot="actions">
-            <template if:true={showAssignLicensesButton}>
-                <lightning-button class="slds-theme_neutral" variant="neutral" label="Assign Licenses" onclick={handleAssignLicensesClicked}></lightning-button>
-            </template>
-  <!-- TODO: add later          <lightning-button class="slds-theme_neutral" variant="neutral" label="Purchase Licenses"></lightning-button> -->
-        </div>
-        <div class="slds-card__body_inner">
-            <div style="font-size: 0.8125rem;">
-                <p>{assignedNorOfSeats} Licenses out of {totalNrOfSeats} assigned.</p>
+        <template if:true={isInitializing}>
+            <div style='height: 300px'>
+                <lightning-spinner alternative-text='Loading'></lightning-spinner>
             </div>
-            <template if:true={sObjectUsers}>
-                <c-user-data-table
-                        users={sObjectUsers}
-                        max-number-of-users={assignedNorOfSeats}
-                        is-loading={isLoading}
-                        default-sort-direction={defaultSortDirection}
-                        enable-infinite-loading={enableInfiniteLoading}
-                        onsort={handleSort}
-                        onrowselection={handleRowSelection}
-                        onloadmore={handleLoadMore}>
-                </c-user-data-table>
+        </template>
+        <template if:false={isInitializing}>
+            <template if:true={showAssignLicensesModal}>
+                <c-assign-license-type-modal license-type-api-name={licenseTypeApiName} onusersassigned={handleUsersAssigned} onclose={handleCloseAssignLicensesModal}></c-assign-license-type-modal>
             </template>
-            <template if:false={sObjectUsers}>
-                <c-no-result-image no-data-label={noAssignedUsers}></c-no-result-image>
-            </template>
-        </div>
-        <div slot="footer">
-            <template if:true={sObjectUsers}>
-                <lightning-button class="slds-theme_neutral" variant="neutral" label="Remove Assignments" onclick={handleRemoveAssignmentClicked}></lightning-button>
-            </template>
-        </div>
-
+            <div slot="actions">
+                <template if:true={showAssignLicensesButton}>
+                    <template if:true={sObjectUsers}>
+                        <lightning-button class="slds-theme_neutral" variant="neutral" label="Remove Assignments" disabled={isNoRowSelected} onclick={handleRemoveAssignmentClicked}></lightning-button>
+                    </template>
+                    <lightning-button class="slds-theme_neutral" variant="neutral" label="Assign Licenses" onclick={handleAssignLicensesClicked}></lightning-button>
+                </template>
+                <!-- TODO: add later          <lightning-button class="slds-theme_neutral" variant="neutral" label="Purchase Licenses"></lightning-button> -->
+            </div>
+            <div class="slds-card__body_inner">
+                <div style="font-size: 0.8125rem;">
+                    <p>{assignedNorOfSeats} Licenses out of {totalNrOfSeats} assigned.</p>
+                </div>
+                <template if:true={sObjectUsers}>
+                    <c-user-data-table
+                            users={sObjectUsers}
+                            max-number-of-users={assignedNorOfSeats}
+                            is-loading={isLoading}
+                            default-sort-direction={defaultSortDirection}
+                            enable-infinite-loading={enableInfiniteLoading}
+                            onsort={handleSort}
+                            onrowselection={handleRowSelection}
+                            onloadmore={handleLoadMore}>
+                    </c-user-data-table>
+                </template>
+                <template if:false={sObjectUsers}>
+                    <c-no-result-image no-data-label={noAssignedUsers}></c-no-result-image>
+                </template>
+            </div>
+        </template>
     </lightning-card>
 </template>

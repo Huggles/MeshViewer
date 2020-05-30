@@ -32,7 +32,7 @@ export default class AssignLicenseTypeModal extends LightningElement {
     /**
      * True if the table is loading
      */
-    isLoading;
+    isFetchingUsers;
 
     /**
      * The rows selected in the table
@@ -66,8 +66,23 @@ export default class AssignLicenseTypeModal extends LightningElement {
      */
     sortDirection = this.defaultSortDirection;
 
+    /**
+     * True if the component is initializing and a spinner should be shown. False otherwise
+     */
+    isInitializing = true;
+
     connectedCallback() {
-        this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
+        this.isInitializing = true;
+        this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection).
+            then(result =>
+                {
+                    this.isInitializing = false
+                }).
+            catch(error =>
+                {
+                    this.isInitializing = false;
+                    this.error = error;
+                });
     }
 
     /**
@@ -82,11 +97,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
      */
     handleCancelClicked() {
         this.dispatchEvent(new CustomEvent('close'));
-    }
-
-    handleAssignAndCloseButtonClicked() {
-        this.handleAssignUsers();
-        this.handleDialogClose();
     }
 
     handleAssignButtonClicked(event) {
@@ -132,14 +142,23 @@ export default class AssignLicenseTypeModal extends LightningElement {
     }
 
     /**
+     * True when rows have been selected, false if not
+     * @type {boolean}
+     */
+    isNoRowSelected = true;
+
+    /**
      * Called when rows in the user data table have been selected
      * @param event
      */
     handleRowSelection(event) {
         this.selectedRows = event.target.selectedRows;
+        if (this.selectedRows && this.selectedRows.length > 0) {
+            this.isNoRowSelected = false;
+        } else {
+            this.isNoRowSelected = true;
+        }
     }
-
-
 
     /**
      * Called when the user data table needs to load more data
@@ -154,27 +173,33 @@ export default class AssignLicenseTypeModal extends LightningElement {
      */
     fetchUnAssignedUsers(offset, limit, sortedBy, sortDirection) {
         // TODO: refactor so there is no code duplication with licenseTypeManagementCard
-        this.isLoading = true;
-        getUnAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
-            .then(result => {
-                if (result && result.length > 0) {
-                    if (this.sObjectUsers) {
-                        const currentSObjectUsers = this.sObjectUsers;
-                        const newSObjectUsers = currentSObjectUsers.concat(result);
-                        this.sObjectUsers = newSObjectUsers;
-                    } else {
-                        this.sObjectUsers = result;
+        return new Promise((resolve, reject) => {
+            this.isFetchingUsers = true;
+            getUnAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
+                .then(result => {
+                    if (result && result.length > 0) {
+                        if (this.sObjectUsers) {
+                            const currentSObjectUsers = this.sObjectUsers;
+                            const newSObjectUsers = currentSObjectUsers.concat(result);
+                            this.sObjectUsers = newSObjectUsers;
+                        } else {
+                            this.sObjectUsers = result;
+                        }
+                        if (this.sObjectUsers && this.sObjectUsers.length >= this.maxUsers) {
+                            this.enableInfiniteLoading = false;
+                        }
+
                     }
-                    if (this.sObjectUsers && this.sObjectUsers.length >= this.maxUsers) {
-                        this.enableInfiniteLoading = false;
-                    }
-                }
-                this.isLoading = false;
-            })
-            .catch(error => {
-                this.error = error;
-                this.isLoading = false;
-            })
+                    this.isFetchingUsers = false;
+                    resolve('unassigned users sucessfully loaded');
+                })
+                .catch(error => {
+                    this.error = error;
+                    this.isFetchingUsers = false;
+                    resolve(error);
+                })
+        });
+
     }
 
 }

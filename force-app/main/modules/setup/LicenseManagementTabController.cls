@@ -23,9 +23,10 @@ public inherited sharing class LicenseManagementTabController {
                         Order__c
                 FROM License_Type_Definition__mdt WHERE Order__c > 0 ORDER BY Order__c ASC];
         List<String> returnValues = new List<String>();
-        System.debug('license type definitions: ' + licenseTypeDefinitions);
         for (License_Type_Definition__mdt licenseTypeDefinition : licenseTypeDefinitions) {
-            returnValues.add(licenseTypeDefinition.Licence_Type_Name__c);
+            Integer nrOfSeats = LicenseManagementService.newInstance().getTotalNumberOfSeats(LicenseManagementService.newInstance().getLicenseTypeByName(licenseTypeDefinition.Licence_Type_Name__c));
+            if (nrOfSeats != null && nrOfSeats > 0)
+                returnValues.add(licenseTypeDefinition.Licence_Type_Name__c);
         }
         return returnValues;
     }

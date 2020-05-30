@@ -18,28 +18,32 @@
                     <div class="slds-text-heading_medium slds-hyphenate header-string">Assign Licenses</div>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium">
-                <template if:true={sObjectUsers}>
-                    <c-user-data-table
-                            users={sObjectUsers}
-                            max-number-of-users={maxUsers}
-                            is-loading={isLoading}
-                            selected-rows={selectedRows}
-                            default-sort-direction={defaultSortDirection}
-                            enable-infinite-loading={enableInfiniteLoading}
-                            onsort={handleSort}
-                            onrowselection={handleRowSelection}
-                            onloadmore={handleLoadMore}>
-                    </c-user-data-table>
-                </template>
-                <template if:false={sObjectUsers}>
-                    <c-no-result-image no-data-label="No users available to assign licenses to"></c-no-result-image>
-                </template>
+                    <template if:true={isInitializing}>
+                        <lightning-spinner alternative-text='loading'></lightning-spinner>
+                    </template>
+                    <template if:false={isInitializing}>
+                        <template if:true={sObjectUsers}>
+                            <c-user-data-table
+                                    users={sObjectUsers}
+                                    max-number-of-users={maxUsers}
+                                    is-loading={isFetchingUsers}
+                                    selected-rows={selectedRows}
+                                    default-sort-direction={defaultSortDirection}
+                                    enable-infinite-loading={enableInfiniteLoading}
+                                    onsort={handleSort}
+                                    onrowselection={handleRowSelection}
+                                    onloadmore={handleLoadMore}>
+                            </c-user-data-table>
+                        </template>
+                        <template if:false={sObjectUsers}>
+                            <c-no-result-image no-data-label="No users available to assign licenses to"></c-no-result-image>
+                        </template>
+                    </template>
                 </div>
                 <footer class="slds-modal__footer">
                     <template if:true={sObjectUsers}>
-                        <lightning-button class="slds-m-right_xx-small slds-theme_neutral" variant="neutral" label="Cancel" onclick={handleCancelClicked}></lightning-button>
-                        <lightning-button class="slds-theme_brand" variant="brand" label="Assign" onclick={handleAssignButtonClicked}></lightning-button>
-                        <lightning-button class="slds-m-right_xx-small slds-theme_neutral" variant="neutral" label="Assign and Close" onclick={handleAssignAndCloseButtonClicked}></lightning-button>
+                        <lightning-button class="slds-theme_brand slds-m-right_xx-small" disabled={isNoRowSelected} variant="brand" label="Assign" onclick={handleAssignButtonClicked}></lightning-button>
+                        <lightning-button class="slds-theme_neutral" variant="neutral" label="Cancel" onclick={handleCancelClicked}></lightning-button>
                     </template>
                     <template if:false={sObjectUsers}>
                         <lightning-button class="slds-theme_brand" variant="brand" label="Close" onclick={handleDialogClose}></lightning-button>

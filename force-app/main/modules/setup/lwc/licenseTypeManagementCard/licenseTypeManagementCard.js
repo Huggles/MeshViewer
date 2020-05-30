@@ -88,9 +88,16 @@ export default class LicenseTypeManagementCard extends LightningElement {
     enableInfiniteLoading = true;
 
     /**
-     * True if the table is loadin
+     * True if the table is loading. A spinner is shown in the table if true
      */
     isLoading = false;
+
+    /**
+     * True if no rows selected in the table. If false the remove assignment button is enabled
+     * @type {boolean}
+     */
+    isNoRowSelected = true;
+
 
     /**
      * Column FieldName on which to sort the table
@@ -118,34 +125,54 @@ export default class LicenseTypeManagementCard extends LightningElement {
      * Fetches a new set of users. Appends them to the assignedUsers.
      */
     fetchAssignedUsers(offset, limit, sortedBy, sortDirection) {
-        this.isLoading = true;
-        getAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
-            .then(result => {
-                if (result && result.length > 0) {
-                    if (this.sObjectUsers) {
-                        const currentSObjectUsers = this.sObjectUsers;
-                        const newSObjectUsers = currentSObjectUsers.concat(result);
-                        this.sObjectUsers = newSObjectUsers;
-                    } else {
-                        this.sObjectUsers = result;
+        return new Promise((resolve, reject) => {
+            this.isLoading = true;
+            getAssignedUsers({
+                licenseTypeAPIName: this.licenseTypeApiName,
+                startRow: offset,
+                nrOfRows: limit,
+                orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]
+            })
+                .then(result => {
+                    if (result && result.length > 0) {
+                        if (this.sObjectUsers) {
+                            const currentSObjectUsers = this.sObjectUsers;
+                            const newSObjectUsers = currentSObjectUsers.concat(result);
+                            this.sObjectUsers = newSObjectUsers;
+                        } else {
+                            this.sObjectUsers = result;
+                        }
                     }
-                }
-                if (this.sObjectUsers && this.sObjectUsers.length >= this.assignedNorOfSeats) {
-                    this.enableInfiniteLoading = false;
-                }
-                this.isLoading = false;
-            })
-            .catch(error => {
-                this.error = error;
-                this.isLoading = false;
-            })
+                    if (this.sObjectUsers && this.sObjectUsers.length >= this.assignedNorOfSeats) {
+                        this.enableInfiniteLoading = false;
+                    }
+                    this.isLoading = false;
+                    resolve('assigned users loaded');
+                })
+                .catch(error => {
+                    this.error = error;
+                    this.isLoading = false;
+                    reject(this.error);
+                })
+        });
     }
 
+    /**
+     * True if the component is loading
+     */
+    isInitializing = true;
+
     connectedCallback() {
+        this.isInitializing = true;
         this.fetchLicenseTypeInfo()
             .then(result => {
                 this.showAssignLicensesButton = this.availableNrOfSeats > 0; // TODO: should take into account how many users there are in the org
-                this.fetchAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
+                this.fetchAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection)
+                    .then(this.isInitializing = false)
+                    .catch((error) => {
+                        this.error = error;
+                        this.isInitializing = false;
+                    })
             })
     }
 
@@ -159,6 +186,11 @@ export default class LicenseTypeManagementCard extends LightningElement {
 
     handleRowSelection(event) {
         this.selectedRows = event.target.selectedRows;
+        if (this.selectedRows && this.selectedRows.length > 0) {
+            this.isNoRowSelected = false;
+        } else {
+            this.isNoRowSelected = true;
+        }
     }
 
     handleRemoveAssignmentClicked(event) {
