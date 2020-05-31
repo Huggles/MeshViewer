@@ -8,9 +8,16 @@ import getUnAssignedUserCount from '@salesforce/apex/LicenseTypeManagementCardCo
 import assignUsers from '@salesforce/apex/LicenseTypeManagementCardController.assignUsers';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
+import Success from '@salesforce/label/c.Success';
+import Close from '@salesforce/label/c.Close';
+
 const numberOfRowsToLoad = 20;
 
 export default class AssignLicenseTypeModal extends LightningElement {
+
+    label = {
+        Success
+    }
 
     /**
      * The API name of the License type
@@ -111,8 +118,9 @@ export default class AssignLicenseTypeModal extends LightningElement {
             assignUsers({licenseTypeAPIName: this.licenseTypeApiName, usersToAssign: selectedIds})
                 .then(result => {
                     const event = new ShowToastEvent({
-                        title: 'Success',
-                        message: 'User assignment successful'
+                        title: this.label.Success,
+                        message: 'User assignment successful',
+                        variant: 'success'
                     });
                     this.dispatchEvent(event);
                     const newlyAssignedUsers = this.sObjectUsers.filter(sObjectUser => selectedIds.includes(sObjectUser.Id));
@@ -172,7 +180,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
      * Fetches a new set of unassigned users. Appends them to the sObjectUsers or initializes the property.
      */
     fetchUnAssignedUsers(offset, limit, sortedBy, sortDirection) {
-        // TODO: refactor so there is no code duplication with licenseTypeManagementCard
         return new Promise((resolve, reject) => {
             this.isFetchingUsers = true;
             getUnAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})

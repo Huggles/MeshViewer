@@ -71,5 +71,11 @@ public with sharing class PermissionSetSelector extends fflib_SObjectSelector im
         return permissionSetByLicenseTypes.values();
     }
 
+    public PermissionSet[] selectPermissionSetsByCustomPermission(List<CustomPermission> customPermissions) {
+        Set<Id> customPermissionIds = (new Map<Id, CustomPermission>(customPermissions)).keySet();
+        PermissionSet[] permissionSets = [SELECT Id, Name, Label, NamespacePrefix FROM PermissionSet WHERE IsOwnedByProfile = false AND Id IN (SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityType = 'CustomPermission' AND SetupEntityId IN :customPermissionIds)];
+        return permissionSets;
+    }
+
 
 }

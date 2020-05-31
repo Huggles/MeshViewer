@@ -9,7 +9,6 @@ public inherited sharing class PermissionSetAssignmentSelector extends fflib_SOb
     public List<Schema.SObjectField> getSObjectFieldList() {
         return new List<Schema.SObjectField>{
                 PermissionSetAssignment.AssigneeId,
-                PermissionSetAssignment.PermissionSetGroupId,
                 PermissionSetAssignment.PermissionSetId,
                 PermissionSetAssignment.Id
         };

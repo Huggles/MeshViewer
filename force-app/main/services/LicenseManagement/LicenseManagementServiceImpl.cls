@@ -63,21 +63,19 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     private static Map<Feature, Map<Id, Boolean>> userHasAccessPerFeature = new Map<Feature, Map<Id, Boolean>>();
 
-    private static Map<String, Id> customPermissionIdsByDeveloperName {
+    private static Map<String, CustomPermission> customPermissionByDeveloperName {
         get {
-            if (customPermissionIdsByDeveloperName == null) {
-                customPermissionIdsByDeveloperName = new Map<String, Id>();
+            if (customPermissionByDeveloperName == null) {
+                customPermissionByDeveloperName = new Map<String, CustomPermission>();
                 List<CustomPermission> customPermissions = [SELECT Id, DeveloperName FROM CustomPermission];
                 for (CustomPermission customPermission : customPermissions) {
-                    customPermissionIdsByDeveloperName.put(customPermission.DeveloperName, customPermission.Id);
+                    customPermissionByDeveloperName.put(customPermission.DeveloperName, customPermission);
                 }
             }
-            return customPermissionIdsByDeveloperName;
+            return customPermissionByDeveloperName;
         }
         set;
     }
-
-    private static Map<Id, Set<Id>> permissionSetGroupAndSetIdsByCustomPermissionId = new Map<Id, Set<Id>>();
 
     public User[] getAssignedUsersForLicenseType(LicenseType licenseType) {
         return UserSelector.newInstance().selectByLicenseType(licenseType);
@@ -214,20 +212,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return licenseTypeDefinition.Title__c; // this is the human readable name, not the API name
     }
 
-    private static Set<Id> getPermissionSetGroupAndSetIds(Id customPermissionId) {
-        Set<Id> returnValue = permissionSetGroupAndSetIdsByCustomPermissionId.get(customPermissionId);
-        if (returnValue == null) {
-            returnValue = new Set<Id>();
-            SetupEntityAccess[] setupEntityAccesses = [SELECT ParentId FROM SetupEntityAccess WHERE SetupEntityType = 'CustomPermission' AND SetupEntityId =:customPermissionId];
-            for (SetupEntityAccess setupEntityAccess : setupEntityAccesses) {
-                returnValue.add(setupEntityAccess.ParentId);
-            }
-            permissionSetGroupAndSetIdsByCustomPermissionId.put(customPermissionId, returnValue);
-        }
-        return returnValue;
-    }
-
-
     public void userHasAccess(Feature feature) {
         Map<Id, Boolean> userHasAccess = userHasAccessPerFeature.get(feature);
         if (userHasAccess == null) {
@@ -239,12 +223,9 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         if (hasAccessToThisFeature == null) {
             String featureName = feature.name();
             Feature_Definition__mdt featureDefinition = [SELECT DeveloperName FROM Feature_Definition__mdt WHERE DeveloperName = : featureName LIMIT 1]; // featureName is in capitals but a SOQL search is case insensitive so this returns the right mdt
-            Id customPermissionId = customPermissionIdsByDeveloperName.get(featureDefinition.DeveloperName); // a get is case sensitive so we need the Feature_Definition_mdt here
-            //System.debug('customPermissionIdsByDeveloperName: ' + JSON.serializePretty(customPermissionIdsByDeveloperName));
-            //System.debug('featureName ' + featureName);
-            System.debug('customPermissionId ' + customPermissionId);
-            Set<Id> permissionSetGroupAndSetIds = getPermissionSetGroupAndSetIds(customPermissionId);
-            PermissionSetAssignment[] permissionSetAssignments = [SELECT PermissionSetGroupId, PermissionSetId FROM PermissionSetAssignment WHERE AssigneeId = :userId AND (PermissionSetGroupId IN :permissionSetGroupAndSetIds OR PermissionSetId IN:permissionSetGroupAndSetIds)];
+            CustomPermission customPermission = customPermissionByDeveloperName.get(featureDefinition.DeveloperName); // a get is case sensitive so we need the Feature_Definition_mdt here
+            Set<Id> permissionSetIds = (new Map<Id, PermissionSet>(PermissionSetSelector.newInstance().selectPermissionSetsByCustomPermission(new List<CustomPermission>{customPermission}))).keySet();
+            PermissionSetAssignment[] permissionSetAssignments = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :userId AND (PermissionSetId IN:permissionSetIds)];
             hasAccessToThisFeature = permissionSetAssignments.size() > 0;
             userHasAccess.put(userId, hasAccessToThisFeature);
         }

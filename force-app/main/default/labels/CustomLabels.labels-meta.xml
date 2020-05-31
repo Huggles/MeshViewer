@@ -68,6 +68,13 @@
         <value>Please fill the city name in Country&#39;s native language</value>
     </labels>
     <labels>
+        <fullName>Close</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Close</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
         <fullName>Config_Account_ActivateDescription</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1487,18 +1494,18 @@
         <value>Please enter a valid Irish VAT Number starting with IE</value>
     </labels>
     <labels>
-        <fullName>Valid_NL_registration_number</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid NL registration number</shortDescription>
-        <value>Please enter a value with either 8 or 12 digits</value>
-    </labels>
-    <labels>
         <fullName>Valid_Italian_VAT_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Italian VAT Number</shortDescription>
         <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
+    </labels>
+    <labels>
+        <fullName>Valid_NL_registration_number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid NL registration number</shortDescription>
+        <value>Please enter a value with either 8 or 12 digits</value>
     </labels>
     <labels>
         <fullName>Valid_Spanish_VAT_Number</fullName>

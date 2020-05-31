@@ -12,8 +12,6 @@ public inherited sharing class TestUtils {
 
     private static Map<String, Id> permissionSetIdsByName = new Map<String, Id>();
 
-    private static Map<String, Id> permissionSetGroupIdsByName = new Map<String, Id>();
-
     private static Map<String, Profile> profilesByName = new Map<String, Profile>();
 
     static {

@@ -26,4 +26,13 @@ public interface IPermissionSetSelector {
      */
     PermissionSet[] selectAllLicenseTypePermissionSets();
 
+    /**
+     * Returns all permission sets that contain all of the given custom permissions
+     * @param customPermissions the custom permissions
+     *
+     * @return the permission sets that contain all of the given custom permissions
+     */
+    PermissionSet[] selectPermissionSetsByCustomPermission(List<CustomPermission> customPermissions);
+
+
 }
