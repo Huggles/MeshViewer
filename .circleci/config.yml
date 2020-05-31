@@ -37,6 +37,9 @@ jobs:
   run_apex_tests:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
+    environment:
+      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_LOG_LEVEL: trace
     steps:
       - checkout
       - log_into_devhub
@@ -44,15 +47,30 @@ jobs:
           name: create scratch org
           command:
             sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM
+      - store_artifacts:
+          path: /root/project/metadata
+          destination: org-create-metadata
+      - store_artifacts:
+          path: /root/.sfdx/sfdx.log
+          destination: org-create-sfdx-log
       - run:
           name: push source to scratch org
           command:
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
+      - store_artifacts:
+          path: /root/.sfdx/sfdx.log
+          destination: push-sfdx-log
+      - store_artifacts:
+          path: /root/project/metadata
+          destination: push-metadata
       - run:
           name: run apex tests
           command: |
             mkdir -p tests/junit
             sfdx force:apex:test:run -d tests/junit -r junit -w 20
+      - store_artifacts:
+          path: /root/.sfdx/sfdx.log
+          destination: test-sfdx-log
       - store_test_results:
           path: tests/junit
       - store_artifacts:
