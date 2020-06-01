@@ -4,7 +4,7 @@
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
         <label>Create Dutch Dossiers</label>
-        <locationX>1522</locationX>
+        <locationX>1701</locationX>
         <locationY>979</locationY>
         <actionName>CreateDutchDossierInvocable</actionName>
         <actionType>apex</actionType>
@@ -41,7 +41,7 @@
         <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &apos;normal&apos; end flow.</description>
         <name>End</name>
         <label>End</label>
-        <locationX>1207</locationX>
+        <locationX>1386</locationX>
         <locationY>889</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -49,7 +49,7 @@
     <actionCalls>
         <name>Find_duplicate_dossier</name>
         <label>Find duplicate dossier</label>
-        <locationX>990</locationX>
+        <locationX>1169</locationX>
         <locationY>889</locationY>
         <actionName>FindDuplicatesInvocable</actionName>
         <actionType>apex</actionType>
@@ -78,7 +78,7 @@
     <actionCalls>
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
-        <locationX>212</locationX>
+        <locationX>391</locationX>
         <locationY>587</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
@@ -160,7 +160,7 @@
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
-        <locationX>412</locationX>
+        <locationX>591</locationX>
         <locationY>1160</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
@@ -235,8 +235,8 @@
     <assignments>
         <name>Assign_Duplicate_Dossier</name>
         <label>Assign Duplicate Dossier</label>
-        <locationX>1237</locationX>
-        <locationY>1237</locationY>
+        <locationX>1415</locationX>
+        <locationY>1284</locationY>
         <assignmentItems>
             <assignToReference>FoundDuplicateDossier</assignToReference>
             <operator>Assign</operator>
@@ -245,14 +245,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Duplicate_Dossier_Check</targetReference>
+            <targetReference>Loop_Over_Duplicate_Dossiers</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_Found_Dossier</name>
         <label>Assign Found Dossier</label>
-        <locationX>1207</locationX>
-        <locationY>1062</locationY>
+        <locationX>1446</locationX>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>selectedDossier</assignToReference>
             <operator>Assign</operator>
@@ -275,7 +275,7 @@
         <description>Assigns the country selected in the search screen to a list</description>
         <name>Assign_Selected_Country_to_List</name>
         <label>Assign Selected Country to List</label>
-        <locationX>415</locationX>
+        <locationX>594</locationX>
         <locationY>721</locationY>
         <assignmentItems>
             <assignToReference>Countries</assignToReference>
@@ -291,7 +291,7 @@
     <assignments>
         <name>Count_Dossier_Lists</name>
         <label>Count Dossier Lists</label>
-        <locationX>562</locationX>
+        <locationX>741</locationX>
         <locationY>646</locationY>
         <assignmentItems>
             <assignToReference>DossiersByCompanyIDCount</assignToReference>
@@ -356,7 +356,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Company_ID</name>
         <label>Dossiers Filtered By Company ID</label>
-        <locationX>214</locationX>
+        <locationX>393</locationX>
         <locationY>465</locationY>
         <assignmentItems>
             <assignToReference>DossiersByCompanyID</assignToReference>
@@ -372,7 +372,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Registration_type_Street_City_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Registration_type, Street, City, Postalcode</label>
-        <locationX>659</locationX>
+        <locationX>838</locationX>
         <locationY>209</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusRegistration_typeStreetCityPostalcode</assignToReference>
@@ -388,7 +388,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Street_City_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Street, City, Postalcode</label>
-        <locationX>193</locationX>
+        <locationX>372</locationX>
         <locationY>217</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusStreetCityPostalcode</assignToReference>
@@ -404,7 +404,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Street_City_Province_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Street, City, Province, Postalcode</label>
-        <locationX>667</locationX>
+        <locationX>846</locationX>
         <locationY>475</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusStreetCityProvincePostalcode</assignToReference>
@@ -420,7 +420,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_Number</name>
         <label>Dossiers Filtered By Registration Number</label>
-        <locationX>198</locationX>
+        <locationX>377</locationX>
         <locationY>346</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistrationNumber</assignToReference>
@@ -436,7 +436,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_Number_Registration_Type_City</name>
         <label>Dossiers Filtered By Registration_Number, Registration_Type, City</label>
-        <locationX>495</locationX>
+        <locationX>674</locationX>
         <locationY>72</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistration_NumberRegistration_TypeCity</assignToReference>
@@ -452,7 +452,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_number_Status_Postalcode</name>
         <label>Dossiers Filtered By Registration_number, Status, Postalcode</label>
-        <locationX>665</locationX>
+        <locationX>844</locationX>
         <locationY>331</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistration_numberStatusPostalcode</assignToReference>
@@ -468,7 +468,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Vat_Number</name>
         <label>Dossiers Filtered By Vat Number</label>
-        <locationX>341</locationX>
+        <locationX>520</locationX>
         <locationY>119</locationY>
         <assignmentItems>
             <assignToReference>DossiersByVatNumber</assignToReference>
@@ -484,7 +484,7 @@
     <decisions>
         <name>Cancel_pressed_in_CreditSafe_search_results</name>
         <label>Cancel pressed in CreditSafe search results</label>
-        <locationX>753</locationX>
+        <locationX>932</locationX>
         <locationY>764</locationY>
         <defaultConnector>
             <targetReference>Find_duplicate_dossier</targetReference>
@@ -509,7 +509,7 @@
     <decisions>
         <name>Cancel_pressed_in_Dutch_search_results</name>
         <label>Cancel pressed in Dutch search results</label>
-        <locationX>754</locationX>
+        <locationX>933</locationX>
         <locationY>999</locationY>
         <defaultConnector>
             <targetReference>Find_duplicate_dossier</targetReference>
@@ -535,7 +535,7 @@
         <description>Decides which search method to call based on the selected country</description>
         <name>Decide_search_method</name>
         <label>Decide search method</label>
-        <locationX>403</locationX>
+        <locationX>582</locationX>
         <locationY>925</locationY>
         <defaultConnector>
             <targetReference>Assign_Selected_Country_to_List</targetReference>
@@ -575,8 +575,8 @@
     <decisions>
         <name>Duplicate_Dossier_Check</name>
         <label>Duplicate Dossier Check</label>
-        <locationX>1385</locationX>
-        <locationY>1138</locationY>
+        <locationX>1583</locationX>
+        <locationY>1154</locationY>
         <defaultConnector>
             <targetReference>Type_of_Business_Dossier</targetReference>
         </defaultConnector>
@@ -600,7 +600,7 @@
     <decisions>
         <name>Filter_Search_Results</name>
         <label>Filter Search Results</label>
-        <locationX>413</locationX>
+        <locationX>592</locationX>
         <locationY>362</locationY>
         <defaultConnector>
             <targetReference>Show_Credit_Safe_Search_Results</targetReference>
@@ -731,8 +731,8 @@
         <description>Decides Type of Business Dossier based on the selected country</description>
         <name>Type_of_Business_Dossier</name>
         <label>Type of Business Dossier</label>
-        <locationX>1384</locationX>
-        <locationY>764</locationY>
+        <locationX>1593</locationX>
+        <locationY>707</locationY>
         <defaultConnector>
             <targetReference>Create_Credit_Safe_dossier</targetReference>
         </defaultConnector>
@@ -761,12 +761,13 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Organisation Search Flow</label>
     <loops>
         <name>Loop_Over_Duplicate_Dossiers</name>
         <label>Loop Over Duplicate Dossiers</label>
-        <locationX>999</locationX>
-        <locationY>1243</locationY>
+        <locationX>1177</locationX>
+        <locationY>1276</locationY>
         <assignNextValueToReference>DuplicateDossierLoopVariable</assignNextValueToReference>
         <collectionReference>Find_duplicate_dossier</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -774,13 +775,13 @@
             <targetReference>Assign_Duplicate_Dossier</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Assign_Duplicate_Dossier</targetReference>
+            <targetReference>Duplicate_Dossier_Check</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Separate_Search_Results</name>
         <label>Separate Search Results</label>
-        <locationX>418</locationX>
+        <locationX>597</locationX>
         <locationY>575</locationY>
         <assignNextValueToReference>LoopVariableBusinessDossier</assignNextValueToReference>
         <collectionReference>Search_for_Credit_Safe_Dossiers</collectionReference>
@@ -808,7 +809,7 @@
     <recordCreates>
         <name>Create_Credit_Safe_dossier</name>
         <label>Create Credit Safe dossier</label>
-        <locationX>1194</locationX>
+        <locationX>1373</locationX>
         <locationY>603</locationY>
         <connector>
             <targetReference>End</targetReference>
@@ -821,7 +822,7 @@
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
-        <locationX>857</locationX>
+        <locationX>1036</locationX>
         <locationY>1159</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -895,7 +896,7 @@
     <screens>
         <name>Search</name>
         <label>Enter Search Criteria</label>
-        <locationX>210</locationX>
+        <locationX>389</locationX>
         <locationY>922</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1062,7 +1063,7 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>758</locationX>
+        <locationX>937</locationX>
         <locationY>600</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>

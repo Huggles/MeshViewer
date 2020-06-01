@@ -3,7 +3,7 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>645</locationX>
+        <locationX>783</locationX>
         <locationY>241</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -11,7 +11,7 @@
     <actionCalls>
         <name>Find_Duplicate_International_Addresses</name>
         <label>Find Duplicate International Addresses</label>
-        <locationX>824</locationX>
+        <locationX>962</locationX>
         <locationY>411</locationY>
         <actionName>FindDuplicatesInvocable</actionName>
         <actionType>apex</actionType>
@@ -37,7 +37,7 @@
     <actionCalls>
         <name>Search_for_international_addresses</name>
         <label>Search for international addresses</label>
-        <locationX>411</locationX>
+        <locationX>549</locationX>
         <locationY>50</locationY>
         <actionName>SearchForInternationalAddressInvocable</actionName>
         <actionType>apex</actionType>
@@ -112,8 +112,8 @@
     <assignments>
         <name>Assign_Duplicate_International_Address</name>
         <label>Assign Duplicate International Address</label>
-        <locationX>658</locationX>
-        <locationY>588</locationY>
+        <locationX>1188</locationX>
+        <locationY>589</locationY>
         <assignmentItems>
             <assignToReference>FoundDuplicateInternationalAddress</assignToReference>
             <operator>Assign</operator>
@@ -122,14 +122,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Duplicate_International_Address_Check</targetReference>
+            <targetReference>Loop_Over_Duplicate_International_Addresses</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_Found_International_Address</name>
         <label>Assign Found International Address</label>
-        <locationX>578</locationX>
-        <locationY>408</locationY>
+        <locationX>793</locationX>
+        <locationY>406</locationY>
         <assignmentItems>
             <assignToReference>SelectedInternationalAddress</assignToReference>
             <operator>Assign</operator>
@@ -152,7 +152,7 @@
         <description>Assign the organization field the user searched for to the selected international address</description>
         <name>Assign_Organization_searched_for</name>
         <label>Assign Organization searched for</label>
-        <locationX>1083</locationX>
+        <locationX>1221</locationX>
         <locationY>412</locationY>
         <assignmentItems>
             <assignToReference>SelectedInternationalAddress.Organization__c</assignToReference>
@@ -168,7 +168,7 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>403</locationX>
+        <locationX>541</locationX>
         <locationY>241</locationY>
         <defaultConnector>
             <targetReference>Search_for_international_addresses</targetReference>
@@ -193,7 +193,7 @@
     <decisions>
         <name>Cancel_Pressed_Search_Results</name>
         <label>Cancel Pressed Search Results</label>
-        <locationX>925</locationX>
+        <locationX>1063</locationX>
         <locationY>53</locationY>
         <defaultConnector>
             <targetReference>Organization_found</targetReference>
@@ -218,8 +218,8 @@
     <decisions>
         <name>Duplicate_International_Address_Check</name>
         <label>Duplicate International Address Check</label>
-        <locationX>470</locationX>
-        <locationY>589</locationY>
+        <locationX>666</locationX>
+        <locationY>574</locationY>
         <defaultConnector>
             <targetReference>Create_International_Address</targetReference>
         </defaultConnector>
@@ -243,7 +243,7 @@
     <decisions>
         <name>Organization_found</name>
         <label>International address with organization found?</label>
-        <locationX>927</locationX>
+        <locationX>1065</locationX>
         <locationY>260</locationY>
         <defaultConnector>
             <targetReference>Find_Duplicate_International_Addresses</targetReference>
@@ -274,11 +274,12 @@
     </decisions>
     <description>Searches for and/or completes/corrects international addresses. Returns a maximum of 20 addresses.</description>
     <interviewLabel>Search International Address {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Search International Address</label>
     <loops>
         <name>Loop_Over_Duplicate_International_Addresses</name>
         <label>Loop Over Duplicate International Addresses</label>
-        <locationX>824</locationX>
+        <locationX>962</locationX>
         <locationY>589</locationY>
         <assignNextValueToReference>DuplicateInternationalAddressLoopVariable</assignNextValueToReference>
         <collectionReference>Find_Duplicate_International_Addresses</collectionReference>
@@ -287,7 +288,7 @@
             <targetReference>Assign_Duplicate_International_Address</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Assign_Duplicate_International_Address</targetReference>
+            <targetReference>Duplicate_International_Address_Check</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -306,8 +307,8 @@
     <recordCreates>
         <name>Create_International_Address</name>
         <label>Create International Address</label>
-        <locationX>354</locationX>
-        <locationY>425</locationY>
+        <locationX>665</locationX>
+        <locationY>329</locationY>
         <connector>
             <targetReference>End</targetReference>
         </connector>
@@ -320,7 +321,7 @@
     <screens>
         <name>International_Address</name>
         <label>International Address</label>
-        <locationX>252</locationX>
+        <locationX>390</locationX>
         <locationY>231</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -457,7 +458,7 @@
     <screens>
         <name>Search_Results</name>
         <label>Search Results</label>
-        <locationX>614</locationX>
+        <locationX>752</locationX>
         <locationY>50</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
