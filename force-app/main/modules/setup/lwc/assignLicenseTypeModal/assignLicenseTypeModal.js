@@ -10,13 +10,25 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 import Success from '@salesforce/label/c.Success';
 import Close from '@salesforce/label/c.Close';
+import Assign_Licenses from '@salesforce/label/c.Assign_Licenses';
+import Loading from '@salesforce/label/c.Loading';
+import Assign from '@salesforce/label/c.Assign';
+import Cancel from '@salesforce/label/c.Cancel';
+
+import No_users_available_to_assign_licenses_to from '@salesforce/label/c.No_users_available_to_assign_licenses_to';
 
 const numberOfRowsToLoad = 20;
 
 export default class AssignLicenseTypeModal extends LightningElement {
 
     label = {
-        Success
+        Success,
+        Close,
+        Assign_Licenses,
+        Loading,
+        No_users_available_to_assign_licenses_to,
+        Assign,
+        Cancel
     }
 
     /**
@@ -108,8 +120,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
 
     handleAssignButtonClicked(event) {
         this.handleAssignUsers();
-        // this.sObjectUsers = undefined;
-        // this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.sortedBy, this.sortDirection);
     }
 
     handleAssignUsers() {

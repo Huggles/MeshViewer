@@ -25,6 +25,22 @@
         <value>An error occured!</value>
     </labels>
     <labels>
+        <fullName>Assign</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Assign</shortDescription>
+        <value>Assign</value>
+    </labels>
+    <labels>
+        <fullName>Assign_Licenses</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Assign Licenses</shortDescription>
+        <value>Assign Licenses</value>
+    </labels>
+    <labels>
         <fullName>Back_To_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -802,6 +818,13 @@
         <value>Selected language is not available for selected company&#39;s country. Please select another language.</value>
     </labels>
     <labels>
+        <fullName>Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Loading</shortDescription>
+        <value>Loading</value>
+    </labels>
+    <labels>
         <fullName>Locality</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -906,6 +929,14 @@
         <protected>true</protected>
         <shortDescription>No address fields filled international address</shortDescription>
         <value>Please fill some address fields (street, postal code, PO box or locality) before searching.</value>
+    </labels>
+    <labels>
+        <fullName>No_users_available_to_assign_licenses_to</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No users available to assign licenses to</shortDescription>
+        <value>No users available to assign licenses to</value>
     </labels>
     <labels>
         <fullName>NonActive</fullName>

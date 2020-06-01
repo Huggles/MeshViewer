@@ -47,30 +47,15 @@ jobs:
           name: create scratch org
           command:
             sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM
-      - store_artifacts:
-          path: /root/project/metadata
-          destination: org-create-metadata
-      - store_artifacts:
-          path: /root/.sfdx/sfdx.log
-          destination: org-create-sfdx-log
       - run:
           name: push source to scratch org
           command:
             sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
-      - store_artifacts:
-          path: /root/.sfdx/sfdx.log
-          destination: push-sfdx-log
-      - store_artifacts:
-          path: /root/project/metadata
-          destination: push-metadata
       - run:
           name: run apex tests
           command: |
             mkdir -p tests/junit
             sfdx force:apex:test:run -d tests/junit -r junit -w 20
-      - store_artifacts:
-          path: /root/.sfdx/sfdx.log
-          destination: test-sfdx-log
       - store_test_results:
           path: tests/junit
       - store_artifacts:
@@ -80,6 +65,23 @@ jobs:
           when: always
           command: |
             sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
+      - run:
+          name: Compress Metadata Artifacts
+          when: always
+          command: |
+            tar -cvf metadata.tar /root/project/metadata
+      - run:
+          name: Compress sfdx log
+          when: always
+          command: |
+            tar -cvf sfdx_log.tar /root/.sfdx/sfdx.log
+      - store_artifacts:
+          path: metadata.tar
+          destination: metadata
+      - store_artifacts:
+          path: sfdx_log.tar
+          destination: sfdx-log
+
 
   build_packaging2_beta:
     docker:
