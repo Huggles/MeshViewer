@@ -37,7 +37,7 @@ jobs:
   run_apex_tests:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
-       environment:
+    environment:
       SFDX_MDAPI_TEMP_DIR: /root/project/metadata
       SFDX_LOG_LEVEL: trace
     steps:
@@ -81,6 +81,7 @@ jobs:
       - store_artifacts:
           path: sfdx_log.tar
           destination: sfdx-log
+  
   build_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
