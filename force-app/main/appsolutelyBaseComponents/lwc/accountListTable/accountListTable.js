@@ -58,14 +58,17 @@ export default class AccountListTable extends LightningElement {
 
     handleClickDuplicateAccount() {
         this.updateDuplicateAccount = true;
-        const navigateNextEvent = new FlowNavigationNextEvent();
-        this.dispatchEvent(navigateNextEvent);
+        const attributeChangeEvent = new FlowAttributeChangeEvent('updateDuplicateAccount', this.updateDuplicateAccount);
+        this.dispatchEvent(attributeChangeEvent);
+        this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
     handleClickCancel() {
         this.cancelClicked = true;
-        const navigateNextEvent = new FlowNavigationNextEvent();
-        this.dispatchEvent(navigateNextEvent);
+
+        const attributeChangeEvent = new FlowAttributeChangeEvent('cancelClicked', this.cancelClicked);
+        this.dispatchEvent(attributeChangeEvent);
+        this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
     handleResultSelected(event) {
