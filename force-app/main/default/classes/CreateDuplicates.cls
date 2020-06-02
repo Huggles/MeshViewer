@@ -9,7 +9,7 @@ public with sharing class CreateDuplicates {
         return createDuplicate(account);
     }
 
-    public static Id createDuplicate(SObject sobj) {
+    private static Id createDuplicate(SObject sobj) {
         Id sobjectCreatedID;
         Database.DMLOptions dml = new Database.DMLOptions();
         dml.DuplicateRuleHeader.allowSave = true;
