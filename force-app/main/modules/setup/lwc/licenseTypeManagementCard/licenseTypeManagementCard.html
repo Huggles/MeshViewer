@@ -7,7 +7,7 @@
     <lightning-card title={title} variant="base">
         <template if:true={isInitializing}>
             <div style='height: 300px'>
-                <lightning-spinner alternative-text='Loading'></lightning-spinner>
+                <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
             </div>
         </template>
         <template if:false={isInitializing}>
@@ -17,15 +17,15 @@
             <div slot="actions">
                 <template if:true={showAssignLicensesButton}>
                     <template if:true={sObjectUsers}>
-                        <lightning-button class="slds-theme_neutral" variant="neutral" label="Remove Assignments" disabled={isNoRowSelected} onclick={handleRemoveAssignmentClicked}></lightning-button>
+                        <lightning-button class="slds-theme_neutral" variant="neutral" label={label.Remove_Assignments_Button} disabled={isNoRowSelected} onclick={handleRemoveAssignmentClicked}></lightning-button>
                     </template>
-                    <lightning-button class="slds-theme_neutral" variant="neutral" label="Assign Licenses" onclick={handleAssignLicensesClicked}></lightning-button>
+                    <lightning-button class="slds-theme_neutral" variant="neutral" label={label.Assign_Licenses} onclick={handleAssignLicensesClicked}></lightning-button>
                 </template>
                 <!-- TODO: add later          <lightning-button class="slds-theme_neutral" variant="neutral" label="Purchase Licenses"></lightning-button> -->
             </div>
             <div class="slds-card__body_inner">
                 <div style="font-size: 0.8125rem;">
-                    <p>{assignedNorOfSeats} Licenses out of {totalNrOfSeats} assigned.</p>
+                    <p>{licensesAssignedLabel}</p>
                 </div>
                 <template if:true={sObjectUsers}>
                     <c-user-data-table
@@ -40,7 +40,7 @@
                     </c-user-data-table>
                 </template>
                 <template if:false={sObjectUsers}>
-                    <c-no-result-image no-data-label={noAssignedUsers}></c-no-result-image>
+                    <c-no-result-image no-data-label={label.No_users_assigned}></c-no-result-image>
                 </template>
             </div>
         </template>

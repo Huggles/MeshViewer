@@ -7,10 +7,30 @@ import getLicenseTypeInfo from '@salesforce/apex/LicenseTypeManagementCardContro
 import getAssignedUsers from '@salesforce/apex/LicenseTypeManagementCardController.getAssignedUsers';
 import unAssignUsers from '@salesforce/apex/LicenseTypeManagementCardController.unAssignUsers';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import {format} from 'c/labelFormatUtils';
+
+
+import Loading from '@salesforce/label/c.Loading';
+import Remove_Assignments_Button from '@salesforce/label/c.Remove_Assignments_Button';
+import Assign_Licenses from '@salesforce/label/c.Assign_Licenses';
+import Nr_of_licenses_assigned from '@salesforce/label/c.Nr_of_licenses_assigned';
+import No_users_assigned from '@salesforce/label/c.No_users_assigned';
+
+
 
 const numberOfRowsToLoad = 20;
 
 export default class LicenseTypeManagementCard extends LightningElement {
+
+    label = {
+        Loading,
+        Remove_Assignments_Button,
+        Assign_Licenses,
+        Nr_of_licenses_assigned,
+        No_users_assigned
+    }
+
+    licensesAssignedLabel;
 
     /**
      * Contains the API name of the license type as defined in the LicenseType enum in Apex
@@ -57,6 +77,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
                     this.availableNrOfSeats = result.availableNrOfSeats;
                     this.assignedNorOfSeats = this.totalNrOfSeats - this.availableNrOfSeats;
                     this.showAssignLicensesButton = this.availableNrOfSeats > 0;
+                    this.licensesAssignedLabel = format(this.label.Nr_of_licenses_assigned, [this.assignedNorOfSeats, this.totalNrOfSeats]);
                     resolve('license type info fetched');
                 })
                 .catch(error => {
@@ -65,6 +86,8 @@ export default class LicenseTypeManagementCard extends LightningElement {
                 })
         );
     }
+
+
 
     /**
      * The users assigned to the license type
@@ -75,12 +98,6 @@ export default class LicenseTypeManagementCard extends LightningElement {
      * The selected rows in the table
      */
     selectedRows = [];
-
-    /**
-     * The label to be shown if there are no users assigned
-     */
-        // TODO: use a custom label
-    noAssignedUsers = 'No Users Assigned';
 
     /**
      * Enable infinite loading on the table
@@ -220,6 +237,9 @@ export default class LicenseTypeManagementCard extends LightningElement {
                 });
         }
     }
+
+
+
 
     /**
      * True if the assign licenses button has been clicked

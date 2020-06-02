@@ -14,6 +14,7 @@ import Assign_Licenses from '@salesforce/label/c.Assign_Licenses';
 import Loading from '@salesforce/label/c.Loading';
 import Assign from '@salesforce/label/c.Assign';
 import Cancel from '@salesforce/label/c.Cancel';
+import Assign_users_success_message from '@salesforce/label/c.Assign_users_success_message'
 
 import No_users_available_to_assign_licenses_to from '@salesforce/label/c.No_users_available_to_assign_licenses_to';
 
@@ -28,7 +29,8 @@ export default class AssignLicenseTypeModal extends LightningElement {
         Loading,
         No_users_available_to_assign_licenses_to,
         Assign,
-        Cancel
+        Cancel,
+        Assign_users_success_message
     }
 
     /**
@@ -129,7 +131,7 @@ export default class AssignLicenseTypeModal extends LightningElement {
                 .then(result => {
                     const event = new ShowToastEvent({
                         title: this.label.Success,
-                        message: 'User assignment successful',
+                        message: this.label.Assign_users_success_message,
                         variant: 'success'
                     });
                     this.dispatchEvent(event);

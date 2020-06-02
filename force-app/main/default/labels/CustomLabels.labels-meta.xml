@@ -25,22 +25,6 @@
         <value>An error occured!</value>
     </labels>
     <labels>
-        <fullName>Assign</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Assign</shortDescription>
-        <value>Assign</value>
-    </labels>
-    <labels>
-        <fullName>Assign_Licenses</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Assign Licenses</shortDescription>
-        <value>Assign Licenses</value>
-    </labels>
-    <labels>
         <fullName>Back_To_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -224,10 +208,10 @@
         <value>Current Threshold</value>
     </labels>
     <labels>
-        <fullName>Config_Loading</fullName>
+        <fullName>Loading</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Config Loading</shortDescription>
+        <shortDescription>Alternative text for spinner</shortDescription>
         <value>Loading...</value>
     </labels>
     <labels>
@@ -818,13 +802,6 @@
         <value>Selected language is not available for selected company&#39;s country. Please select another language.</value>
     </labels>
     <labels>
-        <fullName>Loading</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Loading</shortDescription>
-        <value>Loading</value>
-    </labels>
-    <labels>
         <fullName>Locality</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -923,20 +900,68 @@
         <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
     </labels>
     <labels>
+        <fullName>No_users_available_to_assign_licenses_to</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No users available to assign licenses to</shortDescription>
+        <value>No_users_available_to_assign_licenses_to</value>
+    </labels>
+    <labels>
+        <fullName>Assign</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Assign button</shortDescription>
+        <value>Assign</value>
+    </labels>
+    <labels>
+        <fullName>Assign_users_success_message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success message shown after assigning seats to users</shortDescription>
+        <value>Users successfully assigned</value>
+    </labels>
+    <labels>
+        <fullName>Assign_Licenses</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Assign Licenses button on License Management Card</shortDescription>
+        <value>Assign Licenses</value>
+    </labels>
+    <labels>
+        <fullName>Remove_Assignments_Button</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Remove assignments button on License Management Card</shortDescription>
+        <value>Remove Assignments</value>
+    </labels>
+    <labels>
+        <fullName>Nr_of_licenses_assigned</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message showing nr of licenses have been assigned</shortDescription>
+        <value>{0} Licenses out of {1} assigned</value>
+    </labels>
+    <labels>
+        <fullName>No_users_assigned</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Text shown below desert img when no users have been assigned</shortDescription>
+        <value>No users assigned</value>
+    </labels>
+    <labels>
         <fullName>No_address_fields_filled_international_address</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>No address fields filled international address</shortDescription>
         <value>Please fill some address fields (street, postal code, PO box or locality) before searching.</value>
-    </labels>
-    <labels>
-        <fullName>No_users_available_to_assign_licenses_to</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>No users available to assign licenses to</shortDescription>
-        <value>No users available to assign licenses to</value>
     </labels>
     <labels>
         <fullName>NonActive</fullName>
