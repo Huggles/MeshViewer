@@ -4,56 +4,42 @@
 
 import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+import { NavigationMixin } from 'lightning/navigation';
 import {registerListener} from "c/pubsub";
-import Duplicates_Found_Message from '@salesforce/label/c.Duplicates_Found_Message';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
-export default class AccountListTable extends LightningElement {
+import createDuplicateAccount from '@salesforce/apex/CreateDuplicates.createDuplicateAccount';
+
+import Duplicates_Found_Message from '@salesforce/label/c.Duplicates_Found_Message';
+import Duplicate_Account_Created from '@salesforce/label/c.Duplicate_Account_Created';
+import Create_New_Account from '@salesforce/label/c.Create_New_Account';
+import Update_Duplicate_Account from '@salesforce/label/c.Update_Duplicate_Account';
+import Success from '@salesforce/label/c.Success';
+import Error from '@salesforce/label/c.Error';
+import Cancel from '@salesforce/label/c.Cancel';
+
+export default class AccountListTable extends NavigationMixin(LightningElement) {
 
     @api accountList;
     @api selectedResult;
+    @api showCreateNewAccount;
+    @api newAccount;
     @api updateDuplicateAccount = false;
     @api cancelClicked = false;
 
     @track disableUpdate = true;
 
+    label = {
+        Duplicates_Found_Message,
+        Create_New_Account,
+        Update_Duplicate_Account,
+        Cancel
+    }
+
     connectedCallback() {
-        // var object =  this.accountList,
-        //     result = Object.keys(object).reduce(function (r, k) {
-        //         return r.concat(k, object[k]);
-        //     }, []);
-        //
-        // console.log(result);
-        // for(var a in this.accountList) {
-        //     console.log(JSON.stringify(a));
-        //     if(this.accountList.hasOwnProperty(a)){
-        //         console.log(JSON.stringify(this.accountList[a]));
-        //     }
-        // }
-        // var toReturn = this.flattenObject(this.accountList);
-        // console.log('--'+toReturn);
         registerListener('resultselected', this.handleResultSelected, this);
         registerListener('resultunselected', this.handleResultUnSelected, this);
         this.data = this.accountList;
-    }
-
-    flattenObject(ob) {
-        // var toReturn = {};
-        //
-        // for (var i in ob) {
-        //     if (!ob.hasOwnProperty(i)) continue;
-        //
-        //     if ((typeof ob[i]) == 'object' && ob[i] !== null) {
-        //         var flatObject = this.flattenObject(ob[i]);
-        //         for (var x in flatObject) {
-        //             if (!flatObject.hasOwnProperty(x)) continue;
-        //
-        //             toReturn[i + '.' + x] = flatObject[x];
-        //         }
-        //     } else {
-        //         toReturn[i] = ob[i];
-        //     }
-        // }
-        return Object.values(ob).flat();
     }
 
     handleClickDuplicateAccount() {
@@ -63,9 +49,26 @@ export default class AccountListTable extends LightningElement {
         this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
+    handleClickCreateNewAccount() {
+        createDuplicateAccount({account: this.newAccount}).then(result => {
+            if (result) {
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: result,
+                        actionName: 'view',
+                    },
+                });
+                this.showToast(Success, Duplicate_Account_Created, 'success');
+            }
+        }).catch(error => {
+            this.error = error;
+            this.showToast(Error, error, 'error');
+        })
+    }
+
     handleClickCancel() {
         this.cancelClicked = true;
-
         const attributeChangeEvent = new FlowAttributeChangeEvent('cancelClicked', this.cancelClicked);
         this.dispatchEvent(attributeChangeEvent);
         this.dispatchEvent(new FlowNavigationNextEvent());
@@ -77,6 +80,15 @@ export default class AccountListTable extends LightningElement {
 
     handleResultUnSelected(event) {
         this.disableUpdate = true;
+    }
+
+    showToast(title, message, variant) {
+        const event = new ShowToastEvent({
+            "title": title,
+            "message": message,
+            "variant": variant
+        });
+        this.dispatchEvent(event);
     }
 
 }

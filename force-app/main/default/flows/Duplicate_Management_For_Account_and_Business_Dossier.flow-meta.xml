@@ -3,7 +3,7 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>1260</locationX>
+        <locationX>1390</locationX>
         <locationY>352</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -11,7 +11,7 @@
     <actionCalls>
         <name>Find_Duplicate_Accounts</name>
         <label>Find Duplicate Accounts</label>
-        <locationX>384</locationX>
+        <locationX>514</locationX>
         <locationY>258</locationY>
         <actionName>FindDuplicatesInvocable</actionName>
         <actionType>apex</actionType>
@@ -37,7 +37,7 @@
     <assignments>
         <name>Assign_Duplicate_Account_Size</name>
         <label>Assign Duplicate Account Size</label>
-        <locationX>691</locationX>
+        <locationX>821</locationX>
         <locationY>250</locationY>
         <assignmentItems>
             <assignToReference>DuplicateAccountsSize</assignToReference>
@@ -53,7 +53,7 @@
     <assignments>
         <name>Assign_Id_To_Account</name>
         <label>Assign Id To Account</label>
-        <locationX>1490</locationX>
+        <locationX>1620</locationX>
         <locationY>144</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Id</assignToReference>
@@ -69,7 +69,7 @@
     <assignments>
         <name>Assign_Toast_Message_and_Variant_and_Account_Id</name>
         <label>Assign Toast Message and Variant and Account Id</label>
-        <locationX>889</locationX>
+        <locationX>1019</locationX>
         <locationY>484</locationY>
         <assignmentItems>
             <assignToReference>TextMessage</assignToReference>
@@ -99,7 +99,7 @@
     <assignments>
         <name>Assign_Toast_Message_and_Variant_and_Account_Id_0</name>
         <label>Assign Toast Message and Variant and Account Id</label>
-        <locationX>1092</locationX>
+        <locationX>1222</locationX>
         <locationY>592</locationY>
         <assignmentItems>
             <assignToReference>TextMessage</assignToReference>
@@ -129,7 +129,7 @@
     <assignments>
         <name>Assign_Toast_Message_and_Variant_and_Account_Id_For_Update</name>
         <label>Assign Toast Message and Variant and Account Id For Update</label>
-        <locationX>1498</locationX>
+        <locationX>1628</locationX>
         <locationY>608</locationY>
         <assignmentItems>
             <assignToReference>TextMessage</assignToReference>
@@ -159,7 +159,7 @@
     <decisions>
         <name>Check_Duplicate_Dossier</name>
         <label>Check Duplicate Dossier</label>
-        <locationX>260</locationX>
+        <locationX>390</locationX>
         <locationY>496</locationY>
         <defaultConnector>
             <targetReference>Find_Duplicate_Accounts</targetReference>
@@ -184,7 +184,7 @@
     <decisions>
         <name>Create_New_Or_Update_Duplicate_Account</name>
         <label>Create New Or Update Duplicate Account</label>
-        <locationX>1248</locationX>
+        <locationX>1378</locationX>
         <locationY>155</locationY>
         <defaultConnector>
             <targetReference>End</targetReference>
@@ -209,7 +209,7 @@
     <decisions>
         <name>Duplicate_Account_Check</name>
         <label>Duplicate Account Check</label>
-        <locationX>887</locationX>
+        <locationX>1017</locationX>
         <locationY>253</locationY>
         <defaultConnector>
             <targetReference>Create_Account</targetReference>
@@ -234,7 +234,7 @@
     <decisions>
         <name>Is_Account_Related_To_Dossier</name>
         <label>Is Account Related To Dossier</label>
-        <locationX>654</locationX>
+        <locationX>784</locationX>
         <locationY>487</locationY>
         <defaultConnector>
             <targetReference>Find_Duplicate_Accounts</targetReference>
@@ -272,6 +272,7 @@
         <expression>{!$Label.appsolutely__updated_account}</expression>
     </formulas>
     <interviewLabel>Duplicate Management For Account and Business Dossier {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Duplicate Management For Account and Business Dossier</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -290,7 +291,7 @@
         <description>Creates the account. Add field values which take values from the selectedDossier variable to set the different fields on the account to be created.</description>
         <name>Create_Account</name>
         <label>Create Account</label>
-        <locationX>1100</locationX>
+        <locationX>1230</locationX>
         <locationY>363</locationY>
         <connector>
             <targetReference>Assign_Toast_Message_and_Variant_and_Account_Id_0</targetReference>
@@ -303,7 +304,7 @@
     <recordLookups>
         <name>Get_Account_Related_to_Selected_Dossier</name>
         <label>Get Account Related to Selected Dossier</label>
-        <locationX>395</locationX>
+        <locationX>525</locationX>
         <locationY>705</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -326,7 +327,7 @@
     <recordUpdates>
         <name>Update_Duplicate_Account</name>
         <label>Update Duplicate Account</label>
-        <locationX>1491</locationX>
+        <locationX>1621</locationX>
         <locationY>352</locationY>
         <connector>
             <targetReference>Assign_Toast_Message_and_Variant_and_Account_Id_For_Update</targetReference>
@@ -339,7 +340,7 @@
     <screens>
         <name>Account_Navigation_Screen</name>
         <label>Account Navigation Screen</label>
-        <locationX>1258</locationX>
+        <locationX>1388</locationX>
         <locationY>484</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -377,7 +378,7 @@
     <screens>
         <name>Duplicate_Account_Details</name>
         <label>Duplicate Account Details</label>
-        <locationX>1090</locationX>
+        <locationX>1220</locationX>
         <locationY>153</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -393,6 +394,18 @@
                 <name>accountList</name>
                 <value>
                     <elementReference>Find_Duplicate_Accounts</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>newAccount</name>
+                <value>
+                    <elementReference>AccountToBeCreated</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showCreateNewAccount</name>
+                <value>
+                    <elementReference>ShowCreateNewAccountButton</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -415,7 +428,7 @@
     <screens>
         <name>Flow_Fault_Message_Screen</name>
         <label>Flow Fault Message Screen</label>
-        <locationX>1271</locationX>
+        <locationX>1401</locationX>
         <locationY>789</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -493,6 +506,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>ShowCreateNewAccountButton</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>TextMessage</name>

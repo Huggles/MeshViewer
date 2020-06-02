@@ -27,7 +27,6 @@ global inherited sharing class FindDuplicatesInvocable {
         List<SObject> duplicateSObjects = new List<SObject>();
         List<List<SObject>> allDuplicateSObjects = new List<List<SObject>>();
 
-        //how to handle when duplicate rules is not active or available
         try {
             Datacloud.FindDuplicatesResult[] results = Datacloud.FindDuplicates.findDuplicates(sObjects);
             for (Datacloud.FindDuplicatesResult findDupeResult : results) {

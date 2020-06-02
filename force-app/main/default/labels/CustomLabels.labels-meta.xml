@@ -321,6 +321,13 @@
         <value>Country to Search</value>
     </labels>
     <labels>
+        <fullName>Create_New_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create New Account</shortDescription>
+        <value>Create New Account</value>
+    </labels>
+    <labels>
         <fullName>Credentials_successfully_updated_message</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
@@ -508,6 +515,13 @@
         <protected>true</protected>
         <shortDescription>Dossier Removed</shortDescription>
         <value>Company.info data Removed</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Account_Created</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicate Account Created</shortDescription>
+        <value>A new duplicate Account has been created</value>
     </labels>
     <labels>
         <fullName>Duplicates_Found_Message</fullName>
@@ -1396,6 +1410,13 @@
         <protected>true</protected>
         <shortDescription>Trade Name</shortDescription>
         <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>Update_Duplicate_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update Duplicate Account</shortDescription>
+        <value>Update Duplicate Account</value>
     </labels>
     <labels>
         <fullName>Updated_Account</fullName>

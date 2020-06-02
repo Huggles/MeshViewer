@@ -379,7 +379,7 @@
         <name>Duplicate_Account_Details</name>
         <label>Duplicate Account Details</label>
         <locationX>1220</locationX>
-        <locationY>153</locationY>
+        <locationY>154</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -394,6 +394,18 @@
                 <name>accountList</name>
                 <value>
                     <elementReference>Find_Duplicate_Accounts</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>newAccount</name>
+                <value>
+                    <elementReference>AccountToBeCreated</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showCreateNewAccount</name>
+                <value>
+                    <elementReference>ShowCreateNewAccountButton</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -493,6 +505,16 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>International_Address__c</objectType>
+    </variables>
+    <variables>
+        <name>ShowCreateNewAccountButton</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>TextMessage</name>

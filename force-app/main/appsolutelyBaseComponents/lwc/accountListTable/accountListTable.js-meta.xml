@@ -11,7 +11,9 @@
         <targetConfig targets="lightning__FlowScreen">
             <property name="accountList" type="@salesforce/schema/Account[]" label="Account List" role="inputOnly"/>
             <property name="selectedResult" type="@salesforce/schema/Account" label="Selected Account" role="outputOnly"/>
+            <property name="newAccount" type="@salesforce/schema/Account" label="New Account To Be Created" role="inputOnly"/>
             <property name="updateDuplicateAccount" type="Boolean" label="Update Duplicate Account" role="outputOnly"/>
+            <property name="showCreateNewAccount" type="Boolean" label="Show Create New Account Button" role="inputOnly"/>
             <property name="cancelClicked" type="Boolean" label="Cancel Clicked" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>

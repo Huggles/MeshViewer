@@ -3,7 +3,7 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>852</locationX>
+        <locationX>1028</locationX>
         <locationY>259</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -11,7 +11,7 @@
     <assignments>
         <name>Map_International_Address_Fields_to_Account</name>
         <label>Map International Address Fields to Account</label>
-        <locationX>800</locationX>
+        <locationX>976</locationX>
         <locationY>470</locationY>
         <assignmentItems>
             <assignToReference>newAccount.Name</assignToReference>
@@ -69,7 +69,7 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>594</locationX>
+        <locationX>770</locationX>
         <locationY>265</locationY>
         <defaultConnector>
             <targetReference>Get_International_Address</targetReference>
@@ -93,6 +93,7 @@
     </decisions>
     <description>Template to create an account based on international data. The organization field of the international address will be used as Account Name.</description>
     <interviewLabel>Create Account based on International Address Data {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Account based on International Address Data</label>
     <processMetadataValues>
@@ -111,7 +112,7 @@
     <recordLookups>
         <name>Get_International_Address</name>
         <label>Get International Address</label>
-        <locationX>603</locationX>
+        <locationX>779</locationX>
         <locationY>470</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -134,7 +135,7 @@
     <screens>
         <name>Flow_Fault_Message_Screen</name>
         <label>Flow Fault Message Screen</label>
-        <locationX>411</locationX>
+        <locationX>587</locationX>
         <locationY>472</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -158,7 +159,7 @@
     <subflows>
         <name>Duplicate_Management_For_Account_and_International_Address</name>
         <label>Duplicate Management For Account and International Address</label>
-        <locationX>956</locationX>
+        <locationX>1132</locationX>
         <locationY>469</locationY>
         <flowName>Duplicate_Management_For_Account_and_International_Address</flowName>
         <inputAssignments>
@@ -179,11 +180,17 @@
                 <elementReference>SelectedInternationalAddress</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>ShowCreateNewAccountButton</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Search_International_Address</name>
         <label>Search International Address</label>
-        <locationX>436</locationX>
+        <locationX>612</locationX>
         <locationY>263</locationY>
         <connector>
             <targetReference>Cancel_Pressed</targetReference>

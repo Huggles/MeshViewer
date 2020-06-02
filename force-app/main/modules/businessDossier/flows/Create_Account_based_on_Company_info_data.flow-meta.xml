@@ -3,7 +3,7 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>726</locationX>
+        <locationX>858</locationX>
         <locationY>50</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -11,7 +11,7 @@
     <assignments>
         <name>Assign_Account_fields</name>
         <label>Assign Account fields</label>
-        <locationX>630</locationX>
+        <locationX>762</locationX>
         <locationY>250</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
@@ -48,7 +48,7 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>468</locationX>
+        <locationX>600</locationX>
         <locationY>51</locationY>
         <defaultConnector>
             <targetReference>Get_Business_Dossier</targetReference>
@@ -72,6 +72,7 @@
     </decisions>
     <description>Template you can use to create an account based on Company.info data. Use this for example in quick actions.</description>
     <interviewLabel>Create Account based on Company.info data {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Account based on Company.info data</label>
     <processMetadataValues>
@@ -90,7 +91,7 @@
     <recordLookups>
         <name>Get_Business_Dossier</name>
         <label>Get Business Dossier</label>
-        <locationX>473</locationX>
+        <locationX>605</locationX>
         <locationY>250</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -113,7 +114,7 @@
     <screens>
         <name>Flow_Fault_Message_Screen</name>
         <label>Flow Fault Message Screen</label>
-        <locationX>273</locationX>
+        <locationX>405</locationX>
         <locationY>248</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -137,7 +138,7 @@
     <subflows>
         <name>Duplicate_Management_For_Account_and_Business_Dossier</name>
         <label>Duplicate Management For Account and Business Dossier</label>
-        <locationX>792</locationX>
+        <locationX>924</locationX>
         <locationY>250</locationY>
         <flowName>Duplicate_Management_For_Account_and_Business_Dossier</flowName>
         <inputAssignments>
@@ -158,12 +159,18 @@
                 <elementReference>selectedDossier</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>ShowCreateNewAccountButton</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <description>Searches in Company.info for the right organisation</description>
         <name>Organisation_Search_Flow</name>
         <label>Organisation Search Flow</label>
-        <locationX>258</locationX>
+        <locationX>390</locationX>
         <locationY>50</locationY>
         <connector>
             <targetReference>Cancel_Pressed</targetReference>

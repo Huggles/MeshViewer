@@ -4,14 +4,14 @@
 
 <!-- Account List Table -->
 <template>
-    <p> The following duplicate Accounts have been found for the selected Company,
-        please select any of them if you want to update the existing Account data with the Company data</p>
+    <p> {label.Duplicates_Found_Message}</p>
 
     <c-search-result-tiles-list search-results={data} selected-result={selectedResult} s-object-name="Account" field-set-name="appsolutely__Account_Duplicate_Results_Field_Set"></c-search-result-tiles-list>
 
     <div class="slds-float_right">
-        <lightning-button variant="Neutral" label="Cancel" onclick={handleClickCancel} class="slds-m-left_x-small"></lightning-button>
-        <lightning-button variant="brand" label="Update Duplicate Account" onclick={handleClickDuplicateAccount} class="slds-m-left_x-small" disabled={disableUpdate}></lightning-button>
+        <lightning-button variant="Neutral" label={label.Cancel} onclick={handleClickCancel} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="Neutral" if:true={showCreateNewAccount} label={label.Create_New_Account} onclick={handleClickCreateNewAccount} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="brand" label={label.Update_Duplicate_Account} onclick={handleClickDuplicateAccount} class="slds-m-left_x-small" disabled={disableUpdate}></lightning-button>
     </div>
 
 </template>
