@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ChamberNo__c</fullName>
     <defaultValue>true</defaultValue>
+    <description>chamber_number</description>
     <externalId>false</externalId>
     <label>ChamberNo</label>
     <trackTrending>false</trackTrending>

@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Contact__c</fullName>
     <defaultValue>true</defaultValue>
+    <description>telephone_number, domain_name, mobile_number</description>
     <externalId>false</externalId>
     <label>Contact</label>
     <trackTrending>false</trackTrending>

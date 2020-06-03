@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SubscriptionDates__c</fullName>
     <defaultValue>true</defaultValue>
+    <description>founding_date, continuation_date, establishment_date</description>
     <externalId>false</externalId>
     <label>SubscriptionDates</label>
     <trackTrending>false</trackTrending>

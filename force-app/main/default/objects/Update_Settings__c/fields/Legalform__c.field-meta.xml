@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Legalform__c</fullName>
     <defaultValue>true</defaultValue>
+    <description>legal_form_code, indication_organisation_code</description>
     <externalId>false</externalId>
     <label>Legalform</label>
     <trackTrending>false</trackTrending>

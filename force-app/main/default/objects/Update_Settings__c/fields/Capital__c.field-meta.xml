@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Capital__c</fullName>
     <defaultValue>true</defaultValue>
+    <description>authorized_share_capital, authorized_share_capital_currency, paid_up_share_capital, paid_up_share_capital_currency, issued_share_capital, issued_share_capital_currency</description>
     <externalId>false</externalId>
     <label>Capital</label>
     <trackTrending>false</trackTrending>

@@ -14,20 +14,43 @@ private class UpdateSettingSelectorTest {
     static void getUpdateSettingTest() {
         System.runAs(TestUtils.getSystemAdminUser()){
             Test.startTest();
-            Update_Settings__c updateSettings =  UpdateSettingSelector.getUpdateSettings();
+            List<UpdateSettingSelector.UpdateSettingsWrapper> updateSettings =  UpdateSettingSelector.getUpdateSettings();
             Test.stopTest();
             System.assertNotEquals(null,updateSettings);
-        }
 
+        }
     }
     @IsTest
     static void setUpdateSettingTest() {
         System.runAs(TestUtils.getSystemAdminUser()){
-            Update_Settings__c updateSettings =  UpdateSettingSelector.getUpdateSettings();
+            string assertionField = 'appsolutely__chamberno__c';
+
+            List<UpdateSettingSelector.UpdateSettingsWrapper> updateSettings =  UpdateSettingSelector.getUpdateSettings();
+            System.assertEquals(true,getUpdateSettingValue(updateSettings, assertionField));
+
             Test.startTest();
+            setUpdateSettingValue(updateSettings, assertionField, false);
             UpdateSettingSelector.setUpdateSettings(updateSettings);
             Test.stopTest();
-            System.assertNotEquals(null,updateSettings);
+
+            updateSettings =  UpdateSettingSelector.getUpdateSettings();
+            System.assertEquals(false,getUpdateSettingValue(updateSettings, assertionField));
+
+        }
+    }
+    private static boolean getUpdateSettingValue(List<UpdateSettingSelector.UpdateSettingsWrapper> updateSettings, string apiName){
+        for(UpdateSettingSelector.UpdateSettingsWrapper usw : updateSettings){
+            if(usw.apiName == apiName)
+                return usw.value;
+        }
+        return false;
+    }
+    private static void setUpdateSettingValue(List<UpdateSettingSelector.UpdateSettingsWrapper> updateSettings, string apiName, boolean value){
+        for(UpdateSettingSelector.UpdateSettingsWrapper usw : updateSettings){
+            if(usw.apiName == apiName){
+                usw.value = value;
+                return;
+            }
         }
     }
 }

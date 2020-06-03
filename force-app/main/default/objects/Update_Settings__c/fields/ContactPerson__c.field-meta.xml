@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ContactPerson__c</fullName>
     <defaultValue>true</defaultValue>
+    <description>contact_title1, contact_title2, contact_initials, contact_prefix, contact_surname, contact_gender</description>
     <externalId>false</externalId>
     <label>ContactPerson</label>
     <trackTrending>false</trackTrending>

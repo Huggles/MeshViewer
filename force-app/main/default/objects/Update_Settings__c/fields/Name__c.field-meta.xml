@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Name__c</fullName>
     <defaultValue>true</defaultValue>
+    <description>trade_name_full, trade_name_45, legal_name</description>
     <externalId>false</externalId>
     <label>Name</label>
     <trackTrending>false</trackTrending>

@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Status__c</fullName>
     <defaultValue>true</defaultValue>
+    <description>indication_economically_active, indication_non_mailing</description>
     <externalId>false</externalId>
     <label>Status</label>
     <trackTrending>false</trackTrending>

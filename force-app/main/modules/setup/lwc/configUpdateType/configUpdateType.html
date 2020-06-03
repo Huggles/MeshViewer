@@ -4,14 +4,17 @@
 
 <!-- Config Update Type -->
 <template>
-
-    <lightning-dual-listbox name="languages"
-                            label="Select Update Settings"
-                            source-label="Available"
-                            selected-label="Selected"
-                            field-level-help="This is a dual listbox"
-                            options={options}
-                            value={values}></lightning-dual-listbox>
-
-
+    <div class="slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+        <lightning-dual-listbox name="languages"
+                                label="Select Update Settings"
+                                source-label="Available"
+                                selected-label="Selected"
+                                field-level-help="This is a dual listbox"
+                                options={options}
+                                value={values}
+                                onchange={handleUpdateSettingChange}></lightning-dual-listbox>
+    </div>
 </template>
