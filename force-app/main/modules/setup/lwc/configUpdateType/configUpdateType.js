@@ -5,9 +5,19 @@
 import { LightningElement, wire, track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 
+
+//Labels
 import Error from '@salesforce/label/c.Error';
 import Success from '@salesforce/label/c.Success';
+import Update_settings from '@salesforce/label/c.Update_settings';
+import Update_settings_available from '@salesforce/label/c.Update_settings_available';
+import Update_settings_selected from '@salesforce/label/c.Update_settings_selected';
+import Update_settings_help from '@salesforce/label/c.Update_settings_help';
+import Update_settings_help_link from '@salesforce/label/c.Update_settings_help_link';
+import Update_types from '@salesforce/label/c.Update_types';
 
+
+//Apex Classes
 import getUpdateSettings from '@salesforce/apex/UpdateSettingSelector.getUpdateSettings';
 import setUpdateSettings from '@salesforce/apex/UpdateSettingSelector.setUpdateSettings';
 
@@ -16,6 +26,16 @@ export default class ConfigUpdateType extends LightningElement {
     @track values = [];
 
     isLoading = false;
+
+    labels = {
+        Error,
+        Success,
+        Update_settings,
+        Update_settings_available,
+        Update_settings_selected,
+        Update_settings_help,
+        Update_settings_help_link
+    }
 
     connectedCallback() {
         this.isLoading = true;
@@ -76,7 +96,7 @@ export default class ConfigUpdateType extends LightningElement {
             })
             .catch(error => {
                 const event = new ShowToastEvent({
-                    title: Error,
+                    title: this.labels.Error,
                     message: error,
                     variant: 'error'
                 });

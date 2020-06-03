@@ -5,9 +5,16 @@
 public without sharing class UpdateDossiersBatch implements Database.Batchable<Business_Dossier__c>, Database.AllowsCallouts {
 
     @TestVisible
-    private static final List<String> UPDATE_TYPES = new List<String>{'ChamberNo', 'Legalform', 'Name', 'EstablishmentAddress', 'CorrespondenceAddress', 'Contact',
-            'Activity', 'Personnel', 'FinancialStatus', 'Status', 'Branch', 'ImportExport', 'ContactPerson', 'Capital',
-            'SubscriptionDates', 'New', 'Establishment', 'RSIN', 'Tradenames'};
+    private static final List<String> UPDATE_TYPES{
+        get {
+            List<String> updateTypes = new List<String>();
+            List<UpdateSettingSelector.UpdateSettingsWrapper> updateSettingsWrappers = UpdateSettingSelector.getUpdateSettings();
+            for(UpdateSettingSelector.UpdateSettingsWrapper usw : updateSettingsWrappers){
+                updateTypes.add(usw.label);
+            }
+            return updateTypes;
+        }
+    }
 
     public class UpdatedDossiersIterable implements Iterable<Business_Dossier__c> {
 

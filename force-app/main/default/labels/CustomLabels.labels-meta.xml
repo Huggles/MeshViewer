@@ -1665,4 +1665,52 @@
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
     </labels>
+    <labels>
+        <fullName>Update_settings</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings</shortDescription>
+        <value>Update Settings</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings_available</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings_available</shortDescription>
+        <value>Available</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings_selected</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings_selected</shortDescription>
+        <value>Selected</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings_help</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings_help</shortDescription>
+        <value>For the definitions of update types, see:</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings_help_link</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings_help_link</shortDescription>
+        <value>https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.Update_types</value>
+    </labels>
+    <labels>
+        <fullName>Update_types</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_types</shortDescription>
+        <value>Update Types</value>
+    </labels>
 </CustomLabels>

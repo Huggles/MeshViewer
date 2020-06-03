@@ -10,6 +10,7 @@ public with sharing class UpdateSettingSelector {
         @AuraEnabled public string apiName {get; set;}
         @AuraEnabled public string label {get; set;}
         @AuraEnabled public boolean value {get; set;}
+
     }
 
 
@@ -24,7 +25,6 @@ public with sharing class UpdateSettingSelector {
             insert updateSettings;
             updateSettings = Update_Settings__c.getOrgDefaults();
         }
-
 
         Map<String, Schema.SObjectField> fields = Schema.getGlobalDescribe().get('appsolutely__update_settings__c').getDescribe().fields.getMap();
 
