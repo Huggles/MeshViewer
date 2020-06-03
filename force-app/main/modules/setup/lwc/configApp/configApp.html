@@ -1,12 +1,12 @@
 <template>
     <div class="slds-m-around_small">
-        <lightning-card title={label.Config_Title} icon-name="custom:custom14">
+        <lightning-card title={labels.Config_Title} icon-name="custom:custom14">
             <div class="slds-m-around_small">
                 <lightning-tabset variant="vertical">
-                    <lightning-tab title="Credentials" label="Credentials" icon-name="standard:avatar">
+                    <lightning-tab title={labels.Config_Credentials} label="Credentials" icon-name="standard:avatar">
                         <c-company-info-login></c-company-info-login>
                     </lightning-tab>
-                    <lightning-tab title="Update Settings" label="Update Settings" icon-name="standard:product_transfer">
+                    <lightning-tab title={labels.Update_types} label="Update Settings" icon-name="standard:product_transfer">
                         <c-config-update-type></c-config-update-type>
                     </lightning-tab>
                 </lightning-tabset>
