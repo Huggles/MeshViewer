@@ -34,7 +34,8 @@ export default class ConfigUpdateType extends LightningElement {
         Update_settings_available,
         Update_settings_selected,
         Update_settings_help,
-        Update_settings_help_link
+        Update_settings_help_link,
+        Update_types
     }
 
     connectedCallback() {
