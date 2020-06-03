@@ -121,12 +121,20 @@ export default class InternationalAddressSearchForm extends LightningElement {
         unregisterAllListeners(this);
     }
 
-    handleComponentRegistrationOpen(registrar) {
-        // fire a registration event
-        fireEvent(this.pageRef, 'componentRegistration', {component: this});
+    handleComponentRegistrationOpen(event) {
+        // fire a registration event if the request comes from InternationalAddressSearchForm footer
+        if(event.pageRef == 'InternationalAddressSearchForm') {
+            fireEvent(this.pageRef, 'componentRegistration', {component: this, pageRef: event.pageRef});
+        }
     }
 
-    handleValidationRequest() {
+    handleValidationRequest(event) {
+        if(event.pageRef == 'InternationalAddressSearchForm') {
+            let valid = this.validateForm();
+            fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: valid, pageRef: event.pageRef});
+        }
+    }
+    validateForm(){
         // TODO: move this to a module to make it generic
         // check if the fields are valid based on the html
         let valid = [...this.template.querySelectorAll('lightning-input')]
@@ -153,7 +161,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
                 this.errorMessage = null;
             }
         }
-        fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: valid});
+        return valid;
     }
 
     handleOnChange(event) {

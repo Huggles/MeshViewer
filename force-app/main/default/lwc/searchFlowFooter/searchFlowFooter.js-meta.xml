@@ -9,6 +9,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="cancelPressed" type="Boolean" role="outputOnly"/>
+            <property name="pageRef" type="String" role="inputOnly"/>
             <property name="showCancelButton" type="Boolean" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>

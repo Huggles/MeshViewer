@@ -155,13 +155,18 @@ export default class BusinessSearchForm extends LightningElement {
         unregisterAllListeners(this);
     }
 
-    handleComponentRegistrationOpen(registrar) {
+    handleComponentRegistrationOpen(event) {
         // fire a registration event
-        fireEvent(this.pageRef, 'componentRegistration', {component: this});
+        if(event.pageRef == 'BusinessSearchForm'){
+            fireEvent(this.pageRef, 'componentRegistration', {component: this, pageRef: event.pageRef});
+        }
+
     }
 
-    handleValidationRequest() {
-        fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: this.allValid()});
+    handleValidationRequest(event) {
+        if(event.pageRef == 'BusinessSearchForm'){
+            fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: this.allValid(), pageRef: event.pageRef});
+        }
     }
 
     handleSelectedCountryChange(event) {
