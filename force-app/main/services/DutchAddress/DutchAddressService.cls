@@ -9,12 +9,12 @@ public inherited sharing class DutchAddressService {
      *
      * @param address
      */
-    public static Dutch_Address_Postcode_Range__c dutchAddressRangePostcodeSearch(String address){
-        return newInstance().dutchAddressRangePostcodeSearch(address);
-    }
-
-    public static IDutchAddressService newInstance() {
-        return (IDutchAddressService)Application.Service.newInstance(IDutchAddressService.class);
-    }
+//    public static Dutch_Address_Postcode_Range__c dutchAddressRangePostcodeSearch(String address){
+//        return newInstance().dutchAddressRangePostcodeSearch(address);
+//    }
+//
+//    public static IDutchAddressService newInstance() {
+//        return (IDutchAddressService)Application.Service.newInstance(IDutchAddressService.class);
+//    }
 
 }

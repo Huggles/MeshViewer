@@ -33,8 +33,8 @@ public inherited sharing class Application {
                     Creditsafe_Company_Share_Holder__c.SObjectType,
                     Creditsafe_Address__c.SObjectType,
                     Creditsafe_Company_Key_Value__c.SObjectType,
-                    International_Address__c.SObjectType,
-                    Dutch_Address_Postcode_Range__c.SObjectType
+                    International_Address__c.SObjectType
+//                    Dutch_Address_Postcode_Range__c.SObjectType
             });
 
     // Configure and create the ServiceFactory for this Application
@@ -51,8 +51,8 @@ public inherited sharing class Application {
                             IInternationalAddressService.class => InternationalAddressImpl.class,
                             IWsInternationalAddress.class => WsInternationalAddressImpl.class,
                             IWsVat.class => WsVatImpl.class,
-                            IWsDutchAddress.class => WsDutchAddressImpl.class,
-                            IDutchAddressService.class => DutchAddressServiceImpl.class
+                            IWsDutchAddress.class => WsDutchAddressImpl.class
+//                            IDutchAddressService.class => DutchAddressServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application
