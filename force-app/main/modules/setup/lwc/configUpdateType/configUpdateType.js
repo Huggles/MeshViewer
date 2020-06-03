@@ -51,11 +51,16 @@ export default class ConfigUpdateType extends LightningElement {
                 this.setupDualListBox(result);
             })
             .catch(error => {
-                console.log(error);
+                const event = new ShowToastEvent({
+                    title: this.labels.Error,
+                    message: error,
+                    variant: 'error'
+                });
+                this.dispatchEvent(event);
+                this.isLoading = false;
             })
     }
     setupDualListBox(updateSettingWrappers){
-        console.log(updateSettingWrappers);
         updateSettingWrappers.forEach((wrapper, index) => {
             this.options.push({
                 label: wrapper.label,

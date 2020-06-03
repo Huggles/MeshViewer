@@ -22,7 +22,7 @@ public with sharing class UpdateSettingSelector {
         //If no updatesettings were found, first create them.
         if(updateSettings.Name == null){
             updateSettings = new Update_Settings__c();
-            insert updateSettings;
+            DMLManager.insertAsUser(updateSettings);
             updateSettings = Update_Settings__c.getOrgDefaults();
         }
 

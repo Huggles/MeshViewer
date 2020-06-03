@@ -65,7 +65,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>City Help Text</shortDescription>
-        <value>Please fill the city name in Country&#39;s native language</value>
+        <value>Please fill the city name in Country&apos;s native language</value>
     </labels>
     <labels>
         <fullName>Config_Account_ActivateDescription</fullName>
@@ -465,7 +465,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier ID Access</shortDescription>
-        <value>User doesn&#39;t have access to dossier with ID:</value>
+        <value>User doesn&apos;t have access to dossier with ID:</value>
     </labels>
     <labels>
         <fullName>Dossier_ID_Missing</fullName>
@@ -522,7 +522,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error Client Authentication</shortDescription>
-        <value>Please check your username and password. If you still can&#39;t log in, contact Company.info.</value>
+        <value>Please check your username and password. If you still can&apos;t log in, contact Company.info.</value>
     </labels>
     <labels>
         <fullName>Error_Client_Authentication_Password</fullName>
@@ -792,7 +792,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Language Input Error</shortDescription>
-        <value>Selected language is not available for selected company&#39;s country. Please select another language.</value>
+        <value>Selected language is not available for selected company&apos;s country. Please select another language.</value>
     </labels>
     <labels>
         <fullName>Locality</fullName>
@@ -1363,6 +1363,54 @@
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>Update_settings</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings</shortDescription>
+        <value>Update Settings</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings_available</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings_available</shortDescription>
+        <value>Available</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings_help</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings_help</shortDescription>
+        <value>For the definitions of update types, see:</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings_help_link</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings_help_link</shortDescription>
+        <value>https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.Update_types</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings_selected</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings_selected</shortDescription>
+        <value>Selected</value>
+    </labels>
+    <labels>
+        <fullName>Update_types</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_types</shortDescription>
+        <value>Update Types</value>
+    </labels>
+    <labels>
         <fullName>VAT_Not_Found</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1487,18 +1535,18 @@
         <value>Please enter a valid Irish VAT Number starting with IE</value>
     </labels>
     <labels>
-        <fullName>Valid_NL_registration_number</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid NL registration number</shortDescription>
-        <value>Please enter a value with either 8 or 12 digits</value>
-    </labels>
-    <labels>
         <fullName>Valid_Italian_VAT_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Italian VAT Number</shortDescription>
         <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
+    </labels>
+    <labels>
+        <fullName>Valid_NL_registration_number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid NL registration number</shortDescription>
+        <value>Please enter a value with either 8 or 12 digits</value>
     </labels>
     <labels>
         <fullName>Valid_Spanish_VAT_Number</fullName>
@@ -1664,53 +1712,5 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
-    </labels>
-    <labels>
-        <fullName>Update_settings</fullName>
-        <categories>Settings</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Update_settings</shortDescription>
-        <value>Update Settings</value>
-    </labels>
-    <labels>
-        <fullName>Update_settings_available</fullName>
-        <categories>Settings</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Update_settings_available</shortDescription>
-        <value>Available</value>
-    </labels>
-    <labels>
-        <fullName>Update_settings_selected</fullName>
-        <categories>Settings</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Update_settings_selected</shortDescription>
-        <value>Selected</value>
-    </labels>
-    <labels>
-        <fullName>Update_settings_help</fullName>
-        <categories>Settings</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Update_settings_help</shortDescription>
-        <value>For the definitions of update types, see:</value>
-    </labels>
-    <labels>
-        <fullName>Update_settings_help_link</fullName>
-        <categories>Settings</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Update_settings_help_link</shortDescription>
-        <value>https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.Update_types</value>
-    </labels>
-    <labels>
-        <fullName>Update_types</fullName>
-        <categories>Settings</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Update_types</shortDescription>
-        <value>Update Types</value>
     </labels>
 </CustomLabels>
