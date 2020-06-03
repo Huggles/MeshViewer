@@ -37,6 +37,9 @@ jobs:
   run_apex_tests:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
+    environment:
+      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_LOG_LEVEL: trace
     steps:
       - checkout
       - log_into_devhub
@@ -62,7 +65,23 @@ jobs:
           when: always
           command: |
             sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
-
+      - run:
+          name: Compress Metadata Artifacts
+          when: always
+          command: |
+            tar -cvf metadata.tar /root/project/metadata
+      - run:
+          name: Compress sfdx log
+          when: always
+          command: |
+            tar -cvf sfdx_log.tar /root/.sfdx/sfdx.log
+      - store_artifacts:
+          path: metadata.tar
+          destination: metadata
+      - store_artifacts:
+          path: sfdx_log.tar
+          destination: sfdx-log
+  
   build_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
