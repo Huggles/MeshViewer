@@ -733,7 +733,8 @@ public inherited sharing class fflib_QueryFactory { //No explicit sharing declar
 			this(field, direction, false);
 		}
 		@testVisible
-		private Ordering(String field, SortOrder direction, Boolean nullsLast){
+		// JB: made public so orderings can be applied with relationship queries
+		public Ordering(String field, SortOrder direction, Boolean nullsLast){
 			this.direction = direction;
 			this.field = field;
 			this.nullsLast = nullsLast;
@@ -743,6 +744,10 @@ public inherited sharing class fflib_QueryFactory { //No explicit sharing declar
 		}
 		public SortOrder getDirection(){
 			return direction;
+		}
+		// JB: added this because it was missing
+		public Boolean isNullsLast() {
+			return nullsLast;
 		}
 		public String toSOQL(){
 			return field + ' ' + (direction == SortOrder.ASCENDING ? 'ASC' : 'DESC') + (nullsLast ? ' NULLS LAST ' : ' NULLS FIRST ');
