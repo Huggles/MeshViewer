@@ -62,7 +62,7 @@ public abstract inherited sharing class fflib_SObjectSelector
    /**
     * Order by field
     **/
-    	private String m_orderBy;
+    private String m_orderBy;
 
     /**
      * Sort the query fields in the select statement (defaults to true, at the expense of performance).
@@ -151,12 +151,14 @@ public abstract inherited sharing class fflib_SObjectSelector
     public virtual String getOrderBy()
     {
         if(m_orderBy == null) {
-   		m_orderBy = 'CreatedDate';
-   		if(describeWrapper.getNameField() != null) {
+            if(describeWrapper.getField('CreatedDate') != null) {
+                m_orderBy = describeWrapper.getField('CreatedDate').getDescribe().getName();
+            }
+   		    if(describeWrapper.getNameField() != null) {
 	    		m_orderBy = describeWrapper.getNameField().getDescribe().getName();
 	    	}
-	}
-   	return m_orderBy;
+	    }
+   	    return m_orderBy;
     }
 
     /** 
@@ -418,21 +420,22 @@ public abstract inherited sharing class fflib_SObjectSelector
         }
         
         // Parse the getOrderBy()
-        for(String orderBy : getOrderBy().split(','))
-        {
-            List<String> orderByParts = orderBy.trim().split(' ');
-            String fieldNamePart = orderByParts[0];
-            String fieldSortOrderPart = orderByParts.size() > 1 ? orderByParts[1] : null;
-            fflib_QueryFactory.SortOrder fieldSortOrder = fflib_QueryFactory.SortOrder.ASCENDING;
-            if(fieldSortOrderPart==null)
-                fieldSortOrder = fflib_QueryFactory.SortOrder.ASCENDING;
-            else if(fieldSortOrderPart.equalsIgnoreCase('DESC'))
-                fieldSortOrder = fflib_QueryFactory.SortOrder.DESCENDING;
-            else if(fieldSortOrderPart.equalsIgnoreCase('ASC'))
-                fieldSortOrder = fflib_QueryFactory.SortOrder.ASCENDING;
-            queryFactory.addOrdering(fieldNamePart, fieldSortOrder, orderBy.containsIgnoreCase('NULLS LAST'));
-        }           
-        
+        if (getOrderBy() != null) {
+            for(String orderBy : getOrderBy().split(',')) {
+                List<String> orderByParts = orderBy.trim().split(' ');
+                String fieldNamePart = orderByParts[0];
+                String fieldSortOrderPart = orderByParts.size() > 1 ? orderByParts[1] : null;
+                fflib_QueryFactory.SortOrder fieldSortOrder = fflib_QueryFactory.SortOrder.ASCENDING;
+                if(fieldSortOrderPart==null)
+                    fieldSortOrder = fflib_QueryFactory.SortOrder.ASCENDING;
+                else if(fieldSortOrderPart.equalsIgnoreCase('DESC'))
+                    fieldSortOrder = fflib_QueryFactory.SortOrder.DESCENDING;
+                else if(fieldSortOrderPart.equalsIgnoreCase('ASC'))
+                    fieldSortOrder = fflib_QueryFactory.SortOrder.ASCENDING;
+                queryFactory.addOrdering(fieldNamePart, fieldSortOrder, orderBy.containsIgnoreCase('NULLS LAST'));
+            }
+        }
+
         queryFactory.setSortSelectFields(m_sortSelectFields);           
 
         return queryFactory;    

@@ -68,6 +68,13 @@
         <value>Please fill the city name in Country&#39;s native language</value>
     </labels>
     <labels>
+        <fullName>Close</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Close</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
         <fullName>Config_Account_ActivateDescription</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -201,10 +208,10 @@
         <value>Current Threshold</value>
     </labels>
     <labels>
-        <fullName>Config_Loading</fullName>
+        <fullName>Loading</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Config Loading</shortDescription>
+        <shortDescription>Alternative text for spinner</shortDescription>
         <value>Loading...</value>
     </labels>
     <labels>
@@ -907,6 +914,62 @@
         <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
     </labels>
     <labels>
+        <fullName>No_users_available_to_assign_licenses_to</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No users available to assign licenses to</shortDescription>
+        <value>No_users_available_to_assign_licenses_to</value>
+    </labels>
+    <labels>
+        <fullName>Assign</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Assign button</shortDescription>
+        <value>Assign</value>
+    </labels>
+    <labels>
+        <fullName>Assign_users_success_message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success message shown after assigning seats to users</shortDescription>
+        <value>Users successfully assigned</value>
+    </labels>
+    <labels>
+        <fullName>Assign_Licenses</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Assign Licenses button on License Management Card</shortDescription>
+        <value>Assign Licenses</value>
+    </labels>
+    <labels>
+        <fullName>Remove_Assignments_Button</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Remove assignments button on License Management Card</shortDescription>
+        <value>Remove Assignments</value>
+    </labels>
+    <labels>
+        <fullName>Nr_of_licenses_assigned</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message showing nr of licenses have been assigned</shortDescription>
+        <value>{0} Licenses out of {1} assigned</value>
+    </labels>
+    <labels>
+        <fullName>No_users_assigned</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Text shown below desert img when no users have been assigned</shortDescription>
+        <value>No users assigned</value>
+    </labels>
+    <labels>
         <fullName>No_address_fields_filled_international_address</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
@@ -1501,18 +1564,18 @@
         <value>Please enter a valid Irish VAT Number starting with IE</value>
     </labels>
     <labels>
-        <fullName>Valid_NL_registration_number</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid NL registration number</shortDescription>
-        <value>Please enter a value with either 8 or 12 digits</value>
-    </labels>
-    <labels>
         <fullName>Valid_Italian_VAT_Number</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Italian VAT Number</shortDescription>
         <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
+    </labels>
+    <labels>
+        <fullName>Valid_NL_registration_number</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid NL registration number</shortDescription>
+        <value>Please enter a value with either 8 or 12 digits</value>
     </labels>
     <labels>
         <fullName>Valid_Spanish_VAT_Number</fullName>

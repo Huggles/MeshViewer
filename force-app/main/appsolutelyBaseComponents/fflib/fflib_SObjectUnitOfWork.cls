@@ -93,7 +93,7 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
 
     public class SimpleDML implements IDML
     {
-        public void dmlInsert(List<SObject> objList)
+        public void dmlInsert(List<PermissionSetAssignment> objList)
         {
             insert objList;
         }
@@ -213,7 +213,7 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
      *
      * @param records A list of newly created SObject instances to be inserted during commitWork
      **/
-    public void registerNew(List<SObject> records)
+    public void registerNew(List<PermissionSetAssignment> records)
     {
         for (SObject record : records)
         {
