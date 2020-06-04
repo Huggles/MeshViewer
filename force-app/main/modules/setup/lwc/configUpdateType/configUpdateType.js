@@ -4,6 +4,7 @@
 
 import { LightningElement, wire, track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
+import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 
 //Labels
@@ -18,8 +19,8 @@ import Update_types from '@salesforce/label/c.Update_types';
 
 
 //Apex Classes
-import getUpdateSettings from '@salesforce/apex/UpdateSettingSelector.getUpdateSettings';
-import setUpdateSettings from '@salesforce/apex/UpdateSettingSelector.setUpdateSettings';
+import getUpdateTypes from '@salesforce/apex/CompanyInfoUpdateTypeController.getUpdateTypes';
+import setUpdateTypes from '@salesforce/apex/CompanyInfoUpdateTypeController.setUpdateTypes';
 
 export default class ConfigUpdateType extends LightningElement {
     @track options = [];
@@ -40,15 +41,16 @@ export default class ConfigUpdateType extends LightningElement {
 
     connectedCallback() {
         this.isLoading = true;
-        this.retrieveUpdateSettings();
+        this.retrieveUpdateTypes();
     }
 
-    updateSettingWrappers = [];
-    retrieveUpdateSettings(){
-        getUpdateSettings({})
+    @track updateTypes = [];
+    retrieveUpdateTypes(){
+        getUpdateTypes({})
             .then(result => {
-                this.updateSettingWrappers = result;
-                this.setupDualListBox(result);
+                console.log(result);
+                this.updateTypes = result;
+                this.isLoading = false;
             })
             .catch(error => {
                 const event = new ShowToastEvent({
@@ -60,55 +62,38 @@ export default class ConfigUpdateType extends LightningElement {
                 this.isLoading = false;
             })
     }
-    setupDualListBox(updateSettingWrappers){
-        updateSettingWrappers.forEach((wrapper, index) => {
-            this.options.push({
-                label: wrapper.label,
-                value: wrapper.apiName
-            });
-            if(wrapper.value == true){
-                this.values.push(wrapper.apiName);
-            }
-            this.isLoading = false;
-        });
-    }
-    handleUpdateSettingChange(event){
+    handleUpdateTypesSave(event){
         this.isLoading = true;
-        let selectedValues = event.detail.value;
-
-        //First get all wrapper objects based on what is selected
-        let trueValues = this.updateSettingWrappers.filter(function(wrapper) {
-            return selectedValues.includes(wrapper.apiName);
-        });
-        let falseValues = this.updateSettingWrappers.filter(function(wrapper) {
-            return !selectedValues.includes(wrapper.apiName);
-        });
-
-        //Then set all wrapper object values based on what is selected
-        trueValues.forEach((wrapper, index) => {
-            wrapper.value = true;
-        });
-        falseValues.forEach((wrapper, index) => {
-            wrapper.value = false;
-        });
-
-        //Combine both arrays
-        let allUpdatedValues = trueValues.concat(falseValues);
-
-        //Pass it to the server
-        setUpdateSettings({ wrappers : allUpdatedValues })
-            .then(result => {
-                this.isLoading = false;
-            })
-            .catch(error => {
-                const event = new ShowToastEvent({
-                    title: this.labels.Error,
-                    message: error,
-                    variant: 'error'
-                });
-                this.dispatchEvent(event);
-                this.isLoading = false;
-            })
+        let toggles = this.template.querySelectorAll("lightning-input[data-classification=update_type_toggle]");
+        if(toggles != null){
+            let payload = [];
+            toggles.forEach((toggle, index) => {
+                let payloadItem = {
+                    checked : toggle.checked,
+                    developerName : toggle.dataset.developerName,
+                    label : toggle.dataset.masterlabel
+                }
+                payload.push(payloadItem);
+            });
+            setUpdateTypes({payload : payload})
+                .then(result =>{
+                    const event = new ShowToastEvent({
+                        title: this.labels.Success,
+                        variant: 'success'
+                    });
+                    this.dispatchEvent(event);
+                    this.isLoading = false;
+                })
+                .catch(error =>{
+                    const event = new ShowToastEvent({
+                        title: this.labels.Error,
+                        message: error,
+                        variant: 'error'
+                    });
+                    this.dispatchEvent(event);
+                    this.isLoading = false;
+                })
+        }
 
     }
 

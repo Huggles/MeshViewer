@@ -9,19 +9,31 @@
         <template if:true={isLoading}>
             <lightning-spinner></lightning-spinner>
         </template>
-        <div class="slds-grid ">
-            <div class="slds-size_1-of-1">
-                <lightning-dual-listbox label={labels.Update_settings}
-                                        source-label={labels.Update_settings_available}
-                                        selected-label={labels.Update_settings_selected}
-                                        options={options}
-                                        value={values}
-                                        onchange={handleUpdateSettingChange}></lightning-dual-listbox>
-                <p class="slds-m-top_small">{labels.Update_settings_help}
-                    <a href={labels.Update_settings_help_link}>{labels.Update_types}</a>
-                </p>
-            </div>
-        </div>
+        <div class="slds-grid slds-size_1-of-1 slds-wrap">
+            <template for:each={updateTypes} for:item="updateType">
+                <div key={updateType.MasterLabel} class="slds-size_1-of-1  slds-m-bottom_xx-small">
+                    <div class="slds-size_1-of-3 slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small" >
+                        <div class="slds-m-right_small">
+                            <lightning-input data-classification="update_type_toggle"
+                                             data-developer-name={updateType.DeveloperName}
+                                             data-masterlabel={updateType.MasterLabel}
+                                             message-toggle-active="" message-toggle-inactive=""
+                                             class="slds-float_right" type="toggle"
+                                             checked={updateType.appsolutely__Enabled__c}></lightning-input>
+                        </div>
+                        <div class="slds-text-heading_small slds-text-title_bold">
+                            {updateType.MasterLabel}
+                        </div>
+                        <div>
+                            <lightning-helptext title={updateType.MasterLabel} content={updateType.appsolutely__Description__c} ></lightning-helptext>
+                        </div>
 
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div>
+            <lightning-button label={labels.Success} onclick={handleUpdateTypesSave}></lightning-button>
+        </div>
     </div>
 </template>

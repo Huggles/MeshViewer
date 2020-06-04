@@ -1,0 +1,76 @@
+/**
+ * Created by Hugo on 04/06/2020.
+ */
+
+public with sharing class SetupServiceImpl implements ISetupService {
+
+    public List<Update_Type__mdt> getUpdateTypes(){
+        List<Update_Type__mdt> updateTypes = [
+                SELECT id, DeveloperName, MasterLabel, Label, Company_Info_Key__c, Enabled__c, Description__c
+                FROM Update_Type__mdt
+                WITH SECURITY_ENFORCED
+                ORDER BY MasterLabel
+        ];
+        return updateTypes;
+    }
+    public Id setUpdateTypes(List<Map<string, object>> payload) {
+        string updateTypeAPIName = String.valueOf(appsolutely__Update_Type__mdt.getSObjectType());
+        List<Update_Type__mdt> updateTypes = SetupService.getUpdateTypes();
+        CustomMetadataCallback callback = new CustomMetadataCallback();
+
+        Metadata.DeployContainer mdContainer = new Metadata.DeployContainer();
+        for(Map<string, object> mdRecord : payload ){
+
+            boolean checked = Boolean.valueOf(mdRecord.get('checked'));
+            string developerName = String.valueOf(mdRecord.get('developerName')); //RecordName = DeveloperName
+            string masterLabel = String.valueOf(mdRecord.get('label'));
+
+            if(checked == null || developerName == null || masterLabel == null){
+                throw new AuraHandledException(Label.Error_Input_Incorrect);
+            }
+            //if the the new value is not different from the current value, dont add it to update.
+            boolean requiresUpdate = false;
+            for(Update_Type__mdt updateType : updateTypes){
+                if(updateType.DeveloperName == developerName && updateType.Enabled__c != checked){
+                    requiresUpdate = true;
+                }
+            }
+
+            if(requiresUpdate){
+                Metadata.CustomMetadata customMetadata = new Metadata.CustomMetadata();
+                customMetadata.fullName = updateTypeAPIName + '.' + developerName; //RecordName = DeveloperName
+                customMetadata.label = masterLabel;
+
+                Metadata.CustomMetadataValue customField = new Metadata.CustomMetadataValue();
+                customField.field = String.valueOf(Update_Type__mdt.Enabled__c);
+                customField.value = checked;
+                customMetadata.values.add(customField);
+
+                mdContainer.addMetadata(customMetadata);
+            }
+        }
+        //Cannot update an empty container.
+        if(mdContainer.getMetadata().size() == 0){
+            return null;
+        }
+        Id jobId;
+        try{
+            jobId = Metadata.Operations.enqueueDeployment(mdContainer, callback);
+        }catch (Exception e){
+            AuraHandledException auraHandledException = new AuraHandledException(Label.Error_updating_update_type_settings);
+            e.setMessage(Label.Error_updating_update_type_settings); //Explicitly set the message so it can be read in apex as well.
+            throw e;
+        }
+        return jobId;
+
+    }
+
+
+    public inherited sharing class CustomMetadataCallback implements Metadata.DeployCallback {
+        public void handleResult(Metadata.DeployResult result, Metadata.DeployCallbackContext context) {
+            if (result.status == Metadata.DeployStatus.Succeeded) {
+            } else {
+            }
+        }
+    }
+}
