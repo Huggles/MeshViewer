@@ -10,11 +10,6 @@ import {ShowToastEvent} from "lightning/platformShowToastEvent";
 //Labels
 import Error from '@salesforce/label/c.Error';
 import Success from '@salesforce/label/c.Success';
-import Update_settings from '@salesforce/label/c.Update_settings';
-import Update_settings_available from '@salesforce/label/c.Update_settings_available';
-import Update_settings_selected from '@salesforce/label/c.Update_settings_selected';
-import Update_settings_help from '@salesforce/label/c.Update_settings_help';
-import Update_settings_help_link from '@salesforce/label/c.Update_settings_help_link';
 import Update_types from '@salesforce/label/c.Update_types';
 
 
@@ -31,11 +26,6 @@ export default class ConfigUpdateType extends LightningElement {
     labels = {
         Error,
         Success,
-        Update_settings,
-        Update_settings_available,
-        Update_settings_selected,
-        Update_settings_help,
-        Update_settings_help_link,
         Update_types
     }
 
