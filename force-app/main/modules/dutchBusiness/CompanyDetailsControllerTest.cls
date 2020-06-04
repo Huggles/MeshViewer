@@ -29,13 +29,5 @@ public with sharing class CompanyDetailsControllerTest {
         System.assert(o instanceof AuraResponseWrapper);
         System.assert(((AuraResponseWrapper)o).response instanceof Business_Dossier__c);
     }
-
-
-
-
-
-
-
-
 }
     

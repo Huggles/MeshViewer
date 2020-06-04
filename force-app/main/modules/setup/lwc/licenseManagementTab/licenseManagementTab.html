@@ -1,0 +1,12 @@
+<!--
+ - Created by jaapbranderhorst on 05/05/2020.
+ -->
+
+<!-- License Management Tab -->
+<template>
+    <template for:each={licenseTypes} for:item=licenseType>
+        <div key={licenseType.id} class="slds-m-around_small">
+            <c-license-type-management-card license-type-api-name={licenseType.name}></c-license-type-management-card>
+        </div>
+    </template>
+</template>

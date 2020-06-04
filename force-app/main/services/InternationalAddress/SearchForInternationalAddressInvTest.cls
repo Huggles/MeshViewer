@@ -88,6 +88,5 @@ private class SearchForInternationalAddressInvTest {
         List<International_Address__c> addressesToAssert = addresses.get(0);
         System.assert(addressesToAssert.size() == 2);
         International_Address__c addressToAssert = addressesToAssert.get(0);
-        System.debug(JSON.serializePretty(addressToAssert));
     }
 }
