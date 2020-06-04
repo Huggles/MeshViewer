@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reeks_Indication__c</fullName>
+    <description>Postcode range type.  Range: {‘0’,’1’,’ ‘};
+’0’	range of odd house numbers,
+’1’	range of even house numbers,
+’ ‘	vacant</description>
+    <externalId>false</externalId>
+    <label>Reeks Indication</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

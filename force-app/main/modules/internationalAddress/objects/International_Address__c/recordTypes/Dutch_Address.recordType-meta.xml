@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dutch_Address</fullName>
+    <active>true</active>
+    <label>Dutch Address</label>
+    <picklistValues>
+        <picklist>Building_Match_Status__c</picklist>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched with errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched without errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked %28no reference data or no chance of success%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not found</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Building_Number_Match_Status__c</picklist>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched with errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched without errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked %28no reference data or no chance of success%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not found</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Building_Number_Result_Status__c</picklist>
+        <values>
+            <fullName>Checked and corrected %28changed or inserted%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No value returned%2C due to multiple possible matches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked but standardized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated and unchanged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but changed %28synonyms%2C old names%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but standardized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Building_Result_Status__c</picklist>
+        <values>
+            <fullName>Checked and corrected %28changed or inserted%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No value returned%2C due to multiple possible matches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked but standardized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated and unchanged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but changed %28synonyms%2C old names%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but standardized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Locality_Match_Status__c</picklist>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched with errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched without errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked %28no reference data or no chance of success%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not found</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Locality_Result_Status__c</picklist>
+        <values>
+            <fullName>Checked and corrected %28changed or inserted%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No value returned%2C due to multiple possible matches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked but standardized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated and unchanged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but changed %28synonyms%2C old names%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but standardized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Organization_Match_Status__c</picklist>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched with errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched without errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked %28no reference data or no chance of success%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not found</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Organization_Result_Status__c</picklist>
+        <values>
+            <fullName>Checked and corrected %28changed or inserted%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No value returned%2C due to multiple possible matches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked but standardized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated and unchanged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but changed %28synonyms%2C old names%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but standardized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PO_Box_Match_Status__c</picklist>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched with errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched without errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked %28no reference data or no chance of success%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not found</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PO_Box_Result_Status__c</picklist>
+        <values>
+            <fullName>Checked and corrected %28changed or inserted%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No value returned%2C due to multiple possible matches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked but standardized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated and unchanged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but changed %28synonyms%2C old names%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but standardized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Postcode_Match_Status__c</picklist>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched with errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched without errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked %28no reference data or no chance of success%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not found</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Postcode_Result_Status__c</picklist>
+        <values>
+            <fullName>Checked and corrected %28changed or inserted%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No value returned%2C due to multiple possible matches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked but standardized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated and unchanged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but changed %28synonyms%2C old names%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but standardized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Province_Match_Status__c</picklist>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched with errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched without errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked %28no reference data or no chance of success%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not found</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Province_Result_Status__c</picklist>
+        <values>
+            <fullName>Checked and corrected %28changed or inserted%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No value returned%2C due to multiple possible matches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked but standardized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated and unchanged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but changed %28synonyms%2C old names%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but standardized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Street_Match_Status__c</picklist>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched with errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Matched without errors</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked %28no reference data or no chance of success%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not found</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Street_Result_Status__c</picklist>
+        <values>
+            <fullName>Checked and corrected %28changed or inserted%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Empty</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No value returned%2C due to multiple possible matches</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not checked but standardized</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated and unchanged</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but changed %28synonyms%2C old names%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated%2C but standardized</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
