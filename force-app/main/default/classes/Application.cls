@@ -51,8 +51,8 @@ public inherited sharing class Application {
                             IInternationalAddressService.class => InternationalAddressImpl.class,
                             IWsInternationalAddress.class => WsInternationalAddressImpl.class,
                             IWsVat.class => WsVatImpl.class,
-                            IWsDutchAddress.class => WsDutchAddressImpl.class
-//                            IDutchAddressService.class => DutchAddressServiceImpl.class
+                            IWsAddress.class => WsAddressImpl.class
+//                            IAddressService.class => AddressServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application

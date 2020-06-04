@@ -2,7 +2,7 @@
  * Created by tejaswinidandi on 15/05/2020.
  */
 
-public inherited sharing class WsDutchAddressImpl implements IWsDutchAddress{
+public inherited sharing class WsAddressImpl implements IWsAddress {
 
     private inherited sharing class DutchAddressMethodCallOut extends MethodCallout {
 
@@ -25,7 +25,7 @@ public inherited sharing class WsDutchAddressImpl implements IWsDutchAddress{
         }
     }
 
-    public WsDutchAddressImpl(DutchAddressWsdl.Webservices_nlPort port) {
+    public WsAddressImpl(DutchAddressWsdl.Webservices_nlPort port) {
 
     }
 
@@ -33,7 +33,7 @@ public inherited sharing class WsDutchAddressImpl implements IWsDutchAddress{
 
     private DutchAddressMethodCallOut methodCallOut { get; set; }
 
-    public WsDutchAddressImpl() {
+    public WsAddressImpl() {
         port = new DutchAddressWsdl.Webservices_nlPort();
         port.HeaderLogin = new DutchAddressWsdl.HeaderLoginType();
         Credentials__c credentials = Credentials__c.getOrgDefaults();

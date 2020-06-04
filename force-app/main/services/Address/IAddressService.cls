@@ -2,7 +2,7 @@
  * Created by tejaswinidandi on 15/05/2020.
  */
 
-public interface IDutchAddressService {
+public interface IAddressService {
     /*
      * Returns Dutch_Address_Postcode_Range__c if given address is found
      *

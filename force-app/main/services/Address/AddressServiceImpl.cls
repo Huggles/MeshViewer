@@ -2,13 +2,13 @@
  * Created by tejaswinidandi on 15/05/2020.
  */
 
-public with sharing class DutchAddressServiceImpl implements IDutchAddressService{
+public with sharing class AddressServiceImpl implements IAddressService {
 
 //    public Dutch_Address_Postcode_Range__c dutchAddressRangePostcodeSearch(String address){
 //
 //        Dutch_Address_Postcode_Range__c dutchAddressPostcodeRange = new Dutch_Address_Postcode_Range__c();
 //        if (String.isNotEmpty(address)) {
-//            DutchAddressWsdl.DutchAddressPostcodeRange dutchAddressPostcodeRange2 = WsDutchAddress.dutchAddressRangePostcodeSearch(address);
+//            DutchAddressWsdl.DutchAddressPostcodeRange dutchAddressPostcodeRange2 = WsAddress.dutchAddressRangePostcodeSearch(address);
 //            if (dutchAddressPostcodeRange2 != null) {
 //                dutchAddressPostcodeRange.Cebuco_Code__c = dutchAddressPostcodeRange2.cebuco_code;
 //                dutchAddressPostcodeRange.City__c = dutchAddressPostcodeRange2.city;

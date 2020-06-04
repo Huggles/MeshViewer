@@ -3,7 +3,7 @@
  * See https://webview.webservices.nl/documentation/files/service_dutchaddress-php.html
  */
 
-public interface IWsDutchAddress {
+public interface IWsAddress {
 
     DutchAddressWsdl.DutchAddressPostcodeRange dutchAddressRangePostcodeSearch(String address);
 }

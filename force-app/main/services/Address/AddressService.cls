@@ -2,7 +2,7 @@
  * Created by tejaswinidandi on 15/05/2020.
  */
 
-public inherited sharing class DutchAddressService {
+public inherited sharing class AddressService {
 
     /*
      * Returns Dutch_Address_Postcode_Range__c if given address is found
@@ -13,8 +13,8 @@ public inherited sharing class DutchAddressService {
 //        return newInstance().dutchAddressRangePostcodeSearch(address);
 //    }
 //
-//    public static IDutchAddressService newInstance() {
-//        return (IDutchAddressService)Application.Service.newInstance(IDutchAddressService.class);
+//    public static IAddressService newInstance() {
+//        return (IAddressService)Application.Service.newInstance(IAddressService.class);
 //    }
 
 }

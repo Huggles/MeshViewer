@@ -23,7 +23,7 @@ global inherited sharing class SearchForDutchAddressInvocable {
 //        List<List<Dutch_Address_Postcode_Range__c>> listDutchAddressPostcodeRanges = new List<List<Dutch_Address_Postcode_Range__c>>();
 //
 //        for (SearchForDutchAddressArgument searchForDutchAddressArgument : arguments) {
-//            dutchAddressPostcodeRanges.add(DutchAddressService.dutchAddressRangePostcodeSearch(
+//            dutchAddressPostcodeRanges.add(AddressService.dutchAddressRangePostcodeSearch(
 //                    searchForDutchAddressArgument.address
 //            ));
 //        }
