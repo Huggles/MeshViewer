@@ -104,7 +104,6 @@ private class InternationalAddressImplTest {
             System.assertEquals('building' + i, addressToTest.Building__c);
             System.assertEquals('contact' + i, addressToTest.Contact__c);
             System.assertEquals(100.0, addressToTest.Matchrate__c);
-            System.debug(i);
         }
 
 
