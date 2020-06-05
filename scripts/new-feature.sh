@@ -11,11 +11,11 @@ if [[ "$quit" == 1 ]]; then
 ###############################################################
 #Check git branch. New feature script should run from develop #
 ###############################################################
-sh operations/check-git-branch.sh
-quit=$?
-if [[ "$quit" == 1 ]]; then
-    exit
-  fi
+#sh operations/check-git-branch.sh
+#quit=$?
+#if [[ "$quit" == 1 ]]; then
+#    exit
+#  fi
 
 #########################################################
 #Ask for the name the scratch org and branch should get #
@@ -63,7 +63,7 @@ if [[ "$OPEN" == '' ]]; then
 #Perform the operations based on the input#
 ###########################################
 
-git checkout -b 'feature/$SCRATCH_ORG_ALIAS'
+git checkout -f -b 'feature/$SCRATCH_ORG_ALIAS' 'develop'
 
 sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION
 sh operations/push-source.sh "$SCRATCH_ORG_ALIAS"
