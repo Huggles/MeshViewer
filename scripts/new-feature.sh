@@ -39,7 +39,7 @@ echo " "
 #########################################
 #Ask if LC debug mode should be enabled #
 #########################################
-LC_DEBUG_MODE_DEFAULT="y"
+LC_DEBUG_MODE_DEFAULT="n"
 echo "Enable LC Debug mode for administrator?"
 read -p $LC_DEBUG_MODE_DEFAULT LC_DEBUG_MODE
 if [[ "$LC_DEBUG_MODE" == '' ]]; then
@@ -52,7 +52,7 @@ echo " "
 #Ask whether the scratch org should automatically be opened once the process has been finished #
 ################################################################################################
 OPEN_DEFAULT="y"
-echo "Enable LC Debug mode?"
+echo "Open the scratch org once it has been created?"
 read -p $OPEN_DEFAULT OPEN
 if [[ "$OPEN" == '' ]]; then
     OPEN=$OPEN_DEFAULT
