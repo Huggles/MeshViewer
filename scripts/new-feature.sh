@@ -41,7 +41,7 @@ echo " "
 #########################################
 LC_DEBUG_MODE_DEFAULT="y"
 echo "Enable LC Debug mode for administrator?"
-read -p LC_DEBUG_MODE_DEFAULT LC_DEBUG_MODE
+read -p $LC_DEBUG_MODE_DEFAULT LC_DEBUG_MODE
 if [[ "$LC_DEBUG_MODE" == '' ]]; then
     LC_DEBUG_MODE=$LC_DEBUG_MODE_DEFAULT
   fi
@@ -53,7 +53,7 @@ echo " "
 ################################################################################################
 OPEN_DEFAULT="y"
 echo "Enable LC Debug mode?"
-read -p OPEN_DEFAULT OPEN
+read -p $OPEN_DEFAULT OPEN
 if [[ "$OPEN" == '' ]]; then
     OPEN=$OPEN_DEFAULT
   fi
