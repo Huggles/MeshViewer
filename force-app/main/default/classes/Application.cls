@@ -33,7 +33,10 @@ public inherited sharing class Application {
                     Creditsafe_Company_Share_Holder__c.SObjectType,
                     Creditsafe_Address__c.SObjectType,
                     Creditsafe_Company_Key_Value__c.SObjectType,
-                    International_Address__c.SObjectType
+                    International_Address__c.SObjectType,
+                    PermissionSetAssignment.SObjectType,
+                    UserPackageLicense.SObjectType
+
             });
 
     // Configure and create the ServiceFactory for this Application
@@ -51,6 +54,8 @@ public inherited sharing class Application {
                             IWsInternationalAddress.class => WsInternationalAddressImpl.class,
                             IWsVat.class => WsVatImpl.class,
                             ISetupService.class => SetupServiceImpl.class
+                            IWsVat.class => WsVatImpl.class,
+                            ILicenseManagementService.class => LicenseManagementServiceImpl.class
                     });
 
     // Configure and create the SelectorFactory for this Application
@@ -60,7 +65,12 @@ public inherited sharing class Application {
                     Account.SObjectType => AccountSelector.class,
                     Business_Dossier__c.SObjectType => BusinessDossierSelector.class,
                     Business_Data_SBI__c.SObjectType => SbiCodeSelector.class,
-                    International_Address__c.SObjectType => InternationalAddressSelector.class
+                    User.SObjectType => UserSelector.class,
+                    PackageLicense.SObjectType => PackageLicenseSelector.class,
+                    PermissionSetAssignment.SObjectType => PermissionSetAssignmentSelector.class,
+                    UserPackageLicense.SObjectType => UserPackageSelector.class,
+                    International_Address__c.SObjectType => InternationalAddressSelector.class,
+                    PermissionSet.SObjectType => PermissionSetSelector.class
             });
 
 }

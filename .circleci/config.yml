@@ -46,7 +46,7 @@ jobs:
       - run:
           name: create scratch org
           command:
-            sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM
+            sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM -d 30
       - run:
           name: push source to scratch org
           command:
@@ -62,7 +62,6 @@ jobs:
           path: tests/junit
       - run:
           name: delete scratch org
-          when: always
           command: |
             sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
       - run:
@@ -81,7 +80,8 @@ jobs:
       - store_artifacts:
           path: sfdx_log.tar
           destination: sfdx-log
-  
+
+
   build_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest

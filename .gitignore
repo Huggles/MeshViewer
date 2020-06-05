@@ -23,3 +23,7 @@ CompanyInfoComponents.iml
 force-app/main/default/pages/
 scans/
 scripts/
+/metadata/
+force-app/main/default/aura/
+force-app/main/default/customMetadata/
+manuals/

@@ -156,7 +156,6 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
                 'Building_Result_Status__c' => elementResultStatus.substring(6,7),
                 'Organization_Result_Status__c' => elementResultStatus.substring(7,8)
         };
-        System.debug(JSON.serializePretty(resultStatusByFieldName));
         for (String fieldName : resultStatusByFieldName.keySet()) {
             String value = null;
             switch on resultStatusByFieldName.get(fieldName) {

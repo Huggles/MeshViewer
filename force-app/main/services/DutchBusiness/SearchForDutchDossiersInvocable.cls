@@ -41,7 +41,6 @@ global with sharing class SearchForDutchDossiersInvocable {
                 throw ex;
             }
             List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
-            System.debug(searchForDutchDossiersArgument.house_number);
             businessDossiers.addAll(
                     DutchBusinessService.searchForDutchDossiersSObject(
                             searchForDutchDossiersArgument.dossier_number,
