@@ -63,7 +63,7 @@ if [[ "$OPEN" == '' ]]; then
 #Perform the operations based on the input#
 ###########################################
 
-git checkout -f -b 'feature/$SCRATCH_ORG_ALIAS' 'develop'
+git checkout -f -b "feature/$SCRATCH_ORG_ALIAS" "feature/CI-Scripts"
 
 sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION
 sh operations/push-source.sh "$SCRATCH_ORG_ALIAS"
