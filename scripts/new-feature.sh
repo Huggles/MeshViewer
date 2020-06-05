@@ -1,9 +1,12 @@
 
-tput setaf 1;
-echo "############# -> WARNING <- ###############"
-
-tput sgr0;
-echo "This script will throw away any uncomitted local changes!! First commit all your local changes."
+########################################################
+#Check git commits. There should be no uncommited work #
+########################################################
+sh operations/check-git-commits.sh
+quit=$?
+if [[ "$quit" == 1 ]]; then
+    exit
+  fi
 
 ###############################################################
 #Check git branch. New feature script should run from develop #
@@ -17,14 +20,9 @@ if [[ "$quit" == 1 ]]; then
 #########################################################
 #Ask for the name the scratch org and branch should get #
 #########################################################
-
-red='tput setaf 1'
-nocolor='tput sgr0'
-
 echo "What is the story ID? This will be used as branch name and scratch org name."
 read SCRATCH_ORG_ALIAS
 echo " "
-
 
 ###############################################
 #Ask for how long the scratch org should live #
@@ -64,6 +62,9 @@ if [[ "$OPEN" == '' ]]; then
 ###########################################
 #Perform the operations based on the input#
 ###########################################
+
+git checkout -b 'feature/$SCRATCH_ORG_ALIAS'
+
 sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION
 sh operations/push-source.sh "$SCRATCH_ORG_ALIAS"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_administrator"
