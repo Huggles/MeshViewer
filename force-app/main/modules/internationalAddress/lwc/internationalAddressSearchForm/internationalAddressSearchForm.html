@@ -24,7 +24,7 @@
                         spinner-active="true"
                         onchange={handleSelectedCountryChange}>
     </lightning-combobox>
-    <lightning-layout multiple-rows="true">
+    <lightning-layout multiple-rows="true" if:false={isNlSelected}>
         <lightning-layout-item size="6">
             <lightning-input name="organization" required={organizationRequired} label={label.Organization}
                              class="slds-m-around_xxx-small" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input>
@@ -54,6 +54,49 @@
                              class="slds-m-around_xxx-small" value={locality} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="6">
+            <lightning-input name="province" label={label.Province} title="Province"
+                             class="slds-m-around_xxx-small" value={province} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <lightning-layout multiple-rows="true" if:true={isNlSelected}>
+        <lightning-layout-item size="12">
+            <lightning-input name="organization" required={organizationRequired} label={label.Organization}
+                             class="slds-m-around_xxx-small" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-input name="street" label={label.Street} title="Street"
+                             class="slds-m-around_xxx-small" value={street} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="3">
+            <lightning-input name="housenr" label={label.House_Number} title="House Number"
+                             class="slds-m-around_xxx-small" value={housenr} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="3">
+            <lightning-input name="housenrAddition" label={label.House_Number_Addition} title="House Number Addition"
+                             class="slds-m-around_xxx-small" value={housenrAddition} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="6">
+            <lightning-input name="postcode" label={label.Postcode} title="Postcode"
+                             class="slds-m-around_xxx-small" value={postcode} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="3">
+            <lightning-input name="lettercombination" label={label.Letter_Combination} title="Letter Combination"
+                             class="slds-m-around_xxx-small" value={lettercombination} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="3">
+            <lightning-input name="addresstype" label={label.Address_Type} title="Address Type"
+                             class="slds-m-around_xxx-small" value={addresstype} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="4">
+            <lightning-input name="locality" label={label.Locality} title="Locality" field-level-help={label.Locality_Help_Text}
+                             class="slds-m-around_xxx-small" value={locality} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="4">
+            <lightning-input name="municipality" label={label.Municipality} title="Municipality"
+                             class="slds-m-around_xxx-small" value={municipality} onchange={handleOnChange}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="4">
             <lightning-input name="province" label={label.Province} title="Province"
                              class="slds-m-around_xxx-small" value={province} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>

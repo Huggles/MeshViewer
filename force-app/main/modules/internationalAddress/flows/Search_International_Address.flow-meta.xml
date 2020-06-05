@@ -22,6 +22,12 @@
             <targetReference>International_Address</targetReference>
         </faultConnector>
         <inputParameters>
+            <name>addresstype</name>
+            <value>
+                <elementReference>searchInternationalAddress.addresstype</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>building</name>
             <value>
                 <elementReference>searchInternationalAddress.building</elementReference>
@@ -40,15 +46,33 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>housenrAddition</name>
+            <value>
+                <elementReference>searchInternationalAddress.housenrAddition</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>language</name>
             <value>
                 <elementReference>searchInternationalAddress.language</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
+            <name>lettercombination</name>
+            <value>
+                <elementReference>searchInternationalAddress.lettercombination</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>locality</name>
             <value>
                 <elementReference>searchInternationalAddress.locality</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>municipality</name>
+            <value>
+                <elementReference>searchInternationalAddress.municipality</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -397,6 +421,12 @@
                 <name>searchResults</name>
                 <value>
                     <elementReference>Search_for_international_addresses</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>country</name>
+                <value>
+                    <elementReference>searchInternationalAddress.country</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

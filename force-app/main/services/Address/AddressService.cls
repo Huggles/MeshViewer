@@ -5,16 +5,16 @@
 public inherited sharing class AddressService {
 
     /*
-     * Returns Dutch_Address_Postcode_Range__c if given address is found
+     * Returns International_Address__c if given address is found
      *
      * @param address
      */
-//    public static Dutch_Address_Postcode_Range__c dutchAddressRangePostcodeSearch(String address){
-//        return newInstance().dutchAddressRangePostcodeSearch(address);
-//    }
-//
-//    public static IAddressService newInstance() {
-//        return (IAddressService)Application.Service.newInstance(IAddressService.class);
-//    }
+    public static List<International_Address__c> dutchAddressSearch(String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype){
+        return newInstance().dutchAddressSearch(province, district, city, street, houseNo, houseNoAddition, nbcode, lettercombination, addresstype);
+    }
+
+    public static IAddressService newInstance() {
+        return (IAddressService)Application.Service.newInstance(IAddressService.class);
+    }
 
 }

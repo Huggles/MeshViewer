@@ -10,6 +10,7 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="searchResults" type="@salesforce/schema/appsolutely__International_Address__c[]" label="Search Results" role="inputOnly"/>
+            <property name="country" type="String" label="Country as ISO 3166 Alpha 3 code" description="Country as ISO 3166 Alpha 3 code. Defaults to NLD if not filled and Country as ISO 3166 Alpha 2 code is not filled as well." role="inputOnly"/>
             <property name="selectedResult" type="@salesforce/schema/appsolutely__International_Address__c" label="Selected Search Result" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>

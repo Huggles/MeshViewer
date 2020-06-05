@@ -4,9 +4,9 @@
 
 public interface IAddressService {
     /*
-     * Returns Dutch_Address_Postcode_Range__c if given address is found
+     * Returns List of International_Address__c if given address is found
      *
      * @param address
      */
-//    Dutch_Address_Postcode_Range__c dutchAddressRangePostcodeSearch(String address);
+    List<International_Address__c> dutchAddressSearch(String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype);
 }

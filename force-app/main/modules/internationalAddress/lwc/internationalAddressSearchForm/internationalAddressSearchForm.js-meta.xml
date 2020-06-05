@@ -18,7 +18,11 @@
             <property name="locality" label="City or Locality" type="String"/>
             <property name="postcode" label="Postcode" type="String"/>
             <property name="province" label="Province" type="String"/>
-            <property name="language" type="String"/>
+            <property name="language" label="Language" type="String"/>
+            <property name="housenrAddition" label="House Nr Addition" type="String"/>
+            <property name="lettercombination" label="Letter Combination" type="String"/>
+            <property name="addresstype" label="Address Type" type="String"/>
+            <property name="municipality" label="Municipality" type="String"/>
             <property name="country" type="String" label="Country as ISO 3166 Alpha 3 code" description="Country as ISO 3166 Alpha 3 code. Defaults to NLD if not filled and Country as ISO 3166 Alpha 2 code is not filled as well."/>
             <property name="countryInAlpha2Code" type="String" role="inputOnly" label="Country as ISO 3166 Alpha 2 code" description="Country as ISO 3166 Alpha 2 code"/>
         </targetConfig>

@@ -5,5 +5,5 @@
 
 public interface IWsAddress {
 
-    DutchAddressWsdl.DutchAddressPostcodeRange dutchAddressRangePostcodeSearch(String address);
+    AddressWsdl.PerceelSearchPartsPagedResult addressPerceelFullParameterSearchV2(String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype,Integer page_x);
 }

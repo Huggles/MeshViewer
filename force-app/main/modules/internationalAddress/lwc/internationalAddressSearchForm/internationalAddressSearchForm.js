@@ -22,6 +22,10 @@ import Country from '@salesforce/label/c.Country';
 import Validation_Error_Message_Toast_Title from '@salesforce/label/c.Validation_Error_Message_Toast_Title';
 import No_address_fields_filled_international_address from '@salesforce/label/c.No_address_fields_filled_international_address';
 import Locality_Help_Text from '@salesforce/label/c.Locality_Help_Text';
+import House_Number_Addition from '@salesforce/label/c.House_Number_Addition';
+import Letter_Combination from '@salesforce/label/c.Letter_Combination';
+import Address_Type from '@salesforce/label/c.Address_Type';
+import Municipality from '@salesforce/label/c.Municipality';
 
 export default class InternationalAddressSearchForm extends LightningElement {
 
@@ -38,6 +42,10 @@ export default class InternationalAddressSearchForm extends LightningElement {
     @api txtBoxVal;
     @api country;
     @api countryInAlpha2Code;
+    @api housenrAddition;
+    @api lettercombination;
+    @api addresstype;
+    @api municipality;
 
     @api availableActions = [];
 
@@ -57,7 +65,11 @@ export default class InternationalAddressSearchForm extends LightningElement {
         Country,
         No_address_fields_filled_international_address,
         Validation_Error_Message_Toast_Title,
-        Locality_Help_Text
+        Locality_Help_Text,
+        House_Number_Addition,
+        Letter_Combination,
+        Address_Type,
+        Municipality
     }
 
     /**
@@ -117,6 +129,11 @@ export default class InternationalAddressSearchForm extends LightningElement {
 
     disconnectedCallback() {
         unregisterAllListeners(this);
+    }
+
+    @api
+    get isNlSelected() {
+        return this.country === 'NL' || this.country === 'NLD';
     }
 
     handleComponentRegistrationOpen(registrar) {

@@ -4,14 +4,27 @@
 
 public inherited sharing class WsAddressImpl implements IWsAddress {
 
-    private inherited sharing class DutchAddressMethodCallOut extends MethodCallout {
+    private inherited sharing class AddressMethodCallOut extends MethodCallout {
+
+        public AddressMethodCallOut(AddressWsdl.Webservices_nlPort port) {
+            super(port);
+        }
 
         public Object call(String methodName, Map<String, Object> arguments) {
-            DutchAddressWsdl.Webservices_nlPort port = (DutchAddressWsdl.Webservices_nlPort) this.port;
+            AddressWsdl.Webservices_nlPort port = (AddressWsdl.Webservices_nlPort) this.port;
             switch on methodName {
-                when 'dutchAddressRangePostcodeSearch' {
-                    return port.dutchAddressRangePostcodeSearch(
-                            (String)arguments.get('address')
+                when 'addressPerceelFullParameterSearchV2' {
+                    return port.addressPerceelFullParameterSearchV2(
+                            (String)arguments.get('province'),
+                            (String)arguments.get('district'),
+                            (String)arguments.get('city'),
+                            (String)arguments.get('street'),
+                            (Integer)arguments.get('houseNo'),
+                            (String)arguments.get('houseNoAddition'),
+                            (String)arguments.get('nbcode'),
+                            (String)arguments.get('lettercombination'),
+                            (String)arguments.get('addresstype'),
+                            (Integer)arguments.get('page_x')
                     );
                 }
                 when else {
@@ -19,30 +32,33 @@ public inherited sharing class WsAddressImpl implements IWsAddress {
                 }
             }
         }
-
-        public DutchAddressMethodCallOut(DutchAddressWsdl.Webservices_nlPort port) {
-            super(port);
-        }
     }
 
-    public WsAddressImpl(DutchAddressWsdl.Webservices_nlPort port) {
+    private AddressWsdl.Webservices_nlPort port { get; set; }
 
-    }
-
-    private DutchAddressWsdl.Webservices_nlPort port { get; set; }
-
-    private DutchAddressMethodCallOut methodCallOut { get; set; }
+    private AddressMethodCallOut methodCallOut { get; set; }
 
     public WsAddressImpl() {
-        port = new DutchAddressWsdl.Webservices_nlPort();
-        port.HeaderLogin = new DutchAddressWsdl.HeaderLoginType();
+        port = new AddressWsdl.Webservices_nlPort();
+        port.HeaderLogin = new AddressWsdl.HeaderLoginType();
         Credentials__c credentials = Credentials__c.getOrgDefaults();
         port.HeaderLogin.username = credentials.Username__c;
         port.HeaderLogin.password = credentials.Password__c;
-        methodCallOut = new DutchAddressMethodCallOut(port);
+        methodCallOut = new AddressMethodCallOut(port);
     }
 
-    public DutchAddressWsdl.DutchAddressPostcodeRange dutchAddressRangePostcodeSearch(String address) {
-        return (DutchAddressWsdl.DutchAddressPostcodeRange)methodCallOut.callOut('dutchAddressRangePostcodeSearch', new Map<String, Object>{'address' => address});
+    public AddressWsdl.PerceelSearchPartsPagedResult addressPerceelFullParameterSearchV2(String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype,Integer page_x) {
+        return (AddressWsdl.PerceelSearchPartsPagedResult)methodCallOut.callOut('addressPerceelFullParameterSearchV2', new Map<String, Object>{
+                'province' => province,
+                'district' => district,
+                'city' => city,
+                'street' => street,
+                'houseNo' => houseNo,
+                'houseNoAddition' => houseNoAddition,
+                'nbcode' => nbcode,
+                'lettercombination' => lettercombination,
+                'addresstype' => addresstype,
+                'page_x' => page_x
+        });
     }
 }

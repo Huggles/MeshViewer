@@ -16,6 +16,9 @@ export default class InternationalAddressSearchResults extends LightningElement 
     @api
     selectedResult;
 
+    @api
+    country;
+
     connectedCallback() {
         if (this.searchResults && this.searchResults instanceof Array && this.searchResults.length >= 20) {
             const event = new ShowToastEvent({
@@ -24,5 +27,9 @@ export default class InternationalAddressSearchResults extends LightningElement 
             this.dispatchEvent(event);
             this.errorMessage = null;
         }
+    }
+
+    get isNlSelected() {
+        return this.country === 'NL' || this.country === 'NLD';
     }
 }
