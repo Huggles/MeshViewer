@@ -1,3 +1,10 @@
+
+tput setaf 1;
+echo "############# -> WARNING <- ###############"
+
+tput sgr0;
+echo "This script will throw away any uncomitted local changes!! First commit all your local changes."
+
 ###############################################################
 #Check git branch. New feature script should run from develop #
 ###############################################################
@@ -11,11 +18,10 @@ if [[ "$quit" == 1 ]]; then
 #Ask for the name the scratch org and branch should get #
 #########################################################
 
-RED='\033[0;31m'
-NOCOLOR='\033[0m' # No Color
+red='tput setaf 1'
+nocolor='tput sgr0'
 
 echo "What is the story ID? This will be used as branch name and scratch org name."
-echo "${RED}WARNING:${NOCOLOR} this script will throw away any uncomitted local changes!! "
 read SCRATCH_ORG_ALIAS
 echo " "
 
