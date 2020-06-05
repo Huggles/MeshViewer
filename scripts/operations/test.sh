@@ -1,7 +1,8 @@
 uncommitted_changes="$(git diff --name-only)"
 
 echo $uncommitted_changes
-
+length=${#uncommitted_changes}
+echo $length
 
 #################################################################
 #Quit? In place to avoid the screen closing without confirmation#
