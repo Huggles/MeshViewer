@@ -17,6 +17,7 @@ public inherited sharing class ErrorLogUtil {
             }
             return supportEmailAddress;
         }
+        set;
     }
 
     /**
