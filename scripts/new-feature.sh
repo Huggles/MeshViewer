@@ -72,7 +72,7 @@ if [[ "$OPEN" == '' ]]; then
 
 git checkout -f -b "feature/$SCRATCH_ORG_ALIAS" "feature/CI-Scripts"
 
-sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION
+sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION "../config/project-scratch-def.json"
 sh operations/push-source.sh "$SCRATCH_ORG_ALIAS"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_administrator"
 

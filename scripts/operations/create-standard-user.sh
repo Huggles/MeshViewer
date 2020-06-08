@@ -8,7 +8,7 @@
 SCRATCH_ORG_ALIAS=$1
 SCRATCH_ORG_SU_ALIAS=$2
 
-echo "RUNNING: sfdx package:version:install -u $SCRATCH_ORG_ALIAS -p $SCRATCH_ORG_SU_ALIAS -w 15"
+echo "RUNNING: force:user:create -u $SCRATCH_ORG_ALIAS -a $SCRATCH_ORG_SU_ALIAS -f ../config/companyinfo-user-def.json"
 sfdx force:user:create -u $SCRATCH_ORG_ALIAS -a $SCRATCH_ORG_SU_ALIAS -f ../config/companyinfo-user-def.json
 echo " "
 

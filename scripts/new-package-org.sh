@@ -17,24 +17,15 @@
 #########################################################
 #Ask for the name the scratch org and branch should get #
 #########################################################
-echo "What is the story ID? This will be used as branch name and scratch org name."
+echo "What should we name the test org?"
 read SCRATCH_ORG_ALIAS
-SCRATCH_ORG_SU_ALIAS=${SCRATCH_ORG_ALIAS}+"StandardUser"
+SCRATCH_ORG_SU_ALIAS=${SCRATCH_ORG_ALIAS}"StandardUser"
 echo " "
 
 #########################################################
 #Ask for the name the scratch org and branch should get #
 #########################################################
 
-sfdx force:package:list
-echo "What package do you want to install a version of? (enter 0Ho Id or Alias)"
-read PACKAGE_NAME
-echo " "
-
-#########################################################
-#Ask for the name the scratch org and branch should get #
-#########################################################
-sfdx force:package:version:list -p $PACKAGE_NAME -o CreatedDate
 echo "What package version do you want to install? (enter 04t Id or Alias)"
 read PACKAGE_VERSION_NAME
 echo " "
@@ -53,7 +44,7 @@ if [[ "$OPEN" == '' ]]; then
 ###########################################
 #Perform the operations based on the input#
 ###########################################
-sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" 30
+sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" 30 "../config/enterprise-scratch-def.json"
 sh operations/install-package-version.sh "$SCRATCH_ORG_ALIAS" "$PACKAGE_VERSION_NAME"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_administrator"
 
