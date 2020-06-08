@@ -15,7 +15,7 @@ if [[ "$branch_name" != 'develop' ]]; then
   read CHECKOUT
 fi
 if [[ "$CHECKOUT" == 'y' ]]; then
-  git checkout -f "develop"
+  git checkout "develop"
 fi
 exit 1
 

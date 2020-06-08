@@ -19,31 +19,25 @@
 #########################################################
 echo "What is the story ID? This will be used as branch name and scratch org name."
 read SCRATCH_ORG_ALIAS
+SCRATCH_ORG_SU_ALIAS=${SCRATCH_ORG_ALIAS}+"StandardUser"
 echo " "
 
-###############################################
-#Ask for how long the scratch org should live #
-###############################################
-DURATION_DEFAULT=30
-echo "How long should the scratch org exist?"
-read -p $DURATION_DEFAULT DURATION
-if [[ "$DURATION" == '' ]]; then
-    DURATION=$DURATION_DEFAULT
-  fi
+#########################################################
+#Ask for the name the scratch org and branch should get #
+#########################################################
+
+sfdx force:package:list
+echo "What package do you want to install a version of? (enter 0Ho Id or Alias)"
+read PACKAGE_NAME
 echo " "
 
-
-#########################################
-#Ask if LC debug mode should be enabled #
-#########################################
-LC_DEBUG_MODE_DEFAULT="n"
-echo "Enable LC Debug mode for administrator?"
-read -p $LC_DEBUG_MODE_DEFAULT LC_DEBUG_MODE
-if [[ "$LC_DEBUG_MODE" == '' ]]; then
-    LC_DEBUG_MODE=$LC_DEBUG_MODE_DEFAULT
-  fi
+#########################################################
+#Ask for the name the scratch org and branch should get #
+#########################################################
+sfdx force:package:version:list -p $PACKAGE_NAME -o CreatedDate
+echo "What package version do you want to install? (enter 04t Id or Alias)"
+read PACKAGE_VERSION_NAME
 echo " "
-
 
 ################################################################################################
 #Ask whether the scratch org should automatically be opened once the process has been finished #
@@ -59,12 +53,11 @@ if [[ "$OPEN" == '' ]]; then
 ###########################################
 #Perform the operations based on the input#
 ###########################################
-
-git checkout -f -b "feature/$SCRATCH_ORG_ALIAS" "feature/CI-Scripts"
-
-sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION
-sh operations/push-source.sh "$SCRATCH_ORG_ALIAS"
+sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" 30
+sh operations/install-package-version.sh "$SCRATCH_ORG_ALIAS" "$PACKAGE_VERSION_NAME"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_administrator"
+
+sh operations/create-standard-user.sh "$SCRATCH_ORG_ALIAS" "$SCRATCH_ORG_SU_ALIAS"
 
 if [ "$LC_DEBUG_MODE" = "y" ]
 then
