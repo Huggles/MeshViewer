@@ -40,7 +40,7 @@ global inherited sharing class FindDuplicatesInvocable {
             }
             allDuplicateSObjects.add(new List<SObject>(duplicateSObjects));
         }
-        catch (Exception e) {
+        catch (HandledException e) {
             // System.HandledException: No active duplicate rules are defined for the [objname] object type
         }
         return allDuplicateSObjects;

@@ -2,7 +2,7 @@
  * Created by tejaswinidandi on 02/06/2020.
  */
 
-public with sharing class CreateDuplicates {
+public inherited sharing class CreateDuplicates {
 
     @AuraEnabled
     public static Id createDuplicateAccount(Account account) {
