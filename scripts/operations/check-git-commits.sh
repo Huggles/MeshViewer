@@ -1,5 +1,6 @@
 ########################################################################################################
-# Warning: Do not run this script individually. It requires input parameters provided by other scripts #
+# Author      : Hugo van Krimpen
+# Date        : 08-06-2020
 ########################################################################################################
 
 committed_changes="$(git diff --name-only)"

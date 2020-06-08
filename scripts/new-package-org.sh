@@ -1,19 +1,9 @@
 ########################################################################################################
 # Author      : Hugo van Krimpen
 # Date        : 08-06-2020
-# Description : Creates a branch and scratch org for a new feature.
+# Description : Creates an org and installs a version of a package on it. Creates a standard user with
+#               the user permission set. Org lives for 30 days.
 ########################################################################################################
-
-
-
-########################################################
-#Check git commits. There should be no uncommited work #
-########################################################
-sh operations/check-git-commits.sh
-quit=$?
-if [[ "$quit" == 1 ]]; then
-    exit
-  fi
 
 ###############################################################
 #Check git branch. New feature script should run from develop #
