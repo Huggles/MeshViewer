@@ -8,5 +8,5 @@
 SCRATCH_ORG_ALIAS=$1
 PACKAGE_VERSION_NAME=$2
 
-echo "RUNNING: sfdx force:package:install -u $SCRATCH_ORG_ALIAS -p $PACKAGE_VERSION_NAME -w 15"
-sfdx force:package:install -u $SCRATCH_ORG_ALIAS -p $PACKAGE_VERSION_NAME -w 15 -r
+echo "RUNNING: sfdx force:package:install -u \"$SCRATCH_ORG_ALIAS\" -p \"$PACKAGE_VERSION_NAME\" -w 15"
+sfdx force:package:install -u "$SCRATCH_ORG_ALIAS" -p "$PACKAGE_VERSION_NAME" -w 15 -r

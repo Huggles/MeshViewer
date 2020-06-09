@@ -9,5 +9,5 @@ SCRATCH_ORG_ALIAS=$1
 DURATION=$2
 CONFIG=$3
 
-echo "RUNNING: sfdx force:org:create -f $CONFIG -a $SCRATCH_ORG_ALIAS -d $DURATION"
-sfdx force:org:create -f $CONFIG  -a "$SCRATCH_ORG_ALIAS" -d $DURATION
+echo "RUNNING: sfdx force:org:create -f \"$CONFIG\" -a \"$SCRATCH_ORG_ALIAS\" -d $DURATION"
+sfdx force:org:create -f "$CONFIG" -a "$SCRATCH_ORG_ALIAS" -d $DURATION

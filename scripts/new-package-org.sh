@@ -33,12 +33,9 @@ echo " "
 ################################################################################################
 #Ask whether the scratch org should automatically be opened once the process has been finished #
 ################################################################################################
-OPEN_DEFAULT="y"
 echo "Open the scratch org once it has been created?"
-read -p $OPEN_DEFAULT OPEN
-if [[ "$OPEN" == '' ]]; then
-    OPEN=$OPEN_DEFAULT
-  fi
+read OPEN
+echo " "
 
 
 ###########################################
@@ -50,10 +47,6 @@ sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_admini
 
 sh operations/create-standard-user.sh "$SCRATCH_ORG_ALIAS" "$SCRATCH_ORG_SU_ALIAS"
 
-if [ "$LC_DEBUG_MODE" = "y" ]
-then
-  sh operations/enable-lc-debug-mode.sh "$SCRATCH_ORG_ALIAS"
-fi
 
 if [ "$OPEN" = "y" ]
 then

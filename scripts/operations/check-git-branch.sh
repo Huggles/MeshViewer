@@ -1,11 +1,7 @@
 ########################################################################################################
 # Author      : Hugo van Krimpen
 # Date        : 08-06-2020
-# Parameter 1 : Alias/Username of the scratch org / user
 ########################################################################################################
-
-SCRATCH_ORG_ALIAS=$1
-
 
 branch_name="$(git rev-parse --abbrev-ref HEAD)"
 CHECKOUT="y"

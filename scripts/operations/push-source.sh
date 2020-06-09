@@ -6,6 +6,6 @@
 
 SCRATCH_ORG_ALIAS=$1
 
-echo "RUNNING: sfdx force:source:push -u $SCRATCH_ORG_ALIAS -f"
+echo "RUNNING: sfdx force:source:push -u \"$SCRATCH_ORG_ALIAS\" -f"
 sfdx force:source:push -u "$SCRATCH_ORG_ALIAS" -f
 

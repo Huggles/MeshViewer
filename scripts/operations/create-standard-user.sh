@@ -8,10 +8,10 @@
 SCRATCH_ORG_ALIAS=$1
 SCRATCH_ORG_SU_ALIAS=$2
 
-echo "RUNNING: force:user:create -u $SCRATCH_ORG_ALIAS -a $SCRATCH_ORG_SU_ALIAS -f ../config/companyinfo-user-def.json"
-sfdx force:user:create -u $SCRATCH_ORG_ALIAS -a $SCRATCH_ORG_SU_ALIAS -f ../config/companyinfo-user-def.json
+echo "RUNNING: force:user:create -u \"$SCRATCH_ORG_ALIAS\" -a \"$SCRATCH_ORG_SU_ALIAS\" -f ../config/companyinfo-user-def.json"
+sfdx force:user:create -u "$SCRATCH_ORG_ALIAS" -a "$SCRATCH_ORG_SU_ALIAS" -f ../config/companyinfo-user-def.json
 echo " "
 
 echo "Generating Password ... "
-sfdx force:user:password:generate -u $SCRATCH_ORG_ALIAS -o $SCRATCH_ORG_SU_ALIAS
+sfdx force:user:password:generate -u "$SCRATCH_ORG_ALIAS" -o "$SCRATCH_ORG_SU_ALIAS"
 echo " "
