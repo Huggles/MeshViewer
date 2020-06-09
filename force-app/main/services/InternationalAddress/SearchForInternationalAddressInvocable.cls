@@ -71,6 +71,7 @@ global inherited sharing class SearchForInternationalAddressInvocable {
             for (SearchInternationalAddressArgument searchInternationalAddressArgument : arguments) {
                 if (searchInternationalAddressArgument.country == 'NLD' || searchInternationalAddressArgument.country == 'NL') {
                     listInternationalAddresses2.add(AddressService.dutchAddressSearch(
+                            searchInternationalAddressArgument.organization,
                             searchInternationalAddressArgument.province,
                             searchInternationalAddressArgument.municipality,//district
                             searchInternationalAddressArgument.locality,//city

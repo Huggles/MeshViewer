@@ -6,13 +6,13 @@ public with sharing class AddressServiceImpl implements IAddressService {
 
     public static final Integer MAX_SEARCH_RESULTS = 1000;
 
-    public List<International_Address__c> dutchAddressSearch(String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype){
+    public List<International_Address__c> dutchAddressSearch(String organization,String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype){
 
         List<International_Address__c> dutchAddresses = new List<International_Address__c>();
         List<AddressWsdl.Perceel> addresses = searchForDutchAddressInCompanyInfo(province, district, city, street, houseNo, houseNoAddition, nbcode, lettercombination, addresstype);
         
         for (AddressWsdl.Perceel addressPerceel : addresses) {
-            dutchAddresses.add(mapAddressPerceelToInternationalAddress(addressPerceel));
+            dutchAddresses.add(mapAddressPerceelToInternationalAddress(addressPerceel, organization));
         }
         
         return dutchAddresses;
@@ -32,37 +32,40 @@ public with sharing class AddressServiceImpl implements IAddressService {
         return searchResults;
     }
     
-    private International_Address__c mapAddressPerceelToInternationalAddress(AddressWsdl.Perceel addressPerceel) {
-        International_Address__c dutchAddres = new International_Address__c();
-        dutchAddres.Perceel_Id__c = addressPerceel.perceelid;
-        dutchAddres.House_Number__c = String.valueOf(addressPerceel.huisnr);
-        dutchAddres.House_Number_Addition__c = addressPerceel.huisnr_toevoeging;
-        dutchAddres.Perceel_Number__c = addressPerceel.perceelnummer;
-        dutchAddres.Reeks_Id__c = addressPerceel.reeksid;
-        dutchAddres.House_Number_From__c = addressPerceel.huisnr_van;
-        dutchAddres.House_Number_To__c = addressPerceel.huisnr_tm;
-        dutchAddres.Postcode__c = addressPerceel.wijkcode;
-        dutchAddres.Reeks_Indication__c = addressPerceel.reeksindicatie;
-        dutchAddres.Letter_Combination__c = addressPerceel.lettercombinatie;
-        dutchAddres.Street_Id__c = addressPerceel.straatid;
-        dutchAddres.Street__c = addressPerceel.straatnaam;
-        dutchAddres.Street_Name_Nen__c = addressPerceel.straatnaam_nen;
-        dutchAddres.Street_Name_Ptt__c = addressPerceel.straatnaam_ptt;
-        dutchAddres.Street_Name_Extract__c = addressPerceel.straatnaam_extract;
-        dutchAddres.City_Id__c = addressPerceel.plaatsid;
-        dutchAddres.City_Ptt__c = addressPerceel.plaatsnaam_ptt;
-        dutchAddres.City_Extract__c = addressPerceel.plaatsnaam_extract;
-        dutchAddres.Locality__c = addressPerceel.plaatsnaam;
-        dutchAddres.Municipality__c = addressPerceel.gemeentenaam;
-        dutchAddres.Municipality_Code__c = addressPerceel.gemeentecode;
-        dutchAddres.Municipality_Id__c = addressPerceel.gemeenteid;
-        dutchAddres.Province__c = addressPerceel.provincienaam;
-        dutchAddres.Province_Code__c = addressPerceel.provinciecode;
-        dutchAddres.CeBuco_Code__c = addressPerceel.cebucocode;
-        dutchAddres.Formatted_Address__c = addressPerceel.straatnaam + String.valueOf(addressPerceel.huisnr) ;
-        dutchAddres.RecordTypeId = Schema.SObjectType.International_Address__c.getRecordTypeInfosByDeveloperName().get('Dutch_Address').recordTypeId;
+    private International_Address__c mapAddressPerceelToInternationalAddress(AddressWsdl.Perceel addressPerceel, String organization) {
+        International_Address__c dutchAddress = new International_Address__c();
+        dutchAddress.Perceel_Id__c = addressPerceel.perceelid;
+        dutchAddress.House_Number__c = String.valueOf(addressPerceel.huisnr);
+        dutchAddress.House_Number_Addition__c = addressPerceel.huisnr_toevoeging;
+        dutchAddress.Perceel_Number__c = addressPerceel.perceelnummer;
+        dutchAddress.Reeks_Id__c = addressPerceel.reeksid;
+        dutchAddress.House_Number_From__c = addressPerceel.huisnr_van;
+        dutchAddress.House_Number_To__c = addressPerceel.huisnr_tm;
+        dutchAddress.Postcode__c = addressPerceel.wijkcode;
+        dutchAddress.Reeks_Indication__c = addressPerceel.reeksindicatie;
+        dutchAddress.Letter_Combination__c = addressPerceel.lettercombinatie;
+        dutchAddress.Street_Id__c = addressPerceel.straatid;
+        dutchAddress.Street__c = addressPerceel.straatnaam;
+        dutchAddress.Street_Name_Nen__c = addressPerceel.straatnaam_nen;
+        dutchAddress.Street_Name_Ptt__c = addressPerceel.straatnaam_ptt;
+        dutchAddress.Street_Name_Extract__c = addressPerceel.straatnaam_extract;
+        dutchAddress.City_Id__c = addressPerceel.plaatsid;
+        dutchAddress.City_Ptt__c = addressPerceel.plaatsnaam_ptt;
+        dutchAddress.City_Extract__c = addressPerceel.plaatsnaam_extract;
+        dutchAddress.Locality__c = addressPerceel.plaatsnaam;
+        dutchAddress.Municipality__c = addressPerceel.gemeentenaam;
+        dutchAddress.Municipality_Code__c = addressPerceel.gemeentecode;
+        dutchAddress.Municipality_Id__c = addressPerceel.gemeenteid;
+        dutchAddress.Province__c = addressPerceel.provincienaam;
+        dutchAddress.Province_Code__c = addressPerceel.provinciecode;
+        dutchAddress.CeBuco_Code__c = addressPerceel.cebucocode;
+        dutchAddress.Formatted_Address__c = addressPerceel.straatnaam + String.valueOf(addressPerceel.huisnr) ;
+        dutchAddress.RecordTypeId = Schema.SObjectType.International_Address__c.getRecordTypeInfosByDeveloperName().get('Dutch_Address').recordTypeId;
+        dutchAddress.Organization__c = organization;
+        dutchAddress.Country__c = 'Netherlands';
+        dutchAddress.Alpha_2_Country_Code__c = 'NL';
 
-        return dutchAddres;
+        return dutchAddress;
     }
 
 }

@@ -8,5 +8,5 @@ public interface IAddressService {
      *
      * @param address
      */
-    List<International_Address__c> dutchAddressSearch(String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype);
+    List<International_Address__c> dutchAddressSearch(String organization,String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype);
 }
