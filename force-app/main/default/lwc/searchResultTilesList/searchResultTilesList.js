@@ -26,7 +26,15 @@ export default class SearchResultTilesList extends LightningElement {
      * Are there any results?
      */
     get hasResults() {
-        return this.searchResults != null && this.searchResults.length > 0;
+        if(this.searchResults == null || this.searchResults.length == 0){
+            return false;
+        }
+        if(this.searchResults.length == 1  && this.searchResults[0].appsolutely__Matchrate__c == 0){
+            //Company info returns the info from the request with a matchrate of 0 when no results are found.
+            //We do not want to show that as an actual result.
+            return false;
+        }
+        return true;
     }
 
     /**
