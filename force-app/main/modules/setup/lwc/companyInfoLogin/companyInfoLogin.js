@@ -13,13 +13,15 @@ import SubmitButtonLabel from '@salesforce/label/c.Config_Account_Save';
 import Error from '@salesforce/label/c.Error';
 import Success from '@salesforce/label/c.Success';
 import Credentials_successfully_updated_message from '@salesforce/label/c.Credentials_successfully_updated_message';
+import Loading from '@salesforce/label/c.Loading';
 
 export default class CompanyInfoLogin extends LightningElement {
 
     label = {
         Config_Account_Password,
         Config_Account_Username,
-        SubmitButtonLabel
+        SubmitButtonLabel,
+        Loading
     }
 
     @track loaded = true;
