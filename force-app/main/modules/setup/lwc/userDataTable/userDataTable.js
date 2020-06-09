@@ -4,17 +4,23 @@
 
 import {LightningElement, api, track} from 'lwc';
 
+import Full_Name from '@salesforce/label/c.Full_Name';
+import Alias from '@salesforce/label/c.Alias';
+import Username from '@salesforce/label/c.Username';
+import Profile from '@salesforce/label/c.Profile';
+import Role from '@salesforce/label/c.Role';
+import Active_user from '@salesforce/label/c.Active_user';
+
 /**
  * the column definition of the assigned user table
  */
-// TODO: use custom labels
 const columns = [
-    {label: 'Full Name', fieldName: 'Name', type: 'text', sortable: true},
-    {label: 'Alias', fieldName: 'Alias', type: 'text', sortable: true},
-    {label: 'User name', fieldName: 'Username', type: 'text', sortable: true},
-    {label: 'Profile', fieldName: 'ProfileName', type: 'text', sortable:  true},
-    {label: 'Role', fieldName: 'UserRoleName', type: 'text', sortable: true},
-    {label: 'Active', fieldName: 'IsActive', type: 'boolean', sortable: true}
+    {label: Full_Name, fieldName: 'Name', type: 'text', sortable: true},
+    {label: Alias, fieldName: 'Alias', type: 'text', sortable: true},
+    {label: Username, fieldName: 'Username', type: 'text', sortable: true},
+    {label: Profile, fieldName: 'ProfileName', type: 'text', sortable:  true},
+    {label: Role, fieldName: 'UserRoleName', type: 'text', sortable: true},
+    {label: Active_user, fieldName: 'IsActive', type: 'boolean', sortable: true}
 ];
 
 export default class UserDataTable extends LightningElement {
