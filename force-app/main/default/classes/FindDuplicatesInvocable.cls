@@ -24,25 +24,12 @@ global inherited sharing class FindDuplicatesInvocable {
         for (FindDuplicatesArgument findDuplicatesArgument: arguments) {
             sObjects.add(findDuplicatesArgument.sobj);
         }
-        List<SObject> duplicateSObjects = new List<SObject>();
-        List<List<SObject>> allDuplicateSObjects = new List<List<SObject>>();
 
-        try {
-            Datacloud.FindDuplicatesResult[] results = Datacloud.FindDuplicates.findDuplicates(sObjects);
-            for (Datacloud.FindDuplicatesResult findDupeResult : results) {
-                for (Datacloud.DuplicateResult dupeResult : findDupeResult.getDuplicateResults()) {
-                    for (Datacloud.MatchResult matchResult : dupeResult.getMatchResults()) {
-                        for (Datacloud.MatchRecord matchRecord : matchResult.getMatchRecords()) {
-                            duplicateSObjects.add(matchRecord.getRecord());
-                        }
-                    }
-                }
-            }
-            allDuplicateSObjects.add(new List<SObject>(duplicateSObjects));
-        }
-        catch (HandledException e) {
-            // System.HandledException: No active duplicate rules are defined for the [objname] object type
-        }
+        List<SObject> duplicateSObjects = DuplicateManagementService.findDuplicates(sObjects);
+
+        List<List<SObject>> allDuplicateSObjects = new List<List<SObject>>();
+        allDuplicateSObjects.add(new List<SObject>(duplicateSObjects));
+
         return allDuplicateSObjects;
     }
 }

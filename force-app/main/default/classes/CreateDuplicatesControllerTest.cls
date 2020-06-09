@@ -3,7 +3,7 @@
  */
 
 @IsTest
-private class CreateDuplicatesTest {
+private class CreateDuplicatesControllerTest {
 
     @IsTest
     static void createDuplicateAccountTest() {
@@ -11,8 +11,8 @@ private class CreateDuplicatesTest {
         Account account2 = new Account(Name = 'test', BillingCity = 'city');
 
         Test.startTest();
-        Id id1 = CreateDuplicates.createDuplicateAccount(account1);
-        Id id2 = CreateDuplicates.createDuplicateAccount(account2);
+        Id id1 = CreateDuplicatesController.createDuplicateAccount(account1);
+        Id id2 = CreateDuplicatesController.createDuplicateAccount(account2);
         Test.stopTest();
 
         System.assertNotEquals(id1, null);

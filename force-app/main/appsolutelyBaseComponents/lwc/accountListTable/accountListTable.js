@@ -8,7 +8,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import {registerListener} from "c/pubsub";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
-import createDuplicateAccount from '@salesforce/apex/CreateDuplicates.createDuplicateAccount';
+import createDuplicateAccount from '@salesforce/apex/CreateDuplicatesController.createDuplicateAccount';
 
 import Duplicates_Found_Message from '@salesforce/label/c.Duplicates_Found_Message';
 import Duplicate_Account_Created from '@salesforce/label/c.Duplicate_Account_Created';
