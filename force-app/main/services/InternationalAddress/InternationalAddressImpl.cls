@@ -44,6 +44,20 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
             }
             return returnValue;
         }
+        public Boolean equals(Object obj){
+            if(obj instanceof InternationalAddressComparableWrapper){
+                InternationalAddressComparableWrapper wrapper = (InternationalAddressComparableWrapper)obj;
+                if(this.address.Street__c == wrapper.address.Street__c &&
+                        this.address.House_Number__c == wrapper.address.House_Number__c &&
+                        this.address.Postcode__c == wrapper.address.Postcode__c &&
+                        this.address.Locality__c == wrapper.address.Locality__c &&
+                        this.address.Country__c == wrapper.address.Country__c &&
+                        this.address.Street__c == wrapper.address.Street__c)
+                    return true;
+            }
+            return false;
+
+        }
 
     }
 
@@ -72,7 +86,11 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         // sort the results on how well the organization matches and then on the matchrate. If there is no organization, just sorts on matchrate
         List<InternationalAddressComparableWrapper> wrappedInternationalAddresses = new List<InternationalAddressImpl.InternationalAddressComparableWrapper>();
         for (International_Address__c internationalAddress : resultArray) {
-            wrappedInternationalAddresses.add(new InternationalAddressComparableWrapper(internationalAddress, organization));
+            InternationalAddressComparableWrapper iaWrapper = new InternationalAddressComparableWrapper(internationalAddress, organization);
+            //Dont add duplicates!!
+            if(!containsSimilarAddress(wrappedInternationalAddresses, iaWrapper)){
+                wrappedInternationalAddresses.add(iaWrapper);
+            }
         }
         wrappedInternationalAddresses.sort();
         // and back to the resultArray
@@ -82,6 +100,15 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         }
 
         return resultArray;
+    }
+    private Boolean containsSimilarAddress(
+            List<InternationalAddressComparableWrapper> wrappedInternationalAddresses,
+            InternationalAddressComparableWrapper iaAddressComparableWrapper){
+        for(InternationalAddressComparableWrapper wrapper : wrappedInternationalAddresses){
+            if(wrapper.equals(iaAddressComparableWrapper))
+                return true;
+        }
+        return false;
     }
 
     private International_Address__c mapInternationalV2ToInternationalAddress(InternationalAddressWsdl.InternationalV2 wsAddress, String searchCountryAlpha3Code) {
