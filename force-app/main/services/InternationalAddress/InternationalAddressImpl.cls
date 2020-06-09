@@ -26,19 +26,19 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
             if (this.organization != null && this.organizationLevenshteinDistance != null && addressToCompare.Organization__c != null) {
                 Integer addressToCompareOrganizationLevenshteinDistance = addressToCompare.Organization__c.getLevenshteinDistance(this.organization);
                 if (this.organizationLevenshteinDistance < addressToCompareOrganizationLevenshteinDistance) {
-                    returnValue = -1;
+                    returnValue = 1;
                 } else {
                     if (this.organizationLevenshteinDistance > addressToCompareOrganizationLevenshteinDistance) {
-                        returnValue = 1;
+                        returnValue = -1;
                     }
                 }
             }
             if (returnValue == 0 && address.Matchrate__c != null && addressToCompare.Matchrate__c != null) {
                 if (address.Matchrate__c < addressToCompare.Matchrate__c) {
-                    returnValue = -1;
+                    returnValue = 1;
                 } else {
                     if (address.Matchrate__c > addressToCompare.Matchrate__c) {
-                        returnValue = 1;
+                        returnValue = -1;
                     }
                 }
             }
