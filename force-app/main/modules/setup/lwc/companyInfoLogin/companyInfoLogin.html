@@ -5,7 +5,7 @@
 <!-- Company Info Login -->
 <template>
     <template if:false={loaded}>
-        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
     </template>
     <lightning-layout multiple-rows="true">
         <lightning-layout-item size="12" flexibility="no-flex">
