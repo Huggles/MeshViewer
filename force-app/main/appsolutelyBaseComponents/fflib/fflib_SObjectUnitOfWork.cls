@@ -91,6 +91,33 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
         void eventPublish(List<SObject> objList);
     }
 
+    public class DuplicateDML implements IDML
+    {
+        private Database.DMLOptions dmlOptions;
+
+        public DuplicateDML()
+        {
+            dmlOptions = new Database.DMLOptions();
+            dmlOptions.DuplicateRuleHeader.allowSave = true;
+        }
+        public void dmlInsert(List<SObject> objList)
+        {
+            Database.insert(objList, dmlOptions);
+        }
+        public void dmlUpdate(List<SObject> objList)
+        {
+            Database.update(objList, dmlOptions);
+        }
+        public void dmlDelete(List<SObject> objList)
+        {
+            delete objList;
+        }
+        public void eventPublish(List<SObject> objList)
+        {
+            EventBus.publish(objList);
+        }
+    }
+
     public class SimpleDML implements IDML
     {
         public void dmlInsert(List<SObject> objList)

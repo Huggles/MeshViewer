@@ -4,20 +4,30 @@
 
 public inherited sharing class DuplicateManagementServiceImpl implements IDuplicateManagement{
 
+    /*
+     * Creates a potential duplicate SObject record by overriding duplicate rules
+     *
+     * @param sobj that needs to be created
+     *
+     * @return Id of the created SObject
+     */
+
     public static Id createDuplicate(SObject sobj) {
-        Id sobjectCreatedID;
-        Database.DMLOptions dml = new Database.DMLOptions();
-        dml.DuplicateRuleHeader.allowSave = true;
-        dml.DuplicateRuleHeader.runAsCurrentUser = true;
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML());
 
-        Database.SaveResult sr = Database.insert(sobj, dml);
-        if (sr.isSuccess()) {
-            sobjectCreatedID = sr.id;
-        }
+        unitOfWork.registerNew(sobj);
+        unitOfWork.commitWork();
 
-        return sobjectCreatedID;
+        return sobj.Id;
     }
 
+    /*
+     * Find potential duplicate SObjects for the given SObject
+     *
+     * @param sObjects List of SObjects for which duplicates need to be found
+     *
+     * @return List of found duplicate SObjects
+     */
     public static List<SObject> findDuplicates(List<SObject> sObjects) {
         List<SObject> duplicateSObjects = new List<SObject>();
         try {
