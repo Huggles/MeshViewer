@@ -336,6 +336,62 @@
         <value>Credentials saved!</value>
     </labels>
     <labels>
+        <fullName>License_assignment_succesfully_removed</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message shown when a license assignment has been removed</shortDescription>
+        <value>License assignment removed!</value>
+    </labels>
+    <labels>
+        <fullName>Full_Name</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of full name column in user data table</shortDescription>
+        <value>Full Name</value>
+    </labels>
+    <labels>
+        <fullName>Alias</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of alias column in user data table</shortDescription>
+        <value>Alias</value>
+    </labels>
+    <labels>
+        <fullName>Username</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of username column in user data table</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>Profile</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of profile column in user data table</shortDescription>
+        <value>Profile</value>
+    </labels>
+    <labels>
+        <fullName>Role</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of role column in user data table</shortDescription>
+        <value>Role</value>
+    </labels>
+    <labels>
+        <fullName>Active_user</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of active column in user data table</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
         <fullName>CreditSafe_Validation_Message_Heading</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>

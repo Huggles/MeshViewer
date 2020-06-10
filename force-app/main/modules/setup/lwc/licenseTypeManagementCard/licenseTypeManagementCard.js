@@ -15,6 +15,7 @@ import Remove_Assignments_Button from '@salesforce/label/c.Remove_Assignments_Bu
 import Assign_Licenses from '@salesforce/label/c.Assign_Licenses';
 import Nr_of_licenses_assigned from '@salesforce/label/c.Nr_of_licenses_assigned';
 import No_users_assigned from '@salesforce/label/c.No_users_assigned';
+import License_assignment_succesfully_removed from '@salesforce/label/c.License_assignment_succesfully_removed';
 
 
 
@@ -27,7 +28,8 @@ export default class LicenseTypeManagementCard extends LightningElement {
         Remove_Assignments_Button,
         Assign_Licenses,
         Nr_of_licenses_assigned,
-        No_users_assigned
+        No_users_assigned,
+        License_assignment_succesfully_removed
     }
 
     licensesAssignedLabel;
@@ -217,7 +219,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
                 .then(result => {
                     const event = new ShowToastEvent({
                         title: 'Success',
-                        message: 'User assignment removal successful'
+                        message: this.label.License_assignment_succesfully_removed
                     });
                     this.dispatchEvent(event);
                     const filteredsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );
