@@ -28,7 +28,9 @@ global inherited sharing class FindDuplicatesInvocable {
         List<SObject> duplicateSObjects = DuplicateManagementService.findDuplicates(sObjects);
 
         List<List<SObject>> allDuplicateSObjects = new List<List<SObject>>();
-        allDuplicateSObjects.add(new List<SObject>(duplicateSObjects));
+        if (duplicateSObjects.size() > 0) {
+            allDuplicateSObjects.add(new List<SObject>(duplicateSObjects));
+        }
 
         return allDuplicateSObjects;
     }
