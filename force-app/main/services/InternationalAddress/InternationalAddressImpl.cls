@@ -56,13 +56,10 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
                     return true;
             }
             return false;
-
         }
-
     }
 
     public List<International_Address__c> internationalAddressSearchV2(String organization,String building,String street,String housenr,String pobox,String locality,String postcode,String province,String country,String language,String country_format) {
-
         // check and complete the input
         if (String.isEmpty(country)) {
             throw new CCInputException(Label.Error_Input_Incorrect);
@@ -73,7 +70,6 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         if (String.isEmpty(country_format)) {
             country_format = 'en';
         }
-
         InternationalAddressWSDL.InternationalAddressSearchV2Result userSearchResult = WsInternationalAddress.internationalAddressSearchV2(organization, building, street, housenr, pobox, locality, postcode, province, country, language, country_format);
 
         List<International_Address__c> resultArray = new List<International_Address__c>();

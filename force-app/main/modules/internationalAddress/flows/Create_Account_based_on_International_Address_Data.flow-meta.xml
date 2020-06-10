@@ -173,6 +173,12 @@
             <targetReference>Cancel_Pressed</targetReference>
         </connector>
         <flowName>Search_International_Address</flowName>
+        <inputAssignments>
+            <name>organizationRequired</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
         <outputAssignments>
             <assignToReference>cancelPressed</assignToReference>
             <name>cancelPressed</name>
