@@ -4,12 +4,12 @@
         <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
         <name>Create_Dutch_Dossiers</name>
         <label>Create Dutch Dossiers</label>
-        <locationX>1701</locationX>
-        <locationY>979</locationY>
+        <locationX>1558</locationX>
+        <locationY>894</locationY>
         <actionName>CreateDutchDossierInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Get_Complete_Dossier</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Dutch_Dossiers_Search_Results</targetReference>
@@ -41,16 +41,16 @@
         <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &apos;normal&apos; end flow.</description>
         <name>End</name>
         <label>End</label>
-        <locationX>1386</locationX>
-        <locationY>889</locationY>
+        <locationX>801</locationX>
+        <locationY>884</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Find_duplicate_dossier</name>
         <label>Find duplicate dossier</label>
-        <locationX>1169</locationX>
-        <locationY>889</locationY>
+        <locationX>1104</locationX>
+        <locationY>883</locationY>
         <actionName>FindDuplicatesInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -235,8 +235,8 @@
     <assignments>
         <name>Assign_Duplicate_Dossier</name>
         <label>Assign Duplicate Dossier</label>
-        <locationX>1415</locationX>
-        <locationY>1284</locationY>
+        <locationX>1190</locationX>
+        <locationY>1355</locationY>
         <assignmentItems>
             <assignToReference>FoundDuplicateDossier</assignToReference>
             <operator>Assign</operator>
@@ -251,8 +251,8 @@
     <assignments>
         <name>Assign_Found_Dossier</name>
         <label>Assign Found Dossier</label>
-        <locationX>1446</locationX>
-        <locationY>1019</locationY>
+        <locationX>1426</locationX>
+        <locationY>1056</locationY>
         <assignmentItems>
             <assignToReference>selectedDossier</assignToReference>
             <operator>Assign</operator>
@@ -268,7 +268,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Get_Complete_Dossier</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -286,6 +286,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Search_for_Credit_Safe_Dossiers</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_To_Selected_Dossier</name>
+        <label>Assign To Selected Dossier</label>
+        <locationX>1262</locationX>
+        <locationY>885</locationY>
+        <assignmentItems>
+            <assignToReference>selectedDossier</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Complete_Dossier</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>End</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -575,8 +591,8 @@
     <decisions>
         <name>Duplicate_Dossier_Check</name>
         <label>Duplicate Dossier Check</label>
-        <locationX>1583</locationX>
-        <locationY>1154</locationY>
+        <locationX>1696</locationX>
+        <locationY>1158</locationY>
         <defaultConnector>
             <targetReference>Type_of_Business_Dossier</targetReference>
         </defaultConnector>
@@ -731,8 +747,8 @@
         <description>Decides Type of Business Dossier based on the selected country</description>
         <name>Type_of_Business_Dossier</name>
         <label>Type of Business Dossier</label>
-        <locationX>1593</locationX>
-        <locationY>707</locationY>
+        <locationX>1697</locationX>
+        <locationY>729</locationY>
         <defaultConnector>
             <targetReference>Create_Credit_Safe_dossier</targetReference>
         </defaultConnector>
@@ -766,8 +782,8 @@
     <loops>
         <name>Loop_Over_Duplicate_Dossiers</name>
         <label>Loop Over Duplicate Dossiers</label>
-        <locationX>1177</locationX>
-        <locationY>1276</locationY>
+        <locationX>1190</locationX>
+        <locationY>1159</locationY>
         <assignNextValueToReference>DuplicateDossierLoopVariable</assignNextValueToReference>
         <collectionReference>Find_duplicate_dossier</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -809,21 +825,42 @@
     <recordCreates>
         <name>Create_Credit_Safe_dossier</name>
         <label>Create Credit Safe dossier</label>
-        <locationX>1373</locationX>
-        <locationY>603</locationY>
+        <locationX>1425</locationX>
+        <locationY>609</locationY>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Get_Complete_Dossier</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Show_Credit_Safe_Search_Results</targetReference>
         </faultConnector>
         <inputReference>selectedDossier</inputReference>
     </recordCreates>
+    <recordLookups>
+        <description>Get all the fields from the dossier.</description>
+        <name>Get_Complete_Dossier</name>
+        <label>Get Complete Dossier</label>
+        <locationX>1424</locationX>
+        <locationY>885</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_To_Selected_Dossier</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>selectedDossier.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Business_Dossier__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
-        <locationX>1036</locationX>
-        <locationY>1159</locationY>
+        <locationX>946</locationX>
+        <locationY>1162</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

@@ -11,34 +11,34 @@
     <assignments>
         <name>Assign_Account_fields</name>
         <label>Assign Account fields</label>
-        <locationX>762</locationX>
-        <locationY>250</locationY>
+        <locationX>609</locationX>
+        <locationY>252</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Business_Dossier.Name</elementReference>
+                <elementReference>selectedDossier.Name</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Business_Dossier__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Business_Dossier.Id</elementReference>
+                <elementReference>selectedDossier.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.BillingCity</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Business_Dossier.Correspondence_City__c</elementReference>
+                <elementReference>selectedDossier.Correspondence_City__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.AccountNumber</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Business_Dossier.Dossier_Number__c</elementReference>
+                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -51,7 +51,7 @@
         <locationX>600</locationX>
         <locationY>51</locationY>
         <defaultConnector>
-            <targetReference>Get_Business_Dossier</targetReference>
+            <targetReference>Assign_Account_fields</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
         <rules>
@@ -72,7 +72,6 @@
     </decisions>
     <description>Template you can use to create an account based on Company.info data. Use this for example in quick actions.</description>
     <interviewLabel>Create Account based on Company.info data {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Account based on Company.info data</label>
     <processMetadataValues>
@@ -88,45 +87,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordLookups>
-        <name>Get_Business_Dossier</name>
-        <label>Get Business Dossier</label>
-        <locationX>605</locationX>
-        <locationY>250</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_Account_fields</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Flow_Fault_Message_Screen</targetReference>
-        </faultConnector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>selectedDossier.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Business_Dossier__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <screens>
-        <name>Flow_Fault_Message_Screen</name>
-        <label>Flow Fault Message Screen</label>
-        <locationX>405</locationX>
-        <locationY>248</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>FlowFaultMessage</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>50</locationX>
         <locationY>50</locationY>
@@ -138,8 +98,8 @@
     <subflows>
         <name>Duplicate_Management_For_Account_and_Business_Dossier</name>
         <label>Duplicate Management For Account and Business Dossier</label>
-        <locationX>924</locationX>
-        <locationY>250</locationY>
+        <locationX>868</locationX>
+        <locationY>251</locationY>
         <flowName>Duplicate_Management_For_Account_and_Business_Dossier</flowName>
         <inputAssignments>
             <name>AccountToBeCreated</name>

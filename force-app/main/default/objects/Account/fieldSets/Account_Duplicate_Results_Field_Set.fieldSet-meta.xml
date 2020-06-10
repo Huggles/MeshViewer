@@ -51,7 +51,7 @@
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </availableFields>
-    <description>These field sets are used to show Account fields in the Duplicate results list.</description>
+    <description>This field set determines which Account fields are shown in the Duplicate results list.</description>
     <displayedFields>
         <field>Name</field>
         <isFieldManaged>false</isFieldManaged>

@@ -11,55 +11,55 @@
     <assignments>
         <name>Map_International_Address_Fields_to_Account</name>
         <label>Map International Address Fields to Account</label>
-        <locationX>976</locationX>
-        <locationY>470</locationY>
+        <locationX>783</locationX>
+        <locationY>475</locationY>
         <assignmentItems>
             <assignToReference>newAccount.Name</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_International_Address.Organization__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Organization__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingCity</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_International_Address.Locality__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Locality__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingCountry</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_International_Address.Alpha_2_Country_Code__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Alpha_2_Country_Code__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingPostalCode</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_International_Address.Postcode__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Postcode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingState</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_International_Address.Province__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Province__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.BillingStreet</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_International_Address.Street__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Street__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>newAccount.International_Address_Data__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_International_Address.Id</elementReference>
+                <elementReference>SelectedInternationalAddress.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -72,7 +72,7 @@
         <locationX>770</locationX>
         <locationY>265</locationY>
         <defaultConnector>
-            <targetReference>Get_International_Address</targetReference>
+            <targetReference>Map_International_Address_Fields_to_Account</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Cancel Not Pressed</defaultConnectorLabel>
         <rules>
@@ -109,45 +109,6 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordLookups>
-        <name>Get_International_Address</name>
-        <label>Get International Address</label>
-        <locationX>779</locationX>
-        <locationY>470</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Map_International_Address_Fields_to_Account</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Flow_Fault_Message_Screen</targetReference>
-        </faultConnector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>SelectedInternationalAddress.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>International_Address__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <screens>
-        <name>Flow_Fault_Message_Screen</name>
-        <label>Flow Fault Message Screen</label>
-        <locationX>587</locationX>
-        <locationY>472</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>FlowFaultMessage</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
         <locationX>272</locationX>
         <locationY>262</locationY>
@@ -159,8 +120,8 @@
     <subflows>
         <name>Duplicate_Management_For_Account_and_International_Address</name>
         <label>Duplicate Management For Account and International Address</label>
-        <locationX>1132</locationX>
-        <locationY>469</locationY>
+        <locationX>1033</locationX>
+        <locationY>474</locationY>
         <flowName>Duplicate_Management_For_Account_and_International_Address</flowName>
         <inputAssignments>
             <name>AccountToBeCreated</name>

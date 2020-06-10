@@ -3,16 +3,16 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>783</locationX>
-        <locationY>241</locationY>
+        <locationX>833</locationX>
+        <locationY>311</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Find_Duplicate_International_Addresses</name>
         <label>Find Duplicate International Addresses</label>
-        <locationX>962</locationX>
-        <locationY>411</locationY>
+        <locationX>1018</locationX>
+        <locationY>345</locationY>
         <actionName>FindDuplicatesInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -26,6 +26,9 @@
             <typeName>U__output</typeName>
             <typeValue>appsolutely__International_Address__c</typeValue>
         </dataTypeMappings>
+        <faultConnector>
+            <targetReference>Search_Results</targetReference>
+        </faultConnector>
         <inputParameters>
             <name>sobj</name>
             <value>
@@ -37,7 +40,7 @@
     <actionCalls>
         <name>Search_for_international_addresses</name>
         <label>Search for international addresses</label>
-        <locationX>549</locationX>
+        <locationX>548</locationX>
         <locationY>50</locationY>
         <actionName>SearchForInternationalAddressInvocable</actionName>
         <actionType>apex</actionType>
@@ -112,8 +115,8 @@
     <assignments>
         <name>Assign_Duplicate_International_Address</name>
         <label>Assign Duplicate International Address</label>
-        <locationX>1188</locationX>
-        <locationY>589</locationY>
+        <locationX>1216</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>FoundDuplicateInternationalAddress</assignToReference>
             <operator>Assign</operator>
@@ -128,8 +131,8 @@
     <assignments>
         <name>Assign_Found_International_Address</name>
         <label>Assign Found International Address</label>
-        <locationX>793</locationX>
-        <locationY>406</locationY>
+        <locationX>530</locationX>
+        <locationY>448</locationY>
         <assignmentItems>
             <assignToReference>SelectedInternationalAddress</assignToReference>
             <operator>Assign</operator>
@@ -145,15 +148,15 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Get_Complete_International_Address</targetReference>
         </connector>
     </assignments>
     <assignments>
         <description>Assign the organization field the user searched for to the selected international address</description>
         <name>Assign_Organization_searched_for</name>
         <label>Assign Organization searched for</label>
-        <locationX>1221</locationX>
-        <locationY>412</locationY>
+        <locationX>1315</locationX>
+        <locationY>344</locationY>
         <assignmentItems>
             <assignToReference>SelectedInternationalAddress.Organization__c</assignToReference>
             <operator>Assign</operator>
@@ -165,11 +168,27 @@
             <targetReference>Find_Duplicate_International_Addresses</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assign_To_Selected_International_Address</name>
+        <label>Assign To Selected International Address</label>
+        <locationX>643</locationX>
+        <locationY>320</locationY>
+        <assignmentItems>
+            <assignToReference>SelectedInternationalAddress</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Complete_International_Address</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>End</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>541</locationX>
-        <locationY>241</locationY>
+        <locationX>543</locationX>
+        <locationY>233</locationY>
         <defaultConnector>
             <targetReference>Search_for_international_addresses</targetReference>
         </defaultConnector>
@@ -193,8 +212,8 @@
     <decisions>
         <name>Cancel_Pressed_Search_Results</name>
         <label>Cancel Pressed Search Results</label>
-        <locationX>1063</locationX>
-        <locationY>53</locationY>
+        <locationX>1010</locationX>
+        <locationY>60</locationY>
         <defaultConnector>
             <targetReference>Organization_found</targetReference>
         </defaultConnector>
@@ -218,8 +237,8 @@
     <decisions>
         <name>Duplicate_International_Address_Check</name>
         <label>Duplicate International Address Check</label>
-        <locationX>666</locationX>
-        <locationY>574</locationY>
+        <locationX>711</locationX>
+        <locationY>568</locationY>
         <defaultConnector>
             <targetReference>Create_International_Address</targetReference>
         </defaultConnector>
@@ -243,8 +262,8 @@
     <decisions>
         <name>Organization_found</name>
         <label>International address with organization found?</label>
-        <locationX>1065</locationX>
-        <locationY>260</locationY>
+        <locationX>1154</locationX>
+        <locationY>220</locationY>
         <defaultConnector>
             <targetReference>Find_Duplicate_International_Addresses</targetReference>
         </defaultConnector>
@@ -279,8 +298,8 @@
     <loops>
         <name>Loop_Over_Duplicate_International_Addresses</name>
         <label>Loop Over Duplicate International Addresses</label>
-        <locationX>962</locationX>
-        <locationY>589</locationY>
+        <locationX>1019</locationX>
+        <locationY>566</locationY>
         <assignNextValueToReference>DuplicateInternationalAddressLoopVariable</assignNextValueToReference>
         <collectionReference>Find_Duplicate_International_Addresses</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -307,16 +326,40 @@
     <recordCreates>
         <name>Create_International_Address</name>
         <label>Create International Address</label>
-        <locationX>665</locationX>
-        <locationY>329</locationY>
+        <locationX>905</locationX>
+        <locationY>448</locationY>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Get_Complete_International_Address</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Search_Results</targetReference>
         </faultConnector>
         <inputReference>SelectedInternationalAddress</inputReference>
     </recordCreates>
+    <recordLookups>
+        <description>Get all the fields for the selected International address record</description>
+        <name>Get_Complete_International_Address</name>
+        <label>Get Complete International Address</label>
+        <locationX>720</locationX>
+        <locationY>440</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_To_Selected_International_Address</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Search_Results</targetReference>
+        </faultConnector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SelectedInternationalAddress.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>International_Address__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <runInMode>DefaultMode</runInMode>
     <screens>
         <name>International_Address</name>
@@ -530,8 +573,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>231</locationY>
+        <locationX>36</locationX>
+        <locationY>212</locationY>
         <connector>
             <targetReference>International_Address</targetReference>
         </connector>

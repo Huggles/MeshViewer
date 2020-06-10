@@ -3,7 +3,7 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>1058</locationX>
+        <locationX>1249</locationX>
         <locationY>47</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -11,8 +11,8 @@
     <assignments>
         <name>Assign_Account_Name_to_Organization</name>
         <label>Assign Account Name to Organization</label>
-        <locationX>1437</locationX>
-        <locationY>15</locationY>
+        <locationX>1639</locationX>
+        <locationY>193</locationY>
         <assignmentItems>
             <assignToReference>SelectedInternationalAddress.Organization__c</assignToReference>
             <operator>Assign</operator>
@@ -27,7 +27,7 @@
     <assignments>
         <name>Assign_billing_country_default</name>
         <label>Assign billing country default</label>
-        <locationX>764</locationX>
+        <locationX>955</locationX>
         <locationY>42</locationY>
         <assignmentItems>
             <assignToReference>Get_Account.BillingCountry</assignToReference>
@@ -43,7 +43,7 @@
     <assignments>
         <name>Assign_International_Address_from_Read_Account</name>
         <label>Assign International Address from Read Account</label>
-        <locationX>356</locationX>
+        <locationX>547</locationX>
         <locationY>490</locationY>
         <assignmentItems>
             <assignToReference>internationalAddressRecordId</assignToReference>
@@ -66,7 +66,7 @@
     <assignments>
         <name>Assign_new_International_Address_record_Id</name>
         <label>Assign new International Address record Id</label>
-        <locationX>1302</locationX>
+        <locationX>1493</locationX>
         <locationY>481</locationY>
         <assignmentItems>
             <assignToReference>internationalAddressRecordId</assignToReference>
@@ -89,7 +89,7 @@
     <assignments>
         <name>Default_outcome_message</name>
         <label>Default outcome message</label>
-        <locationX>942</locationX>
+        <locationX>1133</locationX>
         <locationY>459</locationY>
         <assignmentItems>
             <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
@@ -105,7 +105,7 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>1052</locationX>
+        <locationX>1243</locationX>
         <locationY>262</locationY>
         <defaultConnector>
             <targetReference>Organization_is_empty</targetReference>
@@ -130,7 +130,7 @@
     <decisions>
         <name>International_Address_Set</name>
         <label>International Address Set</label>
-        <locationX>346</locationX>
+        <locationX>537</locationX>
         <locationY>265</locationY>
         <defaultConnector>
             <targetReference>Selected_country_is_empty</targetReference>
@@ -156,10 +156,10 @@
         <description>Checks if the returned address has a filled organization field.</description>
         <name>Organization_is_empty</name>
         <label>Organization is empty</label>
-        <locationX>1275</locationX>
+        <locationX>1466</locationX>
         <locationY>266</locationY>
         <defaultConnector>
-            <targetReference>Get_International_Address</targetReference>
+            <targetReference>Update_Account</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Organization is not empty</defaultConnectorLabel>
         <rules>
@@ -188,7 +188,7 @@
     <decisions>
         <name>Search_Again_Clicked</name>
         <label>Search Again Clicked</label>
-        <locationX>763</locationX>
+        <locationX>954</locationX>
         <locationY>459</locationY>
         <defaultConnector>
             <targetReference>Default_outcome_message</targetReference>
@@ -213,7 +213,7 @@
     <decisions>
         <name>Selected_country_is_empty</name>
         <label>Billing country is empty</label>
-        <locationX>623</locationX>
+        <locationX>814</locationX>
         <locationY>261</locationY>
         <defaultConnector>
             <targetReference>Search_International_Address</targetReference>
@@ -263,7 +263,7 @@
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>199</locationX>
+        <locationX>390</locationX>
         <locationY>263</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -280,31 +280,11 @@
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_International_Address</name>
-        <label>Get International Address</label>
-        <locationX>1471</locationX>
-        <locationY>267</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Update_Account</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>SelectedInternationalAddress.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>International_Address__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>Update_Account</name>
         <label>Update Account</label>
-        <locationX>1620</locationX>
-        <locationY>268</locationY>
+        <locationX>1645</locationX>
+        <locationY>372</locationY>
         <connector>
             <targetReference>Assign_new_International_Address_record_Id</targetReference>
         </connector>
@@ -318,37 +298,37 @@
         <inputAssignments>
             <field>BillingCity</field>
             <value>
-                <elementReference>Get_International_Address.Locality__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Locality__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingCountry</field>
             <value>
-                <elementReference>Get_International_Address.Country__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Country__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingPostalCode</field>
             <value>
-                <elementReference>Get_International_Address.Postcode__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Postcode__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingState</field>
             <value>
-                <elementReference>Get_International_Address.Province__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Province__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>BillingStreet</field>
             <value>
-                <elementReference>Get_International_Address.Street__c</elementReference>
+                <elementReference>SelectedInternationalAddress.Street__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>International_Address_Data__c</field>
             <value>
-                <elementReference>Get_International_Address.Id</elementReference>
+                <elementReference>SelectedInternationalAddress.Id</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -356,7 +336,7 @@
     <screens>
         <name>Show_International_Address</name>
         <label>Show International Address</label>
-        <locationX>837</locationX>
+        <locationX>1028</locationX>
         <locationY>694</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -429,7 +409,7 @@
     <subflows>
         <name>Search_International_Address</name>
         <label>Search International Address</label>
-        <locationX>894</locationX>
+        <locationX>1085</locationX>
         <locationY>260</locationY>
         <connector>
             <targetReference>Cancel_Pressed</targetReference>
