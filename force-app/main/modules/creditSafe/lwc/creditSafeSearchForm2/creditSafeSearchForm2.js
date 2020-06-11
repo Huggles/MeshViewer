@@ -16,6 +16,7 @@ import Country_Denmark from '@salesforce/label/c.Country_Denmark';
 import Country_Italy from '@salesforce/label/c.Country_Italy';
 import Country_Norway from '@salesforce/label/c.Country_Norway';
 import Country_Spain from '@salesforce/label/c.Country_Spain';
+import Country_Luxembourg from '@salesforce/label/c.Country_Luxembourg';
 import Active from '@salesforce/label/c.Active';
 import NonActive from '@salesforce/label/c.NonActive';
 import Status from '@salesforce/label/c.Status';
@@ -46,6 +47,7 @@ import Valid_CreditSafe_registration_number from '@salesforce/label/c.Valid_Cred
 import Minimum_registration_number_length from '@salesforce/label/c.Minimum_registration_number_length';
 import Valid_Belgian_registration_number from '@salesforce/label/c.Valid_Belgian_registration_number';
 import Valid_Swedish_CreditSafe_Identification_Nr from '@salesforce/label/c.Valid_Swedish_CreditSafe_Identification_Nr';
+import Valid_Luxembourgian_CreditSafe_Identification_Nr from '@salesforce/label/c.Valid_Luxembourgian_CreditSafe_Identification_Nr';
 import Valid_registration_number from '@salesforce/label/c.Valid_registration_number';
 import Valid_CreditSafe_France_Registration_Id from '@salesforce/label/c.Valid_CreditSafe_France_Registration_Id';
 import Valid_French_registration_number from '@salesforce/label/c.Valid_French_registration_number';
@@ -111,6 +113,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         Valid_French_registration_number,
         Valid_French_VAT_Number,
         Valid_Irish_CreditSafe_Identification_Nr,
+        Valid_Luxembourgian_CreditSafe_Identification_Nr,
         Minimum_registration_number_characters,
         Valid_Irish_VAT_Number,
         Valid_GB_CreditSafe_Identification_Number,
@@ -133,6 +136,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
             { label: Country_Germany, value: 'DE' },
             { label: Country_Ireland, value: 'IE' },
             { label: Country_Italy, value: 'IT' },
+            { label: Country_Luxembourg, value: 'LU' },
             { label: Country_Netherlands, value: 'NL'},
             { label: Country_Norway, value: 'NO' },
             { label: Country_Spain, value: 'ES' },
@@ -186,6 +190,10 @@ export default class CreditSafeSearchForm2 extends LightningElement {
 
     get isEsSelected() {
         return this.selectedCountry === 'ES';
+    }
+
+    get isLUSelected() {
+        return this.selectedCountry === 'LU';
     }
 
     get showProvince() {

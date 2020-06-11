@@ -321,6 +321,13 @@
         <value>United Kingdom</value>
     </labels>
     <labels>
+        <fullName>Country_Luxembourg</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Luxembourg</shortDescription>
+        <value>Luxembourg</value>
+    </labels>
+    <labels>
         <fullName>Country_to_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1596,6 +1603,14 @@
         <protected>true</protected>
         <shortDescription>Valid Irish CreditSafe Identification Nr</shortDescription>
         <value>Please enter a valid Irish CreditSafe Identification Number</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
+        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
     </labels>
     <labels>
         <fullName>Valid_Irish_VAT_Number</fullName>
