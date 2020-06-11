@@ -17,6 +17,7 @@ import Update_Duplicate_Account from '@salesforce/label/c.Update_Duplicate_Accou
 import Success from '@salesforce/label/c.Success';
 import Error from '@salesforce/label/c.Error';
 import Cancel from '@salesforce/label/c.Cancel';
+import Duplicate_Results from '@salesforce/label/c.Duplicate_Results';
 
 export default class AccountListTable extends NavigationMixin(LightningElement) {
 
@@ -27,18 +28,21 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     @api updateDuplicateAccount = false;
     @api cancelClicked = false;
 
+    @track showAccountUpdateLink = true;
     @track disableUpdate = true;
 
     label = {
         Duplicates_Found_Message,
         Create_New_Account,
         Update_Duplicate_Account,
-        Cancel
+        Cancel,
+        Duplicate_Results
     }
 
     connectedCallback() {
         registerListener('resultselected', this.handleResultSelected, this);
         registerListener('resultunselected', this.handleResultUnSelected, this);
+        registerListener('updateAccount', this.handleClickDuplicateAccount, this);
         this.data = this.accountList;
     }
 
@@ -75,6 +79,7 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     }
 
     handleResultSelected(event) {
+        this.selectedResult = event.selectedResult;
         this.disableUpdate = false;
     }
 

@@ -41,4 +41,19 @@ private class DuplicateManagementServiceImplTest {
         System.assertNotEquals(id2, null);
 
     }
+
+    @IsTest
+    static void createDuplicateAccountFTest() {
+        Account account1 = new Account(Name = 'test', BillingCity = 'city');
+        Account account2 = new Account(Name = 'test', BillingCity = 'city');
+
+        Test.startTest();
+        Id id1 = DuplicateManagementService.createDuplicate(account1);
+        Id id2 = DuplicateManagementService.createDuplicate(account2);
+        Test.stopTest();
+
+        System.assertNotEquals(id1, null);
+        System.assertNotEquals(id2, null);
+
+    }
 }

@@ -5,6 +5,12 @@
 @IsTest
 private class CreateDuplicatesControllerTest {
 
+    @TestSetup
+    static void setup() {
+        Account account1 = new Account(Name = 'test', BillingCity = 'city');
+        insert account1;
+    }
+
     @IsTest
     static void createDuplicateAccountTest() {
         Account account1 = new Account(Name = 'test', BillingCity = 'city');

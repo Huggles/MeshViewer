@@ -67,6 +67,9 @@ export default class SearchResultTilesList extends LightningElement {
     @api
     searchCriteriaName;
 
+    @api
+    showAccountUpdateLink = false;
+
     /**
      * Lazy Loading Attributes
      */
@@ -138,7 +141,7 @@ export default class SearchResultTilesList extends LightningElement {
             // set the result param, this is done here because this component knows the type
             const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', tileClicked.searchResult);
             this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultselected', {selectedResult: event.detail.recordSelected}); // let the world know something is selected
+            fireEvent(null, 'resultselected', {selectedResult: tileClicked.searchResult}); // let the world know something is selected
         } else {
             const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', null);
             this.dispatchEvent(attributeChangeEvent);

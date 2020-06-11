@@ -1021,7 +1021,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Redirect to duplicate Account</shortDescription>
-        <value>You are redirected to the duplicate account found for the searched company.</value>
+        <value>The account you were trying to create is already in Salesforce and has Company.info data. You are redirected to this account.</value>
     </labels>
     <labels>
         <fullName>Redirect_to_duplicate_Account_with_Address</fullName>

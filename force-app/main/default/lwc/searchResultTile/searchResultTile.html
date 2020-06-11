@@ -21,5 +21,8 @@
                 </template>
             </div>
         </lightning-tile>
+        <ul class="slds-has-divider_top-space" if:true={showAccountUpdateLink}>
+            <lightning-button variant="base" label={label.Update_Duplicate_Account} onclick={handleClickDuplicateAccount} class="slds-m-left_xx-large"></lightning-button>
+        </ul>
     </div>
 </template>
