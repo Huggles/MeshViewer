@@ -1,0 +1,20 @@
+<!--
+ - Created by jaapbranderhorst on 11/05/2020.
+ -->
+
+<!-- User Data Table -->
+<template>
+    <lightning-datatable
+            key-field='Id'
+            data={localUsers}
+            columns={columns}
+            enable-infinite-loading={enableInfiniteLoading}
+            default-sort-direction={defaultSortDirection}
+            sorted-by={sortedBy}
+            sorted-direction={sortDirection}
+            is-loading={isLoading}
+            onsort={handleSort}
+            onrowselection={handleRowSelection}
+            onloadmore={handleLoadMore}>
+    </lightning-datatable>
+</template>

@@ -1,0 +1,56 @@
+<!--
+ - Created by jaapbranderhorst on 11/05/2020.
+ -->
+
+<!-- Assign License Type Modal -->
+<template>
+    <div>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon
+                            class="slds-modal__close"
+                            title={label.Close}
+                            icon-name="utility:close"
+                            icon-class="slds-button_icon-inverse"
+                            onclick={handleDialogClose}>
+                    </lightning-button-icon>
+                    <div class="slds-text-heading_medium slds-hyphenate header-string">{label.Assign_Licenses}</div>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={isInitializing}>
+                        <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
+                    </template>
+                    <template if:false={isInitializing}>
+                        <template if:true={sObjectUsers}>
+                            <c-user-data-table
+                                    users={sObjectUsers}
+                                    max-number-of-users={maxUsers}
+                                    is-loading={isFetchingUsers}
+                                    selected-rows={selectedRows}
+                                    default-sort-direction={defaultSortDirection}
+                                    enable-infinite-loading={enableInfiniteLoading}
+                                    onsort={handleSort}
+                                    onrowselection={handleRowSelection}
+                                    onloadmore={handleLoadMore}>
+                            </c-user-data-table>
+                        </template>
+                        <template if:false={sObjectUsers}>
+                            <c-no-result-image no-data-label={label.No_users_available_to_assign_licenses_to}></c-no-result-image>
+                        </template>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <template if:true={sObjectUsers}>
+                        <lightning-button class="slds-theme_brand slds-m-right_xx-small" disabled={isNoRowSelected} variant="brand" label={label.Assign} onclick={handleAssignButtonClicked}></lightning-button>
+                        <lightning-button class="slds-theme_neutral" variant="neutral" label={label.Cancel} onclick={handleCancelClicked}></lightning-button>
+                    </template>
+                    <template if:false={sObjectUsers}>
+                        <lightning-button class="slds-theme_brand" variant="brand" label={label.Close} onclick={handleDialogClose}></lightning-button>
+                    </template>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

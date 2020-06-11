@@ -26,29 +26,40 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
             if (this.organization != null && this.organizationLevenshteinDistance != null && addressToCompare.Organization__c != null) {
                 Integer addressToCompareOrganizationLevenshteinDistance = addressToCompare.Organization__c.getLevenshteinDistance(this.organization);
                 if (this.organizationLevenshteinDistance < addressToCompareOrganizationLevenshteinDistance) {
-                    returnValue = -1;
+                    returnValue = 1;
                 } else {
                     if (this.organizationLevenshteinDistance > addressToCompareOrganizationLevenshteinDistance) {
-                        returnValue = 1;
+                        returnValue = -1;
                     }
                 }
             }
             if (returnValue == 0 && address.Matchrate__c != null && addressToCompare.Matchrate__c != null) {
                 if (address.Matchrate__c < addressToCompare.Matchrate__c) {
-                    returnValue = -1;
+                    returnValue = 1;
                 } else {
                     if (address.Matchrate__c > addressToCompare.Matchrate__c) {
-                        returnValue = 1;
+                        returnValue = -1;
                     }
                 }
             }
             return returnValue;
         }
-
+        public Boolean equals(Object obj){
+            if(obj instanceof InternationalAddressComparableWrapper){
+                InternationalAddressComparableWrapper wrapper = (InternationalAddressComparableWrapper)obj;
+                if(this.address.Street__c == wrapper.address.Street__c &&
+                        this.address.House_Number__c == wrapper.address.House_Number__c &&
+                        this.address.Postcode__c == wrapper.address.Postcode__c &&
+                        this.address.Locality__c == wrapper.address.Locality__c &&
+                        this.address.Country__c == wrapper.address.Country__c &&
+                        this.address.Street__c == wrapper.address.Street__c)
+                    return true;
+            }
+            return false;
+        }
     }
 
     public List<International_Address__c> internationalAddressSearchV2(String organization,String building,String street,String housenr,String pobox,String locality,String postcode,String province,String country,String language,String country_format) {
-
         // check and complete the input
         if (String.isEmpty(country)) {
             throw new CCInputException(Label.Error_Input_Incorrect);
@@ -59,7 +70,6 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         if (String.isEmpty(country_format)) {
             country_format = 'en';
         }
-
         InternationalAddressWSDL.InternationalAddressSearchV2Result userSearchResult = WsInternationalAddress.internationalAddressSearchV2(organization, building, street, housenr, pobox, locality, postcode, province, country, language, country_format);
 
         List<International_Address__c> resultArray = new List<International_Address__c>();
@@ -72,7 +82,11 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         // sort the results on how well the organization matches and then on the matchrate. If there is no organization, just sorts on matchrate
         List<InternationalAddressComparableWrapper> wrappedInternationalAddresses = new List<InternationalAddressImpl.InternationalAddressComparableWrapper>();
         for (International_Address__c internationalAddress : resultArray) {
-            wrappedInternationalAddresses.add(new InternationalAddressComparableWrapper(internationalAddress, organization));
+            InternationalAddressComparableWrapper iaWrapper = new InternationalAddressComparableWrapper(internationalAddress, organization);
+            //Dont add duplicates!!
+            if(!containsSimilarAddress(wrappedInternationalAddresses, iaWrapper)){
+                wrappedInternationalAddresses.add(iaWrapper);
+            }
         }
         wrappedInternationalAddresses.sort();
         // and back to the resultArray
@@ -82,6 +96,15 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
         }
 
         return resultArray;
+    }
+    private Boolean containsSimilarAddress(
+            List<InternationalAddressComparableWrapper> wrappedInternationalAddresses,
+            InternationalAddressComparableWrapper iaAddressComparableWrapper){
+        for(InternationalAddressComparableWrapper wrapper : wrappedInternationalAddresses){
+            if(wrapper.equals(iaAddressComparableWrapper))
+                return true;
+        }
+        return false;
     }
 
     private International_Address__c mapInternationalV2ToInternationalAddress(InternationalAddressWsdl.InternationalV2 wsAddress, String searchCountryAlpha3Code) {
@@ -156,7 +179,6 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
                 'Building_Result_Status__c' => elementResultStatus.substring(6,7),
                 'Organization_Result_Status__c' => elementResultStatus.substring(7,8)
         };
-        System.debug(JSON.serializePretty(resultStatusByFieldName));
         for (String fieldName : resultStatusByFieldName.keySet()) {
             String value = null;
             switch on resultStatusByFieldName.get(fieldName) {
