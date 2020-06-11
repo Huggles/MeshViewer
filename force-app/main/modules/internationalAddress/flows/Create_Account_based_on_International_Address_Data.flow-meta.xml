@@ -21,41 +21,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>newAccount.BillingCity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SelectedInternationalAddress.Locality__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>newAccount.BillingCountry</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SelectedInternationalAddress.Alpha_2_Country_Code__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>newAccount.BillingPostalCode</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SelectedInternationalAddress.Postcode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>newAccount.BillingState</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SelectedInternationalAddress.Province__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>newAccount.BillingStreet</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SelectedInternationalAddress.Street__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>newAccount.International_Address_Data__c</assignToReference>
             <operator>Assign</operator>
             <value>

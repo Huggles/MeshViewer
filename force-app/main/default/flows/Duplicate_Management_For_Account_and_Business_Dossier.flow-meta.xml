@@ -508,6 +508,7 @@
         <objectType>Account</objectType>
     </variables>
     <variables>
+        <description>When screen with duplicate accounts list is shown, the admin has the option to allow user to create new duplicate account or not with assigning value to this variable.</description>
         <name>ShowCreateNewAccountButton</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>

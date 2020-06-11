@@ -296,36 +296,6 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>BillingCity</field>
-            <value>
-                <elementReference>SelectedInternationalAddress.Locality__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BillingCountry</field>
-            <value>
-                <elementReference>SelectedInternationalAddress.Country__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BillingPostalCode</field>
-            <value>
-                <elementReference>SelectedInternationalAddress.Postcode__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BillingState</field>
-            <value>
-                <elementReference>SelectedInternationalAddress.Province__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BillingStreet</field>
-            <value>
-                <elementReference>SelectedInternationalAddress.Street__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>International_Address_Data__c</field>
             <value>
                 <elementReference>SelectedInternationalAddress.Id</elementReference>

@@ -40,10 +40,31 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     }
 
     connectedCallback() {
+        this.data = this.flattenObject(this.accountList);
         registerListener('resultselected', this.handleResultSelected, this);
         registerListener('resultunselected', this.handleResultUnSelected, this);
         registerListener('updateAccount', this.handleClickDuplicateAccount, this);
-        this.data = this.accountList;
+    }
+
+    flattenObject(ob) {
+        var a = JSON.parse(JSON.stringify(ob));
+        a.forEach((value, index) => {
+            if (value.BillingAddress){
+                value['BillingStreet'] = value.BillingAddress.street;
+                value['BillingCity'] = value.BillingAddress.city;
+                value['BillingCountry'] = value.BillingAddress.country;
+                value['BillingState'] = value.BillingAddress.state;
+                value['BillingPostalCode'] = value.BillingAddress.postalCode;
+            }
+            if (value.ShippingAddress){
+                value['ShippingStreet'] = value.ShippingAddress.street;
+                value['ShippingCity'] = value.ShippingAddress.city;
+                value['ShippingCountry'] = value.ShippingAddress.country;
+                value['ShippingState'] = value.ShippingAddress.state;
+                value['ShippingPostalCode'] = value.ShippingAddress.postalCode;
+            }
+        });
+        return a;
     }
 
     handleClickDuplicateAccount() {

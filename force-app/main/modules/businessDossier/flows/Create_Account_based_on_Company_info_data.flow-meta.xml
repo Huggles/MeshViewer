@@ -27,20 +27,6 @@
                 <elementReference>selectedDossier.Id</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AccountToBeCreated.BillingCity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>selectedDossier.Correspondence_City__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AccountToBeCreated.AccountNumber</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Duplicate_Management_For_Account_and_Business_Dossier</targetReference>
         </connector>
@@ -72,6 +58,7 @@
     </decisions>
     <description>Template you can use to create an account based on Company.info data. Use this for example in quick actions.</description>
     <interviewLabel>Create Account based on Company.info data {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Account based on Company.info data</label>
     <processMetadataValues>
