@@ -876,6 +876,7 @@ public class CreditSafeServiceImplTest {
         }
         Test.stopTest();
     }
+
     @IsTest
     static void testSearchForCreditSafeDossiersForES() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -972,6 +973,7 @@ public class CreditSafeServiceImplTest {
         }
         Test.stopTest();
     }
+
     @IsTest
     static void testSearchForCreditSafeDossiersForNO() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
@@ -1052,6 +1054,92 @@ public class CreditSafeServiceImplTest {
 
             //test for NOWith name, status, street, city, postalcode, province
             List<Business_Dossier__c> dossiers4 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'NO'}, '', 'status', '', 'registration_type', '', '', 'city', 'street', 'postal_code', 'name');
+            System.assertEquals(dossiers4.size() , 5);
+            for (Business_Dossier__c dossier : dossiers4) {
+                System.assert(dossier.Name.isNumeric());
+                System.assert(dossier.Postal_Code__c.startsWith('123'));
+                System.assert(dossier.Status__c == 'status');
+            }
+        }
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void testSearchForCreditSafeDossiersForLU() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsCreditsafe wsCreditsafeService = (IWsCreditsafe)mocks.mock(IWsCreditsafe.class);
+
+        CreditsafeWsdl.CreditsafeSearchResultV2 searchResultV2 = new CreditsafeWsdl.CreditsafeSearchResultV2();
+        searchResultV2.companies = new CreditsafeWsdl.CreditsafeCompanyV2Array();
+        searchResultV2.companies.item = new List<CreditsafeWsdl.CreditsafeCompanyV2>();
+        for (Integer i = 0; i < 5; i++) {
+            CreditsafeWsdl.CreditsafeCompanyV2 company  = new CreditsafeWsdl.CreditsafeCompanyV2();
+            company.country = 'LU';
+            company.name = '' + i;
+            company.registration_number = '123' + i;
+            company.address = new CreditsafeWsdl.CreditsafeAddressV2();
+            company.address.city = 'Utrecht';
+            company.address.street = 'Braillelaan';
+            company.address.telephone = '' + i;
+            company.address.postal_code = '123' + i;
+            company.status = 'status';
+            company.trade_names = new CreditsafeWsdl.stringArray();
+            company.trade_names.item = new List<String>();
+            for (Integer i2 = 0; i2 < 3; i2++) {
+                company.trade_names.item.add('' + i + '_' + i2);
+            }
+            company.id = '' + i;
+            company.date_last_account = Datetime.now();
+            company.date_last_change = Datetime.now();
+            company.office_type = 'Headoffice';
+            company.creditsafe_number = '' + i;
+
+            searchResultV2.companies.item.add(company);
+        }
+
+        mocks.startStubbing();
+        mocks.when(wsCreditsafeService.creditsafeSearchV2(
+                (CreditsafeWsdl.stringArray)fflib_Match.anyObject(),
+                fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),
+                fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString()
+                ,fflib_Match.anyString(),fflib_Match.anyString())).thenReturn(searchResultV2);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsCreditsafe.class, wsCreditsafeService);
+
+        Test.startTest();
+        {
+            List<Business_Dossier__c> dossiers = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'LU'}, 'id', 'status', 'regnr', 'type', 'vat', 'province', 'city', 'street', 'postal_code', 'name');
+            System.assertEquals(15, dossiers.size());
+            for (Business_Dossier__c dossier : dossiers) {
+                System.assert(dossier.Name.isNumeric());
+                System.assert(dossier.Dossier_Number__c.startsWith('123'));
+                System.assert(dossier.Country__c == 'LU');
+                System.assert(dossier.Street__c == 'Braillelaan');
+                System.assert(dossier.City__c == 'Utrecht');
+                System.assert(dossier.Date_of_Last_Account__c != null && dossier.Date_of_Last_Account__c < Datetime.now());
+                System.assert(dossier.Date_of_Last_Change__c != null && dossier.Date_of_Last_Change__c < Datetime.now());
+                System.assert(dossier.Office_Type__c == 'Headoffice');
+                System.assert(dossier.Trade_Names__c != null);
+                System.assert(dossier.Telephone_Number__c.isNumeric());
+            }
+
+            //test for LUWithCompanyId
+            List<Business_Dossier__c> dossiers1 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'LU'}, 'id', '', '', '', '', '', '', '', '', '');
+            System.assert(dossiers1.size() == 5);
+            for (Business_Dossier__c dossier : dossiers1) {
+                System.assert(dossier.Company_Id__c.isNumeric());
+            }
+
+            //test for LUWithRegistrationNumber
+            List<Business_Dossier__c> dossiers2 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'LU'}, '', '', 'registration_number', '', '', '', '', '', '', '');
+            System.assertEquals(dossiers2.size() , 5);
+            for (Business_Dossier__c dossier : dossiers2) {
+                System.assert(dossier.Dossier_Number__c.startsWith('123'));
+            }
+
+            //test for LUWith name, status, street, city, postalcode
+            List<Business_Dossier__c> dossiers4 = CreditSafeService.searchForCreditSafeDossiers(new List<String>{'LU'}, '', 'status', '', '', '', '', 'city', 'street', 'postal_code', 'name');
             System.assertEquals(dossiers4.size() , 5);
             for (Business_Dossier__c dossier : dossiers4) {
                 System.assert(dossier.Name.isNumeric());
@@ -2297,6 +2385,8 @@ public class CreditSafeServiceImplTest {
         System.assert(employeeInformation.Year__c == 2020);
 
     }
+
+
 
     @TestVisible
     private static CreditsafeWsdl.CreditsafeCompanyReportFullV2 createCompanyReportFullV2Mock() {
