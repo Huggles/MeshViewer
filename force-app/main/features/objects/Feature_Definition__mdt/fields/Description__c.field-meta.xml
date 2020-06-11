@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Description__c</fullName>
     <externalId>false</externalId>
+    <description>Describes the feature</description>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <inlineHelpText>Describes the feature</inlineHelpText>
     <label>Description</label>
