@@ -1799,4 +1799,12 @@
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
     </labels>
+    <labels>
+        <fullName>International_Address_Organization_Help_Text</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
+        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
+    </labels>
 </CustomLabels>
