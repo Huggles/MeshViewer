@@ -27,7 +27,7 @@ public interface IWsDutchBusiness {
 //    DutchBusinessWsdl.DutchBusinessSBICollection dutchBusinessGetSBI(String dossier_number,String establishment_number,String language);
 //    DutchBusinessWsdl.DutchBusinessGetConcernRelationsDetailsResult dutchBusinessGetConcernRelationsDetails(String dossier_number,Boolean include_source);
 //    DutchBusinessWsdl.DutchBusinessNewsItemPagedResult dutchBusinessSearchNewsByDossier(String dossier_number,DateTime period_start,DateTime period_end,String sort_order,Integer page_x);
-//    DutchBusinessWsdl.DutchBusinessExtractHistory dutchBusinessGetExtractHistoryChanged(String dossier_number,Date period_start_date,Date period_end_date);
+    DutchBusinessWsdl.DutchBusinessExtractHistory dutchBusinessGetExtractHistoryChanged(String dossier_number,Date period_start_date,Date period_end_date);
 //    DutchBusinessWsdl.DutchBusinessGetConcernRelationsOverviewResult dutchBusinessGetConcernRelationsOverview(String dossier_number);
 //    DutchBusinessWsdl.DutchBusinessDossierHistory dutchBusinessGetDossierHistory(String dossier_number,Date period_start_date,Date period_end_date);
 //    DutchBusinessWsdl.DutchBusinessOrganizationTree dutchBusinessGetOrganizationTree(String dossier_number);

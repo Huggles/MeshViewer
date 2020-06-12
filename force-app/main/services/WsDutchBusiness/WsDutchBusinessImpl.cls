@@ -65,6 +65,13 @@ public inherited sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
                     );
                     return null;
                 }
+                when 'dutchBusinessGetExtractHistoryChanged' {
+                    return port.dutchBusinessGetExtractHistoryChanged(
+                            (String)arguments.get('dossier_number'),
+                            (Date)arguments.get('period_start_date'),
+                            (Date)arguments.get('period_end_date')
+                    );
+                }
                 when else {
                     throw new CCWsException('Method ' + methodName + ' not implemented');
                 }
@@ -147,6 +154,15 @@ public inherited sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
                 'dossier_number' => dossier_number,
                 'establishment_number' => establishment_number
         });
+    }
+
+    public DutchBusinessWsdl.DutchBusinessExtractHistory dutchBusinessGetExtractHistoryChanged(String dossier_number, Date period_start_date, Date period_end_date){
+        DutchBusinessWsdl.DutchBusinessExtractHistory result = (DutchBusinessWsdl.DutchBusinessExtractHistory)methodCallOut.callOut('dutchBusinessGetExtractHistoryChanged', new Map<String, Object>{
+                'dossier_number' => dossier_number,
+                'period_start_date' => period_start_date,
+                'period_end_date' => period_end_date
+        });
+        return result;
     }
 
 }

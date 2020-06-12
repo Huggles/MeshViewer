@@ -86,4 +86,16 @@ public interface IDutchBusinessService {
      * @param unitOfWork if not present a new uow will be created and used to do the work
      */
     void storeDossiers(List<Business_Dossier__c> dossiers, fflib_ISObjectUnitOfWork unitOfWork);
+
+
+    /**
+     * Gets the changes in the extracts for a specific dossier.
+     *
+     * @param dossier_number    'The COC Number'
+     * @param start_date        'The start date from which to get the list of changes.'
+     * @param end_date          'The end date until which to get the list of changes.'
+     *
+     * @return DutchBusinessExtractHistory
+     */
+    DutchBusinessWsdl.DutchBusinessExtractHistory getExtractHistory(String dossier_number, Date start_date, Date end_date);
 }
