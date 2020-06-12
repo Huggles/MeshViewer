@@ -22,7 +22,6 @@ force-app/main/default/flexipages/Creditsafe_Company_Report_Record_Page.flexipag
 CompanyInfoComponents.iml
 force-app/main/default/pages/
 scans/
-scripts/
 /metadata/
 force-app/main/default/aura/
 force-app/main/default/customMetadata/
