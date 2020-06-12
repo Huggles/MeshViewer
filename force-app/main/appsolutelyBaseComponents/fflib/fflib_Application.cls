@@ -50,17 +50,6 @@ public inherited sharing class fflib_Application
 		}
 
 		/**
-		 * Constructs a Unit Of Work factory
-		 *
-		 * @param objectTypes List of SObjectTypes in dependency order
-		 * @param dml fflib_SObjectUnitOfWork.IDML dml
-		 **/
-		public UnitOfWorkFactory(List<SObjectType> objectTypes, fflib_SObjectUnitOfWork.IDML dml)
-		{
-			m_objectTypes = objectTypes.clone();
-		}
-
-		/**
 		 * Returns a new fflib_SObjectUnitOfWork configured with the 
 		 *   SObjectType list provided in the constructor, returns a Mock implementation
 		 *   if set via the setMock method
