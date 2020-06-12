@@ -21,9 +21,11 @@ public with sharing class AddressServiceImpl implements IAddressService {
     private List<AddressWsdl.Perceel> searchForDutchAddressInCompanyInfo(String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype){
         List<AddressWsdl.Perceel> searchResults = new List<AddressWsdl.Perceel>();
         AddressWsdl.PerceelSearchPartsPagedResult returnedResults = WsAddress.addressPerceelFullParameterSearchV2(province, district, city, street, houseNo, houseNoAddition, nbcode, lettercombination, addresstype, 1);
+
         if (returnedResults != null && returnedResults.results != null && returnedResults.results.item != null) {
             searchResults.addAll(returnedResults.results.item);
             Integer numPages = returnedResults.paging.numpages;
+
             for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
                 returnedResults = WsAddress.addressPerceelFullParameterSearchV2(province, district, city, street, houseNo, houseNoAddition, nbcode, lettercombination, addresstype, i);
                 searchResults.addAll(returnedResults.results.item);

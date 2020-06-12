@@ -70,13 +70,15 @@ global inherited sharing class SearchForInternationalAddressInvocable {
 
             for (SearchInternationalAddressArgument searchInternationalAddressArgument : arguments) {
                 if (searchInternationalAddressArgument.country == 'NLD' || searchInternationalAddressArgument.country == 'NL') {
+                    System.debug(searchInternationalAddressArgument.housenr );
+                    Integer houseNumber = String.isNotEmpty(searchInternationalAddressArgument.housenr) ? Integer.valueOf(searchInternationalAddressArgument.housenr) : null;
                     listInternationalAddresses2.add(AddressService.dutchAddressSearch(
                             searchInternationalAddressArgument.organization,
                             searchInternationalAddressArgument.province,
                             searchInternationalAddressArgument.municipality,//district
                             searchInternationalAddressArgument.locality,//city
                             searchInternationalAddressArgument.street,
-                            Integer.valueOf(searchInternationalAddressArgument.housenr),
+                            houseNumber,
                             searchInternationalAddressArgument.housenrAddition,
                             searchInternationalAddressArgument.postal_code,//nbcode
                             searchInternationalAddressArgument.lettercombination,
