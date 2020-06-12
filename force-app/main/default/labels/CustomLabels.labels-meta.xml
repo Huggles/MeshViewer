@@ -321,6 +321,13 @@
         <value>United Kingdom</value>
     </labels>
     <labels>
+        <fullName>Country_Luxembourg</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Luxembourg</shortDescription>
+        <value>Luxembourg</value>
+    </labels>
+    <labels>
         <fullName>Country_to_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -341,6 +348,62 @@
         <protected>true</protected>
         <shortDescription>Credentials successfully updated message</shortDescription>
         <value>Credentials saved!</value>
+    </labels>
+    <labels>
+        <fullName>License_assignment_succesfully_removed</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message shown when a license assignment has been removed</shortDescription>
+        <value>License assignment removed!</value>
+    </labels>
+    <labels>
+        <fullName>Full_Name</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of full name column in user data table</shortDescription>
+        <value>Full Name</value>
+    </labels>
+    <labels>
+        <fullName>Alias</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of alias column in user data table</shortDescription>
+        <value>Alias</value>
+    </labels>
+    <labels>
+        <fullName>Username</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of username column in user data table</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
+        <fullName>Profile</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of profile column in user data table</shortDescription>
+        <value>Profile</value>
+    </labels>
+    <labels>
+        <fullName>Role</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of role column in user data table</shortDescription>
+        <value>Role</value>
+    </labels>
+    <labels>
+        <fullName>Active_user</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of active column in user data table</shortDescription>
+        <value>Active</value>
     </labels>
     <labels>
         <fullName>CreditSafe_Validation_Message_Heading</fullName>
@@ -1556,6 +1619,14 @@
         <value>Please enter a valid Irish CreditSafe Identification Number</value>
     </labels>
     <labels>
+        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
+        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
+    </labels>
+    <labels>
         <fullName>Valid_Irish_VAT_Number</fullName>
         <categories>Error</categories>
         <language>en_US</language>
@@ -1741,5 +1812,13 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
+    </labels>
+    <labels>
+        <fullName>International_Address_Organization_Help_Text</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
+        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
     </labels>
 </CustomLabels>
