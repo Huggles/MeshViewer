@@ -32,8 +32,6 @@ export default class LicenseTypeManagementCard extends LightningElement {
         License_assignment_succesfully_removed
     }
 
-    licensesAssignedLabel;
-
     /**
      * Contains the API name of the license type as defined in the LicenseType enum in Apex
      */
@@ -79,7 +77,7 @@ export default class LicenseTypeManagementCard extends LightningElement {
                     this.availableNrOfSeats = result.availableNrOfSeats;
                     this.assignedNorOfSeats = this.totalNrOfSeats - this.availableNrOfSeats;
                     this.showAssignLicensesButton = this.availableNrOfSeats > 0;
-                    this.licensesAssignedLabel = format(this.label.Nr_of_licenses_assigned, [this.assignedNorOfSeats, this.totalNrOfSeats]);
+                  //  this.licensesAssignedLabel = format(this.label.Nr_of_licenses_assigned, [this.assignedNorOfSeats, this.totalNrOfSeats]);
                     resolve('license type info fetched');
                 })
                 .catch(error => {
@@ -87,6 +85,14 @@ export default class LicenseTypeManagementCard extends LightningElement {
                     reject(error);
                 })
         );
+    }
+
+    /**
+     * Shows how many licenses have been assigned
+     * @returns {*}
+     */
+    get licensesAssignedLabel() {
+        return format(this.label.Nr_of_licenses_assigned, [this.assignedNorOfSeats, this.totalNrOfSeats]);
     }
 
     licensesAvailable() {
