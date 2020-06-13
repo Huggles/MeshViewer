@@ -12,15 +12,15 @@ public with sharing class CompanyDetailsController {
             if (dossiers != null && dossiers.size() == 1) {
                 Business_Dossier__c dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossiers[0]);
                 DutchBusinessService.storeDossiers(new List<Business_Dossier__c>{dossier}, null);
-                return new AuraResponseWrapper(dossier);
+                return dossier;
             } else {
                 throw new CustomException('Expected a dossier id. No dossier Id present.');
             }
         } catch (CCException e) {
-            return new AuraResponseWrapper(e);
+            throw new AuraHandledException(e.getMessage());
         } catch (Exception e) {
             ErrorLogUtil.logException(e);
-            return new AuraResponseWrapper(e, System.Label.Error);
+            throw new AuraHandledException(e.getMessage());
         }
     }
 

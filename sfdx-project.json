@@ -7,20 +7,13 @@
             "versionNumber": "1.1.0.NEXT",
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
-            "postInstallScript": "PostInstallScript",
-            "ancestorId": "Company.info for Salesforce@R1"
+            "postInstallScript": "PostInstallScript"
         }
     ],
     "namespace": "appsolutely",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "48.0",
     "packageAliases": {
-        "Company.info for Salesforce": "0Ho0J0000004CABSA2",
-        "Company.info for Salesforce@R1-Beta-1": "04t0J000000M9oeQAC",
-        "Company.info for Salesforce@R1-Beta-2": "04t0J000000M9ojQAC",
-        "Company.info for Salesforce@R1-Beta-3": "04t0J000000M9ooQAC",
-        "Company.info for Salesforce@R1-Beta-4": "04t0J000000M9oyQAC",
-        "Company.info for Salesforce@Restructure source tree": "04t0J000000M9p3QAC",
-        "Company.info for Salesforce@R1": "04t0J000000M9pIQAS"
+        "Company.info for Salesforce": "0Ho0J000000k9bSSAQ"
     }
 }

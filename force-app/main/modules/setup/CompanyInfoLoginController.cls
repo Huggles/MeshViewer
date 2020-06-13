@@ -6,6 +6,8 @@ public inherited sharing class CompanyInfoLoginController {
 
     @AuraEnabled
     public static void saveUsernamePassword(String username, String password) {
+        System.debug('username: ' + username);
+        System.debug('password: ' + password);
         BusinessAccountingService.saveDataUserCredentials(username, password);
     }
 
