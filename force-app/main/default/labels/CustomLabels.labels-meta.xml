@@ -709,7 +709,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>No users available to assign licenses to</shortDescription>
-        <value>No_users_available_to_assign_licenses_to</value>
+        <value>No users available to assign licenses to</value>
     </labels>
     <labels>
         <fullName>Assign</fullName>

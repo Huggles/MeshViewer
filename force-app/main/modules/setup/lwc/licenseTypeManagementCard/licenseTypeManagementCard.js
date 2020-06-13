@@ -89,6 +89,10 @@ export default class LicenseTypeManagementCard extends LightningElement {
         );
     }
 
+    licensesAvailable() {
+        return this.availableNrOfSeats > 0;
+    }
+
 
 
     /**
@@ -219,7 +223,8 @@ export default class LicenseTypeManagementCard extends LightningElement {
                 .then(result => {
                     const event = new ShowToastEvent({
                         title: 'Success',
-                        message: this.label.License_assignment_succesfully_removed
+                        message: this.label.License_assignment_succesfully_removed,
+                        variant: 'success'
                     });
                     this.dispatchEvent(event);
                     const filteredsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );

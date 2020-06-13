@@ -441,6 +441,10 @@
         <name>Success</name>
     </customLabels>
     <customLabels>
+        <label>Geen gebruikers om licenties aan toe te wijzen</label>
+        <name>No_users_available_to_assign_licenses_to</name>
+    </customLabels>
+    <customLabels>
         <label>Handelsnaam</label>
         <name>Trade_Name</name>
     </customLabels>
