@@ -7,7 +7,8 @@
             "versionNumber": "1.1.0.NEXT",
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
-            "postInstallScript": "PostInstallScript"
+            "postInstallScript": "PostInstallScript",
+            "ancestorId": "Company.info for Salesforce@1.1.0-1"
         }
     ],
     "namespace": "appsolutely",
@@ -15,6 +16,7 @@
     "sourceApiVersion": "48.0",
     "packageAliases": {
         "Company.info for Salesforce": "0Ho0J000000k9bSSAQ",
-        "Company.info for Salesforce@1.1.0-1": "04t0J000000Hr6kQAC"
+        "Company.info for Salesforce@1.1.0-1": "04t0J000000Hr6kQAC",
+        "Company.info for Salesforce@1.1.1-1": "04t0J000000Hr6pQAC"
     }
 }
