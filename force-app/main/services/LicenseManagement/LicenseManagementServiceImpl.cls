@@ -171,6 +171,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         if (users.size() > getNumberOfAvailableSeats(licenseType)) {
             throw new NotEnoughSeatsAvailableException('Not enough seats of license type ' + licenseType.name() + ' available');
         }
+        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
+        if (permissionSet == null) {
+            throw new InputException('No permission set for ' + licenseType.name());
+        }
 
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
 
@@ -189,7 +193,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
 
         // assign the permission set(s)
-        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
         List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
         for (User user : users) {
             PermissionSetAssignment permAssignment = new PermissionSetAssignment(PermissionSetId = permissionSet.Id, AssigneeId = user.Id);
