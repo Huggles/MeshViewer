@@ -7,8 +7,6 @@
  */
 public with sharing class GlobalFlowQuickActionController {
 
-    private static String FLOW_SETTING_KEY = 'Create_Account_Flow_API_Name';
-
     /**
      * Returns the name of the flow as configured in the Subscriber settings with developername FLOW_SETTING_KEY.
      * Throws a CIConfigurationException if the Flow_Setting is not found or the value is null.
