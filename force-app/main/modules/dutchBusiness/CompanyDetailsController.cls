@@ -19,7 +19,7 @@ public with sharing class CompanyDetailsController {
         } catch (CCException e) {
             throw new AuraHandledException(e.getMessage());
         } catch (Exception e) {
-            ErrorLogUtil.logException(e);
+            ErrorLogUtil.logException(e, true);
             throw new AuraHandledException(e.getMessage());
         }
     }
