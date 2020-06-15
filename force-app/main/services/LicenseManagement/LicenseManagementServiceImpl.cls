@@ -159,6 +159,14 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
                     break;
                 }
             }
+            // check if the current user is in the set. If so remove him from the set since he is the one removing the LMA licenses and should keep a license.
+            Id currentUserId = UserInfo.getUserId();
+            Map<Id, User> usersByIds = new Map<Id, User>(users);
+            if (usersByIds.get(currentUserId) != null) {
+                usersByIds.remove(currentUserId);
+                users = usersByIds.values();
+            }
+            // select the user package licenses to delete
             UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(packageLicense, users);
             unitOfWork.registerDeleted(userPackageLicenses);
         }

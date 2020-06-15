@@ -3,12 +3,11 @@
         {
             "path": "force-app",
             "package": "Company.info for Salesforce",
-            "versionName": "R1.1 Alpha 1",
-            "versionNumber": "1.1.0.NEXT",
+            "versionName": "Summer 2020",
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
             "postInstallScript": "PostInstallScript",
-            "ancestorId": "Company.info for Salesforce@1.1.0-1"
+            "ancestorId": "Company.info for Salesforce@1.2.1-1"
         }
     ],
     "namespace": "appsolutely",
@@ -17,6 +16,8 @@
     "packageAliases": {
         "Company.info for Salesforce": "0Ho0J000000k9bSSAQ",
         "Company.info for Salesforce@1.1.0-1": "04t0J000000Hr6kQAC",
-        "Company.info for Salesforce@1.1.1-1": "04t0J000000Hr6pQAC"
+        "Company.info for Salesforce@1.1.1-1": "04t0J000000Hr6pQAC",
+        "Company.info for Salesforce@1.2.0-1": "04t0J000000Hr6uQAC",
+        "Company.info for Salesforce@1.2.1-1": "04t0J000000Hr74QAC"
     }
 }
