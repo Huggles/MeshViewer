@@ -103,8 +103,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
     get showGetCreditsafeReportButton() {
         if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
             //if there is already a relation, then do not show the button
-            console.log('property calc');
-            console.log(this.getCreditSafeReportAccess);
             if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
                 this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
                 return false;
