@@ -1,0 +1,42 @@
+.modal-hidden {
+    display: none;
+}
+
+.slds-modal__content {
+    overflow: visible !important;
+}
+
+.slds-modal__header
+{
+    text-align: left;
+}
+
+.header-string
+{
+    color: #164194;
+}
+
+/* .slds-modal__content {
+    font-weight: bold;
+    font-size: 1.375rem;
+    color: #E4032E;
+    text-align: center;
+} */
+
+.help .header-string {
+    color: #E4032E;
+    font: Bold 20px/18px Verdana;
+}
+
+.notification .slds-modal__content {
+    font-weight: bold;
+    font-size: 1.375rem;
+    color: #E4032E;
+    text-align: center;
+}
+
+.slds-modal__close {
+    top: .7rem;
+    right: .7rem;
+    border: none;
+}
