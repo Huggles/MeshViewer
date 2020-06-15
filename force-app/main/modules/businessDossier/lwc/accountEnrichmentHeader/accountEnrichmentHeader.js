@@ -29,6 +29,8 @@ import Error_Unknown from '@salesforce/label/c.Error_Unknown';
 import Error_Incomplete from '@salesforce/label/c.Error_Incomplete';
 import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
 
+import { checkFeatureAccess } from "c/helper";
+
 
 
 export default class AccountEnrichmentHeader extends LightningElement {
@@ -64,6 +66,23 @@ export default class AccountEnrichmentHeader extends LightningElement {
         companyInfoLogoSmall,
     }
 
+
+
+    connectedCallback() {
+        this.checkFeatures();
+    }
+
+    getCreditSafeReportAccess = false;
+    checkFeatures(){
+        checkFeatureAccess('CREDITSAFE_GET_REPORT')
+            .then(result=>{
+                this.getCreditSafeReportAccess = result;
+            })
+            .catch(error =>{
+                this.showToast('Error', error.body.message, 'error', null);
+            });
+    }
+
     get showVATButton() {
         if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
             //If there is no VAT Number and the No_VAT_Number__c(known) is false and only for NL companies
@@ -78,15 +97,22 @@ export default class AccountEnrichmentHeader extends LightningElement {
         }
     }
 
+
+
+
     get showGetCreditsafeReportButton() {
         if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
             //if there is already a relation, then do not show the button
+            console.log('property calc');
+            console.log(this.getCreditSafeReportAccess);
             if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
                 this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
                 return false;
             }
-            else {
+            else if(this.getCreditSafeReportAccess){
                 return true;
+            }else{
+                return false;
             }
         }
     }
