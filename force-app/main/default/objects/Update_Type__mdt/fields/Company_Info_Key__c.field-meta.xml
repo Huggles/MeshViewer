@@ -3,7 +3,7 @@
     <fullName>Company_Info_Key__c</fullName>
     <caseSensitive>false</caseSensitive>
     <externalId>false</externalId>
-    <fieldManageability>SubscriberControlled</fieldManageability>
+    <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Company Info Key</label>
     <length>100</length>
     <required>true</required>
