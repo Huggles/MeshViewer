@@ -129,6 +129,4 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
         this.dispatchEvent(attributeChangeEvent);
         this.dispatchEvent(new FlowNavigationNextEvent());
     }
-
-
 }
