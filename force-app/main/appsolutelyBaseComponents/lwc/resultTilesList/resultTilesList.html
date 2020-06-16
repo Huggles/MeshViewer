@@ -16,9 +16,8 @@
                 <div class="scrollable slds-box result-container" onscroll={resultsScrolled}>
                     <div class="grid">
                         <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="object">
-                            abc11
                             <div key={ourKey}>
-                                <slot name="accountList" data-id="inputResultId" data-index={searchResultIndex}>
+                                <slot name="tile" data-index={searchResultIndex} >
 
                                 </slot>
                             </div>

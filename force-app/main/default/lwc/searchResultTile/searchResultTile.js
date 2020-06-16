@@ -11,8 +11,15 @@ export default class SearchResultTile extends LightningElement {
     /**
      * Contains the search result (in fact a business data SObject)
      */
+    m_searchResult;
     @api
-    searchResult;
+    get searchResult(){
+        return this.m_searchResult;
+    }
+    set searchResult(value){
+        this.m_searchResult = value;
+        this.loadTile();
+    }
 
     /**
      * Contains a - within the searchResults - unique id for the search Result
@@ -37,8 +44,23 @@ export default class SearchResultTile extends LightningElement {
     }
 
     connectedCallback() {
-        if (this.labelsAndFields.data) {
-            this.labelsAndFields.data.forEach((value, index) => this.fieldValues.push({index: index, label: value.label, value: this.searchResult[value.apiName]}));
+        this.loadTile();
+    }
+
+
+    @api
+    loadTile(){
+        if (this.labelsAndFields != null &&
+            this.labelsAndFields.data != null &&
+            this.m_searchResult != null) {
+            this.labelsAndFields.data.forEach((value, index) => {
+                let fieldValue =  {
+                    index: index,
+                    label: value.label,
+                    value: this.m_searchResult[value.apiName]
+                };
+                this.fieldValues.push(fieldValue);
+            });
         }
     }
 

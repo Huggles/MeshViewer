@@ -19,8 +19,17 @@ export default class SearchResultTilesList extends LightningElement {
     /**
      * The search results to be displayed
      */
+    m_searchResults;
     @api
-    searchResults;
+    get searchResults(){
+        return this.m_searchResults;
+    }
+    set searchResults(value){
+        console.log('searchResults in resultTilesList');
+        console.log(JSON.stringify(value));
+        this.m_searchResults = value;
+        this.fillSearchResults();
+    }
 
     /**
      * Are there any results?
@@ -103,9 +112,15 @@ export default class SearchResultTilesList extends LightningElement {
 
     @api
     get lazyloadedSearchResults() {
-        if (this.searchResults)
-            return this.searchResults.slice(0, this.numberOfResults);
+        console.log('lazyloadedSearchResults');
+        console.log(this.searchResults);
+        if (this.searchResults){
+            let response = this.searchResults.slice(0, this.numberOfResults);
+            console.log(response);
+            return response;
+        }
         else {
+            console.log(null);
             return null;
         }
     }
@@ -159,35 +174,22 @@ export default class SearchResultTilesList extends LightningElement {
         }
         tileClicked.selected = !tileClicked.selected; // select or unselect the card
     }
-
-    connectedCallback() {
-        console.log('in result tiles connectedcallback' + JSON.stringify(this.labelsAndFields));
-        console.log('in result tiles connectedcallback' + JSON.stringify(this.searchResults));
-    }
-
     renderedCallback() {
         this.querySelector('span'); // <span>push the green button.</span>
         this.querySelectorAll('span'); // [<span>push the green button</span>, <span>push the red button</span>]
-        console.log('in rendering'+ JSON.stringify(this.labelsAndFields));
         this.fillSearchResults();
-        console.log('after fill rendering');
     }
 
     fillSearchResults() {
-        console.log('-----'+this.searchResults);
         if (this.searchResults) {
-            const inputResults = this.template.querySelectorAll('[data-id="inputResultId"]');
-            if (inputResults != null) {
-                inputResults.forEach((value, index) => {
+            const tiles = this.querySelectorAll('[data-name="tile"]');
+            console.log(tiles.length);
+            if (tiles != null && tiles.length > 0) {
+                tiles.forEach((tile, index) => {
                     try {
-                        //let inputIndex = inputResults.dataset.index;
-                        value.searchResult = this.searchResults[index];
-                        value.labelsAndFields = this.labelsAndFields;
-                        value.titleField = this.titleField;
-                        value.searchResultId = index;
-                        value.title = value.searchResult[this.titleField];
-                        value.doRender11 = 'vhv';
-                        //this.labelsAndFields.data.forEach((value1, index1) => value.fieldValues.push({index: index1, label: value1.label, value: value.searchResult[value1.apiName]}));
+                        tile.searchResult = this.searchResults[index];
+                        tile.searchResultId = index;
+                        tile.titleField = this.titleField;
                     }
                     catch (e) {
                         console.log(e);

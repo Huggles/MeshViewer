@@ -7,34 +7,22 @@ import Update_Duplicate_Account from '@salesforce/label/c.Update_Duplicate_Accou
 import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 import {fireEvent} from "c/pubsub";
 
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 export default class AccountResultTile extends LightningElement {
-
-    // /**
-    //  * The field containing the title of the card. Defaults to Name
-    //  */
-    // @api
-    // titleField = 'Name';
-    //
-    // /**
-    //  * An object containing a data structure with a label and a field
-    //  */
-    // @api
-    // labelsAndFields;
-    //
-    // @api
-    // searchResultId;
-    //
-    // @api
-    // object;
-    //
-    // @api
-    // ourKey;
-
     /**
      * Contains the search result (in fact a business data SObject)
      */
+
+    m_searchResult;
     @api
-    searchResult;
+    get searchResult(){
+        return this.m_searchResult;
+    }
+    set searchResult(value){
+        this.m_searchResult = value;
+        this.loadTile();
+    }
 
     /**
      * Contains a - within the searchResults - unique id for the search Result
@@ -51,32 +39,46 @@ export default class AccountResultTile extends LightningElement {
     /**
      * An object containing a data structure with a label and a field
      */
-    // @wire(getFieldSetFieldDescriptions, {objectName: 'Account', fieldSetName: 'appsolutely__Account_Duplicate_Results_Field_Set'})
-    @api labelsAndFields;
+    labelsAndFields;
+    @wire(getFieldSetFieldDescriptions, {objectName: 'Account', fieldSetName: 'appsolutely__Account_Duplicate_Results_Field_Set'})
+    w_labelsAndFields(response){
+        if(response.data != null){
+            this.labelsAndFields = response;
+            this.loadTile();
+        }
+        if(response.error != null){
+            this.showToast('Error', response.error.body.message, 'error');
+        }
+    }
 
+    m_searchResultTileComponent;
+    loadTile(){
+        if (this.labelsAndFields != null &&
+            this.labelsAndFields.data != null &&
+            this.searchResult != null) {
+            this.labelsAndFields.data.forEach((value, index) => {
+                let fieldValue =  {
+                    index: index,
+                    label: value.label,
+                    value: this.m_searchResult[value.apiName]
+                };
+                this.fieldValues.push(fieldValue);
+            });
+
+        }
+
+
+    }
     // get title() {
     //     return this.searchResult[this.titleField];
     // }
-
     @api title;
 
-    m_test;
-    @api
-    get doRender11(){
-        // if (this.labelsAndFields.data && this.searchResult) {
-        //     this.labelsAndFields.data.forEach((value, index) => this.fieldValues.push({index: index, label: value.label, value: this.searchResult[value.apiName]}));
-        // }
-    }
-    set doRender11(value) {
-        this.m_test = value;
-        console.log(this.m_test);
-    }
 
     /**
      * Returns the values of the fields in the fieldset with the given fieldsetname
      */
-    @api
-    fieldValues = [];
+    @track fieldValues = [];
 
     /**
      * The icon state to be shown
@@ -95,15 +97,17 @@ export default class AccountResultTile extends LightningElement {
     @api
     selected;
 
+    labels = {
+        Update_Duplicate_Account
+    }
+
     handleOnClick(event) {
         // this.selected = !this.selected;
         const cardClickedEvent = new CustomEvent('cardclicked', {detail : {id: this.searchResult}});
         this.dispatchEvent(cardClickedEvent);
     }
 
-    label = {
-        Update_Duplicate_Account
-    }
+
 
     handleClickDuplicateAccount() {
         fireEvent(null, 'updateAccount', null);
