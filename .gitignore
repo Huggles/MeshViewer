@@ -27,3 +27,5 @@ force-app/main/default/duplicateRules/*
 force-app/main/default/aura/
 force-app/main/default/customMetadata/
 manuals/
+force-app/main/default/matchingRules/Business_Dossier__c.matchingRule-meta.xml
+force-app/main/default/matchingRules/International_Address__c.matchingRule-meta.xml
