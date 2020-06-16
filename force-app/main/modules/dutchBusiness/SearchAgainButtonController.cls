@@ -9,4 +9,9 @@ public with sharing class SearchAgainButtonController {
         BusinessService.deleteDossier(dossierId, false);
     }
 
+    @AuraEnabled
+    public static void deleteInternationalAddress(Id internationalAddressId) {
+        InternationalAddressService.deleteInternationalAddress(internationalAddressId, false);
+    }
+
 }

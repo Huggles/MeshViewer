@@ -24,7 +24,7 @@
             <property name="addresstype" label="Address Type" type="String"/>
             <property name="municipality" label="Municipality" type="String"/>
             <property name="country" type="String" label="Country as ISO 3166 Alpha 3 code" description="Country as ISO 3166 Alpha 3 code. Defaults to NLD if not filled and Country as ISO 3166 Alpha 2 code is not filled as well."/>
-            <property name="countryInAlpha2Code" type="String" role="inputOnly" label="Country as ISO 3166 Alpha 2 code" description="Country as ISO 3166 Alpha 2 code"/>
+            <property name="countryInAlpha2Code" type="String" label="Country as ISO 3166 Alpha 2 code" description="Country as ISO 3166 Alpha 2 code"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

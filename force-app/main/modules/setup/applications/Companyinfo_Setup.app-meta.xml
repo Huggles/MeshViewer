@@ -4,7 +4,7 @@
         <headerColor>#746D68</headerColor>
         <logo>companyinfologonopayoffsmall</logo>
         <logoVersion>1</logoVersion>
-        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+        <shouldOverrideOrgTheme>true</shouldOverrideOrgTheme>
     </brand>
     <description>Configure Company.info</description>
     <formFactors>Large</formFactors>
@@ -13,6 +13,6 @@
     <label>Company.info Setup</label>
     <navType>Standard</navType>
     <tabs>Company_info_Setup</tabs>
+    <tabs>License_Management</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>Customer_connect_Administration_UtilityBar</utilityBar>
 </CustomApplication>

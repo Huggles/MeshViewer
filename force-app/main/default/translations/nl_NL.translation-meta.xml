@@ -118,7 +118,7 @@
     </customLabels>
     <customLabels>
         <label>Laden…</label>
-        <name>Config_Loading</name>
+        <name>Loading</name>
     </customLabels>
     <customLabels>
         <label>Company.info configuratie pagina</label>
@@ -870,7 +870,7 @@
     </customTabs>
     <flowDefinitions>
         <flows>
-            <fullName>Get_Creditsafe_Report_Quick_Action-1</fullName>
+            <fullName>Get_Creditsafe_Report_Quick_Action</fullName>
             <label>Ophalen Creditsafe Rapport Quick Action voor Zakelijk Dossier</label>
             <screens>
                 <fields>
@@ -883,7 +883,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Organisation_Search_Flow-1</fullName>
+            <fullName>Organisation_Search_Flow</fullName>
             <label>Organisatie Zoek Flow</label>
             <screens>
                 <fields>
@@ -959,7 +959,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account-1</fullName>
+            <fullName>Get_Creditsafe_Report_Quick_Action_on_Account</fullName>
             <label>Ophalen Creditsafe Rapport Quick Action op Account</label>
             <screens>
                 <fields>
@@ -972,7 +972,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Search_International_Address-1</fullName>
+            <fullName>Search_International_Address</fullName>
             <label>Zoeken Internationale Adressen</label>
             <screens>
                 <fields>
@@ -1009,7 +1009,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Complete_Account_with_Dossier_Data-1</fullName>
+            <fullName>Complete_Account_with_Dossier_Data</fullName>
             <label>Verrijk Account met dossier gegevens</label>
             <screens>
                 <fields>
@@ -1028,14 +1028,14 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Account_based_on_International_Address_Data-1</fullName>
+            <fullName>Create_Account_based_on_International_Address_Data</fullName>
             <label>Maak een account aan op basis van internationale adresgegevens</label>
         </flows>
         <fullName>Create_Account_based_on_International_Address_Data</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Account_based_on_Company_info_data-1</fullName>
+            <fullName>Create_Account_based_on_Company_info_data</fullName>
             <label>Account aanmaken op basis van Company.info data</label>
         </flows>
         <fullName>Create_Account_based_on_Company_info_data</fullName>
@@ -1076,7 +1076,7 @@
             <choices>
                 <name>InsuranceContractIntentionOfSignatureOfInsuranceContractChoice</name>
             </choices>
-            <fullName>Get_Creditsafe_Report-1</fullName>
+            <fullName>Get_Creditsafe_Report</fullName>
             <label>Ophalen Creditsafe Rapport</label>
             <screens>
                 <fields>
@@ -1100,7 +1100,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Enrich_Account_with_International_Address_Data-1</fullName>
+            <fullName>Enrich_Account_with_International_Address_Data</fullName>
             <label>Verrijk Account met internationale adresgegevens</label>
             <screens>
                 <fields>

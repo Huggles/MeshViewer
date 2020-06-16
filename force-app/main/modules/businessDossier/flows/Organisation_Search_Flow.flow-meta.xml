@@ -38,7 +38,7 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
-        <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &#39;normal&#39; end flow.</description>
+        <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &apos;normal&apos; end flow.</description>
         <name>End</name>
         <label>End</label>
         <locationX>940</locationX>
@@ -132,7 +132,7 @@
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
         <locationX>413</locationX>
-        <locationY>1124</locationY>
+        <locationY>1125</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -144,7 +144,7 @@
         <inputParameters>
             <name>dossier_number</name>
             <value>
-                <elementReference>BusinessSearchForm.registrationNumber</elementReference>
+                <elementReference>BusinessSearchForm.dossierNumber</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -763,7 +763,7 @@
         <name>Search</name>
         <label>Enter Search Criteria</label>
         <locationX>210</locationX>
-        <locationY>922</locationY>
+        <locationY>921</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -915,6 +915,12 @@
                 <name>showCancelButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>pageRef</name>
+                <value>
+                    <stringValue>BusinessSearchForm</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

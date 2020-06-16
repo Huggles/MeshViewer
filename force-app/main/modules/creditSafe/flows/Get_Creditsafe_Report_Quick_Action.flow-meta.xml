@@ -11,7 +11,7 @@
             <targetReference>Get_Creditsafe_Report_For_Dossier</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Error_Handling_Screen</targetReference>
+            <targetReference>Default_Outcome_Message</targetReference>
         </faultConnector>
         <inputParameters>
             <name>countries</name>
@@ -44,6 +44,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Get_for_Company_IDs</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Default_Outcome_Message</name>
+        <label>Default Outcome Message</label>
+        <locationX>1113</locationX>
+        <locationY>288</locationY>
+        <assignmentItems>
+            <assignToReference>ErrorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Error_Handling_Screen</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -114,7 +130,6 @@
         <expression>{!$Label.appsolutely__an_error_occured}</expression>
     </formulas>
     <interviewLabel>Get Creditsafe Report Quick Action {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Get Creditsafe Report Quick Action on Business Dossier</label>
     <processMetadataValues>
@@ -153,38 +168,15 @@
     <screens>
         <name>Error_Handling_Screen</name>
         <label>Error Handling Screen</label>
-        <locationX>923</locationX>
-        <locationY>511</locationY>
+        <locationX>1114</locationX>
+        <locationY>467</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>Error</name>
-            <fieldText>&lt;p&gt;{!AnErrorOccuredLabel}&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;{!AnErrorOccuredLabel}&lt;/p&gt;&lt;p&gt;{!ErrorMessage}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Navigation</name>
-        <label>Navigation</label>
-        <locationX>1101</locationX>
-        <locationY>49</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>NavigateToCreditsafeReport</name>
-            <extensionName>appsolutely:flowNavigation</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CreditsafeReport.Id</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -202,9 +194,6 @@
         <label>Get Creditsafe Report For Dossier</label>
         <locationX>923</locationX>
         <locationY>50</locationY>
-        <connector>
-            <targetReference>Navigation</targetReference>
-        </connector>
         <flowName>Get_Creditsafe_Report</flowName>
         <inputAssignments>
             <name>CompanyId</name>
@@ -219,10 +208,24 @@
             </value>
         </inputAssignments>
         <outputAssignments>
+            <assignToReference>CancelPressed</assignToReference>
+            <name>CancelPressed</name>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>CreditsafeReport</assignToReference>
             <name>CreditsafeReport</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>CancelPressed</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>CompanyId</name>
         <dataType>String</dataType>
@@ -245,8 +248,15 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Creditsafe_Company_Report_Full__c</objectType>
+    </variables>
+    <variables>
+        <name>ErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>recordId</name>

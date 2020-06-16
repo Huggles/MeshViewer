@@ -62,7 +62,6 @@ private class SearchForDutchDossiersInvocableTest {
         Test.stopTest();
 
         System.assert(dossiers.size() == 1);
-        System.debug(dossiers[0].size());
         System.assert(dossiers[0].size() == 20);
         for (Business_Dossier__c businessDossier : dossiers[0]) {
             System.assert(businessDossier.Dossier_Number__c.startsWith('dossier_number'));

@@ -26,6 +26,7 @@ import House_Number_Addition from '@salesforce/label/c.House_Number_Addition';
 import Letter_Combination from '@salesforce/label/c.Letter_Combination';
 import Address_Type from '@salesforce/label/c.Address_Type';
 import Municipality from '@salesforce/label/c.Municipality';
+import International_Address_Organization_Help_Text from '@salesforce/label/c.International_Address_Organization_Help_Text';
 
 export default class InternationalAddressSearchForm extends LightningElement {
 
@@ -50,6 +51,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
     @api availableActions = [];
 
     @track selectOptions = [];
+    countryAlpha2codeByAlpha3code = new Map();
 
     @track errorMessage;
 
@@ -69,7 +71,8 @@ export default class InternationalAddressSearchForm extends LightningElement {
         House_Number_Addition,
         Letter_Combination,
         Address_Type,
-        Municipality
+        Municipality,
+        International_Address_Organization_Help_Text
     }
 
     /**
@@ -82,6 +85,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
                 let localSelectOptions = [];
                 for (const resultElement of result) {
                     localSelectOptions.push({value: resultElement.alpha3Code, label: resultElement.country});
+                    this.countryAlpha2codeByAlpha3code.set(resultElement.alpha3Code, resultElement.alpha2Code);
                 }
                 this.selectOptions = localSelectOptions;
             })
@@ -136,12 +140,20 @@ export default class InternationalAddressSearchForm extends LightningElement {
         return this.country === 'NL' || this.country === 'NLD';
     }
 
-    handleComponentRegistrationOpen(registrar) {
-        // fire a registration event
-        fireEvent(this.pageRef, 'componentRegistration', {component: this});
+    handleComponentRegistrationOpen(event) {
+        // fire a registration event if the request comes from InternationalAddressSearchForm footer
+        if(event.pageRef == 'InternationalAddressSearchForm') {
+            fireEvent(this.pageRef, 'componentRegistration', {component: this, pageRef: event.pageRef});
+        }
     }
 
-    handleValidationRequest() {
+    handleValidationRequest(event) {
+        if(event.pageRef == 'InternationalAddressSearchForm') {
+            let valid = this.validateForm();
+            fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: valid, pageRef: event.pageRef});
+        }
+    }
+    validateForm(){
         // TODO: move this to a module to make it generic
         // check if the fields are valid based on the html
         let valid = [...this.template.querySelectorAll('lightning-input')]
@@ -168,7 +180,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
                 this.errorMessage = null;
             }
         }
-        fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: valid});
+        return valid;
     }
 
     handleOnChange(event) {
@@ -178,6 +190,8 @@ export default class InternationalAddressSearchForm extends LightningElement {
     handleSelectedCountryChange(event) {
         this.country = event.target.value;
         this.handleOnChange(event);
+        this.countryInAlpha2Code = this.countryAlpha2codeByAlpha3code.get(this.country);
+        this.dispatchFlowAttributeChangeEvent('countryInAlpha2Code', this.countryInAlpha2Code);
     }
 
     dispatchFlowAttributeChangeEvent(attributeName, attributeValue) {
