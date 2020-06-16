@@ -6,6 +6,7 @@ import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
+import {Features, checkAccess} from "c/featureAccessControl";
 
 //Object fields
 import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Number__c';
@@ -75,14 +76,16 @@ export default class AccountEnrichmentHeader extends LightningElement {
     }
 
     get showGetCreditsafeReportButton() {
-        if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
-            //if there is already a relation, then do not show the button
-            if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
-                this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
-                return false;
-            }
-            else {
-                return true;
+        if (checkAccess(Features.CREDITSAFE_GET_REPORT)) {
+            if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
+                //if there is already a relation, then do not show the button
+                if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
+                    this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
             }
         }
     }
