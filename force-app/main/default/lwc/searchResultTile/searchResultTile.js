@@ -4,7 +4,6 @@
 
 import {LightningElement, api, track} from 'lwc';
 
-import Update_Duplicate_Account from '@salesforce/label/c.Update_Duplicate_Account';
 import {fireEvent} from "c/pubsub";
 
 export default class SearchResultTile extends LightningElement {
@@ -32,9 +31,6 @@ export default class SearchResultTile extends LightningElement {
      */
     @api
     labelsAndFields;
-
-    @api
-    showAccountUpdateLink = false;
 
     get title() {
         return this.searchResult[this.titleField];
@@ -69,17 +65,10 @@ export default class SearchResultTile extends LightningElement {
     @api
     selected;
 
-    label = {
-        Update_Duplicate_Account
-    }
-
     handleOnClick(event) {
         // this.selected = !this.selected;
         const cardClickedEvent = new CustomEvent('cardclicked', {detail : {id: this.searchResultId}});
         this.dispatchEvent(cardClickedEvent);
     }
 
-    handleClickDuplicateAccount() {
-        fireEvent(null, 'updateAccount', null);
-    }
 }

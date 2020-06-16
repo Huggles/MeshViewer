@@ -5,7 +5,7 @@
 import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 import { NavigationMixin } from 'lightning/navigation';
-import {registerListener} from "c/pubsub";
+import {fireEvent, registerListener} from "c/pubsub";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 import createDuplicateAccount from '@salesforce/apex/CreateDuplicatesController.createDuplicateAccount';
@@ -116,5 +116,19 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
         });
         this.dispatchEvent(event);
     }
+
+    /**
+     * The field containing the title of the card. Defaults to Name
+     */
+    @api
+    titleField = 'Name';
+
+    handleOnCardClick(event) {
+        this.selectedResult = event.searchResult;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', this.selectedResult);
+        this.dispatchEvent(attributeChangeEvent);
+        this.dispatchEvent(new FlowNavigationNextEvent());
+    }
+
 
 }

@@ -1,11 +1,18 @@
 <!--
- - Created by jaapbranderhorst on 03/03/2020.
+ - Created by tejaswinidandi on 12/06/2020.
  -->
 
-
-<!-- Search Result Tile -->
+<!-- Account Result Tile -->
 <template>
+<!--    <c-search-result-tile key={ourKey} search-result={object} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}-->
+<!--                          title-field= {titleField} oncardclicked={handleOnClick}>-->
+<!--        <ul class="slds-has-divider_top-space">-->
+<!--            <lightning-button variant="base" label={label.Update_Duplicate_Account} onclick={handleClickDuplicateAccount} class="slds-m-left_xx-large"></lightning-button>-->
+<!--        </ul>-->
+<!--    </c-search-result-tile>-->
+
     <div class="slds-p-around_medium slds-box color-on-hover result-card" onclick={handleOnClick}>
+        abc
         <lightning-tile label={title} type="media" href="javascript:void(0);">
                 <span slot="media">
                     <lightning-button-icon-stateful icon-name='utility:check' selected={iconState} size="small"></lightning-button-icon-stateful>
@@ -20,9 +27,9 @@
                     </div>
                 </template>
             </div>
-<!--            <slot name="recordlink">-->
-
-<!--            </slot>-->
+            <ul class="slds-has-divider_top-space">
+                <lightning-button variant="base" label={label.Update_Duplicate_Account} onclick={handleClickDuplicateAccount} class="slds-m-left_xx-large"></lightning-button>
+            </ul>
         </lightning-tile>
     </div>
 </template>

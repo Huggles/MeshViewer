@@ -7,7 +7,12 @@
     <c-flow-header title={label.Duplicate_Results}></c-flow-header>
     <p class="slds-text-heading_small"> {label.Duplicates_Found_Message}</p>
 
-    <c-search-result-tiles-list search-results={data} selected-result={selectedResult} s-object-name="Account" field-set-name="appsolutely__Account_Duplicate_Results_Field_Set" show-account-update-link={showAccountUpdateLink}></c-search-result-tiles-list>
+    <c-result-tiles-list search-results={data} selected-result={selectedResult} s-object-name="Account" field-set-name="appsolutely__Account_Duplicate_Results_Field_Set" show-account-update-link={showAccountUpdateLink}>
+        <div slot="accountList">
+            <c-account-result-tile oncardclicked={handleOnCardClick}></c-account-result-tile>
+
+        </div>
+    </c-result-tiles-list>
 
     <div class="slds-float_right">
         <lightning-button variant="Neutral" label={label.Cancel} onclick={handleClickCancel} class="slds-m-left_x-small"></lightning-button>

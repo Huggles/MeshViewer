@@ -17,7 +17,13 @@
                 <div class="grid">
                     <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="dossier">
                         <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}
-                                              title-field= {titleField} oncardclicked={handleCardClicked} show-account-update-link={showAccountUpdateLink}></c-search-result-tile>
+                                              title-field= {titleField} oncardclicked={handleCardClicked}></c-search-result-tile>
+                        <slot name="accountList" key={ourKey}>
+
+                        </slot>
+                            <!--                        <c-account-result-tile key={ourKey} labels-and-fields={labelsAndFields} title-field= {titleField} our-key={ourKey}-->
+<!--                                               object={dossier} search-result-id= {searchResultIndex} oncardclicked1={handleCardClicked1}-->
+<!--                                                ></c-account-result-tile>-->
                     </template>
                 </div>
                 <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;">

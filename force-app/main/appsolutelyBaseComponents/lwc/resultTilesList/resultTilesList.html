@@ -1,0 +1,38 @@
+<!--
+ - Created by tejaswinidandi on 12/06/2020.
+ -->
+
+<!-- Result Tiles List -->
+<template>
+        <template if:false={hasResults}>
+            <c-no-result-image ></c-no-result-image>
+        </template>
+        <template if:true= {hasResults}>
+            <lightning-card>
+                <h3 slot="title" if:false= {isSearchCriteriaNameEmpty}>
+                    <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
+                    {searchCriteriaName}
+                </h3>
+                <div class="scrollable slds-box result-container" onscroll={resultsScrolled}>
+                    <div class="grid">
+                        <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="object">
+                            abc11
+                            <div key={ourKey}>
+                                <slot name="accountList" data-id="inputResultId" data-index={searchResultIndex}>
+
+                                </slot>
+                            </div>
+                            <!--                        <c-account-result-tile key={ourKey} labels-and-fields={labelsAndFields} title-field= {titleField} our-key={ourKey}-->
+                            <!--                                               object={dossier} search-result-id= {searchResultIndex} oncardclicked1={handleCardClicked1}-->
+                            <!--                                                ></c-account-result-tile>-->
+                        </template>
+                    </div>
+                    <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;">
+                        <template if:true={displayingMaxNumberOfResults}>
+                            <div class="slds-text-align_center" style="max-width: 80%;">{searchResultsLimited}</div>
+                        </template>
+                    </div>
+                </div>
+            </lightning-card>
+        </template>
+</template>

@@ -1,5 +1,5 @@
 /**
- * Created by jaapbranderhorst on 03/03/2020.
+ * Created by tejaswinidandi on 12/06/2020.
  */
 
 import {LightningElement, api, track, wire} from 'lwc';
@@ -160,9 +160,41 @@ export default class SearchResultTilesList extends LightningElement {
         tileClicked.selected = !tileClicked.selected; // select or unselect the card
     }
 
+    connectedCallback() {
+        console.log('in result tiles connectedcallback' + JSON.stringify(this.labelsAndFields));
+        console.log('in result tiles connectedcallback' + JSON.stringify(this.searchResults));
+    }
+
     renderedCallback() {
         this.querySelector('span'); // <span>push the green button.</span>
         this.querySelectorAll('span'); // [<span>push the green button</span>, <span>push the red button</span>]
+        console.log('in rendering'+ JSON.stringify(this.labelsAndFields));
+        this.fillSearchResults();
+        console.log('after fill rendering');
+    }
+
+    fillSearchResults() {
+        console.log('-----'+this.searchResults);
+        if (this.searchResults) {
+            const inputResults = this.template.querySelectorAll('[data-id="inputResultId"]');
+            if (inputResults != null) {
+                inputResults.forEach((value, index) => {
+                    try {
+                        //let inputIndex = inputResults.dataset.index;
+                        value.searchResult = this.searchResults[index];
+                        value.labelsAndFields = this.labelsAndFields;
+                        value.titleField = this.titleField;
+                        value.searchResultId = index;
+                        value.title = value.searchResult[this.titleField];
+                        value.doRender11 = 'vhv';
+                        //this.labelsAndFields.data.forEach((value1, index1) => value.fieldValues.push({index: index1, label: value1.label, value: value.searchResult[value1.apiName]}));
+                    }
+                    catch (e) {
+                        console.log(e);
+                    }
+                });
+            }
+        }
     }
 
     handleCardClicked1(event) {
