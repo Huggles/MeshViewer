@@ -6,7 +6,6 @@ import { LightningElement, track, wire } from 'lwc';
 // import Config_Account_AwaitingActivation from '@salesforce/label/c.Config_Account_AwaitingActivation';
 import Config_Title from '@salesforce/label/c.Config_Title';
 import Config_Credentials from '@salesforce/label/c.Config_Credentials';
-import Update_types from '@salesforce/label/c.Update_types';
 
 
 
@@ -17,6 +16,5 @@ export default class configApp extends LightningElement {
     labels = {
         Config_Title,
         Config_Credentials,
-        Update_types
     };
 }

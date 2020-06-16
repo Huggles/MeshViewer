@@ -26,16 +26,34 @@ export default class CompanyInfoLogin extends LightningElement {
 
     @track loaded = true;
 
+
+    m_credentials;
     @wire(getCredentials)
     wiredGetCredentials(result){
-        if(result.error){
-            this.error = result.error;
-        }else{
-            if (result && result.data) {
-                this.template.querySelector(".username").value = result.data.appsolutely__Username__c;
-                this.template.querySelector(".password").value = result.data.appsolutely__Password__c;
-                this.error = undefined;
-            }
+        console.log('result');
+        console.log(result);
+        if(result.data != null){
+            this.m_credentials = result.data;
+            this.error = undefined;
+            this.prefillFields();
+        }
+        else if(result.error != null){
+            showToastEvent('Error', 'error loading credentials', 'error');
+        }
+    }
+
+    usernameElement;
+    passwordElement;
+    renderedCallback() {
+        this.usernameElement = this.template.querySelector(".username");
+        this.passwordElement = this.template.querySelector(".password");
+        this.prefillFields();
+    }
+
+    prefillFields(){
+        if(this.usernameElement != null && this.passwordElement != null && this.m_credentials != null){
+            this.usernameElement.value = this.m_credentials.appsolutely__Username__c;
+            this.passwordElement.value = this.m_credentials.appsolutely__Password__c;
         }
     }
 

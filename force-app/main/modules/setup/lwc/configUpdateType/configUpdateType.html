@@ -4,41 +4,47 @@
 
 <!-- Config Update Type -->
 <template>
+    <div class="slds-m-around_small">
+        <lightning-card title={labels.Update_types} icon-name="custom:custom18">
+            <div class="slds-m-around_small">
+                <div class="slds-is-relative">
+                    <template if:true={isLoading}>
+                        <lightning-spinner></lightning-spinner>
+                    </template>
+                    <div class="slds-grid slds-size_1-of-1 slds-wrap">
+                        <div class="slds-size_1-of-1 slds-m-vertical_small">
+                            {labels.Update_types_explanation}
+                        </div>
+                        <template for:each={updateTypes} for:item="updateType">
+                            <div key={updateType.MasterLabel} class="slds-size_1-of-1  slds-m-bottom_xx-small">
+                                <div class="slds-size_1-of-3 slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small" >
+                                    <div class="slds-m-right_small">
+                                        <lightning-input data-classification="update_type_toggle"
+                                                         data-developer-name={updateType.DeveloperName}
+                                                         data-masterlabel={updateType.MasterLabel}
+                                                         message-toggle-active="" message-toggle-inactive=""
+                                                         class="slds-float_right" type="toggle"
+                                                         checked={updateType.appsolutely__Enabled__c}></lightning-input>
+                                    </div>
+                                    <div class="slds-text-heading_small slds-text-title_bold">
+                                        {updateType.MasterLabel}
+                                    </div>
+                                    <div>
+                                        <lightning-helptext title={updateType.MasterLabel} content={updateType.appsolutely__Description__c} ></lightning-helptext>
+                                    </div>
 
-    <div class="slds-is-relative">
-        <template if:true={isLoading}>
-            <lightning-spinner></lightning-spinner>
-        </template>
-        <div class="slds-grid slds-size_1-of-1 slds-wrap">
-            <div class="slds-size_1-of-1 slds-m-vertical_small">
-                {labels.Update_types_explanation}
-            </div>
-            <template for:each={updateTypes} for:item="updateType">
-                <div key={updateType.MasterLabel} class="slds-size_1-of-1  slds-m-bottom_xx-small">
-                    <div class="slds-size_1-of-3 slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small" >
-                        <div class="slds-m-right_small">
-                            <lightning-input data-classification="update_type_toggle"
-                                             data-developer-name={updateType.DeveloperName}
-                                             data-masterlabel={updateType.MasterLabel}
-                                             message-toggle-active="" message-toggle-inactive=""
-                                             class="slds-float_right" type="toggle"
-                                             checked={updateType.appsolutely__Enabled__c}></lightning-input>
-                        </div>
-                        <div class="slds-text-heading_small slds-text-title_bold">
-                            {updateType.MasterLabel}
-                        </div>
-                        <div>
-                            <lightning-helptext title={updateType.MasterLabel} content={updateType.appsolutely__Description__c} ></lightning-helptext>
-                        </div>
-
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <div>
+                        <lightning-button variant="brand"
+                                          label={labels.Save}
+                                          onclick={handleUpdateTypesSave} ></lightning-button>
                     </div>
                 </div>
-            </template>
-        </div>
-        <div>
-            <lightning-button variant="brand"
-                              label={labels.Save}
-                              onclick={handleUpdateTypesSave} ></lightning-button>
-        </div>
+            </div>
+        </lightning-card>
     </div>
+
 </template>
