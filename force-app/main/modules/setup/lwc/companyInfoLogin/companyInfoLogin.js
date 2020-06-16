@@ -38,7 +38,7 @@ export default class CompanyInfoLogin extends LightningElement {
             this.prefillFields();
         }
         else if(result.error != null){
-            showToastEvent('Error', 'error loading credentials', 'error');
+            showToastEvent('Error', result.error.body.message, 'error');
         }
     }
 

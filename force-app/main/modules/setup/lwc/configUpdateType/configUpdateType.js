@@ -30,6 +30,45 @@ export default class ConfigUpdateType extends LightningElement {
         Update_types_explanation
     }
 
+    columnKeyIterator = -1;
+    get columnKeyIterator(){
+        this.columnKeyIterator += 1;
+        return this.columnKeyIterator;
+    }
+
+
+    m_numberOfColumns = 4;
+    get sldsColumnSize(){
+        return 'slds-size_1-of-'+this.m_numberOfColumns;
+    }
+    get columns(){
+        let updateTypesCopy = JSON.parse(JSON.stringify(this.updateTypes));
+        let result = [];
+        for (let i = this.m_numberOfColumns; i > 0; i--) {
+            result.push(updateTypesCopy.splice(0, Math.ceil(updateTypesCopy.length / i)));
+        }
+        return result;
+        /*
+        let returnValue = [];
+        let itemsPerColumn = Math.ceil(this.updateTypes.length / this.m_numberOfColumns);
+        console.log('itemspercolumn' + itemsPerColumn);
+        let columnItems = [];
+        for (var i = 0; i < this.updateTypes.length; i++) {
+            let column = Math.floor(i / itemsPerColumn);
+            let columnItemNumber = i % itemsPerColumn;
+            columnItems.push(this.updateTypes[i]);
+            if(columnItemNumber == 0 && columnItems.length > 0 || i == this.updateTypes.length - 1){
+                //start new column || finish loop
+                returnValue.push(columnItems);
+                columnItems = [];
+            }
+        }
+        console.log(returnValue);
+        return returnValue;
+
+         */
+    }
+
     connectedCallback() {
         this.isLoading = true;
         this.retrieveUpdateTypes();
