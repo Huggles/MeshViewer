@@ -44,8 +44,55 @@ export default class AccountEnrichmentHeader extends LightningElement {
     @api
     getCreditsafeReportClicked = false;
 
+    /**
+     * Contains the VAT number
+     */
+    VATNumber;
+
+    /**
+     * True if no vat number is known. If VAT number is null and no vat is true, there is no vat number known.
+     */
+    noVAT;
+
+    /**
+     * The country of the business dossier
+     */
+    country;
+
+    /**
+     * The creditsafe report id
+     */
+    creditSafeReport;
+
+    /**
+     * The retrieved business dossier
+     */
+    businessDossier;
+
     @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY, BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT] })
-    businessDossierRecord;
+    businessDossierRecord({error, data}) {
+        if (error) {
+            let message = 'Unknown error';
+            if (Array.isArray(error.body)) {
+                message = error.body.map(e => e.message).join(', ');
+            } else if (typeof error.body.message === 'string') {
+                message = error.body.message;
+            }
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error loading contact',
+                    message,
+                    variant: 'error',
+                }),
+            );
+        } else if (data) {
+            this.businessDossier = data;
+            this.country = this.businessDossier.fields.appsolutely__Registration_Country__c.value;
+            this.noVAT = this.businessDossier.fields.appsolutely__No_VAT_Number__c.value;
+            this.VATNumber = this.businessDossier.fields.appsolutely__VAT_Number__c.value;
+            this.creditSafeReport = this.businessDossier.fields.appsolutely__Creditsafe_Company_Report__c.value;
+        }
+    };
 
     @api VATUpdated = false;
 
@@ -62,32 +109,34 @@ export default class AccountEnrichmentHeader extends LightningElement {
     }
 
     get showVATButton() {
-        if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
-            //If there is no VAT Number and the No_VAT_Number__c(known) is false and only for NL companies
-            if(this.businessDossierRecord.data.fields.appsolutely__Registration_Country__c.value == 'NL' &&
-                !this.businessDossierRecord.data.fields.appsolutely__VAT_Number__c.value &&
-                !this.businessDossierRecord.data.fields.appsolutely__No_VAT_Number__c.value ){
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
+        return (!this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
+        // if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
+        //     //If there is no VAT Number and the No_VAT_Number__c(known) is false and only for NL companies
+        //     if(this.businessDossierRecord.data.fields.appsolutely__Registration_Country__c.value == 'NL' &&
+        //         !this.businessDossierRecord.data.fields.appsolutely__VAT_Number__c.value &&
+        //         !this.businessDossierRecord.data.fields.appsolutely__No_VAT_Number__c.value ){
+        //         return true;
+        //     }
+        //     else {
+        //         return false;
+        //     }
+        // }
     }
 
     get showGetCreditsafeReportButton() {
-        if (checkAccess(Features.CREDITSAFE_GET_REPORT)) {
-            if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
-                //if there is already a relation, then do not show the button
-                if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
-                    this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
-                    return false;
-                }
-                else {
-                    return true;
-                }
-            }
-        }
+        return (checkAccess(Features.CREDITSAFE_GET_REPORT) && (this.creditSafeReport == undefined || this.creditSafeReport == null));
+        // if (checkAccess(Features.CREDITSAFE_GET_REPORT)) {
+        //     if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
+        //         //if there is already a relation, then do not show the button
+        //         if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
+        //             this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
+        //             return false;
+        //         }
+        //         else {
+        //             return true;
+        //         }
+        //     }
+        // }
     }
 
     handleOnClickVAT(event) {
