@@ -10,6 +10,9 @@
             <lightning-spinner></lightning-spinner>
         </template>
         <div class="slds-grid slds-size_1-of-1 slds-wrap">
+            <div class="slds-size_1-of-1 slds-m-vertical_small">
+                {labels.Update_types_explanation}
+            </div>
             <template for:each={updateTypes} for:item="updateType">
                 <div key={updateType.MasterLabel} class="slds-size_1-of-1  slds-m-bottom_xx-small">
                     <div class="slds-size_1-of-3 slds-grid slds-grid_vertical-align-center slds-m-bottom_xx-small" >
@@ -33,7 +36,9 @@
             </template>
         </div>
         <div>
-            <lightning-button label={labels.Success} onclick={handleUpdateTypesSave}></lightning-button>
+            <lightning-button variant="brand"
+                              label={labels.Save}
+                              onclick={handleUpdateTypesSave} ></lightning-button>
         </div>
     </div>
 </template>

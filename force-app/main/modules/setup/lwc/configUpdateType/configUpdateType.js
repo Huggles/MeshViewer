@@ -9,9 +9,9 @@ import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 //Labels
 import Error from '@salesforce/label/c.Error';
-import Success from '@salesforce/label/c.Success';
+import Save from '@salesforce/label/c.Save';
 import Update_types from '@salesforce/label/c.Update_types';
-
+import Update_types_explanation from '@salesforce/label/c.Update_types_explanation';
 
 //Apex Classes
 import getUpdateTypes from '@salesforce/apex/CompanyInfoUpdateTypeController.getUpdateTypes';
@@ -25,8 +25,9 @@ export default class ConfigUpdateType extends LightningElement {
 
     labels = {
         Error,
-        Success,
-        Update_types
+        Save,
+        Update_types,
+        Update_types_explanation
     }
 
     connectedCallback() {

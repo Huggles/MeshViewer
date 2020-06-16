@@ -47,10 +47,19 @@
     </labels>
     <labels>
         <fullName>Cancel</fullName>
+        <categories>Button</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Cancel</shortDescription>
         <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
         <fullName>City</fullName>
@@ -965,7 +974,7 @@
     </labels>
     <labels>
         <fullName>Assign</fullName>
-        <categories>Setup</categories>
+        <categories>Button, Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Button text on Assign button</shortDescription>
@@ -981,7 +990,7 @@
     </labels>
     <labels>
         <fullName>Assign_Licenses</fullName>
-        <categories>Setup</categories>
+        <categories>Button, Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Button text on Assign Licenses button on License Management Card</shortDescription>
@@ -1496,6 +1505,14 @@
         <protected>true</protected>
         <shortDescription>Update_types</shortDescription>
         <value>Update Types</value>
+    </labels>
+    <labels>
+        <fullName>Update_types_explanation</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Text above the update type in setup</shortDescription>
+        <value>These settings define which types of data automatically updates through nightly batches.</value>
     </labels>
     <labels>
         <fullName>VAT_Not_Found</fullName>
