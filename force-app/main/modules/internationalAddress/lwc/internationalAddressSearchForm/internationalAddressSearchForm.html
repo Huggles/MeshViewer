@@ -24,14 +24,14 @@
                         spinner-active="true"
                         onchange={handleSelectedCountryChange}>
     </lightning-combobox>
-    <lightning-layout multiple-rows="true" if:false={isNlSelected}>
-        <template if:true={organizationRequired}>
-            <lightning-layout-item size="12">
+    <template if:true={organizationRequired}>
+        <lightning-layout-item size="12">
             <lightning-input name="organization" required={organizationRequired} label={label.Organization}
                              class="slds-m-around_xxx-small" value={organization} title="Organization" field-level-help={label.International_Address_Organization_Help_Text}
                              onchange={handleOnChange} ></lightning-input>
-            </lightning-layout-item>
-        </template>
+        </lightning-layout-item>
+    </template>
+    <lightning-layout multiple-rows="true" if:false={isNlSelected}>
         <lightning-layout-item size="12">
             <lightning-input name="building" label={label.Building} title="Building"
                              class="slds-m-around_xxx-small" value={building} onchange={handleOnChange}></lightning-input>
@@ -63,10 +63,6 @@
     </lightning-layout>
 
     <lightning-layout multiple-rows="true" if:true={isNlSelected}>
-        <lightning-layout-item size="12">
-            <lightning-input name="organization" required={organizationRequired} label={label.Organization}
-                             class="slds-m-around_xxx-small" value={organization} title="Organization" onchange={handleOnChange} ></lightning-input>
-        </lightning-layout-item>
         <lightning-layout-item size="6">
             <lightning-input name="street" label={label.Street} title="Street"
                              class="slds-m-around_xxx-small" value={street} onchange={handleOnChange}></lightning-input>
@@ -80,15 +76,15 @@
                              class="slds-m-around_xxx-small" value={housenrAddition} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="6">
-            <lightning-input name="postcode" label={label.Postcode} title="Postcode"
+            <lightning-input name="postcode" label={label.Postcode} title="Postcode" pattern="\d{4}" message-when-pattern-mismatch={label.Postal_code_pattern_mismatch_message}
                              class="slds-m-around_xxx-small" value={postcode} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="3">
-            <lightning-input name="lettercombination" label={label.Letter_Combination} title="Letter Combination"
+            <lightning-input name="lettercombination" label={label.Letter_Combination} title="Letter Combination" pattern="^[a-zA-Z]{2}$" message-when-pattern-mismatch={label.Letter_Combination_pattern_mismatch_message}
                              class="slds-m-around_xxx-small" value={lettercombination} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="3">
-            <lightning-input name="addresstype" label={label.Address_Type} title="Address Type"
+            <lightning-input name="addresstype" label={label.Address_Type} title="Address Type" field-level-help={label.Address_Type_Help_Text}
                              class="slds-m-around_xxx-small" value={addresstype} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="4">

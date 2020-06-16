@@ -9,6 +9,14 @@
         <value>Active</value>
     </labels>
     <labels>
+        <fullName>Active_user</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of active column in user data table</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
         <fullName>Addition</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
@@ -24,12 +32,52 @@
         <value>Address Type</value>
     </labels>
     <labels>
+        <fullName>Address_Type_Help_Text</fullName>
+        <categories>Dutch Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Address Type Help Text</shortDescription>
+        <value>’0’ - range of odd house numbers and  ’1’ - range of even house numbers</value>
+    </labels>
+    <labels>
+        <fullName>Alias</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of alias column in user data table</shortDescription>
+        <value>Alias</value>
+    </labels>
+    <labels>
         <fullName>An_Error_occured</fullName>
         <categories>Error</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>An Error occured</shortDescription>
         <value>An error occured!</value>
+    </labels>
+    <labels>
+        <fullName>Assign</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Assign button</shortDescription>
+        <value>Assign</value>
+    </labels>
+    <labels>
+        <fullName>Assign_Licenses</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Assign Licenses button on License Management Card</shortDescription>
+        <value>Assign Licenses</value>
+    </labels>
+    <labels>
+        <fullName>Assign_users_success_message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success message shown after assigning seats to users</shortDescription>
+        <value>Users successfully assigned</value>
     </labels>
     <labels>
         <fullName>Back_To_Search</fullName>
@@ -215,13 +263,6 @@
         <value>Current Threshold</value>
     </labels>
     <labels>
-        <fullName>Loading</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Alternative text for spinner</shortDescription>
-        <value>Loading...</value>
-    </labels>
-    <labels>
         <fullName>Config_Page_Title</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -293,6 +334,13 @@
         <value>Italy</value>
     </labels>
     <labels>
+        <fullName>Country_Luxembourg</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Luxembourg</shortDescription>
+        <value>Luxembourg</value>
+    </labels>
+    <labels>
         <fullName>Country_Netherlands</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -328,13 +376,6 @@
         <value>United Kingdom</value>
     </labels>
     <labels>
-        <fullName>Country_Luxembourg</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Country Luxembourg</shortDescription>
-        <value>Luxembourg</value>
-    </labels>
-    <labels>
         <fullName>Country_to_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -348,62 +389,6 @@
         <protected>true</protected>
         <shortDescription>Credentials successfully updated message</shortDescription>
         <value>Credentials saved!</value>
-    </labels>
-    <labels>
-        <fullName>License_assignment_succesfully_removed</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Message shown when a license assignment has been removed</shortDescription>
-        <value>License assignment removed!</value>
-    </labels>
-    <labels>
-        <fullName>Full_Name</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of full name column in user data table</shortDescription>
-        <value>Full Name</value>
-    </labels>
-    <labels>
-        <fullName>Alias</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of alias column in user data table</shortDescription>
-        <value>Alias</value>
-    </labels>
-    <labels>
-        <fullName>Username</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of username column in user data table</shortDescription>
-        <value>Username</value>
-    </labels>
-    <labels>
-        <fullName>Profile</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of profile column in user data table</shortDescription>
-        <value>Profile</value>
-    </labels>
-    <labels>
-        <fullName>Role</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of role column in user data table</shortDescription>
-        <value>Role</value>
-    </labels>
-    <labels>
-        <fullName>Active_user</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of active column in user data table</shortDescription>
-        <value>Active</value>
     </labels>
     <labels>
         <fullName>CreditSafe_Validation_Message_Heading</fullName>
@@ -828,6 +813,14 @@
         <value>Please enter at least two characters.</value>
     </labels>
     <labels>
+        <fullName>Full_Name</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of full name column in user data table</shortDescription>
+        <value>Full Name</value>
+    </labels>
+    <labels>
         <fullName>Get_Creditsafe_Report</fullName>
         <categories>Creditsafe</categories>
         <language>en_US</language>
@@ -872,6 +865,14 @@
         <value>Insurance Contract - Intention of signature of a insurance contract</value>
     </labels>
     <labels>
+        <fullName>International_Address_Organization_Help_Text</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
+        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
+    </labels>
+    <labels>
         <fullName>Language_Input_Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -884,6 +885,28 @@
         <protected>true</protected>
         <shortDescription>Letter Combination</shortDescription>
         <value>Letter Combination</value>
+    </labels>
+    <labels>
+        <fullName>Letter_Combination_pattern_mismatch_message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Letter Combination pattern mismatch message</shortDescription>
+        <value>Please enter only 2 alphabets.</value>
+    </labels>
+    <labels>
+        <fullName>License_assignment_succesfully_removed</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message shown when a license assignment has been removed</shortDescription>
+        <value>License assignment removed!</value>
+    </labels>
+    <labels>
+        <fullName>Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Alternative text for spinner</shortDescription>
+        <value>Loading...</value>
     </labels>
     <labels>
         <fullName>Locality</fullName>
@@ -991,52 +1014,12 @@
         <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
     </labels>
     <labels>
-        <fullName>No_users_available_to_assign_licenses_to</fullName>
-        <categories>Setup</categories>
+        <fullName>No_address_fields_filled_international_address</fullName>
+        <categories>InternationalAddress</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>No users available to assign licenses to</shortDescription>
-        <value>No_users_available_to_assign_licenses_to</value>
-    </labels>
-    <labels>
-        <fullName>Assign</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Assign button</shortDescription>
-        <value>Assign</value>
-    </labels>
-    <labels>
-        <fullName>Assign_users_success_message</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Success message shown after assigning seats to users</shortDescription>
-        <value>Users successfully assigned</value>
-    </labels>
-    <labels>
-        <fullName>Assign_Licenses</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Assign Licenses button on License Management Card</shortDescription>
-        <value>Assign Licenses</value>
-    </labels>
-    <labels>
-        <fullName>Remove_Assignments_Button</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Remove assignments button on License Management Card</shortDescription>
-        <value>Remove Assignments</value>
-    </labels>
-    <labels>
-        <fullName>Nr_of_licenses_assigned</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Message showing nr of licenses have been assigned</shortDescription>
-        <value>{0} Licenses out of {1} assigned</value>
+        <shortDescription>No address fields filled international address</shortDescription>
+        <value>Please fill some address fields (street, postal code, PO box or locality) before searching.</value>
     </labels>
     <labels>
         <fullName>No_users_assigned</fullName>
@@ -1047,12 +1030,12 @@
         <value>No users assigned</value>
     </labels>
     <labels>
-        <fullName>No_address_fields_filled_international_address</fullName>
-        <categories>InternationalAddress</categories>
+        <fullName>No_users_available_to_assign_licenses_to</fullName>
+        <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>No address fields filled international address</shortDescription>
-        <value>Please fill some address fields (street, postal code, PO box or locality) before searching.</value>
+        <shortDescription>No users available to assign licenses to</shortDescription>
+        <value>No_users_available_to_assign_licenses_to</value>
     </labels>
     <labels>
         <fullName>NonActive</fullName>
@@ -1068,6 +1051,14 @@
         <protected>true</protected>
         <shortDescription>Non Limited</shortDescription>
         <value>Non Limited</value>
+    </labels>
+    <labels>
+        <fullName>Nr_of_licenses_assigned</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message showing nr of licenses have been assigned</shortDescription>
+        <value>{0} Licenses out of {1} assigned</value>
     </labels>
     <labels>
         <fullName>Organization</fullName>
@@ -1100,11 +1091,26 @@
         <value>Postal Code</value>
     </labels>
     <labels>
+        <fullName>Postal_code_pattern_mismatch_message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Postal code pattern mismatch message</shortDescription>
+        <value>Please only enter the digits without the letter combination.</value>
+    </labels>
+    <labels>
         <fullName>Previous</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Previous</shortDescription>
         <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>Profile</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of profile column in user data table</shortDescription>
+        <value>Profile</value>
     </labels>
     <labels>
         <fullName>Province</fullName>
@@ -1143,6 +1149,22 @@
         <protected>true</protected>
         <shortDescription>Registration Type</shortDescription>
         <value>Registration Type</value>
+    </labels>
+    <labels>
+        <fullName>Remove_Assignments_Button</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Remove assignments button on License Management Card</shortDescription>
+        <value>Remove Assignments</value>
+    </labels>
+    <labels>
+        <fullName>Role</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of role column in user data table</shortDescription>
+        <value>Role</value>
     </labels>
     <labels>
         <fullName>Search_Address</fullName>
@@ -1517,6 +1539,14 @@
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>Username</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of username column in user data table</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
         <fullName>VAT_Not_Found</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1633,14 +1663,6 @@
         <value>Please enter a valid Irish CreditSafe Identification Number</value>
     </labels>
     <labels>
-        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
-        <categories>Error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
-        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
-    </labels>
-    <labels>
         <fullName>Valid_Irish_VAT_Number</fullName>
         <categories>Error</categories>
         <language>en_US</language>
@@ -1654,6 +1676,14 @@
         <protected>true</protected>
         <shortDescription>Valid Italian VAT Number</shortDescription>
         <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
+        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
     </labels>
     <labels>
         <fullName>Valid_NL_registration_number</fullName>
@@ -1826,13 +1856,5 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
-    </labels>
-    <labels>
-        <fullName>International_Address_Organization_Help_Text</fullName>
-        <categories>InternationalAddress</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
-        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
     </labels>
 </CustomLabels>

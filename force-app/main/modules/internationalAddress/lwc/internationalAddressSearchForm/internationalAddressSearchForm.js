@@ -27,6 +27,9 @@ import Letter_Combination from '@salesforce/label/c.Letter_Combination';
 import Address_Type from '@salesforce/label/c.Address_Type';
 import Municipality from '@salesforce/label/c.Municipality';
 import International_Address_Organization_Help_Text from '@salesforce/label/c.International_Address_Organization_Help_Text';
+import Address_Type_Help_Text from '@salesforce/label/c.Address_Type_Help_Text';
+import Postal_code_pattern_mismatch_message from '@salesforce/label/c.Postal_code_pattern_mismatch_message';
+import Letter_Combination_pattern_mismatch_message from '@salesforce/label/c.Letter_Combination_pattern_mismatch_message';
 
 export default class InternationalAddressSearchForm extends LightningElement {
 
@@ -72,7 +75,10 @@ export default class InternationalAddressSearchForm extends LightningElement {
         Letter_Combination,
         Address_Type,
         Municipality,
-        International_Address_Organization_Help_Text
+        International_Address_Organization_Help_Text,
+        Address_Type_Help_Text,
+        Postal_code_pattern_mismatch_message,
+        Letter_Combination_pattern_mismatch_message
     }
 
     /**
