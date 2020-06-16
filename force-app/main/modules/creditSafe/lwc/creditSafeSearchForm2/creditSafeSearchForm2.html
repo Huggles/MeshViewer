@@ -93,6 +93,13 @@
         <lightning-combobox name="registrationType" class="slds-m-around_xxx-small" label={label.Registration_Type} options={registrationTypes} value={registrationType} placeholder={label.Select_a_Registration_Type} dropdown-alignment="left" variant="standard" onchange={handleRegistrationTypeOnChange}></lightning-combobox>
         <lightning-input name="vatNumber" label={label.Search_VAT_Number} class="slds-m-around_xxx-small" pattern="(ES)?[A-Z][0-9]{7}(?:[0-9]|[A-Z])" message-when-pattern-mismatch={label.Valid_Spanish_VAT_Number} value={vatNumber} onchange={handleOnChange}></lightning-input>
     </template>
+    <!-- Luxembourg specific -->
+    <template if:true={isLUSelected}>
+        <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>
+        <lightning-input name="creditSafeId" class="slds-m-around_xxx-small" label={label.Creditsafe_company_identifier} type="text" variant="standard"  pattern="^(LU)-(0|1)-.+$" message-when-pattern-mismatch={label.Valid_Luxembourgian_CreditSafe_Identification_Nr} value={creditSafeId} onchange={handleCreditSafeIdOnChange}></lightning-input>
+        <lightning-input name="registrationNumber" class="slds-m-around_xxx-small" label={label.Registration_Number} type="text" variant="standard" minlength=2 message-when-too-short={label.Minimum_registration_number_characters} value={registrationNumber} onchange={handleRegistrationNumberOnChange}></lightning-input>
+    </template>
+
     <!-- Address -->
     <lightning-layout>
         <lightning-layout-item size="8">

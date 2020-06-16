@@ -330,6 +330,13 @@
         <value>United Kingdom</value>
     </labels>
     <labels>
+        <fullName>Country_Luxembourg</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Luxembourg</shortDescription>
+        <value>Luxembourg</value>
+    </labels>
+    <labels>
         <fullName>Country_to_Search</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1631,6 +1638,14 @@
         <value>Please enter a valid Irish CreditSafe Identification Number</value>
     </labels>
     <labels>
+        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
+        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
+    </labels>
+    <labels>
         <fullName>Valid_Irish_VAT_Number</fullName>
         <categories>Error</categories>
         <language>en_US</language>
@@ -1824,5 +1839,13 @@
         <protected>true</protected>
         <shortDescription>Error_updating_update_type_settings</shortDescription>
         <value>There was an error updating the update type settings</value>
+    </labels>
+    <labels>
+        <fullName>International_Address_Organization_Help_Text</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
+        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
     </labels>
 </CustomLabels>

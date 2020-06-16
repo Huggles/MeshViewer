@@ -20,6 +20,7 @@ import Country_Denmark from '@salesforce/label/c.Country_Denmark';
 import Country_Italy from '@salesforce/label/c.Country_Italy';
 import Country_Norway from '@salesforce/label/c.Country_Norway';
 import Country_Spain from '@salesforce/label/c.Country_Spain';
+import Country_Luxembourg from '@salesforce/label/c.Country_Luxembourg';
 
 export default class BusinessSearchForm extends LightningElement {
 
@@ -31,6 +32,7 @@ export default class BusinessSearchForm extends LightningElement {
         Country_Netherlands,
         Country_United_Kingdom,
         Country_Sweden,
+        Country_Luxembourg,
         Country,
         Select_a_Country
     }
@@ -43,6 +45,7 @@ export default class BusinessSearchForm extends LightningElement {
             { label: Country_Germany, value: 'DE' },
             { label: Country_Ireland, value: 'IE' },
             { label: Country_Italy, value: 'IT' },
+            { label: Country_Luxembourg, value: 'LU' },
             { label: Country_Netherlands, value: 'NL'},
             { label: Country_Norway, value: 'NO' },
             { label: Country_Spain, value: 'ES' },
@@ -155,13 +158,18 @@ export default class BusinessSearchForm extends LightningElement {
         unregisterAllListeners(this);
     }
 
-    handleComponentRegistrationOpen(registrar) {
+    handleComponentRegistrationOpen(event) {
         // fire a registration event
-        fireEvent(this.pageRef, 'componentRegistration', {component: this});
+        if(event.pageRef == 'BusinessSearchForm'){
+            fireEvent(this.pageRef, 'componentRegistration', {component: this, pageRef: event.pageRef});
+        }
+
     }
 
-    handleValidationRequest() {
-        fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: this.allValid()});
+    handleValidationRequest(event) {
+        if(event.pageRef == 'BusinessSearchForm'){
+            fireEvent(this.pageRef, 'componentValidationDone', {component: this, isValid: this.allValid(), pageRef: event.pageRef});
+        }
     }
 
     handleSelectedCountryChange(event) {
