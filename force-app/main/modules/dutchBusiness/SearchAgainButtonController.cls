@@ -6,12 +6,23 @@ public with sharing class SearchAgainButtonController {
 
     @AuraEnabled
     public static void deleteDossier(Id dossierId) {
-        BusinessService.deleteDossier(dossierId, false);
+        try {
+            BusinessService.deleteDossier(dossierId, false);
+        } catch(Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw new AuraHandledException(ex.getMessage());
+        }
+
     }
 
     @AuraEnabled
     public static void deleteInternationalAddress(Id internationalAddressId) {
-        InternationalAddressService.deleteInternationalAddress(internationalAddressId, false);
+        try {
+            InternationalAddressService.deleteInternationalAddress(internationalAddressId, false);
+        } catch(Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw new AuraHandledException(ex.getMessage());
+        }
     }
 
 }

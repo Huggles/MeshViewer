@@ -140,8 +140,9 @@ export default class AssignLicenseTypeModal extends LightningElement {
                     const notYetAssignedsObjectUsers = this.sObjectUsers.filter(sObjectUser => !selectedIds.includes(sObjectUser.Id) );
                     if (notYetAssignedsObjectUsers && notYetAssignedsObjectUsers.length > 0) {
                         this.sObjectUsers = notYetAssignedsObjectUsers;
-                    } else { // if no sObjectUsers are there to be assigned, make this.sObjectUsers undefined so the data table is not shown
+                    } else { // if no sObjectUsers are there to be assigned, close the window
                         this.sObjectUsers = undefined;
+                        this.handleDialogClose();
                     }
                     this.selectedRows = [];
                 })

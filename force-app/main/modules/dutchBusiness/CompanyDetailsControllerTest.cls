@@ -26,8 +26,8 @@ public with sharing class CompanyDetailsControllerTest {
         Test.stopTest();
 
         // then
-        System.assert(o instanceof AuraResponseWrapper);
-        System.assert(((AuraResponseWrapper)o).response instanceof Business_Dossier__c);
+        System.assert(o instanceof Business_Dossier__c);
+        System.assert(((Business_Dossier__c)o).VAT_Number__c == dossierWithVAT.VAT_Number__c);
     }
 }
     

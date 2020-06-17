@@ -9,10 +9,16 @@ public with sharing class UpdateDutchDossierWithVATInvocable {
             description='Updates the given Dutch dossiers with the Dutch VAT number if the relationship between the Dutch Chamber of Commerce number and Dutch VAT number is known by Company.info'
             category='Company.info')
     public static List<Business_Dossier__c> updateDutchDossiersWithVAT(List<Business_Dossier__c> dossiers) {
-        for (Integer i = 0; i < dossiers.size() ; i++) {
-            dossiers[i] = DutchBusinessService.updateBusinessDossierWithVATNumber(dossiers[i]);
+        try {
+            for (Integer i = 0; i < dossiers.size() ; i++) {
+                dossiers[i] = DutchBusinessService.updateBusinessDossierWithVATNumber(dossiers[i]);
+            }
+            return dossiers;
+        } catch(Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw ex;
         }
-        return dossiers;
+
     }
 
 }
