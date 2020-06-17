@@ -14,34 +14,13 @@
                     <div class="slds-size_1-of-1 slds-m-vertical_small">
                         {labels.Update_types_explanation}
                     </div>
-                    <div class="slds-grid  slds-size_1-of-1 slds-wrap">
-                        <template for:each={columns} for:item="column">
-                            <div key={columnKeyIterator} class={sldsColumnSize}>
-                                <template for:each={column} for:item="updateType">
-                                    <div key={updateType.MasterLabel} class="slds-box slds-m-around_small" style="height: 100px;">
-                                        <div class="slds-grid">
-                                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                                                <div class="slds-media__body">
-                                                    <h2 class="slds-card__header-title">
-                                                        <span><b> {updateType.MasterLabel}</b> </span>
-                                                    </h2>
-                                                </div>
-                                                <div class="slds-no-flex">
-                                                    <lightning-input data-classification="update_type_toggle"
-                                                                     data-developer-name={updateType.DeveloperName}
-                                                                     data-masterlabel={updateType.MasterLabel}
-                                                                     message-toggle-active="" message-toggle-inactive=""
-                                                                     class="slds-float_right" type="toggle"
-                                                                     checked={updateType.appsolutely__Enabled__c}></lightning-input>
-                                                </div>
-                                            </header>
-                                        </div>
-                                        <div class="slds-card__body">{updateType.appsolutely__Description__c}</div>
-                                    </div>
-                                </template>
-                            </div>
-                        </template>
-                    </div>
+
+                    <c-vertical-grid items={updateTypes} number-of-columns="4" identifier="abc">
+                        <c-update-type-with-link-tile onclick={onCardClicked} data-identifier="abc"></c-update-type-with-link-tile>
+                    </c-vertical-grid>
+
+
+
                     <div>
                         <lightning-button variant="brand"
                                           label={labels.Save}
