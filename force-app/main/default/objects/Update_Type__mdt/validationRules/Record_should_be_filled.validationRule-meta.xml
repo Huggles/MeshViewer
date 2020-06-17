@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Record_should_be_filled</fullName>
+    <active>true</active>
+    <description>Either value should not be null, or Enabled has to be true.</description>
+    <errorConditionFormula>ISBLANK( Value__c ) ||  Enabled__c = false</errorConditionFormula>
+    <errorMessage>Either Value has to be filled or Enabled should be set to True.</errorMessage>
+</ValidationRule>
