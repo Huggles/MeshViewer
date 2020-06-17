@@ -4,7 +4,7 @@
 
 import apexCheckAccess from '@salesforce/apex/FeatureAccessControlController.checkAccess';
 
-const checkAccess = async(feature) => {
+const checkAccess = async (feature) => {
     await apexCheckAccess({featureName: feature})
         .then(result => {return result})
         .catch(error => {throw error});

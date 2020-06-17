@@ -69,7 +69,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
      */
     businessDossier;
 
-    @wire(getRecord, { recordId: '$businessDossierId', fields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY, BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT] })
+    @wire(getRecord, { recordId: '$businessDossierId', fields: [], optionalFields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY, BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT] })
     businessDossierRecord({error, data}) {
         if (error) {
             let message = 'Unknown error';
@@ -87,10 +87,20 @@ export default class AccountEnrichmentHeader extends LightningElement {
             );
         } else if (data) {
             this.businessDossier = data;
-            this.country = this.businessDossier.fields.appsolutely__Registration_Country__c.value;
-            this.noVAT = this.businessDossier.fields.appsolutely__No_VAT_Number__c.value;
-            this.VATNumber = this.businessDossier.fields.appsolutely__VAT_Number__c.value;
-            this.creditSafeReport = this.businessDossier.fields.appsolutely__Creditsafe_Company_Report__c.value;
+            if (this.businessDossier.fields) {
+                if (this.businessDossier.fields.appsolutely__Registration_Country__c) {
+                    this.country = this.businessDossier.fields.appsolutely__Registration_Country__c.value;
+                }
+                if (this.businessDossier.fields.appsolutely__VAT_Number__c) {
+                    this.VATNumber = this.businessDossier.fields.appsolutely__VAT_Number__c.value;
+                }
+                if (this.businessDossier.fields.appsolutely__No_VAT_Number__c) {
+                    this.noVAT = this.businessDossier.fields.appsolutely__No_VAT_Number__c.value;
+                }
+                if (this.businessDossier.fields.appsolutely__Creditsafe_Company_Report__c) {
+                    this.creditSafeReport = this.businessDossier.fields.appsolutely__Creditsafe_Company_Report__c.value;
+                }
+            }
         }
     };
 
@@ -110,34 +120,25 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
     get showVATButton() {
         return (!this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
-        // if(this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
-        //     //If there is no VAT Number and the No_VAT_Number__c(known) is false and only for NL companies
-        //     if(this.businessDossierRecord.data.fields.appsolutely__Registration_Country__c.value == 'NL' &&
-        //         !this.businessDossierRecord.data.fields.appsolutely__VAT_Number__c.value &&
-        //         !this.businessDossierRecord.data.fields.appsolutely__No_VAT_Number__c.value ){
-        //         return true;
-        //     }
-        //     else {
-        //         return false;
-        //     }
-        // }
     }
 
-    get showGetCreditsafeReportButton() {
-        return (checkAccess(Features.CREDITSAFE_GET_REPORT) && (this.creditSafeReport == undefined || this.creditSafeReport == null));
-        // if (checkAccess(Features.CREDITSAFE_GET_REPORT)) {
-        //     if (this.businessDossierRecord != null && this.businessDossierRecord.data != undefined) {
-        //         //if there is already a relation, then do not show the button
-        //         if (this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != null &&
-        //             this.businessDossierRecord.data.fields.appsolutely__Creditsafe_Company_Report__c.value != undefined) {
-        //             return false;
-        //         }
-        //         else {
-        //             return true;
-        //         }
-        //     }
-        // }
-    }
+    showGetCreditsafeReportButton = checkAccess(Features.CREDITSAFE_GET_REPORT)
+        .then(result => {
+            return (result && (this.creditSafeReport == undefined || this.creditSafeReport == null))
+        })
+        .catch(error => {
+            throw error;
+        });
+
+    // get showGetCreditsafeReportButton() {
+    //     checkAccess(Features.CREDITSAFE_GET_REPORT)
+    //         .then(result => {
+    //             return (result && (this.creditSafeReport == undefined || this.creditSafeReport == null))
+    //         })
+    //         .catch(error => {
+    //             throw error;
+    //         });
+    // }
 
     handleOnClickVAT(event) {
         updateDossierWithVAT({
