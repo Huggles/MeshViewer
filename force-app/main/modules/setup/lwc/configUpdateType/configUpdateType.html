@@ -15,11 +15,9 @@
                         {labels.Update_types_explanation}
                     </div>
 
-                    <c-vertical-grid items={updateTypes} number-of-columns="4" identifier="abc">
-                        <c-update-type-with-link-tile onclick={onCardClicked} data-identifier="abc"></c-update-type-with-link-tile>
+                    <c-vertical-grid items={updateTypes} number-of-columns="4" identifier="updateType">
+                        <c-update-type-tile data-identifier="updateType"></c-update-type-tile>
                     </c-vertical-grid>
-
-
 
                     <div>
                         <lightning-button variant="brand"
