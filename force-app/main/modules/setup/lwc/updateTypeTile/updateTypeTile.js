@@ -5,8 +5,5 @@
 import {LightningElement, api} from 'lwc';
 
 export default class UpdateTypeTile extends LightningElement {
-
     @api item;
-
-
 }

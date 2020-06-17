@@ -20,6 +20,7 @@ export default class VerticalGrid extends LightningElement {
             this.m_numberOfColumns = value;
         }
     }
+
     m_items;
     @api
     get items(){
@@ -35,11 +36,14 @@ export default class VerticalGrid extends LightningElement {
 
     m_tileElements;
     renderedCallback() {
+        this.handleChildData();
+    }
+    handleChildData(){
         let selector = '[data-identifier=\"'+this.identifier+'\"]';
         let tiles = this.querySelectorAll(selector);
         if(tiles != null){
-            tiles.forEach((tile, index) => {
-                tile.item = this.m_items[index];
+            tiles.forEach((tile, tileIndex) => {
+                tile.item = this.m_items[tileIndex];
             });
         }
     }
