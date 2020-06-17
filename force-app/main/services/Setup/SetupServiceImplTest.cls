@@ -13,7 +13,7 @@ public with sharing class SetupServiceImplTest {
     @IsTest
     public static void getUpdateSettingsTest(){
         Test.startTest();
-        List<Update_Type__mdt> updateTypes = SetupService.getUpdateTypes();
+        List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
         Test.stopTest();
 
         System.assertNotEquals(null,updateTypes);

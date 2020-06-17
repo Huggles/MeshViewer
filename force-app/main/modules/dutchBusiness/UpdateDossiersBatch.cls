@@ -8,8 +8,8 @@ public without sharing class UpdateDossiersBatch implements Database.Batchable<B
     private static final List<String> UPDATE_TYPES{
         get {
             List<String> updateTypes = new List<String>();
-            List<Update_Type__mdt> updateTypesMD = SetupService.getUpdateTypes();
-            for(Update_Type__mdt utmd : updateTypesMD){
+            List<Protected_Subscriber_Setting__mdt> updateTypesMD = SetupService.getUpdateTypes();
+            for(Protected_Subscriber_Setting__mdt utmd : updateTypesMD){
                 updateTypes.add(utmd.Company_Info_Key__c);
             }
             return updateTypes;

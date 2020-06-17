@@ -5,7 +5,7 @@ Description     : Service layer for Setup
 ******************************************************************************************/
 public inherited sharing class SetupService {
 
-    public static List<Update_Type__mdt> getUpdateTypes() {
+    public static List<Protected_Subscriber_Setting__mdt> getUpdateTypes() {
         return newInstance().getUpdateTypes();
     }
     public static Id setUpdateTypes(List<Map<string, object>> payload) {

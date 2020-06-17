@@ -8,6 +8,6 @@ public interface ISetupService {
     /**
      * Gets all update types from custom metadata.
      */
-    List<Update_Type__mdt> getUpdateTypes();
+    List<Protected_Subscriber_Setting__mdt> getUpdateTypes();
     Id setUpdateTypes(List<Map<string, object>> payload);
 }

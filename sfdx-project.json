@@ -12,7 +12,7 @@
         }
     ],
     "namespace": "appsolutely",
-    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sfdcLoginUrl": "https://test.salesforce.com",
     "sourceApiVersion": "48.0",
     "packageAliases": {
         "Company.info for Salesforce": "0Ho0J0000004CABSA2",

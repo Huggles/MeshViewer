@@ -3,6 +3,6 @@
     <fullName>Record_should_be_filled</fullName>
     <active>true</active>
     <description>Either value should not be null, or Enabled has to be true.</description>
-    <errorConditionFormula>ISBLANK( Value__c ) ||  Enabled__c = false</errorConditionFormula>
+    <errorConditionFormula>ISBLANK( Value__c ) &amp;&amp;  Enabled__c = false</errorConditionFormula>
     <errorMessage>Either Value has to be filled or Enabled should be set to True.</errorMessage>
 </ValidationRule>

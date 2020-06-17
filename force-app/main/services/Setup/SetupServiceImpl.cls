@@ -4,18 +4,18 @@
 
 public with sharing class SetupServiceImpl implements ISetupService {
 
-    public List<Update_Type__mdt> getUpdateTypes(){
-        List<Update_Type__mdt> updateTypes = [
+    public List<Protected_Subscriber_Setting__mdt> getUpdateTypes(){
+        List<Protected_Subscriber_Setting__mdt> updateTypes = [
                 SELECT id, DeveloperName, MasterLabel, Label, Company_Info_Key__c, Enabled__c, Description__c
-                FROM Update_Type__mdt
+                FROM Protected_Subscriber_Setting__mdt
                 WITH SECURITY_ENFORCED
                 ORDER BY MasterLabel
         ];
         return updateTypes;
     }
     public Id setUpdateTypes(List<Map<string, object>> payload) {
-        string updateTypeAPIName = String.valueOf(appsolutely__Update_Type__mdt.getSObjectType());
-        List<Update_Type__mdt> updateTypes = SetupService.getUpdateTypes();
+        string updateTypeAPIName = String.valueOf(appsolutely__Protected_Subscriber_Setting__mdt.getSObjectType());
+        List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
         CustomMetadataCallback callback = new CustomMetadataCallback();
 
         Metadata.DeployContainer mdContainer = new Metadata.DeployContainer();
@@ -30,7 +30,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
             }
             //if the the new value is not different from the current value, dont add it to update.
             boolean requiresUpdate = false;
-            for(Update_Type__mdt updateType : updateTypes){
+            for(Protected_Subscriber_Setting__mdt updateType : updateTypes){
                 if(updateType.DeveloperName == developerName && updateType.Enabled__c != checked){
                     requiresUpdate = true;
                 }
@@ -42,7 +42,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
                 customMetadata.label = masterLabel;
 
                 Metadata.CustomMetadataValue customField = new Metadata.CustomMetadataValue();
-                customField.field = String.valueOf(Update_Type__mdt.Enabled__c);
+                customField.field = String.valueOf(Protected_Subscriber_Setting__mdt.Enabled__c);
                 customField.value = checked;
                 customMetadata.values.add(customField);
 

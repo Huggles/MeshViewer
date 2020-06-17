@@ -5,7 +5,7 @@
 public with sharing class CompanyInfoUpdateTypeController {
 
     @AuraEnabled
-    public static List<Update_Type__mdt> getUpdateTypes() {
+    public static List<Protected_Subscriber_Setting__mdt> getUpdateTypes() {
         return SetupService.getUpdateTypes();
     }
 
