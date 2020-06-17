@@ -8,6 +8,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
         List<Protected_Subscriber_Setting__mdt> updateTypes = [
                 SELECT id, DeveloperName, MasterLabel, Label, Company_Info_Key__c, Enabled__c, Description__c
                 FROM Protected_Subscriber_Setting__mdt
+                WHERE DeveloperName LIKE '%Update_Type_%'
                 WITH SECURITY_ENFORCED
                 ORDER BY MasterLabel
         ];
