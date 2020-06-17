@@ -78,13 +78,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
             } else if (typeof error.body.message === 'string') {
                 message = error.body.message;
             }
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error loading contact',
-                    message,
-                    variant: 'error',
-                }),
-            );
+            this.showToast(this.label.Error, error, 'error');
         } else if (data) {
             this.businessDossier = data;
             if (this.businessDossier.fields) {
@@ -118,27 +112,20 @@ export default class AccountEnrichmentHeader extends LightningElement {
         companyInfoLogoSmall,
     }
 
-    get showVATButton() {
-        return (!this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
-    }
+    showVATButton = checkAccess(Features.DUTCH_VAT)
+        .then(result => {
+            return (result && !this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
+        }).catch(error => {
+            this.showToast(this.label.Error, error, 'error');
+        });
 
     showGetCreditsafeReportButton = checkAccess(Features.CREDITSAFE_GET_REPORT)
         .then(result => {
             return (result && (this.creditSafeReport == undefined || this.creditSafeReport == null))
         })
         .catch(error => {
-            throw error;
+            this.showToast(this.label.Error, error, 'error');
         });
-
-    // get showGetCreditsafeReportButton() {
-    //     checkAccess(Features.CREDITSAFE_GET_REPORT)
-    //         .then(result => {
-    //             return (result && (this.creditSafeReport == undefined || this.creditSafeReport == null))
-    //         })
-    //         .catch(error => {
-    //             throw error;
-    //         });
-    // }
 
     handleOnClickVAT(event) {
         updateDossierWithVAT({
