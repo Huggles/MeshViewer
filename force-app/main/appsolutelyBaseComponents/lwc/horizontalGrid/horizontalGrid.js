@@ -14,6 +14,7 @@ export default class HorizontalGrid extends LightningElement {
     }
     set numberOfColumns(value){
         if((typeof value) == "string"){
+            //This property passed as an DOM attribute is a string.
             this.m_numberOfColumns = parseInt(value);
         }
         if((typeof value) == "number"){
@@ -30,10 +31,16 @@ export default class HorizontalGrid extends LightningElement {
         this.m_items = value;
     }
 
+    m_tileStyle;
+    @api
+    get tileStyle(){
+        return this.m_tileStyle;
+    }
+    set tileStyle( value ){
+        this.m_tileStyle = value;
+    }
+
     @api identifier;
-    @api equalizeTileHeight = "false";
-
-
 
     m_tileElements;
     renderedCallback() {
@@ -73,16 +80,10 @@ export default class HorizontalGrid extends LightningElement {
         this.rowKeyIterator += 1;
         return this.rowKeyIterator;
     }
-    get gridContainerCss(){
-        if(this.equalizeTileHeight == "true"){
-            return 'equalHMVWrap eqWrap';
-        }
-        else{
-            return '';
-        }
-    }
     get tileContainerCss(){
-        return this.sldsTileWidth;
+        let cssString = "";
+        cssString += this.sldsTileWidth;
+        return cssString;
     }
     get sldsTileWidth(){
         return 'slds-size_1-of-'+this.m_numberOfColumns;

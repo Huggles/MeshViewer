@@ -7,7 +7,7 @@
     <div class="slds-grid  slds-size_1-of-1 slds-wrap">
         <div class="equalHMVWrap eqWrap">
             <template for:each={items} for:item="item">
-                <div class={tileContainerCss} key={rowKeyIterator}>
+                <div class={tileContainerCss} key={rowKeyIterator} style={tileStyle}>
                     <slot ></slot>
                 </div>
             </template>

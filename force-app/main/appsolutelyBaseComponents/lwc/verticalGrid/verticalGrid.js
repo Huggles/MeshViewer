@@ -14,6 +14,7 @@ export default class VerticalGrid extends LightningElement {
     }
     set numberOfColumns(value){
         if((typeof value) == "string"){
+            //This property passed as an DOM attribute is a string.
             this.m_numberOfColumns = parseInt(value);
         }
         if((typeof value) == "number"){
