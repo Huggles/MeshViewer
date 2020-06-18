@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Contains methods to check the access to certain features from within a LWC</description>
+    <isExposed>false</isExposed>
+    <masterLabel>Feature Access Control</masterLabel>
+</LightningComponentBundle>

@@ -1390,4 +1390,12 @@
         <shortDescription>International_Address_Organization_Help_Text</shortDescription>
         <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
     </labels>
+    <labels>
+        <fullName>Feature_Not_Found</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Feature_Not_Found</shortDescription>
+        <value>Feature not found</value>
+    </labels>
 </CustomLabels>
