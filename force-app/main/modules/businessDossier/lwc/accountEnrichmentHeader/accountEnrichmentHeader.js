@@ -25,8 +25,6 @@ import Success from '@salesforce/label/c.Success';
 import Dossier_Account_Update_Completed from '@salesforce/label/c.Dossier_Account_Update_Completed';
 import VAT_Not_Found from '@salesforce/label/c.VAT_Not_Found';
 import Error from '@salesforce/label/c.Error';
-import Error_Unknown from '@salesforce/label/c.Error_Unknown';
-import Error_Incomplete from '@salesforce/label/c.Error_Incomplete';
 import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
 
 
@@ -56,8 +54,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
         Dossier_Account_Update_Completed,
         VAT_Not_Found,
         Error,
-        Error_Unknown,
-        Error_Incomplete,
         Get_Creditsafe_Report
     }
     staticResource = {
@@ -96,7 +92,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
             dossierId: this.businessDossierId
         })
             .then(data => {
-                if (data.response.appsolutely__VAT_Number__c !== undefined) {
+                if (data.appsolutely__VAT_Number__c !== undefined) {
                     this.showToast(this.label.Success, this.label.Dossier_Account_Update_Completed, 'success');
                     this.VATUpdated = true;
                     //we throw an event because we want to refresh the Account details view after VAT is updated
@@ -106,7 +102,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 }
             })
             .catch(error => {
-                this.showToast(this.label.Error, this.label.Error_Unknown, 'error');
+                this.showToast(this.label.Error, error, 'error');
             });
     }
 

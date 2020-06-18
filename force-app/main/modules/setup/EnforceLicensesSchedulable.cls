@@ -58,22 +58,24 @@ public without sharing class EnforceLicensesSchedulable implements Schedulable{
 
     @TestVisible
     private void doWork() {
-        LicenseType[] licenseTypes = LicenseType.values();
-        LicenseTypeInfo[] nonCompliantLicenseTypeInfos = new List<LicenseTypeInfo>();
-        for (LicenseType licenseType : licenseTypes) {
-            if (!licenseType.name().startsWith('TEST')) {
-                // TODO: make this bulkified. Since the number of license types is very low, this will work.
-                LicenseTypeInfo licenseTypeInfo = new LicenseTypeInfo(licenseType);
-                if (!licenseTypeInfo.isCompliant) {
-                    nonCompliantLicenseTypeInfos.add(licenseTypeInfo);
+        try {
+            LicenseType[] licenseTypes = LicenseType.values();
+            LicenseTypeInfo[] nonCompliantLicenseTypeInfos = new List<LicenseTypeInfo>();
+            for (LicenseType licenseType : licenseTypes) {
+                if (!licenseType.name().startsWith('TEST')) {
+                    // TODO: make this bulkified. Since the number of license types is very low, this will work.
+                    LicenseTypeInfo licenseTypeInfo = new LicenseTypeInfo(licenseType);
+                    if (!licenseTypeInfo.isCompliant) {
+                        nonCompliantLicenseTypeInfos.add(licenseTypeInfo);
+                    }
                 }
             }
+            if (nonCompliantLicenseTypeInfos.size() > 0) {
+                sendNoncomplianceMessage(nonCompliantLicenseTypeInfos);
+            }
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
         }
-        if (nonCompliantLicenseTypeInfos.size() > 0) {
-            sendNoncomplianceMessage(nonCompliantLicenseTypeInfos);
-        }
-
-
     }
 
     private void sendNoncomplianceMessage(LicenseTypeInfo[] nonCompliantLicenseTypeInfos) {
