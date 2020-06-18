@@ -111,9 +111,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public LicenseType getLicenseTypeByName(String name) {
-        System.debug('license type name: ' + name);
         LicenseType[] licenseTypes = LicenseType.values();
-        System.debug('license types: ' + licenseTypes);
         LicenseType returnValue = null;
         for (LicenseType licenseType : licenseTypes) {
             if (name == licenseType.name()) {

@@ -51,11 +51,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
     maxUsers;
 
     /**
-     * True if the table is loading
-     */
-    isFetchingUsers;
-
-    /**
      * The rows selected in the table
      */
     selectedRows;
@@ -156,10 +151,11 @@ export default class AssignLicenseTypeModal extends LightningElement {
      * @param event
      */
     handleSort(event) {
-        this.sortDirection = event.target.sortDirection;
-        this.sortedBy = event.target.sortedBy;
+        let table = event.target;
+        this.sortDirection = table.sortDirection;
+        this.sortedBy = table.sortedBy;
         if (event.detail.reload) // if not all data is loaded, the sort field or the direction of the sort has been swapped reload the data
-            this.fetchUnAssignedUsers(0, event.detail.limit, event.target.sortedBy, event.target.sortDirection);
+            this.fetchUnAssignedUsers(0, event.detail.limit, table.sortedBy, table.sortDirection);
     }
 
     /**
@@ -186,7 +182,10 @@ export default class AssignLicenseTypeModal extends LightningElement {
      * @param event
      */
     handleLoadMore(event) {
-        this.fetchUnAssignedUsers(event.detail.offset, event.detail.limit, this.target.sortedBy, this.target.sortDirection);
+        let table = event.target;
+        table.isLoading = true;
+        this.fetchUnAssignedUsers(event.detail.offset, event.detail.limit, this.sortedBy, this.sortDirection)
+            .then(result => {table.isLoading = false});
     }
 
     /**
@@ -194,7 +193,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
      */
     fetchUnAssignedUsers(offset, limit, sortedBy, sortDirection) {
         return new Promise((resolve, reject) => {
-            this.isFetchingUsers = true;
             getUnAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
                 .then(result => {
                     if (result && result.length > 0) {
@@ -210,12 +208,10 @@ export default class AssignLicenseTypeModal extends LightningElement {
                         }
 
                     }
-                    this.isFetchingUsers = false;
                     resolve('unassigned users sucessfully loaded');
                 })
                 .catch(error => {
                     this.error = error;
-                    this.isFetchingUsers = false;
                     resolve(error);
                 })
         });

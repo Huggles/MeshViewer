@@ -165,9 +165,6 @@ private class UserSelectorTest {
                 new fflib_QueryFactory.Ordering(User.LastName, fflib_QueryFactory.SortOrder.ASCENDING, true)
         };
         User[] usersToAssert = UserSelector.newInstance().selectUsersWithoutSeat(0, permissionSets.size() * 10, orderings);
-        for (User user : usersToAssert) {
-            System.debug('Profile: ' + user.Profile.Name);
-        }
         Test.stopTest();
 
         // then
