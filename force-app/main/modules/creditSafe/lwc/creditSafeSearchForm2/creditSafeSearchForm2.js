@@ -28,7 +28,7 @@ import Search_Street from '@salesforce/label/c.Search_Street';
 import Search_City from '@salesforce/label/c.Search_City';
 import Province from '@salesforce/label/c.Province';
 import Search_Postal_Code from '@salesforce/label/c.Search_Postal_Code';
-import Name from '@salesforce/label/c.Name';
+import Trade_Name from '@salesforce/label/c.Trade_Name';
 import Search_Country from '@salesforce/label/c.Search_Country';
 import Ltd from '@salesforce/label/c.Ltd';
 import Non_Limited from '@salesforce/label/c.Non_Limited';
@@ -99,7 +99,7 @@ export default class CreditSafeSearchForm2 extends LightningElement {
         Search_City,
         Province,
         Search_Postal_Code,
-        Name,
+        Trade_Name,
         Search_Country,
         Select_a_Country,
         Fill_minimum_characters,
