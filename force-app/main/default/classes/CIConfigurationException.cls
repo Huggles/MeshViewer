@@ -5,6 +5,6 @@
 /**
  * Throw this whenever the configuration is not correct.
  */
-public with sharing class CIConfigurationException extends CCException {
+public inherited sharing class CIConfigurationException extends CCException {
 
 }

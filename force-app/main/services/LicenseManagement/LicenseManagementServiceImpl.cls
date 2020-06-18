@@ -159,6 +159,14 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
                     break;
                 }
             }
+            // check if the current user is in the set. If so remove him from the set since he is the one removing the LMA licenses and should keep a license.
+            Id currentUserId = UserInfo.getUserId();
+            Map<Id, User> usersByIds = new Map<Id, User>(users);
+            if (usersByIds.get(currentUserId) != null) {
+                usersByIds.remove(currentUserId);
+                users = usersByIds.values();
+            }
+            // select the user package licenses to delete
             UserPackageLicense[] userPackageLicenses = UserPackageSelector.newInstance().selectByPackageLicenseAndUsers(packageLicense, users);
             unitOfWork.registerDeleted(userPackageLicenses);
         }
@@ -170,6 +178,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         users = filterUsersWithoutLicenseTypeAssignment(licenseType, users);
         if (users.size() > getNumberOfAvailableSeats(licenseType)) {
             throw new NotEnoughSeatsAvailableException('Not enough seats of license type ' + licenseType.name() + ' available');
+        }
+        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
+        if (permissionSet == null) {
+            throw new InputException('No permission set for ' + licenseType.name());
         }
 
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
@@ -189,7 +201,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
 
         // assign the permission set(s)
-        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
         List<PermissionSetAssignment> assignments = new List<PermissionSetAssignment>();
         for (User user : users) {
             PermissionSetAssignment permAssignment = new PermissionSetAssignment(PermissionSetId = permissionSet.Id, AssigneeId = user.Id);
