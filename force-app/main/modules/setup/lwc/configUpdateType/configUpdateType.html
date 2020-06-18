@@ -14,10 +14,13 @@
                     <div class="slds-size_1-of-1 slds-m-vertical_small">
                         {labels.Update_types_explanation}
                     </div>
-
-                    <c-vertical-grid items={updateTypes} number-of-columns="4" identifier="updateType">
+                    <c-horizontal-grid items={updateTypes} number-of-columns="4" identifier="updateType" equalize-tile-height="true">
                         <c-update-type-tile data-identifier="updateType"></c-update-type-tile>
-                    </c-vertical-grid>
+                    </c-horizontal-grid>
+
+<!--                    <c-vertical-grid items={updateTypes} number-of-columns="4" identifier="updateType">-->
+<!--                        <c-update-type-tile data-identifier="updateType"></c-update-type-tile>-->
+<!--                    </c-vertical-grid>-->
 
                     <div>
                         <lightning-button variant="brand"
