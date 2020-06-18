@@ -54,14 +54,15 @@ export default class ConfigUpdateType extends LightningElement {
     }
     handleUpdateTypesSave(event){
         this.isLoading = true;
-        let toggles = this.template.querySelectorAll("lightning-input[data-classification=update_type_toggle]");
-        if(toggles != null){
+        let tiles = this.template.querySelectorAll("c-update-type-tile[data-identifier='updateType'");
+        if(tiles != null){
             let payload = [];
-            toggles.forEach((toggle, index) => {
+            tiles.forEach((tile, index) => {
+                let tileStatus = tile.getStatus();
                 let payloadItem = {
-                    checked : toggle.checked,
-                    developerName : toggle.dataset.developerName,
-                    label : toggle.dataset.masterlabel
+                    checked : tileStatus.checked,
+                    developerName : tileStatus.developerName,
+                    label : tileStatus.label
                 }
                 payload.push(payloadItem);
             });
@@ -85,9 +86,4 @@ export default class ConfigUpdateType extends LightningElement {
                 })
         }
     }
-    onCardClicked(event){
-        console.log('event');
-        console.log(event);
-    }
-
 }

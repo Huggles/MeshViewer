@@ -3,7 +3,6 @@
  */
 
 import {LightningElement, api} from 'lwc';
-import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 export default class HorizontalGrid extends LightningElement {
 
@@ -56,15 +55,6 @@ export default class HorizontalGrid extends LightningElement {
         }
     }
 
-    showToast(title, message, variant){
-        const event = new ShowToastEvent({
-            "title": "Error!",
-            "message": "Vertical List can only have 1 root node in the tile slot.",
-            "variant": "error"
-        });
-        this.dispatchEvent(event);
-    }
-
     @api
     get numberOfItems(){
         return this.items.length;
@@ -87,21 +77,5 @@ export default class HorizontalGrid extends LightningElement {
     }
     get sldsTileWidth(){
         return 'slds-size_1-of-'+this.m_numberOfColumns;
-    }
-    get columns(){
-        let itemListCopy = JSON.parse(JSON.stringify(this.items));
-        let result = [];
-        for (let i = this.m_numberOfColumns; i > 0; i--) {
-            result.push(itemListCopy.splice(0, Math.ceil(itemListCopy.length / i)));
-        }
-        return result;
-    }
-    get rows(){
-        let itemListCopy = JSON.parse(JSON.stringify(this.items));
-        let result = [];
-        while(itemListCopy.length > 0){
-            result.push(itemListCopy.splice(0, this.m_numberOfColumns));
-        }
-        return result;
     }
 }

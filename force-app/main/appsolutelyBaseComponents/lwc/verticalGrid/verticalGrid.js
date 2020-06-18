@@ -3,7 +3,6 @@
  */
 
 import {LightningElement, api} from 'lwc';
-import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 export default class VerticalGrid extends LightningElement {
 
@@ -47,15 +46,6 @@ export default class VerticalGrid extends LightningElement {
                 tile.item = this.m_items[tileIndex];
             });
         }
-    }
-
-    showToast(title, message, variant){
-        const event = new ShowToastEvent({
-            "title": "Error!",
-            "message": "Vertical List can only have 1 root node in the tile slot.",
-            "variant": "error"
-        });
-        this.dispatchEvent(event);
     }
 
     @api
