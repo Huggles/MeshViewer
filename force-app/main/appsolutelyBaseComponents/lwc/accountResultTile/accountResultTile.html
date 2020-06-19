@@ -4,24 +4,12 @@
 
 <!-- Account Result Tile -->
 <template>
-    <div class="slds-p-around_xx-small slds-box color-on-hover result-card" onclick={handleOnClick}>
-        <lightning-tile label={title} type="media" href="javascript:void(0);">
-                <span slot="media">
-                    <lightning-button-icon-stateful icon-name='utility:check' selected={iconState} size="small"></lightning-button-icon-stateful>
-                </span>
-            <div class="slds-grid slds-wrap">
-                <template for:each={fieldValues} for:item="field">
-                    <div key={field.index} class="slds-size_2-of-5 slds-text-align_left">
-                        <p class="slds-truncate" title={field.label}>{field.label}</p>
-                    </div>
-                    <div key={field.index} class="slds-size_3-of-5 slds-text-align_right">
-                        <p class="slds-truncate" title={field.value}>{field.value}</p>
-                    </div>
-                </template>
-            </div>
+    <c-search-result-tile search-result-id={searchResultId} labels-and-fields={labelsAndFields} field-values={fieldValues}
+                          title-field={titleField} search-result={searchResult} title={title} oncardclicked={handleOnClick} selected={selected}>
+        <span slot="link">
             <ul class="slds-has-divider_top-space">
                 <lightning-button variant="base" label={labels.Update_Duplicate_Account} onclick={handleClickDuplicateAccount} class="slds-m-left_xx-large"></lightning-button>
             </ul>
-        </lightning-tile>
-    </div>
+        </span>
+    </c-search-result-tile>
 </template>

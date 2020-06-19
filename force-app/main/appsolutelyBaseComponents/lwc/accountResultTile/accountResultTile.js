@@ -43,18 +43,6 @@ export default class AccountResultTile extends LightningElement {
     @api fieldValues = [];
 
     /**
-     * The icon state to be shown
-     */
-    get iconState() {
-        console.log('ART iconState');
-        if (!this.selected) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
      * True if the card is selected, otherwise false
      */
     @api
@@ -66,7 +54,6 @@ export default class AccountResultTile extends LightningElement {
 
     handleOnClick(event) {
         console.log('ART handleOnClick');
-        // this.selected = !this.selected;
         const cardClickedEvent = new CustomEvent('cardclicked', {detail : {id: this.searchResultId}});
         console.log('cardClickedEvent-'+this.searchResultId)
         this.dispatchEvent(cardClickedEvent);
