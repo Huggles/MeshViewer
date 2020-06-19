@@ -18,6 +18,10 @@
                 <behavior>Edit</behavior>
                 <field>Remarks__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Business_Dossier__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
