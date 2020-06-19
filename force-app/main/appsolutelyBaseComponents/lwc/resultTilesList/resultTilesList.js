@@ -44,8 +44,13 @@ export default class SearchResultTilesList extends LightningElement {
     @api
     titleField = 'Name';
 
-    @api
-    searchCriteriaName;
+    get searchCriteriaName() {
+        let criteriaName = '';
+        if (this.searchResults && this.searchResults.length > 0) {
+            criteriaName = 'Results by ' + this.searchResults[0].appsolutely__Search_Criteria_Name__c;
+        }
+        return criteriaName;
+    }
 
     /**
      * Lazy Loading Attributes
@@ -64,8 +69,8 @@ export default class SearchResultTilesList extends LightningElement {
      * Are there any results?
      */
     get hasResults() {
-        console.log('RT hasResults ' + this.searchResults.length);
-        if(this.searchResults == null || this.searchResults.length == 0){
+        console.log('RT hasResults ' + this.searchResults);
+        if(this.searchResults == null || this.searchResults == undefined){
             return false;
         }
         if(this.searchResults.length == 1  &&
@@ -85,7 +90,6 @@ export default class SearchResultTilesList extends LightningElement {
     get isSearchCriteriaNameEmpty() {
         console.log('RT isSearchCriteriaNameEmpty');
         if (this.searchResults[0].appsolutely__Search_Criteria_Name__c) {
-            this.searchCriteriaName = 'Results by ' + this.searchResults[0].appsolutely__Search_Criteria_Name__c;
             return false;
         }
         else

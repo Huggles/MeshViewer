@@ -26,6 +26,7 @@ export default class SearchResultTilesList extends LightningElement {
      * Are there any results?
      */
     get hasResults() {
+        console.log('RT hasResults');
         if(this.searchResults == null || this.searchResults.length == 0){
             return false;
         }
@@ -93,6 +94,7 @@ export default class SearchResultTilesList extends LightningElement {
      * @returns true if search criteria name is undefined
      */
     get isSearchCriteriaNameEmpty() {
+        console.log('RT isSearchCriteriaNameEmpty');
         if (this.searchResults[0].appsolutely__Search_Criteria_Name__c) {
             this.searchCriteriaName = 'Results by ' + this.searchResults[0].appsolutely__Search_Criteria_Name__c;
             return false;
@@ -103,9 +105,15 @@ export default class SearchResultTilesList extends LightningElement {
 
     @api
     get lazyloadedSearchResults() {
-        if (this.searchResults)
-            return this.searchResults.slice(0, this.numberOfResults);
+        console.log('RT lazyloadedSearchResults');
+        console.log(this.searchResults);
+        if (this.searchResults) {
+            let response = this.searchResults.slice(0, this.numberOfResults);
+            console.log(response);
+            return response;
+        }
         else {
+            console.log('null');
             return null;
         }
     }
@@ -165,28 +173,9 @@ export default class SearchResultTilesList extends LightningElement {
         this.querySelectorAll('span'); // [<span>push the green button</span>, <span>push the red button</span>]
     }
 
-    handleCardClicked1(event) {
-        // search for the right record
-        const id = event.detail.id;
-        const searchResultTiles = [...this.template.querySelectorAll('c-account-result-tile')];
-        let tileClicked = searchResultTiles.find(card => card.searchResultId === id);
-        // (un)select the cards
-        if (!tileClicked.selected) { // current 'old' state is unselected, user wants to select this card
-            const unselectedTiles = searchResultTiles.filter(value => value !== tileClicked);
-            unselectedTiles.forEach(value => value.selected = false);
-            // set the result param, this is done here because this component knows the type
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', tileClicked.searchResult);
-            this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultselected', {selectedResult: tileClicked.searchResult}); // let the world know something is selected
-        } else {
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', null);
-            this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultunselected');
-        }
-        tileClicked.selected = !tileClicked.selected; // select or unselect the card
-    }
 
     resultsScrolled(event) {
+        console.log('RT resultsScrolled');
         var element = event.target;
         if (element.scrollHeight - element.scrollTop === element.clientHeight) {
             if ((this.numberOfResults + this.numberOfResultsIncrement) < this.maxNumberOfResults) {
