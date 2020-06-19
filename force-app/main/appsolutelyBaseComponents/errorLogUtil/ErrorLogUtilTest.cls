@@ -87,12 +87,13 @@ private class ErrorLogUtilTest {
 
     @IsTest
     static void testSendSupportEmails() {
-        List<Error_Events__e> events = new List<Error_Events__e>();
+        List<Error_Log__c> logs = new List<Error_Log__c>();
         for (Integer i = 0; i < 5; i++) {
-            events.add(new Error_Events__e(Message__c = 'test'));
+            logs.add(new Error_Log__c(Message__c = 'test', Send_Email__c = true));
         }
         Test.startTest();
-        ErrorLogUtil.sendSupportEmails(events);
+        insert logs;
+        System.debug('logs: ' + JSON.serializePretty(logs));
         Integer invocations = Limits.getEmailInvocations();
         Test.stopTest();
         System.assertEquals(1, invocations);

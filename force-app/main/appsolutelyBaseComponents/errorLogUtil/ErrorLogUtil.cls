@@ -51,18 +51,14 @@ public inherited sharing class ErrorLogUtil {
     *
     * @param events the events to log
     */
-    public static void handleAfterInsert(List<Error_Events__e> events){
+    public static void handleAfterEventInsert(List<Error_Events__e> events){
         List<Error_Log__c> errorLogs = new List<Error_Log__c>();
         List<Error_Events__e> emailEvents = new List<Error_Events__e>();
         for(Error_Events__e event : events){
-            errorLogs.add(new Error_Log__c(Cause__c = event.Cause__c, Message__c = event.Message__c, Line_Number__c = event.Line_Number__c, Stacktrace__c = event.Stacktrace__c, Type__c = event.Type__c));
-            if (event.Send_Email__c) {
-                emailEvents.add(event);
-            }
+            errorLogs.add(new Error_Log__c(Send_Email__c = event.Send_Email__c, Cause__c = event.Cause__c, Message__c = event.Message__c, Line_Number__c = event.Line_Number__c, Stacktrace__c = event.Stacktrace__c, Type__c = event.Type__c));
         }
         // in system context since this needs to happen always
         insert errorLogs;
-        sendSupportEmails(emailEvents);
     }
 
     /**
@@ -89,12 +85,15 @@ public inherited sharing class ErrorLogUtil {
     *
     * @param emailEvents the platform events for which to send emails
     */
-    @TestVisible
-    private static void sendSupportEmails(List<Error_Events__e> emailEvents) {
+    @InvocableMethod
+    public static void sendSupportEmails(List<Error_Log__c> logs) {
+        System.debug('User Id: ' + UserInfo.getUserId());
+        System.debug('User Name: ' + UserInfo.getName());
+        System.debug('User profile: ' + UserInfo.getProfileId());
         List<String> messages = new List<String>();
-        for (Error_Events__e e : emailEvents) {
-            String message = '\n' + 'Type: ' + e.Type__c + '\n' + 'Cause: ' + e.Cause__c + '\n' + 'Message: '
-                    + e.Message__c + '\n' + 'Line #: ' + e.Line_Number__c + '\n' + e.Stacktrace__c + '\n';
+        for (Error_Log__c log : logs) {
+            String message = '\n' + 'Type: ' + log.Type__c + '\n' + 'Cause: ' + log.Cause__c + '\n' + 'Message: '
+                    + log.Message__c + '\n' + 'Line #: ' + log.Line_Number__c + '\n' + log.Stacktrace__c + '\n';
             messages.add(message);
         }
         //send email
