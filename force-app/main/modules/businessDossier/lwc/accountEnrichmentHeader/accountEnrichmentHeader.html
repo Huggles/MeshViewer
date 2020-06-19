@@ -17,6 +17,9 @@
                 </div>
                 <div class="slds-no-flex">
                     <div class="slds-m-around_xx-small slds-float_right">
+                        <lightning-button label={label.Get_Positions} onclick={handleOnGetPositionsClicked} ></lightning-button>
+                    </div>
+                    <div class="slds-m-around_xx-small slds-float_right">
                         <template if:true={showGetCreditsafeReportButton}>
                             <lightning-button label={label.Get_Creditsafe_Report} onclick={handleOnGetCreditsafeReport} ></lightning-button>
                         </template>
@@ -34,4 +37,11 @@
             </header>
         </div>
     </article>
+    <c-confirmation-dialog name="confirmModalGetPositions"
+                           title="Get Positions?"
+                           message="Do you want to get positions?"
+                           cancel-label={label.No}
+                           confirm-label={label.Yes}
+                           onclick={handleOnClickConfirmationDialog}></c-confirmation-dialog>
+
 </template>

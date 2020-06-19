@@ -5,7 +5,7 @@
 import {LightningElement, api} from 'lwc';
 
 export default class ConfirmationDialog extends LightningElement {
-    @api visible; //used to hide/show dialog
+    @api visible = false; //used to hide/show dialog
     @api title; //modal title
     @api name; //reference name of the component
     @api message; //modal message
@@ -20,9 +20,14 @@ export default class ConfirmationDialog extends LightningElement {
             originalMessage: this.originalMessage,
             status: event.target.name
         };
-
         //dispatch a 'click' event so the parent component can handle it
         this.dispatchEvent(new CustomEvent('click', {detail: finalEvent}));
+    }
+
+    @api show(){
+        this.visible = true;
+    }
+    @api hide(){
         this.visible = false;
     }
 }

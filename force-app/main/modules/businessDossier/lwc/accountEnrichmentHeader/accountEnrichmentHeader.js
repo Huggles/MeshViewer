@@ -15,6 +15,7 @@ import BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT from '@salesforce/schema/Busin
 
 //Apex controllers
 import updateDossierWithVAT from '@salesforce/apex/CompanyDetailsController.updateDossierWithVAT';
+import updateDossierWithPositions from '@salesforce/apex/CompanyDetailsController.updateDossierWithPositions';
 
 //Static resources
 import companyInfoLogoSmall from '@salesforce/resourceUrl/companyInfoLogoSmall';
@@ -28,8 +29,9 @@ import Error from '@salesforce/label/c.Error';
 import Error_Unknown from '@salesforce/label/c.Error_Unknown';
 import Error_Incomplete from '@salesforce/label/c.Error_Incomplete';
 import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
-
-
+import Get_Positions from '@salesforce/label/c.Get_Positions';
+import No from '@salesforce/label/c.No';
+import Yes from '@salesforce/label/c.Yes';
 
 export default class AccountEnrichmentHeader extends LightningElement {
 
@@ -50,6 +52,15 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
     @api VATUpdated = false;
 
+    m_getPositionsConfirmDialogVisible = false;
+    @api
+    get getPositionsConfirmDialogVisible(){
+        return this.m_getPositionsConfirmDialogVisible;
+    }
+    set getPositionsConfirmDialogVisible(value){
+        this.m_getPositionsConfirmDialogVisible = value;
+    }
+
     label = {
         VAT_Retrieve,
         Success,
@@ -58,7 +69,10 @@ export default class AccountEnrichmentHeader extends LightningElement {
         Error,
         Error_Unknown,
         Error_Incomplete,
-        Get_Creditsafe_Report
+        Get_Creditsafe_Report,
+        Get_Positions,
+        Yes,
+        No,
     }
     staticResource = {
         companyInfoLogoSmall,
@@ -130,6 +144,40 @@ export default class AccountEnrichmentHeader extends LightningElement {
         this.getCreditsafeReportClicked = true;
         //we throw an event because the flow needs to show a search form
         this.dispatchEvent(new FlowNavigationNextEvent());
+    }
+
+
+    handleOnGetPositionsClicked(event){
+        let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
+
+        confirmationDialog.show();
+    }
+    handleOnClickConfirmationDialog(event){
+
+        if(event.detail.status == 'cancel'){
+            let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
+            confirmationDialog.hide();
+        }
+        if(event.detail.status == 'confirm'){
+            this.retrievePositions();
+        }
+    }
+    retrievePositions(){
+        console.log('retrievePositions');
+        console.log(this.businessDossierId);
+        updateDossierWithPositions({
+            dossierId: this.businessDossierId
+        })
+            .then(result => {
+                console.log(JSON.parse(result));
+            })
+            .catch(error => {
+                console.log(error);
+            })
+            .finally(()=>{
+                let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
+                confirmationDialog.hide();
+            })
     }
 
 }

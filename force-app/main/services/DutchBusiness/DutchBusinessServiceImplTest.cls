@@ -809,7 +809,7 @@ private class DutchBusinessServiceImplTest {
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
         test.startTest();
-        DutchBusinessWsdl.DutchBusinessPositions dutchBusinessPositions = DutchBusinessService.dutchBusinessGetPositions(dossierNumber);
+        DutchBusinessWsdl.DutchBusinessPositions dutchBusinessPositions = DutchBusinessService.getPositions(dossierNumber);
         test.stopTest();
 
         system.assertEquals(1, dutchBusinessPositions.positions.item.size());

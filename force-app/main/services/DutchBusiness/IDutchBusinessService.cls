@@ -106,5 +106,5 @@ public interface IDutchBusinessService {
      *
      * @return DutchBusinessPositions
      */
-    DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number);
+    DutchBusinessWsdl.DutchBusinessPositions getPositions(String dossier_number);
 }

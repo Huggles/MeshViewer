@@ -266,7 +266,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     *
     * @return DutchBusinessPositions
     */
-    public static DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number){
+    public static DutchBusinessWsdl.DutchBusinessPositions getPositions(String dossier_number){
         return WsDutchBusiness.dutchBusinessGetPositions(dossier_number);
     }
 
