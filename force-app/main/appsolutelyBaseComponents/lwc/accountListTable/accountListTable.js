@@ -18,6 +18,7 @@ import Success from '@salesforce/label/c.Success';
 import Error from '@salesforce/label/c.Error';
 import Cancel from '@salesforce/label/c.Cancel';
 import Duplicate_Results from '@salesforce/label/c.Duplicate_Results';
+import {tileSelected} from "c/resultTileFuntionality";
 
 export default class AccountListTable extends NavigationMixin(LightningElement) {
 
@@ -116,19 +117,22 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
         const id = event.detail.id;
         const searchResultTiles = [...this.template.querySelectorAll('c-account-result-tile')];
         let tileClicked = searchResultTiles.find(card => card.searchResultId === id);
-        this.selectedResult = tileClicked.searchResult;
-        // (un)select the cards
-        if (!tileClicked.selected) { // current 'old' state is unselected, user wants to select this card
-            const unselectedTiles = searchResultTiles.filter(value => value !== tileClicked);
-            unselectedTiles.forEach(value => value.selected = false);
-            // set the result param, this is done here because this component knows the type
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', tileClicked.searchResult);
-            this.dispatchEvent(attributeChangeEvent);
-        }
-        else {
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', this.selectedResult);
-            this.dispatchEvent(attributeChangeEvent);
-        }
-        tileClicked.selected = !tileClicked.selected; // select or unselect the card
+        let result = tileSelected(id, searchResultTiles, this);
+        this.selectedResult = result.selectedResult;
+
+        // this.selectedResult = tileClicked.searchResult;
+        // // (un)select the cards
+        // if (!tileClicked.selected) { // current 'old' state is unselected, user wants to select this card
+        //     const unselectedTiles = searchResultTiles.filter(value => value !== tileClicked);
+        //     unselectedTiles.forEach(value => value.selected = false);
+        //     // set the result param, this is done here because this component knows the type
+        //     const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', tileClicked.searchResult);
+        //     this.dispatchEvent(attributeChangeEvent);
+        // }
+        // else {
+        //     const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', this.selectedResult);
+        //     this.dispatchEvent(attributeChangeEvent);
+        // }
+        // tileClicked.selected = !tileClicked.selected; // select or unselect the card
     }
 }
