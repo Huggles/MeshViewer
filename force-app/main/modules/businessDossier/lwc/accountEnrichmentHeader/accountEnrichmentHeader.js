@@ -146,10 +146,8 @@ export default class AccountEnrichmentHeader extends LightningElement {
         this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
-
     handleOnGetPositionsClicked(event){
         let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
-
         confirmationDialog.show();
     }
     handleOnClickConfirmationDialog(event){
@@ -163,8 +161,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
         }
     }
     retrievePositions(){
-        console.log('retrievePositions');
-        console.log(this.businessDossierId);
         updateDossierWithPositions({
             dossierId: this.businessDossierId
         })
