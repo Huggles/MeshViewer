@@ -17,38 +17,6 @@ export default class SearchResultTilesList extends LightningElement {
     availableActions = [];
 
     /**
-     * The search results to be displayed
-     */
-    m_searchResults;
-    @api
-    get searchResults(){
-        return this.m_searchResults;
-    }
-    set searchResults(value){
-        console.log('searchResults in resultTilesList');
-        console.log(JSON.stringify(value));
-        this.m_searchResults = value;
-        this.fillSearchResults();
-    }
-
-    /**
-     * Are there any results?
-     */
-    get hasResults() {
-        if(this.searchResults == null || this.searchResults.length == 0){
-            return false;
-        }
-        if(this.searchResults.length == 1  &&
-            this.searchResults[0].appsolutely__Matchrate__c != null &&
-            this.searchResults[0].appsolutely__Matchrate__c == 0){
-            //Company info returns the info from the request with a matchrate of 0 when no results are found.
-            //We do not want to show that as an actual result.
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Illustration initialization
      */
     desertIllustration = DESERT_ILLUSTRATION + '#desert';
@@ -57,13 +25,6 @@ export default class SearchResultTilesList extends LightningElement {
      * Label for when no results have been found.
      */
     noDataLabel = searchNoResultsCL;
-
-    /**
-     * The search result selected.
-     * TODO: support multiple select
-     */
-    @api
-    selectedResult;
 
     /**
      * The namespaced api name of the sObject (for instance 'appsolutely__Business_Dossier__c')
@@ -86,9 +47,6 @@ export default class SearchResultTilesList extends LightningElement {
     @api
     searchCriteriaName;
 
-    @api
-    showAccountUpdateLink = false;
-
     /**
      * Lazy Loading Attributes
      */
@@ -98,10 +56,34 @@ export default class SearchResultTilesList extends LightningElement {
     searchResultsLimited = searchResultsLimitedCL;
 
     /**
+     * The search results to be displayed
+     */
+    @api searchResults;
+
+    /**
+     * Are there any results?
+     */
+    get hasResults() {
+        console.log('RT hasResults ' + this.searchResults.length);
+        if(this.searchResults == null || this.searchResults.length == 0){
+            return false;
+        }
+        if(this.searchResults.length == 1  &&
+            this.searchResults[0].appsolutely__Matchrate__c != null &&
+            this.searchResults[0].appsolutely__Matchrate__c == 0){
+            //Company info returns the info from the request with a matchrate of 0 when no results are found.
+            //We do not want to show that as an actual result.
+            return false;
+        }
+        return true;
+    }
+
+    /**
      *
      * @returns true if search criteria name is undefined
      */
     get isSearchCriteriaNameEmpty() {
+        console.log('RT isSearchCriteriaNameEmpty');
         if (this.searchResults[0].appsolutely__Search_Criteria_Name__c) {
             this.searchCriteriaName = 'Results by ' + this.searchResults[0].appsolutely__Search_Criteria_Name__c;
             return false;
@@ -110,20 +92,20 @@ export default class SearchResultTilesList extends LightningElement {
             return true;
     }
 
-    @api
-    get lazyloadedSearchResults() {
-        console.log('lazyloadedSearchResults');
-        console.log(this.searchResults);
-        if (this.searchResults){
-            let response = this.searchResults.slice(0, this.numberOfResults);
-            console.log(response);
-            return response;
-        }
-        else {
-            console.log(null);
-            return null;
-        }
-    }
+    // @api
+    // get lazyloadedSearchResults() {
+    //     console.log('RT lazyloadedSearchResults');
+    //     console.log(this.searchResults);
+    //     if (this.searchResults){
+    //         let response = this.searchResults.slice(0, this.numberOfResults);
+    //         console.log(response);
+    //         return response;
+    //     }
+    //     else {
+    //         console.log(null);
+    //         return null;
+    //     }
+    // }
 
     /**
      * True when the number of results displayed is limited by maxNumberOfResults.
@@ -147,49 +129,38 @@ export default class SearchResultTilesList extends LightningElement {
     /**
      * Loads the label/fieldname combination from the fieldset
      */
-    @wire(getFieldSetFieldDescriptions, {objectName: '$sObjectName', fieldSetName: '$fieldSetName'})
-    labelsAndFields;
+    @api labelsAndFields;
 
-    /**
-     * Handler to handle the selection of a search result.
-     * @param event
-     */
-    handleCardClicked(event) {
-        // search for the right record
-        const id = event.detail.id;
-        const searchResultTiles = [...this.template.querySelectorAll('c-search-result-tile')];
-        let tileClicked = searchResultTiles.find(card => card.searchResultId === id);
-        // (un)select the cards
-        if (!tileClicked.selected) { // current 'old' state is unselected, user wants to select this card
-            const unselectedTiles = searchResultTiles.filter(value => value !== tileClicked);
-            unselectedTiles.forEach(value => value.selected = false);
-            // set the result param, this is done here because this component knows the type
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', tileClicked.searchResult);
-            this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultselected', {selectedResult: tileClicked.searchResult}); // let the world know something is selected
-        } else {
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', null);
-            this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultunselected');
-        }
-        tileClicked.selected = !tileClicked.selected; // select or unselect the card
-    }
     renderedCallback() {
-        this.querySelector('span'); // <span>push the green button.</span>
-        this.querySelectorAll('span'); // [<span>push the green button</span>, <span>push the red button</span>]
-        this.fillSearchResults();
+        console.log('RT renderedCallback');
+        getFieldSetFieldDescriptions({objectName: this.sObjectName, fieldSetName: this.fieldSetName})
+            .then(result =>{
+                console.log('result:' + JSON.stringify(result));
+                this.labelsAndFields = result;
+                this.fillSearchResults();
+            }).catch(error =>{
+            console.log(error);
+        });
     }
 
     fillSearchResults() {
+        console.log('RT fillSearchResults');
         if (this.searchResults) {
             const tiles = this.querySelectorAll('[data-name="tile"]');
-            console.log(tiles.length);
             if (tiles != null && tiles.length > 0) {
                 tiles.forEach((tile, index) => {
                     try {
+                        let fieldValues = [];
+                        tile.labelsAndFields = this.labelsAndFields;
                         tile.searchResult = this.searchResults[index];
                         tile.searchResultId = index;
                         tile.titleField = this.titleField;
+                        tile.title = tile.searchResult[this.titleField];
+                        this.labelsAndFields.forEach((value, index) => {
+                            let fieldValue =  {index: index, label: value.label, value: tile.searchResult[value.apiName]};
+                            fieldValues.push(fieldValue);
+                        });
+                        tile.fieldValues = fieldValues;
                     }
                     catch (e) {
                         console.log(e);
@@ -199,38 +170,16 @@ export default class SearchResultTilesList extends LightningElement {
         }
     }
 
-    handleCardClicked1(event) {
-        // search for the right record
-        const id = event.detail.id;
-        const searchResultTiles = [...this.template.querySelectorAll('c-account-result-tile')];
-        let tileClicked = searchResultTiles.find(card => card.searchResultId === id);
-        // (un)select the cards
-        if (!tileClicked.selected) { // current 'old' state is unselected, user wants to select this card
-            const unselectedTiles = searchResultTiles.filter(value => value !== tileClicked);
-            unselectedTiles.forEach(value => value.selected = false);
-            // set the result param, this is done here because this component knows the type
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', tileClicked.searchResult);
-            this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultselected', {selectedResult: tileClicked.searchResult}); // let the world know something is selected
-        } else {
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', null);
-            this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultunselected');
-        }
-        tileClicked.selected = !tileClicked.selected; // select or unselect the card
-    }
-
-    resultsScrolled(event) {
-        var element = event.target;
-        if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-            if ((this.numberOfResults + this.numberOfResultsIncrement) < this.maxNumberOfResults) {
-                this.numberOfResults += this.numberOfResultsIncrement;
-            } else {
-                this.numberOfResults = this.maxNumberOfResults;
-            }
-
-        }
-
-    }
+    // resultsScrolled(event) {
+    //     console.log('RT resultsScrolled');
+    //     var element = event.target;
+    //     if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+    //         if ((this.numberOfResults + this.numberOfResultsIncrement) < this.maxNumberOfResults) {
+    //             this.numberOfResults += this.numberOfResultsIncrement;
+    //         } else {
+    //             this.numberOfResults = this.maxNumberOfResults;
+    //         }
+    //     }
+    // }
 
 }
