@@ -14,9 +14,11 @@
                     {searchCriteriaName}
                 </h3>
                 <div class="scrollable slds-box result-container" style="max-height: 500px ; overflow-y: scroll" >
-                    <template for:each={searchResults} for:index="searchResultIndex" for:item="object">
-                        <slot name="tile" data-index={searchResultIndex} key={ourKey} class="grid"> </slot>
-                    </template>
+                    <div class="slds-grid  slds-size_1-of-1 slds-wrap">
+                        <template for:each={searchResults} for:index="searchResultIndex" for:item="object">
+                            <slot name="tile" data-index={searchResultIndex} key={ourKey}> </slot>
+                        </template>
+                    </div>
                     <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;" if:true={displayingMaxNumberOfResults}>
                         <div class="slds-text-align_center" style="max-width: 80%;">{searchResultsLimited}</div>
                     </div>

@@ -5,7 +5,7 @@
 
 <!-- Search Result Tile -->
 <template>
-    <div class="slds-p-around_medium slds-box color-on-hover result-card" onclick={handleOnClick}>
+    <div class="slds-p-around_small slds-box color-on-hover result-card" onclick={handleOnClick} style="max-width: 480px">
         <lightning-tile label={title} type="media" href="javascript:void(0);">
                 <span slot="media">
                     <lightning-button-icon-stateful icon-name='utility:check' selected={iconState} size="small"></lightning-button-icon-stateful>
