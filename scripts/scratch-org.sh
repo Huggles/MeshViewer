@@ -42,7 +42,9 @@ sfdx force:org:create -f config/project-scratch-def.json  -a $SCRATCH_ORG_ALIAS 
   #Try and run these commands. If they fail, fallback to commands in second set of brackets.
   sfdx force:source:push -u $SCRATCH_ORG_ALIAS -f
   sfdx force:user:permset:assign -n Company_info_administrator -u $SCRATCH_ORG_ALIAS
-  sfdx force:user:permset:assign -n Company_info_user -u $SCRATCH_ORG_ALIAS
+  sfdx force:user:permset:assign -n Company_info_for_Dutch_Business -u $SCRATCH_ORG_ALIAS
+  sfdx force:user:permset:assign -n Company_info_for_International_Business -u $SCRATCH_ORG_ALIAS
+  sfdx force:user:permset:assign -n Company_info_for_Sales -u $SCRATCH_ORG_ALIAS
 }
 echo "Finished creating $SCRATCH_ORG_ALIAS"
 
