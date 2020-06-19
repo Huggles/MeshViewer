@@ -9,6 +9,6 @@
             <type>email</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Error_Email_Template</template>
+        <template>Error_Log_Util_Templates/Error_Email_Template</template>
     </alerts>
 </Workflow>
