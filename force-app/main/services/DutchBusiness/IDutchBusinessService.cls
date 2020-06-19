@@ -98,4 +98,13 @@ public interface IDutchBusinessService {
      * @return DutchBusinessExtractHistory
      */
     DutchBusinessWsdl.DutchBusinessExtractHistory getExtractHistory(String dossier_number, Date start_date, Date end_date);
+
+    /**
+     * Gets the latest -cached- version of the business positions.
+     *
+     * @param dossier_number    'The COC Number'
+     *
+     * @return DutchBusinessPositions
+     */
+    DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number);
 }

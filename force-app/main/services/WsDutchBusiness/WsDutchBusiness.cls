@@ -32,6 +32,10 @@ public inherited sharing class WsDutchBusiness implements IWsDutchBusiness{
         return newInstance().dutchBusinessGetExtractHistoryChanged(dossier_number, period_start_date, period_end_date);
     }
 
+    public static DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number){
+        return newInstance().dutchBusinessGetPositions(dossier_number);
+    }
+
     public static IWsDutchBusiness newInstance() {
         return (IWsDutchBusiness) Application.Service.newInstance(IWsDutchBusiness.class);
     }

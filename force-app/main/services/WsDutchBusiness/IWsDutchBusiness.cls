@@ -54,6 +54,6 @@ public interface IWsDutchBusiness {
 //    DutchBusinessWsdl.DutchBusinessExtractDocumentDataV3 dutchBusinessGetExtractHistoryDocumentDataV3ByDossier(String dossier_number,Boolean include_source,Date period_start,Date period_end);
 //    DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetDossiers(DutchBusinessWsdl.stringArray update_types,Integer page_x);
 //    DutchBusinessWsdl.DutchBusinessUpdateSubscriptionPagedResult dutchBusinessUpdateGetOverview(Integer page_x);
-//    DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number);
+    DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number);
 
 }

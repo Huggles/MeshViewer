@@ -259,6 +259,17 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return WsDutchBusiness.dutchBusinessGetExtractHistoryChanged(dossier_number, start_date, end_date);
     }
 
+    /**
+    * Gets the latest -cached- version of the business positions.
+    *
+    * @param dossier_number    'The COC Number'
+    *
+    * @return DutchBusinessPositions
+    */
+    public static DutchBusinessWsdl.DutchBusinessPositions dutchBusinessGetPositions(String dossier_number){
+        return WsDutchBusiness.dutchBusinessGetPositions(dossier_number);
+    }
+
 
 
 
