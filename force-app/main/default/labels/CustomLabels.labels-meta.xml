@@ -1398,4 +1398,12 @@
         <shortDescription>Feature_Not_Found</shortDescription>
         <value>Feature not found</value>
     </labels>
+    <labels>
+        <fullName>Not_Enough_Seats_Available</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toast shown when the user tries to assign more seats than he has.</shortDescription>
+        <value>Not enough seats available. You tried to assign {0} seats but only have {1} available.</value>
+    </labels>
 </CustomLabels>
