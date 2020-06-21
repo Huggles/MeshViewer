@@ -86,11 +86,11 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public User[] getUnAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
-        return UserSelector.newInstance().selectUsersWithoutLicenseTypeSeat(licenseType, offSet, nrOfRows, ordering);
+        return UserSelector.newInstance().selectUsersAvailableForLicenseType(licenseType, offSet, nrOfRows, ordering);
     }
 
-    public User[] getUsersWithoutSeat(Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
-        return UserSelector.newInstance().selectUsersWithoutSeat(offSet, nrOfRows, ordering);
+    public User[] getUsersWithoutSeat(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
+        return UserSelector.newInstance().selectUsersAvailableForLicenseType(licenseType, offSet, nrOfRows, ordering);
     }
 
     public Integer getUnAssignedUsersForLicenseTypeCount(LicenseType licenseType) {
@@ -241,6 +241,23 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         if (!hasAccessToThisFeature) {
             throw new NoAccessToFeatureException('User ' + UserInfo.getUserId() + ' does not have access to ' + feature.name());
         }
+    }
+
+    public Set<String> getAllowedLicenseDefinitionKeysForLicenseType(LicenseType licenseType) {
+        License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
+        List<Allowed_Salesforce_License_Type__mdt> allowedSalesforceLicenseTypess = [SELECT License_Definition_Key__c FROM Allowed_Salesforce_License_Type__mdt WHERE License_Type_Definition__c = :licenseTypeDefinition.Id];
+        Set<String> returnValue = new Set<String>();
+        for (Allowed_Salesforce_License_Type__mdt allowedSalesforceLicenseType : allowedSalesforceLicenseTypess) {
+            returnValue.add(allowedSalesforceLicenseType.License_Definition_Key__c);
+        }
+        return returnValue;
+    }
+
+    public Set<Id> getAllowedProfileIdsForLicenseType(LicenseType licenseType) {
+        Set<String> licenseKeys = LicenseManagementService.getAllowedLicenseDefinitionKeysForLicenseType(licenseType);
+        List<Profile> allowedProfiles = [SELECT Id FROM Profile WHERE UserLicense.LicenseDefinitionKey IN :licenseKeys];
+        Set<Id> profileIds = (new Map<Id, Profile>(allowedProfiles)).keySet();
+        return profileIds;
     }
 
     /*****************************************

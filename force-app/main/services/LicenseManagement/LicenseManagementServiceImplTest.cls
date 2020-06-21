@@ -434,7 +434,7 @@ private class LicenseManagementServiceImplTest {
         };
 
         mocks.startStubbing();
-        mocks.when(userSelector.selectUsersWithoutLicenseTypeSeat(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 100, orderings)).thenReturn(users);
+        mocks.when(userSelector.selectUsersAvailableForLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 100, orderings)).thenReturn(users);
         mocks.when(userSelector.sObjectType()).thenReturn(User.SObjectType);
         mocks.stopStubbing();
 
@@ -830,5 +830,114 @@ private class LicenseManagementServiceImplTest {
         // then
 
         System.assertEquals(true, exceptionThrown);
+    }
+
+    @IsTest
+    public static void testGetAllowedLicenseKeys() {
+        // given
+        LicenseType licenseType = LicenseType.COMPANY_INFO_API_USER;
+
+        // when
+        Test.startTest();
+        Set<String> licenseKeys = LicenseManagementService.getAllowedLicenseDefinitionKeysForLicenseType(licenseType);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(6, licenseKeys.size());
+    }
+
+    @IsTest
+    public static void testSelectAvailableUsersForAPILicenseType() {
+        // given
+
+        // the license type to test
+        LicenseType licenseType = LicenseType.COMPANY_INFO_API_USER;
+
+        // the current users (users are kind of metadata so you will get users created outside of your test in your result)
+        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
+        Integer currentNrOfUsers = ([SELECT Id FROM User WHERE
+        Profile.UserLicense.LicenseDefinitionKey IN :LicenseManagementService.getAllowedLicenseDefinitionKeysForLicenseType(licenseType)
+        AND Id NOT IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId = :permissionSetId)]).size();
+
+        // users
+        List<User> users = new List<User>();
+        for (Integer i = 0; i < 10; i++) {
+            User u = TestUtils.getUser('Standard User'); // the API user can have this profile
+            u.FirstName = 'first' + i;
+            u.LastName = 'last' + i;
+            users.add(u);
+        }
+        insert users;
+
+        // 5 of the users have the perm set, the rest does not.
+        // work with true assigning
+
+        List<User> usersWithLicenseType = new List<User>();
+        for (Integer i = 0; i < 5; i++) {
+            usersWithLicenseType.add(users.get(i));
+        }
+        LicenseManagementService.assignLicenseType(licenseType, usersWithLicenseType);
+
+
+        // when
+        Test.startTest();
+        // order on first name and last name
+        List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
+                new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
+                new fflib_QueryFactory.Ordering(User.LastName, fflib_QueryFactory.SortOrder.ASCENDING, true)
+        };
+        List<User> usersToAssert = LicenseManagementService.getUnAssignedUsersForLicenseType(licenseType, 0, 10 + currentNrOfUsers, orderings);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(currentNrOfUsers + 5, usersToAssert.size());
+
+    }
+
+    @IsTest
+    public static void testSelectAvailableUsersForDutchBusinessLicenseType() {
+        // given
+
+        // the license type to test
+        LicenseType licenseType = LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS;
+
+        // the current users (users are kind of metadata so you will get users created outside of your test in your result)
+        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
+        Integer currentNrOfUsers = ([SELECT Id FROM User WHERE
+        Profile.UserLicense.LicenseDefinitionKey IN :LicenseManagementService.getAllowedLicenseDefinitionKeysForLicenseType(licenseType)
+        AND Id NOT IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId = :permissionSetId)]).size();
+
+        // users
+        List<User> users = new List<User>();
+        for (Integer i = 0; i < 10; i++) {
+            User u = TestUtils.getUser('Standard User'); // the Dutch business user can have this profile
+            u.FirstName = 'first' + i;
+            u.LastName = 'last' + i;
+            users.add(u);
+        }
+        insert users;
+
+        // 5 of the users have the perm set, the rest does not.
+        // work with true assigning
+
+        List<User> usersWithLicenseType = new List<User>();
+        for (Integer i = 0; i < 5; i++) {
+            usersWithLicenseType.add(users.get(i));
+        }
+        LicenseManagementService.assignLicenseType(licenseType, usersWithLicenseType);
+
+        // when
+        Test.startTest();
+        // order on first name and last name
+        List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
+                new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
+                new fflib_QueryFactory.Ordering(User.LastName, fflib_QueryFactory.SortOrder.ASCENDING, true)
+        };
+        List<User> usersToAssert = LicenseManagementService.getUnAssignedUsersForLicenseType(licenseType, 0, 100, orderings);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(currentNrOfUsers + 5, usersToAssert.size());
+
     }
 }
