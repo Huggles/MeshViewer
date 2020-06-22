@@ -19,7 +19,9 @@
                     <template if:true={sObjectUsers}>
                         <lightning-button class="slds-theme_neutral" variant="neutral" label={label.Remove_Assignments_Button} disabled={isNoRowSelected} onclick={handleRemoveAssignmentClicked}></lightning-button>
                     </template>
-                    <lightning-button class="slds-theme_neutral" variant="neutral" label={label.Assign_Licenses} onclick={handleAssignLicensesClicked}></lightning-button>
+                    <template if:true={licensesAvailable}>
+                        <lightning-button class="slds-theme_neutral" variant="neutral" label={label.Assign_Licenses} onclick={handleAssignLicensesClicked}></lightning-button>
+                    </template>
                 </template>
                 <!-- TODO: add later          <lightning-button class="slds-theme_neutral" variant="neutral" label="Purchase Licenses"></lightning-button> -->
             </div>

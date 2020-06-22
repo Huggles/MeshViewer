@@ -20,7 +20,7 @@
     <template if:false={selectedCountry}>
         <lightning-combobox name="selectedCountry" class="slds-m-around_xxx-small" label={label.Search_Country} options={countries} value={selectedCountry} placeholder={label.Select_a_Country} dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>
     </template>
-    <lightning-input name="tradeName" class="slds-m-around_xxx-small" label={label.Name} type="text" value={localName} minlength=2 message-when-too-short={label.Fill_minimum_characters} variant="standard" onchange={handleNameChange}></lightning-input>
+    <lightning-input name="tradeName" class="slds-m-around_xxx-small" label={label.Trade_Name} type="text" value={localName} minlength=2 message-when-too-short={label.Fill_minimum_characters} variant="standard" onchange={handleNameChange}></lightning-input>
     <!-- Belgium specific -->
     <template if:true={isBeSelected}>
         <lightning-combobox name="status" class="slds-m-around_xxx-small" label={label.Status} options={statuses} value={status} placeholder={label.Select_a_Status} dropdown-alignment="left" variant="standard" onchange={handleStatusOnChange}></lightning-combobox>

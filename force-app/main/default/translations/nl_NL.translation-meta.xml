@@ -9,8 +9,12 @@
         <name>Active</name>
     </customLabels>
     <customLabels>
-        <label>Gebruikersnaam en wachtwoord succesvol veranderd!</label>
-        <name>Credentials_successfully_updated_message</name>
+        <label>Login succesvol</label>
+        <name>Login_successfull</name>
+    </customLabels>
+    <customLabels>
+        <label>Fout</label>
+        <name>Error</name>
     </customLabels>
     <customLabels>
         <label>Toevoeging</label>
@@ -41,88 +45,20 @@
         <name>City</name>
     </customLabels>
     <customLabels>
-        <label>Dank u voor het installeren van Custommer.connect. Om te starten, voer uw gebruikersgegevens in of</label>
-        <name>Config_Account_ActivateDescription</name>
-    </customLabels>
-    <customLabels>
-        <label>vraag een proeflicentie aan</label>
-        <name>Config_Account_ActivateDescriptionRequest</name>
-    </customLabels>
-    <customLabels>
-        <label>Uw account is nog niet geactiveerd. Probeer het later nogmaals. Een van onze accountmanagers neemt contact met u op zodra uw account is geactiveerd.</label>
-        <name>Config_Account_AwaitingActivation</name>
-    </customLabels>
-    <customLabels>
-        <label>Vraag een proeflicentie aan</label>
-        <name>Config_Account_CreateAccount</name>
-    </customLabels>
-    <customLabels>
-        <label>Ik ben al een gebruiker</label>
-        <name>Config_Account_ExistingUser</name>
-    </customLabels>
-    <customLabels>
-        <label>ID</label>
-        <name>Config_Account_ID</name>
-    </customLabels>
-    <customLabels>
         <label>Wachtwoord</label>
-        <name>Config_Account_Password</name>
+        <name>Password</name>
     </customLabels>
     <customLabels>
-        <label>Opslaan</label>
-        <name>Config_Account_Save</name>
+        <label>Inloggen</label>
+        <name>Login_Button</name>
     </customLabels>
     <customLabels>
-        <label>Gebruikersnaam</label>
-        <name>Config_Account_Username</name>
-    </customLabels>
-    <customLabels>
-        <label>Voeg budget toe</label>
-        <name>Config_Add_Budget</name>
-    </customLabels>
-    <customLabels>
-        <label>Uw balans is veranderd</label>
-        <name>Config_Balance_Changed</name>
-    </customLabels>
-    <customLabels>
-        <label>Er is een fout opgetreden tijdens de activering van deze org. Neem contact met ons op.</label>
-        <name>Config_Balance_Error</name>
-    </customLabels>
-    <customLabels>
-        <label>Budgetmanagement</label>
-        <name>Config_Balance_Management</name>
-    </customLabels>
-    <customLabels>
-        <label>Bekijk uw huidige budget, wijzig uw grenswaarde en koop aanvullend budget.</label>
-        <name>Config_Balance_Management_Text</name>
-    </customLabels>
-    <customLabels>
-        <label>De grenswaarde geeft aan wanneer u een waarschuwing krijgt dat uw budget bijna geconsumeerd is.</label>
-        <name>Config_Balance_Threshold_Description</name>
-    </customLabels>
-    <customLabels>
-        <label>Uw budget is opgewaardeerd.</label>
-        <name>Config_Balance_Updated</name>
-    </customLabels>
-    <customLabels>
-        <label>Inloggegevens</label>
-        <name>Config_Credentials</name>
-    </customLabels>
-    <customLabels>
-        <label>Huidig budget</label>
-        <name>Config_Current_Budget</name>
-    </customLabels>
-    <customLabels>
-        <label>Huidige grenswaarde</label>
-        <name>Config_Current_Threshold</name>
+        <label>Company.info Gebruikersnaam</label>
+        <name>Companyinfo_Username</name>
     </customLabels>
     <customLabels>
         <label>Laden…</label>
         <name>Loading</name>
-    </customLabels>
-    <customLabels>
-        <label>Company.info configuratie pagina</label>
-        <name>Config_Page_Title</name>
     </customLabels>
     <customLabels>
         <label>Company.info configuratie</label>
@@ -164,10 +100,10 @@
         <label>Verenigd Koninkrijk</label>
         <name>Country_United_Kingdom</name>
     </customLabels>
-    <customLabels>
-        <label>Zoeken naar land</label>
-        <name>Country_to_Search</name>
-    </customLabels>
+<!--    <customLabels>-->
+<!--        <label>Zoeken naar land</label>-->
+<!--        <name>Country_to_Search</name>-->
+<!--    </customLabels>-->
     <customLabels>
         <label>Voer alstublieft een van de volgende zoekcriteria op om te kunnen zoeken:</label>
         <name>CreditSafe_Validation_Message_Heading</name>
@@ -193,84 +129,32 @@
         <name>Creditsafe_company_identifier</name>
     </customLabels>
     <customLabels>
-        <label>Er is een fout opgetreden bij het controleren van duplicaten.</label>
-        <name>DBSCall_AccountDupCheck_Exception</name>
-    </customLabels>
-    <customLabels>
-        <label>Er is een fout opgetreden bij het aanmaken van het account.</label>
-        <name>DBSCall_AccountSave_Exception</name>
-    </customLabels>
-    <customLabels>
-        <label>Er is een fout opgetreden bij het zoeken naar het account.</label>
-        <name>DBSCall_AccountSearch_Exception</name>
-    </customLabels>
-    <customLabels>
-        <label>Er is een fout opgetreden bij het opslaan van het dossier.</label>
-        <name>DBSCall_DossierSave_Exception</name>
-    </customLabels>
-    <customLabels>
-        <label>Er is een fout opgetreden op BusinessService niveau.</label>
-        <name>DBSCall_Unknown_Exception</name>
-    </customLabels>
-    <customLabels>
         <label>DMLManager Fout: Er kon geen bestaand record gevonden worden voor het object met Id =</label>
         <name>DML_Manager_Error</name>
-    </customLabels>
-    <customLabels>
-        <label>De onderstaande details zijn gesynchroniseerd vanuit Company.info</label>
-        <name>Details_Help</name>
     </customLabels>
     <customLabels>
         <label>Domeinnaam</label>
         <name>Domain_Name</name>
     </customLabels>
     <customLabels>
-        <label>Creeer organisatie</label>
-        <name>Dossier_Account_Create</name>
-    </customLabels>
-    <customLabels>
-        <label>Organisatie gecreeerd</label>
-        <name>Dossier_Account_Create_Completed</name>
-    </customLabels>
-    <customLabels>
-        <label>Werk organisatie bij</label>
-        <name>Dossier_Account_Update</name>
-    </customLabels>
-    <customLabels>
         <label>Organisatie bijgewerkt</label>
         <name>Dossier_Account_Update_Completed</name>
     </customLabels>
     <customLabels>
-        <label>De gebruiker heeft geen toegang tot het dossier met ID:</label>
-        <name>Dossier_ID_Access</name>
-    </customLabels>
-    <customLabels>
-        <label>DossierID moet ingevuld zijn wanneer het BTW nummer opgehaald wordt.</label>
-        <name>Dossier_ID_Missing</name>
-    </customLabels>
-    <customLabels>
-        <label>Er zijn meerdere gelijkende accounts gevonden. Het is niet mogelijk om de data aan het juiste account toe te wijzen. Verwijder alstublieft de gelijkende accounts en probeer het opnieuw.</label>
-        <name>Dossier_Multiple_Account_Duplicates_Found</name>
+        <label>Dossier is niet aanwezig (null).</label>
+        <name>Dossier_Null_Error_Message</name>
     </customLabels>
     <customLabels>
         <label>Kamer van Koophandel nummer</label>
         <name>Dossier_Number</name>
     </customLabels>
     <customLabels>
-        <label>Kon het BTW nummer niet ophalen om het Registratienummer mist.</label>
+        <label>Kon het BTW nummer niet ophalen omdat het KvK nummer mist.</label>
         <name>Dossier_Number_Missing</name>
     </customLabels>
     <customLabels>
-        <label>Verwijder Company.info gegevens</label>
-        <name>Dossier_Remove</name>
-    </customLabels>
-    <customLabels>
-        <label>Company.info gegevens verwijderd</label>
-        <name>Dossier_Removed</name>
-    </customLabels>
-    <customLabels>
         <label>Fout</label>
-        <name>Error</name>
+        <name>Error_Title</name>
     </customLabels>
     <customLabels>
         <label>De authenticatie met de databron is niet gelukt. U bent niet ingelogd en kunt geen data benaderen. Neem contact op met uw systeembeheerder en laat hem controleren of de ingevoerde gebruikersnaam, paswoord en account id correct zijn.</label>
@@ -313,20 +197,8 @@
         <name>Error_Client_Payment</name>
     </customLabels>
     <customLabels>
-        <label>Fout 103 ontvangen van Company.info. Neem contact op met support.</label>
-        <name>Error_Config</name>
-    </customLabels>
-    <customLabels>
-        <label>Een aantal verplichte velden ontbreken.</label>
-        <name>Error_Incomplete</name>
-    </customLabels>
-    <customLabels>
         <label>Incorrecte invoer. Controleer uw invoer en probeer opnieuw.</label>
         <name>Error_Input_Incorrect</name>
-    </customLabels>
-    <customLabels>
-        <label>Er was een probleem met het verwijderen van de Company.info gegevens. Controleer of u toestemming heeft Company.info gegevens te verwijderen.</label>
-        <name>Error_Remove_Dossier</name>
     </customLabels>
     <customLabels>
         <label>Een fout is opgetreden tijdens het ophalen van de gevraagde data.</label>
@@ -377,18 +249,6 @@
         <name>Error_Webservice_Server</name>
     </customLabels>
     <customLabels>
-        <label>De gebruiker bestaat niet. Controleer alstublieft de gebruikersnaam en het paswoord.</label>
-        <name>Error_user_not_found</name>
-    </customLabels>
-    <customLabels>
-        <label>Vestigingsdatum</label>
-        <name>Establishment_Date</name>
-    </customLabels>
-    <customLabels>
-        <label>Vestigingsnummer</label>
-        <name>Establishment_Number</name>
-    </customLabels>
-    <customLabels>
         <label>Voer ten minste twee karakters in.</label>
         <name>Fill_minimum_characters</name>
     </customLabels>
@@ -397,24 +257,8 @@
         <name>Get_Creditsafe_Report</name>
     </customLabels>
     <customLabels>
-        <label>Onderstaand de gedetailleerde organisatie gegevens. Druk op creeer organisatie om de organisatie (Account) aan te maken.</label>
-        <name>Get_Dossier_Results_Help</name>
-    </customLabels>
-    <customLabels>
-        <label>Goederen kredietverzekering</label>
-        <name>Goods_Credit_Insurance</name>
-    </customLabels>
-    <customLabels>
         <label>Huisnummer</label>
         <name>House_Number</name>
-    </customLabels>
-    <customLabels>
-        <label>Verzekeringscontract - Intentie tot  ondertekening van een verzekeringscontract</label>
-        <name>Insurance_Contract_Intention_of_signature_of_a_insurance_contract</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Language Input Error --></label>
-        <name>Language_Input_Error</name>
     </customLabels>
     <customLabels>
         <label>Plaats</label>
@@ -423,10 +267,6 @@
     <customLabels>
         <label>B.V.</label>
         <name>Ltd</name>
-    </customLabels>
-    <customLabels>
-        <label>Overeenkomstige organisatie</label>
-        <name>Matching_Companies</name>
     </customLabels>
     <customLabels>
         <label>Vul een geldig registratienummer in van ten minste twee karakters.</label>
@@ -441,28 +281,8 @@
         <name>More_than_20_results_message</name>
     </customLabels>
     <customLabels>
-        <label>Naam</label>
-        <name>Name</name>
-    </customLabels>
-    <customLabels>
-        <label>Nieuwe Organisatie op basis van Company.info data</label>
-        <name>New_Account_CC</name>
-    </customLabels>
-    <customLabels>
         <label>Nee</label>
         <name>No</name>
-    </customLabels>
-    <customLabels>
-        <label>Geen Company.info authenticatie data gevonden. Company.info is nog niet geactiveerd</label>
-        <name>NoAuthAppNotActive</name>
-    </customLabels>
-    <customLabels>
-        <label>Een Bedrijfsdossier die gerelateerd is aan dit Account kan niet worden gevonden. Zorg ervoor dat een bedrijfsdossier beschikbaar is om het rapport te halen.</label>
-        <name>No_Business_Dossier_Found</name>
-    </customLabels>
-    <customLabels>
-        <label>Creditsafe rapport kon niet worden gegenereerd omdat het Bedrijf ID niet beschikbaar is bij Company.info</label>
-        <name>No_Company_Id_Found</name>
     </customLabels>
     <customLabels>
         <label>Vul alstublieft tenminste een van de adres velden (straat, postcode, postbus of stad)</label>
@@ -501,24 +321,12 @@
         <name>Province</name>
     </customLabels>
     <customLabels>
-        <label>Koopcontract - Intentie tot ondertekening van de koopovereenkomst</label>
-        <name>Purchase_Contract_Intention_of_signature_of_purchase_contract</name>
-    </customLabels>
-    <customLabels>
-        <label>Realisatie check vorderingen collectie</label>
-        <name>Realisation_check_receivables_collection</name>
-    </customLabels>
-    <customLabels>
         <label>Registratienummer</label>
         <name>Registration_Number</name>
     </customLabels>
     <customLabels>
         <label>Registratie type</label>
         <name>Registration_Type</name>
-    </customLabels>
-    <customLabels>
-        <label>Adres</label>
-        <name>Search_Address</name>
     </customLabels>
     <customLabels>
         <label>Weet u het zeker dat u opnieuw wilt zoeken?</label>
@@ -529,20 +337,12 @@
         <name>Search_Again_Confirmation_Dialog_Title</name>
     </customLabels>
     <customLabels>
-        <label>Zoek Gebouw</label>
-        <name>Search_Building</name>
-    </customLabels>
-    <customLabels>
         <label>Zoek bedrijf</label>
         <name>Search_Business_Title</name>
     </customLabels>
     <customLabels>
         <label>Stad</label>
         <name>Search_City</name>
-    </customLabels>
-    <customLabels>
-        <label>Organisatie details</label>
-        <name>Search_Company_Details</name>
     </customLabels>
     <customLabels>
         <label>Zoek</label>
@@ -581,72 +381,12 @@
         <name>Search_Criterium_VAT_Number_Description</name>
     </customLabels>
     <customLabels>
-        <label>Details om te synchroniseren</label>
-        <name>Search_Details</name>
-    </customLabels>
-    <customLabels>
-        <label>Organisatie details</label>
-        <name>Search_Details_Dossier</name>
-    </customLabels>
-    <customLabels>
-        <label>Juridische entiteit details</label>
-        <name>Search_Details_Legal</name>
-    </customLabels>
-    <customLabels>
-        <label>Domeinnaam</label>
-        <name>Search_Domain</name>
-    </customLabels>
-    <customLabels>
-        <label>Kamer van Koophandel nummer</label>
-        <name>Search_Dossier_Number</name>
-    </customLabels>
-    <customLabels>
-        <label>Vul alstublieft de zoekvelden in om de organisatie te vinden waar u naar zoekt.</label>
-        <name>Search_Help</name>
-    </customLabels>
-    <customLabels>
-        <label>Huisnummer</label>
-        <name>Search_House_Nr</name>
-    </customLabels>
-    <customLabels>
-        <label>Toevoeging</label>
-        <name>Search_House_Nr_Addition</name>
-    </customLabels>
-    <customLabels>
-        <label>Zoek Huisnummer</label>
-        <name>Search_Housenr</name>
-    </customLabels>
-    <customLabels>
-        <label>Zoek</label>
-        <name>Search_Match_Dossier</name>
-    </customLabels>
-    <customLabels>
         <label>Geen resultaten</label>
         <name>Search_No_Results</name>
     </customLabels>
     <customLabels>
-        <label>Zoek Organisatie</label>
-        <name>Search_Organization</name>
-    </customLabels>
-    <customLabels>
-        <label>Zoek Postbus</label>
-        <name>Search_PObox</name>
-    </customLabels>
-    <customLabels>
-        <label>Telefoonnummer</label>
-        <name>Search_Phone</name>
-    </customLabels>
-    <customLabels>
         <label>Postcode</label>
         <name>Search_Postal_Code</name>
-    </customLabels>
-    <customLabels>
-        <label>Provincie</label>
-        <name>Search_Province</name>
-    </customLabels>
-    <customLabels>
-        <label>Registratienummer</label>
-        <name>Search_Registration_Number</name>
     </customLabels>
     <customLabels>
         <label>Zoek nogmaals</label>
@@ -655,10 +395,6 @@
     <customLabels>
         <label>Bevestig</label>
         <name>Search_Results_Confirm</name>
-    </customLabels>
-    <customLabels>
-        <label>De volgende organisaties komen overeen met uw zoekcriteria. Selecteer de juiste organisatie.</label>
-        <name>Search_Results_Help</name>
     </customLabels>
     <customLabels>
         <label>Er zijn meer resultaten opgehaald maar deze worden niet getoond. Specificeer gedetailleerdere zoekcriteria.</label>
@@ -671,10 +407,6 @@
     <customLabels>
         <label>Straat</label>
         <name>Search_Street</name>
-    </customLabels>
-    <customLabels>
-        <label>Handelsnaam</label>
-        <name>Search_Trade_Name</name>
     </customLabels>
     <customLabels>
         <label>Btw-nummer</label>
@@ -709,12 +441,8 @@
         <name>Success</name>
     </customLabels>
     <customLabels>
-        <label>Company.info synchronisatie</label>
-        <name>Sync</name>
-    </customLabels>
-    <customLabels>
-        <label>Company.info synchronisatie is succesvol uitgevoerd</label>
-        <name>Sync_Success</name>
+        <label>Geen gebruikers om licenties aan toe te wijzen</label>
+        <name>No_users_available_to_assign_licenses_to</name>
     </customLabels>
     <customLabels>
         <label>Handelsnaam</label>
@@ -799,22 +527,6 @@
     <customLabels>
         <label>Validatie fout</label>
         <name>Validation_Error_Message_Toast_Title</name>
-    </customLabels>
-    <customLabels>
-        <label>Een fout is opgetreden tijdens het veranderen van het budget.</label>
-        <name>WSCall_ChangeBalance_Exception</name>
-    </customLabels>
-    <customLabels>
-        <label>Een fout is opgetreden. Neem contact op met uw systeembeheerder.</label>
-        <name>WSCall_Generic_UI_Exception</name>
-    </customLabels>
-    <customLabels>
-        <label>Een onbekende fout is opgetreden</label>
-        <name>WSCall_Unknown_Exception</name>
-    </customLabels>
-    <customLabels>
-        <label>Company.info kan de systemen van de Company.info niet bereiken. Probeer het later nog een keer.</label>
-        <name>WSCall_Unsuccessful</name>
     </customLabels>
     <customLabels>
         <label>Ja</label>

@@ -3,24 +3,21 @@
         {
             "path": "force-app",
             "package": "Company.info for Salesforce",
-            "versionName": "R1.1 Alpha 1",
-            "versionNumber": "1.1.0.NEXT",
+            "versionName": "Summer 2020",
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
             "postInstallScript": "PostInstallScript",
-            "ancestorId": "Company.info for Salesforce@R1"
+            "ancestorId": "Company.info for Salesforce@1.2.1-1"
         }
     ],
     "namespace": "appsolutely",
     "sfdcLoginUrl": "https://login.salesforce.com",
     "sourceApiVersion": "48.0",
     "packageAliases": {
-        "Company.info for Salesforce": "0Ho0J0000004CABSA2",
-        "Company.info for Salesforce@R1-Beta-1": "04t0J000000M9oeQAC",
-        "Company.info for Salesforce@R1-Beta-2": "04t0J000000M9ojQAC",
-        "Company.info for Salesforce@R1-Beta-3": "04t0J000000M9ooQAC",
-        "Company.info for Salesforce@R1-Beta-4": "04t0J000000M9oyQAC",
-        "Company.info for Salesforce@Restructure source tree": "04t0J000000M9p3QAC",
-        "Company.info for Salesforce@R1": "04t0J000000M9pIQAS"
+        "Company.info for Salesforce": "0Ho0J000000k9bSSAQ",
+        "Company.info for Salesforce@1.1.0-1": "04t0J000000Hr6kQAC",
+        "Company.info for Salesforce@1.1.1-1": "04t0J000000Hr6pQAC",
+        "Company.info for Salesforce@1.2.0-1": "04t0J000000Hr6uQAC",
+        "Company.info for Salesforce@1.2.1-1": "04t0J000000Hr74QAC"
     }
 }
