@@ -4,12 +4,6 @@
 
 @IsTest
 public with sharing class SetupServiceImplTest {
-
-    @TestSetup
-    public static void testSetup(){
-
-    }
-
     @IsTest
     public static void getUpdateSettingsTest(){
         System.runAs(TestUtils.getCompanyInfoAdmin()){

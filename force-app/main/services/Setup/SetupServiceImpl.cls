@@ -27,7 +27,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
             string masterLabel = String.valueOf(mdRecord.get('label'));
 
             if(checked == null || developerName == null || masterLabel == null){
-                throw new AuraHandledException(Label.Error_Input_Incorrect);
+                throw new InputException(Label.Error_Input_Incorrect);
             }
             //if the the new value is not different from the current value, dont add it to update.
             boolean requiresUpdate = false;
@@ -58,19 +58,18 @@ public with sharing class SetupServiceImpl implements ISetupService {
         try{
             jobId = Metadata.Operations.enqueueDeployment(mdContainer, callback);
         }catch (Exception e){
-            AuraHandledException auraHandledException = new AuraHandledException(Label.Error_updating_update_type_settings);
-            e.setMessage(Label.Error_updating_update_type_settings); //Explicitly set the message so it can be read in apex as well.
-            throw e;
+            MetadataOperationException metadataOperationException = new MetadataOperationException(Label.Error_updating_update_type_settings);
+            metadataOperationException.setMessage(Label.Error_updating_update_type_settings); //Explicitly set the message so it can be read in apex as well.
+            throw metadataOperationException;
         }
         return jobId;
 
     }
-
-
     public inherited sharing class CustomMetadataCallback implements Metadata.DeployCallback {
         public void handleResult(Metadata.DeployResult result, Metadata.DeployCallbackContext context) {
             if (result.status == Metadata.DeployStatus.Succeeded) {
             } else {
+
             }
         }
     }

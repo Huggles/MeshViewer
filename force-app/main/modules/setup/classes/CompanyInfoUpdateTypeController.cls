@@ -6,11 +6,22 @@ public with sharing class CompanyInfoUpdateTypeController {
 
     @AuraEnabled
     public static List<Protected_Subscriber_Setting__mdt> getUpdateTypes() {
-        return SetupService.getUpdateTypes();
+        try {
+            return SetupService.getUpdateTypes();
+        }catch (Exception e){
+            ErrorLogUtil.logException(e);
+            throw new AuraHandledException(e.getMessage());
+        }
+
     }
 
     @AuraEnabled
     public static Id setUpdateTypes(List<Map<string, object>> payload) {
-        return SetupService.setUpdateTypes(payload);
+        try {
+            return SetupService.setUpdateTypes(payload);
+        }catch (Exception e){
+            ErrorLogUtil.logException(e);
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 }
