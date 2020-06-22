@@ -280,14 +280,6 @@
         <value>Create Duplicate Account</value>
     </labels>
     <labels>
-        <fullName>Country_Luxembourg</fullName>
-        <categories>CreditSafe</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Country Luxembourg</shortDescription>
-        <value>Luxembourg</value>
-    </labels>
-    <labels>
         <fullName>Login_successfull</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
@@ -820,38 +812,6 @@
         <value>No users available to assign licenses to</value>
     </labels>
     <labels>
-        <fullName>Assign</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Assign button</shortDescription>
-        <value>Assign</value>
-    </labels>
-    <labels>
-        <fullName>Assign_users_success_message</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Success message shown after assigning seats to users</shortDescription>
-        <value>Users successfully assigned</value>
-    </labels>
-    <labels>
-        <fullName>Assign_Licenses</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Assign Licenses button on License Management Card</shortDescription>
-        <value>Assign Licenses</value>
-    </labels>
-    <labels>
-        <fullName>Remove_Assignments_Button</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Remove assignments button on License Management Card</shortDescription>
-        <value>Remove Assignments</value>
-    </labels>
-    <labels>
         <fullName>No_address_fields_filled_international_address</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
@@ -866,14 +826,6 @@
         <protected>true</protected>
         <shortDescription>Text shown below desert img when no users have been assigned</shortDescription>
         <value>No users assigned</value>
-    </labels>
-    <labels>
-        <fullName>No_users_available_to_assign_licenses_to</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>No users available to assign licenses to</shortDescription>
-        <value>No_users_available_to_assign_licenses_to</value>
     </labels>
     <labels>
         <fullName>NonActive</fullName>
@@ -981,14 +933,6 @@
         <protected>true</protected>
         <shortDescription>Redirect to duplicate Account with Address</shortDescription>
         <value>The account you were trying to create is already in Salesforce and has International address data. You are redirected to this account.</value>
-    </labels>
-    <labels>
-        <fullName>Province</fullName>
-        <categories>CreditSafe,InternationalAddress</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Province</shortDescription>
-        <value>Province</value>
     </labels>
     <labels>
         <fullName>Registration_Number</fullName>
@@ -1324,14 +1268,6 @@
         <value>Please enter a valid Danish VAT Number.</value>
     </labels>
     <labels>
-        <fullName>Error</fullName>
-        <categories>Error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Title of error toast</shortDescription>
-        <value>Error</value>
-    </labels>
-    <labels>
         <fullName>Valid_Dutch_phone_number</fullName>
         <categories>Dutch Business,Error</categories>
         <language>en_US</language>
@@ -1402,14 +1338,6 @@
         <protected>true</protected>
         <shortDescription>Valid Irish CreditSafe Identification Nr</shortDescription>
         <value>Please enter a valid Irish CreditSafe Identification Number</value>
-    </labels>
-    <labels>
-        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
-        <categories>CreditSafe,Error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
-        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
     </labels>
     <labels>
         <fullName>Valid_Irish_VAT_Number</fullName>
@@ -1580,14 +1508,6 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
-    </labels>
-    <labels>
-        <fullName>International_Address_Organization_Help_Text</fullName>
-        <categories>InternationalAddress</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
-        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
     </labels>
     <labels>
         <fullName>Feature_Not_Found</fullName>
