@@ -21,8 +21,8 @@ private class CreateDuplicatesControllerTest {
         Id id2 = CreateDuplicatesController.createDuplicateAccount(account2);
         Test.stopTest();
 
-        System.assertNotEquals(id1, null);
-        System.assertNotEquals(id2, null);
+        System.assertNotEquals(id1, null, 'An id should be filled');
+        System.assertNotEquals(id2, null, 'An id should be filled');
 
     }
 }

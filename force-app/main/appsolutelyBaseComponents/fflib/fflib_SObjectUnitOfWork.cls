@@ -95,10 +95,10 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
     {
         private Database.DMLOptions dmlOptions;
 
-        public DuplicateDML()
+        public DuplicateDML(Boolean allowSave)
         {
             dmlOptions = new Database.DMLOptions();
-            dmlOptions.DuplicateRuleHeader.allowSave = true;
+            dmlOptions.DuplicateRuleHeader.allowSave = allowsave;
         }
         public void dmlInsert(List<SObject> objList)
         {

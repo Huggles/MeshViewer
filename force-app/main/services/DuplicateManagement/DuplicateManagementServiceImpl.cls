@@ -13,7 +13,7 @@ public inherited sharing class DuplicateManagementServiceImpl implements IDuplic
      */
 
     public static Id createDuplicate(SObject sobj) {
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML());
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
 
         unitOfWork.registerNew(sobj);
         unitOfWork.commitWork();

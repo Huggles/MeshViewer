@@ -10,7 +10,11 @@ import Creditsafe_Report_Created from '@salesforce/label/c.Creditsafe_Report_Cre
 export default class FlowNavigation extends NavigationMixin(LightningElement) {
 
     @api recordId;
+
+    //Custom message that is shown as the toast message
     @api message;
+
+    //Custom variant that is shown as the toast variant
     @api variant;
 
     connectedCallback() {

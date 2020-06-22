@@ -21,9 +21,9 @@ private class DuplicateManagementServiceImplTest {
         List<SObject> sObjects = DuplicateManagementService.findDuplicates(accounts);
         Test.stopTest();
 
-        System.assertNotEquals(sObjects, null);
+        System.assertNotEquals(sObjects, null, 'There should be an instance of sObjects');
         if (sObjects.size() > 0) { //we know that a duplicate rule is active
-            System.assertNotEquals(sObjects.size(), 0);
+            System.assertNotEquals(sObjects.size(), 0, 'There should be at least one object');
         }
     }
 
@@ -37,23 +37,8 @@ private class DuplicateManagementServiceImplTest {
         Id id2 = DuplicateManagementService.createDuplicate(account2);
         Test.stopTest();
 
-        System.assertNotEquals(id1, null);
-        System.assertNotEquals(id2, null);
-
-    }
-
-    @IsTest
-    static void createDuplicateAccountFTest() {
-        Account account1 = new Account(Name = 'test', BillingCity = 'city');
-        Account account2 = new Account(Name = 'test', BillingCity = 'city');
-
-        Test.startTest();
-        Id id1 = DuplicateManagementService.createDuplicate(account1);
-        Id id2 = DuplicateManagementService.createDuplicate(account2);
-        Test.stopTest();
-
-        System.assertNotEquals(id1, null);
-        System.assertNotEquals(id2, null);
+        System.assertNotEquals(id1, null, 'An id should be filled');
+        System.assertNotEquals(id2, null, 'An id should be filled');
 
     }
 }
