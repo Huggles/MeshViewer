@@ -5,12 +5,11 @@
 import {LightningElement, api} from 'lwc';
 
 export default class UpdateTypeTile extends LightningElement {
-    @api item;
 
+    @api item;
 
     @api
     getStatus(){
-
         let toggle = this.template.querySelector("lightning-input[data-classification=update_type_toggle]");
         if(toggle != null){
             let response = {
@@ -22,4 +21,6 @@ export default class UpdateTypeTile extends LightningElement {
             return response;
         }
     }
+
+
 }

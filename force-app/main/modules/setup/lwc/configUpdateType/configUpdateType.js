@@ -4,11 +4,11 @@
 
 import { LightningElement, wire, track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
-import {ShowToastEvent} from "lightning/platformShowToastEvent";
+import {ToastEventController} from 'c/toastEventController'
 
 
 //Labels
-import Error from '@salesforce/label/c.Error';
+import Update_types_Saved from '@salesforce/label/c.Update_types_Saved';
 import Save from '@salesforce/label/c.Save';
 import Update_types from '@salesforce/label/c.Update_types';
 import Update_types_explanation from '@salesforce/label/c.Update_types_explanation';
@@ -17,6 +17,7 @@ import Update_types_explanation from '@salesforce/label/c.Update_types_explanati
 import getUpdateTypes from '@salesforce/apex/CompanyInfoUpdateTypeController.getUpdateTypes';
 import setUpdateTypes from '@salesforce/apex/CompanyInfoUpdateTypeController.setUpdateTypes';
 
+
 export default class ConfigUpdateType extends LightningElement {
     @track options = [];
     @track values = [];
@@ -24,6 +25,7 @@ export default class ConfigUpdateType extends LightningElement {
     isLoading = false;
 
     labels = {
+        Success,
         Error,
         Save,
         Update_types,
@@ -32,15 +34,18 @@ export default class ConfigUpdateType extends LightningElement {
 
     connectedCallback() {
         this.isLoading = true;
-        this.retrieveUpdateTypes();
+        this.retrieveUpdateTypes().finally(() => {
+            this.isLoading = false;
+        });
+
     }
 
     @track updateTypes = [];
-    retrieveUpdateTypes(){
-        getUpdateTypes({})
+    async retrieveUpdateTypes(){
+        await getUpdateTypes({})
             .then(result => {
                 this.updateTypes = result;
-                this.isLoading = false;
+                Promise.resolve(result);
             })
             .catch(error => {
                 const event = new ShowToastEvent({
@@ -49,12 +54,12 @@ export default class ConfigUpdateType extends LightningElement {
                     variant: 'error'
                 });
                 this.dispatchEvent(event);
-                this.isLoading = false;
+                Promise.reject(error);
             })
     }
     handleUpdateTypesSave(event){
         this.isLoading = true;
-        let tiles = this.template.querySelectorAll("c-update-type-tile[data-identifier='updateType'");
+        let tiles = this.template.querySelectorAll("c-update-type-tile[data-identifier='updateType']");
         if(tiles != null){
             let payload = [];
             tiles.forEach((tile, index) => {
@@ -66,24 +71,25 @@ export default class ConfigUpdateType extends LightningElement {
                 }
                 payload.push(payloadItem);
             });
-            setUpdateTypes({payload : payload})
+            this.saveUpdateTypes(payload)
                 .then(result =>{
-                    const event = new ShowToastEvent({
-                        title: this.labels.Success,
-                        variant: 'success'
-                    });
-                    this.dispatchEvent(event);
-                    this.isLoading = false;
+                    new ToastEventController(this).showSuccessToastMessage(null,this.labels.Update_types_Saved);
                 })
                 .catch(error =>{
-                    const event = new ShowToastEvent({
-                        title: this.labels.Error,
-                        message: error,
-                        variant: 'error'
-                    });
-                    this.dispatchEvent(event);
-                    this.isLoading = false;
+                    new ToastEventController(this).showErrorToastMessage(null,error.message.body);
                 })
+                .finally(() => {
+                    this.isLoading = false;
+                });
         }
+    }
+    async saveUpdateTypes(payload){
+        await setUpdateTypes({payload : payload})
+            .then(result =>{
+                Promise.resolve(result);
+            })
+            .catch(error =>{
+                Promise.reject(error);
+            })
     }
 }

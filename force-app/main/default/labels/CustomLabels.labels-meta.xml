@@ -1110,6 +1110,14 @@
         <value>Update Types</value>
     </labels>
     <labels>
+        <fullName>Update_types_Saved</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Confirmation message that the update types have been saved succesfully.</shortDescription>
+        <value>The update types have been updated succesfully!</value>
+    </labels>
+    <labels>
         <fullName>Update_types_explanation</fullName>
         <categories>Settings</categories>
         <language>en_US</language>
