@@ -20,7 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Company_Info_Key__c</field>
+                <field>Foreign_Key__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
