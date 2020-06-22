@@ -25,19 +25,21 @@ export default class ConfigUpdateType extends LightningElement {
     isLoading = false;
 
     labels = {
-        Success,
-        Error,
         Save,
         Update_types,
-        Update_types_explanation
+        Update_types_explanation,
+        Update_types_Saved
     }
 
     connectedCallback() {
         this.isLoading = true;
-        this.retrieveUpdateTypes().finally(() => {
-            this.isLoading = false;
-        });
-
+        this.retrieveUpdateTypes()
+            .catch(error =>{
+                new ToastEventController(this).showErrorToastMessage(null,error.message.body);
+            })
+            .finally(() => {
+                this.isLoading = false;
+            });
     }
 
     @track updateTypes = [];
@@ -48,12 +50,6 @@ export default class ConfigUpdateType extends LightningElement {
                 Promise.resolve(result);
             })
             .catch(error => {
-                const event = new ShowToastEvent({
-                    title: this.labels.Error,
-                    message: error,
-                    variant: 'error'
-                });
-                this.dispatchEvent(event);
                 Promise.reject(error);
             })
     }
