@@ -36,11 +36,13 @@ sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" 30 "../config/enterpris
 sh operations/install-package-version.sh "$SCRATCH_ORG_ALIAS" "$PACKAGE_VERSION_NAME"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_administrator"
 
+######################
+#Create Standard User#
+######################
 sh operations/create-standard-user.sh "$SCRATCH_ORG_ALIAS" "$SCRATCH_ORG_SU_ALIAS"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_SU_ALIAS" "Company_info_for_Dutch_Business"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_SU_ALIAS" "Company_info_for_International_Business"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_SU_ALIAS" "Company_info_for_Sales"
-
 
 if [ "$OPEN" = "y" ]
 then
