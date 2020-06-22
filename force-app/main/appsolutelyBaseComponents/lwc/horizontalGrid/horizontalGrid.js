@@ -34,8 +34,6 @@ export default class HorizontalGrid extends LightningElement {
         let tiles = this.querySelectorAll(selector);
         if(tiles != null && tiles.length > 0){
             tiles.forEach((tile, tileIndex) => {
-
-
                 tile.item = this.items[tileIndex];
             });
         }

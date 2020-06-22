@@ -29,26 +29,15 @@ public with sharing class SetupServiceImplTest {
         List<Map<String,Object>> l1 = new List<Map<String,Object>>();
         l1.add(record1);
 
-        Map<String,Object> record2 = new Map<String,Object>{
-                'developerName' => 'Activity',
-                'checked' => true,
-                'label' => 'Activity'
-        };
-        List<Map<String,Object>> l2 = new List<Map<String,Object>>();
-        l1.add(record2);
-
         System.runAs(TestUtils.getCompanyInfoAdmin()){
-            //Run with checked=true and checked=false to make sure it runs all scenarios.
+            //Deploying custom metadata cannot be tested/mocked. It will always throw an error.
             Test.startTest();
             try{
                 SetupService.setUpdateTypes(l1);
-                SetupService.setUpdateTypes(l2);
             }catch (Exception e){
                 System.assertEquals(Label.Error_updating_update_type_settings, e.getMessage());
             }
             Test.stopTest();
         }
     }
-
-
 }

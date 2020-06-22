@@ -29,31 +29,22 @@ public with sharing class SetupServiceImpl implements ISetupService {
             if(checked == null || developerName == null || masterLabel == null){
                 throw new InputException(Label.Error_Input_Incorrect);
             }
-            //if the the new value is not different from the current value, dont add it to update.
-            boolean requiresUpdate = false;
-            for(Protected_Subscriber_Setting__mdt updateType : updateTypes){
-                if(updateType.DeveloperName == developerName && updateType.Enabled__c != checked){
-                    requiresUpdate = true;
-                }
-            }
+            Metadata.CustomMetadata customMetadata = new Metadata.CustomMetadata();
+            customMetadata.fullName = updateTypeAPIName + '.' + developerName; //RecordName = DeveloperName
+            customMetadata.label = masterLabel;
 
-            if(requiresUpdate){
-                Metadata.CustomMetadata customMetadata = new Metadata.CustomMetadata();
-                customMetadata.fullName = updateTypeAPIName + '.' + developerName; //RecordName = DeveloperName
-                customMetadata.label = masterLabel;
+            Metadata.CustomMetadataValue customField = new Metadata.CustomMetadataValue();
+            customField.field = String.valueOf(Protected_Subscriber_Setting__mdt.Enabled__c);
+            customField.value = checked;
+            customMetadata.values.add(customField);
 
-                Metadata.CustomMetadataValue customField = new Metadata.CustomMetadataValue();
-                customField.field = String.valueOf(Protected_Subscriber_Setting__mdt.Enabled__c);
-                customField.value = checked;
-                customMetadata.values.add(customField);
-
-                mdContainer.addMetadata(customMetadata);
-            }
+            mdContainer.addMetadata(customMetadata);
         }
         //Cannot update an empty container.
         if(mdContainer.getMetadata().size() == 0){
             return null;
         }
+
         Id jobId;
         try{
             jobId = Metadata.Operations.enqueueDeployment(mdContainer, callback);
