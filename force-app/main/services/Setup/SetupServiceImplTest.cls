@@ -12,15 +12,18 @@ public with sharing class SetupServiceImplTest {
 
     @IsTest
     public static void getUpdateSettingsTest(){
-        Test.startTest();
-        List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
-        Test.stopTest();
+        System.runAs(TestUtils.getCompanyInfoAdmin()){
+            Test.startTest();
+            List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
+            Test.stopTest();
 
-        System.assertNotEquals(null,updateTypes);
-        System.assertNotEquals(0,updateTypes.size());
+            System.assertNotEquals(null,updateTypes);
+            System.assertNotEquals(0,updateTypes.size());
+        }
     }
     @IsTest
     public static void setUpdateSettingsTest(){
+
         Map<String,Object> record1 = new Map<String,Object>{
                 'developerName' => 'Activity',
                 'checked' => false,
@@ -37,16 +40,17 @@ public with sharing class SetupServiceImplTest {
         List<Map<String,Object>> l2 = new List<Map<String,Object>>();
         l1.add(record2);
 
-
-        //Run with checked=true and checked=false to make sure it runs all scenarios.
-        Test.startTest();
-        try{
-            SetupService.setUpdateTypes(l1);
-            SetupService.setUpdateTypes(l2);
-        }catch (Exception e){
-            System.assertEquals(Label.Error_updating_update_type_settings, e.getMessage());
+        System.runAs(TestUtils.getCompanyInfoAdmin()){
+            //Run with checked=true and checked=false to make sure it runs all scenarios.
+            Test.startTest();
+            try{
+                SetupService.setUpdateTypes(l1);
+                SetupService.setUpdateTypes(l2);
+            }catch (Exception e){
+                System.assertEquals(Label.Error_updating_update_type_settings, e.getMessage());
+            }
+            Test.stopTest();
         }
-        Test.stopTest();
     }
 
 
