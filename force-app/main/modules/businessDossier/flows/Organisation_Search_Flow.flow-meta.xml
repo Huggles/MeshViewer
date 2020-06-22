@@ -1088,6 +1088,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>pageRef</name>
+                <value>
+                    <stringValue>BusinessSearchForm</stringValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>cancelPressed</assignToReference>

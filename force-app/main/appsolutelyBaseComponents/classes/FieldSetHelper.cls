@@ -27,25 +27,31 @@ public without sharing class FieldSetHelper {
      */
     @AuraEnabled(Cacheable=true)
     public static List<FieldDescriptionDto> getFieldSetFieldDescriptions(String objectName, String fieldSetName) {
-        Map<String, Schema.SObjectType> globalDescribeMap = Schema.getGlobalDescribe();
-        Schema.SObjectType sObjectTypeObj = globalDescribeMap.get(objectName);
-        if (sObjectTypeObj == null) {
-            Exception e = new InputException('No sObjectType found for given object name ' + objectName);
-            ErrorLogUtil.logException(e);
-            throw e;
+        try {
+            Map<String, Schema.SObjectType> globalDescribeMap = Schema.getGlobalDescribe();
+            Schema.SObjectType sObjectTypeObj = globalDescribeMap.get(objectName);
+            if (sObjectTypeObj == null) {
+                Exception e = new InputException('No sObjectType found for given object name ' + objectName);
+                throw e;
+            }
+            Schema.DescribeSObjectResult describeSObjectResultObj = sObjectTypeObj.getDescribe();
+            Schema.FieldSet fieldSetObj = describeSObjectResultObj.FieldSets.getMap().get(fieldSetName);
+            if (fieldSetObj == null) {
+                Exception e = new InputException('No field set found for given fieldset name ' + fieldSetName);
+                throw e;
+            }
+            List<FieldDescriptionDto> fieldDescriptionDtos = new List<FieldDescriptionDto>();
+            for (Schema.FieldSetMember fieldSetMember : fieldSetObj.getFields()) {
+                fieldDescriptionDtos.add(new FieldDescriptionDto(fieldSetMember.getLabel(), fieldSetMember.getFieldPath()));
+            }
+            return fieldDescriptionDtos;
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            AuraHandledException auraHandledException = new AuraHandledException(ex.getMessage());
+            auraHandledException.setMessage(ex.getMessage());
+            throw auraHandledException;
         }
-        Schema.DescribeSObjectResult describeSObjectResultObj = sObjectTypeObj.getDescribe();
-        Schema.FieldSet fieldSetObj = describeSObjectResultObj.FieldSets.getMap().get(fieldSetName);
-        if (fieldSetObj == null) {
-            Exception e = new InputException('No field set found for given fieldset name ' + fieldSetName);
-            ErrorLogUtil.logException(e);
-            throw e;
-        }
-        List<FieldDescriptionDto> fieldDescriptionDtos = new List<FieldDescriptionDto>();
-        for (Schema.FieldSetMember fieldSetMember : fieldSetObj.getFields()) {
-            fieldDescriptionDtos.add(new FieldDescriptionDto(fieldSetMember.getLabel(), fieldSetMember.getFieldPath()));
-        }
-        return fieldDescriptionDtos;
+
     }
 
 }
