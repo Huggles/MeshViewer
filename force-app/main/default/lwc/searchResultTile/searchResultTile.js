@@ -41,10 +41,15 @@ export default class SearchResultTile extends LightningElement {
     @api fieldValues = [];
 
     /**
+     * True if the card is selected, otherwise false
+     */
+    @api
+    selected;
+
+    /**
      * The icon state to be shown
      */
     get iconState() {
-        console.log('ART iconState');
         if (!this.selected) {
             return false;
         } else {
@@ -52,14 +57,7 @@ export default class SearchResultTile extends LightningElement {
         }
     }
 
-    /**
-     * True if the card is selected, otherwise false
-     */
-    @api
-    selected;
-
     handleOnClick(event) {
-        // this.selected = !this.selected;
         const cardClickedEvent = new CustomEvent('cardclicked', {detail : {id: this.searchResultId}});
         this.dispatchEvent(cardClickedEvent);
     }

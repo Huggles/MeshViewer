@@ -1,5 +1,5 @@
 /**
- * Created by jaapbranderhorst on 03/03/2020.
+ * Created by tejaswinidandi on 12/06/2020.
  */
 
 import {LightningElement, api, track, wire} from 'lwc';
@@ -11,34 +11,11 @@ import searchResultsLimitedCL from '@salesforce/label/c.Search_Results_Limited';
 import searchNoResultsCL from '@salesforce/label/c.Search_No_Results';
 
 import DESERT_ILLUSTRATION from '@salesforce/resourceUrl/Desert';
+import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 export default class SearchResultTilesList extends LightningElement {
     @api
     availableActions = [];
-
-    /**
-     * The search results to be displayed
-     */
-    @api
-    searchResults;
-
-    /**
-     * Are there any results?
-     */
-    get hasResults() {
-        console.log('RT hasResults');
-        if(this.searchResults == null || this.searchResults.length == 0){
-            return false;
-        }
-        if(this.searchResults.length == 1  &&
-            this.searchResults[0].appsolutely__Matchrate__c != null &&
-            this.searchResults[0].appsolutely__Matchrate__c == 0){
-            //Company info returns the info from the request with a matchrate of 0 when no results are found.
-            //We do not want to show that as an actual result.
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Illustration initialization
@@ -49,13 +26,6 @@ export default class SearchResultTilesList extends LightningElement {
      * Label for when no results have been found.
      */
     noDataLabel = searchNoResultsCL;
-
-    /**
-     * The search result selected.
-     * TODO: support multiple select
-     */
-    @api
-    selectedResult;
 
     /**
      * The namespaced api name of the sObject (for instance 'appsolutely__Business_Dossier__c')
@@ -75,56 +45,46 @@ export default class SearchResultTilesList extends LightningElement {
     @api
     titleField = 'Name';
 
-    @api
-    searchCriteriaName;
-
-    @api
-    showAccountUpdateLink = false;
+    get searchCriteriaName() {
+        let criteriaName = '';
+        if (this.searchResults && this.searchResults.length > 0) {
+            criteriaName = 'Results by ' + this.searchResults[0].appsolutely__Search_Criteria_Name__c;
+        }
+        return criteriaName;
+    }
 
     /**
-     * Lazy Loading Attributes
+     * The search results to be displayed
      */
-    maxNumberOfResults = 30;
-    numberOfResultsIncrement = 9;
-    numberOfResults = this.numberOfResultsIncrement;
-    searchResultsLimited = searchResultsLimitedCL;
+    @api searchResults;
+
+    /**
+     * Are there any results?
+     */
+    get hasResults() {
+        if(this.searchResults == null || this.searchResults == undefined){
+            return false;
+        }
+        if(this.searchResults.length == 1  &&
+            this.searchResults[0].appsolutely__Matchrate__c != null &&
+            this.searchResults[0].appsolutely__Matchrate__c == 0){
+            //Company info returns the info from the request with a matchrate of 0 when no results are found.
+            //We do not want to show that as an actual result.
+            return false;
+        }
+        return true;
+    }
 
     /**
      *
      * @returns true if search criteria name is undefined
      */
     get isSearchCriteriaNameEmpty() {
-        console.log('RT isSearchCriteriaNameEmpty');
         if (this.searchResults[0].appsolutely__Search_Criteria_Name__c) {
-            this.searchCriteriaName = 'Results by ' + this.searchResults[0].appsolutely__Search_Criteria_Name__c;
             return false;
         }
         else
             return true;
-    }
-
-    @api
-    get lazyloadedSearchResults() {
-        console.log('RT lazyloadedSearchResults');
-        console.log(this.searchResults);
-        if (this.searchResults) {
-            let response = this.searchResults.slice(0, this.numberOfResults);
-            console.log(response);
-            return response;
-        }
-        else {
-            console.log('null');
-            return null;
-        }
-    }
-
-    /**
-     * True when the number of results displayed is limited by maxNumberOfResults.
-     */
-    get displayingMaxNumberOfResults() {
-        return (
-            this.numberOfResults === this.maxNumberOfResults &&
-            this.numberOfResults < (this.searchResults ? this.searchResults.length : 0));
     }
 
     /**
@@ -140,52 +100,52 @@ export default class SearchResultTilesList extends LightningElement {
     /**
      * Loads the label/fieldname combination from the fieldset
      */
-    @wire(getFieldSetFieldDescriptions, {objectName: '$sObjectName', fieldSetName: '$fieldSetName'})
-    labelsAndFields;
-
-    /**
-     * Handler to handle the selection of a search result.
-     * @param event
-     */
-    handleCardClicked(event) {
-        // search for the right record
-        const id = event.detail.id;
-        const searchResultTiles = [...this.template.querySelectorAll('c-search-result-tile')];
-        let tileClicked = searchResultTiles.find(card => card.searchResultId === id);
-        // (un)select the cards
-        if (!tileClicked.selected) { // current 'old' state is unselected, user wants to select this card
-            const unselectedTiles = searchResultTiles.filter(value => value !== tileClicked);
-            unselectedTiles.forEach(value => value.selected = false);
-            // set the result param, this is done here because this component knows the type
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', tileClicked.searchResult);
-            this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultselected', {selectedResult: tileClicked.searchResult}); // let the world know something is selected
-        } else {
-            const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', null);
-            this.dispatchEvent(attributeChangeEvent);
-            fireEvent(null, 'resultunselected');
-        }
-        tileClicked.selected = !tileClicked.selected; // select or unselect the card
-    }
+    @api labelsAndFields;
 
     renderedCallback() {
-        this.querySelector('span'); // <span>push the green button.</span>
-        this.querySelectorAll('span'); // [<span>push the green button</span>, <span>push the red button</span>]
+        //we get the labels and fields in the rendered callback because we want to fill in the 'fieldValues' property for each tile.
+        //the server call is only done once when the component is rendered
+        getFieldSetFieldDescriptions({objectName: this.sObjectName, fieldSetName: this.fieldSetName})
+            .then(result =>{
+                this.labelsAndFields = result;
+                this.fillSearchResults();
+            }).catch(error =>{
+                this.showToast(e);
+        });
     }
 
-
-    resultsScrolled(event) {
-        console.log('RT resultsScrolled');
-        var element = event.target;
-        if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-            if ((this.numberOfResults + this.numberOfResultsIncrement) < this.maxNumberOfResults) {
-                this.numberOfResults += this.numberOfResultsIncrement;
-            } else {
-                this.numberOfResults = this.maxNumberOfResults;
+    fillSearchResults() {
+        if (this.searchResults) {
+            const tiles = this.querySelectorAll('[data-name="tile"]');
+            if (tiles != null && tiles.length > 0) {
+                tiles.forEach((tile, index) => {
+                    try {
+                        let fieldValues = [];
+                        tile.labelsAndFields = this.labelsAndFields;
+                        tile.searchResult = this.searchResults[index];
+                        tile.searchResultId = index;
+                        tile.titleField = this.titleField;
+                        tile.title = tile.searchResult[this.titleField];
+                        this.labelsAndFields.forEach((value, index) => {
+                            let fieldValue =  {index: index, label: value.label, value: tile.searchResult[value.apiName]};
+                            fieldValues.push(fieldValue);
+                        });
+                        tile.fieldValues = fieldValues;
+                    }
+                    catch (e) {
+                        this.showToast(e);
+                    }
+                });
             }
-
         }
+    }
 
+    showToast(error) {
+        const event = new ShowToastEvent({
+            message: error,
+            variant: 'error'
+        });
+        component.dispatchEvent(event);
     }
 
 }

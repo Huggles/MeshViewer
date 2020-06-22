@@ -41,7 +41,6 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     }
 
     connectedCallback() {
-        console.log('ALT connectedCallback');
         this.data = this.flattenObject(this.accountList);
         registerListener('updateAccount', this.handleClickDuplicateAccount, this);
     }
@@ -68,7 +67,6 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     }
 
     handleClickDuplicateAccount() {
-        console.log('ALT handleClickDuplicateAccount');
         this.updateDuplicateAccount = true;
         const attributeChangeEvent = new FlowAttributeChangeEvent('updateDuplicateAccount', this.updateDuplicateAccount);
         this.dispatchEvent(attributeChangeEvent);
@@ -76,7 +74,6 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     }
 
     handleClickCreateNewAccount() {
-        console.log('ALT handleClickCreateNewAccount');
         createDuplicateAccount({account: this.newAccount}).then(result => {
             if (result) {
                 this[NavigationMixin.Navigate]({
@@ -95,7 +92,6 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     }
 
     handleClickCancel() {
-        console.log('ALT handleClickCancel');
         this.cancelClicked = true;
         const attributeChangeEvent = new FlowAttributeChangeEvent('cancelClicked', this.cancelClicked);
         this.dispatchEvent(attributeChangeEvent);
@@ -112,27 +108,10 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     }
 
     handleOnCardClick(event) {
-        console.log('ALT handleOnCardClick');
         // search for the right record
         const id = event.detail.id;
         const searchResultTiles = [...this.template.querySelectorAll('c-account-result-tile')];
-        let tileClicked = searchResultTiles.find(card => card.searchResultId === id);
         let result = tileSelected(id, searchResultTiles, this);
         this.selectedResult = result.selectedResult;
-
-        // this.selectedResult = tileClicked.searchResult;
-        // // (un)select the cards
-        // if (!tileClicked.selected) { // current 'old' state is unselected, user wants to select this card
-        //     const unselectedTiles = searchResultTiles.filter(value => value !== tileClicked);
-        //     unselectedTiles.forEach(value => value.selected = false);
-        //     // set the result param, this is done here because this component knows the type
-        //     const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', tileClicked.searchResult);
-        //     this.dispatchEvent(attributeChangeEvent);
-        // }
-        // else {
-        //     const attributeChangeEvent = new FlowAttributeChangeEvent('selectedResult', this.selectedResult);
-        //     this.dispatchEvent(attributeChangeEvent);
-        // }
-        // tileClicked.selected = !tileClicked.selected; // select or unselect the card
     }
 }

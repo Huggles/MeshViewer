@@ -1,8 +1,8 @@
 <!--
- - Created by jaapbranderhorst on 03/03/2020.
+ - Created by tejaswinidandi on 12/06/2020.
  -->
 
-<!-- Search Result Tiles List -->
+<!-- Result Tiles List -->
 <template>
     <template if:false={hasResults}>
         <c-no-result-image ></c-no-result-image>
@@ -13,23 +13,14 @@
                 <lightning-icon icon-name="utility:search" size="small"></lightning-icon>
                 {searchCriteriaName}
             </h3>
-            <div class="scrollable slds-box result-container" onscroll={resultsScrolled}>
-                <div class="grid">
-                    <template for:each={lazyloadedSearchResults} for:index="searchResultIndex" for:item="dossier">
-                        <c-search-result-tile key={ourKey} search-result={dossier} search-result-id={searchResultIndex} labels-and-fields={labelsAndFields}
-                                              title-field= {titleField} oncardclicked={handleCardClicked}></c-search-result-tile>
-                        <slot name="accountList" key={ourKey}>
-
-                        </slot>
-                            <!--                        <c-account-result-tile key={ourKey} labels-and-fields={labelsAndFields} title-field= {titleField} our-key={ourKey}-->
-<!--                                               object={dossier} search-result-id= {searchResultIndex} oncardclicked1={handleCardClicked1}-->
-<!--                                                ></c-account-result-tile>-->
+            <div class="scrollable slds-box result-container" style="max-height: 500px ; overflow-y: scroll" >
+                <div class="slds-grid  slds-size_1-of-1 slds-wrap">
+                    <template for:each={searchResults} for:index="searchResultIndex" for:item="object">
+                        <slot name="tile" data-index={searchResultIndex} key={ourKey}> </slot>
                     </template>
                 </div>
-                <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;">
-                    <template if:true={displayingMaxNumberOfResults}>
-                        <div class="slds-text-align_center" style="max-width: 80%;">{searchResultsLimited}</div>
-                    </template>
+                <div class="slds-m-around_medium slds-align_absolute-center" style="width: auto;" if:true={displayingMaxNumberOfResults}>
+                    <div class="slds-text-align_center" style="max-width: 80%;">{searchResultsLimited}</div>
                 </div>
             </div>
         </lightning-card>

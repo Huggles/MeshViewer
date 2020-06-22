@@ -4,6 +4,8 @@
 import {LightningElement} from 'lwc';
 import {fireEvent} from "c/pubsub";
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+import More_than_20_results_message from '@salesforce/label/c.More_than_20_results_message';
+import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 const tileSelected = (id, searchResultTiles, component) => {
     var selectedResult;
@@ -35,5 +37,14 @@ const tileSelected = (id, searchResultTiles, component) => {
     return {selectedResult: selectedResult};
 };
 
+const showToastMessageForMoreResults = (searchResults, component) => {
+    if (searchResults && searchResults instanceof Array && searchResults.length >= 20) {
+        const event = new ShowToastEvent({
+            message: More_than_20_results_message
+        });
+        component.dispatchEvent(event);
+    }
+}
 
-export {tileSelected}
+
+export {tileSelected, showToastMessageForMoreResults}
