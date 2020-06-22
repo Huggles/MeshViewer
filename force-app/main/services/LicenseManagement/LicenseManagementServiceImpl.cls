@@ -331,7 +331,8 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return usersWithoutLMA;
     }
 
-    private PackageLicenseWrapper packageLicense {
+    @TestVisible
+    private static PackageLicenseWrapper packageLicense {
         get {
             if (packageLicense == null) {
                 try {
