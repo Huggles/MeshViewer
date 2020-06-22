@@ -13,13 +13,18 @@ private class GlobalFlowQuickActionControllerTest {
         // when
         Boolean exceptionThrown = false;
         Test.startTest();
-        Object response = GlobalFlowQuickActionController.getFlowAPIName(flowSettingName);
+        try {
+            Object response = GlobalFlowQuickActionController.getFlowAPIName(flowSettingName);
+        } catch(AuraHandledException ex) {
+            exceptionThrown = true;
+        }
+
+
         Test.stopTest();
 
         // then
         // an exception should be thrown
-        System.assert(response instanceof AuraResponseWrapper);
-        System.assert(!String.isEmpty(((AuraResponseWrapper)response).errorMsg));
+        System.assert(exceptionThrown);
     }
 
     @IsTest

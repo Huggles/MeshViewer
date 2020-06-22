@@ -31,51 +31,61 @@ public inherited sharing class PermissionSetAssignmentSelector extends fflib_SOb
     public PermissionSetAssignment[] selectByLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
         fflib_QueryFactory queryFactory = newQueryFactory(false, false, true);
         List<PermissionSetAssignment> result = new List<PermissionSetAssignment>();
-        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
-        queryFactory.setCondition('PermissionSetId = :permissionSetId');
-        for (fflib_QueryFactory.Ordering ordering : orderings) {
-            queryFactory.addOrdering(ordering);
+        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
+        if (permissionSet != null) { // can be null if the licenseType is a test licensetype
+            Id permissionSetId = permissionSet.Id;
+            queryFactory.setCondition('PermissionSetId = :permissionSetId');
+            for (fflib_QueryFactory.Ordering ordering : orderings) {
+                queryFactory.addOrdering(ordering);
+            }
+            queryFactory.setOffset(offSet);
+            queryFactory.setLimit(nrOfRows);
+            result = Database.query(queryFactory.toSOQL());
         }
-        queryFactory.setOffset(offSet);
-        queryFactory.setLimit(nrOfRows);
-        result = Database.query(queryFactory.toSOQL());
         return result;
     }
 
     public PermissionSetAssignment[] selectByLicenseTypeAndUsers(LicenseType licenseType, List<User> users) {
         fflib_QueryFactory queryFactory = newQueryFactory(false, false, true);
         List<PermissionSetAssignment> result = new List<PermissionSetAssignment>();
-        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
-        Set<Id> userIds = (new Map<Id, User>(users)).keySet();
-        queryFactory.setCondition('PermissionSetId = :permissionSetId AND AssigneeId IN :userIds');
-        result = Database.query(queryFactory.toSOQL());
+        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
+        if (permissionSet != null) { // can be null if the licenseType is a test licensetype
+            Id permissionSetId = permissionSet.Id;
+            Set<Id> userIds = (new Map<Id, User>(users)).keySet();
+            queryFactory.setCondition('PermissionSetId = :permissionSetId AND AssigneeId IN :userIds');
+            result = Database.query(queryFactory.toSOQL());
+        }
         return result;
     }
 
     public PermissionSetAssignment[] selectLicenseTypePermissionSetAssignmentsExcludingLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
-        // Set<Id> permissionSetIds = (new Map<Id, PermissionSet>(PermissionSetSelector.newInstance().selectLicenseTypePermissionSetsExcludingLicenseType(licenseType))).keySet();
-        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
-        fflib_QueryFactory queryFactory = newQueryFactory(false, false, true);
         List<PermissionSetAssignment> result = new List<PermissionSetAssignment>();
-        queryFactory.setCondition('PermissionSetId != permissionSetId');
-        queryFactory.selectField('PermissionSet.Name');
-        queryFactory.selectField('Assignee.Profile.Name');
-        for (fflib_QueryFactory.Ordering ordering : orderings) {
-            queryFactory.addOrdering(ordering);
+        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
+        if (permissionSet != null) { // can be null if the licenseType is a test licensetype
+            Id permissionSetId = permissionSet.Id;
+            fflib_QueryFactory queryFactory = newQueryFactory(false, false, true);
+            queryFactory.setCondition('PermissionSetId != permissionSetId');
+            queryFactory.selectField('PermissionSet.Name');
+            queryFactory.selectField('Assignee.Profile.Name');
+            for (fflib_QueryFactory.Ordering ordering : orderings) {
+                queryFactory.addOrdering(ordering);
+            }
+            queryFactory.setOffset(offSet);
+            queryFactory.setLimit(nrOfRows);
+            result = Database.query(queryFactory.toSOQL());
         }
-        queryFactory.setOffset(offSet);
-        queryFactory.setLimit(nrOfRows);
-        result = Database.query(queryFactory.toSOQL());
-        System.debug('permission set assignments: ' + JSON.serializePretty(result));
         return result;
     }
 
     public PermissionSetAssignment[] selectByLicenseType(LicenseType licenseType) {
         fflib_QueryFactory queryFactory = newQueryFactory(false, false, true);
         List<PermissionSetAssignment> result = new List<PermissionSetAssignment>();
-        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
-        queryFactory.setCondition('PermissionSetId = :permissionSetId');
-        result = Database.query(queryFactory.toSOQL());
+        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
+        if (permissionSet != null) { // can be null if the licenseType is a test licensetype
+            Id permissionSetId = permissionSet.Id;
+            queryFactory.setCondition('PermissionSetId = :permissionSetId');
+            result = Database.query(queryFactory.toSOQL());
+        }
         return result;
     }
 

@@ -32,32 +32,38 @@ global with sharing class SearchForDutchDossiersInvocable {
 
     @InvocableMethod(label = 'Search for Dutch dossiers' description='Searches for Dutch dossiers based on the given arguments.' category='Company.info')
     global static List<List<Business_Dossier__c>> searchForDutchDossiers(List<SearchForDutchDossiersArgument> arguments) {
-        List<List<Business_Dossier__c>> returnList = new List<List<Business_Dossier__c>>();
-        for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
-            // input check
-            if (!String.isEmpty(searchForDutchDossiersArgument.house_number) && !searchForDutchDossiersArgument.house_number.isNumeric()) {
-                Exception ex = new CCInputException(Label.Error_String_Not_Numeric);
-                ErrorLogUtil.logException(ex);
-                throw ex;
+        try {
+            List<List<Business_Dossier__c>> returnList = new List<List<Business_Dossier__c>>();
+            for (SearchForDutchDossiersArgument searchForDutchDossiersArgument : arguments) {
+                // input check
+                if (!String.isEmpty(searchForDutchDossiersArgument.house_number) && !searchForDutchDossiersArgument.house_number.isNumeric()) {
+                    Exception ex = new CCInputException(Label.Error_String_Not_Numeric);
+                    ErrorLogUtil.logException(ex);
+                    throw ex;
+                }
+                List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
+                businessDossiers.addAll(
+                        DutchBusinessService.searchForDutchDossiersSObject(
+                                searchForDutchDossiersArgument.dossier_number,
+                                searchForDutchDossiersArgument.trade_name,
+                                searchForDutchDossiersArgument.city,
+                                searchForDutchDossiersArgument.street,
+                                searchForDutchDossiersArgument.postcode,
+                                String.isEmpty(searchForDutchDossiersArgument.house_number) ? null : Integer.valueOf(searchForDutchDossiersArgument.house_number),
+                                searchForDutchDossiersArgument.house_number_addition,
+                                searchForDutchDossiersArgument.telephone_number,
+                                searchForDutchDossiersArgument.domain_name,
+                                searchForDutchDossiersArgument.strictSearch
+                        )
+                );
+                returnList.add(businessDossiers);
             }
-            List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
-            businessDossiers.addAll(
-                    DutchBusinessService.searchForDutchDossiersSObject(
-                            searchForDutchDossiersArgument.dossier_number,
-                            searchForDutchDossiersArgument.trade_name,
-                            searchForDutchDossiersArgument.city,
-                            searchForDutchDossiersArgument.street,
-                            searchForDutchDossiersArgument.postcode,
-                            String.isEmpty(searchForDutchDossiersArgument.house_number) ? null : Integer.valueOf(searchForDutchDossiersArgument.house_number),
-                            searchForDutchDossiersArgument.house_number_addition,
-                            searchForDutchDossiersArgument.telephone_number,
-                            searchForDutchDossiersArgument.domain_name,
-                            searchForDutchDossiersArgument.strictSearch
-                    )
-            );
-            returnList.add(businessDossiers);
+            return returnList;
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw ex;
         }
-        return returnList;
+
     }
 
 }

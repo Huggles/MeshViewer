@@ -17,7 +17,7 @@ private class FieldSetHelperTest {
         Test.startTest();
         try {
             FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, 'fake');
-        } catch (InputException e) {
+        } catch (AuraHandledException e) {
             exceptionThrown = true;
             message = e.getMessage();
         }
@@ -42,7 +42,7 @@ private class FieldSetHelperTest {
         Test.startTest();
         try {
             FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, fieldSetName);
-        } catch (InputException e) {
+        } catch (AuraHandledException e) {
             exceptionThrown = true;
             message = e.getMessage();
         }
@@ -68,7 +68,7 @@ private class FieldSetHelperTest {
         Test.startTest();
         try {
             fieldDescriptionDtos = FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, fieldSetName);
-        } catch (InputException e) {
+        } catch (AuraHandledException e) {
             exceptionThrown = true;
             message = e.getMessage();
         }
