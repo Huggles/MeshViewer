@@ -40,6 +40,7 @@ echo " "
 #Perform the operations based on the input#
 ###########################################
 
+git fetch
 git checkout -f -b "feature/$SCRATCH_ORG_ALIAS"
 
 sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION "../config/project-scratch-def.json"
