@@ -42,7 +42,7 @@
     </labels>
     <labels>
         <fullName>Assign</fullName>
-        <categories>Setup</categories>
+        <categories>Button, Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Button text on Assign button</shortDescription>
@@ -790,14 +790,6 @@
         <value>A new Account has been created for the searched company address.</value>
     </labels>
     <labels>
-        <fullName>Assign</fullName>
-        <categories>Button, Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>No</shortDescription>
-        <value>No</value>
-    </labels>
-    <labels>
         <fullName>No</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -811,14 +803,6 @@
         <protected>false</protected>
         <shortDescription>No Business Dossier Found</shortDescription>
         <value>A Business Dossier related to the Account record cannot be found. Please make sure a Business dossier is available in order to fetch the report.</value>
-    </labels>
-    <labels>
-        <fullName>Assign_Licenses</fullName>
-        <categories>Button, Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>No Company Id Found</shortDescription>
-        <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
     </labels>
     <labels>
         <fullName>No_Company_Id_Found</fullName>
