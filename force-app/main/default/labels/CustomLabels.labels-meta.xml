@@ -140,13 +140,6 @@
         <value>Company.info Username</value>
     </labels>
     <labels>
-        <fullName>Config_Page_Title</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Page Title</shortDescription>
-        <value>Company.info configuration page</value>
-    </labels>
-    <labels>
         <fullName>Config_Title</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
@@ -365,20 +358,6 @@
         <protected>true</protected>
         <shortDescription>Dossier_Account_Update_Completed</shortDescription>
         <value>Account Updated</value>
-    </labels>
-    <labels>
-        <fullName>Dossier_ID_Access</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dossier ID Access</shortDescription>
-        <value>User doesn&apos;t have access to dossier with ID:</value>
-    </labels>
-    <labels>
-        <fullName>Dossier_ID_Missing</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dossier ID Missing</shortDescription>
-        <value>DossierId must be filled when setting VAT number</value>
     </labels>
     <labels>
         <fullName>Dossier_Null_Error_Message</fullName>
@@ -760,13 +739,6 @@
         <value>Name</value>
     </labels>
     <labels>
-        <fullName>New_Account_CC</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>New_Account_CC</shortDescription>
-        <value>New Account with Company.info</value>
-    </labels>
-    <labels>
         <fullName>New_Account_with_Business_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -965,13 +937,6 @@
         <protected>true</protected>
         <shortDescription>Header of role column in user data table</shortDescription>
         <value>Role</value>
-    </labels>
-    <labels>
-        <fullName>Search_Address</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Address</shortDescription>
-        <value>Address</value>
     </labels>
     <labels>
         <fullName>Search_Again_Confirmation_Dialog_Message</fullName>
