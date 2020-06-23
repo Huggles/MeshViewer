@@ -15,7 +15,7 @@ public with sharing class SetupServiceImplTest {
             System.assertNotEquals(0,updateTypes.size());
             System.assertNotEquals(null, updateTypes[0].Description__c);
             System.assertNotEquals(null, updateTypes[0].Enabled__c);
-            System.assertNotEquals(null, updateTypes[0].Foreign_Key__c);
+            System.assertNotEquals(null, updateTypes[0].External_Id__c);
         }
     }
     @IsTest

@@ -3,7 +3,7 @@
     <label>Establishment</label>
     <protected>true</protected>
     <values>
-        <field>Company_Info_Key__c</field>
+        <field>External_Id__c</field>
         <value xsi:type="xsd:string">Establishment</value>
     </values>
     <values>
