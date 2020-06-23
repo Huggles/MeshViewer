@@ -5,6 +5,7 @@
 import {LightningElement, wire, api} from 'lwc';
 import getUnAssignedUsers from '@salesforce/apex/LicenseTypeManagementCardController.getUnAssignedUsers';
 import getUnAssignedUserCount from '@salesforce/apex/LicenseTypeManagementCardController.getUnAssignedUserCount';
+import getLicenseTypeInfo from '@salesforce/apex/LicenseTypeManagementCardController.getLicenseTypeInfo';
 import assignUsers from '@salesforce/apex/LicenseTypeManagementCardController.assignUsers';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
@@ -14,9 +15,12 @@ import Assign_Licenses from '@salesforce/label/c.Assign_Licenses';
 import Loading from '@salesforce/label/c.Loading';
 import Assign from '@salesforce/label/c.Assign';
 import Cancel from '@salesforce/label/c.Cancel';
+import Error from '@salesforce/label/c.Error';
 import Assign_users_success_message from '@salesforce/label/c.Assign_users_success_message'
+import {format} from 'c/labelFormatUtils';
 
 import No_users_available_to_assign_licenses_to from '@salesforce/label/c.No_users_available_to_assign_licenses_to';
+import Not_Enough_Seats_Available from '@salesforce/label/c.Not_Enough_Seats_Available';
 
 const numberOfRowsToLoad = 20;
 
@@ -30,7 +34,9 @@ export default class AssignLicenseTypeModal extends LightningElement {
         No_users_available_to_assign_licenses_to,
         Assign,
         Cancel,
-        Assign_users_success_message
+        Assign_users_success_message,
+        Error,
+        Not_Enough_Seats_Available
     }
 
     /**
@@ -49,6 +55,11 @@ export default class AssignLicenseTypeModal extends LightningElement {
      */
     @wire(getUnAssignedUserCount, {licenseTypeAPIName: '$licenseTypeApiName'})
     maxUsers;
+
+    /**
+     * The information about the license type. Warning: this method is not cached so will result in a roundtrip to the server for every call
+     */
+    licenseTypeInfo;
 
     /**
      * The rows selected in the table
@@ -116,7 +127,39 @@ export default class AssignLicenseTypeModal extends LightningElement {
     }
 
     handleAssignButtonClicked(event) {
-        this.handleAssignUsers();
+        let nrOfSelectedUsers = this.selectedRows.length;
+        getLicenseTypeInfo({licenseTypeAPIName: this.licenseTypeApiName})
+            .then(result => {
+                this.licenseTypeInfo = result;
+                if (nrOfSelectedUsers > this.licenseTypeInfo.availableNrOfSeats) {
+                    let message = format(this.label.Not_Enough_Seats_Available, [nrOfSelectedUsers, this.licenseTypeInfo.availableNrOfSeats]);
+                    const event = new ShowToastEvent({
+                        title: this.label.Error,
+                        message: message,
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(event);
+                } else {
+                    this.handleAssignUsers();
+                }
+            })
+            .catch(error => {
+                let message = error;
+                if (error.message) {
+                    message = error.message;
+                }
+                if (error.body && error.body.message) {
+                    message = error.body.message;
+                }
+                const event = new ShowToastEvent({
+                    title: this.label.Error,
+                    message: message,
+                    variant: 'error'
+                });
+                this.dispatchEvent(event);
+            });
+
     }
 
     handleAssignUsers() {
@@ -151,11 +194,10 @@ export default class AssignLicenseTypeModal extends LightningElement {
      * @param event
      */
     handleSort(event) {
-        let table = event.target;
-        this.sortDirection = table.sortDirection;
-        this.sortedBy = table.sortedBy;
+        this.sortDirection = event.target.sortDirection;
+        this.sortedBy = event.target.sortedBy;
         if (event.detail.reload) // if not all data is loaded, the sort field or the direction of the sort has been swapped reload the data
-            this.fetchUnAssignedUsers(0, event.detail.limit, table.sortedBy, table.sortDirection);
+            this.fetchUnAssignedUsers(0, event.detail.limit, event.target.sortedBy, event.target.sortDirection);
     }
 
     /**
@@ -182,10 +224,7 @@ export default class AssignLicenseTypeModal extends LightningElement {
      * @param event
      */
     handleLoadMore(event) {
-        let table = event.target;
-        table.isLoading = true;
-        this.fetchUnAssignedUsers(event.detail.offset, event.detail.limit, this.sortedBy, this.sortDirection)
-            .then(result => {table.isLoading = false});
+        this.fetchUnAssignedUsers(event.detail.offset, event.detail.limit, this.target.sortedBy, this.target.sortDirection);
     }
 
     /**
