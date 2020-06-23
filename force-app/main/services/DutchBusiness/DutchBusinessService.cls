@@ -60,11 +60,9 @@ public inherited sharing class DutchBusinessService {
         return newInstance().getExtractHistory(dossier_number, start_date, end_date);
     }
 
-    public static DutchBusinessWsdl.DutchBusinessPositions getPositions(String dossier_number){
-        return newInstance().getPositions(dossier_number);
+    public static  List<Business_Position__c> getPositions(String dossier_number, Id dossier_record_id){
+        return newInstance().getPositions(dossier_number, dossier_record_id);
     }
-
-
 
     public static IDutchBusinessService newInstance() {
         return (IDutchBusinessService) Application.Service.newInstance(IDutchBusinessService.class);

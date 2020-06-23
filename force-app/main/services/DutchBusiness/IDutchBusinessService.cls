@@ -104,7 +104,7 @@ public interface IDutchBusinessService {
      *
      * @param dossier_number    'The COC Number'
      *
-     * @return DutchBusinessPositions
+     * @return  List<Business_Position__c>
      */
-    DutchBusinessWsdl.DutchBusinessPositions getPositions(String dossier_number);
+    List<Business_Position__c> getPositions(String dossier_number, Id dossier_record_id);
 }

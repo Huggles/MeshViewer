@@ -29,7 +29,7 @@ public with sharing class CompanyDetailsController {
         try{
             List<Business_Dossier__c> businessDossiers = DutchBusinessService.getDossiersById(new Set<Id>{dossierId});
             if (businessDossiers != null && businessDossiers.size() == 1) {
-                DutchBusinessWsdl.DutchBusinessPositions positions = DutchBusinessService.getPositions(String.valueOf(businessDossiers[0].appsolutely__Dossier_Number__c));
+                List<Business_Position__c> positions = DutchBusinessService.getPositions(String.valueOf(businessDossiers[0].appsolutely__Dossier_Number__c), dossierId);
                 return JSON.serialize(positions);
             }else {
                 throw new CustomException('Expected a dossier id. No dossier Id present.');

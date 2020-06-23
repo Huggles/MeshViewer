@@ -255,6 +255,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
      *
      * @return DutchBusinessExtractHistory
      */
+    //TODO: Map the DutchBusinessWsdl.DutchBusinessExtractHistory to a sObject.
     public DutchBusinessWsdl.DutchBusinessExtractHistory getExtractHistory(String dossier_number, Date start_date, Date end_date){
         return WsDutchBusiness.dutchBusinessGetExtractHistoryChanged(dossier_number, start_date, end_date);
     }
@@ -266,8 +267,15 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     *
     * @return DutchBusinessPositions
     */
-    public DutchBusinessWsdl.DutchBusinessPositions getPositions(String dossier_number){
-        return WsDutchBusiness.dutchBusinessGetPositions(dossier_number);
+    public List<Business_Position__c> getPositions(String dossier_number, Id dossier_record_id){
+        DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL = WsDutchBusiness.dutchBusinessGetPositions(dossier_number);
+
+        try {
+            return createDutchBusinessPositionsToBusinessPositions(businessPositionsWSDL,dossier_record_id);
+        }
+        catch (Exception e){
+            throw e;
+        }
     }
 
 
@@ -497,6 +505,53 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossier.RecordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName().get('Dutch_Business').recordTypeId;
         return dossier;
     }
+
+
+
+    private List<Business_Position__c> createDutchBusinessPositionsToBusinessPositions(DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL, Id dossierRecordId) {
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+                List<Business_Position__c> businessPositions = new List<Business_Position__c>();
+
+        for (DutchBusinessWsdl.DutchBusinessPositionV2 positionV2 : businessPositionsWSDL.positions.item) {
+            if(positionV2.functionary != null){
+                Business_Person__c businessPerson = mapDutchBusinessPersonToBusinessPerson(positionV2, dossierRecordId);
+                Business_Position__c businessPosition = mapDutchBusinessPositionToBusinessPosition(positionV2, dossierRecordId);
+                unitOfWork.registerNew(businessPerson);
+                unitOfWork.registerNew(businessPosition);
+                unitOfWork.registerRelationship(businessPosition, Business_Position__c.Business_Person__c,businessPerson);
+
+                businessPositions.add(businessPosition);
+            }
+        }
+        try {
+            unitOfWork.commitWork();
+        }catch (Exception e){
+            throw e;
+        }
+        return businessPositions;
+    }
+
+    private Business_Person__c mapDutchBusinessPersonToBusinessPerson(DutchBusinessWsdl.DutchBusinessPositionV2 businessPositionsWSDL, Id dossierRecordId) {
+        DutchBusinessWsdl.DutchBusinessPersonV2 functionary = businessPositionsWSDL.functionary;
+        Business_Person__c businessPerson = new Business_Person__c();
+        businessPerson.Name = functionary.full_name;
+        businessPerson.First_Name__c = functionary.first_name;
+        businessPerson.Last_Name__c = functionary.last_name;
+        businessPerson.Date_of_Birth__c = Date.newInstance(functionary.date_of_birth.year,functionary.date_of_birth.month, functionary.date_of_birth.day);
+        businessPerson.Name = functionary.full_name;
+        return businessPerson;
+    }
+    private Business_Position__c mapDutchBusinessPositionToBusinessPosition(DutchBusinessWsdl.DutchBusinessPositionV2 businessPositionsWSDL, Id dossierRecordId) {
+        Business_Position__c position = new Business_Position__c();
+        position.Name = businessPositionsWSDL.function_title;
+        position.Business_Dossier__c = dossierRecordId;
+        position.Function_Registration_Date__c = Date.newInstance(businessPositionsWSDL.function_registration_date.year,businessPositionsWSDL.function_registration_date.month, businessPositionsWSDL.function_registration_date.day);
+        position.Function_Start_Date__c = Date.newInstance(businessPositionsWSDL.function_start_date.year,businessPositionsWSDL.function_start_date.month, businessPositionsWSDL.function_start_date.day);
+        position.Function_Type__c = businessPositionsWSDL.function_type;
+        position.Authorization_Description__c = businessPositionsWSDL.authorization_description;
+        return position;
+    }
+
 
     private String determineStatus(DutchBusinessWsdl.DutchBusinessDossierV3 dossier) {
         List<String> status = new List<String>();

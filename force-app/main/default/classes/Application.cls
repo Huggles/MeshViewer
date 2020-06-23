@@ -12,6 +12,8 @@ public inherited sharing class Application {
                     Account.SObjectType,
                     Business_Dossier__c.SObjectType,
                     Business_Data_SBI__c.SObjectType,
+                    Business_Person__c.SObjectType,
+                    Business_Position__c.SObjectType,
                     Creditsafe_Company_Report_Full__c.SObjectType,
                     Additional_Information_NL_Financial_Item__c.SObjectType,
                     Additional_Information_NL_Kvk_Filing__c.SObjectType,
@@ -36,6 +38,7 @@ public inherited sharing class Application {
                     International_Address__c.SObjectType,
                     PermissionSetAssignment.SObjectType,
                     UserPackageLicense.SObjectType
+
 
             });
 
