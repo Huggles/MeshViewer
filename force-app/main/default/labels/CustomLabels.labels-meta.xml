@@ -162,13 +162,6 @@
         <value>Company.info configuration page</value>
     </labels>
     <labels>
-        <fullName>Loading</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Alternative text for spinner</shortDescription>
-        <value>Loading...</value>
-    </labels>
-    <labels>
         <fullName>Config_Title</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
@@ -660,14 +653,6 @@
         <protected>true</protected>
         <shortDescription>Insurance Contract Intention of signature of a insurance contract</shortDescription>
         <value>Insurance Contract - Intention of signature of a insurance contract</value>
-    </labels>
-    <labels>
-        <fullName>International_Address_Organization_Help_Text</fullName>
-        <categories>InternationalAddress</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
-        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
     </labels>
     <labels>
         <fullName>Language_Input_Error</fullName>
@@ -1342,14 +1327,6 @@
         <protected>true</protected>
         <shortDescription>Valid Italian VAT Number</shortDescription>
         <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
-    </labels>
-    <labels>
-        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
-        <categories>Error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
-        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
     </labels>
     <labels>
         <fullName>Valid_NL_registration_number</fullName>
