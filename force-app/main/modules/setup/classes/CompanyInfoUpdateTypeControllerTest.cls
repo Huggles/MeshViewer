@@ -3,12 +3,12 @@
  */
 
 @IsTest
-public with sharing class SetupServiceImplTest {
+public with sharing class CompanyInfoUpdateTypeControllerTest {
     @IsTest
     public static void getUpdateSettingsHappyFlowTest(){
         System.runAs(TestUtils.getCompanyInfoAdmin()){
             Test.startTest();
-            List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
+            List<Protected_Subscriber_Setting__mdt> updateTypes = CompanyInfoUpdateTypeController.getUpdateTypes();
             Test.stopTest();
 
             System.assertNotEquals(null,updateTypes);
@@ -24,15 +24,12 @@ public with sharing class SetupServiceImplTest {
         System.runAs(TestUtils.getCompanyInfoBusinessUser()){
             Test.startTest();
             try {
-                List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
+                List<Protected_Subscriber_Setting__mdt> updateTypes = CompanyInfoUpdateTypeController.getUpdateTypes();
                 //Should not reach this statement as there is an access error.
                 System.assert(false);
-            }
-            catch (QueryException e){
+            }catch (AuraHandledException e){
                 System.assert(true);
-            }
-            catch (Exception e){
-                //Other exception should not happen
+            }catch (Exception e){
                 System.assert(false);
             }
             Test.stopTest();
@@ -55,9 +52,16 @@ public with sharing class SetupServiceImplTest {
             //Deploying custom metadata cannot be tested/mocked. It will always throw an error.
             Test.startTest();
             try{
-                SetupService.setUpdateTypes(l1);
+                CompanyInfoUpdateTypeController.setUpdateTypes(l1);
+                //Code should never come here, as test method cannot setUpdateType.
+                //Should always return AuraHandledException
+                System.assert(false);
+            }catch (AuraHandledException e){
+                //Should always return AuraHandledException
+                System.assert(true);
             }catch (Exception e){
-                System.assertEquals(Label.Error_updating_update_type_settings, e.getMessage());
+                //No other exceptions
+                System.assert(false);
             }
             Test.stopTest();
         }

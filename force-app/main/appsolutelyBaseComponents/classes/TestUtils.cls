@@ -91,5 +91,15 @@ public inherited sharing class TestUtils {
         return testUser;
     }
 
+    /**
+    * returns a Standard User with the Company.info admin permissionset
+    */
+    @TestVisible
+    private static User getCompanyInfoBusinessUser() {
+        User testUser = TestUtils.getUniqueUser('Standard User');
+        TestUtils.giveUserPermissionSet('Company_info_for_Dutch_Business', testUser);
+        return testUser;
+    }
+
 }
 
