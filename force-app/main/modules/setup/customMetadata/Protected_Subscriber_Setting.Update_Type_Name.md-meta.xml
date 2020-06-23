@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">trade_name_full, trade_name_45, legal_name</value>
+        <value xsi:type="xsd:string">Update of the trade name and legal name.</value>
     </values>
     <values>
         <field>Enabled__c</field>

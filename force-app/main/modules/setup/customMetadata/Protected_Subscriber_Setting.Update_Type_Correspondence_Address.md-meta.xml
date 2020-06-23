@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">correspondence_street, correspondence_house_number, correspondence_house_number_addition, correspondence_postcode, correspondence_city, correspondence_country</value>
+        <value xsi:type="xsd:string">Update of the billing address  (street, house number and suffix, zip code, city and country).</value>
     </values>
     <values>
         <field>Enabled__c</field>

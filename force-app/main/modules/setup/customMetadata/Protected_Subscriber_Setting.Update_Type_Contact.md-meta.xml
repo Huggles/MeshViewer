@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">telephone_number, domain_name, mobile_number</value>
+        <value xsi:type="xsd:string">Telephone number, domain name and mobile number.</value>
     </values>
     <values>
         <field>Enabled__c</field>

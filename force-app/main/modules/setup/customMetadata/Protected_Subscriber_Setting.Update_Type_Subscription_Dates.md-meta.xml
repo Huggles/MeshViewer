@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">founding_date, continuation_date, establishment_date</value>
+        <value xsi:type="xsd:string">Updates on the deed of incorporation, date of incorporation and establishment date.</value>
     </values>
     <values>
         <field>Enabled__c</field>

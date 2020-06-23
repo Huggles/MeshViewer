@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">primary_sbi_code, secondary_sbi_code1, secondary_sbi_code2</value>
+        <value xsi:type="xsd:string">The main establishment number and an indication of the main establishment number.</value>
     </values>
     <values>
         <field>Enabled__c</field>

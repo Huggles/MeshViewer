@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">indication_economically_active, indication_non_mailing</value>
+        <value xsi:type="xsd:string">Provides an update on the status of the company, whether it is still economically active and whether it has a non-mailing indication.</value>
     </values>
     <values>
         <field>Enabled__c</field>

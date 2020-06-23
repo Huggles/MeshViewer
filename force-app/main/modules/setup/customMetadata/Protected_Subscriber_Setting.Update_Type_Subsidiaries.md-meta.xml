@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Indicates that one or more establishments are added or removed for a dossier.</value>
+        <value xsi:type="xsd:string">Provides an update when one or more esthablishments are added to or deleted from a compamy.</value>
     </values>
     <values>
         <field>Enabled__c</field>

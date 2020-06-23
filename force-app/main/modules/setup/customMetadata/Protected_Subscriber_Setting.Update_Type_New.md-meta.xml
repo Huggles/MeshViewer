@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">The dossier has been added.</value>
+        <value xsi:type="xsd:string">The company is added to the followed list.</value>
     </values>
     <values>
         <field>Enabled__c</field>

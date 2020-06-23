@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">The owner/holder(s) identification number (`Rechtspersonen Samenwerkingsverbanden Informatie Nummer`) has changed.</value>
+        <value xsi:type="xsd:string">The identification number of the owner/ holder(s) has changed. (Legal entities and associations Identification Number).</value>
     </values>
     <values>
         <field>Enabled__c</field>

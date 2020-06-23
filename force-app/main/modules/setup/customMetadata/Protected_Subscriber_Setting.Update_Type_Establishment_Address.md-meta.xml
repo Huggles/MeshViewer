@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">establishment_street, establishment_house_number, establishment_house_number_addition, establishment_postcode, establishment_city</value>
+        <value xsi:type="xsd:string">All updates regarding the establishment of a company (street location, house number and suffix, zip code and city).</value>
     </values>
     <values>
         <field>Enabled__c</field>

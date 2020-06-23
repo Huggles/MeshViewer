@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">authorized_share_capital, authorized_share_capital_currency, paid_up_share_capital, paid_up_share_capital_currency, issued_share_capital, issued_share_capital_currency</value>
+        <value xsi:type="xsd:string">The authorized share capital, authorized share capital currency, paid up share capital, paid up share capital currency, issued share capital, issued share capital currency.</value>
     </values>
     <values>
         <field>Enabled__c</field>

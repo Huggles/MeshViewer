@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">contact_title1, contact_title2, contact_initials, contact_prefix, contact_surname, contact_gender</value>
+        <value xsi:type="xsd:string">Title 1, Title 2, contact initials, prefix, surname and gender.</value>
     </values>
     <values>
         <field>Enabled__c</field>
