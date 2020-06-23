@@ -36,15 +36,15 @@ public with sharing class AddressServiceImpl implements IAddressService {
     
     private International_Address__c mapAddressPerceelToInternationalAddress(AddressWsdl.Perceel addressPerceel, String organization) {
         International_Address__c dutchAddress = new International_Address__c();
-        dutchAddress.Perceel_Id__c = addressPerceel.perceelid;
+        dutchAddress.Plot_Id__c = addressPerceel.perceelid;
         dutchAddress.House_Number__c = String.valueOf(addressPerceel.huisnr);
         dutchAddress.House_Number_Addition__c = addressPerceel.huisnr_toevoeging;
-        dutchAddress.Perceel_Number__c = addressPerceel.perceelnummer;
-        dutchAddress.Reeks_Id__c = addressPerceel.reeksid;
+        dutchAddress.Plot_Number__c = addressPerceel.perceelnummer;
+        dutchAddress.Range_Id__c = addressPerceel.reeksid;
         dutchAddress.House_Number_From__c = addressPerceel.huisnr_van;
         dutchAddress.House_Number_To__c = addressPerceel.huisnr_tm;
         dutchAddress.Postcode__c = addressPerceel.wijkcode;
-        dutchAddress.Reeks_Indication__c = addressPerceel.reeksindicatie;
+        dutchAddress.Range_Indication__c = addressPerceel.reeksindicatie;
         dutchAddress.Letter_Combination__c = addressPerceel.lettercombinatie;
         dutchAddress.Street_Id__c = addressPerceel.straatid;
         dutchAddress.Street__c = addressPerceel.straatnaam;

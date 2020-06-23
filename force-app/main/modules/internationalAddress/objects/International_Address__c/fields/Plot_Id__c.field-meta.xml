@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Perceel_Number__c</fullName>
-    <description>Unique number for a perceel / delivery point, assigned by TPG.  In case of a Postbus address match perceelnummer will always be 0.</description>
+    <fullName>Plot_Id__c</fullName>
+    <description>Webservices.nl identifier for this parcel.</description>
     <externalId>false</externalId>
-    <label>Perceel Number</label>
+    <label>Plot Id</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

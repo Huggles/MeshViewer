@@ -63,19 +63,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Perceel_Id__c</field>
+                <field>Plot_Id__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Perceel_Number__c</field>
+                <field>Plot_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Reeks_Id__c</field>
+                <field>Range_Id__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Reeks_Indication__c</field>
+                <field>Range_Indication__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

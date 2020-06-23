@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Perceel_Id__c</fullName>
-    <description>Webservices.nl identifier for this parcel.</description>
+    <fullName>Range_Id__c</fullName>
+    <description>Webservices.nl identifier for this house number range.</description>
     <externalId>false</externalId>
-    <label>Perceel Id</label>
+    <label>Range Id</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
