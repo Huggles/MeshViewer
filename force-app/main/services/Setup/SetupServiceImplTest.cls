@@ -11,8 +11,12 @@ public with sharing class SetupServiceImplTest {
             List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
             Test.stopTest();
 
+
+            //Check response
             System.assertNotEquals(null,updateTypes);
             System.assertNotEquals(0,updateTypes.size());
+
+            //Check fields
             System.assertNotEquals(null, updateTypes[0].Description__c);
             System.assertNotEquals(null, updateTypes[0].Enabled__c);
             System.assertNotEquals(null, updateTypes[0].External_Id__c);
@@ -29,6 +33,7 @@ public with sharing class SetupServiceImplTest {
                 System.assert(false);
             }
             catch (QueryException e){
+                //Should always return a query exception due to insufficient access rights.
                 System.assert(true);
             }
             catch (Exception e){
@@ -57,6 +62,7 @@ public with sharing class SetupServiceImplTest {
             try{
                 SetupService.setUpdateTypes(l1);
             }catch (Exception e){
+                //Should always return an exception due to the fact that this function cannot be run in test methods.
                 System.assertEquals(Label.Error_updating_update_type_settings, e.getMessage());
             }
             Test.stopTest();
