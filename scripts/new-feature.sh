@@ -6,6 +6,15 @@
 
 
 
+###############################################################
+#Check git branch. New feature script should run from develop #
+###############################################################
+sh operations/check-git-branch.sh
+quit=$?
+if [[ "$quit" == 1 ]]; then
+    exit
+  fi
+
 ########################################################
 #Check git commits. There should be no uncommited work #
 ########################################################
@@ -40,6 +49,7 @@ echo " "
 #Perform the operations based on the input#
 ###########################################
 
+git fetch origin
 git checkout -f -b "feature/$SCRATCH_ORG_ALIAS"
 
 sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION "../config/project-scratch-def.json"
