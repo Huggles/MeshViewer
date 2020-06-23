@@ -18,25 +18,6 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
     }
 
-//    /**
-//     * The list of Salesforce license definition keys that can be used to provision a license type to
-//    */
-//    public static final Set<String> ALLOWED_LICENCE_DEFINITION_KEYS = new Set<String>{
-//            'SFDC',
-//            'PID_COMPANY_COMMUNITIES',
-//            'AUL',
-//            'PID_Customer_Community_Login',
-//            'PID_Customer_Community_Plus',
-//            'FDC_SUB',
-//            'PID_Customer_Community_Plus_Login',
-//            'FDC_ISV_SUB',
-//            'PID_Partner_Community',
-//            'PID_Partner_Community_Login',
-//            'PID_Customer_Community',
-//            'PID_FDC_FREE',
-//            'PID_Guest_User' // so guest users can get a license too
-//    };
-
     /**
      * True if for the namespace appsolutely a user based LMA license model instead of an org wide model is used
      */

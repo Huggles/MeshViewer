@@ -59,26 +59,6 @@ public inherited sharing class UserSelector  extends fflib_SObjectSelector imple
         return result;
     }
 
-//    public List<User> selectUsersWithoutLicenseTypeSeat(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
-//        // only users with the right profiles/license types. Only users that do not have the seat (so not in permission set).
-//        List<User> results = new List<User>();
-//        PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
-//        if (permissionSet != null) { // can be null if the licenseType is a test licensetype
-//            Id permissionSetId = permissionSet.Id;
-//            // List<User> users = [SELECT Id FROM User WHERE ProfileId IN :profileIds AND Id IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE )]
-//            fflib_QueryFactory queryFactory = newQueryFactory().selectField('Profile.Name').selectField('UserRole.Name').setCondition('Id IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId != :permissionSetId) AND ProfileId IN :profileIds' +
-//                    ' AND Id NOT IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId = :permissionSetId)');
-//            // TODO: check the ordering
-//            for (fflib_QueryFactory.Ordering ordering : orderings) {
-//                queryFactory.addOrdering(ordering);
-//            }
-//            User[] rawResults = Database.query(queryFactory.toSOQL());
-//            Map<Id, User> usersByIds = new Map<Id, User>(rawResults);
-//            results = usersByIds.values();
-//        }
-//        return results;
-//    }
-
     public List<User> selectUsersAvailableForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> orderings) {
         List<User> results = new List<User>();
         PermissionSet permissionSet = PermissionSetSelector.newInstance().selectByLicenseType(licenseType);
