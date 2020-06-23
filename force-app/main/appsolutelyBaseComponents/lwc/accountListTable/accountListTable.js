@@ -18,7 +18,7 @@ import Success from '@salesforce/label/c.Success';
 import Error from '@salesforce/label/c.Error';
 import Cancel from '@salesforce/label/c.Cancel';
 import Duplicate_Results from '@salesforce/label/c.Duplicate_Results';
-import {tileSelected} from "c/resultTileFuntionality";
+import {tileSelected} from "c/resultTileFunctionality";
 
 export default class AccountListTable extends NavigationMixin(LightningElement) {
 

@@ -5,7 +5,7 @@
 import {LightningElement, api} from 'lwc';
 import {fireEvent, registerListener} from "c/pubsub";
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
-import {showToastMessageForMoreResults, tileSelected} from "c/resultTileFuntionality";
+import {showToastMessageForMoreResults, tileSelected} from "c/resultTileFunctionality";
 
 export default class DutchDossierResults extends LightningElement {
     @api

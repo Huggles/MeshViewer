@@ -5,7 +5,7 @@
 import {api, LightningElement} from 'lwc';
 import {fireEvent} from "c/pubsub";
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
-import {showToastMessageForMoreResults, tileSelected} from "c/resultTileFuntionality";
+import {showToastMessageForMoreResults, tileSelected} from "c/resultTileFunctionality";
 
 export default class InternationalAddressSearchResults extends LightningElement {
     @api

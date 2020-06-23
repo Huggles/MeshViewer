@@ -9,8 +9,6 @@ import {ShowToastEvent} from "lightning/platformShowToastEvent";
 
 const tileSelected = (id, searchResultTiles, component) => {
     var selectedResult;
-    var houseNumberAddition;
-    var streetName;
 
     let tileClicked = searchResultTiles.find(card => card.searchResultId === id);
     selectedResult = tileClicked.searchResult;
