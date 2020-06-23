@@ -11,10 +11,17 @@ public with sharing class CompanyInfoUpdateTypeControllerTest {
             List<Protected_Subscriber_Setting__mdt> updateTypes = CompanyInfoUpdateTypeController.getUpdateTypes();
             Test.stopTest();
 
+            //Check response != null
             System.assertNotEquals(null,updateTypes);
+
+            //Check response size > 0
             System.assertNotEquals(0,updateTypes.size());
+
+            //Check fields
             System.assertNotEquals(null, updateTypes[0].Description__c);
+            //Check fields
             System.assertNotEquals(null, updateTypes[0].Enabled__c);
+            //Check fields
             System.assertNotEquals(null, updateTypes[0].External_Id__c);
         }
     }
@@ -28,8 +35,10 @@ public with sharing class CompanyInfoUpdateTypeControllerTest {
                 //Should not reach this statement as there is an access error.
                 System.assert(false);
             }catch (AuraHandledException e){
+                //Should always reach this statement due to access error.
                 System.assert(true);
             }catch (Exception e){
+                //Should not reach this statement as there is an access error.
                 System.assert(false);
             }
             Test.stopTest();
