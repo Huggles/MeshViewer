@@ -87,9 +87,6 @@ public inherited sharing class ErrorLogUtil {
     */
     @InvocableMethod
     public static void sendSupportEmails(List<Error_Log__c> logs) {
-        System.debug('User Id: ' + UserInfo.getUserId());
-        System.debug('User Name: ' + UserInfo.getName());
-        System.debug('User profile: ' + UserInfo.getProfileId());
         List<String> messages = new List<String>();
         for (Error_Log__c log : logs) {
             String message = '\n' + 'Type: ' + log.Type__c + '\n' + 'Cause: ' + log.Cause__c + '\n' + 'Message: '

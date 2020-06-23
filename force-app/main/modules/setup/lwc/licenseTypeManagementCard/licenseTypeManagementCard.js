@@ -119,11 +119,6 @@ export default class LicenseTypeManagementCard extends LightningElement {
      */
     enableInfiniteLoading = true;
 
-    // /**
-    //  * True if the table is loading. A spinner is shown in the table if true
-    //  */
-    // isLoading = false;
-
     /**
      * True if no rows selected in the table. If false the remove assignment button is enabled
      * @type {boolean}
