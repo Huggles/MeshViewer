@@ -2,8 +2,11 @@
  * Created by Hugo on 23/06/2020.
  */
 
-import {LightningElement, api, track} from 'lwc';
+import {LightningElement, api, track, wire} from 'lwc';
+import { getRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
 
+//import getCustomRecordIdField from '@salesforce/apex/CustomRelatedListController.getCustomRecordIdField'
 import getChildRecords from '@salesforce/apex/CustomRelatedListController.getChildRecords'
 
 
@@ -16,41 +19,76 @@ const columns = [
 ];
 
 export default class CustomRelatedList extends LightningElement {
-    @api objectAPIName;
-    @api objectLookupField;
-    @api objectFields;
-    @api customRecordId;
+    @api objectApiName;
+    @api parentRecordObjectAPIName;
+    @api relationshipField;
+    @api childObjectFields;
+    @api customRecordIdField;
+
     @api recordId;
 
     @track data = [];
     @track columns = [];
 
-    connectedCallback() {
-        if(this.customRecordId == null){
-            this.customRecordId = this.recordId;
-        }
-        this.initColumns();
+    _parentRecordId;
+    get parentRecordId(){
+        return this._parentRecordId;
+    }
+    set parentRecordId(value){
+        this._parentRecordId = value;
         this.retrieveChildRecords();
-
     }
 
+
+    get _customRecordIdFieldRef(){
+        return [this.objectApiName+'.'+this.customRecordIdField];
+    }
+
+    _getRecordDataResponse;
+    @wire(getRecord, { recordId: '$recordId', fields: '$_customRecordIdFieldRef'})
+    recordData(response) {
+        this._getRecordDataResponse = response;
+        if (response.error) {
+            console.log(response.error);
+        } else if (response.data) {
+            if(response.data.fields[this.customRecordIdField] == null){
+                //Field not found
+            }else if(response.data.fields[this.customRecordIdField] != null && response.data.fields[this.customRecordIdField].value == null){
+                //Field empty
+            }else if(response.data.fields[this.customRecordIdField] != null && response.data.fields[this.customRecordIdField].value != null) {
+                //Do something with the field
+                this.parentRecordId = response.data.fields[this.customRecordIdField].value;
+            }
+        }
+    }
+
+    connectedCallback() {
+        this.initColumns();
+        if(this.customRecordIdField == null){
+            this.parentRecordId = this.recordId;
+        }
+    }
     initColumns(){
-        if(this.objectFields != null){
-            let fields = this.objectFields.split(',');
+        if(this.childObjectFields != null){
+            let fields = this.childObjectFields.split(',');
             fields.forEach((value, index) => {
-                console.log(value);
-                let column = { label : value, fieldName : value };
+                let column = {
+                    label : value.toLowerCase(),
+                    fieldName : value.toLowerCase(),
+                };
                 this.columns.push(column);
             });
         }
+
     }
     retrieveChildRecords(){
         let payload = {
-            objectAPIName : this.objectAPIName,
-            parentFieldAPIName : this.objectLookupField,
-            queryFields : this.objectFields,
-            recordId : this.customRecordId
+            objectAPIName : this.parentRecordObjectAPIName,
+            parentFieldAPIName : this.relationshipField,
+            queryFields : this.childObjectFields,
+            recordId : this.parentRecordId
         }
+        console.log(payload);
         getChildRecords(payload)
             .then(result=>{
                 console.log(result);
@@ -61,7 +99,7 @@ export default class CustomRelatedList extends LightningElement {
             })
     }
     updateDataTable(data){
-        let fields = this.objectFields.split(',');
+        let fields = this.childObjectFields.toLowerCase().split(',');
         if(data != null){
             let rows = [];
             data.forEach((record, recordIndex) => {
@@ -75,5 +113,7 @@ export default class CustomRelatedList extends LightningElement {
         }
 
     }
+
+
 
 }

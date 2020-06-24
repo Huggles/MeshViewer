@@ -809,10 +809,10 @@ private class DutchBusinessServiceImplTest {
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
         test.startTest();
-        DutchBusinessWsdl.DutchBusinessPositions dutchBusinessPositions = DutchBusinessService.getPositions(dossierNumber);
+        List<Business_Position__c> dutchBusinessPositions = DutchBusinessService.getPositions(dossierNumber, null);
         test.stopTest();
 
-        system.assertEquals(1, dutchBusinessPositions.positions.item.size());
+        system.assertEquals(1, dutchBusinessPositions.size());
     }
     @IsTest
     public static void testGetExtractHistoryChangedHappyFlow() {

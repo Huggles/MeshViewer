@@ -271,7 +271,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL = WsDutchBusiness.dutchBusinessGetPositions(dossier_number);
 
         try {
-            return createDutchBusinessPositionsToBusinessPositions(businessPositionsWSDL,dossier_record_id);
+            return createDutchBusinessPositions(businessPositionsWSDL,dossier_record_id);
         }
         catch (Exception e){
             throw e;
@@ -508,19 +508,23 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
 
 
-    private List<Business_Position__c> createDutchBusinessPositionsToBusinessPositions(DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL, Id dossierRecordId) {
+    private List<Business_Position__c> createDutchBusinessPositions(DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL, Id dossierRecordId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
                 List<Business_Position__c> businessPositions = new List<Business_Position__c>();
 
         for (DutchBusinessWsdl.DutchBusinessPositionV2 positionV2 : businessPositionsWSDL.positions.item) {
+            Business_Position__c businessPosition = mapDutchBusinessPositionToBusinessPosition(positionV2, dossierRecordId);
+            unitOfWork.registerNew(businessPosition);
+            businessPositions.add(businessPosition);
             if(positionV2.functionary != null){
-                Business_Person__c businessPerson = mapDutchBusinessPersonToBusinessPerson(positionV2, dossierRecordId);
-                Business_Position__c businessPosition = mapDutchBusinessPositionToBusinessPosition(positionV2, dossierRecordId);
+                Business_Person__c businessPerson = mapDutchBusinessPersonToBusinessPerson(positionV2.functionary, dossierRecordId);
                 unitOfWork.registerNew(businessPerson);
-                unitOfWork.registerNew(businessPosition);
                 unitOfWork.registerRelationship(businessPosition, Business_Position__c.Business_Person__c,businessPerson);
-
-                businessPositions.add(businessPosition);
+            }
+            if(positionV2.organisation != null){
+                Business_Dossier__c businessDossier = mapDutchBusinessOrganizationReferenceToBusinessDossier(positionV2.organisation, dossierRecordId);
+                unitOfWork.registerNew(businessDossier);
+                unitOfWork.registerRelationship(businessPosition, Business_Position__c.Organisation__c,businessDossier);
             }
         }
         try {
@@ -531,8 +535,13 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return businessPositions;
     }
 
-    private Business_Person__c mapDutchBusinessPersonToBusinessPerson(DutchBusinessWsdl.DutchBusinessPositionV2 businessPositionsWSDL, Id dossierRecordId) {
-        DutchBusinessWsdl.DutchBusinessPersonV2 functionary = businessPositionsWSDL.functionary;
+    private Business_Dossier__c mapDutchBusinessOrganizationReferenceToBusinessDossier(DutchBusinessWsdl.DutchBusinessOrganizationReferenceV2 organizationReferenceV2, Id dossierRecordId) {
+        Business_Dossier__c dossier = new Business_Dossier__c();
+
+
+        return businessPerson;
+    }
+    private Business_Person__c mapDutchBusinessPersonToBusinessPerson(DutchBusinessWsdl.DutchBusinessPersonV2 functionary, Id dossierRecordId) {
         Business_Person__c businessPerson = new Business_Person__c();
         businessPerson.Name = functionary.full_name;
         businessPerson.First_Name__c = functionary.first_name;

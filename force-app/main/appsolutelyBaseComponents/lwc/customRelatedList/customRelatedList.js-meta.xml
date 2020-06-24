@@ -8,10 +8,10 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <property name="customRecordId" type="String" label="Record Id" placeholder="{record.Id}" />
-            <property name="objectAPIName" type="String" label="Object API Name"/>
-            <property name="objectLookupField" type="String" label="Object Lookup Field API Name"/>
-            <property name="objectFields" type="String" label="Object Fields"/>
+            <property name="customRecordIdField" type="String" label="Custom Record Id Field"/>
+            <property name="parentRecordObjectAPIName" type="String" label="Object API Name"/>
+            <property name="relationshipField" type="String" label="Object Lookup Field API Name"/>
+            <property name="childObjectFields" type="String" label="Object Fields"/>
         </targetConfig>
     </targetConfigs>
     <masterLabel>Custom Related List</masterLabel>
