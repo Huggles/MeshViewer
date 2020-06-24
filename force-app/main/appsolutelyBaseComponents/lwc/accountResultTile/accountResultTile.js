@@ -1,13 +1,15 @@
 /**
- * Created by jaapbranderhorst on 19/02/2020.
+ * Created by tejaswinidandi on 12/06/2020.
  */
 
-import {LightningElement, api, track} from 'lwc';
-
+import {LightningElement, api, track, wire} from 'lwc';
+import Update_Duplicate_Account from '@salesforce/label/c.Update_Duplicate_Account';
+import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 import {fireEvent} from "c/pubsub";
 
-export default class SearchResultTile extends LightningElement {
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+export default class AccountResultTile extends LightningElement {
     /**
      * Contains the search result (in fact a business data SObject)
      */
@@ -27,7 +29,7 @@ export default class SearchResultTile extends LightningElement {
     /**
      * An object containing a data structure with a label and a field
      */
-    @api labelsAndFields;
+   @api labelsAndFields;
 
     /**
      * Contains the title of the tile
@@ -46,20 +48,20 @@ export default class SearchResultTile extends LightningElement {
     @api
     selected;
 
-    /**
-     * The icon state to be shown
-     */
-    get iconState() {
-        if (!this.selected) {
-            return false;
-        } else {
-            return true;
-        }
+    labels = {
+        Update_Duplicate_Account
     }
 
     handleOnClick(event) {
+        console.log('ART handleOnClick');
         const cardClickedEvent = new CustomEvent('cardclicked', {detail : {id: this.searchResultId}});
+        console.log('cardClickedEvent-'+this.searchResultId)
         this.dispatchEvent(cardClickedEvent);
+    }
+
+    handleClickDuplicateAccount() {
+        console.log('ART handleClickDuplicateAccount');
+        fireEvent(null, 'updateAccount', null);
     }
 
 }

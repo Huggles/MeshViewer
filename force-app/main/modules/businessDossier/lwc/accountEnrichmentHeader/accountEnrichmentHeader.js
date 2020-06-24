@@ -148,6 +148,8 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
     handleSearchAgainClicked(event) {
         this.searchAgainClicked = true;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('searchAgainClicked', this.searchAgainClicked);
+        this.dispatchEvent(attributeChangeEvent);
         //we throw an event because the flow needs to show a search form
         this.dispatchEvent(new FlowNavigationNextEvent());
     }
@@ -164,6 +166,8 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
     handleOnGetCreditsafeReport(event) {
         this.getCreditsafeReportClicked = true;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('getCreditsafeReportClicked', this.getCreditsafeReportClicked);
+        this.dispatchEvent(attributeChangeEvent);
         //we throw an event because the flow needs to show a search form
         this.dispatchEvent(new FlowNavigationNextEvent());
     }
