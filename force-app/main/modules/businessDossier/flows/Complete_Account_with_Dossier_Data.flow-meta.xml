@@ -3,7 +3,7 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>974</locationX>
+        <locationX>1161</locationX>
         <locationY>98</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -11,7 +11,7 @@
     <assignments>
         <name>Assign_billing_country_default</name>
         <label>Assign billing country default</label>
-        <locationX>670</locationX>
+        <locationX>857</locationX>
         <locationY>50</locationY>
         <assignmentItems>
             <assignToReference>Get_Account.BillingCountry</assignToReference>
@@ -27,7 +27,7 @@
     <assignments>
         <name>Assign_Business_Dossier_Id_And_Search_Again</name>
         <label>Assign Business Dossier Id And Search Again</label>
-        <locationX>356</locationX>
+        <locationX>543</locationX>
         <locationY>435</locationY>
         <assignmentItems>
             <assignToReference>BusinessDossierRecordId</assignToReference>
@@ -50,7 +50,7 @@
     <assignments>
         <name>Assign_New_Business_Dossier_Id_And_Search_Again</name>
         <label>Assign New Business Dossier Id And Search Again</label>
-        <locationX>1196</locationX>
+        <locationX>1383</locationX>
         <locationY>425</locationY>
         <assignmentItems>
             <assignToReference>BusinessDossierRecordId</assignToReference>
@@ -73,7 +73,7 @@
     <assignments>
         <name>Creditsafe_Report_Created_Message</name>
         <label>Creditsafe Report Created Message</label>
-        <locationX>1136</locationX>
+        <locationX>1323</locationX>
         <locationY>601</locationY>
         <assignmentItems>
             <assignToReference>LookupCreationMessage</assignToReference>
@@ -89,7 +89,7 @@
     <assignments>
         <name>Default_outcome_message</name>
         <label>Default outcome message</label>
-        <locationX>822</locationX>
+        <locationX>1009</locationX>
         <locationY>572</locationY>
         <assignmentItems>
             <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
@@ -105,7 +105,7 @@
     <decisions>
         <name>Business_Dossier_Set</name>
         <label>Business Dossier Set</label>
-        <locationX>348</locationX>
+        <locationX>535</locationX>
         <locationY>268</locationY>
         <defaultConnector>
             <targetReference>Selected_country_is_empty</targetReference>
@@ -130,10 +130,10 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>966</locationX>
+        <locationX>1153</locationX>
         <locationY>269</locationY>
         <defaultConnector>
-            <targetReference>Get_Business_Dossier</targetReference>
+            <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Cancel Not Pressed</defaultConnectorLabel>
         <rules>
@@ -155,7 +155,7 @@
     <decisions>
         <name>Cancel_Pressed1</name>
         <label>Cancel Pressed</label>
-        <locationX>993</locationX>
+        <locationX>1180</locationX>
         <locationY>766</locationY>
         <defaultConnector>
             <targetReference>Default_outcome_message</targetReference>
@@ -195,7 +195,7 @@
     <decisions>
         <name>Search_Again_Clicked_Or_VAT_Updated_or_Get_Creditsafe_Report_Clicked</name>
         <label>Search Again Clicked Or VAT Updated or Get Creditsafe Report Clicked</label>
-        <locationX>591</locationX>
+        <locationX>778</locationX>
         <locationY>502</locationY>
         <defaultConnector>
             <targetReference>Default_outcome_message</targetReference>
@@ -250,7 +250,7 @@
     <decisions>
         <name>Selected_country_is_empty</name>
         <label>Selected country is empty</label>
-        <locationX>587</locationX>
+        <locationX>774</locationX>
         <locationY>269</locationY>
         <defaultConnector>
             <targetReference>Organisation_Search_Flow</targetReference>
@@ -305,7 +305,7 @@
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>203</locationX>
+        <locationX>390</locationX>
         <locationY>266</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -322,32 +322,12 @@
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_Business_Dossier</name>
-        <label>Get Business Dossier</label>
-        <locationX>1165</locationX>
-        <locationY>262</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>CreatedDossier.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Business_Dossier__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <description>Updates an account with the details of a dutch business dossier</description>
         <name>Update_Account_for_Dutch_Dossier</name>
         <label>Update Account for Dutch Dossier</label>
-        <locationX>1312</locationX>
-        <locationY>262</locationY>
+        <locationX>1381</locationX>
+        <locationY>261</locationY>
         <connector>
             <targetReference>Assign_New_Business_Dossier_Id_And_Search_Again</targetReference>
         </connector>
@@ -361,13 +341,13 @@
         <inputAssignments>
             <field>Business_Dossier__c</field>
             <value>
-                <elementReference>Get_Business_Dossier.Id</elementReference>
+                <elementReference>CreatedDossier.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Name</field>
             <value>
-                <elementReference>Get_Business_Dossier.Name</elementReference>
+                <elementReference>CreatedDossier.Name</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -375,7 +355,7 @@
     <screens>
         <name>Show_Buisness_Dossier</name>
         <label>Show Buisness Dossier</label>
-        <locationX>890</locationX>
+        <locationX>1077</locationX>
         <locationY>406</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -478,7 +458,7 @@
     <subflows>
         <name>Get_Creditsafe_Report</name>
         <label>Get Creditsafe Report</label>
-        <locationX>601</locationX>
+        <locationX>788</locationX>
         <locationY>771</locationY>
         <connector>
             <targetReference>Cancel_Pressed1</targetReference>
@@ -503,7 +483,7 @@
         <description>Searches for organisations. Uses the input values as defaults to search on.</description>
         <name>Organisation_Search_Flow</name>
         <label>Organisation Search Flow</label>
-        <locationX>802</locationX>
+        <locationX>989</locationX>
         <locationY>267</locationY>
         <connector>
             <targetReference>Cancel_Pressed</targetReference>

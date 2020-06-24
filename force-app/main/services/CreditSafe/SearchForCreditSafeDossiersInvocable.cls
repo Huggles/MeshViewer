@@ -31,23 +31,29 @@ global with sharing class SearchForCreditSafeDossiersInvocable {
 
     @InvocableMethod(label='Search for Credit Safe dossier' description='Searches for credit safe dossier based on the given arguments.' category='Company.info')
     global static List<List<Business_Dossier__c>> searchForCreditSafeDossier(List<SearchForCreditSafeDossiersArgument> arguments) {
-        List<List<Business_Dossier__c>> dossierLists = new List<List<Business_Dossier__c>>();
-        for (SearchForCreditSafeDossiersArgument argument : arguments) {
-            List<Business_Dossier__c> dossiers = (CreditSafeService.searchForCreditSafeDossiers(
-                    argument.countries,
-                    argument.id,
-                    argument.status,
-                    argument.registration_number,
-                    argument.registration_type,
-                    argument.vat_number,
-                    argument.province,
-                    argument.city,
-                    argument.street,
-                    argument.postal_code,
-                    argument.name));
-            dossierLists.add(dossiers);
+        try {
+            List<List<Business_Dossier__c>> dossierLists = new List<List<Business_Dossier__c>>();
+            for (SearchForCreditSafeDossiersArgument argument : arguments) {
+                List<Business_Dossier__c> dossiers = (CreditSafeService.searchForCreditSafeDossiers(
+                        argument.countries,
+                        argument.id,
+                        argument.status,
+                        argument.registration_number,
+                        argument.registration_type,
+                        argument.vat_number,
+                        argument.province,
+                        argument.city,
+                        argument.street,
+                        argument.postal_code,
+                        argument.name));
+                dossierLists.add(dossiers);
+            }
+            return dossierLists;
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw ex;
         }
-        return dossierLists;
+
     }
 
 }

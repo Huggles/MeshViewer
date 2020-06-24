@@ -63,7 +63,6 @@ public with sharing class PermissionSetSelector extends fflib_SObjectSelector im
             if (permissionSetByLicenseTypes.get(licenseType2) != null) // test license type values don't have permission sets related to them and will return null therefore
                 returnValue.add(permissionSetByLicenseTypes.get(licenseType2));
         }
-        System.debug('permission sets with exclusion: ' + JSON.serializePretty(returnValue));
         return returnValue;
     }
 

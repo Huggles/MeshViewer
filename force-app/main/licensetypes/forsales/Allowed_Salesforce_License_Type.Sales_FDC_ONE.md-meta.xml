@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Sales FDC_ONE</label>
+    <protected>true</protected>
+    <values>
+        <field>License_Definition_Key__c</field>
+        <value xsi:type="xsd:string">FDC_ONE</value>
+    </values>
+    <values>
+        <field>License_Type_Definition__c</field>
+        <value xsi:type="xsd:string">COMPANY_INFO_FOR_SALES</value>
+    </values>
+</CustomMetadata>

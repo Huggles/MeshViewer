@@ -9,12 +9,28 @@
         <value>Active</value>
     </labels>
     <labels>
+        <fullName>Active_user</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of active column in user data table</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
         <fullName>Addition</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Addition</shortDescription>
-        <value>Addition</value>
+        <shortDescription>House number addition</shortDescription>
+        <value>House Number Addition</value>
+    </labels>
+    <labels>
+        <fullName>Alias</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of alias column in user data table</shortDescription>
+        <value>Alias</value>
     </labels>
     <labels>
         <fullName>An_Error_occured</fullName>
@@ -23,6 +39,30 @@
         <protected>false</protected>
         <shortDescription>An Error occured</shortDescription>
         <value>An error occured!</value>
+    </labels>
+    <labels>
+        <fullName>Assign</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Assign button</shortDescription>
+        <value>Assign</value>
+    </labels>
+    <labels>
+        <fullName>Assign_Licenses</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Assign Licenses button on License Management Card</shortDescription>
+        <value>Assign Licenses</value>
+    </labels>
+    <labels>
+        <fullName>Assign_users_success_message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success message shown after assigning seats to users</shortDescription>
+        <value>Users successfully assigned</value>
     </labels>
     <labels>
         <fullName>Back_To_Search</fullName>
@@ -54,7 +94,7 @@
     </labels>
     <labels>
         <fullName>City</fullName>
-        <categories>Dutch Business</categories>
+        <categories>Dutch Business,CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>City</shortDescription>
@@ -62,10 +102,11 @@
     </labels>
     <labels>
         <fullName>City_Help_Text</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>City Help Text</shortDescription>
-        <value>Please fill the city name in Country&#39;s native language</value>
+        <value>Please fill the city name in the country&#39;s main language</value>
     </labels>
     <labels>
         <fullName>Close</fullName>
@@ -75,144 +116,28 @@
         <value>Close</value>
     </labels>
     <labels>
-        <fullName>Config_Account_ActivateDescription</fullName>
+        <fullName>Password</fullName>
+        <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Config_Account_ActivateDescription</shortDescription>
-        <value>Thank you for installing Company.info. To begin, enter your credentials or</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_ActivateDescriptionRequest</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_ActivateDescriptionRequest</shortDescription>
-        <value>request a trial</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_AwaitingActivation</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_AwaitingActivation</shortDescription>
-        <value>Your account has not been activated yet. Please try again later. One of our Account Managers will be in touch once your account has been activated.</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_CreateAccount</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_CreateAccount</shortDescription>
-        <value>Request a trial</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_ExistingUser</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_ExistingUser</shortDescription>
-        <value>I am an existing user</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_ID</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_ID</shortDescription>
-        <value>Account ID</value>
-    </labels>
-    <labels>
-        <fullName>Config_Account_Password</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Account_Password</shortDescription>
+        <shortDescription>Password</shortDescription>
         <value>Password</value>
     </labels>
     <labels>
-        <fullName>Config_Account_Save</fullName>
+        <fullName>Login_Button</fullName>
+        <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Config_Account_Save</shortDescription>
-        <value>Save Credentials</value>
+        <shortDescription>Login button text</shortDescription>
+        <value>Login</value>
     </labels>
     <labels>
-        <fullName>Config_Account_Username</fullName>
+        <fullName>Companyinfo_Username</fullName>
+        <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Config_Account_Username</shortDescription>
-        <value>Username</value>
-    </labels>
-    <labels>
-        <fullName>Config_Add_Budget</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Add Budget</shortDescription>
-        <value>Add Budget</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Changed</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Balance Changed</shortDescription>
-        <value>The balance was changed</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Error</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Balance Error</shortDescription>
-        <value>There was an error during org activation.</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Management</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Balance Management</shortDescription>
-        <value>Balance Management</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Management_Text</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Balance Management Text</shortDescription>
-        <value>See your current budget, manage your threshold and buy additional budget</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Threshold_Description</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Balance_Threshold_Description</shortDescription>
-        <value>The threshold slider determines the value your balance must drop to before you are notfied.</value>
-    </labels>
-    <labels>
-        <fullName>Config_Balance_Updated</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Balance_Updated</shortDescription>
-        <value>Your balance has been updated.</value>
-    </labels>
-    <labels>
-        <fullName>Config_Credentials</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config_Credentials</shortDescription>
-        <value>Credentials</value>
-    </labels>
-    <labels>
-        <fullName>Config_Current_Budget</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Current Budget</shortDescription>
-        <value>Current Budget</value>
-    </labels>
-    <labels>
-        <fullName>Config_Current_Threshold</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Current Threshold</shortDescription>
-        <value>Current Threshold</value>
-    </labels>
-    <labels>
-        <fullName>Loading</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Alternative text for spinner</shortDescription>
-        <value>Loading...</value>
+        <shortDescription>Username on company.info login screen</shortDescription>
+        <value>Company.info Username</value>
     </labels>
     <labels>
         <fullName>Config_Page_Title</fullName>
@@ -223,6 +148,7 @@
     </labels>
     <labels>
         <fullName>Config_Title</fullName>
+        <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Config_Title</shortDescription>
@@ -230,6 +156,7 @@
     </labels>
     <labels>
         <fullName>Contract_Intention_of_signature_of_leasing_or_rent_contract</fullName>
+        <categories>Creditsafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Contract Intention of signature of leasing or rent contract</shortDescription>
@@ -237,7 +164,7 @@
     </labels>
     <labels>
         <fullName>Country</fullName>
-        <categories>CreditSafe</categories>
+        <categories>CreditSafe,Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Country</shortDescription>
@@ -245,6 +172,7 @@
     </labels>
     <labels>
         <fullName>Country_Belgium</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Country Belgium</shortDescription>
@@ -252,6 +180,7 @@
     </labels>
     <labels>
         <fullName>Country_Denmark</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Country Denmark</shortDescription>
@@ -259,6 +188,7 @@
     </labels>
     <labels>
         <fullName>Country_France</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Country France</shortDescription>
@@ -266,6 +196,7 @@
     </labels>
     <labels>
         <fullName>Country_Germany</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Country Germany</shortDescription>
@@ -273,6 +204,7 @@
     </labels>
     <labels>
         <fullName>Country_Ireland</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Country Ireland</shortDescription>
@@ -280,45 +212,11 @@
     </labels>
     <labels>
         <fullName>Country_Italy</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Country Italy</shortDescription>
         <value>Italy</value>
-    </labels>
-    <labels>
-        <fullName>Country_Netherlands</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Country Netherlands</shortDescription>
-        <value>The Netherlands</value>
-    </labels>
-    <labels>
-        <fullName>Country_Norway</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Country Norway</shortDescription>
-        <value>Norway</value>
-    </labels>
-    <labels>
-        <fullName>Country_Spain</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Country Spain</shortDescription>
-        <value>Spain</value>
-    </labels>
-    <labels>
-        <fullName>Country_Sweden</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Country Sweden</shortDescription>
-        <value>Sweden</value>
-    </labels>
-    <labels>
-        <fullName>Country_United_Kingdom</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Country United Kingdom</shortDescription>
-        <value>United Kingdom</value>
     </labels>
     <labels>
         <fullName>Country_Luxembourg</fullName>
@@ -326,6 +224,46 @@
         <protected>true</protected>
         <shortDescription>Country Luxembourg</shortDescription>
         <value>Luxembourg</value>
+    </labels>
+    <labels>
+        <fullName>Country_Netherlands</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Netherlands</shortDescription>
+        <value>The Netherlands</value>
+    </labels>
+    <labels>
+        <fullName>Country_Norway</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Norway</shortDescription>
+        <value>Norway</value>
+    </labels>
+    <labels>
+        <fullName>Country_Spain</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Spain</shortDescription>
+        <value>Spain</value>
+    </labels>
+    <labels>
+        <fullName>Country_Sweden</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country Sweden</shortDescription>
+        <value>Sweden</value>
+    </labels>
+    <labels>
+        <fullName>Country_United_Kingdom</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Country United Kingdom</shortDescription>
+        <value>United Kingdom</value>
     </labels>
     <labels>
         <fullName>Country_to_Search</fullName>
@@ -343,68 +281,27 @@
         <value>The Account does not have a related Business Dossier, please create/link a Business Dossier to Account and retry.</value>
     </labels>
     <labels>
+        <fullName>Create_New_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create New Account</shortDescription>
+        <value>Create Duplicate Account</value>
+    </labels>
+    <labels>
+        <fullName>Login_successfull</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message shown after a succesffull login</shortDescription>
+        <value>Login succesfull!</value>
+    </labels>
+    <labels>
         <fullName>Credentials_successfully_updated_message</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Credentials successfully updated message</shortDescription>
         <value>Credentials saved!</value>
-    </labels>
-    <labels>
-        <fullName>License_assignment_succesfully_removed</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Message shown when a license assignment has been removed</shortDescription>
-        <value>License assignment removed!</value>
-    </labels>
-    <labels>
-        <fullName>Full_Name</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of full name column in user data table</shortDescription>
-        <value>Full Name</value>
-    </labels>
-    <labels>
-        <fullName>Alias</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of alias column in user data table</shortDescription>
-        <value>Alias</value>
-    </labels>
-    <labels>
-        <fullName>Username</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of username column in user data table</shortDescription>
-        <value>Username</value>
-    </labels>
-    <labels>
-        <fullName>Profile</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of profile column in user data table</shortDescription>
-        <value>Profile</value>
-    </labels>
-    <labels>
-        <fullName>Role</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of role column in user data table</shortDescription>
-        <value>Role</value>
-    </labels>
-    <labels>
-        <fullName>Active_user</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Header of active column in user data table</shortDescription>
-        <value>Active</value>
     </labels>
     <labels>
         <fullName>CreditSafe_Validation_Message_Heading</fullName>
@@ -416,6 +313,7 @@
     </labels>
     <labels>
         <fullName>Credit_Assessment_Existing_business_connection</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Credit Assessment Existing business connection</shortDescription>
@@ -454,41 +352,6 @@
         <value>Creditsafe Company Identifier</value>
     </labels>
     <labels>
-        <fullName>DBSCall_AccountDupCheck_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while checking for duplicates</value>
-    </labels>
-    <labels>
-        <fullName>DBSCall_AccountSave_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened creating the matching account</value>
-    </labels>
-    <labels>
-        <fullName>DBSCall_AccountSearch_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened searching for matching account</value>
-    </labels>
-    <labels>
-        <fullName>DBSCall_DossierSave_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while trying to save the dossier.</value>
-    </labels>
-    <labels>
-        <fullName>DBSCall_Unknown_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while working at the BusinessService level</value>
-    </labels>
-    <labels>
         <fullName>DML_Manager_Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -519,28 +382,8 @@
         <value>Domain Name</value>
     </labels>
     <labels>
-        <fullName>Dossier_Account_Create</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dossier_Account_Create</shortDescription>
-        <value>Create Account</value>
-    </labels>
-    <labels>
-        <fullName>Dossier_Account_Create_Completed</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dossier_Account_Create_Completed</shortDescription>
-        <value>Account Created</value>
-    </labels>
-    <labels>
-        <fullName>Dossier_Account_Update</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dossier_Account_Update</shortDescription>
-        <value>Update Account</value>
-    </labels>
-    <labels>
         <fullName>Dossier_Account_Update_Completed</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier_Account_Update_Completed</shortDescription>
@@ -551,7 +394,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier ID Access</shortDescription>
-        <value>User doesn&#39;t have access to dossier with ID:</value>
+        <value>User doesn&apos;t have access to dossier with ID:</value>
     </labels>
     <labels>
         <fullName>Dossier_ID_Missing</fullName>
@@ -561,14 +404,16 @@
         <value>DossierId must be filled when setting VAT number</value>
     </labels>
     <labels>
-        <fullName>Dossier_Multiple_Account_Duplicates_Found</fullName>
+        <fullName>Dossier_Null_Error_Message</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dossier Multiple Account Duplicates Found</shortDescription>
-        <value>Multiple account duplicates have been found. No matching between business data and account possible. Please delete the account duplicates and try again.</value>
+        <shortDescription>Dossier null in input</shortDescription>
+        <value>Dossier not provided.</value>
     </labels>
     <labels>
         <fullName>Dossier_Number</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier Number</shortDescription>
@@ -576,30 +421,45 @@
     </labels>
     <labels>
         <fullName>Dossier_Number_Missing</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Dossier Number Missing</shortDescription>
-        <value>Could not fetch the VAT number as Registration Number is missing</value>
+        <value>Could not fetch the VAT number as the Chamber of Commerce Number is missing</value>
     </labels>
     <labels>
-        <fullName>Dossier_Remove</fullName>
+        <fullName>Error_Title</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dossier Remove</shortDescription>
-        <value>Remove Company.info data</value>
+        <shortDescription>Title of error toast</shortDescription>
+        <value>Error</value>
     </labels>
     <labels>
-        <fullName>Dossier_Removed</fullName>
+        <fullName>Duplicate_Account_Created</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Dossier Removed</shortDescription>
-        <value>Company.info data Removed</value>
+        <shortDescription>Duplicate Account Created</shortDescription>
+        <value>A new duplicate Account has been created</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicate Results</shortDescription>
+        <value>Duplicate Results</value>
+    </labels>
+    <labels>
+        <fullName>Duplicates_Found_Message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicates Found Message</shortDescription>
+        <value>The record you&apos;re about to create looks like a duplicate. Use one of these records?</value>
     </labels>
     <labels>
         <fullName>Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Error</shortDescription>
+        <shortDescription>Title of error toast</shortDescription>
         <value>Error</value>
     </labels>
     <labels>
@@ -608,7 +468,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error Client Authentication</shortDescription>
-        <value>Please check your username and password. If you still can&#39;t log in, contact Company.info.</value>
+        <value>Please check your username and password. If you still cannot log in, contact Company.info.</value>
     </labels>
     <labels>
         <fullName>Error_Client_Authentication_Password</fullName>
@@ -683,33 +543,12 @@
         <value>The request can’t be processed, because the user (or its account) doesn’t have sufficient balance/credits.</value>
     </labels>
     <labels>
-        <fullName>Error_Config</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Error_Config</shortDescription>
-        <value>Error 103 received from Company.info. Please contact support for assistance.</value>
-    </labels>
-    <labels>
-        <fullName>Error_Incomplete</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Error_Incomplete</shortDescription>
-        <value>Some required fields are missing.</value>
-    </labels>
-    <labels>
         <fullName>Error_Input_Incorrect</fullName>
         <categories>Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Error Input Incorrect</shortDescription>
         <value>Incorrect input. Please correct your input and try again.</value>
-    </labels>
-    <labels>
-        <fullName>Error_Remove_Dossier</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Error_Remove_Dossier</shortDescription>
-        <value>There was a problem removing the business data. Please ensure you have permission to carry out this action.</value>
     </labels>
     <labels>
         <fullName>Error_Server_Data</fullName>
@@ -807,34 +646,20 @@
         <value>The data vendor server threw an unknown exception. Please retry later or contact your administrator.</value>
     </labels>
     <labels>
-        <fullName>Error_user_not_found</fullName>
-        <categories>Error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Error user not found</shortDescription>
-        <value>User does not exist. Please check the username and password.</value>
-    </labels>
-    <labels>
-        <fullName>Establishment_Date</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Establishment Date</shortDescription>
-        <value>Establishment Date</value>
-    </labels>
-    <labels>
-        <fullName>Establishment_Number</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Establishment Number</shortDescription>
-        <value>Establishment Number</value>
-    </labels>
-    <labels>
         <fullName>Fill_minimum_characters</fullName>
         <categories>Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Fill minimum characters</shortDescription>
         <value>Please enter at least two characters.</value>
+    </labels>
+    <labels>
+        <fullName>Full_Name</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of full name column in user data table</shortDescription>
+        <value>Full Name</value>
     </labels>
     <labels>
         <fullName>Get_Creditsafe_Report</fullName>
@@ -874,11 +699,34 @@
         <value>Insurance Contract - Intention of signature of a insurance contract</value>
     </labels>
     <labels>
+        <fullName>International_Address_Organization_Help_Text</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
+        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
+    </labels>
+    <labels>
         <fullName>Language_Input_Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Language Input Error</shortDescription>
-        <value>Selected language is not available for selected company&#39;s country. Please select another language.</value>
+        <value>Selected language is not available for selected company&apos;s country. Please select another language.</value>
+    </labels>
+    <labels>
+        <fullName>License_assignment_succesfully_removed</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message shown when a license assignment has been removed</shortDescription>
+        <value>License assignment removed!</value>
+    </labels>
+    <labels>
+        <fullName>Loading</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Alternative text for spinner</shortDescription>
+        <value>Loading...</value>
     </labels>
     <labels>
         <fullName>Locality</fullName>
@@ -903,15 +751,8 @@
         <value>Ltd</value>
     </labels>
     <labels>
-        <fullName>Matching_Companies</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Matching Companies</shortDescription>
-        <value>Matching Companies</value>
-    </labels>
-    <labels>
         <fullName>Minimum_registration_number_characters</fullName>
-        <categories>Error</categories>
+        <categories>Error,CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Minimum registration number characters</shortDescription>
@@ -919,7 +760,7 @@
     </labels>
     <labels>
         <fullName>Minimum_registration_number_length</fullName>
-        <categories>Error</categories>
+        <categories>Error,CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Minimum registration number length</shortDescription>
@@ -949,18 +790,25 @@
         <value>New Account with Company.info</value>
     </labels>
     <labels>
+        <fullName>New_Account_with_Business_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Account with Business Dossier</shortDescription>
+        <value>A new Account has been created for the searched company.</value>
+    </labels>
+    <labels>
+        <fullName>New_Account_with_International_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Account with International Address</shortDescription>
+        <value>A new Account has been created for the searched company address.</value>
+    </labels>
+    <labels>
         <fullName>No</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>No</shortDescription>
         <value>No</value>
-    </labels>
-    <labels>
-        <fullName>NoAuthAppNotActive</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>NoAuthAppNotActive</shortDescription>
-        <value>No authentication data found. The app is not activated</value>
     </labels>
     <labels>
         <fullName>No_Business_Dossier_Found</fullName>
@@ -984,55 +832,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>No users available to assign licenses to</shortDescription>
-        <value>No_users_available_to_assign_licenses_to</value>
-    </labels>
-    <labels>
-        <fullName>Assign</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Assign button</shortDescription>
-        <value>Assign</value>
-    </labels>
-    <labels>
-        <fullName>Assign_users_success_message</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Success message shown after assigning seats to users</shortDescription>
-        <value>Users successfully assigned</value>
-    </labels>
-    <labels>
-        <fullName>Assign_Licenses</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Assign Licenses button on License Management Card</shortDescription>
-        <value>Assign Licenses</value>
-    </labels>
-    <labels>
-        <fullName>Remove_Assignments_Button</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Button text on Remove assignments button on License Management Card</shortDescription>
-        <value>Remove Assignments</value>
-    </labels>
-    <labels>
-        <fullName>Nr_of_licenses_assigned</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Message showing nr of licenses have been assigned</shortDescription>
-        <value>{0} Licenses out of {1} assigned</value>
-    </labels>
-    <labels>
-        <fullName>No_users_assigned</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Text shown below desert img when no users have been assigned</shortDescription>
-        <value>No users assigned</value>
+        <value>No users available to assign licenses to</value>
     </labels>
     <labels>
         <fullName>No_address_fields_filled_international_address</fullName>
@@ -1041,6 +841,14 @@
         <protected>true</protected>
         <shortDescription>No address fields filled international address</shortDescription>
         <value>Please fill some address fields (street, postal code, PO box or locality) before searching.</value>
+    </labels>
+    <labels>
+        <fullName>No_users_assigned</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Text shown below desert img when no users have been assigned</shortDescription>
+        <value>No users assigned</value>
     </labels>
     <labels>
         <fullName>NonActive</fullName>
@@ -1052,13 +860,23 @@
     </labels>
     <labels>
         <fullName>Non_Limited</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Non Limited</shortDescription>
         <value>Non Limited</value>
     </labels>
     <labels>
+        <fullName>Nr_of_licenses_assigned</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message showing nr of licenses have been assigned</shortDescription>
+        <value>{0} Licenses out of {1} assigned</value>
+    </labels>
+    <labels>
         <fullName>Organization</fullName>
+        <categories>InternationalAddress</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Organization</shortDescription>
@@ -1066,6 +884,7 @@
     </labels>
     <labels>
         <fullName>POBox</fullName>
+        <categories>InternationalAddress</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>POBox</shortDescription>
@@ -1081,7 +900,7 @@
     </labels>
     <labels>
         <fullName>Postal_Code</fullName>
-        <categories>Dutch Business</categories>
+        <categories>Dutch Business,InternationalAddress</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Postal Code</shortDescription>
@@ -1093,6 +912,14 @@
         <protected>true</protected>
         <shortDescription>Previous</shortDescription>
         <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>Profile</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of profile column in user data table</shortDescription>
+        <value>Profile</value>
     </labels>
     <labels>
         <fullName>Province</fullName>
@@ -1117,6 +944,20 @@
         <value>Realisation check receivables collection</value>
     </labels>
     <labels>
+        <fullName>Redirect_to_duplicate_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Redirect to duplicate Account</shortDescription>
+        <value>The account you were trying to create is already in Salesforce and has Company.info data. You are redirected to this account.</value>
+    </labels>
+    <labels>
+        <fullName>Redirect_to_duplicate_Account_with_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Redirect to duplicate Account with Address</shortDescription>
+        <value>The account you were trying to create is already in Salesforce and has International address data. You are redirected to this account.</value>
+    </labels>
+    <labels>
         <fullName>Registration_Number</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -1131,6 +972,22 @@
         <protected>true</protected>
         <shortDescription>Registration Type</shortDescription>
         <value>Registration Type</value>
+    </labels>
+    <labels>
+        <fullName>Remove_Assignments_Button</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Button text on Remove assignments button on License Management Card</shortDescription>
+        <value>Remove Assignments</value>
+    </labels>
+    <labels>
+        <fullName>Role</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of role column in user data table</shortDescription>
+        <value>Role</value>
     </labels>
     <labels>
         <fullName>Search_Address</fullName>
@@ -1156,13 +1013,6 @@
         <value>Search Again</value>
     </labels>
     <labels>
-        <fullName>Search_Building</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>International Address search building details</shortDescription>
-        <value>Search_Building</value>
-    </labels>
-    <labels>
         <fullName>Search_Business_Title</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1171,17 +1021,11 @@
     </labels>
     <labels>
         <fullName>Search_City</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Data Search City</shortDescription>
         <value>City</value>
-    </labels>
-    <labels>
-        <fullName>Search_Company_Details</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Company Details</shortDescription>
-        <value>Company Details</value>
     </labels>
     <labels>
         <fullName>Search_Confirm</fullName>
@@ -1192,6 +1036,7 @@
     </labels>
     <labels>
         <fullName>Search_Country</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Data Search Country</shortDescription>
@@ -1254,123 +1099,19 @@
         <value>A valid VAT Number</value>
     </labels>
     <labels>
-        <fullName>Search_Details</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Details</shortDescription>
-        <value>Details to Sync</value>
-    </labels>
-    <labels>
-        <fullName>Search_Details_Dossier</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Details Dossier</shortDescription>
-        <value>Company Details</value>
-    </labels>
-    <labels>
-        <fullName>Search_Details_Legal</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Details Legal</shortDescription>
-        <value>Legal Entity Details</value>
-    </labels>
-    <labels>
-        <fullName>Search_Domain</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Domain</shortDescription>
-        <value>Domain</value>
-    </labels>
-    <labels>
-        <fullName>Search_Dossier_Number</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Dossier Number</shortDescription>
-        <value>Chamber of Commerce Number</value>
-    </labels>
-    <labels>
-        <fullName>Search_Help</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Help</shortDescription>
-        <value>Please fill the search fields to find the organisation you are searching for.</value>
-    </labels>
-    <labels>
-        <fullName>Search_House_Nr</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Search House Nr</shortDescription>
-        <value>House Nr</value>
-    </labels>
-    <labels>
-        <fullName>Search_House_Nr_Addition</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Search House Nr Addition</shortDescription>
-        <value>Addition</value>
-    </labels>
-    <labels>
-        <fullName>Search_Housenr</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>International Address search house number details</shortDescription>
-        <value>Search_Housenr</value>
-    </labels>
-    <labels>
-        <fullName>Search_Match_Dossier</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dutch Business Data Search Match Dossier</shortDescription>
-        <value>Find</value>
-    </labels>
-    <labels>
         <fullName>Search_No_Results</fullName>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Business Data Search No Results</shortDescription>
+        <shortDescription>Message shown when no results are found</shortDescription>
         <value>No results found</value>
     </labels>
     <labels>
-        <fullName>Search_Organization</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>International Address search organization details</shortDescription>
-        <value>Search_Organization</value>
-    </labels>
-    <labels>
-        <fullName>Search_PObox</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>International Address search PObox details</shortDescription>
-        <value>Search_PObox</value>
-    </labels>
-    <labels>
-        <fullName>Search_Phone</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Phone</shortDescription>
-        <value>Phone</value>
-    </labels>
-    <labels>
         <fullName>Search_Postal_Code</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Data Search Postal Code</shortDescription>
         <value>Postal Code</value>
-    </labels>
-    <labels>
-        <fullName>Search_Province</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Province</shortDescription>
-        <value>Province</value>
-    </labels>
-    <labels>
-        <fullName>Search_Registration_Number</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Search Registration Number</shortDescription>
-        <value>Registration Number</value>
     </labels>
     <labels>
         <fullName>Search_Reset</fullName>
@@ -1385,13 +1126,6 @@
         <protected>true</protected>
         <shortDescription>Business Data Search Results Confirm</shortDescription>
         <value>Confirm</value>
-    </labels>
-    <labels>
-        <fullName>Search_Results_Help</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Results Help</shortDescription>
-        <value>The following companies match your search results. Please select the correct match for this account.</value>
     </labels>
     <labels>
         <fullName>Search_Results_Limited</fullName>
@@ -1409,17 +1143,11 @@
     </labels>
     <labels>
         <fullName>Search_Street</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Data Search Street</shortDescription>
         <value>Street</value>
-    </labels>
-    <labels>
-        <fullName>Search_Trade_Name</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Trade Name</shortDescription>
-        <value>Trade Name</value>
     </labels>
     <labels>
         <fullName>Search_VAT_Number</fullName>
@@ -1431,7 +1159,7 @@
     </labels>
     <labels>
         <fullName>Select_a_Country</fullName>
-        <categories>CreditSafe</categories>
+        <categories>CreditSafe,Business Dossier</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Select a Country</shortDescription>
@@ -1439,6 +1167,7 @@
     </labels>
     <labels>
         <fullName>Select_a_Registration_Type</fullName>
+        <categories>CreditSafe</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Select a Registration Type</shortDescription>
@@ -1462,7 +1191,7 @@
     </labels>
     <labels>
         <fullName>Street</fullName>
-        <categories>Dutch Business</categories>
+        <categories>Dutch Business,InternationalAddress</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Street</shortDescription>
@@ -1470,6 +1199,7 @@
     </labels>
     <labels>
         <fullName>Strict_Search</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Strict Search</shortDescription>
@@ -1483,20 +1213,6 @@
         <value>Success</value>
     </labels>
     <labels>
-        <fullName>Sync</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Sync</shortDescription>
-        <value>Business Data Sync</value>
-    </labels>
-    <labels>
-        <fullName>Sync_Success</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Sync Success</shortDescription>
-        <value>Business Data sync was successful.</value>
-    </labels>
-    <labels>
         <fullName>Trade_Name</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
@@ -1505,7 +1221,30 @@
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>Update_Duplicate_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update Duplicate Account</shortDescription>
+        <value>Update Duplicate Account</value>
+    </labels>
+    <labels>
+        <fullName>Updated_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Updated Account</shortDescription>
+        <value>The selected duplicate Account has been updated.</value>
+    </labels>
+    <labels>
+        <fullName>Username</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header of username column in user data table</shortDescription>
+        <value>Username</value>
+    </labels>
+    <labels>
         <fullName>VAT_Not_Found</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>VAT Not Found</shortDescription>
@@ -1513,6 +1252,7 @@
     </labels>
     <labels>
         <fullName>VAT_Retrieve</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>VAT_Retrieve</shortDescription>
@@ -1520,7 +1260,7 @@
     </labels>
     <labels>
         <fullName>Valid_Belgian_registration_number</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Belgian registration number</shortDescription>
@@ -1528,7 +1268,7 @@
     </labels>
     <labels>
         <fullName>Valid_CreditSafe_France_Registration_Id</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid CreditSafe France Registration Id</shortDescription>
@@ -1544,6 +1284,7 @@
     </labels>
     <labels>
         <fullName>Valid_Denmark_VAT_Number</fullName>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Denmark VAT Number</shortDescription>
@@ -1551,7 +1292,7 @@
     </labels>
     <labels>
         <fullName>Valid_Dutch_phone_number</fullName>
-        <categories>Error</categories>
+        <categories>Dutch Business,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Dutch phone number</shortDescription>
@@ -1559,7 +1300,7 @@
     </labels>
     <labels>
         <fullName>Valid_Dutch_postal_code</fullName>
-        <categories>Error</categories>
+        <categories>Dutch Business,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Dutch postal code</shortDescription>
@@ -1567,7 +1308,7 @@
     </labels>
     <labels>
         <fullName>Valid_French_VAT_Number</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid French VAT Number</shortDescription>
@@ -1575,7 +1316,7 @@
     </labels>
     <labels>
         <fullName>Valid_French_registration_number</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid French registration number</shortDescription>
@@ -1583,7 +1324,7 @@
     </labels>
     <labels>
         <fullName>Valid_GB_CreditSafe_Identification_Number</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid GB CreditSafe Identification Number</shortDescription>
@@ -1591,7 +1332,7 @@
     </labels>
     <labels>
         <fullName>Valid_GB_VAT_Number</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid GB VAT Number</shortDescription>
@@ -1599,7 +1340,7 @@
     </labels>
     <labels>
         <fullName>Valid_German_VAT_Number</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid German VAT Number</shortDescription>
@@ -1607,6 +1348,7 @@
     </labels>
     <labels>
         <fullName>Valid_Germany_CreditSafe_registration_id</fullName>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Germany CreditSafe registration id</shortDescription>
@@ -1614,11 +1356,27 @@
     </labels>
     <labels>
         <fullName>Valid_Irish_CreditSafe_Identification_Nr</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Irish CreditSafe Identification Nr</shortDescription>
         <value>Please enter a valid Irish CreditSafe Identification Number</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Irish_VAT_Number</fullName>
+        <categories>CreditSafe,Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid Irish VAT Number</shortDescription>
+        <value>Please enter a valid Irish VAT Number starting with IE</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Italian_VAT_Number</fullName>
+        <categories>CreditSafe,Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid Italian VAT Number</shortDescription>
+        <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
     </labels>
     <labels>
         <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
@@ -1629,22 +1387,8 @@
         <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
     </labels>
     <labels>
-        <fullName>Valid_Irish_VAT_Number</fullName>
-        <categories>Error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid Irish VAT Number</shortDescription>
-        <value>Please enter a valid Irish VAT Number starting with IE</value>
-    </labels>
-    <labels>
-        <fullName>Valid_Italian_VAT_Number</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid Italian VAT Number</shortDescription>
-        <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
-    </labels>
-    <labels>
         <fullName>Valid_NL_registration_number</fullName>
+        <categories>Dutch Business,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid NL registration number</shortDescription>
@@ -1652,6 +1396,7 @@
     </labels>
     <labels>
         <fullName>Valid_Spanish_VAT_Number</fullName>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Spanish VAT Number</shortDescription>
@@ -1659,7 +1404,7 @@
     </labels>
     <labels>
         <fullName>Valid_Swedish_CreditSafe_Identification_Nr</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Swedish CreditSafe Identification Nr</shortDescription>
@@ -1667,7 +1412,7 @@
     </labels>
     <labels>
         <fullName>Valid_Swedish_VAT_Number</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid Swedish VAT Number</shortDescription>
@@ -1675,7 +1420,7 @@
     </labels>
     <labels>
         <fullName>Valid_house_number</fullName>
-        <categories>Error</categories>
+        <categories>Dutch Business,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid house number</shortDescription>
@@ -1683,7 +1428,7 @@
     </labels>
     <labels>
         <fullName>Valid_registration_number</fullName>
-        <categories>Error</categories>
+        <categories>CreditSafe,Error</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Valid registration number</shortDescription>
@@ -1696,34 +1441,6 @@
         <protected>true</protected>
         <shortDescription>Validation Error Message Toast Title</shortDescription>
         <value>Validation Error</value>
-    </labels>
-    <labels>
-        <fullName>WSCall_ChangeBalance_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>Something happened while working at the BusinessService level</value>
-    </labels>
-    <labels>
-        <fullName>WSCall_Generic_UI_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>Exception Happened, please contact your system administrator</value>
-    </labels>
-    <labels>
-        <fullName>WSCall_Unknown_Exception</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unknown_Exception</shortDescription>
-        <value>There was a problem</value>
-    </labels>
-    <labels>
-        <fullName>WSCall_Unsuccessful</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>WSCall_Unsuccessfull</shortDescription>
-        <value>The call to the service was unsuccessful</value>
     </labels>
     <labels>
         <fullName>Yes</fullName>
@@ -1816,11 +1533,19 @@
         <value>You do not have permission to update {0}</value>
     </labels>
     <labels>
-        <fullName>International_Address_Organization_Help_Text</fullName>
+        <fullName>Feature_Not_Found</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
-        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
+        <shortDescription>Feature_Not_Found</shortDescription>
+        <value>Feature not found</value>
+    </labels>
+    <labels>
+        <fullName>Not_Enough_Seats_Available</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toast shown when the user tries to assign more seats than he has.</shortDescription>
+        <value>Not enough seats available. You tried to assign {0} seats but only have {1} available.</value>
     </labels>
 </CustomLabels>

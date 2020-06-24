@@ -49,8 +49,6 @@ private class InternationalAddressImplTest {
                 null);
         Test.stopTest();
 
-
-        System.debug(internationalAddresses);
         // then
         System.assertEquals(2, internationalAddresses.size());
         for (Integer i = internationalAddresses.size(); i == 1; i--) {

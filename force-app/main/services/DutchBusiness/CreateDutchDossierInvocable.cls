@@ -27,11 +27,17 @@ global with sharing class CreateDutchDossierInvocable {
 
     @InvocableMethod(label='Create Dutch Dossiers' description='Fetches dossiers from the Dutch Chamber of Commerce and stores them in Salesforce' category='Company.info')
     global static List<Business_Dossier__c> createDutchDossier(List<CreateDutchDossierArgument> arguments) {
-        List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
-        for (CreateDutchDossierArgument dutchDossierArgument : arguments) {
-            dossiers.add(DutchBusinessService.createDutchDossier(dutchDossierArgument.dossierNumber, dutchDossierArgument.establishmentNumber, dutchDossierArgument.getVat));
+        try {
+            List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
+            for (CreateDutchDossierArgument dutchDossierArgument : arguments) {
+                dossiers.add(DutchBusinessService.createDutchDossier(dutchDossierArgument.dossierNumber, dutchDossierArgument.establishmentNumber, dutchDossierArgument.getVat));
+            }
+            return dossiers;
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw ex;
         }
-        return dossiers;
+
     }
 
 }
