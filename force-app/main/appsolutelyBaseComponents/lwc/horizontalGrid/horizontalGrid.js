@@ -7,18 +7,18 @@ import {LightningElement, api} from 'lwc';
 
 export default class HorizontalGrid extends LightningElement {
 
-    m_numberOfColumns;
+    _numberOfColumns;
     @api
     get numberOfColumns(){
-        return this.m_numberOfColumns;
+        return this._numberOfColumns;
     }
     set numberOfColumns(value){
         if((typeof value) === "string"){
             //This property passed as an DOM attribute is a string.
-            this.m_numberOfColumns = parseInt(value);
+            this._numberOfColumns = parseInt(value);
         }
         if((typeof value) === "number"){
-            this.m_numberOfColumns = value;
+            this._numberOfColumns = value;
         }
     }
 
@@ -55,6 +55,6 @@ export default class HorizontalGrid extends LightningElement {
         return this.rowKeyIterator;
     }
     get tileContainerCss(){
-        return 'slds-size_1-of-'+this.m_numberOfColumns;
+        return 'slds-size_1-of-'+this._numberOfColumns;
     }
 }

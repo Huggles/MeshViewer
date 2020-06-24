@@ -6,18 +6,18 @@ import {LightningElement, api} from 'lwc';
 
 export default class VerticalGrid extends LightningElement {
 
-    m_numberOfColumns;
+    _numberOfColumns;
     @api
     get numberOfColumns(){
-        return this.m_numberOfColumns;
+        return this._numberOfColumns;
     }
     set numberOfColumns(value){
         if((typeof value) === "string"){
             //This property passed as an DOM attribute is a string.
-            this.m_numberOfColumns = parseInt(value);
+            this._numberOfColumns = parseInt(value);
         }
         if((typeof value) === "number"){
-            this.m_numberOfColumns = value;
+            this._numberOfColumns = value;
         }
     }
 
@@ -32,7 +32,7 @@ export default class VerticalGrid extends LightningElement {
         let tiles = this.querySelectorAll(selector);
         if(tiles != null && tiles.length > 0){
             tiles.forEach((tile, tileIndex) => {
-                tile.item = this.m_items[tileIndex];
+                tile.item = this.items[tileIndex];
             });
         }
     }
@@ -54,12 +54,12 @@ export default class VerticalGrid extends LightningElement {
     }
 
     get sldsColumnSize(){
-        return 'slds-size_1-of-'+this.m_numberOfColumns;
+        return 'slds-size_1-of-'+this._numberOfColumns;
     }
     get columns(){
         let itemListCopy = JSON.parse(JSON.stringify(this.items));
         let result = [];
-        for (let i = this.m_numberOfColumns; i > 0; i--) {
+        for (let i = this._numberOfColumns; i > 0; i--) {
             result.push(itemListCopy.splice(0, Math.ceil(itemListCopy.length / i)));
         }
         return result;
