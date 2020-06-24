@@ -86,7 +86,7 @@ public inherited sharing class TestUtils {
     */
     @TestVisible
     private static User getAdminUser() {
-        User testUser = TestUtils.getUniqueUser('Standard User');
+        User testUser = TestUtils.getUniqueUser('System Administrator');
         TestUtils.giveUserPermissionSet('Company_info_administrator', testUser);
         return testUser;
     }
