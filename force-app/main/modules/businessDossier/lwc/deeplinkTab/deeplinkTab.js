@@ -38,10 +38,11 @@ export default class DeeplinkTab extends LightningElement {
     }
 
     get isDeeplinkUrlAvailable() {
-        if (this.accountRecord.data.fields.appsolutely__Business_Dossier__r.value.fields.appsolutely__Registration_Country__c.value == 'NL' &&
-            this.accountRecord.data.fields.appsolutely__Business_Dossier__r.value.fields.appsolutely__Deeplink_URL__c.value  &&
-            this.accountRecord.data.fields.appsolutely__Business_Dossier__r.value.fields.appsolutely__Deeplink_URL__c.value != undefined) {
-            this.deeplinkUrl = this.accountRecord.data.fields.appsolutely__Business_Dossier__r.value.fields.appsolutely__Deeplink_URL__c.value;
+        let businessDossier = this.accountRecord.data.fields.appsolutely__Business_Dossier__r.value.fields;
+        if (businessDossier.appsolutely__Registration_Country__c.value == 'NL' &&
+            businessDossier.appsolutely__Deeplink_URL__c.value  &&
+            businessDossier.appsolutely__Deeplink_URL__c.value != undefined) {
+            this.deeplinkUrl = businessDossier.appsolutely__Deeplink_URL__c.value;
             return true;
         }
         else {

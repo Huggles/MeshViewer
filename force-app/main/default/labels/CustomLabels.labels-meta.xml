@@ -336,6 +336,7 @@
     </labels>
     <labels>
         <fullName>Create_Business_Dossier</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Create Business Dossier</shortDescription>
@@ -496,6 +497,7 @@
     </labels>
     <labels>
         <fullName>Deeplink_Only_for_NL_Dossiers</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Deeplink Only for NL Dossiers</shortDescription>
