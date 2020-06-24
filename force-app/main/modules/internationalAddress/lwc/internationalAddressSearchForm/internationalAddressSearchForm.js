@@ -11,28 +11,11 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import {sanitizeStreet} from "c/inputSanitization";
 
 import Organization from '@salesforce/label/c.Organization';
-import Building from '@salesforce/label/c.Building';
-import Street from '@salesforce/label/c.Street';
-import POBox from '@salesforce/label/c.POBox';
-import Locality from '@salesforce/label/c.Locality';
-import Postcode from '@salesforce/label/c.Postal_Code';
-import Province from '@salesforce/label/c.Province';
-import House_Number from '@salesforce/label/c.House_Number';
 import Country from '@salesforce/label/c.Country';
 import Validation_Error_Message_Toast_Title from '@salesforce/label/c.Validation_Error_Message_Toast_Title';
 import No_address_fields_filled_international_address from '@salesforce/label/c.No_address_fields_filled_international_address';
-import Locality_Help_Text from '@salesforce/label/c.Locality_Help_Text';
-import House_Number_Addition from '@salesforce/label/c.House_Number_Addition';
-import Letter_Combination from '@salesforce/label/c.Letter_Combination';
-import Address_Type from '@salesforce/label/c.Address_Type';
-import Municipality from '@salesforce/label/c.Municipality';
-import International_Address_Organization_Help_Text from '@salesforce/label/c.International_Address_Organization_Help_Text';
-import Address_Type_Help_Text from '@salesforce/label/c.Address_Type_Help_Text';
-import Postal_code_pattern_mismatch_message from '@salesforce/label/c.Postal_code_pattern_mismatch_message';
-import Letter_Combination_pattern_mismatch_message from '@salesforce/label/c.Letter_Combination_pattern_mismatch_message';
 
 export default class InternationalAddressSearchForm extends LightningElement {
-
     @api organization;
     @api organizationRequired = false;
     @api building;
@@ -60,25 +43,9 @@ export default class InternationalAddressSearchForm extends LightningElement {
 
     label = {
         Organization,
-        Building,
-        Street,
-        House_Number,
-        POBox,
-        Locality,
-        Postcode,
-        Province,
         Country,
         No_address_fields_filled_international_address,
         Validation_Error_Message_Toast_Title,
-        Locality_Help_Text,
-        House_Number_Addition,
-        Letter_Combination,
-        Address_Type,
-        Municipality,
-        International_Address_Organization_Help_Text,
-        Address_Type_Help_Text,
-        Postal_code_pattern_mismatch_message,
-        Letter_Combination_pattern_mismatch_message
     }
 
     /**
