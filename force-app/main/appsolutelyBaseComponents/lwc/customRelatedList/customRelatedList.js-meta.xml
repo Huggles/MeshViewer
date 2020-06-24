@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Custom Related List</description>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="customRecordId" type="String" label="Record Id" placeholder="{record.Id}" />
+            <property name="objectAPIName" type="String" label="Object API Name"/>
+            <property name="objectLookupField" type="String" label="Object Lookup Field API Name"/>
+            <property name="objectFields" type="String" label="Object Fields"/>
+        </targetConfig>
+    </targetConfigs>
+    <masterLabel>Custom Related List</masterLabel>
+</LightningComponentBundle>
