@@ -40,7 +40,7 @@ public interface ILicenseManagementService {
      * @param offSet from which row number onwards to fetch the data
      * @return the users who have don't have a seat
     */
-    User[] getUsersWithoutSeat(Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
+    User[] getUsersWithoutSeat(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering);
 
     /**
      * Returns the total number of users that do not have the license type given assigned
@@ -99,6 +99,24 @@ public interface ILicenseManagementService {
      * @exception NoAccessToFeatureException whenever the user tries to access a feature he doesn't have access to
      */
     void userHasAccess(Feature feature);
+
+    /**
+     * Returns the allowed Salesforce License Definition Key
+     * (see https://developer.salesforce.com/docs/atlas.en-us.object_reference.meta/object_reference/sforce_api_objects_userlicense.htm)
+     * for the given Licensetype. Only to users with these Salesforce Licenses a seat of the given Company.info license type can be assigned.
+     * @param licenseType the licensetype for which the user wants to retrieve the allowed Salesforce License Definition Keys
+     *
+     * @return a Set of the allowed Salesforce License Definition Keys
+     */
+    Set<String> getAllowedLicenseDefinitionKeysForLicenseType(LicenseType licenseType);
+
+    /**
+     * Returns a set of profile ids for which it is allowed to assign the license type
+     * @param licenseType the license type for which we want to find the set of allowed profile ids
+     *
+     * @return a set of profile ids to which the given license type can be assigned
+     */
+    Set<Id> getAllowedProfileIdsForLicenseType(LicenseType licenseType);
 
 
 
