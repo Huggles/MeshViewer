@@ -548,10 +548,8 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
             }
             dossier.Trade_Names__c = trade_names;
         }
-        if(organizationReferenceV2.dossier_number != null){
+        if(organizationReferenceV2.dossier_number != null) {
             dossier.Dossier_Number__c = organizationReferenceV2.dossier_number;
-        }else if(organizationReferenceV2.registration != null){
-            dossier.Dossier_Number__c = organizationReferenceV2.registration;
         }
         return dossier;
     }
