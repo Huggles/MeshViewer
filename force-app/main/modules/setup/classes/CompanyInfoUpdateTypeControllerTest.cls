@@ -6,7 +6,7 @@
 public with sharing class CompanyInfoUpdateTypeControllerTest {
     @IsTest
     public static void getUpdateSettingsHappyFlowTest(){
-        System.runAs(TestUtils.getCompanyInfoAdmin()){
+        System.runAs(TestUtils.getAdminUser()){
             Test.startTest();
             List<Protected_Subscriber_Setting__mdt> updateTypes = CompanyInfoUpdateTypeController.getUpdateTypes();
             Test.stopTest();
@@ -14,8 +14,8 @@ public with sharing class CompanyInfoUpdateTypeControllerTest {
             //Check response != null
             System.assertNotEquals(null,updateTypes);
 
-            //Check response size > 0
-            System.assertNotEquals(0,updateTypes.size());
+            //Check response size = 21
+            System.assertEquals(21,updateTypes.size());
 
             //Check fields
             System.assertNotEquals(null, updateTypes[0].Description__c);
@@ -28,7 +28,7 @@ public with sharing class CompanyInfoUpdateTypeControllerTest {
 
     @IsTest
     public static void getUpdateSettingsNoAccessTest(){
-        System.runAs(TestUtils.getCompanyInfoBusinessUser()){
+        System.runAs(TestUtils.getDutchBusinessUser()){
             Test.startTest();
             try {
                 List<Protected_Subscriber_Setting__mdt> updateTypes = CompanyInfoUpdateTypeController.getUpdateTypes();
@@ -57,7 +57,7 @@ public with sharing class CompanyInfoUpdateTypeControllerTest {
         List<Map<String,Object>> l1 = new List<Map<String,Object>>();
         l1.add(record1);
 
-        System.runAs(TestUtils.getCompanyInfoAdmin()){
+        System.runAs(TestUtils.getAdminUser()){
             //Deploying custom metadata cannot be tested/mocked. It will always throw an error.
             Test.startTest();
             try{

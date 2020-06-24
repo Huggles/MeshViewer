@@ -82,20 +82,20 @@ public inherited sharing class TestUtils {
     }
 
     /**
-    * returns a Standard User with the Company.info admin permissionset
+    * returns a Standard User with the Company.info Admin permissionset
     */
     @TestVisible
-    private static User getCompanyInfoAdmin() {
+    private static User getAdminUser() {
         User testUser = TestUtils.getUniqueUser('Standard User');
         TestUtils.giveUserPermissionSet('Company_info_administrator', testUser);
         return testUser;
     }
 
     /**
-    * returns a Standard User with the Company.info admin permissionset
+    * returns a Standard User with the Company.info Dutch Business User permissionset
     */
     @TestVisible
-    private static User getCompanyInfoBusinessUser() {
+    private static User getDutchBusinessUser() {
         User testUser = TestUtils.getUniqueUser('Standard User');
         TestUtils.giveUserPermissionSet('Company_info_for_Dutch_Business', testUser);
         return testUser;

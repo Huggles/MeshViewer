@@ -9,7 +9,7 @@ public with sharing class CompanyInfoUpdateTypeController {
         try {
             return SetupService.getUpdateTypes();
         }catch (Exception e){
-            ErrorLogUtil.logException(e);
+            ErrorLogUtil.logException(e,true);
             throw new AuraHandledException(e.getMessage());
         }
 
@@ -20,7 +20,7 @@ public with sharing class CompanyInfoUpdateTypeController {
         try {
             return SetupService.setUpdateTypes(payload);
         }catch (Exception e){
-            ErrorLogUtil.logException(e);
+            ErrorLogUtil.logException(e,true);
             throw new AuraHandledException(e.getMessage());
         }
     }

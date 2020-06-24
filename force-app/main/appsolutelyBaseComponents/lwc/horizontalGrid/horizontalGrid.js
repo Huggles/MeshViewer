@@ -26,17 +26,30 @@ export default class HorizontalGrid extends LightningElement {
     @api tileStyle;
     @api identifier;
 
+
+    _loadedChildren = false;
+
     renderedCallback() {
-        this.handleChildData();
+        this.loadChildData();
     }
-    handleChildData(){
+    loadChildData(){
+        //if children havn't been rendered yet, do not try to load them.
         let selector = '[data-identifier=\"'+this.identifier+'\"]';
         let tiles = this.querySelectorAll(selector);
         if(tiles != null && tiles.length > 0){
-            tiles.forEach((tile, tileIndex) => {
-                tile.item = this.items[tileIndex];
-            });
+            //Only load them once.
+            if(this._loadedChildren === false){
+                this._loadedChildren = true;
+                tiles.forEach((tile, tileIndex) => {
+                    tile.item = this.items[tileIndex];
+                });
+            }
         }
+    }
+    @api
+    reloadChildData(){
+        this._loadedChildren = false;
+        this.loadChildData();
     }
 
     @api
