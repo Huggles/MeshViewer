@@ -19,8 +19,6 @@ global inherited sharing class SearchForInternationalAddressInvocable {
         global String postal_code;
         @InvocableVariable(label='House Number' description='House number search phrase')
         global String housenr;
-        @InvocableVariable(label='House Number Addition' description='House number addition search phrase')
-        global String housenrAddition;
         @InvocableVariable(label='Locality' description='District or municipality search phrase')
         global String locality;
         @InvocableVariable(label='Language' description='Language in which the results are returned')
@@ -29,13 +27,6 @@ global inherited sharing class SearchForInternationalAddressInvocable {
         global String country;
         @InvocableVariable(label='Country Format' description='The format in which the country is returned.')
         global String countryFormat;
-        @InvocableVariable(label='Municipality' description='Municipality search phrase')
-        global String municipality;
-        @InvocableVariable(label='Letter Combination' description='Postcode letter combination search phrase')
-        global String lettercombination;
-        @InvocableVariable(label='Address Type' description='Even/Odd house number range')
-        global String addresstype;
-
         @TestVisible
         private SearchInternationalAddressArgument(String organization, String building, String POBox, String province, String street, String postCode,
                 String houseNr, String locality, String country, String language, String countryFormat, String municipality, String housenrAddition, String lettercombination, String addresstype) {
@@ -50,14 +41,9 @@ global inherited sharing class SearchForInternationalAddressInvocable {
             this.language = language;
             this.country = country;
             this.countryFormat = countryFormat;
-            this.municipality = municipality;
-            this.housenrAddition = housenrAddition;
-            this.lettercombination = lettercombination;
-            this.addresstype = addresstype;
         }
 
         public SearchInternationalAddressArgument() {}
-
 
     }
 
@@ -69,37 +55,19 @@ global inherited sharing class SearchForInternationalAddressInvocable {
             List<List<International_Address__c>> listInternationalAddresses2 = new List<List<International_Address__c>>();
 
             for (SearchInternationalAddressArgument searchInternationalAddressArgument : arguments) {
-                if (searchInternationalAddressArgument.country == 'NLD' || searchInternationalAddressArgument.country == 'NL') {
-                    System.debug(searchInternationalAddressArgument.housenr );
-                    Integer houseNumber = String.isNotEmpty(searchInternationalAddressArgument.housenr) ? Integer.valueOf(searchInternationalAddressArgument.housenr) : null;
-                    listInternationalAddresses2.add(AddressService.dutchAddressSearch(
-                            searchInternationalAddressArgument.organization,
-                            searchInternationalAddressArgument.province,
-                            searchInternationalAddressArgument.municipality,//district
-                            searchInternationalAddressArgument.locality,//city
-                            searchInternationalAddressArgument.street,
-                            houseNumber,
-                            searchInternationalAddressArgument.housenrAddition,
-                            searchInternationalAddressArgument.postal_code,//nbcode
-                            searchInternationalAddressArgument.lettercombination,
-                            searchInternationalAddressArgument.addresstype
-                    ));
-                }
-                else {
-                    listInternationalAddresses2.add(InternationalAddressService.internationalAddressSearchV2(
-                            searchInternationalAddressArgument.organization,
-                            searchInternationalAddressArgument.building,
-                            searchInternationalAddressArgument.street,
-                            searchInternationalAddressArgument.housenr,
-                            searchInternationalAddressArgument.pobox,
-                            searchInternationalAddressArgument.locality,
-                            searchInternationalAddressArgument.postal_code,
-                            searchInternationalAddressArgument.province,
-                            searchInternationalAddressArgument.country,
-                            searchInternationalAddressArgument.language,
-                            searchInternationalAddressArgument.countryFormat
-                    ));
-                }
+                listInternationalAddresses2.add(InternationalAddressService.internationalAddressSearchV2(
+                        searchInternationalAddressArgument.organization,
+                        searchInternationalAddressArgument.building,
+                        searchInternationalAddressArgument.street,
+                        searchInternationalAddressArgument.housenr,
+                        searchInternationalAddressArgument.pobox,
+                        searchInternationalAddressArgument.locality,
+                        searchInternationalAddressArgument.postal_code,
+                        searchInternationalAddressArgument.province,
+                        searchInternationalAddressArgument.country,
+                        searchInternationalAddressArgument.language,
+                        searchInternationalAddressArgument.countryFormat
+                ));
             }
             return listInternationalAddresses2;
         } catch (Exception e) {

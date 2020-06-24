@@ -30,6 +30,6 @@ export default class InternationalAddressSearchResults extends LightningElement 
     }
 
     get isNlSelected() {
-        return this.country === 'NL' || this.country === 'NLD';
+        return this.country === 'NLD';
     }
 }

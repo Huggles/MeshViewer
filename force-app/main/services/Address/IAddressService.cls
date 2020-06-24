@@ -4,7 +4,7 @@
 
 public interface IAddressService {
     /*
-     * Returns List of International_Address__c if given address is found
+     * Returns List of International_Address__c with Dutch address recordtype if given address is found
      *
      * @param address
      */

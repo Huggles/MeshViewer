@@ -4,7 +4,7 @@
 
 public with sharing class AddressServiceImpl implements IAddressService {
 
-    public static final Integer MAX_SEARCH_RESULTS = 1000;
+    public static final Integer MAX_SEARCH_RESULTS = 500;
 
     public List<International_Address__c> dutchAddressSearch(String organization,String province,String district,String city,String street,Integer houseNo,String houseNoAddition,String nbcode,String lettercombination,String addresstype){
 
@@ -23,11 +23,13 @@ public with sharing class AddressServiceImpl implements IAddressService {
         AddressWsdl.PerceelSearchPartsPagedResult returnedResults = WsAddress.addressPerceelFullParameterSearchV2(province, district, city, street, houseNo, houseNoAddition, nbcode, lettercombination, addresstype, 1);
 
         if (returnedResults != null && returnedResults.results != null && returnedResults.results.item != null) {
+            System.debug(returnedResults.results.item.size());
             searchResults.addAll(returnedResults.results.item);
             Integer numPages = returnedResults.paging.numpages;
 
             for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
                 returnedResults = WsAddress.addressPerceelFullParameterSearchV2(province, district, city, street, houseNo, houseNoAddition, nbcode, lettercombination, addresstype, i);
+                System.debug(returnedResults.results.item.size());
                 searchResults.addAll(returnedResults.results.item);
             }
         }
