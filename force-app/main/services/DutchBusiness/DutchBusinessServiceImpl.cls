@@ -537,9 +537,23 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
     private Business_Dossier__c mapDutchBusinessOrganizationReferenceToBusinessDossier(DutchBusinessWsdl.DutchBusinessOrganizationReferenceV2 organizationReferenceV2, Id dossierRecordId) {
         Business_Dossier__c dossier = new Business_Dossier__c();
-
-
-        return businessPerson;
+        dossier.Name = organizationReferenceV2.name;
+        String trade_names = '';
+        if (organizationReferenceV2.trade_names != null &&
+                organizationReferenceV2.trade_names.item != null &&
+                organizationReferenceV2.trade_names.item.size() > 0) {
+            // Condense all trade names into single field, seperated by new lines.
+            for (Integer i = 0; i < organizationReferenceV2.trade_names.item.size(); i++) {
+                trade_names += organizationReferenceV2.trade_names.item[i] + (i == organizationReferenceV2.trade_names.item.size()-1 ? '' : ', ');
+            }
+            dossier.Trade_Names__c = trade_names;
+        }
+        if(organizationReferenceV2.dossier_number != null){
+            dossier.Dossier_Number__c = organizationReferenceV2.dossier_number;
+        }else if(organizationReferenceV2.registration != null){
+            dossier.Dossier_Number__c = organizationReferenceV2.registration;
+        }
+        return dossier;
     }
     private Business_Person__c mapDutchBusinessPersonToBusinessPerson(DutchBusinessWsdl.DutchBusinessPersonV2 functionary, Id dossierRecordId) {
         Business_Person__c businessPerson = new Business_Person__c();
