@@ -2216,12 +2216,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>International_Address__c.Perceel_Id__c</field>
+        <field>International_Address__c.Plot_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>International_Address__c.Perceel_Number__c</field>
+        <field>International_Address__c.Plot_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2261,12 +2261,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>International_Address__c.Reeks_Id__c</field>
+        <field>International_Address__c.Range_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>International_Address__c.Reeks_Indication__c</field>
+        <field>International_Address__c.Range_Indication__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
