@@ -27,8 +27,8 @@ global inherited sharing class SearchForAddressInvocable {
         global String addresstype;
 
         @TestVisible
-        private SearchAddressArgument(String organization, String building, String POBox, String province, String street, String postCode,
-                String houseNr, String locality, String country, String language, String countryFormat, String municipality, String housenrAddition, String lettercombination, String addresstype) {
+        private SearchAddressArgument(String organization, String province, String street, String postCode,
+                String houseNr, String locality, String municipality, String housenrAddition, String lettercombination, String addresstype) {
             this.organization = organization;
             this.province = province;
             this.street = street;
@@ -49,7 +49,7 @@ global inherited sharing class SearchForAddressInvocable {
     @InvocableMethod(label = 'Search and complete dutch addresses'
             description='Searches and completes/corrects dutch addresses.'
             category='Company.info')
-    global static List<List<International_Address__c>>  SearchAddress(List<SearchAddressArgument> arguments) {
+    global static List<List<International_Address__c>> searchAddress(List<SearchAddressArgument> arguments) {
         try {
             List<List<International_Address__c>> listInternationalAddresses2 = new List<List<International_Address__c>>();
 
