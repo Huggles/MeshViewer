@@ -8,39 +8,14 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     private static Boolean isTestingLicenseManagement = false;
 
     @TestVisible
-    private static final String NAMESPACE_PREFIX ='appsolutely';
+    private static String NAMESPACE_PREFIX = 'appsolutely'; // default to ensure this works in non-packaged code as well
 
-    /**
-     * The list of Salesforce license definition keys that can be used to provision a license type to
-    */
-    public static final Set<String> ALLOWED_LICENCE_DEFINITION_KEYS = new Set<String>{
-            'SFDC',
-            'PID_COMPANY_COMMUNITIES',
-            'AUL',
-            'PID_Customer_Community_Login',
-            'PID_Customer_Community_Plus',
-            'FDC_SUB',
-            'PID_Customer_Community_Plus_Login',
-            'FDC_ISV_SUB',
-            'PID_Partner_Community',
-            'PID_Partner_Community_Login',
-            'PID_Customer_Community',
-            'PID_FDC_FREE',
-            'PID_Guest_User' // so guest users can get a license too
-    };
-
-    /**
-     * The Ids of all Salesforce licenses that can receive a license
-     */
-    // TODO: why public?
-    public static Set<Id> allowedUserLicenseIds {
-        get {
-            if (allowedUserLicenseIds == null) {
-                allowedUserLicenseIds = (new Map<Id, UserLicense>([SELECT Id FROM UserLicense WHERE LicenseDefinitionKey IN :ALLOWED_LICENCE_DEFINITION_KEYS])).keySet();
-            }
-            return allowedUserLicenseIds;
+    static {
+        try {
+            NAMESPACE_PREFIX = ([SELECT NamespacePrefix FROM PackageLicense WHERE Id =:Packaging.getCurrentPackageId() LIMIT 1]).NamespacePrefix;
+        } catch (NoDataFoundException ex) {
+            // just ignore, this runs in non-packaged code
         }
-        set;
     }
 
     /**
@@ -49,11 +24,14 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     private static Boolean userBasedLmaLicenseModel {
         get {
             if (userBasedLmaLicenseModel == null) {
-                PackageLicense[] packageLicenses = [SELECT AllowedLicenses FROM PackageLicense WHERE NamespacePrefix =:NAMESPACE_PREFIX LIMIT 1];
-                if (packageLicenses != null && packageLicenses.size() == 1 && packageLicenses.get(0).AllowedLicenses >=0) { // in scratch orgs/development situations there is no package license, in sandboxes an org wide model is used so the allowedlicense = -1
-                    userBasedLmaLicenseModel = true;
-                } else {
-                    userBasedLmaLicenseModel = false;
+                userBasedLmaLicenseModel = false;
+                try {
+                    PackageLicense[] packageLicenses = [SELECT AllowedLicenses FROM PackageLicense WHERE Id =:Packaging.getCurrentPackageId() LIMIT 1];
+                    if (packageLicenses != null && packageLicenses.size() == 1 && packageLicenses.get(0).AllowedLicenses >=0) { // in scratch orgs/development situations there is no package license, in sandboxes an org wide model is used so the allowedlicense = -1
+                        userBasedLmaLicenseModel = true;
+                    }
+                } catch (NoDataFoundException ex) {
+                    // just ignore, this runs in non-packaged code
                 }
             }
             return userBasedLmaLicenseModel;
@@ -86,11 +64,11 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
     }
 
     public User[] getUnAssignedUsersForLicenseType(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
-        return UserSelector.newInstance().selectUsersWithoutLicenseTypeSeat(licenseType, offSet, nrOfRows, ordering);
+        return UserSelector.newInstance().selectUsersAvailableForLicenseType(licenseType, offSet, nrOfRows, ordering);
     }
 
-    public User[] getUsersWithoutSeat(Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
-        return UserSelector.newInstance().selectUsersWithoutSeat(offSet, nrOfRows, ordering);
+    public User[] getUsersWithoutSeat(LicenseType licenseType, Integer offSet, Integer nrOfRows, List<fflib_QueryFactory.Ordering> ordering) {
+        return UserSelector.newInstance().selectUsersAvailableForLicenseType(licenseType, offSet, nrOfRows, ordering);
     }
 
     public Integer getUnAssignedUsersForLicenseTypeCount(LicenseType licenseType) {
@@ -243,6 +221,23 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         }
     }
 
+    public Set<String> getAllowedLicenseDefinitionKeysForLicenseType(LicenseType licenseType) {
+        License_Type_Definition__mdt licenseTypeDefinition = getLicenseTypeDefinition(licenseType);
+        List<Allowed_Salesforce_License_Type__mdt> allowedSalesforceLicenseTypess = [SELECT License_Definition_Key__c FROM Allowed_Salesforce_License_Type__mdt WHERE License_Type_Definition__c = :licenseTypeDefinition.Id];
+        Set<String> returnValue = new Set<String>();
+        for (Allowed_Salesforce_License_Type__mdt allowedSalesforceLicenseType : allowedSalesforceLicenseTypess) {
+            returnValue.add(allowedSalesforceLicenseType.License_Definition_Key__c);
+        }
+        return returnValue;
+    }
+
+    public Set<Id> getAllowedProfileIdsForLicenseType(LicenseType licenseType) {
+        Set<String> licenseKeys = LicenseManagementService.getAllowedLicenseDefinitionKeysForLicenseType(licenseType);
+        List<Profile> allowedProfiles = [SELECT Id FROM Profile WHERE UserLicense.LicenseDefinitionKey IN :licenseKeys];
+        Set<Id> profileIds = (new Map<Id, Profile>(allowedProfiles)).keySet();
+        return profileIds;
+    }
+
     /*****************************************
      * IMPLEMENTATION METHODS AFTER THIS POINT
     ******************************************/
@@ -317,17 +312,17 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return usersWithoutLMA;
     }
 
-    private PackageLicenseWrapper packageLicense {
+    @TestVisible
+    private static PackageLicenseWrapper packageLicense {
         get {
             if (packageLicense == null) {
-                // TODO: we assume there is only one package with this namespace installed. Should be fixed
-                List<PackageLicenseWrapper> packageLicenseWrappers = PackageLicenseSelector.newInstance().selectByNamespacePrefix(NAMESPACE_PREFIX);
-                if (packageLicenseWrappers.size() == 0) { // we are in a scratch org otherwise we would have had the package license
-                    packageLicenseWrappers = new List<PackageLicenseWrapper>{
-                            new PackageLicenseWrapper(fflib_IDGenerator.generate(Schema.PackageLicense.SObjectType), 0, 20, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
-                    };
+                try {
+                    List<PackageLicenseWrapper> packageLicenseWrappers = PackageLicenseSelector.newInstance().selectById(Packaging.getCurrentPackageId());
+                    packageLicense = packageLicenseWrappers.get(0);
+                } catch (NoDataFoundException ex) {
+                    // runs in non-packaged mode, we need to stub the packageLicense
+                    packageLicense = new PackageLicenseWrapper(fflib_IDGenerator.generate(Schema.PackageLicense.SObjectType), 0, 20, LicenseManagementServiceImpl.NAMESPACE_PREFIX);
                 }
-                packageLicense = packageLicenseWrappers.get(0);
             }
             return packageLicense;
         }

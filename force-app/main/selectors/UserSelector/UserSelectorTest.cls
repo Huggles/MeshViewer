@@ -34,45 +34,6 @@ private class UserSelectorTest {
     }
 
     @IsTest
-    static void testSelectUsersWithoutLicenseTypeGroupHappyFlow() {
-        // given
-        // 5 users without a permission set group and 5 with
-        List<User> users = new List<User>();
-        for (Integer i = 0; i < 10; i++) {
-            users.add(TestUtils.getUser('Standard User'));
-        }
-        System.runAs(TestUtils.getUser('System Administrator')) {
-            insert users;
-        }
-        List<User> usersWithLicenseType = new List<User>();
-        for (Integer i = 0; i < 4; i++) {
-            usersWithLicenseType.add(users.get(i));
-        }
-        LicenseManagementService.assignLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersWithLicenseType);
-
-        PermissionSetAssignment[] permissionSetAssignments = PermissionSetAssignmentSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS);
-
-        System.assertEquals(4, permissionSetAssignments.size());
-
-        // order on first name and last name
-        List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
-                new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
-                new fflib_QueryFactory.Ordering(User.LastName, fflib_QueryFactory.SortOrder.ASCENDING, true)
-        };
-
-        // when
-
-        Test.startTest();
-        System.assertEquals(4, PermissionSetAssignmentSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).size());
-        User[] usersToAssert = UserSelector.newInstance().selectUsersWithoutLicenseTypeSeat(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 30, orderings);
-        Test.stopTest();
-        // then
-        Integer currentNrOfUsers = ([SELECT Id FROM User WHERE Profile.UserLicense.LicenseDefinitionKey IN :LicenseManagementServiceImpl.ALLOWED_LICENCE_DEFINITION_KEYS]).size(); // the user object is strange since it doesn't respect the test boundary (acts like SeeAllData is true)
-        System.assertEquals(currentNrOfUsers - 4, usersToAssert.size());
-
-    }
-
-    @IsTest
     static void testSelectByLicenseTypeWithConditions() {
         // given
         // 100 users

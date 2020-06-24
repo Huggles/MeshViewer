@@ -6,19 +6,29 @@
 public with sharing class PackageLicenseSelectorTest {
 
     @isTest
-    static void testSelectByNamespacePrefix() {
+    static void testSelectById() {
         // given
         // an existing namespace
-        String namespace = LicenseManagementServiceImpl.NAMESPACE_PREFIX;
+        Id packageId = null;
+        try {
+            packageId = Packaging.getCurrentPackageId();
+        } catch (NoDataFoundException ex) {
+            // just ignore, this runs in non-packaged code
+        }
+
 
         // when
         Test.startTest();
-        PackageLicenseWrapper[] packageLicenses = PackageLicenseSelector.newInstance().selectByNamespacePrefix(namespace);
+        PackageLicenseWrapper[] packageLicenses = PackageLicenseSelector.newInstance().selectById(packageId);
         Test.stopTest();
 
         // then
-        // since we are in a scratch org without installed app, nothing should be returned
-        System.assertEquals(0, packageLicenses.size());
+        if (packageId == null) { // scratch org
+            System.assertEquals(0, packageLicenses.size());
+        } else { // managed package
+            System.assertEquals(1, packageLicenses.size());
+        }
+
     }
 
 }
