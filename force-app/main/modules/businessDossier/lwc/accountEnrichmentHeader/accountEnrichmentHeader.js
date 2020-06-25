@@ -9,6 +9,7 @@ import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowS
 import {Features, checkAccess} from "c/featureAccessControl";
 
 //Object fields
+import BUSINESS_DOSSIER_POSITIONS_UPDATED_DATE from '@salesforce/schema/Business_Dossier__c.Business_Positions_Updated_Date__c';
 import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Number__c';
 import BUSINESS_DOSSIER_NO_VAT from '@salesforce/schema/Business_Dossier__c.No_VAT_Number__c';
 import BUSINESS_DOSSIER_COUNTRY from '@salesforce/schema/Business_Dossier__c.Registration_Country__c';
@@ -32,6 +33,14 @@ import Get_Positions from '@salesforce/label/c.Get_Positions';
 import No from '@salesforce/label/c.No';
 import Yes from '@salesforce/label/c.Yes';
 
+const OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS = [
+    BUSINESS_DOSSIER_VAT,
+    BUSINESS_DOSSIER_NO_VAT,
+    BUSINESS_DOSSIER_COUNTRY,
+    BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT,
+    BUSINESS_DOSSIER_POSITIONS_UPDATED_DATE
+]
+
 export default class AccountEnrichmentHeader extends LightningElement {
 
     @api
@@ -45,6 +54,9 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
     @api
     getCreditsafeReportClicked = false;
+
+    @api
+    VATUpdated = false;
 
     /**
      * Contains the VAT number
@@ -69,10 +81,27 @@ export default class AccountEnrichmentHeader extends LightningElement {
     /**
      * The retrieved business dossier
      */
+    businessPositionsUpdatedDate;
+
+    /**
+     * The retrieved business dossier
+     */
     businessDossier;
 
-    @wire(getRecord, { recordId: '$businessDossierId', fields: [], optionalFields: [BUSINESS_DOSSIER_VAT, BUSINESS_DOSSIER_NO_VAT, BUSINESS_DOSSIER_COUNTRY, BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT] })
+    //
+    _getPositionsAccess = false;
+    _VATAccess = false;
+    _CreditSafeAccess = false;
+
+
+    @wire(getRecord, {
+        recordId: '$businessDossierId',
+        fields: [],
+        optionalFields: OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS
+    })
     businessDossierRecord({error, data}) {
+        console.log(data);
+        console.log(error);
         if (error) {
             let message = 'Unknown error';
             if (Array.isArray(error.body)) {
@@ -96,20 +125,12 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 if (this.businessDossier.fields.appsolutely__Creditsafe_Company_Report__c) {
                     this.creditSafeReport = this.businessDossier.fields.appsolutely__Creditsafe_Company_Report__c.value;
                 }
+                if (this.businessDossier.fields.appsolutely__Business_Positions_Updated_Date__c) {
+                    this.businessPositionsUpdatedDate = this.businessDossier.fields.appsolutely__Business_Positions_Updated_Date__c.value;
+                }
             }
         }
     };
-
-    @api VATUpdated = false;
-
-    m_getPositionsConfirmDialogVisible = false;
-    @api
-    get getPositionsConfirmDialogVisible(){
-        return this.m_getPositionsConfirmDialogVisible;
-    }
-    set getPositionsConfirmDialogVisible(value){
-        this.m_getPositionsConfirmDialogVisible = value;
-    }
 
     label = {
         VAT_Retrieve,
@@ -117,32 +138,46 @@ export default class AccountEnrichmentHeader extends LightningElement {
         Dossier_Account_Update_Completed,
         VAT_Not_Found,
         Error,
-        Error_Unknown,
-        Error_Incomplete,
         Get_Creditsafe_Report,
         Get_Positions,
         Yes,
         No,
-        Get_Creditsafe_Report
+
     }
     staticResource = {
         companyInfoLogoSmall,
     }
 
-    showVATButton = checkAccess(Features.DUTCH_VAT)
-        .then(result => {
-            return (result && !this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
-        }).catch(error => {
-            this.showToast(this.label.Error, error, 'error');
-        });
+    connectedCallback() {
+        this.checkFeatureAccess();
+    }
+    checkFeatureAccess(){
+        Promise.all([
+            checkAccess(Features.DUTCH_BUSINESS_POSITIONS),
+            checkAccess(Features.DUTCH_VAT),
+            checkAccess(Features.CREDITSAFE_GET_REPORT)
+        ])
+            .then(results => {
+                if(results != null && results.length == 3){
+                    this._getPositionsAccess = results[0];
+                    this._VATAccess = results[1];
+                    this._CreditSafeAccess = results[2];
+                }
+            })
+            .catch(error => {
+                this.showToast(this.label.Error, error, 'error');
+            });
+    }
 
-    showGetCreditsafeReportButton = checkAccess(Features.CREDITSAFE_GET_REPORT)
-        .then(result => {
-            return (result && (this.creditSafeReport == undefined || this.creditSafeReport == null))
-        })
-        .catch(error => {
-            this.showToast(this.label.Error, error, 'error');
-        });
+    get showVATButton(){
+        return (this._VATAccess && !this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
+    }
+    get showCreditSafeReportButton(){
+        return (this._CreditSafeAccess && (this.creditSafeReport == undefined || this.creditSafeReport == null));
+    }
+    get showGetPositionsButton(){
+        return (this._getPositionsAccess && (this.businessPositionsUpdatedDate == null) );
+    }
 
     handleOnClickVAT(event) {
         updateDossierWithVAT({
@@ -189,6 +224,11 @@ export default class AccountEnrichmentHeader extends LightningElement {
         this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
+
+
+
+
+
     handleOnGetPositionsClicked(event){
         let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
         confirmationDialog.show();
@@ -218,5 +258,4 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 confirmationDialog.hide();
             })
     }
-
 }
