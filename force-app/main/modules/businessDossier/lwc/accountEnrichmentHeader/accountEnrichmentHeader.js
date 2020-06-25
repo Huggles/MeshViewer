@@ -7,6 +7,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
 import {Features, checkAccess} from "c/featureAccessControl";
+import {fireEvent} from "c/pubsub";
 
 //Object fields
 import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Number__c';
@@ -27,8 +28,6 @@ import Dossier_Account_Update_Completed from '@salesforce/label/c.Dossier_Accoun
 import VAT_Not_Found from '@salesforce/label/c.VAT_Not_Found';
 import Error from '@salesforce/label/c.Error';
 import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
-
-
 
 export default class AccountEnrichmentHeader extends LightningElement {
 
@@ -165,11 +164,13 @@ export default class AccountEnrichmentHeader extends LightningElement {
     }
 
     handleOnGetCreditsafeReport(event) {
-        this.getCreditsafeReportClicked = true;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('getCreditsafeReportClicked', this.getCreditsafeReportClicked);
-        this.dispatchEvent(attributeChangeEvent);
-        //we throw an event because the flow needs to show a search form
-        this.dispatchEvent(new FlowNavigationNextEvent());
+        // this.getCreditsafeReportClicked = true;
+        // const attributeChangeEvent = new FlowAttributeChangeEvent('getCreditsafeReportClicked', this.getCreditsafeReportClicked);
+        // this.dispatchEvent(attributeChangeEvent);
+        // //we throw an event because the flow needs to show a search form
+        // this.dispatchEvent(new FlowNavigationNextEvent());
+
+        fireEvent(null, 'getreportclicked');
     }
 
 }
