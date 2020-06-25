@@ -510,23 +510,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
     private List<Business_Position__c> createDutchBusinessPositions(DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL, Id dossierRecordId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-                List<Business_Position__c> businessPositions = new List<Business_Position__c>();
-
-
-        List<String> fullNames = new List<String>();
-        List<Date> dateOfBirths = new List<Date>();
-        for (DutchBusinessWsdl.DutchBusinessPositionV2 positionV2 : businessPositionsWSDL.positions.item) {
-            if(positionV2.functionary != null){
-                fullNames.add(positionV2.functionary.full_name);
-                dateOfBirths.add(convertToDateV2(positionV2.functionary.date_of_birth));
-            }
-            if(positionV2.organisation != null){
-
-            }
-        }
-
-        //Map<Id,Business_Person__c> existingPersons = (Map<Id, Business_Person__c)[SELECT Id FROM Business_Person__c WHERE Name in : fullNames AND Date_of_Birth__c in : dateOfBirths];
-
+        List<Business_Position__c> businessPositions = new List<Business_Position__c>();
 
         for (DutchBusinessWsdl.DutchBusinessPositionV2 positionV2 : businessPositionsWSDL.positions.item) {
             Business_Position__c businessPosition = mapDutchBusinessPositionToBusinessPosition(positionV2, dossierRecordId);
@@ -543,6 +527,12 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
                 unitOfWork.registerRelationship(businessPosition, Business_Position__c.Organisation__c,businessDossier);
             }
         }
+
+        Business_Dossier__c dossier_record = new Business_Dossier__c();
+        dossier_record.Id = dossierRecordId;
+        dossier_record.Business_Positions_Updated_Date__c = Datetime.now();
+        unitOfWork.registerDirty(dossier_record);
+
         try {
             unitOfWork.commitWork();
         }catch (Exception e){
@@ -553,12 +543,13 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
     private Business_Dossier__c mapDutchBusinessOrganizationReferenceToBusinessDossier(DutchBusinessWsdl.DutchBusinessOrganizationReferenceV2 organizationReferenceV2, Id dossierRecordId) {
         Business_Dossier__c dossier = new Business_Dossier__c();
-        dossier.Name = organizationReferenceV2.name;
+
         String trade_names = '';
         if (organizationReferenceV2.trade_names != null &&
                 organizationReferenceV2.trade_names.item != null &&
                 organizationReferenceV2.trade_names.item.size() > 0) {
             // Condense all trade names into single field, seperated by new lines.
+            dossier.Name = organizationReferenceV2.trade_names.item[0];
             for (Integer i = 0; i < organizationReferenceV2.trade_names.item.size(); i++) {
                 trade_names += organizationReferenceV2.trade_names.item[i] + (i == organizationReferenceV2.trade_names.item.size()-1 ? '' : ', ');
             }
