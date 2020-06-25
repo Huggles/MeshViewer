@@ -1,0 +1,32 @@
+<!--
+ - Created by hugovankrimpen on 17/06/2020.
+ -->
+
+<!-- Update Type Tile -->
+<template>
+    <template if:true={item}>
+        <div style="height: 100%;" class="slds-p-around_xxx-small">
+            <div class="slds-box" style="height: 100%;">
+                <div class="slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span><b> {item.MasterLabel}</b> </span>
+                            </h2>
+                        </div>
+                        <div class="slds-no-flex">
+                            <lightning-input data-classification="update_type_toggle"
+                                             data-developer-name={item.DeveloperName}
+                                             data-masterlabel={item.MasterLabel}
+                                             message-toggle-active="" message-toggle-inactive=""
+                                             class="slds-float_right" type="toggle"
+                                             checked={item.appsolutely__Enabled__c}></lightning-input>
+                        </div>
+                    </header>
+                </div>
+                <div class="slds-m-top_small">{item.appsolutely__Description__c}</div>
+                <slot name="link"></slot>
+            </div>
+        </div>
+    </template>
+</template>
