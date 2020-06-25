@@ -62,11 +62,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
     licenseTypeInfo;
 
     /**
-     * True if the table is loading
-     */
-    isFetchingUsers;
-
-    /**
      * The rows selected in the table
      */
     selectedRows;
@@ -164,7 +159,7 @@ export default class AssignLicenseTypeModal extends LightningElement {
                 });
                 this.dispatchEvent(event);
             });
-        
+
     }
 
     handleAssignUsers() {
@@ -237,7 +232,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
      */
     fetchUnAssignedUsers(offset, limit, sortedBy, sortDirection) {
         return new Promise((resolve, reject) => {
-            this.isFetchingUsers = true;
             getUnAssignedUsers({licenseTypeAPIName: this.licenseTypeApiName, startRow: offset, nrOfRows: limit, orderings: [{fieldName: sortedBy, sortOrder: sortDirection}]})
                 .then(result => {
                     if (result && result.length > 0) {
@@ -253,12 +247,10 @@ export default class AssignLicenseTypeModal extends LightningElement {
                         }
 
                     }
-                    this.isFetchingUsers = false;
                     resolve('unassigned users sucessfully loaded');
                 })
                 .catch(error => {
                     this.error = error;
-                    this.isFetchingUsers = false;
                     resolve(error);
                 })
         });

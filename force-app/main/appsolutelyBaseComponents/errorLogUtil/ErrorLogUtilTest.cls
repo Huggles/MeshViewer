@@ -86,19 +86,6 @@ private class ErrorLogUtilTest {
     }
 
     @IsTest
-    static void testSendSupportEmails() {
-        List<Error_Events__e> events = new List<Error_Events__e>();
-        for (Integer i = 0; i < 5; i++) {
-            events.add(new Error_Events__e(Message__c = 'test'));
-        }
-        Test.startTest();
-        ErrorLogUtil.sendSupportEmails(events);
-        Integer invocations = Limits.getEmailInvocations();
-        Test.stopTest();
-        System.assertEquals(1, invocations);
-    }
-
-    @IsTest
     static void testHasErrorsLogged() {
         Test.startTest();
         ErrorLogUtil.logException(new TestException());
