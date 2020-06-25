@@ -576,8 +576,8 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         Business_Position__c position = new Business_Position__c();
         position.Name = businessPositionsWSDL.function_title;
         position.Business_Dossier__c = dossierRecordId;
-        position.Function_Registration_Date__c = Date.newInstance(businessPositionsWSDL.function_registration_date.year,businessPositionsWSDL.function_registration_date.month, businessPositionsWSDL.function_registration_date.day);
-        position.Function_Start_Date__c = Date.newInstance(businessPositionsWSDL.function_start_date.year,businessPositionsWSDL.function_start_date.month, businessPositionsWSDL.function_start_date.day);
+        position.Function_Registration_Date__c = convertToDateV2(businessPositionsWSDL.function_registration_date);
+        position.Function_Start_Date__c = convertToDateV2(businessPositionsWSDL.function_start_date);
         position.Function_Type__c = businessPositionsWSDL.function_type;
         position.Authorization_Description__c = businessPositionsWSDL.authorization_description;
         return position;

@@ -780,6 +780,11 @@ private class DutchBusinessServiceImplTest {
 
         final String dossierNumber = '123';
 
+        Business_Dossier__c existingDossier = new Business_Dossier__c();
+        existingDossier.Dossier_Number__c = dossierNumber;
+        insert existingDossier;
+
+
         DutchBusinessWsdl.DutchBusinessDateV2 birthDay = new DutchBusinessWsdl.DutchBusinessDateV2();
         birthDay.year = 2000;
         birthDay.month = 1;
@@ -809,7 +814,7 @@ private class DutchBusinessServiceImplTest {
         Application.Service.setMock(IWsDutchBusiness.class, mockWS);
 
         test.startTest();
-        List<Business_Position__c> dutchBusinessPositions = DutchBusinessService.getPositions(dossierNumber, null);
+        List<Business_Position__c> dutchBusinessPositions = DutchBusinessService.getPositions(dossierNumber, existingDossier.Id);
         test.stopTest();
 
         system.assertEquals(1, dutchBusinessPositions.size());
