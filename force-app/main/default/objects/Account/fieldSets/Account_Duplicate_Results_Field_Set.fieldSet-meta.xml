@@ -77,11 +77,6 @@
         <isRequired>false</isRequired>
     </availableFields>
     <availableFields>
-        <field>OperatingHoursId</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </availableFields>
-    <availableFields>
         <field>OwnerId</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>

@@ -92,23 +92,7 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
-            <componentInstanceProperties>
-                <name>childObjectFields</name>
-                <value>Name,appsolutely__Function_Type__c,appsolutely__Filled_By__c</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>customRecordIdField</name>
-                <value>appsolutely__Business_Dossier__c</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>parentRecordObjectAPIName</name>
-                <value>appsolutely__Business_Position__c</value>
-            </componentInstanceProperties>
-            <componentInstanceProperties>
-                <name>relationshipField</name>
-                <value>appsolutely__Business_Dossier__c</value>
-            </componentInstanceProperties>
-            <componentName>customRelatedList</componentName>
+            <componentName>businessPositions</componentName>
         </componentInstances>
         <componentInstances>
             <componentInstanceProperties>
@@ -117,7 +101,7 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>relatedListApiName</name>
-                <value>ActivityHistories</value>
+                <value>Contacts</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>relatedListComponentOverride</name>
