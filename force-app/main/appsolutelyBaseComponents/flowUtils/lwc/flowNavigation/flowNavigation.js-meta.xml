@@ -10,6 +10,8 @@
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
             <property name="recordId" type="String" role="inputOnly"/>
+            <property name="message" type="String" label="Custom Message" description="Custom message that is shown as the toast message. It should be a label." role="inputOnly"/>
+            <property name="variant" type="String" label="Custom Variant" description="Custom variant that is shown as the toast variant" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

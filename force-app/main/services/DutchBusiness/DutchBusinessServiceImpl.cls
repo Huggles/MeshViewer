@@ -173,7 +173,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
       */
     public  Business_Dossier__c updateBusinessDossierWithVATNumber(Business_Dossier__c dossier) {
         if (dossier == null) {
-            throw new CCInputException(System.Label.Dossier_ID_Missing); // shouldn't happen but let's check the input
+            throw new CCInputException(System.Label.Dossier_Null_Error_Message); // shouldn't happen but let's check the input
         }
         if (dossier.Dossier_Number__c == null) {
             throw new CCInputException(System.Label.Dossier_Number_Missing);

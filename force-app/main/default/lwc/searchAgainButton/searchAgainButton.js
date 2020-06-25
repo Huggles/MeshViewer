@@ -9,7 +9,7 @@ import deleteInternationalAddress from '@salesforce/apex/SearchAgainButtonContro
 import No from '@salesforce/label/c.No';
 import Yes from '@salesforce/label/c.Yes';
 import Search_Reset from '@salesforce/label/c.Search_Reset';
-import Error from '@salesforce/label/c.Error';
+import Error_Title from '@salesforce/label/c.Error_Title';
 import Search_Again_Confirmation_Dialog_Message from '@salesforce/label/c.Search_Again_Confirmation_Dialog_Message';
 import Search_Again_Confirmation_Dialog_Title from '@salesforce/label/c.Search_Again_Confirmation_Dialog_Title';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
@@ -23,7 +23,7 @@ export default class SearchAgainButton extends LightningElement {
         Search_Reset,
         Search_Again_Confirmation_Dialog_Title,
         Search_Again_Confirmation_Dialog_Message,
-        Error
+        Error_Title
     }
 
     /**
@@ -58,7 +58,7 @@ export default class SearchAgainButton extends LightningElement {
                     }).catch(error => {
                         this.error = error;
                         const event = new ShowToastEvent({
-                            "title": this.label.Error,
+                            "title": this.label.Error_Title,
                             "message": this.error,
                             "variant": 'error',
                             "mode": 'sticky'
@@ -73,7 +73,7 @@ export default class SearchAgainButton extends LightningElement {
                     }).catch(error => {
                         this.error = error;
                         const event = new ShowToastEvent({
-                            "title": this.label.Error,
+                            "title": this.label.Error_Title,
                             "message": this.error,
                             "variant": 'error',
                             "mode": 'sticky'

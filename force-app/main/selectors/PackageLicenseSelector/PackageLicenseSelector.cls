@@ -21,15 +21,17 @@ public inherited sharing class PackageLicenseSelector  extends fflib_SObjectSele
         return (IPackageLicenseSelector) Application.Selector.newInstance(PackageLicense.SObjectType);
     }
 
-    public PackageLicenseWrapper[] selectByNamespacePrefix(String namespacePrefix) {
+    public PackageLicenseWrapper[] selectById(Id packageId) {
         fflib_QueryFactory queryFactory = newQueryFactory();
         List<PackageLicenseWrapper> result = new List<PackageLicenseWrapper>();
-        queryFactory.setCondition('NamespacePrefix = :namespacePrefix');
+        queryFactory.setCondition('Id = :packageId');
         List<PackageLicense> packageLicenses = Database.query(queryFactory.toSOQL());
         for (PackageLicense packageLicense : packageLicenses) {
             result.add(new PackageLicenseWrapper(packageLicense));
         }
         return result;
     }
+
+
 
 }

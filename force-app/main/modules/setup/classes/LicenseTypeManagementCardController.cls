@@ -28,57 +28,93 @@ public inherited sharing class LicenseTypeManagementCardController {
 
     @AuraEnabled
     public static LicenseTypeInfo getLicenseTypeInfo(String licenseTypeAPIName) {
-        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
-        LicenseTypeInfo info = new LicenseTypeInfo();
-        info.availableNrOfSeats = LicenseManagementService.getNumberOfAvailableSeats(licenseType);
-        info.name = LicenseManagementService.getLicenseTypeName(licenseType);
-        info.totalNrOfSeats = LicenseManagementService.getTotalNumberOfSeats(licenseType);
-        return info;
+        try {
+            LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+            LicenseTypeInfo info = new LicenseTypeInfo();
+            info.availableNrOfSeats = LicenseManagementService.getNumberOfAvailableSeats(licenseType);
+            info.name = LicenseManagementService.getLicenseTypeName(licenseType);
+            info.totalNrOfSeats = LicenseManagementService.getTotalNumberOfSeats(licenseType);
+            return info;
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw new AuraHandledException(ex.getMessage());
+        }
     }
 
     @AuraEnabled
     public static User[] getAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
-        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
-        List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
-        for (Ordering ordering : orderings) {
-            queryOrderings.add(new fflib_QueryFactory.Ordering(ordering.fieldName, ordering.sortOrder == 'asc' ? fflib_QueryFactory.SortOrder.ASCENDING : fflib_QueryFactory.SortOrder.DESCENDING, false));
+        try {
+            LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+            List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
+            for (Ordering ordering : orderings) {
+                queryOrderings.add(new fflib_QueryFactory.Ordering(ordering.fieldName, ordering.sortOrder == 'asc' ? fflib_QueryFactory.SortOrder.ASCENDING : fflib_QueryFactory.SortOrder.DESCENDING, false));
+            }
+            return LicenseManagementService.getAssignedUsersForLicenseType(licenseType, startRow, nrOfRows, queryOrderings);
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw new AuraHandledException(ex.getMessage());
         }
-        return LicenseManagementService.getAssignedUsersForLicenseType(licenseType, startRow, nrOfRows, queryOrderings);
+
     }
 
     @AuraEnabled
-    public static User[] getUnAssignedUsers(Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
-        List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
-        for (Ordering ordering : orderings) {
-            queryOrderings.add(new fflib_QueryFactory.Ordering(ordering.fieldName, ordering.sortOrder == 'asc' ? fflib_QueryFactory.SortOrder.ASCENDING : fflib_QueryFactory.SortOrder.DESCENDING, false));
+    public static User[] getUnAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
+        try {
+            LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+            List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
+            for (Ordering ordering : orderings) {
+                queryOrderings.add(new fflib_QueryFactory.Ordering(ordering.fieldName, ordering.sortOrder == 'asc' ? fflib_QueryFactory.SortOrder.ASCENDING : fflib_QueryFactory.SortOrder.DESCENDING, false));
+            }
+            return LicenseManagementService.getUnAssignedUsersForLicenseType(licenseType, startRow, nrOfRows, queryOrderings);
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw new AuraHandledException(ex.getMessage());
         }
-        return LicenseManagementService.getUsersWithoutSeat(startRow, nrOfRows, queryOrderings);
+
     }
 
     @AuraEnabled(Cacheable=true)
     public static Integer getUnAssignedUserCount(String licenseTypeAPIName) {
-        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
-        return LicenseManagementService.getUnAssignedUsersForLicenseTypeCount(licenseType);
+        try {
+            LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+            return LicenseManagementService.getUnAssignedUsersForLicenseTypeCount(licenseType);
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw new AuraHandledException(ex.getMessage());
+        }
+
     }
 
     @AuraEnabled
     public static void assignUsers(String licenseTypeAPIName, List<Id> usersToAssign) {
-        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
-        List<User> users = new List<User>();
-        for (Id id : usersToAssign) {
-            users.add(new User(Id = id));
+        try {
+            LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+            List<User> users = new List<User>();
+            for (Id id : usersToAssign) {
+                users.add(new User(Id = id));
+            }
+            LicenseManagementService.assignLicenseType(licenseType, users);
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw new AuraHandledException(ex.getMessage());
         }
-        LicenseManagementService.assignLicenseType(licenseType, users);
+
     }
 
     @AuraEnabled
     public static void unAssignUsers(String licenseTypeAPIName, List<Id> usersToUnAssign) {
-        LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
-        List<User> users = new List<User>();
-        for (Id id : usersToUnAssign) {
-            users.add(new User(Id = id));
+        try {
+            LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
+            List<User> users = new List<User>();
+            for (Id id : usersToUnAssign) {
+                users.add(new User(Id = id));
+            }
+            LicenseManagementService.unassignLicenseType(licenseType, users);
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw new AuraHandledException(ex.getMessage());
         }
-        LicenseManagementService.unassignLicenseType(licenseType, users);
+
     }
 
 }
