@@ -94,7 +94,7 @@
         <componentInstances>
             <componentInstanceProperties>
                 <name>childObjectFields</name>
-                <value>Name,appsolutely__Function_Type__c,appsolutely__Business_Person__r.Name</value>
+                <value>Name,appsolutely__Function_Type__c,appsolutely__Filled_By__c</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>customRecordIdField</name>
