@@ -512,6 +512,22 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
                 List<Business_Position__c> businessPositions = new List<Business_Position__c>();
 
+
+        List<String> fullNames = new List<String>();
+        List<Date> dateOfBirths = new List<Date>();
+        for (DutchBusinessWsdl.DutchBusinessPositionV2 positionV2 : businessPositionsWSDL.positions.item) {
+            if(positionV2.functionary != null){
+                fullNames.add(positionV2.functionary.full_name);
+                dateOfBirths.add(convertToDateV2(positionV2.functionary.date_of_birth));
+            }
+            if(positionV2.organisation != null){
+
+            }
+        }
+
+        Map<Id,Business_Person__c> existingPersons = (Map<Id, Business_Person__c)[SELECT Id FROM Business_Person__c WHERE Name in : fullNames AND Date_of_Birth__c in : dateOfBirths];
+
+
         for (DutchBusinessWsdl.DutchBusinessPositionV2 positionV2 : businessPositionsWSDL.positions.item) {
             Business_Position__c businessPosition = mapDutchBusinessPositionToBusinessPosition(positionV2, dossierRecordId);
             unitOfWork.registerNew(businessPosition);
@@ -558,7 +574,10 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         businessPerson.Name = functionary.full_name;
         businessPerson.First_Name__c = functionary.first_name;
         businessPerson.Last_Name__c = functionary.last_name;
-        businessPerson.Date_of_Birth__c = Date.newInstance(functionary.date_of_birth.year,functionary.date_of_birth.month, functionary.date_of_birth.day);
+        businessPerson.Date_of_Birth__c = convertToDateV2(functionary.date_of_birth);
+        businessPerson.Date_Deceased__c = convertToDateV2(functionary.date_deceased);
+
+
         businessPerson.Name = functionary.full_name;
         return businessPerson;
     }
@@ -586,6 +605,16 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     }
 
     private static Date convertToDate(DutchBusinessWsdl.DutchBusinessDateV3 theDate) {
+        Date returnDate = null;
+        if (theDate == null) {
+            return null;
+        }
+        if (theDate != null && theDate.year != null && theDate.month != null && theDate.day != null && theDate.year >= 1700) {
+            returnDate= Date.newInstance(theDate.year, theDate.month, theDate.day);
+        }
+        return returnDate;
+    }
+    private static Date convertToDateV2(DutchBusinessWsdl.DutchBusinessDateV2 theDate) {
         Date returnDate = null;
         if (theDate == null) {
             return null;
