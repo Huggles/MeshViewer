@@ -5,6 +5,8 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from "@salesforce/apex";
+
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
 import {Features, checkAccess} from "c/featureAccessControl";
 
@@ -23,15 +25,20 @@ import updateDossierWithPositions from '@salesforce/apex/CompanyDetailsControlle
 import companyInfoLogoSmall from '@salesforce/resourceUrl/companyInfoLogoSmall';
 
 //Labels
-import VAT_Retrieve from '@salesforce/label/c.VAT_Retrieve';
+import Yes from '@salesforce/label/c.Yes';
+import No from '@salesforce/label/c.No';
 import Success from '@salesforce/label/c.Success';
-import Dossier_Account_Update_Completed from '@salesforce/label/c.Dossier_Account_Update_Completed';
-import VAT_Not_Found from '@salesforce/label/c.VAT_Not_Found';
 import Error from '@salesforce/label/c.Error';
+import VAT_Retrieve from '@salesforce/label/c.VAT_Retrieve';
+import VAT_Not_Found from '@salesforce/label/c.VAT_Not_Found';
+import Dossier_Account_Update_Completed from '@salesforce/label/c.Dossier_Account_Update_Completed';
 import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
 import Get_Positions from '@salesforce/label/c.Get_Positions';
-import No from '@salesforce/label/c.No';
-import Yes from '@salesforce/label/c.Yes';
+import Business_Positions_Retrieved_Succesfully from '@salesforce/label/c.Business_Positions_Retrieved_Succesfully';
+
+
+
+
 
 const OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS = [
     BUSINESS_DOSSIER_VAT,
@@ -88,20 +95,30 @@ export default class AccountEnrichmentHeader extends LightningElement {
      */
     businessDossier;
 
-    //
+    /*
+     * boolean whether the component is loading something or not. Shows a spinner.
+     */
+    isLoading = false;
+
+    /*
+     * Booleans to define whether we can access certain elements or not.
+     */
     _getPositionsAccess = false;
     _VATAccess = false;
     _CreditSafeAccess = false;
 
+
+    _businessDossierRecordResponse;
 
     @wire(getRecord, {
         recordId: '$businessDossierId',
         fields: [],
         optionalFields: OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS
     })
-    businessDossierRecord({error, data}) {
-        console.log(data);
-        console.log(error);
+    businessDossierRecord(response) {
+        this._businessDossierRecordResponse = response;
+        let error = response.error;
+        let data = response.data;
         if (error) {
             let message = 'Unknown error';
             if (Array.isArray(error.body)) {
@@ -133,15 +150,16 @@ export default class AccountEnrichmentHeader extends LightningElement {
     };
 
     label = {
-        VAT_Retrieve,
-        Success,
-        Dossier_Account_Update_Completed,
-        VAT_Not_Found,
-        Error,
-        Get_Creditsafe_Report,
-        Get_Positions,
         Yes,
         No,
+        Error,
+        Success,
+        VAT_Retrieve,
+        VAT_Not_Found,
+        Dossier_Account_Update_Completed,
+        Get_Creditsafe_Report,
+        Get_Positions,
+        Business_Positions_Retrieved_Succesfully
 
     }
     staticResource = {
@@ -234,28 +252,27 @@ export default class AccountEnrichmentHeader extends LightningElement {
         confirmationDialog.show();
     }
     handleOnClickConfirmationDialog(event){
-
-        if(event.detail.status == 'cancel'){
-            let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
-            confirmationDialog.hide();
-        }
+        let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
+        confirmationDialog.hide();
         if(event.detail.status == 'confirm'){
             this.retrievePositions();
         }
     }
     retrievePositions(){
+        this.isLoading = true;
         updateDossierWithPositions({
             dossierId: this.businessDossierId
         })
             .then(result => {
-                console.log(JSON.parse(result));
+                this.showToast(this.label.Success, this.label.Business_Positions_Retrieved_Succesfully, 'success');
+                //Reload the business dossier to reload the buttons
+                refreshApex(this._businessDossierRecordResponse);
             })
             .catch(error => {
-                console.log(error);
+                this.showToast(this.label.Error, error, 'error');
             })
             .finally(()=>{
-                let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
-                confirmationDialog.hide();
+                this.isLoading = false;
             })
     }
 }

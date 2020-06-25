@@ -1534,4 +1534,12 @@
         <shortDescription>Label for button that triggers the getPositions callout</shortDescription>
         <value>Get Positions</value>
     </labels>
+    <labels>
+        <fullName>Business_Positions_Retrieved_Succesfully</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success message when business positions have been retrieved.</shortDescription>
+        <value>Business Positions succesfully retrieved.</value>
+    </labels>
 </CustomLabels>

@@ -1,0 +1,8 @@
+/**
+ * Created by Hugo on 25/06/2020.
+ */
+.forceRelatedListCardDesktop.headerBottomBorder .slds-page-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: thin solid rgb(221,219,218);
+}

@@ -5,107 +5,102 @@
 import {LightningElement, api, track, wire} from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
-
-//import getCustomRecordIdField from '@salesforce/apex/CustomRelatedListController.getCustomRecordIdField'
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import getChildRecords from '@salesforce/apex/CustomRelatedListController.getChildRecords'
 
 
-const columns = [
-    { label: 'Label', fieldName: 'name' },
-    { label: 'Website', fieldName: 'website', type: 'url' },
-    { label: 'Phone', fieldName: 'phone', type: 'phone' },
-    { label: 'Balance', fieldName: 'amount', type: 'currency' },
-    { label: 'CloseAt', fieldName: 'closeAt', type: 'date' },
-];
 
 export default class CustomRelatedList extends LightningElement {
-    @api objectApiName;
-    @api parentRecordObjectAPIName;
-    @api relationshipField;
-    @api childObjectFields;
-    @api customRecordIdField;
 
-    @api recordId;
+
+    @api relationshipField;
+    @api childRecordFields;
+    @api childRecordsObjectDeveloperName;
+    @api parentRecordId;
+
+    @api iconName = 'custom:custom1';
+
+    @api
+    loadRelatedList(){
+        this.retrieveChildRecords()
+            .then(result =>{
+                this.updateDataTable(result);
+            })
+            .catch(error=>{
+
+            });
+
+    }
+
 
     @track data = [];
     @track columns = [];
 
-    _parentRecordId;
-    get parentRecordId(){
-        return this._parentRecordId;
-    }
-    set parentRecordId(value){
-        this._parentRecordId = value;
-        this.retrieveChildRecords();
-    }
 
+    _childRecords = [];
+    _objectInfo;
 
-    get _customRecordIdFieldRef(){
-        return [this.objectApiName+'.'+this.customRecordIdField];
+    @wire(getObjectInfo, { objectApiName: '$childRecordsObjectDeveloperName' })
+    objectInfo(response) {
+        this._objectInfo = response;
+        this.initColumns();
     }
 
-    _getRecordDataResponse;
-    @wire(getRecord, { recordId: '$recordId', fields: '$_customRecordIdFieldRef'})
-    recordData(response) {
-        this._getRecordDataResponse = response;
-        if (response.error) {
-            console.log(response.error);
-        } else if (response.data) {
-            if(response.data.fields[this.customRecordIdField] == null){
-                //Field not found
-            }else if(response.data.fields[this.customRecordIdField] != null && response.data.fields[this.customRecordIdField].value == null){
-                //Field empty
-            }else if(response.data.fields[this.customRecordIdField] != null && response.data.fields[this.customRecordIdField].value != null) {
-                //Do something with the field
-                this.parentRecordId = response.data.fields[this.customRecordIdField].value;
-            }
+    get objectLabel(){
+        if(this._objectInfo != null && this._objectInfo.data != null){
+            return this._objectInfo.data.labelPlural + ' (' + this._childRecords.length + ') ';
         }
+        return '';
     }
 
     connectedCallback() {
         this.initColumns();
-        if(this.customRecordIdField == null){
-            this.parentRecordId = this.recordId;
-        }
     }
     initColumns(){
-        if(this.childObjectFields != null){
-            let fields = this.childObjectFields.split(',');
+        if(this.childRecordFields != null && this._objectInfo != null && this._objectInfo.data != null){
+            this.columns = [];
+            let fields = this.childRecordFields.split(',');
             fields.forEach((value, index) => {
+                let fieldInfoKey = Object.keys(this._objectInfo.data.fields).find(key => key.toLowerCase() == value.toLowerCase())
+                if(fieldInfoKey == null){
+                    return;
+                }
+                let fieldInfo = this._objectInfo.data.fields[fieldInfoKey];
                 let column = {
-                    label : value.toLowerCase(),
-                    fieldName : value.toLowerCase(),
+                    label : fieldInfo.label,
+                    fieldName : fieldInfo.apiName,
                 };
+
                 this.columns.push(column);
             });
+            console.log( this.columns);
         }
 
     }
-    retrieveChildRecords(){
+
+
+    async retrieveChildRecords(){
         let payload = {
-            objectAPIName : this.parentRecordObjectAPIName,
+            objectAPIName : this.childRecordsObjectDeveloperName,
             parentFieldAPIName : this.relationshipField,
-            queryFields : this.childObjectFields,
+            queryFields : this.childRecordFields,
             recordId : this.parentRecordId
         }
-        console.log(payload);
-        getChildRecords(payload)
+        return await getChildRecords(payload)
             .then(result=>{
-                console.log(result);
-                this.updateDataTable(result);
+                this._childRecords = result;
             })
             .catch(error=>{
                 console.log(error);
             })
     }
-    updateDataTable(data){
-        let fields = this.childObjectFields.toLowerCase().split(',');
-        if(data != null){
+    updateDataTable(){
+        if(this._childRecords != null){
             let rows = [];
-            data.forEach((record, recordIndex) => {
+            this._childRecords.forEach((record, recordIndex) => {
                 let rowData = {};
-                fields.forEach((field, fieldIndex) => {
-                    rowData[field] = record[field];
+                this.columns.forEach((column, columnIndex) => {
+                    rowData[column.fieldName] = record[column.fieldName];
                 });
                 rows.push(rowData);
             });

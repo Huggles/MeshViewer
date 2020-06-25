@@ -42,18 +42,12 @@ public with sharing class CustomRelatedListController {
             if( value instanceof Map<String,Object>){
                 Map<String,Object> node = (Map<String,Object>)mapToFlatten.get(field);
                 for(String nodeField : node.keySet()){
-                    flattenedMap.put( (field+'.'+nodeField).toLowerCase(), node.get(nodeField));
+                    flattenedMap.put( (field+'.'+nodeField), node.get(nodeField));
                 }
             }else{
-                flattenedMap.put(field.toLowerCase(), mapToFlatten.get(field));
+                flattenedMap.put(field, mapToFlatten.get(field));
             }
         }
         return flattenedMap;
     }
-
-//    @AuraEnabled
-//    public static Id getCustomRecordIdField(String objectAPIName, String parentFieldAPIName, String queryFields, Id recordId){
-//
-//    }
-
 }

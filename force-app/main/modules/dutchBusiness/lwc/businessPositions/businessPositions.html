@@ -1,0 +1,13 @@
+<!--
+ - Created by Hugo on 25/06/2020.
+ -->
+
+<!-- Business Positions -->
+<template>
+    <c-custom-related-list
+            child-record-fields="name,appsolutely__Filled_By__c"
+            relationship-field="appsolutely__Business_Dossier__c"
+            parent-record-id={parentRecordId}
+            child-records-object-developer-name="appsolutely__Business_Position__c">
+    </c-custom-related-list>
+</template>
