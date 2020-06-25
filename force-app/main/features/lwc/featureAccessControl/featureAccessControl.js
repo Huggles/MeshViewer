@@ -5,9 +5,14 @@
 import apexCheckAccess from '@salesforce/apex/FeatureAccessControlController.checkAccess';
 
 const checkAccess = async (feature) => {
-    await apexCheckAccess({featureName: feature})
-        .then(result => {return result})
-        .catch(error => {throw error});
+    return await apexCheckAccess({featureName: feature})
+        .then(result => {
+            return result;
+        })
+        .catch(error => {
+            return error;
+        });
+
 }
 
 const Features = Object.freeze({
