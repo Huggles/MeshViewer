@@ -8,7 +8,7 @@
     <referenceTo>Business_Person__c</referenceTo>
     <relationshipLabel>Business Positions</relationshipLabel>
     <relationshipName>Business_Positions</relationshipName>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
