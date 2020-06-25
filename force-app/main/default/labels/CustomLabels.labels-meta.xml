@@ -42,7 +42,7 @@
     </labels>
     <labels>
         <fullName>Assign</fullName>
-        <categories>Setup</categories>
+        <categories>Button, Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Button text on Assign button</shortDescription>
@@ -87,10 +87,19 @@
     </labels>
     <labels>
         <fullName>Cancel</fullName>
+        <categories>Button</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Cancel</shortDescription>
         <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
         <fullName>City</fullName>
@@ -1198,6 +1207,38 @@
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>Update_settings</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings</shortDescription>
+        <value>Update Settings</value>
+    </labels>
+    <labels>
+        <fullName>Update_types</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_types</shortDescription>
+        <value>Update Types</value>
+    </labels>
+    <labels>
+        <fullName>Update_types_Saved</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Confirmation message that the update types have been saved succesfully.</shortDescription>
+        <value>The update types have been updated succesfully!</value>
+    </labels>
+    <labels>
+        <fullName>Update_types_explanation</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Text above the update type in setup</shortDescription>
+        <value>These settings define which types of data automatically updates through nightly batches.</value>
+    </labels>
+    <labels>
         <fullName>Update_Duplicate_Account</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -1508,6 +1549,14 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
+    </labels>
+    <labels>
+        <fullName>Error_updating_update_type_settings</fullName>
+        <categories>error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_updating_update_type_settings</shortDescription>
+        <value>There was an error updating the update type settings</value>
     </labels>
     <labels>
         <fullName>Feature_Not_Found</fullName>
