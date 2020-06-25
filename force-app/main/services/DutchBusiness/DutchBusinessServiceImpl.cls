@@ -525,7 +525,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
             }
         }
 
-        Map<Id,Business_Person__c> existingPersons = (Map<Id, Business_Person__c)[SELECT Id FROM Business_Person__c WHERE Name in : fullNames AND Date_of_Birth__c in : dateOfBirths];
+        //Map<Id,Business_Person__c> existingPersons = (Map<Id, Business_Person__c)[SELECT Id FROM Business_Person__c WHERE Name in : fullNames AND Date_of_Birth__c in : dateOfBirths];
 
 
         for (DutchBusinessWsdl.DutchBusinessPositionV2 positionV2 : businessPositionsWSDL.positions.item) {
