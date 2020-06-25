@@ -771,7 +771,39 @@ private class DutchBusinessServiceImplTest {
         System.assert(dossiers.size() == dossiersToAssert.size());
     }
 
+    @IsTest
+    public static void testCreateDutchDossiersWithEstablishmentFoundingYearsLessThan1700Flow() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
 
+        String dossierNumber = '1234';
+        String establishmentNUmber = '1234';
+        DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier = getDataVendorMockDossier();
+        dataVendorDossier.founding_date = newDateInstance(1619, 4, 1);
+        dataVendorDossier.establishment_date = newDateInstance(1419, 12, 2);
+        mocks.startStubbing();
+        mocks.when(webserviceMock.dutchBusinessGetDossierV3(dossierNumber, establishmentNUmber)).thenReturn(dataVendorDossier);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
+        Business_Dossier__c dossier = null;
+
+        Test.startTest();
+        {
+            dossier = DutchBusinessService.createDutchDossier(dossierNumber, establishmentNUmber, false);
+        }
+        Test.stopTest();
+        System.assert(dossier != null);
+        System.assert(dossier.Establishment_Date__c == null);
+        System.assert(dossier.Establishment_Date_Day__c == 2);
+        System.assert(dossier.Establishment_Date_Month__c == 12);
+        System.assert(dossier.Establishment_Date_Year__c == 1419);
+        System.assert(dossier.Founding_Date__c == null);
+        System.assert(dossier.Founding_Date_Day__c == 1);
+        System.assert(dossier.Founding_Date_Month__c == 4);
+        System.assert(dossier.Founding_Date_Year__c == 1619);
+        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
+    }
 
 
 }
