@@ -13,6 +13,7 @@
     <label>Company.info Setup</label>
     <navType>Standard</navType>
     <tabs>Company_info_Setup</tabs>
+    <tabs>Config_Update_Type</tabs>
     <tabs>License_Management</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

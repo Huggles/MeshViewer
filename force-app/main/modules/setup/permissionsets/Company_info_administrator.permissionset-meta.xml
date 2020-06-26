@@ -22,6 +22,10 @@
     </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>Protected_Subscriber_Setting__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>Subscriber_Setting__mdt</name>
     </customMetadataTypeAccesses>
     <description>Permission set allowing a user to setup/configure Company.info</description>
@@ -102,6 +106,10 @@
     </objectPermissions>
     <tabSettings>
         <tab>Company_info_Setup</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Config_Update_Type</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

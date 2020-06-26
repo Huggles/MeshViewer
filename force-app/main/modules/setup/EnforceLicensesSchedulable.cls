@@ -4,7 +4,7 @@
 
 public without sharing class EnforceLicensesSchedulable implements Schedulable{
 
-    private class LicenseTypeInfo {
+    private without sharing class LicenseTypeInfo {
 
         private LicenseType licenseType { get; set; }
 
@@ -63,7 +63,6 @@ public without sharing class EnforceLicensesSchedulable implements Schedulable{
             LicenseTypeInfo[] nonCompliantLicenseTypeInfos = new List<LicenseTypeInfo>();
             for (LicenseType licenseType : licenseTypes) {
                 if (!licenseType.name().startsWith('TEST')) {
-                    // TODO: make this bulkified. Since the number of license types is very low, this will work.
                     LicenseTypeInfo licenseTypeInfo = new LicenseTypeInfo(licenseType);
                     if (!licenseTypeInfo.isCompliant) {
                         nonCompliantLicenseTypeInfos.add(licenseTypeInfo);
