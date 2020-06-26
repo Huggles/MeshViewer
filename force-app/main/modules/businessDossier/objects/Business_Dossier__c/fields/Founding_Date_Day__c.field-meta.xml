@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Type__c</fullName>
-    <deprecated>false</deprecated>
-    <description>The exception type</description>
+    <fullName>Founding_Date_Day__c</fullName>
+    <description>Day of Founding Date</description>
     <externalId>false</externalId>
-    <inlineHelpText>The exception type</inlineHelpText>
-    <label>Type</label>
-    <length>255</length>
+    <label>Founding Date Day</label>
+    <precision>18</precision>
     <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

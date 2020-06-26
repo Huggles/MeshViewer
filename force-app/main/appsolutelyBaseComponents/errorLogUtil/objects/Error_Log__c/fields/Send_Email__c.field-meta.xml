@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_Email__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Set in the handleAfterEventInsert method to true if an email needs to be send to the support email address configured in the Setting error email. If checked the after insert trigger on Error Log itself will send an email to the support email address. See https://salesforce.stackexchange.com/questions/221708/does-messaging-sendemail-not-work-in-a-platform-event-trigger-context</description>
+    <externalId>false</externalId>
+    <label>Send Email</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
