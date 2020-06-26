@@ -335,7 +335,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossierDB.Secondary_Sbi_Code_2_Text__c = dataVendorDossier.secondary_sbi_code2_text;
         dossierDB.Chamber_Code__c = dataVendorDossier.chamber_number;
         dossierDB.Status__c = determineStatus(dataVendorDossier);
-        if (String.isNotEmpty(dataVendorDossier.dossier_number)) { dossierDB.Deeplink_URL__c = 'https://company.info/id/' + dataVendorDossier.dossier_number; }
 
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
         if (dataVendorDossier.annual_financial_statement_summary != null) {

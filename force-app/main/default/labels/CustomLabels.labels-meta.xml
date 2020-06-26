@@ -287,7 +287,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Create Business Dossier</shortDescription>
-        <value>The Account does not have a related Business Dossier, please create/link a Business Dossier to Account and retry.</value>
+        <value>The Account does not have a related Business Dossier, please create/link a Business Dossier to Account and refresh.</value>
     </labels>
     <labels>
         <fullName>Create_New_Account</fullName>

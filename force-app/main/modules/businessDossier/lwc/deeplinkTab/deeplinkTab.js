@@ -10,39 +10,62 @@ import COUNTRY from '@salesforce/schema/Account.Business_Dossier__r.Registration
 
 import Deeplink_Only_for_NL_Dossiers from '@salesforce/label/c.Deeplink_Only_for_NL_Dossiers';
 import Create_Business_Dossier from '@salesforce/label/c.Create_Business_Dossier';
+import Error from '@salesforce/label/c.Error';
 
 export default class DeeplinkTab extends LightningElement {
 
     @api recordId;
+
+    //deeplink value
     @track deeplinkUrl;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [BUSINESS_DOSSIER, DEEPLINK_URL, COUNTRY] })
-    accountRecord;
+    //account record
+    account;
+
+    //business dossier record
+    businessDossier;
+
+    //dossier country
+    country;
 
     label = {
         Create_Business_Dossier,
-        Deeplink_Only_for_NL_Dossiers
+        Deeplink_Only_for_NL_Dossiers,
+        Error
     }
 
-
-    get isBusinessDossierAvailable() {
-        if (this.accountRecord != null && this.accountRecord != undefined && this.accountRecord.data != undefined) {
-            if (this.accountRecord.data.fields.appsolutely__Business_Dossier__c.value &&
-                this.accountRecord.data.fields.appsolutely__Business_Dossier__c.value != undefined) {
-                return true;
+    @wire(getRecord, { recordId: '$recordId', fields: [BUSINESS_DOSSIER, DEEPLINK_URL, COUNTRY] })
+    accountRecord({ error, data }) {
+        if (error) {
+            let message = 'Unknown error';
+            if (Array.isArray(error.body)) {
+                message = error.body.map(e => e.message).join(', ');
+            } else if (typeof error.body.message === 'string') {
+                message = error.body.message;
             }
-            else {
-                return false;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: Error,
+                    message,
+                    variant: 'error',
+                }),
+            );
+        } else if (data) {
+            this.account = data;
+            if (this.account.fields) {
+                this.businessDossier = this.account.fields.appsolutely__Business_Dossier__c.value;
+
+                let businessDossierRelation = this.account.fields.appsolutely__Business_Dossier__r.value;
+                if (businessDossierRelation && businessDossierRelation.fields) {
+                    this.country = businessDossierRelation.fields.appsolutely__Registration_Country__c.value;
+                    this.deeplinkUrl = businessDossierRelation.fields.appsolutely__Deeplink_URL__c.value;
+                }
             }
         }
     }
-
+    
     get isDeeplinkUrlAvailable() {
-        let businessDossier = this.accountRecord.data.fields.appsolutely__Business_Dossier__r.value.fields;
-        if (businessDossier.appsolutely__Registration_Country__c.value == 'NL' &&
-            businessDossier.appsolutely__Deeplink_URL__c.value  &&
-            businessDossier.appsolutely__Deeplink_URL__c.value != undefined) {
-            this.deeplinkUrl = businessDossier.appsolutely__Deeplink_URL__c.value;
+        if (this.country == 'NL' && this.deeplinkUrl) {
             return true;
         }
         else {

@@ -4,7 +4,7 @@
 
 <!-- Deeplink Tab -->
 <template>
-    <template if:true={isBusinessDossierAvailable}>
+    <template if:true={businessDossier}>
         <div if:true={isDeeplinkUrlAvailable}>
             <iframe width="1000" height="600" src={deeplinkUrl}></iframe>
         </div>
@@ -12,7 +12,7 @@
             {label.Deeplink_Only_for_NL_Dossiers}
         </div>
     </template>
-    <template if:false={isBusinessDossierAvailable}>
+    <template if:false={businessDossier}>
         {label.Create_Business_Dossier}
     </template>
 </template>
