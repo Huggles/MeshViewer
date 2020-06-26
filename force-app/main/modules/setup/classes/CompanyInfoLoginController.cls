@@ -11,9 +11,7 @@ public inherited sharing class CompanyInfoLoginController {
         } catch(Exception ex) { // do not log the error otherwise we can see the username/password entered maybe
             throw new AuraHandledException(ex.getMessage());
         }
-
     }
-
     @AuraEnabled(cacheable=true)
     public static Credentials__c getCredentials(){
         try {
@@ -22,7 +20,5 @@ public inherited sharing class CompanyInfoLoginController {
             ErrorLogUtil.logException(ex, true);
             throw new AuraHandledException(ex.getMessage());
         }
-
     }
-
 }

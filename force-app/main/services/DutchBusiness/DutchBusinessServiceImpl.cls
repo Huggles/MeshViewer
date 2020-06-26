@@ -354,8 +354,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossierDB.Class_Personnel_Fulltime__c = convertToString(dataVendorDossier.class_personnel_fulltime);
         dossierDB.Continuation_Date__c = convertToDate(dataVendorDossier.continuation_date);
         dossierDB.Discontinuation_Date__c = convertToDate(dataVendorDossier.discontinuation_date);
-        dossierDB.Establishment_Date__c = convertToDate(dataVendorDossier.establishment_date);
-        dossierDB.Founding_Date__c = convertToDate(dataVendorDossier.founding_date);
         dossierDB.Issued_Share_Capital__c = convertToInteger(dataVendorDossier.issued_share_capital);
         dossierDB.Issued_Share_Capital_Currency__c = dataVendorDossier.issued_share_capital_currency;
         dossierDB.Paid_Up_Share_Capital__c = convertToInteger(dataVendorDossier.paid_up_share_capital);
@@ -372,6 +370,24 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
         dossierDB.Chamber_Code__c = dataVendorDossier.chamber_number;
         dossierDB.Status__c = determineStatus(dataVendorDossier);
+
+        //store the establishment and found date in Integer fields if the year is less than 1700
+        if (dataVendorDossier.establishment_date != null && dataVendorDossier.establishment_date.year < 1700) {
+            dossierDB.Establishment_Date_Day__c = dataVendorDossier.establishment_date.day;
+            dossierDB.Establishment_Date_Month__c = dataVendorDossier.establishment_date.month;
+            dossierDB.Establishment_Date_Year__c = dataVendorDossier.establishment_date.year;
+        }
+        else {
+            dossierDB.Establishment_Date__c = convertToDate(dataVendorDossier.establishment_date);
+        }
+        if (dataVendorDossier.founding_date != null && dataVendorDossier.founding_date.year < 1700) {
+            dossierDB.Founding_Date_Day__c = dataVendorDossier.founding_date.day;
+            dossierDB.Founding_Date_Month__c = dataVendorDossier.founding_date.month;
+            dossierDB.Founding_Date_Year__c = dataVendorDossier.founding_date.year;
+        }
+        else {
+            dossierDB.Founding_Date__c = convertToDate(dataVendorDossier.founding_date);
+        }
 
         // dossierDB.Annual_Financial_Statement_Summary__c = dataVendorDossier.annual_financial_statement_summary.;
         if (dataVendorDossier.annual_financial_statement_summary != null) {
