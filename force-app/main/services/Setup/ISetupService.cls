@@ -10,4 +10,6 @@ public interface ISetupService {
      */
     List<Protected_Subscriber_Setting__mdt> getUpdateTypes();
     Id setUpdateTypes(List<Map<string, object>> payload);
+
+
 }
