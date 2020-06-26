@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Error_Email_Address__c</fullName>
+    <defaultValue>$CustomMetadata.Setting__mdt.Error_Email_Address.Value__c</defaultValue>
+    <externalId>false</externalId>
+    <label>Error Email Address</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Email</type>
+    <unique>false</unique>
+</CustomField>

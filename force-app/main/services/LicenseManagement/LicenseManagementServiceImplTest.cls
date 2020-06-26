@@ -117,10 +117,6 @@ private class LicenseManagementServiceImplTest {
         // happy flow: license seats have been assigned to users and the users only have this license type
 
         // given
-        // a fake packagelicense with 10 used licenses
-        List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
-                new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 10, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
-        };
 
         // 10 users with license assignments
         User[] users = new List<User>();
@@ -133,7 +129,7 @@ private class LicenseManagementServiceImplTest {
         Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id;
         for (Integer i = 0; i < 10; i++) {
             permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetId = permissionSetId));
-            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
+            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = LicenseManagementServiceImpl.packageLicense.id, UserId = users.get(i).Id));
         }
 
         // 5 who need to be unassigned
@@ -162,9 +158,6 @@ private class LicenseManagementServiceImplTest {
         mocks.when(userPackageSelectorMock.sObjectType()).thenReturn(UserPackageLicense.SObjectType);
         mocks.when(userSelectorMock.sObjectType()).thenReturn(User.SObjectType);
 
-        // ensure the fake package license wrapper is used
-        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
-
         // ensure the right permission set assignments are returned
         mocks.when(permissionSetAssignmentSelectorMock.selectByLicenseTypeAndUsers(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users)).thenReturn(permissionSetAssignments);
         Set<LicenseType> otherLicenseTypes = new Set<LicenseType>(LicenseType.values());
@@ -175,8 +168,8 @@ private class LicenseManagementServiceImplTest {
         mocks.when(permissionSetAssignmentSelectorMock.selectByLicenseTypeAndUsers(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersToUnassign)).thenReturn(permissionSetAssignmentsToRemove);
 
         // and the package licenses
-        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), users)).thenReturn(userPackageLicenses);
-        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersToUnassign)).thenReturn(userPackageLicensesToRemove);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(LicenseManagementServiceImpl.packageLicense, users)).thenReturn(userPackageLicenses);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(LicenseManagementServiceImpl.packageLicense, usersToUnassign)).thenReturn(userPackageLicensesToRemove);
 
         // users
         mocks.when(userSelectorMock.selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS)).thenReturn(userPackageLicensesToRemove); // need to check
@@ -209,7 +202,7 @@ private class LicenseManagementServiceImplTest {
         List<Map<Schema.SObjectField, Object>> userPackageLicensesToAssert = new List<Map<SObjectField, Object>>();
         for (Integer i = 0; i < 5; i++) {
             userPackageLicensesToAssert.add(new Map<Schema.SObjectField, Object>{
-                    UserPackageLicense.PackageLicenseId => packageLicenseWrappers.get(0).Id,
+                    UserPackageLicense.PackageLicenseId => LicenseManagementServiceImpl.packageLicense.id,
                     UserPackageLicense.UserId => usersToUnassign.get(i).Id
             });
         }
@@ -269,7 +262,7 @@ private class LicenseManagementServiceImplTest {
         mocks.when(userSelectorMock.sObjectType()).thenReturn(User.SObjectType);
 
         // ensure the fake package license wrapper is used
-        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
+        mocks.when(packageLicenseSelectorMock.selectById(null)).thenReturn(packageLicenseWrappers);
 
         // ensure the right permission set assignments are returned
         mocks.when(permissionSetAssignmentSelectorMock.selectByLicenseTypeAndUsers(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users)).thenReturn(permissionSetAssignments);
@@ -308,10 +301,6 @@ private class LicenseManagementServiceImplTest {
         // the users to remove do not have a LMA license assigned to them but do have license type licenses assigned
 
         // given
-        // a fake packagelicense with 10 used licenses
-        List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
-                new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 10, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
-        };
 
         // 10 users without license assignments
         User[] users = new List<User>();
@@ -334,14 +323,12 @@ private class LicenseManagementServiceImplTest {
         for (Integer i = 0; i < 5; i++) {
             usersToUnassign.add(users.get(i));
             permissionSetAssignmentsToRemove.add(permissionSetAssignments.get(i));
-//            userPackageLicensesToRemove.add(userPackageLicenses.get(i));
         }
 
         // start stubbing
         fflib_ApexMocks mocks = new fflib_ApexMocks();
 
         IPermissionSetAssignmentSelector  permissionSetAssignmentSelectorMock = (IPermissionSetAssignmentSelector)mocks.mock(IPermissionSetAssignmentSelector.class);
-        IPackageLicenseSelector packageLicenseSelectorMock = (IPackageLicenseSelector)mocks.mock(IPackageLicenseSelector.class);
         IUserPackageSelector userPackageSelectorMock = (IUserPackageSelector)mocks.mock(IUserPackageSelector.class);
         IUserSelector userSelectorMock = (IUserSelector)mocks.mock(IUserSelector.class);
         fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
@@ -349,27 +336,22 @@ private class LicenseManagementServiceImplTest {
         mocks.startStubbing();
         // sobject types for the selectors (otherwise the mock cannot be found by the Application.Selector factory)
         mocks.when(permissionSetAssignmentSelectorMock.sObjectType()).thenReturn(PermissionSetAssignment.SObjectType);
-        mocks.when(packageLicenseSelectorMock.sObjectType()).thenReturn(PackageLicense.SObjectType);
         mocks.when(userPackageSelectorMock.sObjectType()).thenReturn(UserPackageLicense.SObjectType);
         mocks.when(userSelectorMock.sObjectType()).thenReturn(User.SObjectType);
-
-        // ensure the fake package license wrapper is used
-        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
 
         // ensure the right permission set assignments are returned
         mocks.when(permissionSetAssignmentSelectorMock.selectByLicenseTypeAndUsers(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users)).thenReturn(permissionSetAssignments);
         mocks.when(permissionSetAssignmentSelectorMock.selectByLicenseTypeAndUsers(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, usersToUnassign)).thenReturn(permissionSetAssignmentsToRemove);
 
         // and the package licenses
-        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), users)).thenReturn(userPackageLicenses);
-        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersToUnassign)).thenReturn(userPackageLicensesToRemove);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(LicenseManagementServiceImpl.packageLicense, users)).thenReturn(userPackageLicenses);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(LicenseManagementServiceImpl.packageLicense, usersToUnassign)).thenReturn(userPackageLicensesToRemove);
 
         // users
         mocks.when(userSelectorMock.selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS)).thenReturn(userPackageLicensesToRemove);
         mocks.stopStubbing();
 
         Application.Selector.setMock(permissionSetAssignmentSelectorMock);
-        Application.Selector.setMock(packageLicenseSelectorMock);
         Application.Selector.setMock(userPackageSelectorMock);
         Application.Selector.setMock(userSelectorMock);
         Application.UnitOfWork.setMock(unitOfWorkMock);
@@ -434,7 +416,7 @@ private class LicenseManagementServiceImplTest {
         };
 
         mocks.startStubbing();
-        mocks.when(userSelector.selectUsersWithoutLicenseTypeSeat(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 100, orderings)).thenReturn(users);
+        mocks.when(userSelector.selectUsersAvailableForLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, 0, 100, orderings)).thenReturn(users);
         mocks.when(userSelector.sObjectType()).thenReturn(User.SObjectType);
         mocks.stopStubbing();
 
@@ -540,10 +522,10 @@ private class LicenseManagementServiceImplTest {
         mocks.when(userPackageSelectorMock.sObjectType()).thenReturn(UserPackageLicense.SObjectType);
         mocks.when(userSelectorMock.sObjectType()).thenReturn(User.SObjectType);
 
-        List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
-                new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 5, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
-        };
-        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
+//        List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
+//                new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 5, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
+//        };
+        // mocks.when(packageLicenseSelectorMock.selectById(null)).thenReturn(packageLicenseWrappers);
 
         // 10 seats total
         // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), 20);
@@ -562,13 +544,13 @@ private class LicenseManagementServiceImplTest {
         Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS).Id;
         for (Integer i = 0; i < 5; i++) {
             permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetId = permissionSetId));
-            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
+            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = LicenseManagementServiceImpl.packageLicense.id, UserId = users.get(i).Id));
             usersWithPermissionSet.add(users.get(i));
             usersWithoutPermissionSet.add(users.get(i+5));
         }
         mocks.when(permissionSetAssignmentSelectorMock.selectByLicenseTypeAndUsers(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users)).thenReturn(permissionSetAssignments);
-        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithPermissionSet)).thenReturn(userPackageLicenses);
-        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithoutPermissionSet)).thenReturn(new List<UserPackageLicense>());
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(LicenseManagementServiceImpl.packageLicense, usersWithPermissionSet)).thenReturn(userPackageLicenses);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(LicenseManagementServiceImpl.packageLicense, usersWithoutPermissionSet)).thenReturn(new List<UserPackageLicense>());
         mocks.when(userSelectorMock.selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS)).thenReturn(usersWithPermissionSet);
         mocks.stopStubbing();
 
@@ -601,7 +583,7 @@ private class LicenseManagementServiceImplTest {
         List<Map<Schema.SObjectField, Object>> userPackageLicensesToAssert = new List<Map<SObjectField, Object>>();
         for (Integer i = 5; i < 10; i++) {
             userPackageLicensesToAssert.add(new Map<Schema.SObjectField, Object>{
-                    UserPackageLicense.PackageLicenseId => packageLicenseWrappers.get(0).Id,
+                    UserPackageLicense.PackageLicenseId => LicenseManagementServiceImpl.packageLicense.id,
                     UserPackageLicense.UserId => users.get(i).Id
             });
         }
@@ -631,7 +613,7 @@ private class LicenseManagementServiceImplTest {
         List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
                 new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 5, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
         };
-        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
+        mocks.when(packageLicenseSelectorMock.selectById(null)).thenReturn(packageLicenseWrappers);
 
         // 10 seats total
         // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), 20);
@@ -758,7 +740,6 @@ private class LicenseManagementServiceImplTest {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
 
         IPermissionSetAssignmentSelector  permissionSetAssignmentSelectorMock = (IPermissionSetAssignmentSelector)mocks.mock(IPermissionSetAssignmentSelector.class);
-        IPackageLicenseSelector packageLicenseSelectorMock = (IPackageLicenseSelector)mocks.mock(IPackageLicenseSelector.class);
         IUserPackageSelector userPackageSelectorMock = (IUserPackageSelector)mocks.mock(IUserPackageSelector.class);
         IUserSelector userSelectorMock = (IUserSelector)mocks.mock(IUserSelector.class);
         fflib_ISObjectUnitOfWork unitOfWorkMock = (fflib_ISObjectUnitOfWork)mocks.mock(fflib_ISObjectUnitOfWork.class);
@@ -767,14 +748,8 @@ private class LicenseManagementServiceImplTest {
         // a fake PackageLicense with 10 total seats and 0 available (so there are enough LMA licenses in this test case)
         mocks.startStubbing();
         mocks.when(permissionSetAssignmentSelectorMock.sObjectType()).thenReturn(PermissionSetAssignment.SObjectType);
-        mocks.when(packageLicenseSelectorMock.sObjectType()).thenReturn(PackageLicense.SObjectType);
         mocks.when(userPackageSelectorMock.sObjectType()).thenReturn(UserPackageLicense.SObjectType);
         mocks.when(userSelectorMock.sObjectType()).thenReturn(User.SObjectType);
-
-        List<PackageLicenseWrapper> packageLicenseWrappers = new List<PackageLicenseWrapper>{
-                new PackageLicenseWrapper(fflib_IDGenerator.generate(PackageLicense.SObjectType), 10, 10, LicenseManagementServiceImpl.NAMESPACE_PREFIX)
-        };
-        mocks.when(packageLicenseSelectorMock.selectByNamespacePrefix(LicenseManagementServiceImpl.NAMESPACE_PREFIX)).thenReturn(packageLicenseWrappers);
 
         // 10 seats total
         // FeatureManagement.setPackageIntegerValue(LicenseManagementServiceImpl.FEATURE_PARAM_NAMES_BY_LICENSETYPE.get(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS), 30);
@@ -786,6 +761,9 @@ private class LicenseManagementServiceImplTest {
         }
 
         // the first 10 of them already have a license (LMA and license seat)
+        LicenseManagementServiceImpl.packageLicense.usedLicenses = 10;
+        LicenseManagementServiceImpl.packageLicense.allowedLicenses = 10;
+
         PermissionSetAssignment[] permissionSetAssignments = new List<PermissionSetAssignment>();
         UserPackageLicense[] userPackageLicenses = new List<UserPackageLicense>();
         List<User> usersWithPermissionSet = new List<User>();
@@ -793,7 +771,7 @@ private class LicenseManagementServiceImplTest {
 
         for (Integer i = 0; i < 5; i++) {
             permissionSetAssignments.add(new PermissionSetAssignment(Id = fflib_IDGenerator.generate(PermissionSetAssignment.SObjectType), AssigneeId = users.get(i).Id, PermissionSetId = permissionSetId));
-            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = packageLicenseWrappers.get(0).Id, UserId = users.get(i).Id));
+            userPackageLicenses.add(new UserPackageLicense(Id = fflib_IDGenerator.generate(UserPackageLicense.SObjectType), PackageLicenseId = LicenseManagementServiceImpl.packageLicense.id, UserId = users.get(i).Id));
             usersWithPermissionSet.add(users.get(i));
         }
 
@@ -804,13 +782,12 @@ private class LicenseManagementServiceImplTest {
         }
 
         mocks.when(permissionSetAssignmentSelectorMock.selectByLicenseTypeAndUsers(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS, users)).thenReturn(permissionSetAssignments);
-        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithPermissionSet)).thenReturn(userPackageLicenses);
-        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(packageLicenseWrappers.get(0), usersWithoutPermissionSet)).thenReturn(new List<UserPackageLicense>());
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(LicenseManagementServiceImpl.packageLicense, usersWithPermissionSet)).thenReturn(userPackageLicenses);
+        mocks.when(userPackageSelectorMock.selectByPackageLicenseAndUsers(LicenseManagementServiceImpl.packageLicense, usersWithoutPermissionSet)).thenReturn(new List<UserPackageLicense>());
         mocks.when(userSelectorMock.selectByLicenseType(LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS)).thenReturn(usersWithPermissionSet);
         mocks.stopStubbing();
 
         Application.Selector.setMock(permissionSetAssignmentSelectorMock);
-        Application.Selector.setMock(packageLicenseSelectorMock);
         Application.Selector.setMock(userPackageSelectorMock);
         Application.Selector.setMock(userSelectorMock);
         Application.UnitOfWork.setMock(unitOfWorkMock);
@@ -830,5 +807,66 @@ private class LicenseManagementServiceImplTest {
         // then
 
         System.assertEquals(true, exceptionThrown);
+    }
+
+    @IsTest
+    public static void testGetAllowedLicenseKeys() {
+        // given
+        LicenseType licenseType = LicenseType.COMPANY_INFO_API_USER;
+
+        // when
+        Test.startTest();
+        Set<String> licenseKeys = LicenseManagementService.getAllowedLicenseDefinitionKeysForLicenseType(licenseType);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(6, licenseKeys.size());
+    }
+
+    @IsTest
+    public static void testSelectAvailableUsersForDutchBusinessLicenseType() {
+        // given
+
+        // the license type to test
+        LicenseType licenseType = LicenseType.COMPANY_INFO_FOR_DUTCH_BUSINESS;
+
+        // the current users (users are kind of metadata so you will get users created outside of your test in your result)
+        Id permissionSetId = PermissionSetSelector.newInstance().selectByLicenseType(licenseType).Id;
+        Integer currentNrOfUsers = ([SELECT Id FROM User WHERE
+        Profile.UserLicense.LicenseDefinitionKey IN :LicenseManagementService.getAllowedLicenseDefinitionKeysForLicenseType(licenseType)
+        AND Id NOT IN (SELECT AssigneeId FROM PermissionSetAssignment WHERE PermissionSetId = :permissionSetId)]).size();
+
+        // users
+        List<User> users = new List<User>();
+        for (Integer i = 0; i < 10; i++) {
+            User u = TestUtils.getUser('Standard User'); // the Dutch business user can have this profile
+            u.FirstName = 'first' + i;
+            u.LastName = 'last' + i;
+            users.add(u);
+        }
+        insert users;
+
+        // 5 of the users have the perm set, the rest does not.
+        // work with true assigning
+
+        List<User> usersWithLicenseType = new List<User>();
+        for (Integer i = 0; i < 5; i++) {
+            usersWithLicenseType.add(users.get(i));
+        }
+        LicenseManagementService.assignLicenseType(licenseType, usersWithLicenseType);
+
+        // when
+        Test.startTest();
+        // order on first name and last name
+        List<fflib_QueryFactory.Ordering> orderings = new List<fflib_QueryFactory.Ordering>{
+                new fflib_QueryFactory.Ordering(User.FirstName, fflib_QueryFactory.SortOrder.ASCENDING, true),
+                new fflib_QueryFactory.Ordering(User.LastName, fflib_QueryFactory.SortOrder.ASCENDING, true)
+        };
+        List<User> usersToAssert = LicenseManagementService.getUnAssignedUsersForLicenseType(licenseType, 0, 100, orderings);
+        Test.stopTest();
+
+        // then
+        System.assertEquals(currentNrOfUsers + 5, usersToAssert.size());
+
     }
 }
