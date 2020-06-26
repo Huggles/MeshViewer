@@ -12,7 +12,7 @@
         <name>Assign_billing_country_default</name>
         <label>Assign billing country default</label>
         <locationX>857</locationX>
-        <locationY>50</locationY>
+        <locationY>51</locationY>
         <assignmentItems>
             <assignToReference>Get_Account.BillingCountry</assignToReference>
             <operator>Assign</operator>
@@ -50,8 +50,8 @@
     <assignments>
         <name>Assign_New_Business_Dossier_Id_And_Search_Again</name>
         <label>Assign New Business Dossier Id And Search Again</label>
-        <locationX>1383</locationX>
-        <locationY>425</locationY>
+        <locationX>1384</locationX>
+        <locationY>447</locationY>
         <assignmentItems>
             <assignToReference>BusinessDossierRecordId</assignToReference>
             <operator>Assign</operator>
@@ -71,26 +71,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Creditsafe_Report_Created_Message</name>
-        <label>Creditsafe Report Created Message</label>
-        <locationX>1323</locationX>
-        <locationY>601</locationY>
-        <assignmentItems>
-            <assignToReference>LookupCreationMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CreditsafeReportCreatedLabel</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Show_Buisness_Dossier</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Default_outcome_message</name>
         <label>Default outcome message</label>
-        <locationX>1009</locationX>
-        <locationY>572</locationY>
+        <locationX>1079</locationX>
+        <locationY>581</locationY>
         <assignmentItems>
             <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
             <operator>Assign</operator>
@@ -153,50 +137,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Cancel_Pressed1</name>
-        <label>Cancel Pressed</label>
-        <locationX>1180</locationX>
-        <locationY>766</locationY>
-        <defaultConnector>
-            <targetReference>Default_outcome_message</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Cancel_is_Pressed</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>cancelPressed</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Show_Buisness_Dossier</targetReference>
-            </connector>
-            <label>Cancel is Pressed</label>
-        </rules>
-        <rules>
-            <name>Creditsafe_Report_Created</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>CreditsafeReport.Id</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Creditsafe_Report_Created_Message</targetReference>
-            </connector>
-            <label>Creditsafe Report Created</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Search_Again_Clicked_Or_VAT_Updated_or_Get_Creditsafe_Report_Clicked</name>
-        <label>Search Again Clicked Or VAT Updated or Get Creditsafe Report Clicked</label>
-        <locationX>778</locationX>
-        <locationY>502</locationY>
+        <name>Search_Again_Clicked_Or_VAT_Updated</name>
+        <label>Search Again Clicked Or VAT Updated</label>
+        <locationX>776</locationX>
+        <locationY>505</locationY>
         <defaultConnector>
             <targetReference>Default_outcome_message</targetReference>
         </defaultConnector>
@@ -230,21 +174,6 @@
                 <targetReference>Show_Buisness_Dossier</targetReference>
             </connector>
             <label>VAT Updated</label>
-        </rules>
-        <rules>
-            <name>Get_Creditsafe_Report_is_Clicked</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetCreditsafeReportClicked</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Creditsafe_Report</targetReference>
-            </connector>
-            <label>Get Creditsafe Report is Clicked</label>
         </rules>
     </decisions>
     <decisions>
@@ -280,11 +209,6 @@
         </rules>
     </decisions>
     <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
-    <formulas>
-        <name>CreditsafeReportCreatedLabel</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__creditsafe_report_created}</expression>
-    </formulas>
     <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
     <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
@@ -355,13 +279,13 @@
     <screens>
         <name>Show_Buisness_Dossier</name>
         <label>Show Buisness Dossier</label>
-        <locationX>1077</locationX>
-        <locationY>406</locationY>
+        <locationX>1083</locationX>
+        <locationY>447</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Search_Again_Clicked_Or_VAT_Updated_or_Get_Creditsafe_Report_Clicked</targetReference>
+            <targetReference>Search_Again_Clicked_Or_VAT_Updated</targetReference>
         </connector>
         <fields>
             <name>ErrorMessage</name>
@@ -386,28 +310,6 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>SuccessMessage</name>
-            <extensionName>appsolutely:flowSuccessHandler</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>message</name>
-                <value>
-                    <elementReference>LookupCreationMessage</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LookupCreationMessage</leftValueReference>
-                    <operator>StartsWith</operator>
-                    <rightValue>
-                        <elementReference>CreditsafeReportCreatedLabel</elementReference>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>BusinessDossierHeader</name>
             <extensionName>appsolutely:accountEnrichmentHeader</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -419,16 +321,16 @@
             </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
+                <assignToReference>GetCreditsafeReportClicked</assignToReference>
+                <name>getCreditsafeReportClicked</name>
+            </outputParameters>
+            <outputParameters>
                 <assignToReference>SearchAgainClicked</assignToReference>
                 <name>searchAgainClicked</name>
             </outputParameters>
             <outputParameters>
                 <assignToReference>VATUpdated</assignToReference>
                 <name>VATUpdated</name>
-            </outputParameters>
-            <outputParameters>
-                <assignToReference>GetCreditsafeReportClicked</assignToReference>
-                <name>getCreditsafeReportClicked</name>
             </outputParameters>
         </fields>
         <fields>
@@ -455,30 +357,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <subflows>
-        <name>Get_Creditsafe_Report</name>
-        <label>Get Creditsafe Report</label>
-        <locationX>788</locationX>
-        <locationY>771</locationY>
-        <connector>
-            <targetReference>Cancel_Pressed1</targetReference>
-        </connector>
-        <flowName>Get_Creditsafe_Report_Quick_Action_on_Account</flowName>
-        <inputAssignments>
-            <name>recordId</name>
-            <value>
-                <elementReference>Get_Account.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <outputAssignments>
-            <assignToReference>cancelPressed</assignToReference>
-            <name>CancelPressed</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>CreditsafeReport</assignToReference>
-            <name>CreditsafeReport</name>
-        </outputAssignments>
-    </subflows>
     <subflows>
         <description>Searches for organisations. Uses the input values as defaults to search on.</description>
         <name>Organisation_Search_Flow</name>
@@ -592,16 +470,6 @@
         <isOutput>false</isOutput>
         <value>
             <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <name>LookupCreationMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue/>
         </value>
     </variables>
     <variables>

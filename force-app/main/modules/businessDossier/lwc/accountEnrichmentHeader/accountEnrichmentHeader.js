@@ -118,6 +118,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
             this.showToast(this.label.Error, error, 'error');
         });
 
+
     showGetCreditsafeReportButton = checkAccess(Features.CREDITSAFE_GET_REPORT)
         .then(result => {
             return (result && (this.creditSafeReport == undefined || this.creditSafeReport == null))
@@ -164,12 +165,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
     }
 
     handleOnGetCreditsafeReport(event) {
-        // this.getCreditsafeReportClicked = true;
-        // const attributeChangeEvent = new FlowAttributeChangeEvent('getCreditsafeReportClicked', this.getCreditsafeReportClicked);
-        // this.dispatchEvent(attributeChangeEvent);
-        // //we throw an event because the flow needs to show a search form
-        // this.dispatchEvent(new FlowNavigationNextEvent());
-
+        //throw an event to the child component(getCreditsafeReportChildComponent) of the aura component(getCreditsafeReportAction)
         fireEvent(null, 'getreportclicked');
     }
 
