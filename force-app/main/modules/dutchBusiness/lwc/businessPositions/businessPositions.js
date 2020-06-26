@@ -6,52 +6,64 @@ import {LightningElement, wire, api} from 'lwc';
 import {getRecord} from "lightning/uiRecordApi";
 
 import ACCOUNT_BUSINESS_DOSSIER_FIELD from '@salesforce/schema/Account.Business_Dossier__c';
+import {checkAccess, Features} from "c/featureAccessControl";
+import {ToastEventController} from "c/toastEventController";
 
 export default class BusinessPositions extends LightningElement {
 
     @api recordId;
 
     parentRecordId;
+    isLoading = false;
+
+    _hasFeatureAccess = false;
+    get hasFeatureAccess(){
+        return this._hasFeatureAccess;
+    }
+    set hasFeatureAccess(value){
+        this._hasFeatureAccess = value;
+        if(value === true){
+            this.loadBusinessPositionRelatedList();
+        }
+    }
 
     _businessPositionRelatedList;
     _contactRelatedList;
-
-
     _getRecordDataResponse;
-    @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_BUSINESS_DOSSIER_FIELD]})
-    recordData(response) {
-        this._getRecordDataResponse = response;
-        if (response.error) {
-            console.log(response.error);
-        } else if (response.data) {
-            if(response.data.fields[ACCOUNT_BUSINESS_DOSSIER_FIELD.fieldApiName] != null &&
-                response.data.fields[ACCOUNT_BUSINESS_DOSSIER_FIELD.fieldApiName].value != null) {
-                this.loadBusinessPositionRelatedList();
-            }
-        }
+
+    connectedCallback() {
+        this.isLoading = true;
+        checkAccess(Features.DUTCH_BUSINESS_POSITIONS)
+            .then(result => {
+                this.hasFeatureAccess = result;
+            })
+            .catch(error => {
+                new ToastEventController(this).showErrorToastMessage('Error', error);
+            }).finally(()=>{
+                this.isLoading = false;
+            })
+
+    }
+    renderedCallback() {
+        this.loadBusinessPositionRelatedList();
     }
 
-    renderedCallback() {
-        this._businessPositionRelatedList = this.template.querySelector("c-custom-related-list[data-identifier='BusinessPositionRelatedList']");
-        this._contactRelatedList = this.template.querySelector("c-custom-related-list[data-identifier='ContactRelatedList']");
-        this.loadContactRelatedList();
-    }
+    /*
+     * Try and load this component:
+     * -When access has been checked
+     * -When customRelatedList has been rendered
+     */
     loadBusinessPositionRelatedList(){
-        if(this._businessPositionRelatedList != null) {
-            this._businessPositionRelatedList.parentRecordId = response.data.fields[ACCOUNT_BUSINESS_DOSSIER_FIELD.fieldApiName].value;
+        this._businessPositionRelatedList = this.template.querySelector("c-custom-related-list[data-identifier='BusinessPositionRelatedList']");
+        if(this._businessPositionRelatedList != null && this.hasFeatureAccess == true) {
+            this._businessPositionRelatedList.parentRecordId = this.recordId;
             this._businessPositionRelatedList.loadRelatedList();
         }
     }
-    loadContactRelatedList(){
-        if(this._contactRelatedList != null){
-            this._contactRelatedList.loadRelatedList();
+    businessPositionRelatedListColumnsInitialized(){
+        if(this._businessPositionRelatedList != null){
+            this._businessPositionRelatedList.setColumnTypeRelativeURL('appsolutely__Filled_By_Id__c','appsolutely__Filled_By__c', false);
+            this._businessPositionRelatedList.removeColumn('appsolutely__Filled_By__c');
         }
     }
-    contactRelatedListColumnsInitialized(){
-        console.log('contactRelatedListColumnsInitialized');
-        if(this._contactRelatedList != null){
-            this._contactRelatedList.setColumnType('name','url', { value : 'http://google.nl'});
-        }
-    }
-
 }

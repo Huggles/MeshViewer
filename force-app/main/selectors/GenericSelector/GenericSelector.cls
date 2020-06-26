@@ -40,6 +40,7 @@ public inherited sharing class GenericSelector extends fflib_SObjectSelector imp
     public List<SObject> selectByParentRecordId(Id parentRecordId){
         fflib_QueryFactory queryFactory = newQueryFactory();
         queryFactory.setCondition(relationshipFieldDeveloperName + ' = :parentRecordId');
+        queryFactory.setEnforceFLS(true);
         List<SObject> results = Database.query(queryFactory.toSOQL());
         return results;
     }

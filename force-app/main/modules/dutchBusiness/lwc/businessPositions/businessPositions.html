@@ -4,25 +4,30 @@
 
 <!-- Business Positions -->
 <template>
-    <div class="slds-m-vertical_small">
-<!--        <c-custom-related-list-->
-<!--                data-identifier="BusinessPositionRelatedList"-->
-<!--                child-record-fields="name,appsolutely__Filled_By__c"-->
-<!--                relationship-field="appsolutely__Business_Dossier__c"-->
-<!--                parent-record-id={parentRecordId}-->
-<!--                child-records-object-developer-name="appsolutely__Business_Position__c">-->
-<!--        </c-custom-related-list>-->
+    <div class="slds-is-relative">
+        <template if:true={isLoading}>
+            <lightning-spinner></lightning-spinner>
+        </template>
+        <template if:false={isLoading}>
+            <template if:true={hasFeatureAccess}>
+                <c-custom-related-list
+                        data-identifier="BusinessPositionRelatedList"
+                        parent-record-id={parentRecordId}
+                        child-records-object-developer-name="appsolutely__Business_Position__c"
+                        child-record-fields="name,appsolutely__Filled_By__c,appsolutely__Filled_By_Id__c"
+                        relationship-field="appsolutely__Business_Dossier__c"
+                        icon-name="standard:avatar"
+                        oncolumnsinitialized={businessPositionRelatedListColumnsInitialized}        >
+                </c-custom-related-list>
+            </template>
+
+            <template if:false={hasFeatureAccess}>
+                <div class="slds-box">
+                    <c-no-access-image max-height-in-pixels="150"></c-no-access-image>
+                </div>
+            </template>
+        </template>
+
     </div>
-    <div>
-        <c-custom-related-list
-                data-identifier="ContactRelatedList"
-                child-record-fields="name,firstname,lastname"
-                relationship-field="AccountId"
-                parent-record-id={recordId}
-                child-records-object-developer-name="Contact"
-                icon-name="standard:contact"
-                oncolumnsinitialized={contactRelatedListColumnsInitialized}
-        >
-        </c-custom-related-list>
-    </div>
+
 </template>

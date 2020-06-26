@@ -795,6 +795,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Business_Position__c.Filled_By_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Business_Position__c.Function_Registration_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>

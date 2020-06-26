@@ -1556,4 +1556,12 @@
         <shortDescription>Success message when business positions have been retrieved.</shortDescription>
         <value>Business Positions succesfully retrieved.</value>
     </labels>
+    <labels>
+        <fullName>No_Access_Message</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error message  when the user does not have enough access.</shortDescription>
+        <value>You dont have the right permissions to see this.</value>
+    </labels>
 </CustomLabels>

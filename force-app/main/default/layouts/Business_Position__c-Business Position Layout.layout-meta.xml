@@ -35,6 +35,10 @@
                 <behavior>Readonly</behavior>
                 <field>Filled_By__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Filled_By_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

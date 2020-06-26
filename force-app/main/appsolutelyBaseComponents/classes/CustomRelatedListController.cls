@@ -16,7 +16,10 @@ public with sharing class CustomRelatedListController {
         genericSelector.fieldsDeveloperNames = queryFields;
         genericSelector.relationshipFieldDeveloperName = relationshipFieldDeveloperName;
 
+
+
         List<SObject> results = genericSelector.selectByParentRecordId(parentRecordId);
+
 
         List<Map<String,Object>> flattenedResults = new List<Map<String,Object>>();
         for(SObject result : results){
@@ -24,6 +27,11 @@ public with sharing class CustomRelatedListController {
             Map<String,Object> flattenedMap = flattenMap(jsonResult);
             flattenedResults.add(flattenedMap);
         }
+
+
+        System.debug('>><<');
+        System.debug(JSON.serialize(flattenedResults));
+
         return flattenedResults;
     }
 

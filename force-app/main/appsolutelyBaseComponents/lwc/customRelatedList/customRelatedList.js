@@ -66,17 +66,53 @@ export default class CustomRelatedList extends LightningElement {
      */
     @api
     setColumnType(fieldName, type, typeAttributes){
-
-        let fieldMapping = this.queriedObjectFieldsMap;
-        let correctFieldName = fieldMapping[fieldName]; //The translated objectFieldName
-        let column = this.columns.find(columnRef =>{
-            return columnRef.fieldName == correctFieldName;
-        });
-        if(column == null) return; //If the column was not found, return;
+        let column = this.getColumn(fieldName);
         column.type = type;
         column.typeAttributes = typeAttributes;
-        this.columns[this.columns.indexOf(column)] = column;
-        console.log(JSON.stringify(this.columns));
+        this.replaceColumn(this.getColumn(fieldName), column);
+
+    }
+
+    /*
+    * Sets one of the columns to type url
+    * This can only be called once the columns have been initialized. *
+    */
+    @api
+    setColumnTypeRelativeURL(fieldName, valueField, openInNewTab) {
+        let correctValueFieldName = this.queriedObjectFieldsMap[valueField];
+        let typeAttributes = {
+            label: { fieldName : correctValueFieldName },
+            isRelativeURL : true
+        };
+        if (openInNewTab == true) typeAttributes["target"] = "_blank";
+        //this.setColumnValuesToRelativeURL(fieldName);
+        this.setColumnType(fieldName, 'url', typeAttributes);
+        this.switchColumnLabels(fieldName, valueField);
+    }
+
+    /*
+    * Sets the values of field "ValueField" to the column "FieldName"
+    * Should only be called when the data has been loaded
+    */
+    setColumnValuesToOtherColumn(fieldName, valueField) {
+        let correctFieldName = this.queriedObjectFieldsMap[fieldName];
+        let correctValueFieldName = this.queriedObjectFieldsMap[valueField];
+        this.data.forEach((row,index) => {
+            row[correctFieldName] = row[correctValueFieldName];
+        })
+    }
+
+
+
+
+
+    /*
+    * Remove a column in the datatable based on the query field name
+    */
+    @api
+    removeColumn(fieldName){
+        let column = this.getColumn(fieldName);
+        this.columns.splice(this.columns.indexOf(column),1);
     }
 
 
@@ -93,8 +129,13 @@ export default class CustomRelatedList extends LightningElement {
     @wire(getObjectInfo, { objectApiName: '$childRecordsObjectDeveloperName' })
     objectInfo(response) {
         this._objectInfo = response;
-        this.initColumns();
-        this.loadRelatedList();
+        if(response.data != null){
+            this.initColumns();
+            this.loadRelatedList();
+        }else if (response.error){
+            new ToastEventController(this).showErrorToastMessage('Error', response.error);
+        }
+
     }
 
     get objectLabel(){
@@ -166,28 +207,74 @@ export default class CustomRelatedList extends LightningElement {
             queryFields : this.queriedObjectFieldsDeveloperNames,
             parentRecordId : this.parentRecordId
         }
-        console.log(payload);
         return await getChildRecords(payload)
             .then(result=>{
-                this._childRecords = result;
+                this._childRecords = JSON.parse(JSON.stringify(result));
             })
             .catch(error=>{
-                console.log(error);
+                new ToastEventController(this).showErrorToastMessage('Error', error);
             })
     }
     updateDataTable(){
         if(this._childRecords != null){
-            let rows = [];
-            this._childRecords.forEach((record, recordIndex) => {
-                let rowData = {};
-                this.columns.forEach((column, columnIndex) => {
-                    rowData[column.fieldName] = record[column.fieldName];
-                });
-                rows.push(rowData);
-            });
-            this.data = rows;
+            this.data = this._childRecords;
+            this.setRelativeURLTypeColumnsToRelativeURL();
+            const datainitialized = new CustomEvent('dataloaded');
+            this.dispatchEvent(datainitialized);
         }
     }
+
+    setRelativeURLTypeColumnsToRelativeURL(){
+        this.columns.forEach((column,index) => {
+            if( column.typeAttributes != null &&  column.typeAttributes.isRelativeURL == true && column.type == 'url'){
+                this.setColumnValuesToRelativeURL(column);
+            }
+        });
+    }
+    setColumnValuesToRelativeURL(column) {
+        this.data.forEach((row,index) => {
+            row[column.fieldName] = '/'+row[column.fieldName];
+        })
+    }
+
+    /*
+    * Gets a column in the datatable based on the query field name
+    */
+    getColumn(fieldName){
+        let fieldMapping = this.queriedObjectFieldsMap;
+        let correctFieldName = fieldMapping[fieldName]; //The translated objectFieldName
+        let column = this.columns.find(columnRef =>{
+            return columnRef.fieldName == correctFieldName;
+        });
+        return column;
+    }
+    /*
+    * Replaces a column definition with a new column definition
+    */
+    replaceColumn(oldColumn, newColumn){
+        if(this.columns != null){
+            this.columns[this.columns.indexOf(oldColumn)] = newColumn;
+        }
+
+    }
+
+    /*
+    * Switches labels of columns around
+    */
+    switchColumnLabels(fieldName1, fieldName2){
+        let column1 = this.getColumn(fieldName1);
+        let column2 = this.getColumn(fieldName2);
+
+        let column1Label = column1.label;
+        let column2Label = column2.label;
+
+        column1.label = column2Label;
+        column2.label = column1Label;
+
+        this.replaceColumn(column1, column2);
+        this.replaceColumn(column2, column1);
+    }
+
 
 
 
