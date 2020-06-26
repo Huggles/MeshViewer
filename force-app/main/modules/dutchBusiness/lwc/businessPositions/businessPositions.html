@@ -4,10 +4,25 @@
 
 <!-- Business Positions -->
 <template>
-    <c-custom-related-list
-            child-record-fields="name,appsolutely__Filled_By__c"
-            relationship-field="appsolutely__Business_Dossier__c"
-            parent-record-id={parentRecordId}
-            child-records-object-developer-name="appsolutely__Business_Position__c">
-    </c-custom-related-list>
+    <div class="slds-m-vertical_small">
+<!--        <c-custom-related-list-->
+<!--                data-identifier="BusinessPositionRelatedList"-->
+<!--                child-record-fields="name,appsolutely__Filled_By__c"-->
+<!--                relationship-field="appsolutely__Business_Dossier__c"-->
+<!--                parent-record-id={parentRecordId}-->
+<!--                child-records-object-developer-name="appsolutely__Business_Position__c">-->
+<!--        </c-custom-related-list>-->
+    </div>
+    <div>
+        <c-custom-related-list
+                data-identifier="ContactRelatedList"
+                child-record-fields="name,firstname,lastname"
+                relationship-field="AccountId"
+                parent-record-id={recordId}
+                child-records-object-developer-name="Contact"
+                icon-name="standard:contact"
+                oncolumnsinitialized={contactRelatedListColumnsInitialized}
+        >
+        </c-custom-related-list>
+    </div>
 </template>

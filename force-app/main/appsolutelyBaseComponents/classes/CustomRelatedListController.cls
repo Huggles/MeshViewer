@@ -6,25 +6,17 @@ public with sharing class CustomRelatedListController {
 
 
     @AuraEnabled
-    public static List<Map<String,Object>> getChildRecords(String objectAPIName, String parentFieldAPIName, String queryFields, Id recordId){
-        SObjectType type = Schema.getGlobalDescribe().get(ObjectAPIName);
-        if(type == null){
-            throw new AuraHandledException('Object API Name does not exist');
-        }
-        Map<String,Schema.SObjectField> fields = type.getDescribe().fields.getMap();
+    public static List<Map<String,Object>> getChildRecords(
+            String objectDeveloperName, String relationshipFieldDeveloperName,
+            List<String> queryFields,   Id parentRecordId){
 
-        if(fields.get(ParentFieldAPIName) == null){
-            throw new AuraHandledException('Parent field does not exist');
-        }
 
-        string encodedObjectAPIName = EncodingUtil.urlEncode(objectAPIName,'UTF8');
-        string encodedParentFieldAPIName = EncodingUtil.urlEncode(parentFieldAPIName,'UTF8');
+        GenericSelector genericSelector = GenericSelector.newInstance();
+        genericSelector.objectDeveloperName = objectDeveloperName;
+        genericSelector.fieldsDeveloperNames = queryFields;
+        genericSelector.relationshipFieldDeveloperName = relationshipFieldDeveloperName;
 
-        string query = 'SELECT ' + queryFields + ' FROM ' + encodedObjectAPIName + ' WHERE ' + encodedParentFieldAPIName + ' = \'' + recordId + '\'';
-
-        System.debug(query);
-
-        List<SObject> results = Database.query(query);
+        List<SObject> results = genericSelector.selectByParentRecordId(parentRecordId);
 
         List<Map<String,Object>> flattenedResults = new List<Map<String,Object>>();
         for(SObject result : results){
@@ -35,7 +27,7 @@ public with sharing class CustomRelatedListController {
         return flattenedResults;
     }
 
-    public static Map<String,Object> flattenMap(Map<string,object> mapToFlatten){
+    private static Map<String,Object> flattenMap(Map<string,object> mapToFlatten){
         Map<String,Object> flattenedMap = new Map<String,Object>();
         for(String field : mapToFlatten.keySet()){
             Object value = mapToFlatten.get(field);

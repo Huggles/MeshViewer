@@ -13,7 +13,9 @@ export default class BusinessPositions extends LightningElement {
 
     parentRecordId;
 
-    _customRelatedListElement;
+    _businessPositionRelatedList;
+    _contactRelatedList;
+
 
     _getRecordDataResponse;
     @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_BUSINESS_DOSSIER_FIELD]})
@@ -24,13 +26,32 @@ export default class BusinessPositions extends LightningElement {
         } else if (response.data) {
             if(response.data.fields[ACCOUNT_BUSINESS_DOSSIER_FIELD.fieldApiName] != null &&
                 response.data.fields[ACCOUNT_BUSINESS_DOSSIER_FIELD.fieldApiName].value != null) {
-                this._customRelatedListElement.parentRecordId = response.data.fields[ACCOUNT_BUSINESS_DOSSIER_FIELD.fieldApiName].value;
-                this._customRelatedListElement.loadRelatedList();
+                this.loadBusinessPositionRelatedList();
             }
         }
     }
 
     renderedCallback() {
-        this._customRelatedListElement = this.template.querySelector('c-custom-related-list');
+        this._businessPositionRelatedList = this.template.querySelector("c-custom-related-list[data-identifier='BusinessPositionRelatedList']");
+        this._contactRelatedList = this.template.querySelector("c-custom-related-list[data-identifier='ContactRelatedList']");
+        this.loadContactRelatedList();
     }
+    loadBusinessPositionRelatedList(){
+        if(this._businessPositionRelatedList != null) {
+            this._businessPositionRelatedList.parentRecordId = response.data.fields[ACCOUNT_BUSINESS_DOSSIER_FIELD.fieldApiName].value;
+            this._businessPositionRelatedList.loadRelatedList();
+        }
+    }
+    loadContactRelatedList(){
+        if(this._contactRelatedList != null){
+            this._contactRelatedList.loadRelatedList();
+        }
+    }
+    contactRelatedListColumnsInitialized(){
+        console.log('contactRelatedListColumnsInitialized');
+        if(this._contactRelatedList != null){
+            this._contactRelatedList.setColumnType('name','url', { value : 'http://google.nl'});
+        }
+    }
+
 }
