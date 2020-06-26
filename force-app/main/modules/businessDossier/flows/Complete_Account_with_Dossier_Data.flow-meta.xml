@@ -286,7 +286,6 @@
         <expression>{!$Label.appsolutely__creditsafe_report_created}</expression>
     </formulas>
     <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Enrich Account with Dossier Data</label>
     <processMetadataValues>
@@ -443,6 +442,18 @@
             </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>BusinessPositions</name>
+            <extensionName>appsolutely:businessPositions</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>BusinessDossierRecordId</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
