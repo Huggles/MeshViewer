@@ -15,13 +15,18 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
         public String selectedDataSource {get; set;}
 
         @AuraEnabled
-        public List<String> dataSourceOptions { get; set;}
+        public List<String> dataSourceOptions { get; set; }
 
-        public DataSourcesPerCountry(Datasource_Per_Country__mdt datasourcePerCountry) {
+        public DataSourcesPerCountry(String countryCode, List<Datasource_Per_Country__mdt> datasourcePerCountriesOptions) {
+            Datasource_Per_Country__mdt datasourcePerCountry = datasourcePerCountriesOptions.get(0);
             this.country = datasourcePerCountry.ISO_3166_Entry__r.Label;
             this.countryCode = datasourcePerCountry.ISO_3166_Entry__r.Country_Code__c;
             this.selectedDataSource = SetupService.getSelectedDataSource(this.countryCode).Label;
-            // TODO: options
+            List<String> dataSourceOptions = new List<String>();
+            for (Datasource_Per_Country__mdt datasourcePerCountry2 : datasourcePerCountriesOptions) {
+                dataSourceOptions.add(datasourcePerCountry2.Data_source__r.Label);
+            }
+            this.dataSourceOptions = dataSourceOptions;
         }
     }
 
@@ -29,11 +34,21 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
     public static List<DataSourcesPerCountry> getDataSourcesPerCountry() {
         try {
             List<Datasource_Per_Country__mdt> datasourcePerCountries = SetupService.getDataSourcesPerCountry();
-            List<DataSourcesPerCountry> dataSourcesPerCountriesAura = new List<DataSourcesPerCountry>();
+            List<DataSourcesPerCountry> returnValue = new List<DataSourcesPerCountry>();
+            Map<String, List<Datasource_Per_Country__mdt>> datasourcePerCountriesByCountryCode = new Map<String, List<Datasource_Per_Country__mdt>>();
             for (Datasource_Per_Country__mdt datasourcePerCountry : datasourcePerCountries) {
-                dataSourcesPerCountriesAura.add(new DataSourcesPerCountry(datasourcePerCountry));
+                String countryCode = datasourcePerCountry.ISO_3166_Entry__r.Country_Code__c;
+                List<Datasource_Per_Country__mdt> datasourcePerCountries2 = datasourcePerCountriesByCountryCode.get(countryCode);
+                if (datasourcePerCountries2 == null) {
+                    datasourcePerCountries2 = new List<Datasource_Per_Country__mdt>();
+                    datasourcePerCountriesByCountryCode.put(countryCode, datasourcePerCountries2);
+                }
+                datasourcePerCountries2.add(datasourcePerCountry);
             }
-            return dataSourcesPerCountriesAura;
+            for (String countryCode : datasourcePerCountriesByCountryCode.keySet()) {
+                returnValue.add(new DataSourcesPerCountry(countryCode, datasourcePerCountriesByCountryCode.get(countryCode)));
+            }
+            return returnValue;
         }catch (Exception e){
             ErrorLogUtil.logException(e,true);
             throw new AuraHandledException(e.getMessage());
