@@ -5,9 +5,15 @@
 import {LightningElement, track} from 'lwc';
 
 import {ToastEventController} from "c/toastEventController";
-import {getDataSourcesPerCountry} from "@salesforce/apex/ConfigOrgPerCountryDataSourceController.getDataSourcesPerCountry";
+import getDataSourcesPerCountry from "@salesforce/apex/ConfigOrgPerCountryDataSourceController.getDataSourcesPerCountry";
+
+import Save from '@salesforce/label/c.Save';
 
 export default class ConfigOrganizationPerCountryDataSource extends LightningElement {
+
+    labels = {
+        Save
+    }
 
     isLoading = false;
 
@@ -22,11 +28,11 @@ export default class ConfigOrganizationPerCountryDataSource extends LightningEle
             });
     }
 
-    @track dataSourcePerCountry = []; // array of objects with a property country, an array of possible datasources (property datasource) and the chosen data source for the country
+    @track dataSourcesPerCountry = []; // array of objects with a property country, an array of possible datasources (property datasource) and the chosen data source for the country
     async retrieveDataSourcesPerCountry(){
         await getDataSourcesPerCountry({})
             .then(result => {
-                this.dataSourcePerCountry = result;
+                this.dataSourcesPerCountry = result;
                 Promise.resolve(result);
             })
             .catch(error => {

@@ -125,6 +125,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Data_Sources</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>Error_Log__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>

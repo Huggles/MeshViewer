@@ -3,6 +3,9 @@
     <apiVersion>48.0</apiVersion>
     <description>Allows the user to select the data source to be used to search for organizations per country
     </description>
-    <isExposed>false</isExposed>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__Tab</target>
+    </targets>
     <masterLabel>Config Organization Per Country Data Source</masterLabel>
 </LightningComponentBundle>
