@@ -43,6 +43,7 @@ export default class ConfigUpdateType extends LightningElement {
     }
 
     @track updateTypes = [];
+
     async retrieveUpdateTypes(){
         await getUpdateTypes({})
             .then(result => {

@@ -19,7 +19,7 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
 
         public DataSourcesPerCountry(String countryCode, List<Datasource_Per_Country__mdt> datasourcePerCountriesOptions) {
             Datasource_Per_Country__mdt datasourcePerCountry = datasourcePerCountriesOptions.get(0);
-            this.country = datasourcePerCountry.ISO_3166_Entry__r.Label;
+            this.country = datasourcePerCountry.ISO_3166_Entry__r.Country_Name__c;
             this.countryCode = datasourcePerCountry.ISO_3166_Entry__r.Country_Code__c;
             this.selectedDataSource = SetupService.getSelectedDataSource(this.countryCode).Label;
             List<String> dataSourceOptions = new List<String>();

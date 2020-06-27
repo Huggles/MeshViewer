@@ -55,6 +55,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
                         ISO_3166_Entry__c,
                         ISO_3166_Entry__r.Country_Code__c,
                         ISO_3166_Entry__r.Label,
+                        ISO_3166_Entry__r.Country_Name__c,
                         DeveloperName,
                         Id,
                         Label,
