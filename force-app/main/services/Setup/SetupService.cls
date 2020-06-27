@@ -8,8 +8,17 @@ public inherited sharing class SetupService {
     public static List<Protected_Subscriber_Setting__mdt> getUpdateTypes() {
         return newInstance().getUpdateTypes();
     }
+
     public static Id setUpdateTypes(List<Map<string, object>> payload) {
         return newInstance().setUpdateTypes(payload);
+    }
+
+    public static List<Datasource_Per_Country__mdt> getDataSourcesPerCountry() {
+        return newInstance().getDataSourcesPerCountry();
+    }
+
+    public static Data_source__mdt getSelectedDataSource(String countryCode) {
+        return newInstance().getSelectedDataSource(countryCode);
     }
 
     public static ISetupService newInstance() {

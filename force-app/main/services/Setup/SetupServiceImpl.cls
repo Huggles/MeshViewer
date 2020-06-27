@@ -4,6 +4,15 @@
 
 public with sharing class SetupServiceImpl implements ISetupService {
 
+    public inherited sharing class CustomMetadataCallback implements Metadata.DeployCallback {
+        public void handleResult(Metadata.DeployResult result, Metadata.DeployCallbackContext context) {
+            if (result.status == Metadata.DeployStatus.Succeeded) {
+            } else {
+
+            }
+        }
+    }
+
     public List<Protected_Subscriber_Setting__mdt> getUpdateTypes(){
         List<Protected_Subscriber_Setting__mdt> updateTypes = [
                 SELECT id, DeveloperName, MasterLabel, Label, External_Id__c, Enabled__c, Description__c
@@ -14,6 +23,49 @@ public with sharing class SetupServiceImpl implements ISetupService {
         ];
         return updateTypes;
     }
+
+    public Data_source__mdt getSelectedDataSource(String countryCode) {
+        List<Datasource_Per_Country__mdt> datasourcePerCountries = [
+                SELECT Data_source__c
+                FROM Datasource_Per_Country__mdt
+                WHERE Data_Source_Select_Record__c = TRUE AND ISO_3166_Entry__r.Country_Code__c = :countryCode WITH SECURITY_ENFORCED];
+        if (datasourcePerCountries != null && datasourcePerCountries.size() == 1) {
+            Data_source__mdt dataSource = [
+                    SELECT
+                            DeveloperName,
+                            Id,
+                            Label,
+                            Language,
+                            MasterLabel,
+                            NamespacePrefix,
+                            QualifiedApiName
+                    FROM Data_source__mdt WHERE Id = :datasourcePerCountries.get(0).Data_source__c WITH SECURITY_ENFORCED];
+            return dataSource;
+        } else {
+            throw new InputException('Found no or too many data sources selected for country code ' + countryCode);
+        }
+    }
+
+    public List<Datasource_Per_Country__mdt> getDataSourcesPerCountry() {
+        List<Datasource_Per_Country__mdt> datasourcePerCountries = [
+                SELECT
+                        Data_source__r.Label,
+                        Data_source__c,
+                        Data_Source_Select_Record__c,
+                        ISO_3166_Entry__c,
+                        ISO_3166_Entry__r.Country_Code__c,
+                        ISO_3166_Entry__r.Label,
+                        DeveloperName,
+                        Id,
+                        Label,
+                        Language,
+                        MasterLabel,
+                        NamespacePrefix,
+                        QualifiedApiName
+                FROM Datasource_Per_Country__mdt WHERE Data_Source_Select_Record__c = FALSE WITH SECURITY_ENFORCED];
+        return datasourcePerCountries;
+    }
+
     public Id setUpdateTypes(List<Map<string, object>> payload) {
         string updateTypeAPIName = String.valueOf(appsolutely__Protected_Subscriber_Setting__mdt.getSObjectType());
         List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
@@ -56,12 +108,6 @@ public with sharing class SetupServiceImpl implements ISetupService {
         return jobId;
 
     }
-    public inherited sharing class CustomMetadataCallback implements Metadata.DeployCallback {
-        public void handleResult(Metadata.DeployResult result, Metadata.DeployCallbackContext context) {
-            if (result.status == Metadata.DeployStatus.Succeeded) {
-            } else {
 
-            }
-        }
-    }
+
 }
