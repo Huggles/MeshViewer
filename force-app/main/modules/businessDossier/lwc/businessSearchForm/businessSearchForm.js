@@ -8,6 +8,7 @@ import {fireEvent, registerListener, unregisterAllListeners} from 'c/pubsub';
 import {sanitizeStreet} from "c/inputSanitization";
 
 import getCountryOptions from "@salesforce/apex/BusinessSearchFormController.getCountryOptions";
+import getSelectedDataSource from "@salesforce/apex/BusinessSearchFormController.getSelectedDataSource";
 import {ToastEventController} from "c/toastEventController";
 
 import Country from '@salesforce/label/c.Country';
@@ -26,25 +27,53 @@ export default class BusinessSearchForm extends LightningElement {
 
     get countries() {
         if (!this._countries) {
+            this.loadCountryOptions();
+        }
+        return this._countries;
+    }
+
+    async loadCountryOptions() {
+        try {
             this.isLoading = true;
-            getCountryOptions()
-                .then(result => {
-                    this._countries = result;
-                    return this._countries;
-                })
-                .catch(error => {
-                    new ToastEventController(this).showErrorToastMessage(null,error.message);
-                })
-                .finally(result => {
-                    this.isLoading = false
-                });
-        } else {
-            return this._countries;
+            this._countries = await getCountryOptions();
+        } catch (error) {
+            new ToastEventController(this).showErrorToastMessage(null,error.message);
+        } finally {
+            this.isLoading = false;
         }
     }
 
+
+    _selectedCountry;
     @api
-    selectedCountry; // default is set in the flow
+    get selectedCountry() { // default is set in the flow
+        return this._selectedCountry;
+    }
+    set selectedCountry(value) {
+        this._selectedCountry = value;
+        this.loadDataSource(value);
+    }
+
+    _dataSource;
+    get dataSource() {
+        if (!this._dataSource && this.selectedCountry) {
+            this.loadDataSource(this.selectedCountry)
+        }
+        return this._dataSource;
+    }
+
+    async loadDataSource(alpha2CountryCode) {
+        try {
+            this.isLoading = true;
+            this._dataSource = await getSelectedDataSource({alpha2CountryCode: alpha2CountryCode});
+        } catch(error) {
+            new ToastEventController(this).showErrorToastMessage(null,error.message);
+        } finally {
+            this.isLoading = false;
+        }
+    }
+
+
     @api
     dossierNumber;
     @api
@@ -82,59 +111,104 @@ export default class BusinessSearchForm extends LightningElement {
     name;
 
     get isSelectedDatasourceDutchChamberOfCommerce() {
-
+        return this.dataSource === 'Dutch_Chamber_of_Commerce';
     }
 
+    get isSelectedDatasourceCreditSafe() {
+        return this.dataSource === 'Creditsafe';
+    }
+
+    get isSelectedDatasourceDunBradstreet() {
+        return this.dataSource === 'Dun_Bradstreet';
+    }
+
+    get moreThanOneCountryOption() {
+        return this.countries.length > 1;
+    }
+
+    /**
+     * @deprecated
+     */
     @api
     get isNlSelected() {
         return this.selectedCountry === 'NL';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isGbSelected() {
         return this.selectedCountry === 'GB';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isBeSelected() {
         return this.selectedCountry === 'BE';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isDeSelected() {
         return this.selectedCountry === 'DE';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isFrSelected() {
         return this.selectedCountry === 'FR';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isSeSelected() {
         return this.selectedCountry === 'SE';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isIeSelected() {
         return this.selectedCountry === 'IE';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isItSelected() {
         return this.selectedCountry === 'IT';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isNoSelected() {
         return this.selectedCountry === 'NO';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isDkSelected() {
         return this.selectedCountry === 'DK';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isEsSelected() {
         return this.selectedCountry === 'ES';

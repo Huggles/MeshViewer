@@ -9,4 +9,10 @@ public with sharing class BusinessSearchFormController {
         return BusinessService.getCountryOptionsForBusinessSearch();
     }
 
+    @AuraEnabled
+    public static String getSelectedDataSource(String alpha2CountryCode) {
+        Data_source__mdt dataSource = SetupService.getSelectedDataSource(alpha2CountryCode);
+        return dataSource.DeveloperName;
+    }
+
 }
