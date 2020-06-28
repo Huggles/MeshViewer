@@ -30,7 +30,7 @@ public with sharing class BusinessServiceImplTest {
         }
         Test.stopTest();
         System.assertEquals(1, countryOptions.size());
-        System.assertEquals('528', countryOptions.values().get(0));
+        System.assertEquals('NL', countryOptions.values().get(0));
         System.assertEquals(true, countryOptions.containsKey(Label.Country_Netherlands));
     }
 

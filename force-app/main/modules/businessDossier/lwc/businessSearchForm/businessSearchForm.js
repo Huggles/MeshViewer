@@ -20,15 +20,31 @@ export default class BusinessSearchForm extends LightningElement {
         Select_a_Country
     }
 
+    isLoading = false;
+
+    _countries;
+
     get countries() {
-        getCountryOptions()
-            .then(result => {return result})
-            .catch(error => {});
+        if (!this._countries) {
+            this.isLoading = true;
+            getCountryOptions()
+                .then(result => {
+                    this._countries = result;
+                    return this._countries;
+                })
+                .catch(error => {
+                    new ToastEventController(this).showErrorToastMessage(null,error.message);
+                })
+                .finally(result => {
+                    this.isLoading = false
+                });
+        } else {
+            return this._countries;
+        }
     }
 
-    // TODO: make NL configurable depending on a user custom setting
     @api
-    selectedCountry;
+    selectedCountry; // default is set in the flow
     @api
     dossierNumber;
     @api
@@ -64,6 +80,10 @@ export default class BusinessSearchForm extends LightningElement {
 
     @api
     name;
+
+    get isSelectedDatasourceDutchChamberOfCommerce() {
+
+    }
 
     @api
     get isNlSelected() {

@@ -29,7 +29,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
         List<Datasource_Per_Country__mdt> datasourcePerCountries = [
                 SELECT Data_source__c
                 FROM Datasource_Per_Country__mdt
-                WHERE Data_Source_Select_Record__c = TRUE AND ISO_3166_Entry__r.Country_Code__c = :countryCode WITH SECURITY_ENFORCED];
+                WHERE Data_Source_Select_Record__c = TRUE AND ISO_3166_Entry__r.Alpha_2_Code__c = :countryCode WITH SECURITY_ENFORCED];
         if (datasourcePerCountries != null && datasourcePerCountries.size() == 1) {
             Data_source__mdt dataSource = [
                     SELECT
@@ -55,7 +55,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
                         Data_source__c,
                         Data_Source_Select_Record__c,
                         ISO_3166_Entry__c,
-                        ISO_3166_Entry__r.Country_Code__c,
+                        ISO_3166_Entry__r.Alpha_2_Code__c,
                         ISO_3166_Entry__r.Label,
                         ISO_3166_Entry__r.Country_Name__c,
                         DeveloperName,

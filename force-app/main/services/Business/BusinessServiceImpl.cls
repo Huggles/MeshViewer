@@ -47,15 +47,15 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             datasourcePerCountries.addAll([
                     SELECT
                             ISO_3166_Entry__r.Country_Name__c,
-                            ISO_3166_Entry__r.Country_Code__c,
+                            ISO_3166_Entry__r.Alpha_2_Code__c,
                             ISO_3166_Entry__r.Label,
                             ISO_3166_Entry__c
-                    FROM Datasource_Per_Country__mdt WHERE Data_Source_Select_Record__c = TRUE AND ISO_3166_Entry__r.Country_Code__c = '528']); // doesn't matter what the data source selected is, user has access
+                    FROM Datasource_Per_Country__mdt WHERE Data_Source_Select_Record__c = TRUE AND ISO_3166_Entry__r.Alpha_2_Code__c = 'NL']); // doesn't matter what the data source selected is, user has access
         if (LicenseManagementService.userHasAccess(Feature.INTERNATIONAL_BUSINESS_SEARCH)) {
             datasourcePerCountries.addAll([
                     SELECT
                             ISO_3166_Entry__r.Country_Name__c,
-                            ISO_3166_Entry__r.Country_Code__c,
+                            ISO_3166_Entry__r.Alpha_2_Code__c,
                             ISO_3166_Entry__r.Label,
                             ISO_3166_Entry__c
                     FROM Datasource_Per_Country__mdt
@@ -67,7 +67,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         for (Datasource_Per_Country__mdt datasourcePerCountry : datasourcePerCountries) {
             String translatedCountry = translatedCountryByAlpha3Code.get(datasourcePerCountry.ISO_3166_Entry__r.Label);
             if (translatedCountry != null)
-                countryCodesByTranslatedCountryNames.put(translatedCountry, datasourcePerCountry.ISO_3166_Entry__r.Country_Code__c);
+                countryCodesByTranslatedCountryNames.put(translatedCountry, datasourcePerCountry.ISO_3166_Entry__r.Alpha_2_Code__c);
         }
         return countryCodesByTranslatedCountryNames;
     }

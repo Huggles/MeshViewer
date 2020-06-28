@@ -34,7 +34,7 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
         public DataSourcesPerCountry(String countryCode, List<Datasource_Per_Country__mdt> datasourcePerCountriesOptions) {
             Datasource_Per_Country__mdt datasourcePerCountry = datasourcePerCountriesOptions.get(0);
             this.country = datasourcePerCountry.ISO_3166_Entry__r.Country_Name__c;
-            this.countryCode = datasourcePerCountry.ISO_3166_Entry__r.Country_Code__c;
+            this.countryCode = datasourcePerCountry.ISO_3166_Entry__r.Alpha_2_Code__c;
             this.selectedDataSource = SetupService.getSelectedDataSource(this.countryCode).DeveloperName;
             List<DataSourceOption> dataSourceOptions = new List<DataSourceOption>();
             for (Datasource_Per_Country__mdt datasourcePerCountry2 : datasourcePerCountriesOptions) {
@@ -53,7 +53,7 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
             List<DataSourcesPerCountry> returnValue = new List<DataSourcesPerCountry>();
             Map<String, List<Datasource_Per_Country__mdt>> datasourcePerCountriesByCountryCode = new Map<String, List<Datasource_Per_Country__mdt>>();
             for (Datasource_Per_Country__mdt datasourcePerCountry : datasourcePerCountries) {
-                String countryCode = datasourcePerCountry.ISO_3166_Entry__r.Country_Code__c;
+                String countryCode = datasourcePerCountry.ISO_3166_Entry__r.Alpha_2_Code__c;
                 List<Datasource_Per_Country__mdt> datasourcePerCountries2 = datasourcePerCountriesByCountryCode.get(countryCode);
                 if (datasourcePerCountries2 == null) {
                     datasourcePerCountries2 = new List<Datasource_Per_Country__mdt>();
@@ -74,12 +74,10 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
     @AuraEnabled
     public static void setDataSourcePerCountry(List<DataSourcesPerCountry> dataSourcesPerCountries) {
         try {
-            System.debug('dataSourcesPerCountries: ' + JSON.serializePretty(dataSourcesPerCountries));
             Map<String, String> selectedDataSourceByCountryId = new Map<String, String>();
             for (DataSourcesPerCountry dataSourcesPerCountry : dataSourcesPerCountries) {
                 selectedDataSourceByCountryId.put(dataSourcesPerCountry.countryCode, dataSourcesPerCountry.selectedDataSource);
             }
-            System.debug('selectedDataSourceByCountryId:  ' + JSON.serializePretty(selectedDataSourceByCountryId));
             SetupService.setDataSourcePerCountry(selectedDataSourceByCountryId);
         } catch(Exception e) {
             ErrorLogUtil.logException(e,true);

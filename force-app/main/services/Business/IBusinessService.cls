@@ -11,7 +11,7 @@ public interface IBusinessService {
 
     /**
      * Gets a map with all possible country names/country codes the user has access to to search for organisations
-     * @return a map with as key the name of the country as defined in ISO 3166 translated to the users language and as value the country code
+     * @return a map with as key the name of the country as defined in ISO 3166 translated to the users language and as value the alpha 2 country code
      */
     Map<String, String> getCountryOptionsForBusinessSearch();
 

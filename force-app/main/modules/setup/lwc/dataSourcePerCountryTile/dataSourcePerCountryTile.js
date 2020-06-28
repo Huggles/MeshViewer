@@ -15,7 +15,6 @@ export default class DataSourcePerCountryTile extends LightningElement {
     set item(value) {
         let localValue = {...value};
         this._item = localValue;
-        // this._selectedDatasource = localValue.selectedDataSource;
         this.options = localValue.dataSourceOptions;
     }
 

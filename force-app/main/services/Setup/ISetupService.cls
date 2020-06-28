@@ -27,7 +27,7 @@ public interface ISetupService {
 
     /**
      * Gets the selected data source for the given country code
-     * @param countryCode the 3 letter country code to get the selected data source for
+     * @param countryCode the alpha 2 letter country code to get the selected data source for
      *
      * @return the selected data source
      */
