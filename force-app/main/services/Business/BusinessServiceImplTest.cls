@@ -19,7 +19,19 @@ public with sharing class BusinessServiceImplTest {
         // no objects any more
         System.assert([SELECT Id FROM Business_Dossier__c].size() == 0);
         System.assert([SELECT Id FROM Business_Data_SBI__c].size() == 0);
+    }
 
+    @IsTest
+    public static void testGetCountryOptionsForBusinessSearchDutchBusiness() {
+        Test.startTest();
+        Map<String, String> countryOptions = null;
+        System.runAs(TestUtils.getDutchBusinessUser()) {
+            countryOptions = BusinessService.getCountryOptionsForBusinessSearch();
+        }
+        Test.stopTest();
+        System.assertEquals(1, countryOptions.size());
+        System.assertEquals('528', countryOptions.values().get(0));
+        System.assertEquals(true, countryOptions.containsKey(Label.Country_Netherlands));
     }
 
 }

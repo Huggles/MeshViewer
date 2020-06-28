@@ -44,8 +44,8 @@ public with sharing class LicenseManagementService {
         return newInstance().getTotalNumberOfSeats(licenseType);
     }
 
-    public static void userHasAccess(Feature feature) {
-         newInstance().userHasAccess(feature);
+    public static Boolean userHasAccess(Feature feature) {
+         return newInstance().userHasAccess(feature);
     }
 
     public static Set<String> getAllowedLicenseDefinitionKeysForLicenseType(LicenseType licenseType) {

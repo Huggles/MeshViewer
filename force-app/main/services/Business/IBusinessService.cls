@@ -9,4 +9,11 @@ public interface IBusinessService {
      */
      void deleteDossier(Id dossierId, Boolean checkPermissions);
 
+    /**
+     * Gets a map with all possible country names/country codes the user has access to to search for organisations
+     * @return a map with as key the name of the country as defined in ISO 3166 translated to the users language and as value the country code
+     */
+    Map<String, String> getCountryOptionsForBusinessSearch();
+
+
 }

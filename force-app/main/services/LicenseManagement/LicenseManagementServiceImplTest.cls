@@ -683,19 +683,12 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        Boolean exceptionThrown = false;
-        System.runAs(user) {
-            try {
-                LicenseManagementService.userHasAccess(feature);
-            } catch (NoAccessToFeatureException ex) {
-                exceptionThrown = true;
-            }
-        }
+        Boolean hasAccess = LicenseManagementService.userHasAccess(feature);
         Test.stopTest();
 
         // then
         // the user should have access to the feature
-        System.assertEquals(true, exceptionThrown);
+        System.assertEquals(false, hasAccess);
     }
 
     @IsTest
@@ -717,20 +710,12 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        Boolean exceptionThrown = false;
-        System.runAs(user) {
-            try {
-                LicenseManagementService.userHasAccess(feature);
-            } catch (NoAccessToFeatureException ex) {
-                exceptionThrown = true;
-            }
-
-        }
+        Boolean hasAccess = LicenseManagementService.userHasAccess(feature);
         Test.stopTest();
 
         // then
         // the user should have access to the feature
-        System.assertEquals(false, exceptionThrown);
+        System.assertEquals(true, hasAccess);
     }
 
     @IsTest
