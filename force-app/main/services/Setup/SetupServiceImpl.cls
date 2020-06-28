@@ -50,6 +50,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
         List<Datasource_Per_Country__mdt> datasourcePerCountries = [
                 SELECT
                         Data_source__r.Label,
+                        Data_source__r.DeveloperName,
                         Data_source__c,
                         Data_Source_Select_Record__c,
                         ISO_3166_Entry__c,

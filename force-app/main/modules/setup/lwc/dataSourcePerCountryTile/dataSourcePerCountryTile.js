@@ -2,19 +2,29 @@
  * Created by jaapbranderhorst on 27/06/2020.
  */
 
-import {LightningElement, api} from 'lwc';
+import {LightningElement, api, track} from 'lwc';
 
 export default class DataSourcePerCountryTile extends LightningElement {
 
-    @api item;
+    _item;
 
     @api
-    getSelectedDatasource() {
-        return item.selectedDataSource;
+    get item() {
+        return this._item;
+    }
+    set item(value) {
+        let localValue = {...value};
+        this._item = localValue;
+        this.selectedDatasource = localValue.selectedDataSource;
+        this.options = localValue.dataSourceOptions;
     }
 
+    selectedDataSource;
+
+    options;
+
     handleDataSourceSelect(event) {
-        item.selectedDataSource = event.target.value;
+        this.item.selectedDataSource = event.target.value;
     }
 
 }

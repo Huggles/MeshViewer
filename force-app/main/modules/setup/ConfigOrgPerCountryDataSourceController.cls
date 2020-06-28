@@ -4,6 +4,20 @@
 
 public with sharing class ConfigOrgPerCountryDataSourceController {
 
+    public class DataSourceOption {
+
+        @AuraEnabled
+        public String label { get; set; }
+
+        @AuraEnabled
+        public String value { get; set; }
+
+        public DataSourceOption(Datasource_Per_Country__mdt datasourcePerCountry) {
+            this.label = datasourcePerCountry.Data_source__r.Label;
+            this.value = datasourcePerCountry.Data_source__r.DeveloperName;
+        }
+    }
+
     public class DataSourcesPerCountry {
         @AuraEnabled
         public String country { get; set; }
@@ -15,16 +29,16 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
         public String selectedDataSource {get; set;}
 
         @AuraEnabled
-        public List<String> dataSourceOptions { get; set; }
+        public List<DataSourceOption> dataSourceOptions { get; set; }
 
         public DataSourcesPerCountry(String countryCode, List<Datasource_Per_Country__mdt> datasourcePerCountriesOptions) {
             Datasource_Per_Country__mdt datasourcePerCountry = datasourcePerCountriesOptions.get(0);
             this.country = datasourcePerCountry.ISO_3166_Entry__r.Country_Name__c;
             this.countryCode = datasourcePerCountry.ISO_3166_Entry__r.Country_Code__c;
-            this.selectedDataSource = SetupService.getSelectedDataSource(this.countryCode).Label;
-            List<String> dataSourceOptions = new List<String>();
+            this.selectedDataSource = SetupService.getSelectedDataSource(this.countryCode).DeveloperName;
+            List<DataSourceOption> dataSourceOptions = new List<DataSourceOption>();
             for (Datasource_Per_Country__mdt datasourcePerCountry2 : datasourcePerCountriesOptions) {
-                dataSourceOptions.add(datasourcePerCountry2.Data_source__r.Label);
+                dataSourceOptions.add(new DataSourceOption(datasourcePerCountry2));
             }
             this.dataSourceOptions = dataSourceOptions;
         }

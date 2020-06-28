@@ -17,9 +17,7 @@
                     </header>
                 </div>
                 <!-- TODO: labels -->
-                <lightning-combobox value={item.selectedDataSource} options={item.dataSourceOptions} label='Data Source' onchange={handleDataSourceSelect}></lightning-combobox>
-                <div class="slds-m-top_small">{item.appsolutely__Description__c}</div>
-                <slot name="link"></slot>
+                <lightning-combobox value={selectedDataSource} options={options} label='Data Source' onchange={handleDataSourceSelect}></lightning-combobox>
             </div>
         </div>
     </template>

@@ -16,6 +16,8 @@ private class ConfigOrgPerCountryDataSourceContrTest {
             System.assertNotEquals(null, dataSourcesPerCountry.dataSourceOptions);
             System.assertNotEquals(null, dataSourcesPerCountry.selectedDataSource);
             System.assertEquals(true, dataSourcesPerCountry.dataSourceOptions.size() > 0);
+            System.assertNotEquals(null, dataSourcesPerCountry.dataSourceOptions.get(0).label);
+            System.assertNotEquals(null, dataSourcesPerCountry.dataSourceOptions.get(0).value);
         }
     }
 }
