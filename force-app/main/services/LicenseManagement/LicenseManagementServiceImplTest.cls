@@ -710,7 +710,10 @@ private class LicenseManagementServiceImplTest {
 
         // when
         Test.startTest();
-        Boolean hasAccess = LicenseManagementService.userHasAccess(feature);
+        Boolean hasAccess = false;
+        System.runAs(user) {
+            hasAccess = LicenseManagementService.userHasAccess(feature);
+        }
         Test.stopTest();
 
         // then

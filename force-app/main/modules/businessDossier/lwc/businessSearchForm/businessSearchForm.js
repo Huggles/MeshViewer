@@ -55,7 +55,8 @@ export default class BusinessSearchForm extends LightningElement {
     }
 
     _dataSource;
-    get dataSource() {
+    @api
+    get source() {
         if (!this._dataSource && this.selectedCountry) {
             this.loadDataSource(this.selectedCountry)
         }
@@ -111,15 +112,15 @@ export default class BusinessSearchForm extends LightningElement {
     name;
 
     get isSelectedDatasourceDutchChamberOfCommerce() {
-        return this.dataSource === 'Dutch_Chamber_of_Commerce';
+        return this.source === 'Dutch_Chamber_of_Commerce';
     }
 
     get isSelectedDatasourceCreditSafe() {
-        return this.dataSource === 'Creditsafe';
+        return this.source === 'Creditsafe';
     }
 
     get isSelectedDatasourceDunBradstreet() {
-        return this.dataSource === 'Dun_Bradstreet';
+        return this.source === 'Dun_Bradstreet';
     }
 
     get moreThanOneCountryOption() {

@@ -90,7 +90,7 @@ public with sharing class SetupServiceImplTest {
                 List<Datasource_Per_Country__mdt> datasourcePerCountries = SetupService.getDataSourcesPerCountry();
                 Set<String> countryCodes = new Set<String>();
                 for (Datasource_Per_Country__mdt datasourcePerCountry : datasourcePerCountries) {
-                    countryCodes.add(datasourcePerCountry.ISO_3166_Entry__r.Country_Code__c);
+                    countryCodes.add(datasourcePerCountry.ISO_3166_Entry__r.Alpha_2_Code__c);
                 }
                 for (String countryCode : countryCodes) {
                     Data_source__mdt datasourcePerCountry = SetupService.getSelectedDataSource(countryCode);
