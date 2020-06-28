@@ -28,11 +28,20 @@ export default class DataSourcePerCountryTile extends LightningElement {
         }
     }
 
+    @api
+    get countryCode() {
+        if (this._item) {
+            return this._item.countryCode;
+        } else {
+            return null;
+        }
+    }
+
     @track
     options;
 
     handleDataSourceSelect(event) {
-        this.item.selectedDataSource = event.target.value;
+        this._item.selectedDataSource = event.target.value;
     }
 
 }

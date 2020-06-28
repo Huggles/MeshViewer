@@ -33,6 +33,13 @@ public interface ISetupService {
      */
     Data_source__mdt getSelectedDataSource(String countryCode);
 
+    /**
+    * Sets the selected datasource per country
+    * @param selectedDataSourcePerCountry a map with as key the country code and as value the selected data source
+    *
+    */
+    void setDataSourcePerCountry(Map<String, String> selectedDataSourcePerCountry);
+
 
 
 

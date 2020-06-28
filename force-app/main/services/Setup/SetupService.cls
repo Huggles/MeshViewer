@@ -21,6 +21,10 @@ public inherited sharing class SetupService {
         return newInstance().getSelectedDataSource(countryCode);
     }
 
+    public static void setDataSourcePerCountry(Map<String, String> selectedDataSourcePerCountry){
+        newInstance().setDataSourcePerCountry(selectedDataSourcePerCountry);
+    }
+
     public static ISetupService newInstance() {
         return (ISetupService) Application.Service.newInstance(ISetupService.class);
     }

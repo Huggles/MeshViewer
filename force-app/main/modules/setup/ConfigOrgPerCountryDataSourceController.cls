@@ -42,6 +42,8 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
             }
             this.dataSourceOptions = dataSourceOptions;
         }
+
+        public DataSourcesPerCountry() {}
     }
 
     @AuraEnabled(Cacheable=true)
@@ -67,7 +69,22 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
             ErrorLogUtil.logException(e,true);
             throw new AuraHandledException(e.getMessage());
         }
+    }
 
+    @AuraEnabled
+    public static void setDataSourcePerCountry(List<DataSourcesPerCountry> dataSourcesPerCountries) {
+        try {
+            System.debug('dataSourcesPerCountries: ' + JSON.serializePretty(dataSourcesPerCountries));
+            Map<String, String> selectedDataSourceByCountryId = new Map<String, String>();
+            for (DataSourcesPerCountry dataSourcesPerCountry : dataSourcesPerCountries) {
+                selectedDataSourceByCountryId.put(dataSourcesPerCountry.countryCode, dataSourcesPerCountry.selectedDataSource);
+            }
+            System.debug('selectedDataSourceByCountryId:  ' + JSON.serializePretty(selectedDataSourceByCountryId));
+            SetupService.setDataSourcePerCountry(selectedDataSourceByCountryId);
+        } catch(Exception e) {
+            ErrorLogUtil.logException(e,true);
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 
 }
