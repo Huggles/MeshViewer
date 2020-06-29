@@ -25,28 +25,6 @@ public with sharing class SetupServiceImplTest {
     }
 
     @IsTest
-    public static void getUpdateSettingsNoAccessTest(){
-        System.runAs(TestUtils.getDutchBusinessUser()){
-            Test.startTest();
-            try {
-                List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
-                //Should not reach this statement as there is an access error.
-                System.assert(false);
-            }
-            catch (QueryException e){
-                //Should always return a query exception due to insufficient access rights.
-                System.assert(true);
-            }
-            catch (Exception e){
-                //Other exception should not happen
-                System.assert(false);
-            }
-            Test.stopTest();
-        }
-    }
-
-
-    @IsTest
     public static void setUpdateSettingsTest(){
 
         Map<String,Object> record1 = new Map<String,Object>{
