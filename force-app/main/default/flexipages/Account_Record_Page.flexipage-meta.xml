@@ -96,6 +96,17 @@
     <flexiPageRegions>
         <componentInstances>
             <componentInstanceProperties>
+                <name>recordId</name>
+                <value>$recordId</value>
+            </componentInstanceProperties>
+            <componentName>deeplinkTab</componentName>
+        </componentInstances>
+        <name>Facet-ed718d00-c3b7-4276-aa05-cf2aa6b1c462</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
                 <name>active</name>
                 <value>false</value>
             </componentInstanceProperties>
@@ -143,6 +154,21 @@
             <componentInstanceProperties>
                 <name>title</name>
                 <value>International Address</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>active</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-ed718d00-c3b7-4276-aa05-cf2aa6b1c462</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Company.info online</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>
