@@ -1,0 +1,13 @@
+<!--
+ - Created by tejaswinidandi on 25/06/2020.
+ -->
+
+<aura:component description="getCreditsafeReportAction" controller="GlobalFlowQuickActionController" implements="force:lightningQuickActionWithoutHeader, flexipage:availableForRecordHome, force:hasRecordId">
+    <aura:attribute name="isClicked" type="Boolean" default="false"/>
+
+    <c:getCreditsafeReportChildComponent ongetreport="{!c.handleGetReport}"></c:getCreditsafeReportChildComponent>
+
+    <aura:if isTrue="{!v.isClicked}">
+        <c:globalFlowQuickAction flowSettingName="Get_Creditsafe_Report_Account_Action" recordId="{!v.recordId}"></c:globalFlowQuickAction>
+    </aura:if>
+</aura:component>
