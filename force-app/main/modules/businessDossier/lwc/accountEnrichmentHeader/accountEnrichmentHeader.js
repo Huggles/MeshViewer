@@ -87,8 +87,9 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
     /**
      * The retrieved business dossier
+     * Logic activates with this field being NULL, so setting default to false instead.
      */
-    businessPositionsUpdatedDate;
+    businessPositionsUpdatedDate = false;
 
     /**
      * The retrieved business dossier
