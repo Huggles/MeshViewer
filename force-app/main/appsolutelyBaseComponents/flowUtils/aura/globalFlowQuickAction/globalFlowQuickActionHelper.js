@@ -45,7 +45,13 @@
                     });
                     component.set("v.overlayPromise", promiseModal);
                     var flow = component.find("flow");
-                    flow.startFlow(component.get("v.flowAPIName"));
+                    if (component.get("v.recordId") !== null && component.get("v.recordId") !== undefined) {
+                        var inputVariables = [{ name : "recordId", type : "String", value: component.get("v.recordId") }];
+                        flow.startFlow(component.get("v.flowAPIName"), inputVariables);
+                    }
+                    else {
+                        flow.startFlow(component.get("v.flowAPIName"));
+                    }
                 }
                 else if (status === "ERROR") {
                     console.log("Error: " + errorMessage);

@@ -696,7 +696,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                 }
             }
             if (reportFullV2.negative_information.de != null) {
-                //Creditsafe_Company_Negative_Info_DE__c negativeInfoDE = new Creditsafe_Company_Negative_Info_DE__c();
                 if (reportFullV2.negative_information.de.bankruptcy != null) {
                     companyReportFull.Has_Bankruptcy__c = reportFullV2.negative_information.de.bankruptcy.has_bankruptcy;
                 }
@@ -733,7 +732,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         unitOfWork.registerNew(directorEvent, Negative_Information_DE_Director_Event__c.Creditsafe_Company_Report_Full__c , companyReportFull);
                     }
                 }
-                //unitOfWork.registerNew(negativeInfoDE, Creditsafe_Company_Negative_Info_DE__c.Creditsafe_Company_Report_Full__c, companyReportFull);
             }
             if (reportFullV2.negative_information.generic != null && reportFullV2.negative_information.generic.item != null) {
                 for (CreditsafeWsdl.CreditsafeCompanyKeyValueV2 keyValueV2 :reportFullV2.negative_information.generic.item) {
@@ -899,8 +897,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     companyReportFull.Previous_CR_Provider_Value_Min__c = reportFullV2.credit_score.previous_credit_rating.provider_value.min_value;
                 }
             }
-            //companyReportFull.Creditsafe_Company_Credit_Score__c = creditScore.Id;
-            //unitOfWork.registerNew(creditScore, Creditsafe_Company_Credit_Score__c.Creditsafe_Company_Report_Full__c, companyReportFull);
         }
 
         return companyReportFull;
@@ -934,8 +930,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
             companyReportFull.Company_Registration_Number__c = reportFullV2.company_summary.company_registration_number;
             companyReportFull.Business_Name__c = reportFullV2.company_summary.business_name;
             companyReportFull.Country__c = reportFullV2.company_summary.country;
-            //companyReportFull.Creditsafe_Company_Summary__c = companySummary.Id;
-            //unitOfWork.registerNew(companySummary, Creditsafe_Company_Summary__c.Creditsafe_Company_Report_Full__c, companyReportFull);
         }
 
         return companyReportFull;
@@ -945,7 +939,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         if (reportFullV2.company_identification != null) {
             if (reportFullV2.company_identification.basic_information != null) {
                 CreditsafeWsdl.CreditsafeCompanyBasicInformationV2 basicInformationV2 = reportFullV2.company_identification.basic_information;
-                //Creditsafe_Company_Basic_Information__c basicInformation = new Creditsafe_Company_Basic_Information__c();
                 if (basicInformationV2.company_status != null) {
                     companyReportFull.Company_Status__c = basicInformationV2.company_status.status;
                     companyReportFull.Company_Status_Description__c = basicInformationV2.company_status.description;
@@ -964,10 +957,9 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                 companyReportFull.Business_Name__c = basicInformationV2.business_name;
                 companyReportFull.Country__c = basicInformationV2.country;
                 companyReportFull.Dateof_Company_Registration__c = basicInformationV2.dateof_company_registration;
-                companyReportFull.Dateof_Starting_Operations__c = basicInformationV2.dateof_starting_operations;
+                companyReportFull.Dateof_Starting_Operations__c = basicInformationV2.dateof_starting_operations.year() >= 1700 ? basicInformationV2.dateof_starting_operations : null;
                 companyReportFull.Registered_Company_Name__c = basicInformationV2.registered_company_name;
                 companyReportFull.VAT_Registration_Number__c = basicInformationV2.vat_registration_number;
-                //unitOfWork.registerNew(basicInformation, Creditsafe_Company_Basic_Information__c.Creditsafe_Company_Report_Full__c, companyReportFull);
 
                 if (basicInformationV2.contact_address != null) {
                     Creditsafe_Address__c contactAddress = mapCreditSafeAddress(basicInformationV2.contact_address, new Creditsafe_Address__c(), 'Contact Address');
@@ -984,10 +976,8 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         companyActivity.Classification__c = companyActivityV2.classification;
                         companyActivity.Activity_Code__c = companyActivityV2.activity_code.abbreviate(255);
                         companyActivity.Activity_Description__c = companyActivityV2.activity_description;
-                        //companyActivity.Creditsafe_Comp_Activity_Classification__c = activityClassification.Id;
                         unitOfWork.registerNew(companyActivity, Creditsafe_Company_Activity__c.Creditsafe_Comp_Activity_Classification__c, activityClassification);
                     }
-                    //activityClassification.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
                     unitOfWork.registerNew(activityClassification, Creditsafe_Comp_Activity_Classifications__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                 }
             }
@@ -1000,7 +990,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
         if (reportFullV2.additional_information != null) {
 
             if (reportFullV2.additional_information.de != null) {
-                //Creditsafe_Company_Additional_Info_DE__c additionalInfoDE = new Creditsafe_Company_Additional_Info_DE__c();
 
                 CreditsafeWsdl.CreditsafeCompanyAdditionalInformationDEAdditionalInformationV2 additionalInformationDEAdditionalInformationV2 = reportFullV2.additional_information.de;
                 if (additionalInformationDEAdditionalInformationV2.miscellaneous != null) {
@@ -1055,7 +1044,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         additionalInfoComment.Text__c = commentV2.text;
                         additionalInfoComment.Sentiment__c = commentV2.sentiment;
                         additionalInfoComment.Type__c = 'DE_Comments';
-                        //additionalInfoComment.Creditsafe_Company_Additional_Info_DE__c = additionalInfoDE.Id;
                         unitOfWork.registerNew(additionalInfoComment, Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
                 }
@@ -1119,7 +1107,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         additionalInformationNLFinancialItem.Date_Year_End__c = getDate(financialItemV2.date_year_end);
                         additionalInformationNLFinancialItem.Judgement__c = financialItemV2.judgement;
                         additionalInformationNLFinancialItem.Consolidated_Subsidiaries__c = financialItemV2.consolidated_subsidiaries;
-                        //additionalInformationNLFinancialItem.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
                         unitOfWork.registerNew(additionalInformationNLFinancialItem, Additional_Information_NL_Financial_Item__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
                 }
@@ -1129,7 +1116,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         Additional_Information_NL_Kvk_Filing__c additionalInformationNLKvkFiling = new Additional_Information_NL_Kvk_Filing__c();
                         additionalInformationNLKvkFiling.Date__c = getDate(kvkFilingV2.date_x);
                         additionalInformationNLKvkFiling.Event__c = kvkFilingV2.event;
-                        //additionalInformationNLKvkFiling.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
                         unitOfWork.registerNew(additionalInformationNLKvkFiling, Additional_Information_NL_Kvk_Filing__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
                 }
@@ -1167,7 +1153,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                         additionalInfoComment.Text__c = commentV2.text;
                         additionalInfoComment.Sentiment__c = commentV2.sentiment;
                         additionalInfoComment.Type__c = 'NL_Comments';
-                        //additionalInfoComment.Creditsafe_Company_Additional_Info_NL__c = additionalInfoNL.Id;
                         unitOfWork.registerNew(additionalInfoComment, Creditsafe_Comp_Additional_Info_Comment__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                     }
                 }
@@ -1190,7 +1175,6 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                     Creditsafe_Company_Key_Value__c creditsafeCompanyKeyValue = new Creditsafe_Company_Key_Value__c();
                     creditsafeCompanyKeyValue.Key__c = keyValueV2.key;
                     creditsafeCompanyKeyValue.Value__c = keyValueV2.value;
-                    //creditsafeCompanyKeyValue.Creditsafe_Company_Report_Full__c = companyReportFull.Id;
                     unitOfWork.registerNew(creditsafeCompanyKeyValue, Creditsafe_Company_Key_Value__c.Creditsafe_Company_Report_Full__c, companyReportFull);
                 }
             }
