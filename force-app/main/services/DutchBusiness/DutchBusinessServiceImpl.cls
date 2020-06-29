@@ -590,11 +590,11 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     }
     private Business_Position__c mapDutchBusinessPositionToBusinessPosition(DutchBusinessWsdl.DutchBusinessPositionV2 businessPositionsWSDL, Id dossierRecordId) {
         Business_Position__c position = new Business_Position__c();
-        position.Name = businessPositionsWSDL.function_title;
+        position.Name = businessPositionsWSDL.function_type;
         position.Business_Dossier__c = dossierRecordId;
         position.Function_Registration_Date__c = convertToDateV2(businessPositionsWSDL.function_registration_date);
         position.Function_Start_Date__c = convertToDateV2(businessPositionsWSDL.function_start_date);
-        position.Function_Type__c = businessPositionsWSDL.function_type;
+        position.Function_Type__c = businessPositionsWSDL.function_title;
         position.Authorization_Description__c = businessPositionsWSDL.authorization_description;
         return position;
     }
