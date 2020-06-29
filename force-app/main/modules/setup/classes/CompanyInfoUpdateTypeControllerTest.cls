@@ -27,26 +27,6 @@ public with sharing class CompanyInfoUpdateTypeControllerTest {
     }
 
     @IsTest
-    public static void getUpdateSettingsNoAccessTest(){
-        System.runAs(TestUtils.getDutchBusinessUser()){
-            Test.startTest();
-            try {
-                List<Protected_Subscriber_Setting__mdt> updateTypes = CompanyInfoUpdateTypeController.getUpdateTypes();
-                //Should not reach this statement as there is an access error.
-                System.assert(false);
-            }catch (AuraHandledException e){
-                //Should always reach this statement due to access error.
-                System.assert(true);
-            }catch (Exception e){
-                //Should not reach this statement as there is an access error.
-                System.assert(false);
-            }
-            Test.stopTest();
-        }
-    }
-
-
-    @IsTest
     public static void setUpdateSettingsTest(){
 
         Map<String,Object> record1 = new Map<String,Object>{
