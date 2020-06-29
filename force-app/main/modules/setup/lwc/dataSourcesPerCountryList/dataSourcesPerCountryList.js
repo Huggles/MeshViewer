@@ -60,17 +60,14 @@ export default class dataSourcesPerCountryList extends LightningElement {
                 }
                 payload.push(payloadItem);
             });
-            this.save(payload)
-                .then(result =>{
-                    // TODO: labels
-                    new ToastEventController(this).showSuccessToastMessage(null,'this.labels.Update_types_Saved');
-                })
-                .catch(error =>{
-                    new ToastEventController(this).showErrorToastMessage(null,error.message.body);
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
+            try {
+                this.save(payload);
+            } catch(error) {
+                console.log(error);
+                new ToastEventController(this).showErrorToastMessage(null,error.message);
+            } finally {
+                this.isLoading = false;
+            }
         }
     }
 

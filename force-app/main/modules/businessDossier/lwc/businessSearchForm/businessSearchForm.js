@@ -27,15 +27,17 @@ export default class BusinessSearchForm extends LightningElement {
 
     get countries() {
         if (!this._countries) {
-            this.loadCountryOptions();
+            return this.loadCountryOptions();
+        } else {
+            return this._countries;
         }
-        return this._countries;
     }
 
     async loadCountryOptions() {
         try {
             this.isLoading = true;
             this._countries = await getCountryOptions();
+            return this._countries;
         } catch (error) {
             new ToastEventController(this).showErrorToastMessage(null,error.message);
         } finally {
@@ -58,15 +60,21 @@ export default class BusinessSearchForm extends LightningElement {
     @api
     get source() {
         if (!this._dataSource && this.selectedCountry) {
-            this.loadDataSource(this.selectedCountry)
+            this._dataSource = this.loadDataSource(this.selectedCountry)
+            return this._dataSource;
+        } else {
+            return this._dataSource;
         }
-        return this._dataSource;
+    }
+    set source(value) {
+        this._dataSource = value;
     }
 
     async loadDataSource(alpha2CountryCode) {
         try {
             this.isLoading = true;
             this._dataSource = await getSelectedDataSource({alpha2CountryCode: alpha2CountryCode});
+            return this._dataSource;
         } catch(error) {
             new ToastEventController(this).showErrorToastMessage(null,error.message);
         } finally {
@@ -112,15 +120,15 @@ export default class BusinessSearchForm extends LightningElement {
     name;
 
     get isSelectedDatasourceDutchChamberOfCommerce() {
-        return this.source === 'Dutch_Chamber_of_Commerce';
+        return this._dataSource === 'Dutch_Chamber_of_Commerce';
     }
 
     get isSelectedDatasourceCreditSafe() {
-        return this.source === 'Creditsafe';
+        return this._dataSource === 'Creditsafe';
     }
 
     get isSelectedDatasourceDunBradstreet() {
-        return this.source === 'Dun_Bradstreet';
+        return this._dataSource === 'Dun_Bradstreet';
     }
 
     get moreThanOneCountryOption() {

@@ -171,7 +171,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
                             QualifiedApiName
                     FROM ISO_3166_Entry__mdt];
             for (ISO_3166_Entry__mdt isoO3166Entry : iso3166Entries) {
-                countryMtdsByCountryCode.put(isoO3166Entry.Country_Code__c, isoO3166Entry);
+                countryMtdsByCountryCode.put(isoO3166Entry.Alpha_2_Code__c, isoO3166Entry);
             }
         }
         return countryMtdsByCountryCode;
@@ -183,27 +183,11 @@ public with sharing class SetupServiceImpl implements ISetupService {
         Metadata.DeployContainer mdContainer = new Metadata.DeployContainer();
         for(Datasource_Per_Country__mdt datasourcePerCountry : datasourcePerCountries ){
 
-//
-//            Boolean checked = Boolean.valueOf(mdRecord.get('checked'));
-//            String developerName = String.valueOf(mdRecord.get('developerName')); //RecordName = DeveloperName
-//            String masterLabel = String.valueOf(mdRecord.get('label'));
-//
-//            if(checked == null || developerName == null || masterLabel == null){
-//                throw new InputException(Label.Error_Input_Incorrect);
-//            }
-
             // record
             Metadata.CustomMetadata customMetadata = new Metadata.CustomMetadata();
             customMetadata.fullName = updateTypeAPIName + '.' + datasourcePerCountry.DeveloperName; //RecordName = DeveloperName
-            System.debug('fullname: ' + customMetadata.fullName);
             customMetadata.label = datasourcePerCountry.Label;
             customMetadata.protected_x = false;
-
-//            // masterlabel field
-//            Metadata.CustomMetadataValue masterLabelField = new Metadata.CustomMetadataValue();
-//            masterLabelField.field = String.valueOf(Datasource_Per_Country__mdt.MasterLabel);
-//            masterLabelField.value = datasourcePerCountry.Label;
-//            customMetadata.values.add(masterLabelField);
 
             // country field
             Metadata.CustomMetadataValue countryField = new Metadata.CustomMetadataValue();
@@ -225,8 +209,6 @@ public with sharing class SetupServiceImpl implements ISetupService {
             selectedDataSourcefield.value = datasourcePerCountry.Data_Source_Select_Record__c;
             customMetadata.values.add(selectedDataSourcefield);
 
-            System.debug('customMetadata to deploy: ' + JSON.serializePretty(customMetadata));
-
             mdContainer.addMetadata(customMetadata);
         }
         //Cannot update an empty container.
@@ -239,7 +221,6 @@ public with sharing class SetupServiceImpl implements ISetupService {
             CustomMetadataCallback callback = new CustomMetadataCallback();
             jobId = Metadata.Operations.enqueueDeployment(mdContainer, callback);
         }catch (Exception e){
-            System.debug('Exception: ' + e);
             // TODO: labels
             MetadataOperationException metadataOperationException = new MetadataOperationException(Label.Error_updating_update_type_settings);
             metadataOperationException.setMessage(Label.Error_updating_update_type_settings); //Explicitly set the message so it can be read in apex as well.
