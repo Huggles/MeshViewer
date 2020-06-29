@@ -443,18 +443,6 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <fields>
-            <name>BusinessPositions</name>
-            <extensionName>appsolutely:businessPositions</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>BusinessDossierRecordId</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-        </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
