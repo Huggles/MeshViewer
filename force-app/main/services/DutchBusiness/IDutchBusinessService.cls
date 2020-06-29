@@ -97,6 +97,8 @@ public interface IDutchBusinessService {
      *
      * @return DutchBusinessExtractHistory
      */
+
+    //TODO: Map the DutchBusinessWsdl.DutchBusinessExtractHistory to a sObject.
     DutchBusinessWsdl.DutchBusinessExtractHistory getExtractHistory(String dossier_number, Date start_date, Date end_date);
 
     /**

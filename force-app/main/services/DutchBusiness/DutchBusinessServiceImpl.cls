@@ -653,6 +653,4 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     private static String convertToString(Integer value){
         return value != null ? String.valueOf(value) : null;
     }
-
-
 }
