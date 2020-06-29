@@ -53,6 +53,14 @@ export default class DutchAddressForm extends LightningElement {
         Letter_Combination_pattern_mismatch_message
     }
 
+    get addressTypes() {
+        let addressTypes = [
+            { label: '0', value: '0' },
+            { label: '1', value: '1' }
+        ];
+        return addressTypes;
+    }
+
     handleOnChange(event) {
         this.dispatchFlowAttributeChangeEvent(event.target.name, event.target.value);
     }

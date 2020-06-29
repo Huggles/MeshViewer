@@ -649,7 +649,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Letter Combination pattern mismatch message</shortDescription>
-        <value>Please enter only 2 alphabets.</value>
+        <value>Please enter only 2 alphabets. SS, SA, SD are not valid.</value>
     </labels>
     <labels>
         <fullName>License_assignment_succesfully_removed</fullName>

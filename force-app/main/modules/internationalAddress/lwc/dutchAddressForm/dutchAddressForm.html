@@ -22,12 +22,12 @@
                              class="slds-m-around_xxx-small" value={postcode} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="3">
-            <lightning-input name="lettercombination" label={label.Letter_Combination} title="Letter Combination" pattern="^[a-zA-Z]{2}$" message-when-pattern-mismatch={label.Letter_Combination_pattern_mismatch_message}
+            <lightning-input name="lettercombination" label={label.Letter_Combination} title="Letter Combination" pattern="^(?!sa|sd|ss)[a-zA-Z]{2}$" message-when-pattern-mismatch={label.Letter_Combination_pattern_mismatch_message}
                              class="slds-m-around_xxx-small" value={lettercombination} onchange={handleOnChange}></lightning-input>
         </lightning-layout-item>
         <lightning-layout-item size="3">
-            <lightning-input name="addresstype" label={label.Address_Type} title="Address Type" field-level-help={label.Address_Type_Help_Text}
-                             class="slds-m-around_xxx-small" value={addresstype} onchange={handleOnChange}></lightning-input>
+            <lightning-combobox name="addresstype" class="slds-m-around_xxx-small" label={label.Address_Type} options={addressTypes} value={addresstype} title="Address Type"
+                                field-level-help={label.Address_Type_Help_Text} placeholder='Select the address range' dropdown-alignment="left" variant="standard" onchange={handleOnChange}></lightning-combobox>
         </lightning-layout-item>
         <lightning-layout-item size="4">
             <lightning-input name="locality" label={label.Locality} title="Locality" field-level-help={label.Locality_Help_Text}
