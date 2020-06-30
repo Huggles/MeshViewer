@@ -38,7 +38,7 @@ jobs:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     environment:
-      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_MDAPI_TEMP_DIR: /force-app/main/metadata
       SFDX_LOG_LEVEL: trace
     steps:
       - checkout
