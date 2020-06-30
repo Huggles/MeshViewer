@@ -1,0 +1,49 @@
+<!--
+ - Created by jaapbranderhorst on 26/06/2020.
+ -->
+
+<!-- Config Organization Per Country Data Source -->
+<template>
+    <div class="slds-m-around_small">
+        <article class="slds-card slds-is-relative">
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <lightning-spinner></lightning-spinner>
+            </template>
+
+            <!-- Card Header -->
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="custom:custom18"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <!-- TODO: change text -->
+                        <h2 class="slds-card__header-title"><span>{labels.Update_types}</span></h2>
+                    </div>
+                </header>
+            </div>
+
+            <!-- Card Body -->
+            <div class="slds-card__body slds-card__body_inner">
+                <div class="slds-size_1-of-1 slds-m-vertical_small">
+                    <!-- TODO: change text -->
+                    {labels.Update_types_explanation}
+                </div>
+                <c-horizontal-grid items={dataSourcesPerCountry} number-of-columns="4" identifier="dataSourcePerCountry">
+                    <c-data-source-per-country-tile data-identifier="dataSourcePerCountry"></c-data-source-per-country-tile>
+                </c-horizontal-grid>
+            </div>
+
+            <!-- Card Footer -->
+            <footer class="slds-card__footer slds-text-align_right">
+                <lightning-button variant="brand"
+                                  name="save"
+                                  label={labels.Save}
+                                  title={labels.Save}
+                                  onclick={handleSaveButtonClick} ></lightning-button>
+
+            </footer>
+        </article>
+    </div>
+</template>

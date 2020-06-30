@@ -31,13 +31,7 @@ public inherited sharing class FeatureAccessControlController {
     public static Boolean checkAccess(String featureName) {
         try {
             if (getFeatures().contains(featureName)) {
-                Boolean returnValue = true;
-                try {
-                    LicenseManagementService.userHasAccess(getFeatureByName(featureName));
-                } catch (NoAccessToFeatureException ex) {
-                    returnValue = false;
-                }
-                return returnValue;
+                return LicenseManagementService.userHasAccess(getFeatureByName(featureName));
             } else {
                 throw new InputException('No feature named ' + featureName);
             }

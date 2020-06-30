@@ -10,6 +10,10 @@ public inherited sharing class BusinessService {
         newInstance().deleteDossier(dossierId, checkPermissions);
     }
 
+    public static Map<String, String> getCountryOptionsForBusinessSearch() {
+        return newInstance().getCountryOptionsForBusinessSearch();
+    }
+
     public static IBusinessService newInstance() {
         return (IBusinessService) Application.Service.newInstance(IBusinessService.class);
     }

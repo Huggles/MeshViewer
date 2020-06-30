@@ -7,56 +7,82 @@ import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 import {fireEvent, registerListener, unregisterAllListeners} from 'c/pubsub';
 import {sanitizeStreet} from "c/inputSanitization";
 
-import Country_Belgium from '@salesforce/label/c.Country_Belgium';
-import Country_France from '@salesforce/label/c.Country_France';
-import Country_Germany from '@salesforce/label/c.Country_Germany';
-import Country_Ireland from '@salesforce/label/c.Country_Ireland';
-import Country_Netherlands from '@salesforce/label/c.Country_Netherlands';
-import Country_United_Kingdom from '@salesforce/label/c.Country_United_Kingdom';
-import Country_Sweden from '@salesforce/label/c.Country_Sweden';
+import getCountryOptions from "@salesforce/apex/BusinessSearchFormController.getCountryOptions";
+import getSelectedDataSource from "@salesforce/apex/BusinessSearchFormController.getSelectedDataSource";
+import {ToastEventController} from "c/toastEventController";
+
 import Country from '@salesforce/label/c.Country';
 import Select_a_Country from '@salesforce/label/c.Select_a_Country';
-import Country_Denmark from '@salesforce/label/c.Country_Denmark';
-import Country_Italy from '@salesforce/label/c.Country_Italy';
-import Country_Norway from '@salesforce/label/c.Country_Norway';
-import Country_Spain from '@salesforce/label/c.Country_Spain';
-import Country_Luxembourg from '@salesforce/label/c.Country_Luxembourg';
 
 export default class BusinessSearchForm extends LightningElement {
 
     label = {
-        Country_Belgium,
-        Country_France,
-        Country_Germany,
-        Country_Ireland,
-        Country_Netherlands,
-        Country_United_Kingdom,
-        Country_Sweden,
-        Country_Luxembourg,
         Country,
         Select_a_Country
     }
 
+    isLoading = false;
+
+    _countries;
+
     get countries() {
-        return [
-            { label: Country_Belgium, value: 'BE' },
-            { label: Country_Denmark, value: 'DK' },
-            { label: Country_France, value: 'FR' },
-            { label: Country_Germany, value: 'DE' },
-            { label: Country_Ireland, value: 'IE' },
-            { label: Country_Italy, value: 'IT' },
-            { label: Country_Luxembourg, value: 'LU' },
-            { label: Country_Netherlands, value: 'NL'},
-            { label: Country_Norway, value: 'NO' },
-            { label: Country_Spain, value: 'ES' },
-            { label: Country_Sweden, value: 'SE' },
-            { label: Country_United_Kingdom, value: 'GB' }
-        ];
+        if (!this._countries) {
+            return this.loadCountryOptions();
+        } else {
+            return this._countries;
+        }
     }
 
-    // TODO: make NL configurable depending on a user custom setting
+    async loadCountryOptions() {
+        try {
+            this.isLoading = true;
+            this._countries = await getCountryOptions();
+            return this._countries;
+        } catch (error) {
+            new ToastEventController(this).showErrorToastMessage(null,error.message);
+        } finally {
+            this.isLoading = false;
+        }
+    }
+
+
+    _selectedCountry;
     @api
-    selectedCountry;
+    get selectedCountry() { // default is set in the flow
+        return this._selectedCountry;
+    }
+    set selectedCountry(value) {
+        this._selectedCountry = value;
+        this.loadDataSource(value);
+    }
+
+    _dataSource;
+    @api
+    get source() {
+        if (!this._dataSource && this.selectedCountry) {
+            this._dataSource = this.loadDataSource(this.selectedCountry)
+            return this._dataSource;
+        } else {
+            return this._dataSource;
+        }
+    }
+    set source(value) {
+        this._dataSource = value;
+    }
+
+    async loadDataSource(alpha2CountryCode) {
+        try {
+            this.isLoading = true;
+            this._dataSource = await getSelectedDataSource({alpha2CountryCode: alpha2CountryCode});
+            return this._dataSource;
+        } catch(error) {
+            new ToastEventController(this).showErrorToastMessage(null,error.message);
+        } finally {
+            this.isLoading = false;
+        }
+    }
+
+
     @api
     dossierNumber;
     @api
@@ -93,56 +119,105 @@ export default class BusinessSearchForm extends LightningElement {
     @api
     name;
 
+    get isSelectedDatasourceDutchChamberOfCommerce() {
+        return this._dataSource === 'Dutch_Chamber_of_Commerce';
+    }
+
+    get isSelectedDatasourceCreditSafe() {
+        return this._dataSource === 'Creditsafe';
+    }
+
+    get isSelectedDatasourceDunBradstreet() {
+        return this._dataSource === 'Dun_Bradstreet';
+    }
+
+    get moreThanOneCountryOption() {
+        return this.countries.length > 1;
+    }
+
+    /**
+     * @deprecated
+     */
     @api
     get isNlSelected() {
         return this.selectedCountry === 'NL';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isGbSelected() {
         return this.selectedCountry === 'GB';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isBeSelected() {
         return this.selectedCountry === 'BE';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isDeSelected() {
         return this.selectedCountry === 'DE';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isFrSelected() {
         return this.selectedCountry === 'FR';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isSeSelected() {
         return this.selectedCountry === 'SE';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isIeSelected() {
         return this.selectedCountry === 'IE';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isItSelected() {
         return this.selectedCountry === 'IT';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isNoSelected() {
         return this.selectedCountry === 'NO';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isDkSelected() {
         return this.selectedCountry === 'DK';
     }
 
+    /**
+     * @deprecated
+     */
     @api
     get isEsSelected() {
         return this.selectedCountry === 'ES';
