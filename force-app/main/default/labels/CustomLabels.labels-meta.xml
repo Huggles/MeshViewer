@@ -58,7 +58,7 @@
     </labels>
     <labels>
         <fullName>Assign</fullName>
-        <categories>Setup</categories>
+        <categories>Button, Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Button text on Assign button</shortDescription>
@@ -103,10 +103,19 @@
     </labels>
     <labels>
         <fullName>Cancel</fullName>
+        <categories>Button</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Cancel</shortDescription>
         <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
         <fullName>City</fullName>
@@ -275,12 +284,36 @@
         <value>United Kingdom</value>
     </labels>
     <labels>
-        <fullName>Login_successfull</fullName>
+    <labels>
+        <fullName>Create_Business_Dossier</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Business Dossier</shortDescription>
+        <value>The Account does not have a related Business Dossier, please create/link a Business Dossier to Account and refresh.</value>
+    </labels>
+    <labels>
+        <fullName>Create_New_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create New Account</shortDescription>
+        <value>Create Duplicate Account</value>
+    </labels>
+    <labels>
+        <fullName>Login_successful</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Message shown after a succesffull login</shortDescription>
-        <value>Login succesfull!</value>
+        <shortDescription>Message shown after a successful login</shortDescription>
+        <value>Login successful!</value>
+    </labels>
+    <labels>
+        <fullName>Credentials_successfully_updated_message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Credentials successfully updated message</shortDescription>
+        <value>Credentials saved!</value>
     </labels>
     <labels>
         <fullName>CreditSafe_Validation_Message_Heading</fullName>
@@ -338,6 +371,21 @@
         <value>DMLManager ERROR:  An existing record could not be found for object with Id =</value>
     </labels>
     <labels>
+        <fullName>Deeplink_Only_for_NL_Dossiers</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Deeplink Only for NL Dossiers</shortDescription>
+        <value>The Deeplink is only available for Dutch businesses</value>
+    </labels>
+    <labels>
+        <fullName>Details_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Business Data Details Help</shortDescription>
+        <value>The below details are synchronised from  Business Data.</value>
+    </labels>
+    <labels>
         <fullName>Domain_Name</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
@@ -379,6 +427,34 @@
     </labels>
     <labels>
         <fullName>Error_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title of error toast</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Account_Created</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicate Account Created</shortDescription>
+        <value>A new duplicate Account has been created</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_Results</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicate Results</shortDescription>
+        <value>Duplicate Results</value>
+    </labels>
+    <labels>
+        <fullName>Duplicates_Found_Message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicates Found Message</shortDescription>
+        <value>The record you&apos;re about to create looks like a duplicate. Use one of these records?</value>
+    </labels>
+    <labels>
+        <fullName>Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Title of error toast</shortDescription>
@@ -629,6 +705,14 @@
         <value>Insurance Contract - Intention of signature of a insurance contract</value>
     </labels>
     <labels>
+        <fullName>International_Address_Organization_Help_Text</fullName>
+        <categories>InternationalAddress</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
+        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
+    </labels>
+    <labels>
         <fullName>Language_Input_Error</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -721,6 +805,28 @@
         <value>Municipality</value>
     </labels>
     <labels>
+        <fullName>Name</fullName>
+        <categories>CreditSafe</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>New_Account_with_Business_Dossier</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Account with Business Dossier</shortDescription>
+        <value>A new Account has been created for the searched company.</value>
+    </labels>
+    <labels>
+        <fullName>New_Account_with_International_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>New Account with International Address</shortDescription>
+        <value>A new Account has been created for the searched company address.</value>
+    </labels>
+    <labels>
         <fullName>No</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -744,6 +850,14 @@
         <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
     </labels>
     <labels>
+        <fullName>No_users_available_to_assign_licenses_to</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No users available to assign licenses to</shortDescription>
+        <value>No users available to assign licenses to</value>
+    </labels>
+    <labels>
         <fullName>No_address_fields_filled_international_address</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
@@ -758,14 +872,6 @@
         <protected>true</protected>
         <shortDescription>Text shown below desert img when no users have been assigned</shortDescription>
         <value>No users assigned</value>
-    </labels>
-    <labels>
-        <fullName>No_users_available_to_assign_licenses_to</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>No users available to assign licenses to</shortDescription>
-        <value>No users available to assign licenses to</value>
     </labels>
     <labels>
         <fullName>NonActive</fullName>
@@ -867,6 +973,20 @@
         <protected>true</protected>
         <shortDescription>Realisation check receivables collection</shortDescription>
         <value>Realisation check receivables collection</value>
+    </labels>
+    <labels>
+        <fullName>Redirect_to_duplicate_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Redirect to duplicate Account</shortDescription>
+        <value>The account you were trying to create is already in Salesforce and has Company.info data. You are redirected to this account.</value>
+    </labels>
+    <labels>
+        <fullName>Redirect_to_duplicate_Account_with_Address</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Redirect to duplicate Account with Address</shortDescription>
+        <value>The account you were trying to create is already in Salesforce and has International address data. You are redirected to this account.</value>
     </labels>
     <labels>
         <fullName>Registration_Number</fullName>
@@ -1125,6 +1245,52 @@
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>Update_settings</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings</shortDescription>
+        <value>Update Settings</value>
+    </labels>
+    <labels>
+        <fullName>Update_types</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_types</shortDescription>
+        <value>Update Types</value>
+    </labels>
+    <labels>
+        <fullName>Update_types_Saved</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Confirmation message that the update types have been saved succesfully.</shortDescription>
+        <value>The update types have been updated succesfully!</value>
+    </labels>
+    <labels>
+        <fullName>Update_types_explanation</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Text above the update type in setup</shortDescription>
+        <value>These settings define which types of data automatically updates through nightly batches.</value>
+    </labels>
+    <labels>
+        <fullName>Update_Duplicate_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update Duplicate Account</shortDescription>
+        <value>Update Duplicate Account</value>
+    </labels>
+    <labels>
+        <fullName>Updated_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Updated Account</shortDescription>
+        <value>The selected duplicate Account has been updated.</value>
+    </labels>
+    <labels>
         <fullName>Username</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
@@ -1179,14 +1345,6 @@
         <protected>true</protected>
         <shortDescription>Valid Denmark VAT Number</shortDescription>
         <value>Please enter a valid Danish VAT Number.</value>
-    </labels>
-    <labels>
-        <fullName>Error</fullName>
-        <categories>Error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Title of error toast</shortDescription>
-        <value>Error</value>
     </labels>
     <labels>
         <fullName>Valid_Dutch_phone_number</fullName>
@@ -1261,14 +1419,6 @@
         <value>Please enter a valid Irish CreditSafe Identification Number</value>
     </labels>
     <labels>
-        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
-        <categories>CreditSafe,Error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
-        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
-    </labels>
-    <labels>
         <fullName>Valid_Irish_VAT_Number</fullName>
         <categories>CreditSafe,Error</categories>
         <language>en_US</language>
@@ -1283,6 +1433,14 @@
         <protected>true</protected>
         <shortDescription>Valid Italian VAT Number</shortDescription>
         <value>Please enter a valid Italian VAT Number starting with IT followed by 11 digits.</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Luxembourgian_CreditSafe_Identification_Nr</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Valid_Luxembourgian_CreditSafe_Identification_Nr</shortDescription>
+        <value>Please enter a valid Luxembourgian CreditSafe Identification Number</value>
     </labels>
     <labels>
         <fullName>Valid_NL_registration_number</fullName>
@@ -1431,12 +1589,12 @@
         <value>You do not have permission to update {0}</value>
     </labels>
     <labels>
-        <fullName>International_Address_Organization_Help_Text</fullName>
-        <categories>InternationalAddress</categories>
+        <fullName>Error_updating_update_type_settings</fullName>
+        <categories>error</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>International_Address_Organization_Help_Text</shortDescription>
-        <value>The organization name entered here will not be used to search. It will be the name of the account.</value>
+        <shortDescription>Error_updating_update_type_settings</shortDescription>
+        <value>There was an error updating the update type settings</value>
     </labels>
     <labels>
         <fullName>Feature_Not_Found</fullName>
@@ -1445,5 +1603,13 @@
         <protected>true</protected>
         <shortDescription>Feature_Not_Found</shortDescription>
         <value>Feature not found</value>
+    </labels>
+    <labels>
+        <fullName>Not_Enough_Seats_Available</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toast shown when the user tries to assign more seats than he has.</shortDescription>
+        <value>Not enough seats available. You tried to assign {0} seats but only have {1} available.</value>
     </labels>
 </CustomLabels>

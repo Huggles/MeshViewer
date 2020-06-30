@@ -3,8 +3,9 @@
  */
 
 import {api, LightningElement} from 'lwc';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import More_than_20_results_message from '@salesforce/label/c.More_than_20_results_message';
+import {fireEvent} from "c/pubsub";
+import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+import {showToastMessageForMoreResults, tileSelected} from "c/resultTileFunctionality";
 
 export default class InternationalAddressSearchResults extends LightningElement {
     @api
@@ -20,13 +21,17 @@ export default class InternationalAddressSearchResults extends LightningElement 
     country;
 
     connectedCallback() {
-        if (this.searchResults && this.searchResults instanceof Array && this.searchResults.length >= 20) {
-            const event = new ShowToastEvent({
-                message: More_than_20_results_message
-            });
-            this.dispatchEvent(event);
-            this.errorMessage = null;
-        }
+        //if results are more than 20, show a toast
+        showToastMessageForMoreResults(this.searchResults, this);
+    }
+
+    handleOnCardClick(event) {
+        // search for the right record
+        const id = event.detail.id;
+        const searchResultTiles = [...this.template.querySelectorAll('c-search-result-tile')];
+        let tileClicked = searchResultTiles.find(card => card.searchResultId === id);
+        let result = tileSelected(id, searchResultTiles, this);
+        this.selectedResult = result.selectedResult;
     }
 
     get isNlSelected() {

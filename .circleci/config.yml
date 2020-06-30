@@ -46,7 +46,7 @@ jobs:
       - run:
           name: create scratch org
           command:
-            sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM -d 30
+            sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM -d 30 -w 10
       - run:
           name: push source to scratch org
           command:

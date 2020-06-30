@@ -58,13 +58,14 @@ public inherited sharing class LicenseTypeManagementCardController {
     }
 
     @AuraEnabled
-    public static User[] getUnAssignedUsers(Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
+    public static User[] getUnAssignedUsers(String licenseTypeAPIName, Integer startRow, Integer nrOfRows, List<Ordering> orderings) {
         try {
+            LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
             List<fflib_QueryFactory.Ordering> queryOrderings = new List<fflib_QueryFactory.Ordering>();
             for (Ordering ordering : orderings) {
                 queryOrderings.add(new fflib_QueryFactory.Ordering(ordering.fieldName, ordering.sortOrder == 'asc' ? fflib_QueryFactory.SortOrder.ASCENDING : fflib_QueryFactory.SortOrder.DESCENDING, false));
             }
-            return LicenseManagementService.getUsersWithoutSeat(startRow, nrOfRows, queryOrderings);
+            return LicenseManagementService.getUnAssignedUsersForLicenseType(licenseType, startRow, nrOfRows, queryOrderings);
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);
             throw new AuraHandledException(ex.getMessage());

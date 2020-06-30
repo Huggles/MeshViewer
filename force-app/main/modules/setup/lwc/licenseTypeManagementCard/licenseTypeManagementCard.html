@@ -15,14 +15,14 @@
                 <c-assign-license-type-modal license-type-api-name={licenseTypeApiName} onusersassigned={handleUsersAssigned} onclose={handleCloseAssignLicensesModal}></c-assign-license-type-modal>
             </template>
             <div slot="actions">
-                <template if:true={showAssignLicensesButton}>
+<!--                <template if:true={showAssignLicensesButton}>-->
                     <template if:true={sObjectUsers}>
                         <lightning-button class="slds-theme_neutral" variant="neutral" label={label.Remove_Assignments_Button} disabled={isNoRowSelected} onclick={handleRemoveAssignmentClicked}></lightning-button>
                     </template>
                     <template if:true={licensesAvailable}>
                         <lightning-button class="slds-theme_neutral" variant="neutral" label={label.Assign_Licenses} onclick={handleAssignLicensesClicked}></lightning-button>
                     </template>
-                </template>
+<!--                </template>-->
                 <!-- TODO: add later          <lightning-button class="slds-theme_neutral" variant="neutral" label="Purchase Licenses"></lightning-button> -->
             </div>
             <div class="slds-card__body_inner">
@@ -33,7 +33,6 @@
                     <c-user-data-table
                             users={sObjectUsers}
                             max-number-of-users={assignedNorOfSeats}
-                            is-loading={isLoading}
                             default-sort-direction={defaultSortDirection}
                             enable-infinite-loading={enableInfiniteLoading}
                             onsort={handleSort}

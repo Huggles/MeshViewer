@@ -95,10 +95,13 @@ export default class LicenseTypeManagementCard extends LightningElement {
         return format(this.label.Nr_of_licenses_assigned, [this.assignedNorOfSeats, this.totalNrOfSeats]);
     }
 
+    /**
+     * Returns true if there are licenses available. Used to determine if the assign button should be shown.
+     * @returns {boolean}
+     */
     licensesAvailable() {
         return this.availableNrOfSeats > 0;
     }
-
 
 
     /**
@@ -115,11 +118,6 @@ export default class LicenseTypeManagementCard extends LightningElement {
      * Enable infinite loading on the table
      */
     enableInfiniteLoading = true;
-
-    /**
-     * True if the table is loading. A spinner is shown in the table if true
-     */
-    isLoading = false;
 
     /**
      * True if no rows selected in the table. If false the remove assignment button is enabled
@@ -155,7 +153,6 @@ export default class LicenseTypeManagementCard extends LightningElement {
      */
     fetchAssignedUsers(offset, limit, sortedBy, sortDirection) {
         return new Promise((resolve, reject) => {
-            this.isLoading = true;
             getAssignedUsers({
                 licenseTypeAPIName: this.licenseTypeApiName,
                 startRow: offset,
@@ -175,12 +172,10 @@ export default class LicenseTypeManagementCard extends LightningElement {
                     if (this.sObjectUsers && this.sObjectUsers.length >= this.assignedNorOfSeats) {
                         this.enableInfiniteLoading = false;
                     }
-                    this.isLoading = false;
                     resolve('assigned users loaded');
                 })
                 .catch(error => {
                     this.error = error;
-                    this.isLoading = false;
                     reject(this.error);
                 })
         });
@@ -206,11 +201,22 @@ export default class LicenseTypeManagementCard extends LightningElement {
     }
 
     handleLoadMore(event) {
-        this.fetchAssignedUsers();
+        let table = event.target;
+        table.isLoading = true;
+        this.fetchAssignedUsers(event.detail.offset, event.detail.limit, this.sortedBy, this.sortDirection)
+            .then(result => {table.isLoading = false});
     }
 
     handleSort(event) {
-        this.fetchAssignedUsers(0, numberOfRowsToLoad, event.target.sortedBy, event.target.sortDirection);
+        let table = event.target;
+        this.sortedBy = table.sortedBy;
+        this.sortDirection = table.sortDirection;
+        if (event.detail.reload) {
+            table.isLoading = true;
+            this.fetchAssignedUsers(0, event.detail.limit, this.sortedBy, this.sortDirection)
+                .then(result => {table.isLoading = false});
+        }
+
     }
 
     handleRowSelection(event) {

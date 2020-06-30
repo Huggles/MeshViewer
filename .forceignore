@@ -6,4 +6,6 @@ force-app/main/default/profiles/Custom%3A Marketing Profile.profile-meta.xml
 force-app/main/default/profiles/Custom%3A Sales Profile.profile-meta.xml
 force-app/main/default/profiles/Custom%3A Support Profile.profile-meta.xml
 force-app/main/default/layouts/Account-Account Layout.layout-meta.xml
-force-app/main/default/duplicateRules
+force-app/main/default/settings/Security.settings
+/force-app/main/default/matchingRules/*
+/force-app/main/default/duplicateRules/*
