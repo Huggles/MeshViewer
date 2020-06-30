@@ -35,6 +35,9 @@ import Dossier_Account_Update_Completed from '@salesforce/label/c.Dossier_Accoun
 import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
 import Get_Positions from '@salesforce/label/c.Get_Positions';
 import Business_Positions_Retrieved_Succesfully from '@salesforce/label/c.Business_Positions_Retrieved_Succesfully';
+import Get_Business_Positions_Confirmation from '@salesforce/label/c.Get_Business_Positions_Confirmation';
+
+
 
 
 
@@ -111,11 +114,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
     _businessDossierRecordResponse;
 
-    @wire(getRecord, {
-        recordId: '$businessDossierId',
-        fields: [],
-        optionalFields: OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS
-    })
+    @wire(getRecord, {recordId: '$businessDossierId',fields: [],optionalFields: OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS})
     businessDossierRecord(response) {
         this._businessDossierRecordResponse = response;
         let error = response.error;
@@ -160,6 +159,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
         Dossier_Account_Update_Completed,
         Get_Creditsafe_Report,
         Get_Positions,
+        Get_Business_Positions_Confirmation,
         Business_Positions_Retrieved_Succesfully
 
     }

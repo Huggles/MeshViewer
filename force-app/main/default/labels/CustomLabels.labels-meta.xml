@@ -1556,11 +1556,11 @@
         <value>Business Positions succesfully retrieved.</value>
     </labels>
     <labels>
-        <fullName>No_Access_Message</fullName>
-        <categories>Error</categories>
+        <fullName>Get_Business_Positions_Confirmation</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Error message  when the user does not have enough access.</shortDescription>
-        <value>You dont have the right permissions to see this.</value>
+        <shortDescription>Confirmation question whether the positions should be retrieved</shortDescription>
+        <value>Do you want to get positions?</value>
     </labels>
 </CustomLabels>
