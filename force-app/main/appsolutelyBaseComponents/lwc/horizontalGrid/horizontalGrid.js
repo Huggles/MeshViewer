@@ -4,6 +4,8 @@
 
 import {LightningElement, api} from 'lwc';
 
+import {deepCopyFunction} from 'c/deepCloneUtils';
+
 
 export default class HorizontalGrid extends LightningElement {
 
@@ -22,16 +24,43 @@ export default class HorizontalGrid extends LightningElement {
         }
     }
 
-    @api items;
-    @api tileStyle;
+    /**
+     * The 'raw' items. The items stored in this property are not distributed over rows or columns
+     */
+    _items;
+
+    @api
+    get items() {
+        return this._items;
+    };
+    set items(value) {
+        if (value && Array.isArray(value)) {
+            // add keys to the items
+            const items = deepCopyFunction(value);
+            let counter = 0;
+            items.forEach(item => {
+                item.key = counter;
+                counter++;
+            });
+            this._items = items;
+        }else {
+            throw 'value ' + value + ' is null or not an array';
+        }
+    }
+
     @api identifier;
-
-
-    _loadedChildren = false;
 
     renderedCallback() {
         this.loadChildData();
     }
+
+    /**
+     * flag indicating if the children have been loaded (true) or not (false)
+     * @type {boolean}
+     * @private
+     */
+    _loadedChildren = false;
+
     loadChildData(){
         //if children havn't been rendered yet, do not try to load them.
         let selector = '[data-identifier=\"'+this.identifier+'\"]';
@@ -46,28 +75,16 @@ export default class HorizontalGrid extends LightningElement {
             }
         }
     }
+
     @api
     reloadChildData(){
         this._loadedChildren = false;
         this.loadChildData();
     }
 
-    @api
-    get numberOfItems(){
-        return this.items.length;
+    get tileContainerCss(){
+        return 'slds-col slds-size_1-of-'+this._numberOfColumns;
     }
 
-    columnKeyIterator = -1;
-    get columnKeyIterator(){
-        this.columnKeyIterator += 1;
-        return this.columnKeyIterator;
-    }
-    rowKeyIterator = -1;
-    get rowKeyIterator(){
-        this.rowKeyIterator += 1;
-        return this.rowKeyIterator;
-    }
-    get tileContainerCss(){
-        return 'slds-size_1-of-'+this._numberOfColumns;
-    }
+
 }

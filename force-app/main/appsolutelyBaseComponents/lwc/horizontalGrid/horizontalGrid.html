@@ -4,13 +4,11 @@
 
 <!-- Horizontal Grid -->
 <template>
-    <div class="slds-grid  slds-size_1-of-1 slds-wrap">
-        <div class="gridContainer">
-            <template for:each={items} for:item="item">
-                <div class={tileContainerCss} key={rowKeyIterator} style={tileStyle}>
-                    <slot ></slot>
-                </div>
-            </template>
-        </div>
+    <div class="gridContainer">
+        <template for:each={items} for:item="item">
+            <div key={item.key} class={tileContainerCss}>
+                <slot></slot>
+            </div>
+        </template>
     </div>
 </template>

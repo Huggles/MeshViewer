@@ -1,0 +1,24 @@
+<!--
+ - Created by jaapbranderhorst on 27/06/2020.
+ -->
+
+<!-- Data Source Per Country Tile -->
+<template>
+    <template if:true={item}>
+        <div class="slds-p-around_xxx-small" style="height: 100%;">
+            <div class="slds-box" style="height: 100%;">
+                <div class="slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span><b> {item.country}</b> </span>
+                            </h2>
+                        </div>
+                    </header>
+                </div>
+                <!-- TODO: labels -->
+                <lightning-combobox value={selectedDataSource} name="combobox" options={options} label='Data Source' onchange={handleDataSourceSelect}></lightning-combobox>
+            </div>
+        </div>
+    </template>
+</template>
