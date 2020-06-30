@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  slack: circleci/slack@3.4.2/*
-
 commands:
   log_into_devhub:
     steps:
@@ -13,19 +10,12 @@ commands:
             echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
             openssl rsa -in keys/hub.key -check -noout
             sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
-  log_into_test_org:
-    steps:
-      - run:
-          name: login into test org
-          command:
-            sfdx force:auth:sfdxurl:store -f config/beta-test-org.sfdx-url -a beta_test_org
-
 
 parameters:
   packageid:
     description: "The package id (starts with 0Ho). Copy it from the sfdx-project.json."
     type: string
-    default: "0Ho0J000000k9bSSAQ"
+    default: "0Ho0J0000004CA1SAM"
   package_version_tag:
     description: "the package version’s tag"
     type: string
@@ -34,23 +24,14 @@ parameters:
     description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
     type: string
     default: "config/project-scratch-def.json"
-  beta_test_scratch_org_definition_file:
+  enterprise_scratch_org_definition_file:
     description: "the enterprise edition scratch org definition file used to install the beta. Should define all the right org shape/dependencies/features needed for installing the package"
     type: string
-    default: "config/beta-test-scratch-def.json"
+    default: "config/enterprise-scratch-def.json"
   build_wait:
     description: "the time in minutes the version create command waits until to return"
     type: integer
-    default: 60
-  username_beta_test:
-    description: "the username for the beta test scratch org that can be used to test. Has admin rights and company.info admin rights"
-    type: string
-    default: "test@companyinfo.beta.test"
-  email_beta_test:
-    description: "the email for the beta test user"
-    type: string
-    default: "jaap.branderhorst@appsolutely.nl"
-
+    default: 20
 
 jobs:
   run_apex_tests:
@@ -100,13 +81,17 @@ jobs:
           path: sfdx_log.tar
           destination: sfdx-log
 
+
   build_packaging2_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     steps:
       - checkout
       - log_into_devhub
-
+      - run:
+          name: create beta package version
+          command: |
+            sfdx force:package:version:create -x --codecoverage --package << pipeline.parameters.packageid >> --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
   
   install_packaging2_beta:
     docker:
@@ -117,24 +102,9 @@ jobs:
       - checkout
       - log_into_devhub
       - run:
-          name: create beta package version
+          name: create scratch org
           command: |
-            packageversionid=$(sfdx force:package:version:create --package << pipeline.parameters.packageid >> -x --codecoverage --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" --json | jq .result[-1].SubscriberPackageVersionId)
-      - run:
-          name: create beta test scratch org
-          command: |
-            sfdx force:org:create -s -f << pipeline.parameters.beta_test_scratch_org_definition_file >> -a test_circle_build_$CIRCLE_BUILD_NUM -d 30
-      - run:
-          name: create admin user with fixed name and store the sfdxurl
-          command: |
-            sfdx force:user:create -a test-user -u test_circle_build_$CIRCLE_BUILD_NUM username=<< pipeline.parameters.username_beta_test >> email=<< pipeline.parameters.username_beta_test >> generatepassword=true -f config/companyinfo-admin-user-def.json
-            sfdxurl=$(sfdx force:org:display -u beta_test_org --verbose --json | jq .result[-1].sfdxAuthUrl)
-            sfdxurl="${sfdxurl%\"}"
-            sfdxurl="${sfdxurl#\"}"
-            echo $sfdxurl > sfdx-url.txt
-      - store-artifacts:
-          path: sfdx-url.txt
-          destination: sfdx-url
+            sfdx force:org:create -s -f << pipeline.parameters.enterprise_scratch_org_definition_file >> -a test_circle_build_$CIRCLE_BUILD_NUM
       - run:
           name: get latest package version and install
           command: |
@@ -143,10 +113,11 @@ jobs:
             packageversionid="${packageversionid#\"}"
             echo $packageversionid
             sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM
-
-      - slack/notify:
-          mentions: 'UTDU2GWGJ'
-          message: 'new scratch org with beta package available. Download the sfdx-url.txt artifact to use as login'
+      - run:
+          name: delete scratch org
+          when: always
+          command: |
+            sfdx force:org:delete -u test_circle_build_$CIRCLE_BUILD_NUM -p
   
   upgrade_to_managed:
     docker:
@@ -172,7 +143,7 @@ jobs:
 
 workflows:
   version: 2
-  feature_branch_push:
+  deploy_test_feature:
     jobs:
       - run_apex_tests:
           context: org-global
@@ -180,7 +151,7 @@ workflows:
             branches:
               only: /feature\/.*/
   
-  develop_branch_push:
+  deploy_test_develop:
     jobs:
       - run_apex_tests:
           context: org-global
@@ -188,12 +159,8 @@ workflows:
             branches:
               only: 
                 - develop
-      - build_packaging2_beta:
-          context: org-global
-          requires:
-            - run_apex_tests
   
-  release_branch_push:
+  deploy_test_build_package_test_package_release:
     jobs:
       - run_apex_tests:
           context: org-global
