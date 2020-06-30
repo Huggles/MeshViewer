@@ -4,11 +4,12 @@
 
 public interface IPackageLicenseSelector extends fflib_ISObjectSelector {
 
-    // packageLicense = [SELECT Id, UsedLicenses, AllowedLicenses FROM PackageLicense WHERE NamespacePrefix = :NAMESPACE_PREFIX];
-
     /**
-     * Selects the PackageLicense records belonging to the namespaceprefix.
-    */
-    PackageLicenseWrapper[] selectByNamespacePrefix(String namespacePrefix);
+     * Get the package info based on the id
+     * @param packageId The id of the package
+     *
+     * @return a list of packagelicense wrappers
+     */
+    PackageLicenseWrapper[] selectById(Id packageId);
 
 }
