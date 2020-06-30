@@ -56,7 +56,7 @@ public inherited sharing class DutchBusinessService {
         newInstance().storeDossiers(dossiers, unitOfWork);
     }
 
-    public static Object getExtractHistory(String dossier_number, Date start_date, Date end_date){
+    public static DutchBusinessWsdl.DutchBusinessExtractHistory getExtractHistory(String dossier_number, Date start_date, Date end_date){
         //TODO: This function should not return the WSDL object, but a Salesforce sObject. The data model for this is NYI.
         DutchBusinessWsdl.DutchBusinessExtractHistory dutchBusinessExtractHistory = newInstance().getExtractHistory(dossier_number, start_date, end_date);
         return dutchBusinessExtractHistory;
