@@ -9,6 +9,7 @@ import { refreshApex } from "@salesforce/apex";
 
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
 import {Features, checkAccess} from "c/featureAccessControl";
+import {fireEvent} from "c/pubsub";
 
 //Object fields
 import BUSINESS_DOSSIER_POSITIONS_UPDATED_DATE from '@salesforce/schema/Business_Dossier__c.Business_Positions_Updated_Date__c';
@@ -236,11 +237,8 @@ export default class AccountEnrichmentHeader extends LightningElement {
     }
 
     handleOnGetCreditsafeReport(event) {
-        this.getCreditsafeReportClicked = true;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('getCreditsafeReportClicked', this.getCreditsafeReportClicked);
-        this.dispatchEvent(attributeChangeEvent);
-        //we throw an event because the flow needs to show a search form
-        this.dispatchEvent(new FlowNavigationNextEvent());
+        //throw an event to the child component(getCreditsafeReportChildComponent) of the aura component(getCreditsafeReportAction)
+        fireEvent(null, 'getreportclicked');
     }
 
 

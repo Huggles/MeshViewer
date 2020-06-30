@@ -68,6 +68,10 @@
                 <behavior>Readonly</behavior>
                 <field>Rsin_Number__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Deeplink_URL__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

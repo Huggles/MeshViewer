@@ -367,7 +367,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossierDB.Secondary_Sbi_Code_1_Text__c = dataVendorDossier.secondary_sbi_code1_text;
         dossierDB.Secondary_Sbi_Code_2__c = dataVendorDossier.secondary_sbi_code2;
         dossierDB.Secondary_Sbi_Code_2_Text__c = dataVendorDossier.secondary_sbi_code2_text;
-
         dossierDB.Chamber_Code__c = dataVendorDossier.chamber_number;
         dossierDB.Status__c = determineStatus(dataVendorDossier);
 
