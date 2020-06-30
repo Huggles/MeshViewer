@@ -12,7 +12,7 @@ import Companyinfo_Username from '@salesforce/label/c.Companyinfo_Username';
 import SubmitButtonLabel from '@salesforce/label/c.Login_Button';
 import Error from '@salesforce/label/c.Error';
 import Success from '@salesforce/label/c.Success';
-import Login_successfull from '@salesforce/label/c.Login_successfull';
+import Login_successfull from '@salesforce/label/c.Login_successful';
 import Loading from '@salesforce/label/c.Loading';
 
 export default class CompanyInfoLogin extends LightningElement {
