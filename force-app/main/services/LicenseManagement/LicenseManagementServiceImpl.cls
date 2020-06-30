@@ -199,7 +199,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
         return licenseTypeDefinition.Title__c; // this is the human readable name, not the API name
     }
 
-    public void userHasAccess(Feature feature) {
+    public Boolean userHasAccess(Feature feature) {
         Map<Id, Boolean> userHasAccess = userHasAccessPerFeature.get(feature);
         if (userHasAccess == null) {
             userHasAccess = new Map<Id, Boolean>();
@@ -216,9 +216,7 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
             hasAccessToThisFeature = permissionSetAssignments.size() > 0;
             userHasAccess.put(userId, hasAccessToThisFeature);
         }
-        if (!hasAccessToThisFeature) {
-            throw new NoAccessToFeatureException('User ' + UserInfo.getUserId() + ' does not have access to ' + feature.name());
-        }
+        return hasAccessToThisFeature;
     }
 
     public Set<String> getAllowedLicenseDefinitionKeysForLicenseType(LicenseType licenseType) {

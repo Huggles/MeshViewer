@@ -2353,6 +2353,14 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
+        <flow>Duplicate_Management_For_Account_and_Business_Dossier</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
+        <flow>Duplicate_Management_For_Account_and_International_Address</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
         <flow>Enrich_Account_with_International_Address_Data</flow>
     </flowAccesses>
     <flowAccesses>
