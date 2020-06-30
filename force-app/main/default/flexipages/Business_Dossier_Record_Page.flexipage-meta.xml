@@ -48,9 +48,9 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>Business Person Record Page</masterLabel>
+    <masterLabel>Business Dossier Record Page</masterLabel>
     <parentFlexiPage>flexipage__default_rec_L</parentFlexiPage>
-    <sobjectType>Business_Person__c</sobjectType>
+    <sobjectType>Business_Dossier__c</sobjectType>
     <template>
         <name>flexipage:recordHomeTemplateDesktop</name>
     </template>
