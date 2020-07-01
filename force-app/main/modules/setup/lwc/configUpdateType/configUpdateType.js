@@ -14,8 +14,8 @@ import Update_types from '@salesforce/label/c.Update_types';
 import Update_types_explanation from '@salesforce/label/c.Update_types_explanation';
 
 //Apex Classes
-import getUpdateTypes from '@salesforce/apex/CompanyInfoUpdateTypeController.getUpdateTypes';
-import setUpdateTypes from '@salesforce/apex/CompanyInfoUpdateTypeController.setUpdateTypes';
+import getUpdateTypes from '@salesforce/apex/ConfigUpdateTypeController.getUpdateTypes';
+import setUpdateTypes from '@salesforce/apex/ConfigUpdateTypeController.setUpdateTypes';
 
 
 export default class ConfigUpdateType extends LightningElement {
@@ -43,6 +43,7 @@ export default class ConfigUpdateType extends LightningElement {
     }
 
     @track updateTypes = [];
+
     async retrieveUpdateTypes(){
         await getUpdateTypes({})
             .then(result => {

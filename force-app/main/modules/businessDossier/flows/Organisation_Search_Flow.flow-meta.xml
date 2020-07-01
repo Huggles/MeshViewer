@@ -160,8 +160,8 @@
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
-        <locationX>591</locationX>
-        <locationY>1160</locationY>
+        <locationX>573</locationX>
+        <locationY>1164</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -548,17 +548,17 @@
         </rules>
     </decisions>
     <decisions>
-        <description>Decides which search method to call based on the selected country</description>
-        <name>Decide_search_method</name>
-        <label>Decide search method</label>
-        <locationX>582</locationX>
-        <locationY>925</locationY>
+        <description>Directs the flow to the right search invocable method based on the data source selected in the search screen (which data source is selected, is determined by the country and the configuration)</description>
+        <name>Data_source_selected</name>
+        <label>Data source selected</label>
+        <locationX>574</locationX>
+        <locationY>924</locationY>
         <defaultConnector>
-            <targetReference>Assign_Selected_Country_to_List</targetReference>
+            <targetReference>End</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Search via Credit Safe</defaultConnectorLabel>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Cancel_Pressed</name>
+            <name>Cancel_Pressed_Data_Source_Selected</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>cancelPressed</leftValueReference>
@@ -573,19 +573,49 @@
             <label>Cancel Pressed</label>
         </rules>
         <rules>
-            <name>Search_for_Dutch_Dossiers_Outcome</name>
+            <name>Creditsafe</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>BusinessSearchForm.selectedCountry</leftValueReference>
+                <leftValueReference>BusinessSearchForm.source</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>NL</stringValue>
+                    <stringValue>Creditsafe</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Selected_Country_to_List</targetReference>
+            </connector>
+            <label>Creditsafe</label>
+        </rules>
+        <rules>
+            <name>Dutch_Chamber_of_Commerce</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BusinessSearchForm.source</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dutch_Chamber_of_Commerce</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Search_for_Dutch_Dossiers</targetReference>
             </connector>
-            <label>Search for Dutch Dossiers</label>
+            <label>Dutch Chamber of Commerce</label>
+        </rules>
+        <rules>
+            <name>Dun_and_Bradstreet</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BusinessSearchForm.source</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dun_Bradstreet</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End</targetReference>
+            </connector>
+            <label>Dun and Bradstreet</label>
         </rules>
     </decisions>
     <decisions>
@@ -856,6 +886,7 @@
         <object>Business_Dossier__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
@@ -939,7 +970,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Decide_search_method</targetReference>
+            <targetReference>Data_source_selected</targetReference>
         </connector>
         <fields>
             <name>flowErrorHandlerSearchScreen</name>
