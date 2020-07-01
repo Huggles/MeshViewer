@@ -285,6 +285,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Business_Dossier__c.Business_Positions_Updated_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Business_Dossier__c.Chamber_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -790,12 +795,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Position__c.Filled_By__c</field>
+        <field>Business_Position__c.Filled_By_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Business_Position__c.Filled_By_Id__c</field>
+        <field>Business_Position__c.Filled_By__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -821,11 +826,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Position__c.Organisation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Business_Dossier__c.Year__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2417,7 +2417,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Business_Position__c</object>
+        <object>Business_Person__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -2426,7 +2426,7 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Business_Person__c</object>
+        <object>Business_Position__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
