@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>928</locationX>
-        <locationY>392</locationY>
+        <locationX>833</locationX>
+        <locationY>311</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -39,78 +38,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Search_for_dutch_addresses</name>
-        <label>Search for dutch addresses</label>
-        <locationX>508</locationX>
-        <locationY>56</locationY>
-        <actionName>SearchForAddressInvocable</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Assign_Dutch_Address_Search_Results</targetReference>
-        </connector>
-        <inputParameters>
-            <name>addresstype</name>
-            <value>
-                <elementReference>searchInternationalAddress.addresstype</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>housenr</name>
-            <value>
-                <elementReference>searchInternationalAddress.housenr</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>housenrAddition</name>
-            <value>
-                <elementReference>searchInternationalAddress.housenrAddition</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>lettercombination</name>
-            <value>
-                <elementReference>searchInternationalAddress.lettercombination</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>locality</name>
-            <value>
-                <elementReference>searchInternationalAddress.locality</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>municipality</name>
-            <value>
-                <elementReference>searchInternationalAddress.municipality</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>organization</name>
-            <value>
-                <elementReference>searchInternationalAddress.organization</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>postal_code</name>
-            <value>
-                <elementReference>searchInternationalAddress.postcode</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>province</name>
-            <value>
-                <elementReference>searchInternationalAddress.province</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>street</name>
-            <value>
-                <elementReference>searchInternationalAddress.street</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
         <name>Search_for_international_addresses</name>
         <label>Search for international addresses</label>
         <locationX>548</locationX>
@@ -118,8 +45,11 @@
         <actionName>SearchForInternationalAddressInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Assign_International_Address_Search_Results_0</targetReference>
+            <targetReference>Search_Results</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>International_Address</targetReference>
+        </faultConnector>
         <inputParameters>
             <name>building</name>
             <value>
@@ -222,43 +152,11 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Dutch_Address_Search_Results</name>
-        <label>Assign Dutch Address Search Results</label>
-        <locationX>636</locationX>
-        <locationY>56</locationY>
-        <assignmentItems>
-            <assignToReference>InternationalAddressResults</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Search_for_dutch_addresses</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Search_Results</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_International_Address_Search_Results_0</name>
-        <label>Assign International Address Search Results</label>
-        <locationX>641</locationX>
-        <locationY>262</locationY>
-        <assignmentItems>
-            <assignToReference>InternationalAddressResults</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Search_for_international_addresses</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Search_Results</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Assign the organization field the user searched for to the selected international address</description>
         <name>Assign_Organization_searched_for</name>
         <label>Assign Organization searched for</label>
-        <locationX>1292</locationX>
-        <locationY>265</locationY>
+        <locationX>1315</locationX>
+        <locationY>344</locationY>
         <assignmentItems>
             <assignToReference>SelectedInternationalAddress.Organization__c</assignToReference>
             <operator>Assign</operator>
@@ -289,10 +187,10 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>254</locationX>
-        <locationY>396</locationY>
+        <locationX>543</locationX>
+        <locationY>233</locationY>
         <defaultConnector>
-            <targetReference>Check_selected_country</targetReference>
+            <targetReference>Search_for_international_addresses</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
         <rules>
@@ -314,8 +212,8 @@
     <decisions>
         <name>Cancel_Pressed_Search_Results</name>
         <label>Cancel Pressed Search Results</label>
-        <locationX>920</locationX>
-        <locationY>154</locationY>
+        <locationX>1010</locationX>
+        <locationY>60</locationY>
         <defaultConnector>
             <targetReference>Organization_found</targetReference>
         </defaultConnector>
@@ -334,38 +232,6 @@
                 <targetReference>End</targetReference>
             </connector>
             <label>Cancel Pressed</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_selected_country</name>
-        <label>Check selected country</label>
-        <locationX>393</locationX>
-        <locationY>184</locationY>
-        <defaultConnector>
-            <targetReference>Search_for_international_addresses</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>NL is not selected</defaultConnectorLabel>
-        <rules>
-            <name>Is_NL_selected</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>searchInternationalAddress.countryInAlpha2Code</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NL</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>searchInternationalAddress.country</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NLD</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Search_for_dutch_addresses</targetReference>
-            </connector>
-            <label>Is NL selected</label>
         </rules>
     </decisions>
     <decisions>
@@ -459,8 +325,8 @@
     <recordCreates>
         <name>Create_International_Address</name>
         <label>Create International Address</label>
-        <locationX>1106</locationX>
-        <locationY>384</locationY>
+        <locationX>905</locationX>
+        <locationY>448</locationY>
         <connector>
             <targetReference>Get_Complete_International_Address</targetReference>
         </connector>
@@ -640,8 +506,8 @@
     <screens>
         <name>Search_Results</name>
         <label>Search Results</label>
-        <locationX>791</locationX>
-        <locationY>145</locationY>
+        <locationX>752</locationX>
+        <locationY>50</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -681,15 +547,9 @@
             <extensionName>appsolutely:internationalAddressSearchResults</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>country</name>
-                <value>
-                    <elementReference>searchInternationalAddress.country</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>searchResults</name>
                 <value>
-                    <elementReference>InternationalAddressResults</elementReference>
+                    <elementReference>Search_for_international_addresses</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -786,14 +646,6 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>InternationalAddressResults</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>International_Address__c</objectType>
     </variables>
     <variables>
         <name>Language</name>
