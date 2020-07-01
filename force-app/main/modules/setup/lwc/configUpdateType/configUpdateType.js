@@ -12,6 +12,8 @@ import Update_types_Saved from '@salesforce/label/c.Update_types_Saved';
 import Save from '@salesforce/label/c.Save';
 import Update_types from '@salesforce/label/c.Update_types';
 import Update_types_explanation from '@salesforce/label/c.Update_types_explanation';
+import Update_types_URL from '@salesforce/label/c.Update_types_URL';
+import URL_link_text from '@salesforce/label/c.URL_link_text';
 
 //Apex Classes
 import getUpdateTypes from '@salesforce/apex/ConfigUpdateTypeController.getUpdateTypes';
@@ -28,7 +30,9 @@ export default class ConfigUpdateType extends LightningElement {
         Save,
         Update_types,
         Update_types_explanation,
-        Update_types_Saved
+        Update_types_Saved,
+        Update_types_URL,
+        URL_link_text
     }
 
     connectedCallback() {
