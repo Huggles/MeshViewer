@@ -53,8 +53,10 @@ public inherited sharing class Application {
                             IInternationalAddressService.class => InternationalAddressImpl.class,
                             IWsInternationalAddress.class => WsInternationalAddressImpl.class,
                             IWsVat.class => WsVatImpl.class,
+                            IWsSepa.class => WsSepaImpl.class,
                             IDuplicateManagement.class => DuplicateManagementServiceImpl.class,
                             ILicenseManagementService.class => LicenseManagementServiceImpl.class
+
                     });
 
     // Configure and create the SelectorFactory for this Application
