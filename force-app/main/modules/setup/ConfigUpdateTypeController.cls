@@ -2,7 +2,7 @@
  * Created by Hugo on 04/06/2020.
  */
 
-public with sharing class CompanyInfoUpdateTypeController {
+public with sharing class ConfigUpdateTypeController {
 
     @AuraEnabled
     public static List<Protected_Subscriber_Setting__mdt> getUpdateTypes() {

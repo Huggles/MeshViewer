@@ -32,12 +32,15 @@ class ToastEventController {
 
 
         //Title
-        if(title != null && title.length > 0){
+        if (title != null && title.length > 0) {
             payload['title'] = title;
-        }else{
-            if(variant == this.ToastMessageVariant.SUCCESS){ payload['title'] = Success; }
-            if(variant == this.ToastMessageVariant.ERROR){ payload['title'] = Error; }
-
+        } else {
+            if(variant == this.ToastMessageVariant.SUCCESS) {
+                payload['title'] = Success;
+            }
+            if(variant == this.ToastMessageVariant.ERROR) {
+                payload['title'] = Error;
+            }
         }
         //Message
         if(message != null && message.length > 0){

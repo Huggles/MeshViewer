@@ -95,10 +95,9 @@ public interface ILicenseManagementService {
     /**
      * Checks if the current user has access to the given feature. Throws
      * @param feature the feature to check
-     *
-     * @exception NoAccessToFeatureException whenever the user tries to access a feature he doesn't have access to
+     * @return true if the user has access otherwise false
      */
-    void userHasAccess(Feature feature);
+    Boolean userHasAccess(Feature feature);
 
     /**
      * Returns the allowed Salesforce License Definition Key
