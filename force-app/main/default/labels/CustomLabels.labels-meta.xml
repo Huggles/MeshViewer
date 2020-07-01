@@ -1203,11 +1203,12 @@
         <value>here.</value>
     </labels>
     <labels>
-        <fullName>Update_Duplicate_Account</fullName>
+        <fullName>Update_types_URL</fullName>
+        <categories>Settings</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Update Duplicate Account</shortDescription>
-        <value>Update Duplicate Account</value>
+        <shortDescription>Update types URL</shortDescription>
+        <value>https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.Update_types</value>
     </labels>
     <labels>
         <fullName>Update_settings</fullName>
