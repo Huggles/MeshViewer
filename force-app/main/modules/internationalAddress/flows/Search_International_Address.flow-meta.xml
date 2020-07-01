@@ -38,10 +38,85 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Search_for_Dutch_Address</name>
+        <label>Search for Dutch Address</label>
+        <locationX>521</locationX>
+        <locationY>200</locationY>
+        <actionName>SearchForAddressInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assign_Search_Results</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>International_Address</targetReference>
+        </faultConnector>
+        <inputParameters>
+            <name>addresstype</name>
+            <value>
+                <elementReference>searchInternationalAddress.addresstype</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>housenr</name>
+            <value>
+                <elementReference>searchInternationalAddress.housenr</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>housenrAddition</name>
+            <value>
+                <elementReference>searchInternationalAddress.housenrAddition</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>lettercombination</name>
+            <value>
+                <elementReference>searchInternationalAddress.lettercombination</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>locality</name>
+            <value>
+                <elementReference>searchInternationalAddress.locality</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>municipality</name>
+            <value>
+                <elementReference>searchInternationalAddress.municipality</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>organization</name>
+            <value>
+                <elementReference>searchInternationalAddress.organization</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>postal_code</name>
+            <value>
+                <elementReference>searchInternationalAddress.postcode</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>province</name>
+            <value>
+                <elementReference>searchInternationalAddress.province</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>street</name>
+            <value>
+                <elementReference>searchInternationalAddress.street</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Search_for_international_addresses</name>
         <label>Search for international addresses</label>
-        <locationX>548</locationX>
-        <locationY>50</locationY>
+        <locationX>344</locationX>
+        <locationY>42</locationY>
         <actionName>SearchForInternationalAddressInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -169,6 +244,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Search_Results</name>
+        <label>Assign Search Results</label>
+        <locationX>604</locationX>
+        <locationY>109</locationY>
+        <assignmentItems>
+            <assignToReference>Search_for_international_addresses</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Search_for_Dutch_Address</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Search_Results</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_To_Selected_International_Address</name>
         <label>Assign To Selected International Address</label>
         <locationX>643</locationX>
@@ -187,10 +278,10 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>543</locationX>
-        <locationY>233</locationY>
+        <locationX>257</locationX>
+        <locationY>322</locationY>
         <defaultConnector>
-            <targetReference>Search_for_international_addresses</targetReference>
+            <targetReference>Check_Selected_Country</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
         <rules>
@@ -232,6 +323,38 @@
                 <targetReference>End</targetReference>
             </connector>
             <label>Cancel Pressed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Selected_Country</name>
+        <label>Check Selected Country</label>
+        <locationX>336</locationX>
+        <locationY>212</locationY>
+        <defaultConnector>
+            <targetReference>Search_for_international_addresses</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NL Not Selected</defaultConnectorLabel>
+        <rules>
+            <name>Is_NL_Selected</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>searchInternationalAddress.countryInAlpha2Code</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NL</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>searchInternationalAddress.country</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NLD</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Search_for_Dutch_Address</targetReference>
+            </connector>
+            <label>Is NL Selected</label>
         </rules>
     </decisions>
     <decisions>
@@ -293,6 +416,7 @@
     </decisions>
     <description>Searches for and/or completes/corrects international addresses. Returns a maximum of 20 addresses.</description>
     <interviewLabel>Search International Address {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Search International Address</label>
     <loops>
         <name>Loop_Over_Duplicate_International_Addresses</name>
@@ -363,8 +487,8 @@
     <screens>
         <name>International_Address</name>
         <label>International Address</label>
-        <locationX>390</locationX>
-        <locationY>231</locationY>
+        <locationX>142</locationX>
+        <locationY>223</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -475,6 +599,30 @@
                     <elementReference>organizationRequired</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>addresstype</name>
+                <value>
+                    <elementReference>AddressType</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>housenrAddition</name>
+                <value>
+                    <elementReference>HouseNrAddition</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>lettercombination</name>
+                <value>
+                    <elementReference>LetterCombination</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>municipality</name>
+                <value>
+                    <elementReference>Municipality</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -506,8 +654,8 @@
     <screens>
         <name>Search_Results</name>
         <label>Search Results</label>
-        <locationX>752</locationX>
-        <locationY>50</locationY>
+        <locationX>750</locationX>
+        <locationY>51</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -578,13 +726,20 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>36</locationX>
-        <locationY>212</locationY>
+        <locationX>38</locationX>
+        <locationY>223</locationY>
         <connector>
             <targetReference>International_Address</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>AddressType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>Building</name>
         <dataType>String</dataType>
@@ -648,6 +803,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>HouseNrAddition</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>Language</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -655,7 +817,21 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>LetterCombination</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>Locality</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Municipality</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
