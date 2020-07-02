@@ -31,14 +31,9 @@ public with sharing class SepaServiceImpl implements ISepaService{
     public void saveSEPABankAccounts(List<SEPA_Bank_Account__c> sepaBankAccounts){
         //Insert Existing SEPA Bank Account Ids
         insertExistingSEPABankAccountsIds(sepaBankAccounts);
-
-        System.debug(Datetime.now());
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-        System.debug(Datetime.now());
         unitOfWork.registerUpsert(sepaBankAccounts);
-        System.debug(Datetime.now());
         unitOfWork.commitWork();
-        System.debug(Datetime.now());
     }
 
 
