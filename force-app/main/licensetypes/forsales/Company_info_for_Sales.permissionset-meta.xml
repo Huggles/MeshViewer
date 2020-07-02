@@ -66,6 +66,10 @@
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
+        <name>D_B_get_report</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>Dutch_Addresses</name>
     </customPermissions>
     <customPermissions>
@@ -74,11 +78,31 @@
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
+        <name>Dutch_Business_Positions</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>Dutch_Business_Search</name>
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
+        <name>Dutch_Chamber_of_Commerce_Extract</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_News</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>Dutch_VAT</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_lead_generator</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_look_a_like_service</name>
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
@@ -2041,6 +2065,41 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Error_Log__c.Cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Error_Email_Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Line_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Message__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Send_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Stacktrace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.Alpha_2_Country_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2463,6 +2522,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Creditsafe_Person_Position__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Error_Log__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

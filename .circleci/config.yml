@@ -109,8 +109,6 @@ jobs:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
-    environment:
-      BASH_ENV: ~/.env
     steps:
       - checkout
       - log_into_devhub
