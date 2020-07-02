@@ -12,6 +12,7 @@ public inherited sharing class Application {
                     Account.SObjectType,
                     Business_Dossier__c.SObjectType,
                     Business_Data_SBI__c.SObjectType,
+                    SEPA_Bank_Account__c.SObjectType,
                     Creditsafe_Company_Report_Full__c.SObjectType,
                     Additional_Information_NL_Financial_Item__c.SObjectType,
                     Additional_Information_NL_Kvk_Filing__c.SObjectType,
@@ -53,6 +54,7 @@ public inherited sharing class Application {
                             IInternationalAddressService.class => InternationalAddressImpl.class,
                             IWsInternationalAddress.class => WsInternationalAddressImpl.class,
                             IWsVat.class => WsVatImpl.class,
+                            ISepaService.class => SepaServiceImpl.class,
                             IWsSepa.class => WsSepaImpl.class,
                             IDuplicateManagement.class => DuplicateManagementServiceImpl.class,
                             ILicenseManagementService.class => LicenseManagementServiceImpl.class
