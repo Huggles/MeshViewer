@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Update that the establishment has changed. This occurs when a company without establishments gets one or more establishments. Use the XX button to request the new added head office.</value>
+        <value xsi:type="xsd:string">Update that the establishment has changed. This occurs when a company without establishments gets one or more establishments.</value>
     </values>
     <values>
         <field>Enabled__c</field>

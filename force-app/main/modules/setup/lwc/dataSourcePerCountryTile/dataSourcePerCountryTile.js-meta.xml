@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <description>Tile showing which data sources the user can select and the selected data source</description>
+    <isExposed>false</isExposed>
+    <masterLabel>Data Source Per Country Tile</masterLabel>
+</LightningComponentBundle>
