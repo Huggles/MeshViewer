@@ -50,12 +50,15 @@ parameters:
     description: "the email for the beta test user"
     type: string
     default: "jaap.branderhorst@appsolutely.nl"
+  user_defintion_beta_test:
+    description: "the path to the user definition file for the user that will be created for testing"
 
 
 jobs:
   run_apex_tests:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
+    resource_class: small
     environment:
       SFDX_MDAPI_TEMP_DIR: /root/project/metadata
       SFDX_LOG_LEVEL: trace
@@ -103,6 +106,7 @@ jobs:
   create_and_install_beta:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
+    resource_class: small
     environment:
       BASH_ENV: ~/.env
     steps:
@@ -110,6 +114,7 @@ jobs:
       - log_into_devhub
       - run:
           name: create beta package version
+          no_output_timeout: 1.5h
           command: |
             packageversionid=$(sfdx force:package:version:create --package << pipeline.parameters.packageid >> -x --codecoverage --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" --json | jq .result.SubscriberPackageVersionId)
             packageversionid="${packageversionid%\"}"
@@ -125,7 +130,7 @@ jobs:
       - run:
           name: create beta test scratch org
           command: |
-            sfdx force:org:create -s -f << pipeline.parameters.beta_test_scratch_org_definition_file >> -a test_beta_$versionnumber -d 30 -w 10
+            sfdx force:org:create -s -f << pipeline.parameters.beta_test_scratch_org_definition_file >> -a test_beta_$versionnumber -d 30 -w 10 --nonamespace
       - run:
           name: install
           command: |
@@ -133,7 +138,7 @@ jobs:
       - run:
           name: create admin user with fixed name and store the loginurl, username and password
           command: |
-            sfdx force:user:create -a test-user -u test_beta_$versionnumber username=<< pipeline.parameters.username_beta_test >> email=<< pipeline.parameters.username_beta_test >> generatepassword=true -f config/companyinfo-admin-user-def.json
+            sfdx force:user:create -a test-user -u test_beta_$versionnumber username=<< pipeline.parameters.username_beta_test >> email=<< pipeline.parameters.username_beta_test >> generatepassword=true -f << pipeline.parameters.user_defintion_beta_test >> config/companyinfo-admin-user-def.json
             username=$(sfdx force:user:display -u test-user --verbose --json | jq .result.username)
             username="${username%\"}"
             username="${username#\"}"
@@ -150,12 +155,12 @@ jobs:
           path: test-beta-login.txt
           destination: test-beta-login
       - slack/notify:
-          mentions: 'UTDU2GWGJ'
-          message: 'new scratch org with beta package available. Download the test-beta-login artifact to use as login'
+          message: 'new scratch org with beta package available. Download the test-beta-login artifact and use the credentials to login'
   
   upgrade_to_managed:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
+    resource_class: small
     steps:
       - checkout
       - log_into_devhub
@@ -176,7 +181,7 @@ jobs:
 #            git push origin --tags
 
 workflows:
-  version: 2
+  version: 2.1
   feature_branch_push:
     jobs:
       - run_apex_tests:
