@@ -533,6 +533,10 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
+        <flow>Duplicate_Management_For_Account_and_Business_Dossier</flow>
+    </flowAccesses>
+    <flowAccesses>
+        <enabled>true</enabled>
         <flow>Organisation_Search_Flow</flow>
     </flowAccesses>
     <hasActivationRequired>false</hasActivationRequired>

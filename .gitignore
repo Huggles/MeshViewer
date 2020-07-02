@@ -26,3 +26,4 @@ force-app/main/default/matchingRules/International_Address__c.matchingRule-meta.
 force-app/main/default/duplicateRules/Account.Account_Duplicate_rule.duplicateRule-meta.xml
 force-app/main/default/duplicateRules/International_Address__c.Duplicate_International_Address_rule.duplicateRule-meta.xml
 force-app/main/default/duplicateRules/Business_Dossier__c.Duplicate_Business_Dossier_rule.duplicateRule-meta.xml
+mdapiout/

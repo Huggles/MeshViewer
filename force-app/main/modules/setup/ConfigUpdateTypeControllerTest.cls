@@ -3,12 +3,12 @@
  */
 
 @IsTest
-public with sharing class CompanyInfoUpdateTypeControllerTest {
+public with sharing class ConfigUpdateTypeControllerTest {
     @IsTest
     public static void getUpdateSettingsHappyFlowTest(){
         System.runAs(TestUtils.getAdminUser()){
             Test.startTest();
-            List<Protected_Subscriber_Setting__mdt> updateTypes = CompanyInfoUpdateTypeController.getUpdateTypes();
+            List<Protected_Subscriber_Setting__mdt> updateTypes = ConfigUpdateTypeController.getUpdateTypes();
             Test.stopTest();
 
             //Check response != null
@@ -41,7 +41,7 @@ public with sharing class CompanyInfoUpdateTypeControllerTest {
             //Deploying custom metadata cannot be tested/mocked. It will always throw an error.
             Test.startTest();
             try{
-                CompanyInfoUpdateTypeController.setUpdateTypes(l1);
+                ConfigUpdateTypeController.setUpdateTypes(l1);
                 //Code should never come here, as test method cannot setUpdateType.
                 //Should always return AuraHandledException
                 System.assert(false);
