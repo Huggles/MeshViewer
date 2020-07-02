@@ -53,6 +53,8 @@ public with sharing class SepaServiceImpl implements ISepaService{
         sepaBankAccount.Country_Code__c = sepaMatchAccountHolderResults.bank_account_details.country_code;
         sepaBankAccount.Foreign__c = sepaMatchAccountHolderResults.bank_account_details.foreign;
         sepaBankAccount.Account_Holder_Type__c = sepaMatchAccountHolderResults.bank_account_holder.type_x;
+        sepaBankAccount.Number_of_Account_Holders__c = sepaMatchAccountHolderResults.bank_account_holder.number_of_account_holders;
+        sepaBankAccount.Joint_Account__c = sepaMatchAccountHolderResults.bank_account_holder.joint_account;
         return sepaBankAccount;
     }
 

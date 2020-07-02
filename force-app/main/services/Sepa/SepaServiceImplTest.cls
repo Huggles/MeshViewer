@@ -4,7 +4,7 @@
 
 
 @IsTest
-public with sharing class SepaServiceTest {
+public with sharing class SepaServiceImplTest {
 
     @TestVisible private final static String IBAN_NUMBER_SUCCESS_NP = '123';
     @TestVisible private final static String IBAN_NUMBER_SUCCESS_ORG = '456';
