@@ -28,8 +28,11 @@ global with sharing class SepaMatchAccountHolderInvocable {
                 SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(
                         sepaMatchAccountHolderArgument.accountNumber,
                         sepaMatchAccountHolderArgument.accountName);
-                sepaBankAccounts.add(sepaBankAccount);
+                if(sepaBankAccount != null){
+                    sepaBankAccounts.add(sepaBankAccount);
+                }
             }
+            System.debug(JSON.serialize(sepaBankAccounts));
             SepaService.saveSEPABankAccounts(sepaBankAccounts);
             return sepaBankAccounts;
         } catch (Exception ex) {

@@ -19,14 +19,19 @@ public with sharing class SepaServiceImpl implements ISepaService{
             //This should hopefully never happen.
             throw e;
         }
-        //If its a match, create it! -OR-
-        //If its almost a match, create it only if its an ORGANIZATION
-        if(sepaMatchAccountHolderResult.name_matching_result.type_x == 'MATCHING' ||
-                (sepaMatchAccountHolderResult.name_matching_result.type_x == 'MISTYPE' && sepaMatchAccountHolderResult.bank_account_holder.type_x == 'ORG')){
-            return createSEPABankAccount(sepaMatchAccountHolderResult);
-        }else{
-            return null;
+
+        if(sepaMatchAccountHolderResult != null){
+            //If its a match, create it! -OR-
+            //If its mistype, create it only if its an ORGANIZATION
+            if(sepaMatchAccountHolderResult.name_matching_result.type_x == 'MATCHING' ||
+                    (   sepaMatchAccountHolderResult.name_matching_result != null &&
+                            sepaMatchAccountHolderResult.name_matching_result.type_x == 'MISTYPE' &&
+                            sepaMatchAccountHolderResult.bank_account_holder != null &&
+                            sepaMatchAccountHolderResult.bank_account_holder.type_x == 'ORG')){
+                return createSEPABankAccount(sepaMatchAccountHolderResult);
+            }
         }
+        return null;
     }
     public void saveSEPABankAccounts(List<SEPA_Bank_Account__c> sepaBankAccounts){
         //Insert Existing SEPA Bank Account Ids
@@ -52,6 +57,7 @@ public with sharing class SepaServiceImpl implements ISepaService{
     }
 
     private static void insertExistingSEPABankAccountsIds(List<SEPA_Bank_Account__c> sepaBankAccounts){
+        System.debug(sepaBankAccounts);
         Set<String> IBANs = new Set<String>();
         for(SEPA_Bank_Account__c sepaBankAccount : sepaBankAccounts){
             IBANs.add(sepaBankAccount.Name);

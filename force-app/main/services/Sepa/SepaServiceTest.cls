@@ -6,15 +6,16 @@
 @IsTest
 public with sharing class SepaServiceTest {
 
-    private final static String IBAN_NUMBER_SUCCESS = '123';
-    private final static String IBAN_NUMBER_ERROR = '999';
+    @TestVisible private final static String IBAN_NUMBER_SUCCESS_NP = '123';
+    @TestVisible private final static String IBAN_NUMBER_SUCCESS_ORG = '456';
+    @TestVisible private final static String IBAN_NUMBER_ERROR = '999';
 
-    private final static String NP_NAME_MATCHED = 'Smit';
-    private final static String NP_NAME_MISTYPE = 'Smi';
-    private final static String NP_NAME_NOT_MATCHED = 'Bakker';
+    @TestVisible private final static String NP_NAME_MATCHED = 'Smit';
+    @TestVisible private final static String NP_NAME_MISTYPE = 'Smi';
+    @TestVisible private final static String NP_NAME_NOT_MATCHED = 'Bakker';
 
-    private final static String ORG_NAME_MISTYPE = 'Appsolutel';
-    private final static String ORG_NAME_SUGGESTION = 'Appsolutely';
+    @TestVisible private final static String ORG_NAME_MISTYPE = 'Appsolutel';
+    @TestVisible private final static String ORG_NAME_SUGGESTION = 'Appsolutely';
 
     enum MatchingType{
         MATCHING,
@@ -32,13 +33,13 @@ public with sharing class SepaServiceTest {
         initMocks();
 
         Test.startTest();
-        SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, NP_NAME_MATCHED);
+        SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_NP, NP_NAME_MATCHED);
         Test.stopTest();
 
         //Match should be stored
         System.assertNotEquals(null, sepaBankAccount);
         //With the following fields:
-        System.assertEquals(IBAN_NUMBER_SUCCESS, sepaBankAccount.Name);
+        System.assertEquals(IBAN_NUMBER_SUCCESS_NP, sepaBankAccount.Name);
         System.assertEquals(true, sepaBankAccount.Active__c);
         System.assertEquals(false, sepaBankAccount.Foreign__c);
     }
@@ -47,7 +48,7 @@ public with sharing class SepaServiceTest {
         initMocks();
 
         Test.startTest();
-        SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, NP_NAME_NOT_MATCHED);
+        SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_NP, NP_NAME_NOT_MATCHED);
         Test.stopTest();
 
 
@@ -59,7 +60,7 @@ public with sharing class SepaServiceTest {
         initMocks();
 
         Test.startTest();
-        SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, NP_NAME_MISTYPE);
+        SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_NP, NP_NAME_MISTYPE);
         Test.stopTest();
 
         //Natural Person Mistype is not stored
@@ -70,13 +71,13 @@ public with sharing class SepaServiceTest {
         initMocks();
 
         Test.startTest();
-        SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, ORG_NAME_MISTYPE);
+        SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_ORG, ORG_NAME_MISTYPE);
         Test.stopTest();
 
         //Org Person Mistype is stored
         System.assertNotEquals(null, sepaBankAccount);
         //With the following fields:
-        System.assertEquals(IBAN_NUMBER_SUCCESS, sepaBankAccount.Name);
+        System.assertEquals(IBAN_NUMBER_SUCCESS_ORG, sepaBankAccount.Name);
     }
     @IsTest
     public static  void testMatchBankAccountIncorrectInput(){
@@ -96,7 +97,7 @@ public with sharing class SepaServiceTest {
         initMocks();
         Test.startTest();
         try {
-            SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, NP_NAME_MATCHED);
+            SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_NP, NP_NAME_MATCHED);
             SepaService.saveSEPABankAccounts(new List<SEPA_Bank_Account__c>{sepaBankAccount});
             //Saving twice to cover all scenarios
             SepaService.saveSEPABankAccounts(new List<SEPA_Bank_Account__c>{sepaBankAccount});
@@ -107,15 +108,20 @@ public with sharing class SepaServiceTest {
         Test.stopTest();
     }
 
+    /****************/
+    /*Initialization*/
+    /****************/
+
+    @TestVisible
     private static void initMocks(){
         fflib_ApexMocks mocks = new fflib_ApexMocks();
         IWsSepa mockWS = (IWsSepa)mocks.mock(IWsSepa.class);
         mocks.startStubbing();
 
-        mocks.when(mockWS.sepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, NP_NAME_MATCHED)).thenReturn(createStubObject(MatchingType.MATCHING, AccountHolderType.NP));
-        mocks.when(mockWS.sepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, NP_NAME_NOT_MATCHED)).thenReturn(createStubObject(MatchingType.NOT_MATCHING, AccountHolderType.NP));
-        mocks.when(mockWS.sepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, NP_NAME_MISTYPE)).thenReturn(createStubObject(MatchingType.MISTYPE, AccountHolderType.NP));
-        mocks.when(mockWS.sepaMatchAccountHolder(IBAN_NUMBER_SUCCESS, ORG_NAME_MISTYPE)).thenReturn(createStubObject(MatchingType.MISTYPE, AccountHolderType.ORG));
+        mocks.when(mockWS.sepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_NP, NP_NAME_MATCHED)).thenReturn(createStubObject(MatchingType.MATCHING, AccountHolderType.NP));
+        mocks.when(mockWS.sepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_NP, NP_NAME_NOT_MATCHED)).thenReturn(createStubObject(MatchingType.NOT_MATCHING, AccountHolderType.NP));
+        mocks.when(mockWS.sepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_NP, NP_NAME_MISTYPE)).thenReturn(createStubObject(MatchingType.MISTYPE, AccountHolderType.NP));
+        mocks.when(mockWS.sepaMatchAccountHolder(IBAN_NUMBER_SUCCESS_ORG, ORG_NAME_MISTYPE)).thenReturn(createStubObject(MatchingType.MISTYPE, AccountHolderType.ORG));
         mocks.when(mockWS.sepaMatchAccountHolder(null, null)).thenThrow(new CalloutException());
 
         mocks.stopStubbing();
@@ -135,7 +141,10 @@ public with sharing class SepaServiceTest {
     }
     private static SepaWsdl.SepaMatchAccountHolderResult createMatchingStubObject(MatchingType matching_type, AccountHolderType account_holder_type){
         SepaWsdl.SepaMatchAccountHolderResult result = new SepaWsdl.SepaMatchAccountHolderResult();
-        result.iban = IBAN_NUMBER_SUCCESS;
+        if(account_holder_type == AccountHolderType.NP)
+            result.iban = IBAN_NUMBER_SUCCESS_NP;
+        else if(account_holder_type == AccountHolderType.ORG)
+            result.iban = IBAN_NUMBER_SUCCESS_ORG;
         result.iban_found = true;
         result.bank_account_details = createBankAccountDetails();
         result.bank_account_holder = createBankAccountHolder(account_holder_type);
@@ -152,7 +161,10 @@ public with sharing class SepaServiceTest {
     }
     private static SepaWsdl.SepaMatchAccountHolderResult createMistypeStubObject(MatchingType matching_type, AccountHolderType account_holder_type){
         SepaWsdl.SepaMatchAccountHolderResult result = new SepaWsdl.SepaMatchAccountHolderResult();
-        result.iban = IBAN_NUMBER_SUCCESS;
+        if(account_holder_type == AccountHolderType.NP)
+            result.iban = IBAN_NUMBER_SUCCESS_NP;
+        else if(account_holder_type == AccountHolderType.ORG)
+            result.iban = IBAN_NUMBER_SUCCESS_ORG;
         result.iban_found = false;
         result.bank_account_details = createBankAccountDetails();
         result.bank_account_holder = createBankAccountHolder(account_holder_type);
