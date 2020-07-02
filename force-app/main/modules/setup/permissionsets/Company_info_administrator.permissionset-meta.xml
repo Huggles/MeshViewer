@@ -22,6 +22,22 @@
     </classAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>Data_source__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>Datasource_Per_Country__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>ISO_3166_Entry__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>License_Type_Definition__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>Subscriber_Setting__mdt</name>
     </customMetadataTypeAccesses>
     <description>Permission set allowing a user to setup/configure Company.info</description>
@@ -102,6 +118,14 @@
     </objectPermissions>
     <tabSettings>
         <tab>Company_info_Setup</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Config_Update_Type</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Data_Sources</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>

@@ -42,7 +42,7 @@
     </labels>
     <labels>
         <fullName>Assign</fullName>
-        <categories>Setup</categories>
+        <categories>Button, Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Button text on Assign button</shortDescription>
@@ -87,10 +87,19 @@
     </labels>
     <labels>
         <fullName>Cancel</fullName>
+        <categories>Button</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Cancel</shortDescription>
         <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
         <fullName>City</fullName>
@@ -138,13 +147,6 @@
         <protected>true</protected>
         <shortDescription>Username on company.info login screen</shortDescription>
         <value>Company.info Username</value>
-    </labels>
-    <labels>
-        <fullName>Config_Page_Title</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Config Page Title</shortDescription>
-        <value>Company.info configuration page</value>
     </labels>
     <labels>
         <fullName>Config_Title</fullName>
@@ -273,6 +275,14 @@
         <value>Country to Search</value>
     </labels>
     <labels>
+        <fullName>Create_Business_Dossier</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Business Dossier</shortDescription>
+        <value>The Account does not have a related Business Dossier, please create/link a Business Dossier to Account and refresh.</value>
+    </labels>
+    <labels>
         <fullName>Create_New_Account</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -351,6 +361,21 @@
         <value>DMLManager ERROR:  An existing record could not be found for object with Id =</value>
     </labels>
     <labels>
+        <fullName>Deeplink_Only_for_NL_Dossiers</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Deeplink Only for NL Dossiers</shortDescription>
+        <value>The Deeplink is only available for Dutch businesses</value>
+    </labels>
+    <labels>
+        <fullName>Details_Help</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Business Data Details Help</shortDescription>
+        <value>The below details are synchronised from  Business Data.</value>
+    </labels>
+    <labels>
         <fullName>Domain_Name</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
@@ -365,20 +390,6 @@
         <protected>true</protected>
         <shortDescription>Dossier_Account_Update_Completed</shortDescription>
         <value>Account Updated</value>
-    </labels>
-    <labels>
-        <fullName>Dossier_ID_Access</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dossier ID Access</shortDescription>
-        <value>User doesn&apos;t have access to dossier with ID:</value>
-    </labels>
-    <labels>
-        <fullName>Dossier_ID_Missing</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dossier ID Missing</shortDescription>
-        <value>DossierId must be filled when setting VAT number</value>
     </labels>
     <labels>
         <fullName>Dossier_Null_Error_Message</fullName>
@@ -760,13 +771,6 @@
         <value>Name</value>
     </labels>
     <labels>
-        <fullName>New_Account_CC</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>New_Account_CC</shortDescription>
-        <value>New Account with Company.info</value>
-    </labels>
-    <labels>
         <fullName>New_Account_with_Business_Dossier</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -965,13 +969,6 @@
         <protected>true</protected>
         <shortDescription>Header of role column in user data table</shortDescription>
         <value>Role</value>
-    </labels>
-    <labels>
-        <fullName>Search_Address</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Business Data Search Address</shortDescription>
-        <value>Address</value>
     </labels>
     <labels>
         <fullName>Search_Again_Confirmation_Dialog_Message</fullName>
@@ -1196,6 +1193,38 @@
         <protected>true</protected>
         <shortDescription>Trade Name</shortDescription>
         <value>Trade Name</value>
+    </labels>
+    <labels>
+        <fullName>Update_settings</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_settings</shortDescription>
+        <value>Update Settings</value>
+    </labels>
+    <labels>
+        <fullName>Update_types</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update_types</shortDescription>
+        <value>Update Types</value>
+    </labels>
+    <labels>
+        <fullName>Update_types_Saved</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Confirmation message that the update types have been saved succesfully.</shortDescription>
+        <value>The update types have been updated succesfully!</value>
+    </labels>
+    <labels>
+        <fullName>Update_types_explanation</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Text above the update type in setup</shortDescription>
+        <value>These settings define which types of data automatically updates through nightly batches.</value>
     </labels>
     <labels>
         <fullName>Update_Duplicate_Account</fullName>
@@ -1508,6 +1537,14 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
+    </labels>
+    <labels>
+        <fullName>Error_updating_update_type_settings</fullName>
+        <categories>error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_updating_update_type_settings</shortDescription>
+        <value>There was an error updating the update type settings</value>
     </labels>
     <labels>
         <fullName>Feature_Not_Found</fullName>

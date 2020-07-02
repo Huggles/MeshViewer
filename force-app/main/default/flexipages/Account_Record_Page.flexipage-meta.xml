@@ -54,6 +54,9 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentName>getCreditsafeReportAction</componentName>
+        </componentInstances>
+        <componentInstances>
             <componentInstanceProperties>
                 <name>flowArguments</name>
                 <value>[{&quot;label&quot;:&quot;recordId&quot;,&quot;dataType&quot;:&quot;String&quot;,&quot;supportsRecordId&quot;:true,&quot;value&quot;:&quot;{!Record.Id}&quot;}]</value>
@@ -88,6 +91,17 @@
             <componentName>flowruntime:interview</componentName>
         </componentInstances>
         <name>Facet-5e601fc7-61b4-4b05-9e8e-dc7c5ca5f4ef</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>recordId</name>
+                <value>$recordId</value>
+            </componentInstanceProperties>
+            <componentName>deeplinkTab</componentName>
+        </componentInstances>
+        <name>Facet-ed718d00-c3b7-4276-aa05-cf2aa6b1c462</name>
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
@@ -140,6 +154,21 @@
             <componentInstanceProperties>
                 <name>title</name>
                 <value>International Address</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:tab</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>active</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>body</name>
+                <value>Facet-ed718d00-c3b7-4276-aa05-cf2aa6b1c462</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+                <value>Company.info online</value>
             </componentInstanceProperties>
             <componentName>flexipage:tab</componentName>
         </componentInstances>

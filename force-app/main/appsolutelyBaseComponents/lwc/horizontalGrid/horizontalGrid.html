@@ -1,0 +1,14 @@
+<!--
+ - Created by hugovankrimpen on 17/06/2020.
+ -->
+
+<!-- Horizontal Grid -->
+<template>
+    <div class="gridContainer">
+        <template for:each={items} for:item="item">
+            <div key={item.key} class={tileContainerCss}>
+                <slot></slot>
+            </div>
+        </template>
+    </div>
+</template>
