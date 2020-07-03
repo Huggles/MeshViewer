@@ -17,6 +17,7 @@ public with sharing class SepaServiceImpl implements ISepaService{
         }
         catch (Exception e){
             //This should hopefully never happen.
+            ErrorLogUtil.logException(e, true);
             throw e;
         }
 
