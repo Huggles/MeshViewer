@@ -161,7 +161,6 @@ jobs:
           path: test-beta-login.txt
           destination: test-beta-login
       - slack/notify:
-          when: on_success
           message: 'new scratch org with beta package available. Download the test-beta-login artifact and use the credentials to login'
   
   upgrade_to_managed:
