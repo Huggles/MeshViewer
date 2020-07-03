@@ -120,6 +120,7 @@ jobs:
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
             echo 'export packageversionid="'$packageversionid'"' >> $BASH_ENV
+            echo 'export beta_package_created=true' >> $BASH_ENV
       - run:
           name: get version number
           command: |
@@ -134,7 +135,7 @@ jobs:
       - run:
           name: install
           command: |
-            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM -w 30
+            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_beta_$versionnumber -w 30
       - run:
           name: create admin user with fixed name and store the loginurl, username and password
           command: |
@@ -151,10 +152,16 @@ jobs:
             instanceUrl="${instanceUrl%\"}"
             instanceUrl="${instanceUrl#\"}"
             echo $instanceUrl >> test-beta-login.txt
+      - run:
+          name: delete scratch org
+          when: on_fail
+          command: |
+            sfdx force:org:delete -u test_beta_$versionnumber
       - store_artifacts:
           path: test-beta-login.txt
           destination: test-beta-login
       - slack/notify:
+          when: on_success
           message: 'new scratch org with beta package available. Download the test-beta-login artifact and use the credentials to login'
   
   upgrade_to_managed:
