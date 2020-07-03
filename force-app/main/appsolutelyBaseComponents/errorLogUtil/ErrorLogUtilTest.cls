@@ -17,10 +17,23 @@ private class ErrorLogUtilTest {
         List<Error_Log__c> logs = [
                 SELECT
                         Cause__c,
+                        Error_Email_Address__c,
                         Line_Number__c,
                         Message__c,
+                        Send_Email__c,
                         Stacktrace__c,
-                        Type__c
+                        Type__c,
+                        CreatedById,
+                        CreatedDate,
+                        Id,
+                        IsDeleted,
+                        LastModifiedById,
+                        LastModifiedDate,
+                        LastReferencedDate,
+                        LastViewedDate,
+                        Name,
+                        OwnerId,
+                        SystemModstamp
                 FROM Error_Log__c];
         System.assertEquals(1, logs.size());
         System.assertEquals('message', logs[0].Message__c);

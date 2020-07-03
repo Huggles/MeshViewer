@@ -111,21 +111,23 @@ export default class AccountEnrichmentHeader extends LightningElement {
         companyInfoLogoSmall,
     }
 
-    showVATButton = checkAccess(Features.DUTCH_VAT)
-        .then(result => {
-            return (result && !this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
-        }).catch(error => {
-            this.showToast(this.label.Error, error, 'error');
-        });
+    _VATAccess;
+
+    _CreditSafeAccess;
+
+    connectedCallback() {
+        checkAccess(Features.CREDITSAFE_GET_REPORT).then(result => {this._CreditSafeAccess = result});
+        checkAccess(Features.DUTCH_VAT).then(result => {this._VATAccess = result});
+    }
+
+    get showVATButton() {
+        return (this._VATAccess && !this.noVAT && (this.VATNumber === undefined || this.VATNumber === null || this.VATNumber === ''));
+    }
 
 
-    showGetCreditsafeReportButton = checkAccess(Features.CREDITSAFE_GET_REPORT)
-        .then(result => {
-            return (result && (this.creditSafeReport == undefined || this.creditSafeReport == null))
-        })
-        .catch(error => {
-            this.showToast(this.label.Error, error, 'error');
-        });
+    get showGetCreditsafeReportButton() {
+        return this._CreditSafeAccess && (this.creditSafeReport == undefined || this.creditSafeReport == null);
+    }
 
     handleOnClickVAT(event) {
         updateDossierWithVAT({

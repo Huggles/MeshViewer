@@ -6,7 +6,7 @@
 public with sharing class ConfigUpdateTypeControllerTest {
     @IsTest
     public static void getUpdateSettingsHappyFlowTest(){
-        System.runAs(TestUtils.getAdminUser()){
+        System.runAs(CompanyInfoTestUserFactory.getAdminUser()){
             Test.startTest();
             List<Protected_Subscriber_Setting__mdt> updateTypes = ConfigUpdateTypeController.getUpdateTypes();
             Test.stopTest();
@@ -37,7 +37,7 @@ public with sharing class ConfigUpdateTypeControllerTest {
         List<Map<String,Object>> l1 = new List<Map<String,Object>>();
         l1.add(record1);
 
-        System.runAs(TestUtils.getAdminUser()){
+        System.runAs(CompanyInfoTestUserFactory.getAdminUser()){
             //Deploying custom metadata cannot be tested/mocked. It will always throw an error.
             Test.startTest();
             try{

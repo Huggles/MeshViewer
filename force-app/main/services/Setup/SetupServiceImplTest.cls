@@ -6,7 +6,7 @@
 public with sharing class SetupServiceImplTest {
     @IsTest
     public static void getUpdateSettingsHappyFlowTest(){
-        System.runAs(TestUtils.getAdminUser()){
+        System.runAs(CompanyInfoTestUserFactory.getAdminUser()){
             Test.startTest();
             List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
             Test.stopTest();
@@ -26,7 +26,7 @@ public with sharing class SetupServiceImplTest {
 
     @IsTest
     public static void getDataSourcesPerCountryHappyFlowTest() {
-        System.runAs(TestUtils.getAdminUser()) {
+        System.runAs(CompanyInfoTestUserFactory.getAdminUser()) {
             // when
             Test.startTest();
             List<Datasource_Per_Country__mdt> datasourcePerCountries = SetupService.getDataSourcesPerCountry();
@@ -42,32 +42,9 @@ public with sharing class SetupServiceImplTest {
         }
     }
 
-//    @IsTest
-//    public static void getDataSourcesPerCountryNoAccess() {
-//        System.runAs(TestUtils.getDutchBusinessUser()) {
-//            Test.startTest();
-//            {
-//                try {
-//                    List<Datasource_Per_Country__mdt> datasourcePerCountries = SetupService.getDataSourcesPerCountry();
-//                    //Should not reach this statement as there is an access error.
-//                    System.assert(false);
-//                }
-//                catch (QueryException e){
-//                    //Should always return a query exception due to insufficient access rights.
-//                    System.assert(true);
-//                }
-//                catch (Exception e){
-//                    //Other exception should not happen
-//                    System.assert(false);
-//                }
-//            }
-//            Test.stopTest();
-//        }
-//    }
-
     @IsTest
     public static void oneSelectedRecordPerCountryTest() {
-        System.runAs(TestUtils.getAdminUser()) {
+        System.runAs(CompanyInfoTestUserFactory.getAdminUser()) {
             Test.startTest();
             {
                 List<Datasource_Per_Country__mdt> datasourcePerCountries = SetupService.getDataSourcesPerCountry();
@@ -84,7 +61,7 @@ public with sharing class SetupServiceImplTest {
 
     @IsTest
     public static void getSelectedDataSourceHappyFlow() {
-        System.runAs(TestUtils.getAdminUser()) {
+        System.runAs(CompanyInfoTestUserFactory.getAdminUser()) {
             Test.startTest();
             {
                 List<Datasource_Per_Country__mdt> datasourcePerCountries = SetupService.getDataSourcesPerCountry();
@@ -101,28 +78,6 @@ public with sharing class SetupServiceImplTest {
         }
     }
 
-//    @IsTest
-//    public static void getUpdateSettingsNoAccessTest(){
-//        System.runAs(TestUtils.getDutchBusinessUser()){
-//            Test.startTest();
-//            try {
-//                List<Protected_Subscriber_Setting__mdt> updateTypes = SetupService.getUpdateTypes();
-//                //Should not reach this statement as there is an access error.
-//                System.assert(false);
-//            }
-//            catch (QueryException e){
-//                //Should always return a query exception due to insufficient access rights.
-//                System.assert(true);
-//            }
-//            catch (Exception e){
-//                //Other exception should not happen
-//                System.assert(false);
-//            }
-//            Test.stopTest();
-//        }
-//    }
-
-
     @IsTest
     public static void setUpdateSettingsTest(){
 
@@ -134,7 +89,7 @@ public with sharing class SetupServiceImplTest {
         List<Map<String,Object>> l1 = new List<Map<String,Object>>();
         l1.add(record1);
 
-        System.runAs(TestUtils.getAdminUser()){
+        System.runAs(CompanyInfoTestUserFactory.getAdminUser()){
             //Deploying custom metadata cannot be tested/mocked. It will always throw an error.
             Test.startTest();
             try{
