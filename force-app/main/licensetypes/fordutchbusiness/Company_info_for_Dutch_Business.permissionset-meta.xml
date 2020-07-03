@@ -9,10 +9,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>FieldSetHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CompanyDetailsController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -26,6 +22,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ErrorLogUtil</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FeatureAccessControlController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FieldSetHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -64,6 +68,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Business_Dossier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.International_Address_Data__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

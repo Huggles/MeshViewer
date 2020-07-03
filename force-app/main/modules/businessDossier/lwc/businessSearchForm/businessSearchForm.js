@@ -23,27 +23,7 @@ export default class BusinessSearchForm extends LightningElement {
 
     isLoading = false;
 
-    _countries;
-
-    get countries() {
-        if (!this._countries) {
-            return this.loadCountryOptions();
-        } else {
-            return this._countries;
-        }
-    }
-
-    async loadCountryOptions() {
-        try {
-            this.isLoading = true;
-            this._countries = await getCountryOptions();
-            return this._countries;
-        } catch (error) {
-            new ToastEventController(this).showErrorToastMessage(null,error.body.message);
-        } finally {
-            this.isLoading = false;
-        }
-    }
+    countries = [];
 
 
     _selectedCountry;
@@ -132,7 +112,7 @@ export default class BusinessSearchForm extends LightningElement {
     }
 
     get moreThanOneCountryOption() {
-        return this.countries.length > 1;
+        return (this.countries != null && this.countries.length > 1);
     }
 
     /**
@@ -227,10 +207,25 @@ export default class BusinessSearchForm extends LightningElement {
         registerListener('validationRequest', this.handleValidationRequest, this);
         registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
         if (this.street) this.assignStreetAndHouseNumber(this.street);
+        this.loadCountryOptions();
     }
 
     disconnectedCallback() {
         unregisterAllListeners(this);
+    }
+
+    loadCountryOptions() {
+        this.isLoading = true;
+        getCountryOptions()
+            .then(result=>{
+                this.countries = result;
+            })
+            .catch(error=>{
+                new ToastEventController(this).showErrorToastMessage(null,error.body.message);
+            })
+            .finally(()=>{
+                this.isLoading = false;
+            })
     }
 
     handleComponentRegistrationOpen(event) {
