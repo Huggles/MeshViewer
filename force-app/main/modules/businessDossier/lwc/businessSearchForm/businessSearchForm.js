@@ -39,7 +39,7 @@ export default class BusinessSearchForm extends LightningElement {
             this._countries = await getCountryOptions();
             return this._countries;
         } catch (error) {
-            new ToastEventController(this).showErrorToastMessage(null,error.message);
+            new ToastEventController(this).showErrorToastMessage(null,error.body.message);
         } finally {
             this.isLoading = false;
         }

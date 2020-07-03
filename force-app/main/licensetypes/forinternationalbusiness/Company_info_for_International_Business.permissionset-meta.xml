@@ -223,6 +223,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Business_Dossier__c.Deeplink_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Business_Dossier__c.Discontinuation_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
