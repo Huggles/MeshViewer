@@ -6,15 +6,6 @@
 
 
 
-###############################################################
-#Check git branch. New feature script should run from develop #
-###############################################################
-sh operations/check-git-branch.sh
-quit=$?
-if [[ "$quit" == 1 ]]; then
-    exit
-  fi
-
 ########################################################
 #Check git commits. There should be no uncommited work #
 ########################################################
@@ -23,6 +14,15 @@ quit=$?
 if [[ "$quit" == 1 ]]; then
     exit
   fi
+
+###############################################################
+#Check git branch. New feature script should run from develop #
+###############################################################
+#sh operations/check-git-branch.sh
+#quit=$?
+#if [[ "$quit" == 1 ]]; then
+#    exit
+#  fi
 
 #########################################################
 #Ask for the name the scratch org and branch should get #
@@ -38,6 +38,16 @@ echo "How long should the scratch org exist?"
 read DURATION
 echo " "
 
+
+#########################################
+#Ask if LC debug mode should be enabled #
+#########################################
+
+echo "Enable LC Debug mode for administrator?"
+read LC_DEBUG_MODE
+echo " "
+
+
 ################################################################################################
 #Ask whether the scratch org should automatically be opened once the process has been finished #
 ################################################################################################
@@ -49,16 +59,16 @@ echo " "
 #Perform the operations based on the input#
 ###########################################
 
-git fetch origin
 git checkout -f -b "feature/$SCRATCH_ORG_ALIAS"
 
 sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" $DURATION "../config/project-scratch-def.json"
 sh operations/push-source.sh "$SCRATCH_ORG_ALIAS"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_administrator"
-sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_for_Dutch_Business"
-sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_for_International_Business"
-sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_for_Sales"
 
+if [ "$LC_DEBUG_MODE" = "y" ]
+then
+  sh operations/enable-lc-debug-mode.sh "$SCRATCH_ORG_ALIAS"
+fi
 
 if [ "$OPEN" = "y" ]
 then

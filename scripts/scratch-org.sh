@@ -23,9 +23,15 @@ echo "Duration:"
 read DURATION
 echo " "
 
+echo "Enable LC Debug mode?:"
+read LC_DEBUG_MODE
+echo " "
+
 echo "Open scratch org afterwards?:"
 read OPEN
 echo " "
+
+
 
 fi
 echo " "
@@ -53,6 +59,11 @@ then
     fi
   echo "Deleting scratch org..."
   sfdx force:org:delete -u $SCRATCH_ORG_ALIAS -p
+fi
+
+if [ "$LC_DEBUG_MODE" = "y" ]
+then
+  echo "update new User(Id = UserInfo.getUserId(), UserPreferencesUserDebugModePref=true);" | sfdx force:apex:execute -u $SCRATCH_ORG_ALIAS
 fi
 
 #Open Scratch org

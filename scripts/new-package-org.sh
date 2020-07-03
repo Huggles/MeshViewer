@@ -5,6 +5,15 @@
 #               the user permission set. Org lives for 30 days.
 ########################################################################################################
 
+###############################################################
+#Check git branch. New feature script should run from develop #
+###############################################################
+#sh operations/check-git-branch.sh
+#quit=$?
+#if [[ "$quit" == 1 ]]; then
+#    exit
+#  fi
+
 #########################################################
 #Ask for the name the scratch org and branch should get #
 #########################################################
@@ -32,17 +41,12 @@ echo " "
 ###########################################
 #Perform the operations based on the input#
 ###########################################
-sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" 30 "../config/beta-test-scratch-def.json"
+sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" 30 "../config/enterprise-scratch-def.json"
 sh operations/install-package-version.sh "$SCRATCH_ORG_ALIAS" "$PACKAGE_VERSION_NAME"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_administrator"
 
-######################
-#Create Standard User#
-######################
 sh operations/create-standard-user.sh "$SCRATCH_ORG_ALIAS" "$SCRATCH_ORG_SU_ALIAS"
-sh operations/assign-permission-set.sh "$SCRATCH_ORG_SU_ALIAS" "Company_info_for_Dutch_Business"
-sh operations/assign-permission-set.sh "$SCRATCH_ORG_SU_ALIAS" "Company_info_for_International_Business"
-sh operations/assign-permission-set.sh "$SCRATCH_ORG_SU_ALIAS" "Company_info_for_Sales"
+
 
 if [ "$OPEN" = "y" ]
 then
