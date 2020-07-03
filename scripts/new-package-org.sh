@@ -41,7 +41,7 @@ echo " "
 ###########################################
 #Perform the operations based on the input#
 ###########################################
-sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" 30 "../config/enterprise-scratch-def.json"
+sh operations/create-scratch-org.sh "$SCRATCH_ORG_ALIAS" 30 "../config/beta-test-scratch-def.json"
 sh operations/install-package-version.sh "$SCRATCH_ORG_ALIAS" "$PACKAGE_VERSION_NAME"
 sh operations/assign-permission-set.sh "$SCRATCH_ORG_ALIAS" "Company_info_administrator"
 

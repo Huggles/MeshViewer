@@ -2,7 +2,7 @@
  - Created by tejaswinidandi on 25/06/2020.
  -->
 
-<aura:component description="getCreditsafeReportAction" controller="GlobalFlowQuickActionController" implements="force:lightningQuickActionWithoutHeader, flexipage:availableForRecordHome, force:hasRecordId">
+<aura:component description="getCreditsafeReportAction" controller="GlobalFlowQuickActionController" implements="force:lightningQuickActionWithoutHeader, flexipage:availableForRecordHome, force:hasRecordId" access="global">
     <aura:attribute name="isClicked" type="Boolean" default="false"/>
 
     <c:getCreditsafeReportChildComponent ongetreport="{!c.handleGetReport}"></c:getCreditsafeReportChildComponent>
