@@ -89,8 +89,8 @@
     <assignments>
         <name>Default_outcome_message</name>
         <label>Default outcome message</label>
-        <locationX>1133</locationX>
-        <locationY>459</locationY>
+        <locationX>1188</locationX>
+        <locationY>460</locationY>
         <assignmentItems>
             <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
             <operator>Assign</operator>
@@ -303,6 +303,7 @@
         </inputAssignments>
         <object>Account</object>
     </recordUpdates>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Show_International_Address</name>
         <label>Show International Address</label>

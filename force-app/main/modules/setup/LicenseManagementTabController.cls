@@ -35,7 +35,6 @@ public inherited sharing class LicenseManagementTabController {
             return returnValues;
 
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex, true);
             throw new AuraHandledException(ex.getMessage());
         }
     }

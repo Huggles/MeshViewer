@@ -12,6 +12,7 @@ import searchNoResultsCL from '@salesforce/label/c.Search_No_Results';
 
 import DESERT_ILLUSTRATION from '@salesforce/resourceUrl/Desert';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
+import {ToastEventController} from "c/toastEventController";
 
 export default class SearchResultTilesList extends LightningElement {
     @api
@@ -110,7 +111,7 @@ export default class SearchResultTilesList extends LightningElement {
                 this.labelsAndFields = result;
                 this.fillSearchResults();
             }).catch(error =>{
-                this.showToast(e);
+                new ToastEventController(this).showErrorToastMessage('Error', error.body.message);
         });
     }
 
