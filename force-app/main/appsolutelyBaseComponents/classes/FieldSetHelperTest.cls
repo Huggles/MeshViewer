@@ -13,19 +13,16 @@ private class FieldSetHelperTest {
 
         // when
         Boolean exceptionThrown = false;
-        String message = null;
         Test.startTest();
-        try {
-            FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, 'fake');
-        } catch (AuraHandledException e) {
-            exceptionThrown = true;
-            message = e.getMessage();
-        }
+        Object responseWrapper = FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, 'fake');
         Test.stopTest();
 
         // then an exception should be thrown which message ends with the sobject name
-        System.assert(exceptionThrown);
-        System.assert(message.endsWith(sObjectName));
+        System.assert(responseWrapper instanceof AuraResponseWrapper);
+        System.assertEquals('ERROR', ((AuraResponseWrapper)responseWrapper).state);
+        System.assertNotEquals(null, ((AuraResponseWrapper)responseWrapper).error);
+        System.assertEquals(null, ((AuraResponseWrapper)responseWrapper).data);
+        System.assert(((AuraResponseWrapper)responseWrapper).error.message.endsWith(sObjectName));
     }
 
     @IsTest
@@ -37,20 +34,15 @@ private class FieldSetHelperTest {
         String fieldSetName = 'fake';
 
         // when
-        Boolean exceptionThrown = false;
-        String message = null;
         Test.startTest();
-        try {
-            FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, fieldSetName);
-        } catch (AuraHandledException e) {
-            exceptionThrown = true;
-            message = e.getMessage();
-        }
+        Object responseWrapper =    FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, fieldSetName);
         Test.stopTest();
 
-        // then an exception should be thrown which message ends with the sobject name
-        System.assert(exceptionThrown);
-        System.assert(message.endsWith(fieldSetName));
+        System.assert(responseWrapper instanceof AuraResponseWrapper);
+        System.assertEquals('ERROR', ((AuraResponseWrapper)responseWrapper).state);
+        System.assertNotEquals(null, ((AuraResponseWrapper)responseWrapper).error);
+        System.assertEquals(null, ((AuraResponseWrapper)responseWrapper).data);
+        System.assert(((AuraResponseWrapper)responseWrapper).error.message.endsWith(fieldSetName));
     }
 
     @IsTest
@@ -62,24 +54,14 @@ private class FieldSetHelperTest {
         String fieldSetName = 'appsolutely__Creditsafe_search_result_fields';
 
         // when
-        Boolean exceptionThrown = false;
-        String message = null;
         List<FieldSetHelper.FieldDescriptionDto> fieldDescriptionDtos = null;
         Test.startTest();
-        try {
-            fieldDescriptionDtos = FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, fieldSetName);
-        } catch (AuraHandledException e) {
-            exceptionThrown = true;
-            message = e.getMessage();
-        }
+        Object responseWrapper = FieldSetHelper.getFieldSetFieldDescriptions(sObjectName, fieldSetName);
         Test.stopTest();
 
         // then no exception should be thrown
-        System.assert(!exceptionThrown);
-        System.assert(message == null);
-        // fieldNames should be there and the length should be more than zero (don't want to test for exact length so we don't need to change the test every time the field set changes
-        System.assert(fieldDescriptionDtos != null);
-        System.assert(fieldDescriptionDtos.size() > 0);
+        System.assertEquals('SUCCESS', ((AuraResponseWrapper)responseWrapper).state);
+        System.assertEquals(true, (( List<FieldSetHelper.FieldDescriptionDto>)((AuraResponseWrapper)responseWrapper).data).size() > 0);
     }
 
 }

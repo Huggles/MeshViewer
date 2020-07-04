@@ -5,6 +5,7 @@
 import {LightningElement, api, track, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
+import {handleResponse} from "c/auraResponseWrapperHandler";
 import {fireEvent} from "c/pubsub";
 
 import searchResultsLimitedCL from '@salesforce/label/c.Search_Results_Limited';
@@ -49,6 +50,7 @@ export default class SearchResultTilesList extends LightningElement {
     get searchCriteriaName() {
         let criteriaName = '';
         if (this.searchResults && this.searchResults.length > 0) {
+            // TODO: internationalization
             criteriaName = 'Results by ' + this.searchResults[0].appsolutely__Search_Criteria_Name__c;
         }
         return criteriaName;
@@ -103,16 +105,30 @@ export default class SearchResultTilesList extends LightningElement {
      */
     @api labelsAndFields;
 
+    connectedCallback() {
+        if (!this.labelsAndFields) {
+            this.getFieldSetFieldDescriptionsFromServer();
+        }
+    }
+
+    async getFieldSetFieldDescriptionsFromServer() {
+        let myPromise = await getFieldSetFieldDescriptions({objectName: this.sObjectName, fieldSetName: this.fieldSetName})
+            .then(result =>{ return handleResponse(result)})
+            .then(data => {this.labelsAndFields = data})
+            .catch(error =>{
+                new ToastEventController(this).showErrorToastMessage('Error', error.body.message);
+            });
+        return myPromise;
+    }
+
     renderedCallback() {
         //we get the labels and fields in the rendered callback because we want to fill in the 'fieldValues' property for each tile.
         //the server call is only done once when the component is rendered
-        getFieldSetFieldDescriptions({objectName: this.sObjectName, fieldSetName: this.fieldSetName})
-            .then(result =>{
-                this.labelsAndFields = result;
-                this.fillSearchResults();
-            }).catch(error =>{
-                new ToastEventController(this).showErrorToastMessage('Error', error.body.message);
-        });
+        if (!this.labelsAndFields) {
+            this.getFieldSetFieldDescriptionsFromServer().then(result => {this.fillSearchResults()});
+        } else {
+            this.fillSearchResults();
+        }
     }
 
     fillSearchResults() {
@@ -134,19 +150,11 @@ export default class SearchResultTilesList extends LightningElement {
                         tile.fieldValues = fieldValues;
                     }
                     catch (e) {
-                        this.showToast(e);
+                        new ToastEventController(this).showErrorToastMessage('Error', e);
                     }
                 });
             }
         }
-    }
-
-    showToast(error) {
-        const event = new ShowToastEvent({
-            message: error,
-            variant: 'error'
-        });
-        component.dispatchEvent(event);
     }
 
 }

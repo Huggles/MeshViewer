@@ -26,7 +26,7 @@ public without sharing class FieldSetHelper {
      * @return
      */
     @AuraEnabled(Cacheable=true)
-    public static List<FieldDescriptionDto> getFieldSetFieldDescriptions(String objectName, String fieldSetName) {
+    public static Object getFieldSetFieldDescriptions(String objectName, String fieldSetName) {
         try {
             Map<String, Schema.SObjectType> globalDescribeMap = Schema.getGlobalDescribe();
             Schema.SObjectType sObjectTypeObj = globalDescribeMap.get(objectName);
@@ -44,12 +44,9 @@ public without sharing class FieldSetHelper {
             for (Schema.FieldSetMember fieldSetMember : fieldSetObj.getFields()) {
                 fieldDescriptionDtos.add(new FieldDescriptionDto(fieldSetMember.getLabel(), fieldSetMember.getFieldPath()));
             }
-            return fieldDescriptionDtos;
+            return new AuraResponseWrapper(fieldDescriptionDtos);
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex, true);
-            AuraHandledException auraHandledException = new AuraHandledException(ex.getMessage());
-            auraHandledException.setMessage(ex.getMessage());
-            throw auraHandledException;
+            return new AuraResponseWrapper(ex, true, true );
         }
 
     }

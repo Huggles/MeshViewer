@@ -4,7 +4,6 @@
 
 import {LightningElement, api, track, wire} from 'lwc';
 import Update_Duplicate_Account from '@salesforce/label/c.Update_Duplicate_Account';
-import getFieldSetFieldDescriptions from '@salesforce/apex/FieldSetHelper.getFieldSetFieldDescriptions';
 import {fireEvent} from "c/pubsub";
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -53,14 +52,11 @@ export default class AccountResultTile extends LightningElement {
     }
 
     handleOnClick(event) {
-        console.log('ART handleOnClick');
         const cardClickedEvent = new CustomEvent('cardclicked', {detail : {id: this.searchResultId}});
-        console.log('cardClickedEvent-'+this.searchResultId)
         this.dispatchEvent(cardClickedEvent);
     }
 
     handleClickDuplicateAccount() {
-        console.log('ART handleClickDuplicateAccount');
         fireEvent(null, 'updateAccount', null);
     }
 

@@ -7,6 +7,20 @@ CAREFULL: doesn't work when you rollback the transaction.
 
 public inherited sharing class ErrorLogUtil {
 
+    private class AsyncLogger implements Queueable {
+        private Exception ex;
+        private Boolean sendEmail;
+
+        public AsyncLogger(Exception ex, Boolean sendEmail) {
+            this.ex = ex;
+            this.sendEmail = sendEmail;
+        }
+
+        public void execute(QueueableContext param1) {
+            ErrorLogUtil.logException(ex, sendEmail);
+        }
+    }
+
     @TestVisible
     private final static String ERROR_LOG_SETTING_EMAIL = 'Error_Email_Address';
 
@@ -44,6 +58,18 @@ public inherited sharing class ErrorLogUtil {
         error.Stacktrace__c = e.getStackTraceString();
         error.Send_Email__c = sendEmail;
         EventBus.publish(error);
+    }
+
+    /**
+     * Logs an exception without writing any DML. To be used in AuraEnabled(Cachaeable=true) methods.
+     * THE TRANSACTION CANNOT END WITH AN EXCEPTION. NO LOGGING WILL TAKE PLACE. WRAP ANY EXCEPTIONS AND HANDLE THEM IN THE TRANSCATION
+     *
+     * @param e the exception to log
+     * @param sendEmail true if an email needs to be send to the in Error_Log_Setting__mdt configured email address
+     */
+    public static void logExceptionNoDML(Exception e, Boolean sendEmail) {
+        AsyncLogger asyncLogger = new AsyncLogger(e, sendEmail);
+        System.enqueueJob(asyncLogger);
     }
 
     /**
@@ -101,4 +127,6 @@ public inherited sharing class ErrorLogUtil {
 
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
     }
+
+
 }
