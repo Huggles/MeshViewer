@@ -5,7 +5,8 @@
 import {LightningElement, track, wire} from 'lwc';
 import saveUsernamePassword from '@salesforce/apex/CompanyInfoLoginController.saveUsernamePassword';
 import getCredentials from '@salesforce/apex/CompanyInfoLoginController.getCredentials';
-import showToastEvent, {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import {handleResponse} from "c/auraResponseWrapperHandler";
+import {ToastEventController} from "c/toastEventController";
 
 import Password from '@salesforce/label/c.Password';
 import Companyinfo_Username from '@salesforce/label/c.Companyinfo_Username';
@@ -24,7 +25,10 @@ export default class CompanyInfoLogin extends LightningElement {
         Loading
     }
 
-    @track loaded = false;
+    /**
+     * Switch which is set to true to show a spinner when interacting with the server
+     */
+    loading;
 
     /**
      * The password
@@ -36,49 +40,41 @@ export default class CompanyInfoLogin extends LightningElement {
      */
     username;
 
-    @wire(getCredentials)
-    wiredGetCredentials(result){
-        if(result.error){
-            this.error = result.error;
-
-        }else{
-            if (result && result.data) {
-                if (result.data.appsolutely__Username__c) {
-                    this.username = result.data.appsolutely__Username__c;
-                }
-                if (result.data.appsolutely__Password__c) {
-                    this.password = result.data.appsolutely__Password__c;
-                }
-            }
-            this.error = undefined;
-        }
-        this.loaded = true;
+    /**
+     * Load the credentials
+     */
+    connectedCallback() {
+        this.loading = true;
+        getCredentials()
+            .then(result => {
+                return handleResponse(result);
+            })
+            .then(result => {
+                this.username = result.username;
+                this.password = result.password;
+            })
+            .catch(error => {
+                new ToastEventController(this).showErrorToastMessage(Error,error.message);
+            })
+            .finally(() => {
+                this.loading = false;
+            })
     }
 
     /**
      * Handles the click on the submit button by saving the username and password
      */
     handleSubmitButtonClick() {
-        this.loaded = false;
+        this.loading = true;
         saveUsernamePassword({"username": this.username, "password": this.password})
             .then(result => {
-                const event = new ShowToastEvent({
-                    title: Success,
-                    message: Login_successfull,
-                    variant: 'success'
-                });
-                this.dispatchEvent(event);
-                this.loaded = true;
+                new ToastEventController(this).showSuccessToastMessage(Success,Login_successfull);
             })
             .catch(error => {
-                const event = new ShowToastEvent({
-                    title: Error,
-                    message: error.body.message,
-                    variant: 'error',
-                    mode: 'sticky'
-                });
-                this.dispatchEvent(event);
-                this.loaded = true;
+                new ToastEventController(this).showErrorToastMessage(null,error.body.message);
+            })
+            .finally(() => {
+                this.loading = false
             });
 
     }

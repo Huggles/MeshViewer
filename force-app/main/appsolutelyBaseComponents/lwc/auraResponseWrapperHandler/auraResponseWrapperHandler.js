@@ -13,7 +13,7 @@ const handleResponse = (auraResponseWrapper) => {
         return Promise.resolve(auraResponseWrapper.data); // void methods just return undefined
     }
     if (auraResponseWrapper.state === 'ERROR') {
-        return Promise.reject(auraResponseWrapper.error);
+        return Promise.reject(auraResponseWrapper.error); // most likely a Toast should be shown but let's not handle it here
     }
 }
 
