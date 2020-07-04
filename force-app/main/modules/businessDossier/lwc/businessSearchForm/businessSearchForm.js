@@ -6,6 +6,7 @@ import {LightningElement, api, track} from 'lwc';
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 import {fireEvent, registerListener, unregisterAllListeners} from 'c/pubsub';
 import {sanitizeStreet} from "c/inputSanitization";
+import {handleResponse} from "c/auraResponseWrapperHandler";
 
 import getCountryOptions from "@salesforce/apex/BusinessSearchFormController.getCountryOptions";
 import getSelectedDataSource from "@salesforce/apex/BusinessSearchFormController.getSelectedDataSource";
@@ -53,7 +54,9 @@ export default class BusinessSearchForm extends LightningElement {
     async loadDataSource(alpha2CountryCode) {
         try {
             this.isLoading = true;
-            this._dataSource = await getSelectedDataSource({alpha2CountryCode: alpha2CountryCode});
+            this._dataSource = await getSelectedDataSource({alpha2CountryCode: alpha2CountryCode}).then(result => {
+                return handleResponse(result);
+            });
             return this._dataSource;
         } catch(error) {
             new ToastEventController(this).showErrorToastMessage(null,error.message);
@@ -217,6 +220,9 @@ export default class BusinessSearchForm extends LightningElement {
     loadCountryOptions() {
         this.isLoading = true;
         getCountryOptions()
+            .then(result => {
+                return handleResponse(result);
+            })
             .then(result=>{
                 this.countries = result;
             })
