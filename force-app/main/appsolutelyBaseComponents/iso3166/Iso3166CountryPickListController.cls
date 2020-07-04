@@ -32,17 +32,16 @@ public inherited sharing class Iso3166CountryPickListController {
      * @return
      */
     @AuraEnabled(cacheable=true)
-    public static List<Iso3166Option> getIso3166Options() {
+    public static Object getIso3166Options() {
         try {
             List<ISO_3166_Entry__mdt> iso3166Entries = [SELECT Alpha_2_Code__c, Country_Code__c, Country_Name__c, Label FROM ISO_3166_Entry__mdt ORDER BY Country_Name__c];
             List<Iso3166Option> options = new List<Iso3166CountryPickListController.Iso3166Option>();
             for (ISO_3166_Entry__mdt o3166Entry : iso3166Entries) {
                 options.add(new Iso3166Option(o3166Entry.Country_Name__c, o3166Entry.Alpha_2_Code__c, o3166Entry.Label, o3166Entry.Country_Code__c));
             }
-            return options;
+            return new AuraResponseWrapper(options);
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex, true);
-            throw new AuraHandledException(ex.getMessage());
+            return new AuraResponseWrapper(ex, true, true);
         }
 
     }
@@ -55,21 +54,21 @@ public inherited sharing class Iso3166CountryPickListController {
      * @return
      */
     @AuraEnabled(cacheable=true)
-    public static Iso3166Option getIsO3166OptionByAlpha2Code(String alpha2Code) {
+    public static Object getIsO3166OptionByAlpha2Code(String alpha2Code) {
         try {
             alpha2Code = alpha2Code.toUpperCase();
             List<ISO_3166_Entry__mdt> o3166Entries = [SELECT Alpha_2_Code__c, Country_Code__c, Country_Name__c, Label FROM ISO_3166_Entry__mdt WHERE Alpha_2_Code__c =:alpha2Code LIMIT 1];
             if (o3166Entries != null && o3166Entries.size() == 1) {
                 ISO_3166_Entry__mdt o3166Entry = o3166Entries.get(0);
-                return new Iso3166Option(o3166Entry.Country_Name__c, o3166Entry.Alpha_2_Code__c, o3166Entry.Label, o3166Entry.Country_Code__c);
+                return new AuraResponseWrapper(new Iso3166Option(o3166Entry.Country_Name__c, o3166Entry.Alpha_2_Code__c, o3166Entry.Label, o3166Entry.Country_Code__c));
             } else {
-                throw new CCInputException('Cannot find an ISO 3166 entry for alpha 2 code ' + alpha2Code);
+                Exception ex = new CCInputException('Cannot find an ISO 3166 entry for alpha 2 code ' + alpha2Code);
+                return new AuraResponseWrapper(ex, true, true);
             }
         } catch (CCInputException ex) {
-            throw new AuraHandledException(ex.getMessage());
+            return new AuraResponseWrapper(new AuraHandledException(ex.getMessage()), true, true);
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex, true);
-            throw new AuraHandledException(ex.getMessage());
+            return new AuraResponseWrapper(ex, true, true);
         }
 
 

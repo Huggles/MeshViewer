@@ -25,7 +25,8 @@ public with sharing class GlobalFlowQuickActionController {
         } catch (CIConfigurationException ex) {
             throw new AuraHandledException('Flow Setting Name ' + flowSettingName + ' not found.');
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex);
+            // TODO: migrate to AuraResponseWrapper
+            // ErrorLogUtil.logException(ex);
             throw new AuraHandledException('Exception occured: ' + ex.getMessage());
         }
     }
