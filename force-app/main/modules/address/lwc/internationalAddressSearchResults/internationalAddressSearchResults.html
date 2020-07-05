@@ -1,0 +1,21 @@
+<!--
+ - Created by jaapbranderhorst on 12/03/2020.
+ -->
+
+<!-- International Address Search Results -->
+<template>
+    <template if:true={isNlSelected}>
+        <c-search-result-tiles-list search-results={searchResults} title-field="appsolutely__Formatted_Address__c" s-object-name="appsolutely__International_Address__c" field-set-name="appsolutely__Dutch_Address_Search_Results">
+        <span slot="tile" class="slds-p-around_x-small">
+            <c-search-result-tile oncardclicked={handleOnCardClick} data-name="tile"></c-search-result-tile>
+        </span>
+        </c-search-result-tiles-list>
+    </template>
+    <template if:false={isNlSelected}>
+        <c-search-result-tiles-list search-results={searchResults} title-field="appsolutely__Formatted_Address__c" s-object-name="appsolutely__International_Address__c" field-set-name="appsolutely__International_Address_search_results">
+        <span slot="tile" class="slds-p-around_x-small">
+            <c-search-result-tile oncardclicked={handleOnCardClick} data-name="tile"></c-search-result-tile>
+        </span>
+        </c-search-result-tiles-list>
+    </template>
+</template>

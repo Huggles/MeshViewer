@@ -2147,6 +2147,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>International_Address__c.CeBuco_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.City_Extract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.City_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.City_Ptt__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2177,12 +2197,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>International_Address__c.House_Number_Addition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.House_Number_From__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.House_Number_To__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>International_Address__c.Language__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Letter_Combination__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2203,6 +2243,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>International_Address__c.Matchrate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Municipality_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Municipality_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Municipality__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2237,6 +2292,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>International_Address__c.Plot_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Plot_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.Postcode_Match_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2248,6 +2313,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>International_Address__c.Postcode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Province_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2267,7 +2337,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>International_Address__c.Range_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Range_Indication__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Street_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.Street_Match_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Street_Name_Extract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Street_Name_Nen__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Street_Name_Ptt__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2591,6 +2691,14 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Creditsafe_Person_Director__c.Previous_Director</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>International_Address__c.Dutch_Address</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>International_Address__c.International_Address</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>

@@ -13,7 +13,7 @@ import Companyinfo_Username from '@salesforce/label/c.Companyinfo_Username';
 import SubmitButtonLabel from '@salesforce/label/c.Login_Button';
 import Error from '@salesforce/label/c.Error';
 import Success from '@salesforce/label/c.Success';
-import Login_successfull from '@salesforce/label/c.Login_successfull';
+import Login_successful from '@salesforce/label/c.Login_successful';
 import Loading from '@salesforce/label/c.Loading';
 
 export default class CompanyInfoLogin extends LightningElement {
@@ -68,7 +68,7 @@ export default class CompanyInfoLogin extends LightningElement {
         this.loading = true;
         saveUsernamePassword({"username": this.username, "password": this.password})
             .then(result => {
-                new ToastEventController(this).showSuccessToastMessage(Success,Login_successfull);
+                new ToastEventController(this).showSuccessToastMessage(Success,Login_successful);
             })
             .catch(error => {
                 new ToastEventController(this).showErrorToastMessage(null,error.body.message);

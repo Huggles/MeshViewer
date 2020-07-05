@@ -53,6 +53,8 @@ public inherited sharing class Application {
                             IInternationalAddressService.class => InternationalAddressImpl.class,
                             IWsInternationalAddress.class => WsInternationalAddressImpl.class,
                             IWsVat.class => WsVatImpl.class,
+                            IWsAddress.class => WsAddressImpl.class,
+                            IAddressService.class => AddressServiceImpl.class,
                             ISetupService.class => SetupServiceImpl.class,
                             IDuplicateManagement.class => DuplicateManagementServiceImpl.class,
                             ILicenseManagementService.class => LicenseManagementServiceImpl.class

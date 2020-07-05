@@ -130,6 +130,7 @@ public inherited sharing class InternationalAddressImpl implements IInternationa
             address.Postcode__c = wsAddress.address.postcode;
             address.Department__c = wsAddress.address.department;
             address.Province__c = wsAddress.address.province;
+            address.RecordTypeId = Schema.SObjectType.International_Address__c.getRecordTypeInfosByDeveloperName().get('International_Address').recordTypeId;
         }
         // map the match status
         String elementMatchStatus = wsAddress.element_match_status;

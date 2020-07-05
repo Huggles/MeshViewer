@@ -27,9 +27,9 @@ global inherited sharing class SearchForInternationalAddressInvocable {
         global String country;
         @InvocableVariable(label='Country Format' description='The format in which the country is returned.')
         global String countryFormat;
-
         @TestVisible
-        private SearchInternationalAddressArgument(String organization, String building, String POBox, String province, String street, String postCode, String houseNr, String locality, String country, String language, String countryFormat) {
+        private SearchInternationalAddressArgument(String organization, String building, String POBox, String province, String street, String postCode,
+                String houseNr, String locality, String country, String language, String countryFormat) {
             this.organization = organization;
             this.building = building;
             this.pobox = POBox;
@@ -44,7 +44,6 @@ global inherited sharing class SearchForInternationalAddressInvocable {
         }
 
         public SearchInternationalAddressArgument() {}
-
 
     }
 
