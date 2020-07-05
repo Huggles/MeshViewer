@@ -174,6 +174,7 @@ export default class InternationalAddressSearchForm extends LightningElement {
         this.handleOnChange(event);
         this.countryInAlpha2Code = this.countryAlpha2codeByAlpha3code.get(this.country);
         this.dispatchFlowAttributeChangeEvent('countryInAlpha2Code', this.countryInAlpha2Code);
+        this.dispatchFlowAttributeChangeEvent('country', this.country);
     }
 
     dispatchFlowAttributeChangeEvent(attributeName, attributeValue) {

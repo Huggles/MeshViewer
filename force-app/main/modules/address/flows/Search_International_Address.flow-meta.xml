@@ -246,7 +246,7 @@
     <assignments>
         <name>Assign_Search_Results</name>
         <label>Assign Search Results</label>
-        <locationX>604</locationX>
+        <locationX>605</locationX>
         <locationY>109</locationY>
         <assignmentItems>
             <assignToReference>Search_for_international_addresses</assignToReference>
@@ -698,6 +698,12 @@
                 <name>searchResults</name>
                 <value>
                     <elementReference>Search_for_international_addresses</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>country</name>
+                <value>
+                    <elementReference>searchInternationalAddress.country</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
