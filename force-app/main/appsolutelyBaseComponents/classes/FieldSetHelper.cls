@@ -26,7 +26,7 @@ public without sharing class FieldSetHelper {
      * @return
      */
     @AuraEnabled(Cacheable=true)
-    public static Object getFieldSetFieldDescriptions(String objectName, String fieldSetName) {
+    public static AuraResponseWrapper getFieldSetFieldDescriptions(String objectName, String fieldSetName) {
         try {
             Map<String, Schema.SObjectType> globalDescribeMap = Schema.getGlobalDescribe();
             Schema.SObjectType sObjectTypeObj = globalDescribeMap.get(objectName);
