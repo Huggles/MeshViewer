@@ -17,11 +17,11 @@ import House_Number_Addition from '@salesforce/label/c.House_Number_Addition';
 import Letter_Combination from '@salesforce/label/c.Letter_Combination';
 import Address_Type from '@salesforce/label/c.Address_Type';
 import Municipality from '@salesforce/label/c.Municipality';
-import Address_Type_Help_Text from '@salesforce/label/c.Address_Type_Help_Text';
 import Postal_code_pattern_mismatch_message from '@salesforce/label/c.Postal_code_pattern_mismatch_message';
 import Letter_Combination_pattern_mismatch_message from '@salesforce/label/c.Letter_Combination_pattern_mismatch_message';
 import Odd from '@salesforce/label/c.Odd';
 import Even from '@salesforce/label/c.Even';
+import Both from '@salesforce/label/c.Both';
 
 export default class DutchAddressForm extends LightningElement {
     @api street;
@@ -50,7 +50,6 @@ export default class DutchAddressForm extends LightningElement {
         Letter_Combination,
         Address_Type,
         Municipality,
-        Address_Type_Help_Text,
         Postal_code_pattern_mismatch_message,
         Letter_Combination_pattern_mismatch_message
     }
@@ -58,7 +57,8 @@ export default class DutchAddressForm extends LightningElement {
     get addressTypes() {
         let addressTypes = [
             { label: Even, value: '0' },
-            { label: Odd, value: '1' }
+            { label: Odd, value: '1' },
+            { label: Both, value: ' '}
         ];
         return addressTypes;
     }
