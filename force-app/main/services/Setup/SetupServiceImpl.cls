@@ -65,7 +65,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
                         MasterLabel,
                         NamespacePrefix,
                         QualifiedApiName
-                FROM Datasource_Per_Country__mdt WHERE Data_Source_Select_Record__c = FALSE WITH SECURITY_ENFORCED];
+                FROM Datasource_Per_Country__mdt WHERE Data_Source_Select_Record__c = FALSE WITH SECURITY_ENFORCED ORDER BY MasterLabel];
         return datasourcePerCountries;
     }
 

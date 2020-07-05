@@ -31,7 +31,7 @@ public inherited sharing class TestUtils {
      * @return new User object
      */
     @TestVisible
-    private static User getUniqueUser(String profile) {
+    public static User getUniqueUser(String profile) {
         User u = usersByProfileName.get(profile);
         if (u == null) {
             u = getUser(profile);
@@ -51,7 +51,7 @@ public inherited sharing class TestUtils {
      * @return the created user
     */
     @TestVisible
-    private static User getUser(String profileName) {
+    public static User getUser(String profileName) {
         Double d = Math.random() * SIZE;
         Integer randomInt = d.intValue();
         Profile p = profilesByName.get(profileName);
@@ -70,7 +70,7 @@ public inherited sharing class TestUtils {
      * @param permissionSetName the name of the permission set
      */
     @TestVisible
-    private static void giveUserPermissionSet(String permissionSetName, User u) {
+    public static void giveUserPermissionSet(String permissionSetName, User u) {
         Id permissionSetId = permissionSetIdsByName.get(permissionSetName);
         if (permissionSetId == null) {
             PermissionSet permissionSet = [SELECT Id FROM PermissionSet WHERE Name = :permissionSetName LIMIT 1];

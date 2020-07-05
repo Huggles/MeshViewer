@@ -4,6 +4,19 @@
 
 public inherited sharing class CompanyInfoLoginController {
 
+    public class Credentials {
+        @AuraEnabled
+        public String username;
+
+        @AuraEnabled
+        public String password;
+
+        public Credentials(Credentials__c credentials) {
+            this.username = credentials.Username__c;
+            this.password = credentials.Password__c;
+        }
+    }
+
     @AuraEnabled
     public static void saveUsernamePassword(String username, String password) {
         try {
@@ -11,18 +24,15 @@ public inherited sharing class CompanyInfoLoginController {
         } catch(Exception ex) { // do not log the error otherwise we can see the username/password entered maybe
             throw new AuraHandledException(ex.getMessage());
         }
-
     }
 
     @AuraEnabled(cacheable=true)
-    public static Credentials__c getCredentials(){
+    public static AuraResponseWrapper getCredentials(){
         try {
-            return BusinessAccountingService.getCredentials();
+            return new AuraResponseWrapper(new Credentials(BusinessAccountingService.getCredentials()));
         } catch(Exception ex) {
-            ErrorLogUtil.logException(ex, true);
-            throw new AuraHandledException(ex.getMessage());
+            return new AuraResponseWrapper(ex, true, true);
         }
-
     }
 
 }

@@ -4,20 +4,22 @@
 
 <!-- Company Info Login -->
 <template>
-    <template if:false={loaded}>
+    <template if:true={loading}>
         <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
     </template>
-    <lightning-layout multiple-rows="true">
-        <lightning-layout-item size="12" flexibility="no-flex">
-            <lightning-input label={label.Companyinfo_Username} value={username} name="username" required type="text" onchange={handleOnChange} class="slds-col slds-p-around_xx-small slds-size_3-of-12 username"></lightning-input>
-        </lightning-layout-item>
-        <lightning-layout-item size="12" flexibility="no-flex">
-            <lightning-input label={label.Password} value={password} required type="password" name="password" onchange={handleOnChange} class="slds-col slds-p-around_xx-small slds-size_3-of-12  password"></lightning-input>
-        </lightning-layout-item>
-        <lightning-layout-item size="3">
-            <div class="slds-float_right">
-                <lightning-button onclick={handleSubmitButtonClick} label={label.SubmitButtonLabel} variant="brand" class="slds-p-around_xx-small slds-button_stretch"></lightning-button>
-            </div>
-        </lightning-layout-item>
-    </lightning-layout>
+    <template if:false={loading}>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" flexibility="no-flex">
+                <lightning-input label={label.Companyinfo_Username} value={username} name="username" required type="text" onchange={handleOnChange} class="slds-col slds-p-around_xx-small slds-size_3-of-12"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" flexibility="no-flex">
+                <lightning-input label={label.Password} value={password} required type="password" name="password" onchange={handleOnChange} class="slds-col slds-p-around_xx-small slds-size_3-of-12"></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="3">
+                <div class="slds-float_right">
+                    <lightning-button onclick={handleSubmitButtonClick} label={label.SubmitButtonLabel} variant="brand" class="slds-p-around_xx-small slds-button_stretch"></lightning-button>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
 </template>

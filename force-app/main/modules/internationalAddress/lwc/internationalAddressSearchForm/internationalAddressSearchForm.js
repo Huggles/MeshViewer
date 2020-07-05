@@ -8,6 +8,7 @@ import getIso3166Options from '@salesforce/apex/Iso3166CountryPickListController
 import getIsO3166OptionByAlpha2Code from '@salesforce/apex/Iso3166CountryPickListController.getIsO3166OptionByAlpha2Code';
 import {fireEvent, registerListener, unregisterAllListeners} from "c/pubsub";
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import {handleResponse} from "c/auraResponseWrapperHandler";
 import {sanitizeStreet} from "c/inputSanitization";
 
 import Organization from '@salesforce/label/c.Organization';
@@ -54,15 +55,19 @@ export default class InternationalAddressSearchForm extends LightningElement {
     loadCountries() {
         getIso3166Options()
             .then(result => {
+                return handleResponse(result);
+            })
+            .then(data => {
                 // result consists of an array of objects with country, alpha3Code and countryCode as fields
                 let localSelectOptions = [];
-                for (const resultElement of result) {
+                for (const resultElement of data) {
                     localSelectOptions.push({value: resultElement.alpha3Code, label: resultElement.country});
                     this.countryAlpha2codeByAlpha3code.set(resultElement.alpha3Code, resultElement.alpha2Code);
                 }
                 this.selectOptions = localSelectOptions;
             })
             .catch(error => {
+                // todo: improve error handling
                 this.hints = error;
             });
     }
@@ -75,11 +80,15 @@ export default class InternationalAddressSearchForm extends LightningElement {
         if (this.countryInAlpha2Code && this.countryInAlpha2Code !== '') {
             getIsO3166OptionByAlpha2Code({alpha2Code: this.countryInAlpha2Code})
                 .then(result => {
+                    return handleResponse(result);
+                })
+                .then(result => {
                     if (result && result.alpha3Code) {
                         this.country = result.alpha3Code;
                         this.dispatchFlowAttributeChangeEvent('country', this.country);
                     }
                     else {
+                        // todo: improve error handling
                         this.hints = "Invalid country alpha 2 code: " + this.countryInAlpha2Code;
                     }
                 })

@@ -483,7 +483,7 @@
         <object>International_Address__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>International_Address</name>
         <label>International Address</label>

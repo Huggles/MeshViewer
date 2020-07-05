@@ -77,13 +77,14 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             'BEL' => Label.Country_Belgium,
             'NLD' => Label.Country_Netherlands,
             'GBR' => Label.Country_United_Kingdom,
-            'IRE' => Label.Country_Ireland,
+            'IRL' => Label.Country_Ireland,
             'ITA' => Label.Country_Italy,
             'NOR' => Label.Country_Norway,
             'SWE' => Label.Country_Sweden,
             'ESP' => Label.Country_Spain,
             'DEU' => Label.Country_Germany,
             'FRA' => Label.Country_France,
-            'DNK' => Label.Country_Denmark
+            'DNK' => Label.Country_Denmark,
+            'LUX' => Label.Country_Luxembourg
     };
 }

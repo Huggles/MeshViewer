@@ -5,39 +5,20 @@
 public inherited sharing class FeatureAccessControlController {
 
     /**
-     * @return a list with the names of all features
-     */
-    @AuraEnabled(cacheable=true)
-    public static List<String> getFeatures() {
-        try {
-            List<String> featureNames = new List<String>();
-            List<Feature> features = Feature.values();
-            for (Feature feature : features) {
-                featureNames.add(feature.name());
-            }
-            return featureNames;
-        } catch(Exception ex) {
-            ErrorLogUtil.logException(ex, true);
-            throw new AuraHandledException(ex.getMessage());
-        }
-    }
-
-    /**
      * @param featureName the name of the feature
      *
      * @return true if the user has access to the feature, false otherwise. Throws an error if the feature name doesn't exist
      */
     @AuraEnabled(cacheable=true)
-    public static Boolean checkAccess(String featureName) {
+    public static AuraResponseWrapper checkAccess(String featureName) {
         try {
-            if (getFeatures().contains(featureName)) {
-                return LicenseManagementService.userHasAccess(getFeatureByName(featureName));
+            if (getFeatureNames().contains(featureName)) {
+                return new AuraResponseWrapper(LicenseManagementService.userHasAccess(getFeatureByName(featureName)));
             } else {
                 throw new InputException('No feature named ' + featureName);
             }
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex, true);
-            throw new AuraHandledException(ex.getMessage());
+            return new AuraResponseWrapper(ex, true, true);
         }
     }
 
@@ -49,6 +30,15 @@ public inherited sharing class FeatureAccessControlController {
             }
         }
         return null;
+    }
+
+    private static List<String> getFeatureNames() {
+        List<String> featureNames = new List<String>();
+        List<Feature> features = Feature.values();
+        for (Feature feature : features) {
+            featureNames.add(feature.name());
+        }
+        return featureNames;
     }
 
 }

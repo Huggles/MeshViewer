@@ -3,5 +3,7 @@
   "LocaleSidKey": "nl_NL",
   "EmailEncodingKey": "UTF-8",
   "LanguageLocaleKey": "en_US",
-  "profileName": "Standard User"
+  "profileName": "System Administrator",
+  "permsets": ["Company_info_administrator"],
+  "generatePassword": true
 }

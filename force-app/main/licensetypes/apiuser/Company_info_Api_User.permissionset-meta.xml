@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_Addresses</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_Business_Get_Dossier</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_Business_Search</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_VAT</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>International_Addresses</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>International_Business_Search</name>
+    </customPermissions>
     <description>Permission set containing permission for the license type CompanyInfo API User</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Business_Dossier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.CC_Sync__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.International_Address_Data__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Assets__c</field>
@@ -148,6 +187,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Business_Dossier__c.Deeplink_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Business_Dossier__c.Discontinuation_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -169,6 +213,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Establishment_Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Establishment_Date_Day__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Establishment_Date_Month__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Establishment_Date_Year__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -204,6 +263,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Establishment_Street_and_House_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Founding_Date_Day__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Founding_Date_Month__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Founding_Date_Year__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -480,11 +554,20 @@
     <label>Companyinfo Api User</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Business_Dossier__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Business_Dossier__c</object>
+        <object>Error_Log__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
