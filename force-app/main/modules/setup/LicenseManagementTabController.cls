@@ -5,7 +5,7 @@
 public inherited sharing class LicenseManagementTabController {
 
     @AuraEnabled(Cacheable=true)
-    public static Object getLicenseTypes() {
+    public static AuraResponseWrapper getLicenseTypes() {
         try {
             List<License_Type_Definition__mdt> licenseTypeDefinitions = new List<License_Type_Definition__mdt>();
             licenseTypeDefinitions = [
