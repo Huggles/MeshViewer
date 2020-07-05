@@ -20,6 +20,8 @@ import Municipality from '@salesforce/label/c.Municipality';
 import Address_Type_Help_Text from '@salesforce/label/c.Address_Type_Help_Text';
 import Postal_code_pattern_mismatch_message from '@salesforce/label/c.Postal_code_pattern_mismatch_message';
 import Letter_Combination_pattern_mismatch_message from '@salesforce/label/c.Letter_Combination_pattern_mismatch_message';
+import Odd from '@salesforce/label/c.Odd';
+import Even from '@salesforce/label/c.Even';
 
 export default class DutchAddressForm extends LightningElement {
     @api street;
@@ -55,8 +57,8 @@ export default class DutchAddressForm extends LightningElement {
 
     get addressTypes() {
         let addressTypes = [
-            { label: '0', value: '0' },
-            { label: '1', value: '1' }
+            { label: Even, value: '0' },
+            { label: Odd, value: '1' }
         ];
         return addressTypes;
     }

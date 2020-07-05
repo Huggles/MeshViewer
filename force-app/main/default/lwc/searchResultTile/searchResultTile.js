@@ -40,11 +40,24 @@ export default class SearchResultTile extends LightningElement {
      */
     @api fieldValues = [];
 
+    _selected;
+
     /**
      * True if the card is selected, otherwise false
      */
     @api
-    selected;
+    get selected() {
+        return this._selected;
+    }
+    set selected(value) {
+        this._selected = value;
+        let checkbox = this.template.querySelector('[name="card-selected"]');
+        if (value === true) {
+            checkbox.checked = true;
+        } else {
+            checkbox.checked = false;
+        }
+    }
 
     /**
      * The icon state to be shown

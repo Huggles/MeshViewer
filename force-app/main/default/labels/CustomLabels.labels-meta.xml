@@ -1611,4 +1611,20 @@
         <shortDescription>Toast shown when the user tries to assign more seats than he has.</shortDescription>
         <value>Not enough seats available. You tried to assign {0} seats but only have {1} available.</value>
     </labels>
+    <labels>
+        <fullName>Even</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Even as in an 'even number'</shortDescription>
+        <value>Even</value>
+    </labels>
+    <labels>
+        <fullName>Odd</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Odd as in an 'odd number'</shortDescription>
+        <value>Odd</value>
+    </labels>
 </CustomLabels>
