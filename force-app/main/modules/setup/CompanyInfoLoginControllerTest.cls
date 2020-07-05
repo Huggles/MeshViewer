@@ -66,7 +66,7 @@ private class CompanyInfoLoginControllerTest {
         Test.stopTest();
 
         System.assertEquals('SUCCESS', responseWrapper.state);
-        System.assertEquals(true, responseWrapper.data instanceof Credentials__c);
+        System.assertEquals(true, responseWrapper.data instanceof CompanyInfoLoginController.Credentials);
         System.assertEquals('test', ((CompanyInfoLoginController.Credentials)responseWrapper.data).username);
         System.assertEquals('test', ((CompanyInfoLoginController.Credentials)responseWrapper.data).password);
     }
