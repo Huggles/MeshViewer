@@ -12,7 +12,10 @@ public with sharing class LicenseManagementServiceImpl implements ILicenseManage
 
     static {
         try {
-            NAMESPACE_PREFIX = ([SELECT NamespacePrefix FROM PackageLicense WHERE Id =:Packaging.getCurrentPackageId() LIMIT 1]).NamespacePrefix;
+            List<PackageLicense> packageLicenses = [SELECT NamespacePrefix FROM PackageLicense WHERE Id =:Packaging.getCurrentPackageId() LIMIT 1];
+            if (packageLicenses != null && packageLicenses.size() == 1) {
+                NAMESPACE_PREFIX = packageLicenses.get(0).NamespacePrefix;
+            }
         } catch (NoDataFoundException ex) {
             // just ignore, this runs in non-packaged code
         }

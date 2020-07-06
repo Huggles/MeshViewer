@@ -99,16 +99,16 @@ public class DutchAddressWsdl {
             Map<String, DutchAddressWsdl.dutchAddressRangePostcodeSearchResponseType> response_map_x = new Map<String, DutchAddressWsdl.dutchAddressRangePostcodeSearchResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://api.webservices.nl/dutchaddress/soap_doclit.php/dutchAddressRangePostcodeSearch',
-              'http://www.webservices.nl/soap/',
-              'dutchAddressRangePostcodeSearch',
-              'http://www.webservices.nl/soap/',
-              'dutchAddressRangePostcodeSearchResponse',
-              'DutchAddressWsdl.dutchAddressRangePostcodeSearchResponseType'}
+                    this,
+                    request_x,
+                    response_map_x,
+                    new String[]{endpoint_x,
+                            'https://api.webservices.nl/dutchaddress/soap_doclit.php/dutchAddressRangePostcodeSearch',
+                            'http://www.webservices.nl/soap/',
+                            'dutchAddressRangePostcodeSearch',
+                            'http://www.webservices.nl/soap/',
+                            'dutchAddressRangePostcodeSearchResponse',
+                            'DutchAddressWsdl.dutchAddressRangePostcodeSearchResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.out;
@@ -121,16 +121,16 @@ public class DutchAddressWsdl {
             Map<String, DutchAddressWsdl.loginResponseType> response_map_x = new Map<String, DutchAddressWsdl.loginResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://api.webservices.nl/dutchaddress/soap_doclit.php/login',
-              'http://www.webservices.nl/soap/',
-              'login',
-              'http://www.webservices.nl/soap/',
-              'loginResponse',
-              'DutchAddressWsdl.loginResponseType'}
+                    this,
+                    request_x,
+                    response_map_x,
+                    new String[]{endpoint_x,
+                            'https://api.webservices.nl/dutchaddress/soap_doclit.php/login',
+                            'http://www.webservices.nl/soap/',
+                            'login',
+                            'http://www.webservices.nl/soap/',
+                            'loginResponse',
+                            'DutchAddressWsdl.loginResponseType'}
             );
             response_x = response_map_x.get('response_x');
             return response_x.reactid;
@@ -141,16 +141,16 @@ public class DutchAddressWsdl {
             Map<String, DutchAddressWsdl.logoutResponseType> response_map_x = new Map<String, DutchAddressWsdl.logoutResponseType>();
             response_map_x.put('response_x', response_x);
             WebServiceCallout.invoke(
-              this,
-              request_x,
-              response_map_x,
-              new String[]{endpoint_x,
-              'https://api.webservices.nl/dutchaddress/soap_doclit.php/logout',
-              'http://www.webservices.nl/soap/',
-              'logout',
-              'http://www.webservices.nl/soap/',
-              'logoutResponse',
-              'DutchAddressWsdl.logoutResponseType'}
+                    this,
+                    request_x,
+                    response_map_x,
+                    new String[]{endpoint_x,
+                            'https://api.webservices.nl/dutchaddress/soap_doclit.php/logout',
+                            'http://www.webservices.nl/soap/',
+                            'logout',
+                            'http://www.webservices.nl/soap/',
+                            'logoutResponse',
+                            'DutchAddressWsdl.logoutResponseType'}
             );
             response_x = response_map_x.get('response_x');
         }

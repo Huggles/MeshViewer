@@ -1,0 +1,187 @@
+version: 2.1
+
+commands:
+  log_into_devhub:
+    steps:
+      - run:
+          name: login into devhub
+          command: |
+            mkdir keys
+            echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
+            openssl rsa -in keys/hub.key -check -noout
+            sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
+
+parameters:
+  packageid:
+    description: "The package id (starts with 0Ho). Copy it from the sfdx-project.json."
+    type: string
+    default: "0Ho0J0000004CA1SAM"
+  package_version_tag:
+    description: "the package version’s tag"
+    type: string
+    default: ""
+  packaging_scratch_org_definition_file:
+    description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
+    type: string
+    default: "config/project-scratch-def.json"
+  enterprise_scratch_org_definition_file:
+    description: "the enterprise edition scratch org definition file used to install the beta. Should define all the right org shape/dependencies/features needed for installing the package"
+    type: string
+    default: "config/enterprise-scratch-def.json"
+  build_wait:
+    description: "the time in minutes the version create command waits until to return"
+    type: integer
+    default: 20
+
+jobs:
+  run_apex_tests:
+    docker:
+      - image: appsolutely/sfdx_circleci_container:latest
+    environment:
+      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_LOG_LEVEL: trace
+    steps:
+      - checkout
+      - log_into_devhub
+      - run:
+          name: create scratch org
+          command:
+            sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM -d 30 -w 10
+      - run:
+          name: push source to scratch org
+          command:
+            sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
+      - run:
+          name: run apex tests
+          command: |
+            mkdir -p tests/junit
+            sfdx force:apex:test:run -d tests/junit -r junit -w 20
+      - store_test_results:
+          path: tests/junit
+      - store_artifacts:
+          path: tests/junit
+      - run:
+          name: delete scratch org
+          command: |
+            sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
+      - run:
+          name: Compress Metadata Artifacts
+          when: always
+          command: |
+            tar -cvf metadata.tar /root/project/metadata
+      - run:
+          name: Compress sfdx log
+          when: always
+          command: |
+            tar -cvf sfdx_log.tar /root/.sfdx/sfdx.log
+      - store_artifacts:
+          path: metadata.tar
+          destination: metadata
+      - store_artifacts:
+          path: sfdx_log.tar
+          destination: sfdx-log
+
+
+  build_packaging2_beta:
+    docker:
+      - image: appsolutely/sfdx_circleci_container:latest
+    steps:
+      - checkout
+      - log_into_devhub
+      - run:
+          name: create beta package version
+          command: |
+            sfdx force:package:version:create -x --codecoverage --package << pipeline.parameters.packageid >> --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1"
+  
+  install_packaging2_beta:
+    docker:
+      - image: appsolutely/sfdx_circleci_container:latest
+    environment:
+      BASH_ENV: ~/.env
+    steps:
+      - checkout
+      - log_into_devhub
+      - run:
+          name: create scratch org
+          command: |
+            sfdx force:org:create -s -f << pipeline.parameters.enterprise_scratch_org_definition_file >> -a test_circle_build_$CIRCLE_BUILD_NUM
+      - run:
+          name: get latest package version and install
+          command: |
+            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.packageid >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
+            packageversionid="${packageversionid%\"}"
+            packageversionid="${packageversionid#\"}"
+            echo $packageversionid
+            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM
+      - run:
+          name: delete scratch org
+          when: always
+          command: |
+            sfdx force:org:delete -u test_circle_build_$CIRCLE_BUILD_NUM -p
+  
+  upgrade_to_managed:
+    docker:
+      - image: appsolutely/sfdx_circleci_container:latest
+    steps:
+      - checkout
+      - log_into_devhub
+      - run:
+          name: get latest package version and upgrade to managed package
+          command: |
+            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.packageid >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
+            packageversionid="${packageversionid%\"}"
+            packageversionid="${packageversionid#\"}"
+            sfdx force:package:version:promote --package $packageversionid --noprompt
+#      - run:
+#          name: merge into master
+#          command: |
+#            git checkout master
+#            git merge $CIRCLE_BRANCH
+#            git push origin master
+#            git tag -a v$PACKAGE_MAJOR_VERSION.$CIRCLE_BUILD_NUM -m "$PACKAGE_VERSION_NAME v$PACKAGE_MAJOR_VERSION.$CIRCLE_BUILD_NUM"
+#            git push origin --tags
+
+workflows:
+  version: 2
+  deploy_test_feature:
+    jobs:
+      - run_apex_tests:
+          context: org-global
+          filters:
+            branches:
+              only: /feature\/.*/
+  
+  deploy_test_develop:
+    jobs:
+      - run_apex_tests:
+          context: org-global
+          filters:
+            branches:
+              only: 
+                - develop
+  
+  deploy_test_build_package_test_package_release:
+    jobs:
+      - run_apex_tests:
+          context: org-global
+          filters:
+            branches:
+              only: /release\/.*/
+#      - build_packaging2_beta:
+#          context: org-global
+#          requires:
+#            - run_apex_tests
+#      - install_packaging2_beta:
+#          context: org-global
+#          requires:
+#            - build_packaging2_beta
+#      - approve_upgrade_to_managed:
+#          type: approval
+#          requires:
+#            - install_packaging2_beta
+#      - upgrade_to_managed:
+#          context: org-global
+#          requires:
+#            - approve_upgrade_to_managed
+
+

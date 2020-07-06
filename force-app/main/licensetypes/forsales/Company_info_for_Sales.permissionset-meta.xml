@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>BusinessSearchFormController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>BusinessService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -22,6 +26,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ErrorLogUtil</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FeatureAccessControlController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>FieldSetHelper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -66,6 +78,10 @@
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
+        <name>D_B_get_report</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>Dutch_Addresses</name>
     </customPermissions>
     <customPermissions>
@@ -74,11 +90,31 @@
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
+        <name>Dutch_Business_Positions</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>Dutch_Business_Search</name>
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
+        <name>Dutch_Chamber_of_Commerce_Extract</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_News</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
         <name>Dutch_VAT</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_lead_generator</name>
+    </customPermissions>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Dutch_look_a_like_service</name>
     </customPermissions>
     <customPermissions>
         <enabled>true</enabled>
@@ -407,6 +443,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Business_Dossier__c.Date_of_Last_Change__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Business_Dossier__c.Deeplink_URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2041,6 +2082,41 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Error_Log__c.Cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Error_Email_Address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Line_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Message__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Send_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Stacktrace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Error_Log__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.Alpha_2_Country_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2067,6 +2143,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>International_Address__c.Building__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.CeBuco_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.City_Extract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.City_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.City_Ptt__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2101,12 +2197,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>International_Address__c.House_Number_Addition__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.House_Number_From__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.House_Number_To__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.House_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>International_Address__c.Language__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Letter_Combination__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2127,6 +2243,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>International_Address__c.Matchrate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Municipality_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Municipality_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Municipality__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2161,6 +2292,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>International_Address__c.Plot_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Plot_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.Postcode_Match_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2172,6 +2313,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>International_Address__c.Postcode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Province_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2191,7 +2337,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>International_Address__c.Range_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Range_Indication__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Street_Id__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>International_Address__c.Street_Match_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Street_Name_Extract__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Street_Name_Nen__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>International_Address__c.Street_Name_Ptt__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2323,12 +2499,12 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>Business_Dossier__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -2471,8 +2647,17 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>International_Address__c</object>
+        <object>Error_Log__c</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>International_Address__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -2506,6 +2691,14 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Creditsafe_Person_Director__c.Previous_Director</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>International_Address__c.Dutch_Address</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>International_Address__c.International_Address</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>

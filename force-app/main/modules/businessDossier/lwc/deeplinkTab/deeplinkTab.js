@@ -11,6 +11,7 @@ import COUNTRY from '@salesforce/schema/Account.Business_Dossier__r.Registration
 import Deeplink_Only_for_NL_Dossiers from '@salesforce/label/c.Deeplink_Only_for_NL_Dossiers';
 import Create_Business_Dossier from '@salesforce/label/c.Create_Business_Dossier';
 import Error from '@salesforce/label/c.Error';
+import {ToastEventController} from "c/toastEventController";
 
 export default class DeeplinkTab extends LightningElement {
 
@@ -43,13 +44,7 @@ export default class DeeplinkTab extends LightningElement {
             } else if (typeof error.body.message === 'string') {
                 message = error.body.message;
             }
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: Error,
-                    message,
-                    variant: 'error',
-                }),
-            );
+            new ToastEventController(this).showErrorToastMessage(Error, message);
         } else if (data) {
             this.account = data;
             if (this.account.fields) {

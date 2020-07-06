@@ -19,21 +19,29 @@ public with sharing class BusinessSearchFormController {
     }
 
     @AuraEnabled(cacheable=true)
-    public static List<CountryOption> getCountryOptions() {
-        Map<String, String> alpha2CodeByCountryName = BusinessService.getCountryOptionsForBusinessSearch();
-        List<CountryOption> returnValue = new List<BusinessSearchFormController.CountryOption>();
-        for (String countryName : alpha2CodeByCountryName.keySet()) {
-            returnValue.add(new CountryOption(countryName, alpha2CodeByCountryName.get(countryName)));
+    public static AuraResponseWrapper getCountryOptions() {
+        try {
+            Map<String, String> alpha2CodeByCountryName = BusinessService.getCountryOptionsForBusinessSearch();
+            List<CountryOption> returnValue = new List<BusinessSearchFormController.CountryOption>();
+            for (String countryName : alpha2CodeByCountryName.keySet()) {
+                returnValue.add(new CountryOption(countryName, alpha2CodeByCountryName.get(countryName)));
+            }
+            return new AuraResponseWrapper(returnValue);
+        } catch (Exception ex) {
+            return new AuraResponseWrapper(ex, true, true);
         }
-        return returnValue;
+
     }
 
     @AuraEnabled
-    public static String getSelectedDataSource(String alpha2CountryCode) {
-        Data_source__mdt dataSource = SetupService.getSelectedDataSource(alpha2CountryCode);
-        System.debug('country code: ' + alpha2CountryCode);
-        System.debug('datasource: ' + JSON.serializePretty(dataSource));
-        return dataSource.DeveloperName;
+    public static AuraResponseWrapper getSelectedDataSource(String alpha2CountryCode) {
+        try {
+            Data_source__mdt dataSource = SetupService.getSelectedDataSource(alpha2CountryCode);
+            return new AuraResponseWrapper(dataSource.DeveloperName);
+        } catch (Exception ex) {
+            return new AuraResponseWrapper(ex, true, true);
+        }
+
     }
 
 }
