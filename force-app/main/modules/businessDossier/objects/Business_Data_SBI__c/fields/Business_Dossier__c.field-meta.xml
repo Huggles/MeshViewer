@@ -4,7 +4,6 @@
     <externalId>false</externalId>
     <label>Business Dossier</label>
     <referenceTo>Business_Dossier__c</referenceTo>
-    <relationshipLabel>SBIs</relationshipLabel>
     <relationshipName>SBIs</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>

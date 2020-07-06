@@ -956,8 +956,8 @@ public inherited sharing class CreditSafeServiceImpl implements ICreditSafeServi
                 companyReportFull.Company_Registration_Number__c = basicInformationV2.company_registration_number;
                 companyReportFull.Business_Name__c = basicInformationV2.business_name;
                 companyReportFull.Country__c = basicInformationV2.country;
-                companyReportFull.Dateof_Company_Registration__c = basicInformationV2.dateof_company_registration;
-                companyReportFull.Dateof_Starting_Operations__c = basicInformationV2.dateof_starting_operations.year() >= 1700 ? basicInformationV2.dateof_starting_operations : null;
+                companyReportFull.Dateof_Company_Registration__c = (basicInformationV2.dateof_company_registration != null && basicInformationV2.dateof_company_registration.year() >= 1700) ? basicInformationV2.dateof_company_registration : null;
+                companyReportFull.Dateof_Starting_Operations__c = (basicInformationV2.dateof_starting_operations != null && basicInformationV2.dateof_starting_operations.year() >= 1700) ? basicInformationV2.dateof_starting_operations : null;
                 companyReportFull.Registered_Company_Name__c = basicInformationV2.registered_company_name;
                 companyReportFull.VAT_Registration_Number__c = basicInformationV2.vat_registration_number;
 
