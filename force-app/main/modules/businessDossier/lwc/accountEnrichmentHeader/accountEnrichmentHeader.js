@@ -173,7 +173,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
         Dossier_Account_Update_Completed,
         Get_Creditsafe_Report,
         Get_Positions,
-        Get_Business_Positions_Confirmation,
         Business_Positions_Retrieved_Succesfully
 
     }
