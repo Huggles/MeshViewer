@@ -22,7 +22,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>House number addition</shortDescription>
-        <value>House Number Addition</value>
+        <value>Addition</value>
     </labels>
     <labels>
         <fullName>Address_Type</fullName>
