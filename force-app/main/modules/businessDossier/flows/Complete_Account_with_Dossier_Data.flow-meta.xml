@@ -268,12 +268,6 @@
                 <elementReference>CreatedDossier.Id</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>Name</field>
-            <value>
-                <elementReference>CreatedDossier.Name</elementReference>
-            </value>
-        </inputAssignments>
         <object>Account</object>
     </recordUpdates>
     <screens>

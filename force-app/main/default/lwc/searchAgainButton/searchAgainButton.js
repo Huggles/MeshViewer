@@ -41,13 +41,10 @@ export default class SearchAgainButton extends LightningElement {
     @api
     searchAgainClicked = false;
 
-    /**
-     * True if the confirm dialog is shown
-     */
-    confirmDialogVisible = false;
 
     handleOnClick() {
-        this.confirmDialogVisible = true; // would be better to encapsulate this in a method on the confirm dialog itself
+        let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
+        confirmationDialog.show();
     }
 
     handleOnClickConfirmationDialog(event) {
@@ -86,7 +83,8 @@ export default class SearchAgainButton extends LightningElement {
                 }
             }
             if (event.detail.status === 'cancel') {
-                this.confirmDialogVisible = false;
+                let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
+                confirmationDialog.hide();
             }
         }
     }
