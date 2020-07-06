@@ -6,17 +6,21 @@ import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from "@salesforce/apex";
+import {getRecordTypeName} from "c/objectInfoUtils";
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
 import {Features, checkAccess} from "c/featureAccessControl";
 import {fireEvent} from "c/pubsub";
 
 //Object fields
+import BUSINESS_DOSSIER from '@salesforce/schema/Business_Dossier__c';
 import BUSINESS_DOSSIER_POSITIONS_UPDATED_DATE from '@salesforce/schema/Business_Dossier__c.Business_Positions_Updated_Date__c';
 import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Number__c';
 import BUSINESS_DOSSIER_NO_VAT from '@salesforce/schema/Business_Dossier__c.No_VAT_Number__c';
 import BUSINESS_DOSSIER_COUNTRY from '@salesforce/schema/Business_Dossier__c.Registration_Country__c';
 import BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT from '@salesforce/schema/Business_Dossier__c.Creditsafe_Company_Report__c';
+import BUSINESS_DOSSIER_RECORD_TYPE from '@salesforce/schema/Business_Dossier__c.RecordTypeId';
 
 //Apex controllers
 import updateDossierWithVAT from '@salesforce/apex/CompanyDetailsController.updateDossierWithVAT';
@@ -36,21 +40,18 @@ import Dossier_Account_Update_Completed from '@salesforce/label/c.Dossier_Accoun
 import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
 import Get_Positions from '@salesforce/label/c.Get_Positions';
 import Business_Positions_Retrieved_Succesfully from '@salesforce/label/c.Business_Positions_Retrieved_Succesfully';
-import Get_Business_Positions_Confirmation from '@salesforce/label/c.Get_Business_Positions_Confirmation';
-
-
-
-
-
-
 
 const OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS = [
     BUSINESS_DOSSIER_VAT,
     BUSINESS_DOSSIER_NO_VAT,
     BUSINESS_DOSSIER_COUNTRY,
     BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT,
-    BUSINESS_DOSSIER_POSITIONS_UPDATED_DATE
+    BUSINESS_DOSSIER_POSITIONS_UPDATED_DATE,
+    BUSINESS_DOSSIER_RECORD_TYPE
 ]
+
+const CREDITSAFE_DOSSIER_RECORD_TYPE_NAME = 'Creditsafe';
+const DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME = 'Dutch Business';
 
 export default class AccountEnrichmentHeader extends LightningElement {
 
@@ -100,12 +101,12 @@ export default class AccountEnrichmentHeader extends LightningElement {
      */
     businessDossier;
 
-    /*
+    /**
      * boolean whether the component is loading something or not. Shows a spinner.
      */
     isLoading = false;
 
-    /*
+    /**
      * Booleans to define whether we can access certain elements or not.
      */
     _getPositionsAccess = false;
@@ -114,6 +115,15 @@ export default class AccountEnrichmentHeader extends LightningElement {
 
 
     _businessDossierRecordResponse;
+
+    /**
+     * The name of the record type of the business dossier
+     */
+    _recordTypeName;
+
+    @wire(getObjectInfo, { objectApiName: BUSINESS_DOSSIER})
+    _businessDossierObjectInfo;
+
 
     @wire(getRecord, {recordId: '$businessDossierId',fields: [],optionalFields: OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS})
     businessDossierRecord(response) {
@@ -145,6 +155,9 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 }
                 if (this.businessDossier.fields.appsolutely__Business_Positions_Updated_Date__c) {
                     this.businessPositionsUpdatedDate = this.businessDossier.fields.appsolutely__Business_Positions_Updated_Date__c.value;
+                }
+                if (this.businessDossier.fields.RecordTypeId) {
+                    this._recordTypeName = getRecordTypeName(this.businessDossier.fields.RecordTypeId.value, this._businessDossierObjectInfo);
                 }
             }
         }
@@ -190,13 +203,13 @@ export default class AccountEnrichmentHeader extends LightningElement {
     }
 
     get showVATButton(){
-        return (this._VATAccess && !this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
+        return (this._recordTypeName === DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME && this._VATAccess && !this.noVAT && (this.VATNumber == undefined || this.VATNumber == null || this.VATNumber == ''));
     }
     get showCreditSafeReportButton(){
         return (this._CreditSafeAccess && (this.creditSafeReport == undefined || this.creditSafeReport == null));
     }
     get showGetPositionsButton(){
-        return (this._getPositionsAccess && (this.businessPositionsUpdatedDate == null) );
+        return (this._recordTypeName === DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME && this._getPositionsAccess && (this.businessPositionsUpdatedDate == null) );
     }
 
     handleOnClickVAT(event) {
@@ -241,22 +254,10 @@ export default class AccountEnrichmentHeader extends LightningElement {
         fireEvent(null, 'getreportclicked');
     }
 
-
-
-
-
-
     handleOnGetPositionsClicked(event){
-        let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
-        confirmationDialog.show();
+        this.retrievePositions();
     }
-    handleOnClickConfirmationDialog(event){
-        let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
-        confirmationDialog.hide();
-        if(event.detail.status == 'confirm'){
-            this.retrievePositions();
-        }
-    }
+
     retrievePositions(){
         this.isLoading = true;
         updateDossierWithPositions({

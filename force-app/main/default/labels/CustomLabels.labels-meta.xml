@@ -1641,14 +1641,6 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Success message when business positions have been retrieved.</shortDescription>
-        <value>Business Positions succesfully retrieved.</value>
-    </labels>
-    <labels>
-        <fullName>Get_Business_Positions_Confirmation</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Confirmation question whether the positions should be retrieved</shortDescription>
-        <value>Do you want to get positions?</value>
+        <value>Business Positions successfully retrieved.</value>
     </labels>
 </CustomLabels>
