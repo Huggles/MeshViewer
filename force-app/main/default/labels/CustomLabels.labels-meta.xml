@@ -1627,6 +1627,20 @@
         <shortDescription>Value to indicate the user wants to select even or odd house numbers</shortDescription>
         <value>Both</value>
     </labels>
-
-    Even_Odd
+    <labels>
+        <fullName>Get_Positions</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for button that triggers the getPositions callout</shortDescription>
+        <value>Get Positions</value>
+    </labels>
+    <labels>
+        <fullName>Business_Positions_Retrieved_Succesfully</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success message when business positions have been retrieved.</shortDescription>
+        <value>Business Positions successfully retrieved.</value>
+    </labels>
 </CustomLabels>

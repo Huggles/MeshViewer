@@ -86,4 +86,14 @@ public interface IDutchBusinessService {
      * @param unitOfWork if not present a new uow will be created and used to do the work
      */
     void storeDossiers(List<Business_Dossier__c> dossiers, fflib_ISObjectUnitOfWork unitOfWork);
+
+
+    /**
+     * Gets the latest -cached- version of the business positions.
+     *
+     * @param dossier_number    'The COC Number'
+     *
+     * @return  List<Business_Position__c>
+     */
+    List<Business_Position__c> getPositions(String dossier_number, Id dossier_record_id);
 }

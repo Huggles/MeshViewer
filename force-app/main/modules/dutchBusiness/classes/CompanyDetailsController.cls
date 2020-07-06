@@ -24,4 +24,21 @@ public with sharing class CompanyDetailsController {
         }
     }
 
+    @AuraEnabled
+    public static Object updateDossierWithPositions(Id dossierId) {
+        try{
+            List<Business_Dossier__c> businessDossiers = DutchBusinessService.getDossiersById(new Set<Id>{dossierId});
+            if (businessDossiers != null && businessDossiers.size() == 1) {
+                List<Business_Position__c> positions = DutchBusinessService.getPositions(String.valueOf(businessDossiers[0].appsolutely__Dossier_Number__c), dossierId);
+                return positions;
+            }else {
+                throw new CustomException('Expected a dossier id. No dossier Id present.');
+            }
+
+        } catch (Exception e) {
+            ErrorLogUtil.logException(e);
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
 }
