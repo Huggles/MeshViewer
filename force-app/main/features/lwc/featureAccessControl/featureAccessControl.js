@@ -3,9 +3,11 @@
  */
 
 import apexCheckAccess from '@salesforce/apex/FeatureAccessControlController.checkAccess';
+import {handleResponse} from "c/auraResponseWrapperHandler";
 
 const checkAccess = async (feature) => {
     let result = await apexCheckAccess({featureName: feature})
+        .then(result => {return handleResponse(result)})
         .then(result => {return result})
         .catch(error => {throw error});
     return result;

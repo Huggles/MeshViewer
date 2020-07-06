@@ -4,5 +4,6 @@
   "EmailEncodingKey": "UTF-8",
   "LanguageLocaleKey": "en_US",
   "profileName": "System Administrator",
-  "permsets": ["Company_info_administrator"]
+  "permsets": ["Company_info_administrator"],
+  "generatePassword": true
 }

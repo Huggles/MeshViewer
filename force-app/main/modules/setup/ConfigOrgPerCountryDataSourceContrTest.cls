@@ -7,8 +7,9 @@ private class ConfigOrgPerCountryDataSourceContrTest {
     @IsTest
     static void testGetDataSourcesPerCountry() {
         Test.startTest();
-        List<ConfigOrgPerCountryDataSourceController.DataSourcesPerCountry> dataSourcesPerCountries = ConfigOrgPerCountryDataSourceController.getDataSourcesPerCountry();
+        AuraResponseWrapper responseWrapper = ConfigOrgPerCountryDataSourceController.getDataSourcesPerCountry();
         Test.stopTest();
+        List<ConfigOrgPerCountryDataSourceController.DataSourcesPerCountry> dataSourcesPerCountries = (List<ConfigOrgPerCountryDataSourceController.DataSourcesPerCountry>)responseWrapper.data;
         System.assertEquals(true, dataSourcesPerCountries.size() > 0);
         for (ConfigOrgPerCountryDataSourceController.DataSourcesPerCountry dataSourcesPerCountry :dataSourcesPerCountries) {
             System.assertNotEquals(null, dataSourcesPerCountry.countryCode);

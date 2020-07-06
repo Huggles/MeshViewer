@@ -56,6 +56,8 @@ public inherited sharing class Application {
                             IWsVat.class => WsVatImpl.class,
                             ISepaService.class => SepaServiceImpl.class,
                             IWsSepa.class => WsSepaImpl.class,
+                            IWsAddress.class => WsAddressImpl.class,
+                            IAddressService.class => AddressServiceImpl.class,
                             ISetupService.class => SetupServiceImpl.class,
                             IDuplicateManagement.class => DuplicateManagementServiceImpl.class,
                             ILicenseManagementService.class => LicenseManagementServiceImpl.class

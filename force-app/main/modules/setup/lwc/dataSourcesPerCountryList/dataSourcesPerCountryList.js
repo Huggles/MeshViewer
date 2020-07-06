@@ -7,6 +7,7 @@ import {LightningElement, track} from 'lwc';
 import {ToastEventController} from "c/toastEventController";
 import getDataSourcesPerCountry from "@salesforce/apex/ConfigOrgPerCountryDataSourceController.getDataSourcesPerCountry";
 import setDataSourcePerCountry from "@salesforce/apex/ConfigOrgPerCountryDataSourceController.setDataSourcePerCountry";
+import {handleResponse} from "c/auraResponseWrapperHandler";
 
 import Save from '@salesforce/label/c.Save';
 
@@ -37,6 +38,9 @@ export default class dataSourcesPerCountryList extends LightningElement {
 
     async retrieveDataSourcesPerCountry(){
         await getDataSourcesPerCountry({})
+            .then(result => {
+                return handleResponse(result);
+            })
             .then(result => {
                 this._dataSourcesPerCountry = result;
                 Promise.resolve(result);

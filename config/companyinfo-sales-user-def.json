@@ -1,0 +1,8 @@
+{
+  "TimeZoneSidKey": "Europe/Amsterdam",
+  "LocaleSidKey": "nl_NL",
+  "EmailEncodingKey": "UTF-8",
+  "LanguageLocaleKey": "en_US",
+  "profileName": "Standard User",
+  "permsets": ["Company_info_for_Sales"]
+}

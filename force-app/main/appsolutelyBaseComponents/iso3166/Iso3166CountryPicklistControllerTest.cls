@@ -7,7 +7,7 @@ private class Iso3166CountryPicklistControllerTest {
     @IsTest
     static void testGetIso3166Options() {
         Test.startTest();
-        List<Iso3166CountryPickListController.Iso3166Option> entries = Iso3166CountryPickListController.getIso3166Options();
+        List<Iso3166CountryPickListController.Iso3166Option> entries = (List<Iso3166CountryPickListController.Iso3166Option>)((AuraResponseWrapper)Iso3166CountryPickListController.getIso3166Options()).data;
         Test.stopTest();
         System.assert(entries.size() == 249);
     }
@@ -15,7 +15,7 @@ private class Iso3166CountryPicklistControllerTest {
     @IsTest
     static void testGetIsO3166OptionByAlpha2Code() {
         Test.startTest();
-        Iso3166CountryPickListController.Iso3166Option option = Iso3166CountryPickListController.getIsO3166OptionByAlpha2Code('NL');
+        Iso3166CountryPickListController.Iso3166Option option = (Iso3166CountryPickListController.Iso3166Option)((AuraResponseWrapper)Iso3166CountryPickListController.getIsO3166OptionByAlpha2Code('NL')).data;
         Test.stopTest();
         System.assert(option != null);
         System.assert(option.alpha2Code == 'NL');

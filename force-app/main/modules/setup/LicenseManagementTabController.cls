@@ -5,7 +5,7 @@
 public inherited sharing class LicenseManagementTabController {
 
     @AuraEnabled(Cacheable=true)
-    public static String[] getLicenseTypes() {
+    public static AuraResponseWrapper getLicenseTypes() {
         try {
             List<License_Type_Definition__mdt> licenseTypeDefinitions = new List<License_Type_Definition__mdt>();
             licenseTypeDefinitions = [
@@ -32,11 +32,9 @@ public inherited sharing class LicenseManagementTabController {
                 if (nrOfSeats != null && nrOfSeats > 0)
                     returnValues.add(licenseTypeDefinition.Licence_Type_Name__c);
             }
-            return returnValues;
-
+            return new AuraResponseWrapper(returnValues);
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex, true);
-            throw new AuraHandledException(ex.getMessage());
+            return new AuraResponseWrapper(ex, true, true);
         }
     }
 

@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.webservices.nl/soap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://www.webservices.nl/soap/">
+ <types>
+  <xsd:schema elementFormDefault="qualified" targetNamespace="http://www.webservices.nl/soap/">
+   <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"/>
+   <xsd:complexType name="HeaderAuthenticateType">
+    <xsd:all>
+     <xsd:element name="reactid" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="HeaderLoginType">
+    <xsd:all>
+     <xsd:element name="username" type="xsd:string"/>
+     <xsd:element name="password" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="PCReeks">
+    <xsd:all>
+     <xsd:element name="reeksid" type="xsd:int"/>
+     <xsd:element name="huisnr_van" type="xsd:int"/>
+     <xsd:element name="huisnr_tm" type="xsd:int"/>
+     <xsd:element name="wijkcode" type="xsd:string"/>
+     <xsd:element name="lettercombinatie" type="xsd:string"/>
+     <xsd:element name="reeksindicatie" type="xsd:string"/>
+     <xsd:element name="straatid" type="xsd:int"/>
+     <xsd:element name="straatnaam" type="xsd:string"/>
+     <xsd:element name="straatnaam_nen" type="xsd:string"/>
+     <xsd:element name="straatnaam_ptt" type="xsd:string"/>
+     <xsd:element name="straatnaam_extract" type="xsd:string"/>
+     <xsd:element name="plaatsid" type="xsd:int"/>
+     <xsd:element name="plaatsnaam" type="xsd:string"/>
+     <xsd:element name="plaatsnaam_ptt" type="xsd:string"/>
+     <xsd:element name="plaatsnaam_extract" type="xsd:string"/>
+     <xsd:element name="gemeenteid" type="xsd:int"/>
+     <xsd:element name="gemeentenaam" type="xsd:string"/>
+     <xsd:element name="gemeentecode" type="xsd:int"/>
+     <xsd:element name="cebucocode" type="xsd:int"/>
+     <xsd:element name="provinciecode" type="xsd:string"/>
+     <xsd:element name="provincienaam" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="SearchParts">
+    <xsd:all>
+     <xsd:element name="huisnr" type="xsd:int"/>
+     <xsd:element name="toevoeging" type="xsd:string"/>
+     <xsd:element name="wijkcode" type="xsd:string"/>
+     <xsd:element name="lettercombinatie" type="xsd:string"/>
+     <xsd:element name="straat" type="xsd:string"/>
+     <xsd:element name="plaats" type="xsd:string"/>
+     <xsd:element name="gemeente" type="xsd:string"/>
+     <xsd:element name="provincie" type="xsd:string"/>
+     <xsd:element name="reeksindicatie" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="PCReeksArray">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:PCReeks" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ResultInfo">
+    <xsd:all>
+     <xsd:element name="curpage" type="xsd:int"/>
+     <xsd:element name="perpage" type="xsd:int"/>
+     <xsd:element name="numpages" type="xsd:int"/>
+     <xsd:element name="numresults" type="xsd:int"/>
+     <xsd:element name="maxresults" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="PCReeksSearchPartsPagedResult">
+    <xsd:all>
+     <xsd:element name="extra" type="tns:SearchParts"/>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:PCReeksArray"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="Perceel">
+    <xsd:all>
+     <xsd:element name="perceelid" type="xsd:int"/>
+     <xsd:element name="huisnr" type="xsd:int"/>
+     <xsd:element name="huisnr_toevoeging" type="xsd:string"/>
+     <xsd:element name="perceelnummer" type="xsd:int"/>
+     <xsd:element name="reeksid" type="xsd:int"/>
+     <xsd:element name="huisnr_van" type="xsd:int"/>
+     <xsd:element name="huisnr_tm" type="xsd:int"/>
+     <xsd:element name="wijkcode" type="xsd:string"/>
+     <xsd:element name="lettercombinatie" type="xsd:string"/>
+     <xsd:element name="reeksindicatie" type="xsd:string"/>
+     <xsd:element name="straatid" type="xsd:int"/>
+     <xsd:element name="straatnaam" type="xsd:string"/>
+     <xsd:element name="straatnaam_nen" type="xsd:string"/>
+     <xsd:element name="straatnaam_ptt" type="xsd:string"/>
+     <xsd:element name="straatnaam_extract" type="xsd:string"/>
+     <xsd:element name="plaatsid" type="xsd:int"/>
+     <xsd:element name="plaatsnaam" type="xsd:string"/>
+     <xsd:element name="plaatsnaam_ptt" type="xsd:string"/>
+     <xsd:element name="plaatsnaam_extract" type="xsd:string"/>
+     <xsd:element name="gemeenteid" type="xsd:int"/>
+     <xsd:element name="gemeentenaam" type="xsd:string"/>
+     <xsd:element name="gemeentecode" type="xsd:int"/>
+     <xsd:element name="cebucocode" type="xsd:int"/>
+     <xsd:element name="provinciecode" type="xsd:string"/>
+     <xsd:element name="provincienaam" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="PerceelArray">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:Perceel" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="PerceelSearchPartsPagedResult">
+    <xsd:all>
+     <xsd:element name="extra" type="tns:SearchParts"/>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:PerceelArray"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="RangeAddress">
+    <xsd:all>
+     <xsd:element name="reeks" type="tns:PCReeks"/>
+     <xsd:element name="huisnr" type="xsd:int" minOccurs="0"/>
+     <xsd:element name="huisnr_toevoeging" type="xsd:string" minOccurs="0"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="RangeAddressArray">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:RangeAddress" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="RangeAddressPagedResult">
+    <xsd:all>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:RangeAddressArray"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="District">
+    <xsd:all>
+     <xsd:element name="gemeenteid" type="xsd:int"/>
+     <xsd:element name="gemeentenaam" type="xsd:string"/>
+     <xsd:element name="gemeentecode" type="xsd:int"/>
+     <xsd:element name="provinciecode" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="DistrictArray">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:District" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="DistrictPagedResult">
+    <xsd:all>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:DistrictArray"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="City">
+    <xsd:all>
+     <xsd:element name="plaatsid" type="xsd:int"/>
+     <xsd:element name="plaatsnaam" type="xsd:string"/>
+     <xsd:element name="plaatsnaam_ptt" type="xsd:string"/>
+     <xsd:element name="plaatsnaam_extract" type="xsd:string"/>
+     <xsd:element name="gemeenteid" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="CityArray">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:City" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CityPagedResult">
+    <xsd:all>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:CityArray"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="CityV2">
+    <xsd:all>
+     <xsd:element name="plaatsid" type="xsd:int"/>
+     <xsd:element name="plaatsnaam" type="xsd:string"/>
+     <xsd:element name="plaatsnaam_ptt" type="xsd:string"/>
+     <xsd:element name="plaatsnaam_extract" type="xsd:string"/>
+     <xsd:element name="gemeenteid" type="xsd:int"/>
+     <xsd:element name="gemeentenaam" type="xsd:string"/>
+     <xsd:element name="gemeentecode" type="xsd:int"/>
+     <xsd:element name="cebucocode" type="xsd:int"/>
+     <xsd:element name="provinciecode" type="xsd:string"/>
+     <xsd:element name="provincienaam" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="CityV2Array">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:CityV2" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="CityV2PagedResult">
+    <xsd:all>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:CityV2Array"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="Province">
+    <xsd:all>
+     <xsd:element name="provinciecode" type="xsd:string"/>
+     <xsd:element name="provincienaam" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="ProvinceArray">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:Province" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ProvincePagedResult">
+    <xsd:all>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:ProvinceArray"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="Neighborhood">
+    <xsd:all>
+     <xsd:element name="nbcode" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="NeighborhoodArray">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:Neighborhood" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="NeighborhoodPagedResult">
+    <xsd:all>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:NeighborhoodArray"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="NeighborhoodName">
+    <xsd:all>
+     <xsd:element name="nbcode" type="xsd:string"/>
+     <xsd:element name="nbname" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="NeighborhoodNameArray">
+    <xsd:sequence>
+     <xsd:element name="item" type="tns:NeighborhoodName" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="NeighborhoodNamePagedResult">
+    <xsd:all>
+     <xsd:element name="paging" type="tns:ResultInfo"/>
+     <xsd:element name="results" type="tns:NeighborhoodNameArray"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="loginRequestType">
+    <xsd:all>
+     <xsd:element name="username" type="xsd:string"/>
+     <xsd:element name="password" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="loginResponseType">
+    <xsd:all>
+     <xsd:element name="reactid" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="logoutRequestType"/>
+   <xsd:complexType name="logoutResponseType"/>
+   <xsd:complexType name="addressReeksPostcodeSearchRequestType">
+    <xsd:all>
+     <xsd:element name="address" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksPostcodeSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:PCReeks"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksAddressSearchRequestType">
+    <xsd:all>
+     <xsd:element name="address" type="xsd:string"/>
+     <xsd:element name="postcode" type="xsd:string"/>
+     <xsd:element name="city" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksAddressSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:RangeAddressPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksFullParameterSearchRequestType">
+    <xsd:all>
+     <xsd:element name="province" type="xsd:string"/>
+     <xsd:element name="district" type="xsd:string"/>
+     <xsd:element name="city" type="xsd:string"/>
+     <xsd:element name="street" type="xsd:string"/>
+     <xsd:element name="houseNo" type="xsd:int"/>
+     <xsd:element name="houseNoAddition" type="xsd:string"/>
+     <xsd:element name="nbcode" type="xsd:string"/>
+     <xsd:element name="lettercombination" type="xsd:string"/>
+     <xsd:element name="addresstype" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksFullParameterSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:PCReeksSearchPartsPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksParameterSearchRequestType">
+    <xsd:all>
+     <xsd:element name="province" type="xsd:string"/>
+     <xsd:element name="district" type="xsd:string"/>
+     <xsd:element name="city" type="xsd:string"/>
+     <xsd:element name="street" type="xsd:string"/>
+     <xsd:element name="houseNo" type="xsd:int"/>
+     <xsd:element name="houseNoAddition" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksParameterSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:PCReeksSearchPartsPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressPerceelPhraseSearchRequestType">
+    <xsd:all>
+     <xsd:element name="address" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressPerceelPhraseSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:PerceelSearchPartsPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressPerceelFullParameterSearchV2RequestType">
+    <xsd:all>
+     <xsd:element name="province" type="xsd:string"/>
+     <xsd:element name="district" type="xsd:string"/>
+     <xsd:element name="city" type="xsd:string"/>
+     <xsd:element name="street" type="xsd:string"/>
+     <xsd:element name="houseNo" type="xsd:int"/>
+     <xsd:element name="houseNoAddition" type="xsd:string"/>
+     <xsd:element name="nbcode" type="xsd:string"/>
+     <xsd:element name="lettercombination" type="xsd:string"/>
+     <xsd:element name="addresstype" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressPerceelFullParameterSearchV2ResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:PerceelSearchPartsPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressProvinceListNeighborhoodsRequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="postbus" type="xsd:boolean"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressProvinceListNeighborhoodsResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:NeighborhoodPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressProvinceListDistrictsRequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressProvinceListDistrictsResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:DistrictPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressProvinceListRequestType">
+    <xsd:all>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressProvinceListResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:ProvincePagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressProvinceSearchRequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressProvinceSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:ProvincePagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressDistrictSearchRequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressDistrictSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:DistrictPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressDistrictListCitiesRequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressDistrictListCitiesResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:CityPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressDistrictListNeighborhoodsRequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="postbus" type="xsd:boolean"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressDistrictListNeighborhoodsResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:NeighborhoodPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressCitySearchV2RequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressCitySearchV2ResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:CityV2PagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressCityListNeighborhoodsRequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="postbus" type="xsd:boolean"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressCityListNeighborhoodsResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:NeighborhoodPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressPerceelFullParameterSearchRequestType">
+    <xsd:all>
+     <xsd:element name="province" type="xsd:string"/>
+     <xsd:element name="district" type="xsd:string"/>
+     <xsd:element name="city" type="xsd:string"/>
+     <xsd:element name="street" type="xsd:string"/>
+     <xsd:element name="houseNo" type="xsd:int"/>
+     <xsd:element name="houseNoAddition" type="xsd:string"/>
+     <xsd:element name="nbcode" type="xsd:string"/>
+     <xsd:element name="lettercombination" type="xsd:string"/>
+     <xsd:element name="addresstype" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressPerceelFullParameterSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:PerceelSearchPartsPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressPerceelParameterSearchRequestType">
+    <xsd:all>
+     <xsd:element name="province" type="xsd:string"/>
+     <xsd:element name="district" type="xsd:string"/>
+     <xsd:element name="city" type="xsd:string"/>
+     <xsd:element name="street" type="xsd:string"/>
+     <xsd:element name="houseNo" type="xsd:int"/>
+     <xsd:element name="houseNoAddition" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressPerceelParameterSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:PerceelSearchPartsPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksPhraseSearchRequestType">
+    <xsd:all>
+     <xsd:element name="address" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressReeksPhraseSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:PCReeksSearchPartsPagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressNeighborhoodNameRequestType">
+    <xsd:all>
+     <xsd:element name="nbcode" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressNeighborhoodNameResponseType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressNeighborhoodPhraseSearchRequestType">
+    <xsd:all>
+     <xsd:element name="name" type="xsd:string"/>
+     <xsd:element name="page" type="xsd:int"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:complexType name="addressNeighborhoodPhraseSearchResponseType">
+    <xsd:all>
+     <xsd:element name="out" type="tns:NeighborhoodNamePagedResult"/>
+    </xsd:all>
+   </xsd:complexType>
+   <xsd:element name="errorcode" type="xsd:string"/>
+   <xsd:element name="login" type="tns:loginRequestType"/>
+   <xsd:element name="loginResponse" type="tns:loginResponseType"/>
+   <xsd:element name="HeaderLogin" type="tns:HeaderLoginType"/>
+   <xsd:element name="HeaderAuthenticate" type="tns:HeaderAuthenticateType"/>
+   <xsd:element name="logout" type="tns:logoutRequestType"/>
+   <xsd:element name="logoutResponse" type="tns:logoutResponseType"/>
+   <xsd:element name="addressReeksPostcodeSearch" type="tns:addressReeksPostcodeSearchRequestType"/>
+   <xsd:element name="addressReeksPostcodeSearchResponse" type="tns:addressReeksPostcodeSearchResponseType"/>
+   <xsd:element name="addressReeksAddressSearch" type="tns:addressReeksAddressSearchRequestType"/>
+   <xsd:element name="addressReeksAddressSearchResponse" type="tns:addressReeksAddressSearchResponseType"/>
+   <xsd:element name="addressReeksFullParameterSearch" type="tns:addressReeksFullParameterSearchRequestType"/>
+   <xsd:element name="addressReeksFullParameterSearchResponse" type="tns:addressReeksFullParameterSearchResponseType"/>
+   <xsd:element name="addressReeksParameterSearch" type="tns:addressReeksParameterSearchRequestType"/>
+   <xsd:element name="addressReeksParameterSearchResponse" type="tns:addressReeksParameterSearchResponseType"/>
+   <xsd:element name="addressPerceelPhraseSearch" type="tns:addressPerceelPhraseSearchRequestType"/>
+   <xsd:element name="addressPerceelPhraseSearchResponse" type="tns:addressPerceelPhraseSearchResponseType"/>
+   <xsd:element name="addressPerceelFullParameterSearchV2" type="tns:addressPerceelFullParameterSearchV2RequestType"/>
+   <xsd:element name="addressPerceelFullParameterSearchV2Response" type="tns:addressPerceelFullParameterSearchV2ResponseType"/>
+   <xsd:element name="addressProvinceListNeighborhoods" type="tns:addressProvinceListNeighborhoodsRequestType"/>
+   <xsd:element name="addressProvinceListNeighborhoodsResponse" type="tns:addressProvinceListNeighborhoodsResponseType"/>
+   <xsd:element name="addressProvinceListDistricts" type="tns:addressProvinceListDistrictsRequestType"/>
+   <xsd:element name="addressProvinceListDistrictsResponse" type="tns:addressProvinceListDistrictsResponseType"/>
+   <xsd:element name="addressProvinceList" type="tns:addressProvinceListRequestType"/>
+   <xsd:element name="addressProvinceListResponse" type="tns:addressProvinceListResponseType"/>
+   <xsd:element name="addressProvinceSearch" type="tns:addressProvinceSearchRequestType"/>
+   <xsd:element name="addressProvinceSearchResponse" type="tns:addressProvinceSearchResponseType"/>
+   <xsd:element name="addressDistrictSearch" type="tns:addressDistrictSearchRequestType"/>
+   <xsd:element name="addressDistrictSearchResponse" type="tns:addressDistrictSearchResponseType"/>
+   <xsd:element name="addressDistrictListCities" type="tns:addressDistrictListCitiesRequestType"/>
+   <xsd:element name="addressDistrictListCitiesResponse" type="tns:addressDistrictListCitiesResponseType"/>
+   <xsd:element name="addressDistrictListNeighborhoods" type="tns:addressDistrictListNeighborhoodsRequestType"/>
+   <xsd:element name="addressDistrictListNeighborhoodsResponse" type="tns:addressDistrictListNeighborhoodsResponseType"/>
+   <xsd:element name="addressCitySearchV2" type="tns:addressCitySearchV2RequestType"/>
+   <xsd:element name="addressCitySearchV2Response" type="tns:addressCitySearchV2ResponseType"/>
+   <xsd:element name="addressCityListNeighborhoods" type="tns:addressCityListNeighborhoodsRequestType"/>
+   <xsd:element name="addressCityListNeighborhoodsResponse" type="tns:addressCityListNeighborhoodsResponseType"/>
+   <xsd:element name="addressPerceelFullParameterSearch" type="tns:addressPerceelFullParameterSearchRequestType"/>
+   <xsd:element name="addressPerceelFullParameterSearchResponse" type="tns:addressPerceelFullParameterSearchResponseType"/>
+   <xsd:element name="addressPerceelParameterSearch" type="tns:addressPerceelParameterSearchRequestType"/>
+   <xsd:element name="addressPerceelParameterSearchResponse" type="tns:addressPerceelParameterSearchResponseType"/>
+   <xsd:element name="addressReeksPhraseSearch" type="tns:addressReeksPhraseSearchRequestType"/>
+   <xsd:element name="addressReeksPhraseSearchResponse" type="tns:addressReeksPhraseSearchResponseType"/>
+   <xsd:element name="addressNeighborhoodName" type="tns:addressNeighborhoodNameRequestType"/>
+   <xsd:element name="addressNeighborhoodNameResponse" type="tns:addressNeighborhoodNameResponseType"/>
+   <xsd:element name="addressNeighborhoodPhraseSearch" type="tns:addressNeighborhoodPhraseSearchRequestType"/>
+   <xsd:element name="addressNeighborhoodPhraseSearchResponse" type="tns:addressNeighborhoodPhraseSearchResponseType"/>
+  </xsd:schema>
+ </types>
+ <message name="loginRequest">
+  <part name="parameters" element="tns:login"/>
+ </message>
+ <message name="loginResponse">
+  <part name="parameters" element="tns:loginResponse"/>
+ </message>
+ <message name="Headers">
+  <part name="HeaderLogin" element="tns:HeaderLogin"/>
+  <part name="HeaderAuthenticate" element="tns:HeaderAuthenticate"/>
+ </message>
+ <message name="logoutRequest">
+  <part name="parameters" element="tns:logout"/>
+ </message>
+ <message name="logoutResponse">
+  <part name="parameters" element="tns:logoutResponse"/>
+ </message>
+ <message name="addressReeksPostcodeSearchRequest">
+  <part name="parameters" element="tns:addressReeksPostcodeSearch"/>
+ </message>
+ <message name="addressReeksPostcodeSearchResponse">
+  <part name="parameters" element="tns:addressReeksPostcodeSearchResponse"/>
+ </message>
+ <message name="addressReeksAddressSearchRequest">
+  <part name="parameters" element="tns:addressReeksAddressSearch"/>
+ </message>
+ <message name="addressReeksAddressSearchResponse">
+  <part name="parameters" element="tns:addressReeksAddressSearchResponse"/>
+ </message>
+ <message name="addressReeksFullParameterSearchRequest">
+  <part name="parameters" element="tns:addressReeksFullParameterSearch"/>
+ </message>
+ <message name="addressReeksFullParameterSearchResponse">
+  <part name="parameters" element="tns:addressReeksFullParameterSearchResponse"/>
+ </message>
+ <message name="addressReeksParameterSearchRequest">
+  <part name="parameters" element="tns:addressReeksParameterSearch"/>
+ </message>
+ <message name="addressReeksParameterSearchResponse">
+  <part name="parameters" element="tns:addressReeksParameterSearchResponse"/>
+ </message>
+ <message name="addressPerceelPhraseSearchRequest">
+  <part name="parameters" element="tns:addressPerceelPhraseSearch"/>
+ </message>
+ <message name="addressPerceelPhraseSearchResponse">
+  <part name="parameters" element="tns:addressPerceelPhraseSearchResponse"/>
+ </message>
+ <message name="addressPerceelFullParameterSearchV2Request">
+  <part name="parameters" element="tns:addressPerceelFullParameterSearchV2"/>
+ </message>
+ <message name="addressPerceelFullParameterSearchV2Response">
+  <part name="parameters" element="tns:addressPerceelFullParameterSearchV2Response"/>
+ </message>
+ <message name="addressProvinceListNeighborhoodsRequest">
+  <part name="parameters" element="tns:addressProvinceListNeighborhoods"/>
+ </message>
+ <message name="addressProvinceListNeighborhoodsResponse">
+  <part name="parameters" element="tns:addressProvinceListNeighborhoodsResponse"/>
+ </message>
+ <message name="addressProvinceListDistrictsRequest">
+  <part name="parameters" element="tns:addressProvinceListDistricts"/>
+ </message>
+ <message name="addressProvinceListDistrictsResponse">
+  <part name="parameters" element="tns:addressProvinceListDistrictsResponse"/>
+ </message>
+ <message name="addressProvinceListRequest">
+  <part name="parameters" element="tns:addressProvinceList"/>
+ </message>
+ <message name="addressProvinceListResponse">
+  <part name="parameters" element="tns:addressProvinceListResponse"/>
+ </message>
+ <message name="addressProvinceSearchRequest">
+  <part name="parameters" element="tns:addressProvinceSearch"/>
+ </message>
+ <message name="addressProvinceSearchResponse">
+  <part name="parameters" element="tns:addressProvinceSearchResponse"/>
+ </message>
+ <message name="addressDistrictSearchRequest">
+  <part name="parameters" element="tns:addressDistrictSearch"/>
+ </message>
+ <message name="addressDistrictSearchResponse">
+  <part name="parameters" element="tns:addressDistrictSearchResponse"/>
+ </message>
+ <message name="addressDistrictListCitiesRequest">
+  <part name="parameters" element="tns:addressDistrictListCities"/>
+ </message>
+ <message name="addressDistrictListCitiesResponse">
+  <part name="parameters" element="tns:addressDistrictListCitiesResponse"/>
+ </message>
+ <message name="addressDistrictListNeighborhoodsRequest">
+  <part name="parameters" element="tns:addressDistrictListNeighborhoods"/>
+ </message>
+ <message name="addressDistrictListNeighborhoodsResponse">
+  <part name="parameters" element="tns:addressDistrictListNeighborhoodsResponse"/>
+ </message>
+ <message name="addressCitySearchV2Request">
+  <part name="parameters" element="tns:addressCitySearchV2"/>
+ </message>
+ <message name="addressCitySearchV2Response">
+  <part name="parameters" element="tns:addressCitySearchV2Response"/>
+ </message>
+ <message name="addressCityListNeighborhoodsRequest">
+  <part name="parameters" element="tns:addressCityListNeighborhoods"/>
+ </message>
+ <message name="addressCityListNeighborhoodsResponse">
+  <part name="parameters" element="tns:addressCityListNeighborhoodsResponse"/>
+ </message>
+ <message name="addressPerceelFullParameterSearchRequest">
+  <part name="parameters" element="tns:addressPerceelFullParameterSearch"/>
+ </message>
+ <message name="addressPerceelFullParameterSearchResponse">
+  <part name="parameters" element="tns:addressPerceelFullParameterSearchResponse"/>
+ </message>
+ <message name="addressPerceelParameterSearchRequest">
+  <part name="parameters" element="tns:addressPerceelParameterSearch"/>
+ </message>
+ <message name="addressPerceelParameterSearchResponse">
+  <part name="parameters" element="tns:addressPerceelParameterSearchResponse"/>
+ </message>
+ <message name="addressReeksPhraseSearchRequest">
+  <part name="parameters" element="tns:addressReeksPhraseSearch"/>
+ </message>
+ <message name="addressReeksPhraseSearchResponse">
+  <part name="parameters" element="tns:addressReeksPhraseSearchResponse"/>
+ </message>
+ <message name="addressNeighborhoodNameRequest">
+  <part name="parameters" element="tns:addressNeighborhoodName"/>
+ </message>
+ <message name="addressNeighborhoodNameResponse">
+  <part name="parameters" element="tns:addressNeighborhoodNameResponse"/>
+ </message>
+ <message name="addressNeighborhoodPhraseSearchRequest">
+  <part name="parameters" element="tns:addressNeighborhoodPhraseSearch"/>
+ </message>
+ <message name="addressNeighborhoodPhraseSearchResponse">
+  <part name="parameters" element="tns:addressNeighborhoodPhraseSearchResponse"/>
+ </message>
+ <portType name="Webservices.nlPortType">
+  <operation name="login">
+   <documentation>Logs the user in using username and password, returns a reactid for authentication in further requests</documentation>
+   <input message="tns:loginRequest"/>
+   <output message="tns:loginResponse"/>
+  </operation>
+  <operation name="logout">
+   <documentation>Logs the user out, destroys the session associated with the reactid</documentation>
+   <input message="tns:logoutRequest"/>
+   <output message="tns:logoutResponse"/>
+  </operation>
+  <operation name="addressReeksPostcodeSearch">
+   <documentation>Get an address by providing its complete postcode (including house number). This is a reeks level function. </documentation>
+   <input message="tns:addressReeksPostcodeSearchRequest"/>
+   <output message="tns:addressReeksPostcodeSearchResponse"/>
+  </operation>
+  <operation name="addressReeksAddressSearch">
+   <documentation>Get an address by providing the address, postcode, city. This is a reeks level function. </documentation>
+   <input message="tns:addressReeksAddressSearchRequest"/>
+   <output message="tns:addressReeksAddressSearchResponse"/>
+  </operation>
+  <operation name="addressReeksFullParameterSearch">
+   <documentation>Look for an address by province, municipality, city, street, house number and house number addition. Returns a list of matches. This is a reeks level function. </documentation>
+   <input message="tns:addressReeksFullParameterSearchRequest"/>
+   <output message="tns:addressReeksFullParameterSearchResponse"/>
+  </operation>
+  <operation name="addressReeksParameterSearch">
+   <documentation>Look for an address by province, municipality, city, street, house number and house number addition. Returns a list of matches. This is a reeks level function.</documentation>
+   <input message="tns:addressReeksParameterSearchRequest"/>
+   <output message="tns:addressReeksParameterSearchResponse"/>
+  </operation>
+  <operation name="addressPerceelPhraseSearch">
+   <documentation>Look for an perceel address by simply providing a phrase such as "Somestreet 123". Returns a list of matches. This is a perceel level function (more accurate than reeks level).</documentation>
+   <input message="tns:addressPerceelPhraseSearchRequest"/>
+   <output message="tns:addressPerceelPhraseSearchResponse"/>
+  </operation>
+  <operation name="addressPerceelFullParameterSearchV2">
+   <documentation>Look for an perceel address by province, municipality, city, street, house number and house number addition. Returns a list of matches This is a perceel level function (more accurate than reeks level). </documentation>
+   <input message="tns:addressPerceelFullParameterSearchV2Request"/>
+   <output message="tns:addressPerceelFullParameterSearchV2Response"/>
+  </operation>
+  <operation name="addressProvinceListNeighborhoods">
+   <documentation>Returns a list of all neighborhood codes in the province</documentation>
+   <input message="tns:addressProvinceListNeighborhoodsRequest"/>
+   <output message="tns:addressProvinceListNeighborhoodsResponse"/>
+  </operation>
+  <operation name="addressProvinceListDistricts">
+   <documentation>Returns a list of municipalities which are in the specified province</documentation>
+   <input message="tns:addressProvinceListDistrictsRequest"/>
+   <output message="tns:addressProvinceListDistrictsResponse"/>
+  </operation>
+  <operation name="addressProvinceList">
+   <documentation>Returns a list of all provinces</documentation>
+   <input message="tns:addressProvinceListRequest"/>
+   <output message="tns:addressProvinceListResponse"/>
+  </operation>
+  <operation name="addressProvinceSearch">
+   <documentation>Returns a list of provinces which match the given name</documentation>
+   <input message="tns:addressProvinceSearchRequest"/>
+   <output message="tns:addressProvinceSearchResponse"/>
+  </operation>
+  <operation name="addressDistrictSearch">
+   <documentation>Returns a list of municipalities which match the given name</documentation>
+   <input message="tns:addressDistrictSearchRequest"/>
+   <output message="tns:addressDistrictSearchResponse"/>
+  </operation>
+  <operation name="addressDistrictListCities">
+   <documentation>Returns a list of cities which are in the specified municipality</documentation>
+   <input message="tns:addressDistrictListCitiesRequest"/>
+   <output message="tns:addressDistrictListCitiesResponse"/>
+  </operation>
+  <operation name="addressDistrictListNeighborhoods">
+   <documentation>Returns a list of all neighborhood codes in the municipality</documentation>
+   <input message="tns:addressDistrictListNeighborhoodsRequest"/>
+   <output message="tns:addressDistrictListNeighborhoodsResponse"/>
+  </operation>
+  <operation name="addressCitySearchV2">
+   <documentation>Search for all cities that match a phrase. Cities are also matched if input matches a commonly used alternative city name. Exact matches on the official name are listed first, the rest of the results is sorted alphabetically.</documentation>
+   <input message="tns:addressCitySearchV2Request"/>
+   <output message="tns:addressCitySearchV2Response"/>
+  </operation>
+  <operation name="addressCityListNeighborhoods">
+   <documentation>Returns a list of all neighborhood codes in the city</documentation>
+   <input message="tns:addressCityListNeighborhoodsRequest"/>
+   <output message="tns:addressCityListNeighborhoodsResponse"/>
+  </operation>
+  <operation name="addressPerceelFullParameterSearch">
+   <documentation>This is a deprecated function. Please use "addressPerceelFullParameterSearchV2" instead.</documentation>
+   <input message="tns:addressPerceelFullParameterSearchRequest"/>
+   <output message="tns:addressPerceelFullParameterSearchResponse"/>
+  </operation>
+  <operation name="addressPerceelParameterSearch">
+   <documentation>This is a deprecated function. Please use "addressPerceelFullParameterSearchV2" or "addressPerceelPhraseSearch" instead.</documentation>
+   <input message="tns:addressPerceelParameterSearchRequest"/>
+   <output message="tns:addressPerceelParameterSearchResponse"/>
+  </operation>
+  <operation name="addressReeksPhraseSearch">
+   <documentation>This function is deprecated and will not be available in the future. Use "addressReeksAddressSearch" or "addressReeksFullParameterSearch" instead.</documentation>
+   <input message="tns:addressReeksPhraseSearchRequest"/>
+   <output message="tns:addressReeksPhraseSearchResponse"/>
+  </operation>
+  <operation name="addressNeighborhoodName">
+   <documentation>This function is about to be removed!</documentation>
+   <input message="tns:addressNeighborhoodNameRequest"/>
+   <output message="tns:addressNeighborhoodNameResponse"/>
+  </operation>
+  <operation name="addressNeighborhoodPhraseSearch">
+   <documentation>This function is about to be removed!</documentation>
+   <input message="tns:addressNeighborhoodPhraseSearchRequest"/>
+   <output message="tns:addressNeighborhoodPhraseSearchResponse"/>
+  </operation>
+ </portType>
+ <binding name="Webservices.nlBinding" type="tns:Webservices.nlPortType">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="login">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/login" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="logout">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/logout" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressReeksPostcodeSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressReeksPostcodeSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressReeksAddressSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressReeksAddressSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressReeksFullParameterSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressReeksFullParameterSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressReeksParameterSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressReeksParameterSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressPerceelPhraseSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressPerceelPhraseSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressPerceelFullParameterSearchV2">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressPerceelFullParameterSearchV2" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressProvinceListNeighborhoods">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressProvinceListNeighborhoods" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressProvinceListDistricts">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressProvinceListDistricts" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressProvinceList">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressProvinceList" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressProvinceSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressProvinceSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressDistrictSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressDistrictSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressDistrictListCities">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressDistrictListCities" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressDistrictListNeighborhoods">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressDistrictListNeighborhoods" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressCitySearchV2">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressCitySearchV2" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressCityListNeighborhoods">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressCityListNeighborhoods" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressPerceelFullParameterSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressPerceelFullParameterSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressPerceelParameterSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressPerceelParameterSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressReeksPhraseSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressReeksPhraseSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressNeighborhoodName">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressNeighborhoodName" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+  <operation name="addressNeighborhoodPhraseSearch">
+   <soap:operation soapAction="https://ws1.webservices.nl/address/soap_doclit.php/addressNeighborhoodPhraseSearch" style="document"/>
+   <input>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderLogin" use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </input>
+   <output>
+    <soap:body use="literal"/>
+    <soap:header message="tns:Headers" part="HeaderAuthenticate" use="literal"/>
+   </output>
+  </operation>
+ </binding>
+ <service name="Webservices.nl">
+  <port name="Webservices.nlPort" binding="tns:Webservices.nlBinding">
+   <soap:address location="https://ws1.webservices.nl:443/address/soap_doclit.php"/>
+  </port>
+ </service>
+</definitions>

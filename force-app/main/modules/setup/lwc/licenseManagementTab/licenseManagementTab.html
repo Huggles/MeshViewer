@@ -4,6 +4,11 @@
 
 <!-- License Management Tab -->
 <template>
+    <template if:true={isLoading}>
+        <article class="slds-card slds-is-relative" style="height: 150px;">
+            <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
+        </article>
+    </template>
     <template for:each={licenseTypes} for:item=licenseType>
         <div key={licenseType.id} class="slds-m-around_small">
             <c-license-type-management-card license-type-api-name={licenseType.name}></c-license-type-management-card>

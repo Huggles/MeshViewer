@@ -120,6 +120,7 @@ jobs:
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
             echo 'export packageversionid="'$packageversionid'"' >> $BASH_ENV
+            echo 'export beta_package_created=true' >> $BASH_ENV
       - run:
           name: get version number
           command: |
@@ -134,23 +135,28 @@ jobs:
       - run:
           name: install
           command: |
-            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_circle_build_$CIRCLE_BUILD_NUM -w 30
+            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_beta_$versionnumber -w 30
       - run:
           name: create admin user with fixed name and store the loginurl, username and password
           command: |
-            sfdx force:user:create -a test-user -u test_beta_$versionnumber username=<< pipeline.parameters.username_beta_test >> email=<< pipeline.parameters.username_beta_test >> generatepassword=true -f << pipeline.parameters.user_defintion_beta_test >>
-            username=$(sfdx force:user:display -u test-user --verbose --json | jq .result.username)
+            sfdx force:user:create -a test-user -u test_beta_$versionnumber -f << pipeline.parameters.user_defintion_beta_test >> generatepassword=true
+            username=$(sfdx force:user:display -u test-user --json | jq .result.username)
             username="${username%\"}"
             username="${username#\"}"
             echo $username > test-beta-login.txt
-            password=$(sfdx force:user:display -u test-user --verbose --json | jq .result.password)
+            password=$(sfdx force:user:display -u test-user --json | jq .result.password)
             password="${password%\"}"
             password="${password#\"}"
             echo $password >> test-beta-login.txt
-            instanceUrl=$(sfdx force:user:display -u test-user --verbose --json | jq .result.instanceUrl)
+            instanceUrl=$(sfdx force:user:display -u test-user --json | jq .result.instanceUrl)
             instanceUrl="${instanceUrl%\"}"
             instanceUrl="${instanceUrl#\"}"
             echo $instanceUrl >> test-beta-login.txt
+      - run:
+          name: delete scratch org
+          when: on_fail
+          command: |
+            sfdx force:org:delete -u test_beta_$versionnumber
       - store_artifacts:
           path: test-beta-login.txt
           destination: test-beta-login
