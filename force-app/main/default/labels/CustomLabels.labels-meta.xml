@@ -25,6 +25,14 @@
         <value>House Number Addition</value>
     </labels>
     <labels>
+        <fullName>Address_Type</fullName>
+        <categories>Dutch Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label of address type field</shortDescription>
+        <value>Even or odd house numbers</value>
+    </labels>
+    <labels>
         <fullName>Alias</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
@@ -268,13 +276,6 @@
         <value>United Kingdom</value>
     </labels>
     <labels>
-        <fullName>Country_to_Search</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Country to Search</shortDescription>
-        <value>Country to Search</value>
-    </labels>
-    <labels>
         <fullName>Create_Business_Dossier</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
@@ -290,12 +291,12 @@
         <value>Create Duplicate Account</value>
     </labels>
     <labels>
-        <fullName>Login_successfull</fullName>
+        <fullName>Login_successful</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Message shown after a succesffull login</shortDescription>
-        <value>Login succesfull!</value>
+        <shortDescription>Message shown after a successful login</shortDescription>
+        <value>Login successful!</value>
     </labels>
     <labels>
         <fullName>Credentials_successfully_updated_message</fullName>
@@ -680,6 +681,14 @@
         <value>House Number</value>
     </labels>
     <labels>
+        <fullName>House_Number_Addition</fullName>
+        <categories>Dutch Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>House Number Addition</shortDescription>
+        <value>House Number Addition</value>
+    </labels>
+    <labels>
         <fullName>Insurance_Contract_Intention_of_signature_of_a_insurance_contract</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -700,6 +709,22 @@
         <protected>true</protected>
         <shortDescription>Language Input Error</shortDescription>
         <value>Selected language is not available for selected company&apos;s country. Please select another language.</value>
+    </labels>
+    <labels>
+        <fullName>Letter_Combination</fullName>
+        <categories>Dutch Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Letter Combination</shortDescription>
+        <value>Letter Combination</value>
+    </labels>
+    <labels>
+        <fullName>Letter_Combination_pattern_mismatch_message</fullName>
+        <categories>Dutch Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Letter Combination pattern mismatch message</shortDescription>
+        <value>Please enter only 2 alphabets. SS, SA, SD are not valid.</value>
     </labels>
     <labels>
         <fullName>License_assignment_succesfully_removed</fullName>
@@ -761,6 +786,14 @@
         <protected>true</protected>
         <shortDescription>More than 20 results message</shortDescription>
         <value>More than 20 results found! Refine your search criteria.</value>
+    </labels>
+    <labels>
+        <fullName>Municipality</fullName>
+        <categories>Dutch Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Municipality</shortDescription>
+        <value>Municipality</value>
     </labels>
     <labels>
         <fullName>Name</fullName>
@@ -888,6 +921,14 @@
         <value>Postal Code</value>
     </labels>
     <labels>
+        <fullName>Postal_code_pattern_mismatch_message</fullName>
+        <categories>Dutch Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Postal code pattern mismatch message</shortDescription>
+        <value>Please only enter the digits without the letter combination.</value>
+    </labels>
+    <labels>
         <fullName>Previous</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -904,7 +945,7 @@
     </labels>
     <labels>
         <fullName>Province</fullName>
-        <categories>CreditSafe</categories>
+        <categories>CreditSafe,InternationalAddress</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Province</shortDescription>
@@ -1561,6 +1602,30 @@
         <protected>true</protected>
         <shortDescription>Toast shown when the user tries to assign more seats than he has.</shortDescription>
         <value>Not enough seats available. You tried to assign {0} seats but only have {1} available.</value>
+    </labels>
+    <labels>
+        <fullName>Even</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Even as in an 'even number'</shortDescription>
+        <value>Even</value>
+    </labels>
+    <labels>
+        <fullName>Odd</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Odd as in an 'odd number'</shortDescription>
+        <value>Odd</value>
+    </labels>
+    <labels>
+        <fullName>Both</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Value to indicate the user wants to select even or odd house numbers</shortDescription>
+        <value>Both</value>
     </labels>
     <labels>
         <fullName>Get_Positions</fullName>

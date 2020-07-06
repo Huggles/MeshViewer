@@ -74,15 +74,13 @@ public inherited sharing class LicenseTypeManagementCardController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static Integer getUnAssignedUserCount(String licenseTypeAPIName) {
+    public static AuraResponseWrapper getUnAssignedUserCount(String licenseTypeAPIName) {
         try {
             LicenseType licenseType = LicenseManagementService.getLicenseTypeByName(licenseTypeAPIName);
-            return LicenseManagementService.getUnAssignedUsersForLicenseTypeCount(licenseType);
+            return new AuraResponseWrapper(LicenseManagementService.getUnAssignedUsersForLicenseTypeCount(licenseType));
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex, true);
-            throw new AuraHandledException(ex.getMessage());
+            return new AuraResponseWrapper(ex, true, true);
         }
-
     }
 
     @AuraEnabled

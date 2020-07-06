@@ -6,6 +6,7 @@ import {LightningElement, api, track} from 'lwc';
 import {FlowAttributeChangeEvent} from 'lightning/flowSupport';
 import {fireEvent, registerListener, unregisterAllListeners} from 'c/pubsub';
 import {sanitizeStreet} from "c/inputSanitization";
+import {handleResponse} from "c/auraResponseWrapperHandler";
 
 import getCountryOptions from "@salesforce/apex/BusinessSearchFormController.getCountryOptions";
 import getSelectedDataSource from "@salesforce/apex/BusinessSearchFormController.getSelectedDataSource";
@@ -23,27 +24,7 @@ export default class BusinessSearchForm extends LightningElement {
 
     isLoading = false;
 
-    _countries;
-
-    get countries() {
-        if (!this._countries) {
-            return this.loadCountryOptions();
-        } else {
-            return this._countries;
-        }
-    }
-
-    async loadCountryOptions() {
-        try {
-            this.isLoading = true;
-            this._countries = await getCountryOptions();
-            return this._countries;
-        } catch (error) {
-            new ToastEventController(this).showErrorToastMessage(null,error.message);
-        } finally {
-            this.isLoading = false;
-        }
-    }
+    countries = [];
 
 
     _selectedCountry;
@@ -73,7 +54,9 @@ export default class BusinessSearchForm extends LightningElement {
     async loadDataSource(alpha2CountryCode) {
         try {
             this.isLoading = true;
-            this._dataSource = await getSelectedDataSource({alpha2CountryCode: alpha2CountryCode});
+            this._dataSource = await getSelectedDataSource({alpha2CountryCode: alpha2CountryCode}).then(result => {
+                return handleResponse(result);
+            });
             return this._dataSource;
         } catch(error) {
             new ToastEventController(this).showErrorToastMessage(null,error.message);
@@ -132,7 +115,7 @@ export default class BusinessSearchForm extends LightningElement {
     }
 
     get moreThanOneCountryOption() {
-        return this.countries.length > 1;
+        return (this.countries != null && this.countries.length > 1);
     }
 
     /**
@@ -227,10 +210,28 @@ export default class BusinessSearchForm extends LightningElement {
         registerListener('validationRequest', this.handleValidationRequest, this);
         registerListener('componentRegistrationOpen', this.handleComponentRegistrationOpen, this);
         if (this.street) this.assignStreetAndHouseNumber(this.street);
+        this.loadCountryOptions();
     }
 
     disconnectedCallback() {
         unregisterAllListeners(this);
+    }
+
+    loadCountryOptions() {
+        this.isLoading = true;
+        getCountryOptions()
+            .then(result => {
+                return handleResponse(result);
+            })
+            .then(result=>{
+                this.countries = result;
+            })
+            .catch(error=>{
+                new ToastEventController(this).showErrorToastMessage(null,error.body.message);
+            })
+            .finally(()=>{
+                this.isLoading = false;
+            })
     }
 
     handleComponentRegistrationOpen(event) {

@@ -8,7 +8,9 @@
     <div class="slds-p-around_small slds-box color-on-hover result-card" onclick={handleOnClick} style="max-width: 495px">
         <lightning-tile label={title} type="media" href="javascript:void(0);">
                 <span slot="media">
-                    <lightning-button-icon-stateful icon-name='utility:check' selected={iconState} size="small"></lightning-button-icon-stateful>
+                    <input type="checkbox" name="card-selected"/>
+                    <!--
+                    <lightning-button-icon-stateful icon-name='utility:check' selected={iconState} size="small"></lightning-button-icon-stateful> -->
                 </span>
             <div class="slds-grid slds-wrap">
                 <template for:each={fieldValues} for:item="field">

@@ -40,7 +40,4 @@ public inherited sharing class WsDutchBusiness implements IWsDutchBusiness{
         return (IWsDutchBusiness) Application.Service.newInstance(IWsDutchBusiness.class);
     }
 
-
-
-
 }

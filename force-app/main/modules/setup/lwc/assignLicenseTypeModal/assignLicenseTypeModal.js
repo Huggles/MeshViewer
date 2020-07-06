@@ -8,6 +8,8 @@ import getUnAssignedUserCount from '@salesforce/apex/LicenseTypeManagementCardCo
 import getLicenseTypeInfo from '@salesforce/apex/LicenseTypeManagementCardController.getLicenseTypeInfo';
 import assignUsers from '@salesforce/apex/LicenseTypeManagementCardController.assignUsers';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import {handleResponse} from "c/auraResponseWrapperHandler";
+import {ToastEventController} from "c/toastEventController";
 
 import Success from '@salesforce/label/c.Success';
 import Close from '@salesforce/label/c.Close';
@@ -49,12 +51,6 @@ export default class AssignLicenseTypeModal extends LightningElement {
      * The loaded users as SObjects
      */
     sObjectUsers;
-
-    /**
-     * The maximum number of users
-     */
-    @wire(getUnAssignedUserCount, {licenseTypeAPIName: '$licenseTypeApiName'})
-    maxUsers;
 
     /**
      * The information about the license type. Warning: this method is not cached so will result in a roundtrip to the server for every call
@@ -100,16 +96,27 @@ export default class AssignLicenseTypeModal extends LightningElement {
 
     connectedCallback() {
         this.isInitializing = true;
-        this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection).
-            then(result =>
-                {
-                    this.isInitializing = false
-                }).
-            catch(error =>
-                {
-                    this.isInitializing = false;
-                    this.error = error;
-                });
+        getUnAssignedUserCount({licenseTypeAPIName: this.licenseTypeApiName})
+            .then(result => {
+                return handleResponse(result);
+            })
+            .then(result => {
+                this.maxUsers = result;
+                return this.fetchUnAssignedUsers(0, numberOfRowsToLoad, this.defaultSortedBy, this.defaultSortDirection);
+            })
+            .catch(error => {
+                let message = error;
+                if (error.message) {
+                    message = error.message;
+                }
+                if (error.body && error.body.message) {
+                    message = error.body.message;
+                }
+                new ToastEventController(this).showErrorToastMessage(Error,message);
+            })
+            .finally(() => {
+                this.isInitializing = false;
+            });
     }
 
     /**
@@ -152,12 +159,7 @@ export default class AssignLicenseTypeModal extends LightningElement {
                 if (error.body && error.body.message) {
                     message = error.body.message;
                 }
-                const event = new ShowToastEvent({
-                    title: this.label.Error,
-                    message: message,
-                    variant: 'error'
-                });
-                this.dispatchEvent(event);
+                new ToastEventController(this).showErrorToastMessage(Error,message);
             });
 
     }
@@ -184,7 +186,16 @@ export default class AssignLicenseTypeModal extends LightningElement {
                     }
                     this.selectedRows = [];
                 })
-                .catch(error => this.error = error);
+                .catch(error => {
+                    let message = error;
+                    if (error.message) {
+                        message = error.message;
+                    }
+                    if (error.body && error.body.message) {
+                        message = error.body.message;
+                    }
+                    new ToastEventController(this).showErrorToastMessage(Error,message);
+                });
 
         }
     }
@@ -245,13 +256,18 @@ export default class AssignLicenseTypeModal extends LightningElement {
                         if (this.sObjectUsers && this.sObjectUsers.length >= this.maxUsers) {
                             this.enableInfiniteLoading = false;
                         }
-
                     }
                     resolve('unassigned users sucessfully loaded');
                 })
                 .catch(error => {
-                    this.error = error;
-                    resolve(error);
+                    let message = error;
+                    if (error.message) {
+                        message = error.message;
+                    }
+                    if (error.body && error.body.message) {
+                        message = error.body.message;
+                    }
+                    new ToastEventController(this).showErrorToastMessage(Error,message);
                 })
         });
 

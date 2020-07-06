@@ -47,7 +47,7 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static List<DataSourcesPerCountry> getDataSourcesPerCountry() {
+    public static AuraResponseWrapper getDataSourcesPerCountry() {
         try {
             List<Datasource_Per_Country__mdt> datasourcePerCountries = SetupService.getDataSourcesPerCountry();
             List<DataSourcesPerCountry> returnValue = new List<DataSourcesPerCountry>();
@@ -64,10 +64,9 @@ public with sharing class ConfigOrgPerCountryDataSourceController {
             for (String countryCode : datasourcePerCountriesByCountryCode.keySet()) {
                 returnValue.add(new DataSourcesPerCountry(countryCode, datasourcePerCountriesByCountryCode.get(countryCode)));
             }
-            return returnValue;
+            return new AuraResponseWrapper(returnValue);
         }catch (Exception e){
-            ErrorLogUtil.logException(e,true);
-            throw new AuraHandledException(e.getMessage());
+            return new AuraResponseWrapper(e, true, true);
         }
     }
 
