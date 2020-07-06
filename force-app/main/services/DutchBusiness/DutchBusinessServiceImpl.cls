@@ -245,21 +245,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return BusinessDossierSelector.newInstance().selectById(ids);
     }
 
-
-    /**
-     * Gets the changes in the extracts for a specific dossier.
-     *
-     * @param dossier_number    'The COC Number'
-     * @param start_date        'The start date from which to get the list of changes.'
-     * @param end_date          'The end date until which to get the list of changes.'
-     *
-     * @return DutchBusinessExtractHistory
-     */
-    //TODO: Map the DutchBusinessWsdl.DutchBusinessExtractHistory to a sObject.
-    public DutchBusinessWsdl.DutchBusinessExtractHistory getExtractHistory(String dossier_number, Date start_date, Date end_date){
-        return WsDutchBusiness.dutchBusinessGetExtractHistoryChanged(dossier_number, start_date, end_date);
-    }
-
     /**
     * Gets the latest -cached- version of the business positions.
     *

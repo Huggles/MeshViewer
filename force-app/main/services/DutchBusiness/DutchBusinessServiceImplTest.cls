@@ -851,54 +851,6 @@ private class DutchBusinessServiceImplTest {
 
         system.assertEquals(1, dutchBusinessPositions.size());
     }
-    @IsTest
-    public static void testGetExtractHistoryChangedHappyFlow() {
-        fflib_ApexMocks mocks = new fflib_ApexMocks();
-        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
-
-
-        final String dossierNumber = '123';
-        final Date startDate = Date.today().addYears(-3);
-        final Date endDate = Date.today();
-        final String extractNumber = '456';
-
-
-        List<String> changeSetTypes = new List<String>{'legal_entity', 'posititons'};
-        DutchBusinessWsdl.stringArray changeSetStringArray = new DutchBusinessWsdl.stringArray();
-        changeSetStringArray.item = new List<String>();
-        for (String s : changeSetTypes) {
-            changeSetStringArray.item.add(s);
-        }
-
-        DutchBusinessWsdl.DutchBusinessExtractChangeSet extractChangeSet = new DutchBusinessWsdl.DutchBusinessExtractChangeSet();
-        extractChangeSet.changes = new DutchBusinessWsdl.stringArray();
-
-        DutchBusinessWsdl.DutchBusinessExtractReference extractReference = new DutchBusinessWsdl.DutchBusinessExtractReference();
-        extractReference.document_date = Datetime.now().addYears(-1);
-        extractReference.extract_id = extractNumber;
-
-
-        DutchBusinessWsdl.DutchBusinessExtractReferenceArray extractReferenceArray = new DutchBusinessWsdl.DutchBusinessExtractReferenceArray();
-        extractReferenceArray.item = new List<DutchBusinessWsdl.DutchBusinessExtractReference>();
-        extractReferenceArray.item.add(extractReference);
-
-        DutchBusinessWsdl.DutchBusinessExtractHistory output = new DutchBusinessWsdl.DutchBusinessExtractHistory();
-        output.references = extractReferenceArray;
-
-
-        mocks.startStubbing();
-        mocks.when(mockWS.dutchBusinessGetExtractHistoryChanged(dossierNumber, startDate, endDate)).thenReturn(output);
-        mocks.stopStubbing();
-
-        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
-
-        test.startTest();
-        DutchBusinessWsdl.DutchBusinessExtractHistory dutchBusinessExtractHistory = DutchBusinessService.getExtractHistory(dossierNumber, startDate, endDate);
-        test.stopTest();
-
-        system.assertEquals(1, dutchBusinessExtractHistory.references.item.size());
-
-    }
 
 
 }
