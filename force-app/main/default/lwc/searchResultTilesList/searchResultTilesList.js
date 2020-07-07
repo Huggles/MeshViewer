@@ -101,6 +101,12 @@ export default class SearchResultTilesList extends LightningElement {
     }
 
     /**
+     * All tiles of the search results.
+     */
+    _tiles;
+
+
+    /**
      * Loads the label/fieldname combination from the fieldset
      */
     @api labelsAndFields;
@@ -120,37 +126,45 @@ export default class SearchResultTilesList extends LightningElement {
                 fieldSetName: this.fieldSetName
             })
             .then(result => {
-                this.labelsAndFields = result.data;
+                return handleResponse(result);
+            })
+            .then(result =>{
+                this.labelsAndFields = result;
             })
             .catch(error =>{
                 new ToastEventController(this).showErrorToastMessage('Error', error.body.message);
             });
     }
+    renderedCallback() {
+        this.initTileElements();
+    }
 
+    initTileElements(){
+        this._tiles = this.querySelectorAll('[data-name="tile"]');
+        this.fillSearchResults();
+    }
 
     fillSearchResults() {
-        if (this.searchResults != null && this.labelsAndFields != null) {
-            const tiles = this.querySelectorAll('[data-name="tile"]');
-            if (tiles != null && tiles.length > 0) {
-                tiles.forEach((tile, index) => {
-                    try {
-                        let fieldValues = [];
-                        tile.labelsAndFields = this.labelsAndFields;
-                        tile.searchResult = this.searchResults[index];
-                        tile.searchResultId = index;
-                        tile.titleField = this.titleField;
-                        tile.title = tile.searchResult[this.titleField];
-                        this.labelsAndFields.forEach((value, index) => {
-                            let fieldValue =  {index: index, label: value.label, value: tile.searchResult[value.apiName]};
-                            fieldValues.push(fieldValue);
-                        });
-                        tile.fieldValues = fieldValues;
-                    }
-                    catch (e) {
-                        new ToastEventController(this).showErrorToastMessage('Error', e);
-                    }
-                });
-            }
+        if (this.searchResults != null && this.labelsAndFields != null &&
+            this._tiles != null && this._tiles.length > 0) {
+            this._tiles.forEach((tile, index) => {
+                try {
+                    let fieldValues = [];
+                    tile.labelsAndFields = this.labelsAndFields;
+                    tile.searchResult = this.searchResults[index];
+                    tile.searchResultId = index;
+                    tile.titleField = this.titleField;
+                    tile.title = tile.searchResult[this.titleField];
+                    this.labelsAndFields.forEach((value, index) => {
+                        let fieldValue =  {index: index, label: value.label, value: tile.searchResult[value.apiName]};
+                        fieldValues.push(fieldValue);
+                    });
+                    tile.fieldValues = fieldValues;
+                }
+                catch (e) {
+                    new ToastEventController(this).showErrorToastMessage('Error', e);
+                }
+            });
         }
     }
 

@@ -41,8 +41,7 @@ export default class SearchResultTile extends LightningElement {
      */
     @api
     get checkboxHidden(){
-        let response = this._checkboxHidden;
-        return response;
+        return this._checkboxHidden;
     }
     set checkboxHidden(value){
         if((typeof value) === "string"){
