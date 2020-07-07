@@ -442,7 +442,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Duplicates Found Message</shortDescription>
-        <value>The record you&apos;re about to create looks like a duplicate. Use one of these records?</value>
+        <value>The record you&apos;re about to create is a duplicate. Do you instead want to update one of the following accounts?</value>
     </labels>
     <labels>
         <fullName>Error</fullName>
