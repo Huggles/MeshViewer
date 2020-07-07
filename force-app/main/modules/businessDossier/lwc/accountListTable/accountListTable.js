@@ -43,7 +43,7 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
 
     connectedCallback() {
         this.data = this.flattenObject(this.accountList);
-        registerListener('updateAccount', this.handleClickUpdateDuplicateAccount, this);
+        registerListener('updateAccount', this.handleClickDuplicateAccount, this);
     }
 
     flattenObject(ob) {
@@ -67,11 +67,29 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
         return a;
     }
 
-    handleClickUpdateDuplicateAccount() {
+    handleClickDuplicateAccount() {
         this.updateDuplicateAccount = true;
         const attributeChangeEvent = new FlowAttributeChangeEvent('updateDuplicateAccount', this.updateDuplicateAccount);
         this.dispatchEvent(attributeChangeEvent);
         this.dispatchEvent(new FlowNavigationNextEvent());
+    }
+
+    handleClickCreateNewAccount() {
+        createDuplicateAccount({account: this.newAccount}).then(result => {
+            if (result) {
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: result,
+                        actionName: 'view',
+                    },
+                });
+                this.showToast(Success, Duplicate_Account_Created, 'success');
+            }
+        }).catch(error => {
+            this.error = error;
+            this.showToast(Error, error, 'error');
+        })
     }
 
     handleClickCancel() {
