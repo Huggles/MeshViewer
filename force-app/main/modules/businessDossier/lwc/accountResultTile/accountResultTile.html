@@ -5,10 +5,10 @@
 <!-- Account Result Tile -->
 <template>
     <c-search-result-tile search-result-id={searchResultId} labels-and-fields={labelsAndFields} field-values={fieldValues}
-                          title-field={titleField} search-result={searchResult} title={title} oncardclicked={handleOnClick} selected={selected}>
+                          title-field={titleField} search-result={searchResult} title={title} oncardclicked={handleOnClick} checkbox-hidden="true">
         <span slot="link">
             <ul class="slds-has-divider_top-space">
-                <lightning-button variant="base" label={labels.Update_Duplicate_Account} onclick={handleClickDuplicateAccount} class="slds-m-left_xx-large"></lightning-button>
+                 <lightning-button variant="Neutral" label={labels.Update_Duplicate_Account} onclick={handleClickDuplicateAccount} class="slds-m-left_xx-large"></lightning-button>
             </ul>
         </span>
     </c-search-result-tile>

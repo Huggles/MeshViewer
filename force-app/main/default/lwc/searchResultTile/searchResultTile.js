@@ -35,12 +35,31 @@ export default class SearchResultTile extends LightningElement {
     @api title;
 
 
+    _checkboxHidden = false;
+    /**
+     * To hide the checkbox or not.
+     */
+    @api
+    get checkboxHidden(){
+        return this._checkboxHidden;
+    }
+    set checkboxHidden(value){
+        if((typeof value) === "string"){
+            //This property passed as an DOM attribute is a string.
+            this._checkboxHidden = (value === "true");
+        }else if((typeof value) === "boolean"){
+            this._checkboxHidden = value;
+        }
+    }
+
+
     /**
      * Returns the values of the fields in the fieldset with the given fieldsetname
      */
     @api fieldValues = [];
 
     _selected;
+    _checkboxElement;
 
     /**
      * True if the card is selected, otherwise false
@@ -51,11 +70,8 @@ export default class SearchResultTile extends LightningElement {
     }
     set selected(value) {
         this._selected = value;
-        let checkbox = this.template.querySelector('[name="card-selected"]');
-        if (value === true) {
-            checkbox.checked = true;
-        } else {
-            checkbox.checked = false;
+        if (this._checkboxElement != null) {
+            this._checkboxElement.checked = value;
         }
     }
 
@@ -73,6 +89,17 @@ export default class SearchResultTile extends LightningElement {
     handleOnClick(event) {
         const cardClickedEvent = new CustomEvent('cardclicked', {detail : {id: this.searchResultId}});
         this.dispatchEvent(cardClickedEvent);
+    }
+
+
+    renderedCallback() {
+        this.initCheckbox();
+    }
+    initCheckbox(){
+        this._checkboxElement = this.template.querySelector('[name="card-selected"]');
+        if(this._checkboxElement != null){
+            this._checkboxElement.checked = this.selected;
+        }
     }
 
 }
