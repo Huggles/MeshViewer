@@ -4,6 +4,9 @@
 
 <!-- Account Enrichment Header -->
 <template>
+    <template if:true={isLoading}>
+        <lightning-spinner></lightning-spinner>
+    </template>
     <article class="slds-card slds-card_boundary slds-m-bottom_x-small">
         <div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -17,8 +20,12 @@
                 </div>
                 <div class="slds-no-flex">
                     <div class="slds-m-around_xx-small slds-float_right">
-                        <template if:true={showGetCreditsafeReportButton}>
-
+                        <template if:true={showGetPositionsButton}>
+                            <lightning-button label={label.Get_Positions} onclick={handleOnGetPositionsClicked} ></lightning-button>
+                        </template>
+                    </div>
+                    <div class="slds-m-around_xx-small slds-float_right">
+                        <template if:true={showCreditSafeReportButton}>
                             <lightning-button label={label.Get_Creditsafe_Report} onclick={handleOnGetCreditsafeReport} ></lightning-button>
                         </template>
                     </div>
@@ -35,4 +42,5 @@
             </header>
         </div>
     </article>
+
 </template>

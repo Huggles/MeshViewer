@@ -56,6 +56,10 @@ public inherited sharing class DutchBusinessService {
         newInstance().storeDossiers(dossiers, unitOfWork);
     }
 
+    public static  List<Business_Position__c> getPositions(String dossier_number, Id dossier_record_id){
+        return newInstance().getPositions(dossier_number, dossier_record_id);
+    }
+
     public static IDutchBusinessService newInstance() {
         return (IDutchBusinessService) Application.Service.newInstance(IDutchBusinessService.class);
     }

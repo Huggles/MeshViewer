@@ -22,7 +22,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>House number addition</shortDescription>
-        <value>House Number Addition</value>
+        <value>Addition</value>
     </labels>
     <labels>
         <fullName>Address_Type</fullName>
@@ -442,7 +442,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Duplicates Found Message</shortDescription>
-        <value>The record you&apos;re about to create looks like a duplicate. Use one of these records?</value>
+        <value>The record you&apos;re about to create is a duplicate. Do you instead want to update one of the following accounts?</value>
     </labels>
     <labels>
         <fullName>Error</fullName>
@@ -1236,6 +1236,22 @@
         <value>Trade Name</value>
     </labels>
     <labels>
+        <fullName>URL_link_text</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>URL link text</shortDescription>
+        <value>here.</value>
+    </labels>
+    <labels>
+        <fullName>Update_types_URL</fullName>
+        <categories>Settings</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update types URL</shortDescription>
+        <value>https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.Update_types</value>
+    </labels>
+    <labels>
         <fullName>Update_settings</fullName>
         <categories>Settings</categories>
         <language>en_US</language>
@@ -1265,7 +1281,8 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Text above the update type in setup</shortDescription>
-        <value>These settings define which types of data automatically updates through nightly batches.</value>
+        <value>The update service will update the Dutch Business Dossiers in Salesforce, once there is updated data available from Company.info. The service will check whether any of the Business Dossiers have changed. If so, it will automatically update the Business Dossier.
+            With the Update Types, you can define which data you want to have updated. An overview of the fields that get updated per Update Type can be found</value>
     </labels>
     <labels>
         <fullName>Update_Duplicate_Account</fullName>
@@ -1627,6 +1644,20 @@
         <shortDescription>Value to indicate the user wants to select even or odd house numbers</shortDescription>
         <value>Both</value>
     </labels>
-
-    Even_Odd
+    <labels>
+        <fullName>Get_Positions</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for button that triggers the getPositions callout</shortDescription>
+        <value>Get Positions</value>
+    </labels>
+    <labels>
+        <fullName>Business_Positions_Retrieved_Succesfully</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success message when business positions have been retrieved.</shortDescription>
+        <value>Business Positions successfully retrieved.</value>
+    </labels>
 </CustomLabels>

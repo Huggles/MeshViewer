@@ -6,7 +6,14 @@ public inherited sharing class CreateDuplicatesController {
 
     @AuraEnabled
     public static Id createDuplicateAccount(Account account) {
-        return DuplicateManagementService.createDuplicate(account);
+        try {
+            Id accountId =  DuplicateManagementService.createDuplicate(account);
+            return accountId;
+        }catch (Exception e){
+            ErrorLogUtil.logException(e);
+            throw new AuraHandledException(e.getMessage());
+        }
+
     }
 
 

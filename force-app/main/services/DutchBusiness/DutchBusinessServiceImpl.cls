@@ -245,6 +245,27 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return BusinessDossierSelector.newInstance().selectById(ids);
     }
 
+    /**
+    * Gets the latest -cached- version of the business positions.
+    *
+    * @param dossier_number    'The COC Number'
+    *
+    * @return DutchBusinessPositions
+    */
+    public List<Business_Position__c> getPositions(String dossier_number, Id dossier_record_id){
+        DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL = WsDutchBusiness.dutchBusinessGetPositions(dossier_number);
+
+        try {
+            return createDutchBusinessPositions(businessPositionsWSDL,dossier_record_id);
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
+
+
+
+
     /*****************************
     /** IMPLEMENTATION METHODS
     /******************************/
@@ -485,6 +506,84 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return dossier;
     }
 
+
+
+    private List<Business_Position__c> createDutchBusinessPositions(DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL, Id dossierRecordId) {
+        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        List<Business_Position__c> businessPositions = new List<Business_Position__c>();
+
+        for (DutchBusinessWsdl.DutchBusinessPositionV2 positionV2 : businessPositionsWSDL.positions.item) {
+            Business_Position__c businessPosition = mapDutchBusinessPositionToBusinessPosition(positionV2, dossierRecordId);
+            unitOfWork.registerNew(businessPosition);
+            businessPositions.add(businessPosition);
+            if(positionV2.functionary != null){
+                Business_Person__c businessPerson = mapDutchBusinessPersonToBusinessPerson(positionV2.functionary, dossierRecordId);
+                unitOfWork.registerNew(businessPerson);
+                unitOfWork.registerRelationship(businessPosition, Business_Position__c.Business_Person__c,businessPerson);
+            }
+            if(positionV2.organisation != null){
+                Business_Dossier__c businessDossier = mapDutchBusinessOrganizationReferenceToBusinessDossier(positionV2.organisation, dossierRecordId);
+                unitOfWork.registerNew(businessDossier);
+                unitOfWork.registerRelationship(businessPosition, Business_Position__c.Organisation__c,businessDossier);
+            }
+        }
+
+        Business_Dossier__c dossier_record = new Business_Dossier__c();
+        dossier_record.Id = dossierRecordId;
+        dossier_record.Business_Positions_Updated_Date__c = Datetime.now();
+        unitOfWork.registerDirty(dossier_record);
+
+        try {
+            unitOfWork.commitWork();
+        }catch (Exception e){
+            throw e;
+        }
+        return businessPositions;
+    }
+
+    private Business_Dossier__c mapDutchBusinessOrganizationReferenceToBusinessDossier(DutchBusinessWsdl.DutchBusinessOrganizationReferenceV2 organizationReferenceV2, Id dossierRecordId) {
+        Business_Dossier__c dossier = new Business_Dossier__c();
+
+        String trade_names = '';
+        if (organizationReferenceV2.trade_names != null &&
+                organizationReferenceV2.trade_names.item != null &&
+                organizationReferenceV2.trade_names.item.size() > 0) {
+            // Condense all trade names into single field, seperated by new lines.
+            dossier.Name = organizationReferenceV2.trade_names.item[0];
+            for (Integer i = 0; i < organizationReferenceV2.trade_names.item.size(); i++) {
+                trade_names += organizationReferenceV2.trade_names.item[i] + (i == organizationReferenceV2.trade_names.item.size()-1 ? '' : ', ');
+            }
+            dossier.Trade_Names__c = trade_names;
+        }
+        if(organizationReferenceV2.dossier_number != null) {
+            dossier.Dossier_Number__c = organizationReferenceV2.dossier_number;
+        }
+        return dossier;
+    }
+    private Business_Person__c mapDutchBusinessPersonToBusinessPerson(DutchBusinessWsdl.DutchBusinessPersonV2 functionary, Id dossierRecordId) {
+        Business_Person__c businessPerson = new Business_Person__c();
+        businessPerson.Name = functionary.full_name;
+        businessPerson.First_Name__c = functionary.first_name;
+        businessPerson.Last_Name__c = functionary.last_name;
+        businessPerson.Date_of_Birth__c = convertToDateV2(functionary.date_of_birth);
+        businessPerson.Date_Deceased__c = convertToDateV2(functionary.date_deceased);
+
+
+        businessPerson.Name = functionary.full_name;
+        return businessPerson;
+    }
+    private Business_Position__c mapDutchBusinessPositionToBusinessPosition(DutchBusinessWsdl.DutchBusinessPositionV2 businessPositionsWSDL, Id dossierRecordId) {
+        Business_Position__c position = new Business_Position__c();
+        position.Name = businessPositionsWSDL.function_type;
+        position.Business_Dossier__c = dossierRecordId;
+        position.Function_Registration_Date__c = convertToDateV2(businessPositionsWSDL.function_registration_date);
+        position.Function_Start_Date__c = convertToDateV2(businessPositionsWSDL.function_start_date);
+        position.Function_Type__c = businessPositionsWSDL.function_title;
+        position.Authorization_Description__c = businessPositionsWSDL.authorization_description;
+        return position;
+    }
+
+
     private String determineStatus(DutchBusinessWsdl.DutchBusinessDossierV3 dossier) {
         List<String> status = new List<String>();
         if (dossier.indication_import != null && Boolean.valueOf(dossier.indication_import) == true) status.add('Import');
@@ -497,6 +596,16 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     }
 
     private static Date convertToDate(DutchBusinessWsdl.DutchBusinessDateV3 theDate) {
+        Date returnDate = null;
+        if (theDate == null) {
+            return null;
+        }
+        if (theDate != null && theDate.year != null && theDate.month != null && theDate.day != null && theDate.year >= 1700) {
+            returnDate= Date.newInstance(theDate.year, theDate.month, theDate.day);
+        }
+        return returnDate;
+    }
+    private static Date convertToDateV2(DutchBusinessWsdl.DutchBusinessDateV2 theDate) {
         Date returnDate = null;
         if (theDate == null) {
             return null;
@@ -528,5 +637,4 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     private static String convertToString(Integer value){
         return value != null ? String.valueOf(value) : null;
     }
-
 }

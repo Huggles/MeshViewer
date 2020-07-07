@@ -25,7 +25,6 @@ public inherited sharing class CompanyInfoLoginController {
             throw new AuraHandledException(ex.getMessage());
         }
     }
-
     @AuraEnabled(cacheable=true)
     public static AuraResponseWrapper getCredentials(){
         try {
@@ -34,5 +33,4 @@ public inherited sharing class CompanyInfoLoginController {
             return new AuraResponseWrapper(ex, true, true);
         }
     }
-
 }

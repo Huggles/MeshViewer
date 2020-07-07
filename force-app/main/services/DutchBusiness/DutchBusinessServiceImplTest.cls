@@ -804,6 +804,53 @@ private class DutchBusinessServiceImplTest {
         System.assert(dossier.Founding_Date_Year__c == 1619);
         System.assert([SELECT Id FROM Error_Log__c].size() == 0);
     }
+    @IsTest
+    public static void testGetPositionsHappyFlow() {
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness mockWS = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+
+
+        final String dossierNumber = '123';
+
+        Business_Dossier__c existingDossier = new Business_Dossier__c();
+        existingDossier.Dossier_Number__c = dossierNumber;
+        insert existingDossier;
+
+
+        DutchBusinessWsdl.DutchBusinessDateV2 birthDay = new DutchBusinessWsdl.DutchBusinessDateV2();
+        birthDay.year = 2000;
+        birthDay.month = 1;
+        birthDay.day = 1;
+
+        DutchBusinessWsdl.DutchBusinessPersonV2 person = new DutchBusinessWsdl.DutchBusinessPersonV2();
+        person.first_name = 'Test_FirstName';
+        person.last_name = 'Test_LastName';
+        person.date_of_birth = birthDay;
+
+        DutchBusinessWsdl.DutchBusinessPositionV2 position = new DutchBusinessWsdl.DutchBusinessPositionV2();
+        position.functionary = person;
+
+        DutchBusinessWsdl.DutchBusinessPositionV2Array positions = new DutchBusinessWsdl.DutchBusinessPositionV2Array();
+        positions.item = new List<DutchBusinessWsdl.DutchBusinessPositionV2>();
+        positions.item.add(position);
+
+        DutchBusinessWsdl.DutchBusinessPositions output = new DutchBusinessWsdl.DutchBusinessPositions();
+        output.dossier_number = dossierNumber;
+        output.positions = positions;
+        output.reference_date = Date.today();
+
+        mocks.startStubbing();
+        mocks.when(mockWS.dutchBusinessGetPositions(dossierNumber)).thenReturn(output);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsDutchBusiness.class, mockWS);
+
+        test.startTest();
+        List<Business_Position__c> dutchBusinessPositions = DutchBusinessService.getPositions(dossierNumber, existingDossier.Id);
+        test.stopTest();
+
+        system.assertEquals(1, dutchBusinessPositions.size());
+    }
 
 
 }

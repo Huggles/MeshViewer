@@ -4,9 +4,8 @@
     <description>A text description of the companies business purpose in German language.</description>
     <externalId>false</externalId>
     <label>Business Purpose</label>
-    <length>255</length>
-    <required>false</required>
+    <length>30000</length>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
 </CustomField>
