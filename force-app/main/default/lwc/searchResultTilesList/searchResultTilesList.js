@@ -107,32 +107,29 @@ export default class SearchResultTilesList extends LightningElement {
 
     connectedCallback() {
         if (!this.labelsAndFields) {
-            this.getFieldSetFieldDescriptionsFromServer();
+            this.getFieldSetDescriptionsFromServer()
+                .then(result =>{
+                    this.fillSearchResults();
+                });
         }
     }
-
-    async getFieldSetFieldDescriptionsFromServer() {
-        let myPromise = await getFieldSetFieldDescriptions({objectName: this.sObjectName, fieldSetName: this.fieldSetName})
-            .then(result =>{ return handleResponse(result)})
-            .then(data => {this.labelsAndFields = data})
+    async getFieldSetDescriptionsFromServer() {
+        return await getFieldSetFieldDescriptions(
+            {
+                objectName: this.sObjectName,
+                fieldSetName: this.fieldSetName
+            })
+            .then(result => {
+                this.labelsAndFields = result.data;
+            })
             .catch(error =>{
                 new ToastEventController(this).showErrorToastMessage('Error', error.body.message);
             });
-        return myPromise;
     }
 
-    renderedCallback() {
-        //we get the labels and fields in the rendered callback because we want to fill in the 'fieldValues' property for each tile.
-        //the server call is only done once when the component is rendered
-        if (!this.labelsAndFields) {
-            this.getFieldSetFieldDescriptionsFromServer().then(result => {this.fillSearchResults()});
-        } else {
-            this.fillSearchResults();
-        }
-    }
 
     fillSearchResults() {
-        if (this.searchResults) {
+        if (this.searchResults != null && this.labelsAndFields != null) {
             const tiles = this.querySelectorAll('[data-name="tile"]');
             if (tiles != null && tiles.length > 0) {
                 tiles.forEach((tile, index) => {
@@ -158,3 +155,4 @@ export default class SearchResultTilesList extends LightningElement {
     }
 
 }
+

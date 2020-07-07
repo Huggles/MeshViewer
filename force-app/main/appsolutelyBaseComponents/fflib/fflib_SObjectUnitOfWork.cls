@@ -102,7 +102,9 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
         }
         public void dmlInsert(List<SObject> objList)
         {
-            Database.insert(objList, dmlOptions);
+            Database.SaveResult[] saveResults = Database.insert(objList, dmlOptions);
+
+
         }
         public void dmlUpdate(List<SObject> objList)
         {
