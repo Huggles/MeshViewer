@@ -16,4 +16,11 @@ public interface IBusinessService {
     Map<String, String> getCountryOptionsForBusinessSearch();
 
 
+    /**
+     * Gets a list of all duplicate business dossiers, based on dossier number and establishment number.
+     * @return a list of all duplicate business dossiers.
+     */
+    List<Business_Dossier__c> findDuplicateDossiersByDossierAndEstablishmentNumber(List<String> dossierNumbers, List<String> establishmentNumbers);
+
+
 }

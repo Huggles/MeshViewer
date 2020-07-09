@@ -1,85 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <description>Fetches the dossiers from the Company.info backend and creates them in the database.</description>
-        <name>Create_Dutch_Dossiers</name>
-        <label>Create Dutch Dossiers</label>
-        <locationX>1558</locationX>
-        <locationY>894</locationY>
-        <actionName>CreateDutchDossierInvocable</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Get_Complete_Dossier</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Dutch_Dossiers_Search_Results</targetReference>
-        </faultConnector>
-        <inputParameters>
-            <name>dossierNumber</name>
-            <value>
-                <elementReference>selectedDossier.Dossier_Number__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>getVat</name>
-            <value>
-                <elementReference>VATEnrichmentRequired</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>establishmentNumber</name>
-            <value>
-                <elementReference>selectedDossier.Establishment_Number__c</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>selectedDossier</assignToReference>
-            <name>output</name>
-        </outputParameters>
-    </actionCalls>
-    <actionCalls>
         <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &apos;normal&apos; end flow.</description>
         <name>End</name>
         <label>End</label>
-        <locationX>801</locationX>
-        <locationY>884</locationY>
+        <locationX>1503</locationX>
+        <locationY>1201</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
-        <name>Find_duplicate_dossier</name>
-        <label>Find duplicate dossier</label>
-        <locationX>1104</locationX>
-        <locationY>883</locationY>
-        <actionName>FindDuplicatesInvocable</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Loop_Over_Duplicate_Dossiers</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <typeName>T__sobj</typeName>
-            <typeValue>appsolutely__Business_Dossier__c</typeValue>
-        </dataTypeMappings>
-        <dataTypeMappings>
-            <typeName>U__output</typeName>
-            <typeValue>appsolutely__Business_Dossier__c</typeValue>
-        </dataTypeMappings>
-        <faultConnector>
-            <targetReference>Dutch_Dossiers_Search_Results</targetReference>
-        </faultConnector>
-        <inputParameters>
-            <name>sobj</name>
-            <value>
-                <elementReference>selectedDossier</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
-        <locationX>391</locationX>
-        <locationY>587</locationY>
+        <locationX>400</locationX>
+        <locationY>689</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -160,8 +94,8 @@
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
-        <locationX>573</locationX>
-        <locationY>1164</locationY>
+        <locationX>881</locationX>
+        <locationY>961</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -233,50 +167,11 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
-        <name>Assign_Duplicate_Dossier</name>
-        <label>Assign Duplicate Dossier</label>
-        <locationX>1190</locationX>
-        <locationY>1355</locationY>
-        <assignmentItems>
-            <assignToReference>FoundDuplicateDossier</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DuplicateDossierLoopVariable</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_Over_Duplicate_Dossiers</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Found_Dossier</name>
-        <label>Assign Found Dossier</label>
-        <locationX>1426</locationX>
-        <locationY>1056</locationY>
-        <assignmentItems>
-            <assignToReference>selectedDossier</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>FoundDuplicateDossier</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>DuplicateDossierFound</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Complete_Dossier</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <description>Assigns the country selected in the search screen to a list</description>
         <name>Assign_Selected_Country_to_List</name>
         <label>Assign Selected Country to List</label>
-        <locationX>594</locationX>
-        <locationY>721</locationY>
+        <locationX>577</locationX>
+        <locationY>697</locationY>
         <assignmentItems>
             <assignToReference>Countries</assignToReference>
             <operator>Add</operator>
@@ -289,26 +184,26 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_To_Selected_Dossier</name>
-        <label>Assign To Selected Dossier</label>
-        <locationX>1262</locationX>
-        <locationY>885</locationY>
+        <name>Assign_Source</name>
+        <label>Assign Source</label>
+        <locationX>521</locationX>
+        <locationY>1198</locationY>
         <assignmentItems>
-            <assignToReference>selectedDossier</assignToReference>
+            <assignToReference>SearchSource</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Complete_Dossier</elementReference>
+                <elementReference>BusinessSearchForm.source</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Data_source_selected</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Count_Dossier_Lists</name>
         <label>Count Dossier Lists</label>
-        <locationX>741</locationX>
-        <locationY>646</locationY>
+        <locationX>727</locationX>
+        <locationY>624</locationY>
         <assignmentItems>
             <assignToReference>DossiersByCompanyIDCount</assignToReference>
             <operator>AssignCount</operator>
@@ -372,8 +267,8 @@
     <assignments>
         <name>Dossiers_Filtered_By_Company_ID</name>
         <label>Dossiers Filtered By Company ID</label>
-        <locationX>393</locationX>
-        <locationY>465</locationY>
+        <locationX>379</locationX>
+        <locationY>443</locationY>
         <assignmentItems>
             <assignToReference>DossiersByCompanyID</assignToReference>
             <operator>Add</operator>
@@ -388,8 +283,8 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Registration_type_Street_City_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Registration_type, Street, City, Postalcode</label>
-        <locationX>838</locationX>
-        <locationY>209</locationY>
+        <locationX>824</locationX>
+        <locationY>187</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusRegistration_typeStreetCityPostalcode</assignToReference>
             <operator>Add</operator>
@@ -404,8 +299,8 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Street_City_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Street, City, Postalcode</label>
-        <locationX>372</locationX>
-        <locationY>217</locationY>
+        <locationX>358</locationX>
+        <locationY>195</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusStreetCityPostalcode</assignToReference>
             <operator>Add</operator>
@@ -420,8 +315,8 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Street_City_Province_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Street, City, Province, Postalcode</label>
-        <locationX>846</locationX>
-        <locationY>475</locationY>
+        <locationX>832</locationX>
+        <locationY>453</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusStreetCityProvincePostalcode</assignToReference>
             <operator>Add</operator>
@@ -436,8 +331,8 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_Number</name>
         <label>Dossiers Filtered By Registration Number</label>
-        <locationX>377</locationX>
-        <locationY>346</locationY>
+        <locationX>363</locationX>
+        <locationY>324</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistrationNumber</assignToReference>
             <operator>Add</operator>
@@ -452,8 +347,8 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_Number_Registration_Type_City</name>
         <label>Dossiers Filtered By Registration_Number, Registration_Type, City</label>
-        <locationX>674</locationX>
-        <locationY>72</locationY>
+        <locationX>660</locationX>
+        <locationY>50</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistration_NumberRegistration_TypeCity</assignToReference>
             <operator>Add</operator>
@@ -468,8 +363,8 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_number_Status_Postalcode</name>
         <label>Dossiers Filtered By Registration_number, Status, Postalcode</label>
-        <locationX>844</locationX>
-        <locationY>331</locationY>
+        <locationX>830</locationX>
+        <locationY>309</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistration_numberStatusPostalcode</assignToReference>
             <operator>Add</operator>
@@ -484,8 +379,8 @@
     <assignments>
         <name>Dossiers_Filtered_By_Vat_Number</name>
         <label>Dossiers Filtered By Vat Number</label>
-        <locationX>520</locationX>
-        <locationY>119</locationY>
+        <locationX>506</locationX>
+        <locationY>97</locationY>
         <assignmentItems>
             <assignToReference>DossiersByVatNumber</assignToReference>
             <operator>Add</operator>
@@ -498,61 +393,11 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Cancel_pressed_in_CreditSafe_search_results</name>
-        <label>Cancel pressed in CreditSafe search results</label>
-        <locationX>932</locationX>
-        <locationY>764</locationY>
-        <defaultConnector>
-            <targetReference>Find_duplicate_dossier</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Create CreditSafe dossier</defaultConnectorLabel>
-        <rules>
-            <name>Cancel_Pressed_Creditsafe_search_results_outcome</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>cancelPressed</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>End</targetReference>
-            </connector>
-            <label>Cancel Pressed</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Cancel_pressed_in_Dutch_search_results</name>
-        <label>Cancel pressed in Dutch search results</label>
-        <locationX>933</locationX>
-        <locationY>999</locationY>
-        <defaultConnector>
-            <targetReference>Find_duplicate_dossier</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Create Dutch Dossier</defaultConnectorLabel>
-        <rules>
-            <name>Cancel_Pressed_Dutch_search_results</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>cancelPressed</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>End</targetReference>
-            </connector>
-            <label>Cancel Pressed</label>
-        </rules>
-    </decisions>
-    <decisions>
         <description>Directs the flow to the right search invocable method based on the data source selected in the search screen (which data source is selected, is determined by the country and the configuration)</description>
         <name>Data_source_selected</name>
         <label>Data source selected</label>
-        <locationX>574</locationX>
-        <locationY>924</locationY>
+        <locationX>670</locationX>
+        <locationY>1200</locationY>
         <defaultConnector>
             <targetReference>End</targetReference>
         </defaultConnector>
@@ -619,35 +464,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Duplicate_Dossier_Check</name>
-        <label>Duplicate Dossier Check</label>
-        <locationX>1696</locationX>
-        <locationY>1158</locationY>
-        <defaultConnector>
-            <targetReference>Type_of_Business_Dossier</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Duplicate Dossier Not Found</defaultConnectorLabel>
-        <rules>
-            <name>Duplicate_Dossier_Found</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>FoundDuplicateDossier</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Found_Dossier</targetReference>
-            </connector>
-            <label>Duplicate Dossier Found</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Filter_Search_Results</name>
         <label>Filter Search Results</label>
-        <locationX>592</locationX>
-        <locationY>362</locationY>
+        <locationX>578</locationX>
+        <locationY>340</locationY>
         <defaultConnector>
             <targetReference>Show_Credit_Safe_Search_Results</targetReference>
         </defaultConnector>
@@ -773,32 +593,6 @@
             <label>Filter By Name, Status, Street, City, Province, Postalcode</label>
         </rules>
     </decisions>
-    <decisions>
-        <description>Decides Type of Business Dossier based on the selected country</description>
-        <name>Type_of_Business_Dossier</name>
-        <label>Type of Business Dossier</label>
-        <locationX>1697</locationX>
-        <locationY>729</locationY>
-        <defaultConnector>
-            <targetReference>Create_Credit_Safe_dossier</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Search via Credit Safe</defaultConnectorLabel>
-        <rules>
-            <name>Search_for_Dutch_Dossiers_Outcome_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>BusinessSearchForm.selectedCountry</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NL</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Create_Dutch_Dossiers</targetReference>
-            </connector>
-            <label>Search for Dutch Dossiers</label>
-        </rules>
-    </decisions>
     <description>Search for organisations through CreditSafe or through the Dutch Chamber of Commerce. When an organisation has been found and selected fetches this organisation and inserts it into Salesforce as a Business Dossier.</description>
     <formulas>
         <name>HouseNumberAsIntConversion</name>
@@ -807,28 +601,12 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Orga {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Organisation Search Flow</label>
-    <loops>
-        <name>Loop_Over_Duplicate_Dossiers</name>
-        <label>Loop Over Duplicate Dossiers</label>
-        <locationX>1190</locationX>
-        <locationY>1159</locationY>
-        <assignNextValueToReference>DuplicateDossierLoopVariable</assignNextValueToReference>
-        <collectionReference>Find_duplicate_dossier</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Assign_Duplicate_Dossier</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Duplicate_Dossier_Check</targetReference>
-        </noMoreValuesConnector>
-    </loops>
     <loops>
         <name>Separate_Search_Results</name>
         <label>Separate Search Results</label>
-        <locationX>597</locationX>
-        <locationY>575</locationY>
+        <locationX>583</locationX>
+        <locationY>553</locationY>
         <assignNextValueToReference>LoopVariableBusinessDossier</assignNextValueToReference>
         <collectionReference>Search_for_Credit_Safe_Dossiers</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -852,51 +630,17 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <name>Create_Credit_Safe_dossier</name>
-        <label>Create Credit Safe dossier</label>
-        <locationX>1425</locationX>
-        <locationY>609</locationY>
-        <connector>
-            <targetReference>Get_Complete_Dossier</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Show_Credit_Safe_Search_Results</targetReference>
-        </faultConnector>
-        <inputReference>selectedDossier</inputReference>
-    </recordCreates>
-    <recordLookups>
-        <description>Get all the fields from the dossier.</description>
-        <name>Get_Complete_Dossier</name>
-        <label>Get Complete Dossier</label>
-        <locationX>1424</locationX>
-        <locationY>885</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assign_To_Selected_Dossier</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>selectedDossier.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Business_Dossier__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <runInMode>DefaultMode</runInMode>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
-        <locationX>946</locationX>
-        <locationY>1162</locationY>
+        <locationX>1169</locationX>
+        <locationY>961</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Cancel_pressed_in_Dutch_search_results</targetReference>
+            <targetReference>End</targetReference>
         </connector>
         <fields>
             <name>flowErrorHandlerDutchResultsScreen</name>
@@ -964,13 +708,13 @@
     <screens>
         <name>Search</name>
         <label>Enter Search Criteria</label>
-        <locationX>389</locationX>
-        <locationY>922</locationY>
+        <locationX>352</locationX>
+        <locationY>1190</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Data_source_selected</targetReference>
+            <targetReference>Assign_Source</targetReference>
         </connector>
         <fields>
             <name>flowErrorHandlerSearchScreen</name>
@@ -1137,13 +881,13 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>937</locationX>
-        <locationY>600</locationY>
+        <locationX>1412</locationX>
+        <locationY>616</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Cancel_pressed_in_CreditSafe_search_results</targetReference>
+            <targetReference>End</targetReference>
         </connector>
         <fields>
             <name>creditSafeSearchResultFlowErrorHandler</name>
@@ -1471,7 +1215,7 @@
     </screens>
     <start>
         <locationX>49</locationX>
-        <locationY>923</locationY>
+        <locationY>1187</locationY>
         <connector>
             <targetReference>Search</targetReference>
         </connector>
@@ -1835,6 +1579,13 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SearchSource</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <description>The Country Selected</description>

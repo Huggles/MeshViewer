@@ -21,9 +21,11 @@ global inherited sharing class FindDuplicatesInvocable {
     @InvocableMethod(label='Find Duplicate Sobjects' description='Find Duplicate Sobjects in Salesforce' category='Company.info')
     global static List<List<SObject>> findDuplicates(List<FindDuplicatesArgument> arguments) {
         try {
+
             List<List<SObject>> allDuplicateSObjects = new List<List<SObject>>();
             List<SObject> sObjects = new List<SObject>();
             for (FindDuplicatesArgument findDuplicatesArgument : arguments) {
+                System.debug(JSON.serialize(findDuplicatesArgument.sobj));
                 sObjects.add(findDuplicatesArgument.sobj);
             }
 

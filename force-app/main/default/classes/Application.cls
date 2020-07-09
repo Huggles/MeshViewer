@@ -9,8 +9,8 @@ public inherited sharing class Application {
         new fflib_Application.UnitOfWorkFactory(
             new List < SObjectType > {
                     User.SObjectType,
-                    Account.SObjectType,
                     Business_Dossier__c.SObjectType,
+                    Account.SObjectType,
                     Business_Data_SBI__c.SObjectType,
                     Business_Person__c.SObjectType,
                     Business_Position__c.SObjectType,

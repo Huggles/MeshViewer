@@ -72,6 +72,20 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         return countryCodesByTranslatedCountryNames;
     }
 
+
+    public List<Business_Dossier__c> findDuplicateDossiersByDossierAndEstablishmentNumber(List<String> dossierNumbers, List<String> establishmentNumbers) {
+        if(dossierNumbers == null){
+            throw new InputException('Require at least one item in the list.');
+        }
+        List<Business_Dossier__c> duplicateBusinessDossiers = [
+                SELECT Id FROM Business_Dossier__c
+                WHERE Dossier_Number__c IN : dossierNumbers AND
+                Establishment_Number__c IN :establishmentNumbers
+                WITH SECURITY_ENFORCED
+        ];
+        return duplicateBusinessDossiers;
+    }
+
     // TODO: move this to a constant util class in the ISO 3166 dir?
     private final static Map<String, String> translatedCountryByAlpha3Code = new Map<String, String> {
             'BEL' => Label.Country_Belgium,

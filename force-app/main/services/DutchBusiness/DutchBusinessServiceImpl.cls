@@ -113,7 +113,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
             Business_Dossier__c dossier = mapDutchBusinessDossierV3ToDossier(dutchBusinessDossierV3, businessDossier);
             unitOfWork.registerDirty(dossier);
 
-            List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(dutchBusinessDossierV3, new List<Business_Data_SBI__c>());
+            List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(dutchBusinessDossierV3);
             for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
                 unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, dossier);
             }
@@ -145,22 +145,51 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossier = mapDutchBusinessDossierV3ToDossier(dossierV3, dossier);
         unitOfWork.registerNew(dossier);
         List<Business_Data_SBI__c> sbiCodes = new List<Business_Data_SBI__c>();
-        sbiCodes = mapDataVendorDataToSBICodes(dossierV3, sbiCodes);
+        sbiCodes = mapDataVendorDataToSBICodes(dossierV3);
         for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
             unitOfWork.registerNew(businessDataSBI, Business_Data_SBI__c.Business_Dossier__c, dossier);
         }
-
-        if(getVAT) {
-            // try {
-                dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
-//            } catch(CCWsServerDataNotFoundVatException e) {
-//                // just don't do anything since the VAT number should stay null in this case.
-//            }
+        if(getVAT != null && getVAT == true) {
+            dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
         }
 
         unitOfWork.commitWork();
         return dossier;
     }
+
+    /**
+     * Fetches the dutch business dossier with the given dossier number and establishment number and instantiates the data model (incl. any related records)
+     * If getVAT is true, also enriches the dossier with the VAT number (if available).
+     *
+     * @param dossierNumber the dossier number to fetch and to create
+     * @param establishmentNumber the establishment number belonging to the dossier
+     * @param getVAT boolean indicating if it should be tried to fetch the VAT (true) or not (false). If no VAT can be found, the No VAT Found field is set to true (only when getVAT is true)
+     *
+     * @return the dossier created.
+     */
+    public Business_Dossier__c instantiateDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT) {
+        if (dossierNumber == null || dossierNumber == '') {
+            Exception ex = new CCInputException('empty dossier number');
+            ErrorLogUtil.logException(ex);
+            throw ex;
+        }
+        // fetch the data
+        DutchBusinessWsdl.DutchBusinessDossierV3 dossierV3 = WsDutchBusiness.dutchBusinessGetDossierV3(dossierNumber, establishmentNumber);
+        // instantiate the dossier
+
+        Business_Dossier__c dossier = new Business_Dossier__c();
+        dossier = mapDutchBusinessDossierV3ToDossier(dossierV3, dossier);
+        List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(dossierV3);
+        for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
+            dossier.SBIs__r.add(businessDataSBI);
+        }
+        if(getVAT != null && getVAT == true) {
+            dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
+        }
+        return dossier;
+    }
+
+
 
     /**
       * Updates a given Dutch business dossier with the VAT number from the CI backend.
@@ -423,10 +452,9 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
         return dossierDB;
     }
-    private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier, List<Business_Data_SBI__c> sbiCodesDB) {
-        if (sbiCodesDB == null) {
-            sbiCodesDB = new List<Business_Data_SBI__c>();
-        }
+    private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier) {
+
+        List<Business_Data_SBI__c> sbiCodesDB = new List<Business_Data_SBI__c>();
         Map<String, Business_Data_SBI__c> sbiCodeRecordsOriginaBySbiCode = new Map<String, Business_Data_SBI__c>();
         Map<String, Business_Data_SBI__c> sbiCodeRecordsCompanyInfoBySbiCode = new Map<String, Business_Data_SBI__c>();
         for (Business_Data_SBI__c businessDataSBI : sbiCodesDB) {
@@ -441,7 +469,11 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
                 if (dataVendorDossier.sbi_collection.original.item != null) {
                     for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeOriginal : dataVendorDossier.sbi_collection.original.item) {
                         if (sbiCodeRecordsOriginaBySbiCode.get(sbiCodeOriginal.sbi_code) == null) {
-                            sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeOriginal.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeOriginal.description));
+                            sbiCodesDB.add(
+                                    new Business_Data_SBI__c(
+                                        SBI_Code__c = sbiCodeOriginal.sbi_code,
+                                        SBI_Type__c = 'original',
+                                        SBI_Description__c = sbiCodeOriginal.description));
                         }
                     }
                 }
@@ -450,7 +482,11 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
                 if (dataVendorDossier.sbi_collection.company_info.item != null) {
                     for (DutchBusinessWsdl.DutchBusinessSBICode sbiCodeCompanyInfo : dataVendorDossier.sbi_collection.company_info.item) {
                         if (sbiCodeRecordsCompanyInfoBySbiCode.get(sbiCodeCompanyInfo.sbi_code) == null) {
-                            sbiCodesDB.add(new Business_Data_SBI__c(SBI_Code__c = sbiCodeCompanyInfo.sbi_code, SBI_Type__c = 'original', SBI_Description__c = sbiCodeCompanyInfo.description));
+                            sbiCodesDB.add(
+                                    new Business_Data_SBI__c(
+                                            SBI_Code__c = sbiCodeCompanyInfo.sbi_code,
+                                            SBI_Type__c = 'original',
+                                            SBI_Description__c = sbiCodeCompanyInfo.description));
                         }
                     }
                 }

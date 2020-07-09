@@ -25,7 +25,10 @@ global with sharing class CreateDutchDossierInvocable {
     }
 
 
-    @InvocableMethod(label='Create Dutch Dossiers' description='Fetches dossiers from the Dutch Chamber of Commerce and stores them in Salesforce' category='Company.info')
+    @InvocableMethod(
+            label='Create Dutch Dossiers'
+            description='Fetches dossiers from the Dutch Chamber of Commerce and stores them in Salesforce'
+            category='Company.info')
     global static List<Business_Dossier__c> createDutchDossier(List<CreateDutchDossierArgument> arguments) {
         try {
             List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
@@ -41,3 +44,15 @@ global with sharing class CreateDutchDossierInvocable {
     }
 
 }
+
+/*
+appsolutely.UpsertBusinessDossierInvocable.UpsertBusinessDossierArgument argument = new appsolutely.UpsertBusinessDossierInvocable.UpsertBusinessDossierArgument();
+argument.dossierNumber = '16044409';
+argument.establishmentNumber = '000039676749';
+argument.getVat = null;
+argument.relatedAccount = new Account(Name = 'Jumbo');
+
+appsolutely.UpsertBusinessDossierInvocable.upsertBusinessDossier(new List<appsolutely.UpsertBusinessDossierInvocable.UpsertBusinessDossierArgument>{argument});
+
+
+ */
