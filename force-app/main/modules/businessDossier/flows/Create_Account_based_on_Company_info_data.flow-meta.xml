@@ -3,8 +3,8 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>713</locationX>
-        <locationY>54</locationY>
+        <locationX>1434</locationX>
+        <locationY>310</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
@@ -188,7 +188,7 @@
     <subflows>
         <name>Upsert_Business_Dossier_to_Account</name>
         <label>Upsert Business Dossier to Account</label>
-        <locationX>1295</locationX>
+        <locationX>1296</locationX>
         <locationY>357</locationY>
         <connector>
             <targetReference>End</targetReference>
