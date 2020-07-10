@@ -18,8 +18,12 @@ public with sharing class FindDuplicateDossiersInvocableTest {
         businessDossier.Dossier_Number__c = '123';
         businessDossier.Establishment_Number__c = '456';
 
+        FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument argument = new FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument();
+        argument.dossier = businessDossier;
+
         Test.startTest();
-        List<Business_Dossier__c>  duplicateDossiers = FindDuplicateDossiersInvocable.findDuplicates(new List<Business_Dossier__c>{businessDossier});
+        List<List<Business_Dossier__c>>  duplicateDossiers =
+                FindDuplicateDossiersInvocable.findDuplicates(new List<FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument>{argument});
         Test.stopTest();
 
         System.assertNotEquals(duplicateDossiers, null);
@@ -27,10 +31,10 @@ public with sharing class FindDuplicateDossiersInvocableTest {
     }
     @IsTest
     static void findDuplicatesErrorTest() {
-
         Test.startTest();
         try {
-            List<Business_Dossier__c>  duplicateDossiers = FindDuplicateDossiersInvocable.findDuplicates(new List<Business_Dossier__c>());
+            List<List<Business_Dossier__c>>  duplicateDossiers =
+                    FindDuplicateDossiersInvocable.findDuplicates(new List<FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument>{});
             System.assert(false);
         }catch (Exception e){
             System.assert(true);
