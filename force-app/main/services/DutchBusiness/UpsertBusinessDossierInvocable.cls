@@ -39,7 +39,6 @@ public inherited sharing class UpsertBusinessDossierInvocable {
                 if(dutchDossierArgument.relatedAccount instanceof Account){
                     relatedAccount = (Account)dutchDossierArgument.relatedAccount;
                 }
-                System.debug(JSON.serialize(dutchDossierArgument));
                 //Add account to response
                 unitOfWork.registerUpsert(relatedAccount);
 
@@ -54,9 +53,6 @@ public inherited sharing class UpsertBusinessDossierInvocable {
                 businessDossiers.add(businessDossier);
             }
             unitOfWork.commitWork();
-
-            System.debug(businessDossiers);
-
             return businessDossiers;
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);

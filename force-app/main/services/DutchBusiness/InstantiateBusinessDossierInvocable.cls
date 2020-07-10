@@ -39,7 +39,6 @@ public with sharing class InstantiateBusinessDossierInvocable {
                 Business_Dossier__c businessDossier =  DutchBusinessService.instantiateDutchDossier(dutchDossierArgument.dossierNumber, dutchDossierArgument.establishmentNumber, dutchDossierArgument.getVat);
                 dossiers.add(businessDossier);
             }
-            System.debug(JSON.serialize(dossiers));
             return dossiers;
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);

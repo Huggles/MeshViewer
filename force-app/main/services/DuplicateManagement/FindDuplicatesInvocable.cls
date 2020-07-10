@@ -25,7 +25,6 @@ global inherited sharing class FindDuplicatesInvocable {
             List<List<SObject>> allDuplicateSObjects = new List<List<SObject>>();
             List<SObject> sObjects = new List<SObject>();
             for (FindDuplicatesArgument findDuplicatesArgument : arguments) {
-                System.debug(JSON.serialize(findDuplicatesArgument.sobj));
                 sObjects.add(findDuplicatesArgument.sobj);
             }
 
