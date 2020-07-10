@@ -11,12 +11,12 @@
     <actionCalls>
         <name>Get_Dutch_Dossier_Complete</name>
         <label>Get Dutch Dossier Complete</label>
-        <locationX>1522</locationX>
-        <locationY>54</locationY>
+        <locationX>1474</locationX>
+        <locationY>53</locationY>
         <actionName>InstantiateBusinessDossierInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Set_Complete_Dossier_Dutch_CoC</targetReference>
+            <targetReference>Based_on_Duplicate_Dossier</targetReference>
         </connector>
         <inputParameters>
             <name>dossierNumber</name>
@@ -36,7 +36,10 @@
                 <elementReference>selectedDossier.Establishment_Number__c</elementReference>
             </value>
         </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>CompleteBusinessDossier</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
     <assignments>
         <description>When a duplicate dossier has been found, but this had no Account connected, it is important to still set that Id on the complete business dossier so we can upsert on it. If its null then it will be inserted.</description>
@@ -65,22 +68,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>selectedDossier</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Based_on_Duplicate_Dossier</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Complete_Dossier_Dutch_CoC</name>
-        <label>Set Complete Dossier Dutch CoC</label>
-        <locationX>1511</locationX>
-        <locationY>318</locationY>
-        <assignmentItems>
-            <assignToReference>CompleteBusinessDossier</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Dutch_Dossier_Complete</elementReference>
             </value>
         </assignmentItems>
         <connector>
