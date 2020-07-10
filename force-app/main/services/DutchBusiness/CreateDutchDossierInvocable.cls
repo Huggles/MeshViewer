@@ -44,15 +44,3 @@ global with sharing class CreateDutchDossierInvocable {
     }
 
 }
-
-/*
-appsolutely.UpsertBusinessDossierInvocable.UpsertBusinessDossierArgument argument = new appsolutely.UpsertBusinessDossierInvocable.UpsertBusinessDossierArgument();
-argument.dossierNumber = '16044409';
-argument.establishmentNumber = '000039676749';
-argument.getVat = null;
-argument.relatedAccount = new Account(Name = 'Jumbo');
-
-appsolutely.UpsertBusinessDossierInvocable.upsertBusinessDossier(new List<appsolutely.UpsertBusinessDossierInvocable.UpsertBusinessDossierArgument>{argument});
-
-
- */

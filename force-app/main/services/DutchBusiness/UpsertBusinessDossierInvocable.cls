@@ -17,12 +17,6 @@ public inherited sharing class UpsertBusinessDossierInvocable {
                 required=true)
         public SObject relatedAccount;
 
-        @TestVisible
-        private UpsertBusinessDossierArgument(Business_Dossier__c businessDossier, Account relatedAccount) {
-            this.businessDossier = businessDossier;
-            this.relatedAccount = relatedAccount;
-        }
-
         public UpsertBusinessDossierArgument() {
 
         }
@@ -34,9 +28,6 @@ public inherited sharing class UpsertBusinessDossierInvocable {
             category='Company.info')
     public static List<Business_Dossier__c> upsertAccountWithBusinessDossier(List<UpsertBusinessDossierArgument> arguments) {
         try {
-            System.debug('>><<');
-
-            System.debug(JSON.serialize(arguments));
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
             List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
             for (UpsertBusinessDossierArgument dutchDossierArgument : arguments) {

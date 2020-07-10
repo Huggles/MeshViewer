@@ -30,16 +30,13 @@ public with sharing class FindDuplicateDossiersInvocableTest {
         System.assertNotEquals(duplicateDossiers.size(), 0);
     }
     @IsTest
-    static void findDuplicatesErrorTest() {
+    static void findDuplicatesNoInputTest() {
         Test.startTest();
-        try {
-            List<List<Business_Dossier__c>>  duplicateDossiers =
-                    FindDuplicateDossiersInvocable.findDuplicates(new List<FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument>{});
-            System.assert(false);
-        }catch (Exception e){
-            System.assert(true);
-        }
+        List<List<Business_Dossier__c>>  duplicateDossiers = FindDuplicateDossiersInvocable.findDuplicates(new List<FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument>{});
         Test.stopTest();
+        System.assertNotEquals(null, duplicateDossiers);
+        System.assertEquals(1, duplicateDossiers.size());
+        System.assertEquals(0, duplicateDossiers[0].size());
     }
 }
 
