@@ -134,7 +134,7 @@
         <locationX>1020</locationX>
         <locationY>534</locationY>
         <assignNextValueToReference>InternalDuplicateDossierLoopVariable</assignNextValueToReference>
-        <collectionReference>Find_Duplicate_Dossiers</collectionReference>
+        <collectionReference>Find_duplicate_dossiers_internal</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_Internal_Duplicate_Dossier</targetReference>

@@ -29,15 +29,14 @@ public inherited sharing class UpsertBusinessDossierInvocable {
     }
 
     @InvocableMethod(
-            label='Upsert Account & Insert Business Dossiers'
+            label='Upsert Account With Business Dossiers'
             description='Fetches dossiers from the Dutch Chamber of Commerce, stores them in Salesforce, and links it to an account.'
             category='Company.info')
     public static List<Business_Dossier__c> upsertAccountWithBusinessDossier(List<UpsertBusinessDossierArgument> arguments) {
         try {
             System.debug('>><<');
 
-
-
+            System.debug(JSON.serialize(arguments));
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
             List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
             for (UpsertBusinessDossierArgument dutchDossierArgument : arguments) {
@@ -53,9 +52,10 @@ public inherited sharing class UpsertBusinessDossierInvocable {
                 //Add account to response
                 unitOfWork.registerUpsert(relatedAccount);
 
-                //Loop through all records to register them for insert.
-                unitOfWork.registerNew(businessDossier);
+                //Loop through all records to register them for upsert.
+                unitOfWork.registerUpsert(businessDossier);
                 for(Business_Data_SBI__c sbi : businessDossier.SBIs__r){
+                    unitOfWork.registerRelationship(sbi, Business_Data_SBI__c.Business_Dossier__c, businessDossier);
                     unitOfWork.registerNew(sbi);
                 }
                 unitOfWork.registerRelationship(relatedAccount, Account.Business_Dossier__c, businessDossier);
@@ -73,6 +73,4 @@ public inherited sharing class UpsertBusinessDossierInvocable {
         }
 
     }
-
-
 }

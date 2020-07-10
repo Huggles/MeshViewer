@@ -180,9 +180,15 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         Business_Dossier__c dossier = new Business_Dossier__c();
         dossier = mapDutchBusinessDossierV3ToDossier(dossierV3, dossier);
         List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(dossierV3);
-        for (Business_Data_SBI__c businessDataSBI : sbiCodes) {
-            dossier.SBIs__r.add(businessDataSBI);
-        }
+
+        Map<String, Object> businessDossierMap = (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(dossier));
+        Map<string, Object> listProperties = new Map<String, Object>();
+        listProperties.put('totalSize', sbiCodes.size());
+        listProperties.put('done', 'true');
+        listProperties.put('records', sbiCodes);
+        businessDossierMap.put('appsolutely__SBIs__r', listProperties);
+        dossier = (Business_Dossier__c)JSON.deserialize(JSON.serialize(businessDossierMap), Business_Dossier__c.class);
+
         if(getVAT != null && getVAT == true) {
             dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
         }

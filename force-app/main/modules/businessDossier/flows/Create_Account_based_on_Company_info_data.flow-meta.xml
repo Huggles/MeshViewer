@@ -3,21 +3,67 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>649</locationX>
-        <locationY>373</locationY>
+        <locationX>713</locationX>
+        <locationY>54</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <assignments>
-        <name>Assign_Account_fields</name>
-        <label>Assign Account fields</label>
-        <locationX>645</locationX>
-        <locationY>53</locationY>
+        <name>Assign_Account_fields_Creditsafe</name>
+        <label>Assign Account fields Creditsafe</label>
+        <locationX>820</locationX>
+        <locationY>618</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CompleteBusinessDossier.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AccountToBeCreated.AccountNumber</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CompleteBusinessDossier.VAT_Number__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Upsert_Business_Dossier_to_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Account_Fields_Default</name>
+        <label>Assign Account Fields Default</label>
+        <locationX>818</locationX>
+        <locationY>352</locationY>
+        <assignmentItems>
+            <assignToReference>AccountToBeCreated.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CompleteBusinessDossier.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Upsert_Business_Dossier_to_Account</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Account_Fields_Dutch_CoC</name>
+        <label>Assign Account Fields Dutch CoC</label>
+        <locationX>819</locationX>
+        <locationY>493</locationY>
+        <assignmentItems>
+            <assignToReference>AccountToBeCreated.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CompleteBusinessDossier.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AccountToBeCreated.BillingCity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CompleteBusinessDossier.Correspondence_City__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -30,7 +76,7 @@
         <locationX>452</locationX>
         <locationY>52</locationY>
         <defaultConnector>
-            <targetReference>Assign_Account_fields</targetReference>
+            <targetReference>Dossier_Source</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Cancel Pressed</defaultConnectorLabel>
         <rules>
@@ -47,6 +93,47 @@
                 <targetReference>End</targetReference>
             </connector>
             <label>Cancel Pressed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>What is the dossier source</description>
+        <name>Dossier_Source</name>
+        <label>Dossier Source</label>
+        <locationX>531</locationX>
+        <locationY>461</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Account_Fields_Default</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dutch_CoC</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DossierSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dutch_Chamber_of_Commerce</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Account_Fields_Dutch_CoC</targetReference>
+            </connector>
+            <label>Dutch CoC</label>
+        </rules>
+        <rules>
+            <name>Creditsafe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DossierSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Creditsafe</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Account_fields_Creditsafe</targetReference>
+            </connector>
+            <label>Creditsafe</label>
         </rules>
     </decisions>
     <description>Template you can use to create an account based on Company.info data. Use this for example in quick actions.</description>
@@ -93,12 +180,16 @@
             <assignToReference>DuplicateFound</assignToReference>
             <name>DuplicateFound</name>
         </outputAssignments>
+        <outputAssignments>
+            <assignToReference>DossierSource</assignToReference>
+            <name>DossierSource</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Upsert_Business_Dossier_to_Account</name>
         <label>Upsert Business Dossier to Account</label>
-        <locationX>853</locationX>
-        <locationY>53</locationY>
+        <locationX>1295</locationX>
+        <locationY>357</locationY>
         <connector>
             <targetReference>End</targetReference>
         </connector>
@@ -138,6 +229,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <name>DossierSource</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>DuplicateDossier</name>

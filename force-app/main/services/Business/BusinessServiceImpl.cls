@@ -77,9 +77,11 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         if(dossierNumbers == null){
             throw new InputException('Require at least one item in the list.');
         }
+        System.debug(dossierNumbers);
+        System.debug(establishmentNumbers);
         List<Business_Dossier__c> duplicateBusinessDossiers = [
                 SELECT Id FROM Business_Dossier__c
-                WHERE Dossier_Number__c IN : dossierNumbers AND
+                WHERE Dossier_Number__c IN :dossierNumbers AND
                 Establishment_Number__c IN :establishmentNumbers
                 WITH SECURITY_ENFORCED
         ];

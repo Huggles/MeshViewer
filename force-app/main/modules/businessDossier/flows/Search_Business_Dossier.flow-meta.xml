@@ -3,15 +3,15 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>548</locationX>
-        <locationY>503</locationY>
+        <locationX>567</locationX>
+        <locationY>725</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Get_Dutch_Dossier_Complete</name>
         <label>Get Dutch Dossier Complete</label>
-        <locationX>1361</locationX>
+        <locationX>1513</locationX>
         <locationY>52</locationY>
         <actionName>InstantiateBusinessDossierInvocable</actionName>
         <actionType>apex</actionType>
@@ -39,10 +39,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <assignments>
+        <description>When a duplicate dossier has been found, but this had no Account connected, it is important to still set that Id on the complete business dossier so we can upsert on it. If its null then it will be inserted.</description>
+        <name>Assign_Duplicate_Record_Id_to_New_Dossier</name>
+        <label>Assign Duplicate Record Id to New Dossier</label>
+        <locationX>1394</locationX>
+        <locationY>734</locationY>
+        <assignmentItems>
+            <assignToReference>CompleteBusinessDossier.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>selectedDossier.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>End</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Complete_Business_Dossier</name>
         <label>Set Complete Business Dossier</label>
-        <locationX>1177</locationX>
-        <locationY>477</locationY>
+        <locationX>1283</locationX>
+        <locationY>318</locationY>
         <assignmentItems>
             <assignToReference>CompleteBusinessDossier</assignToReference>
             <operator>Assign</operator>
@@ -51,14 +68,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Based_on_Duplicate_Dossier</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Complete_Dossier_Dutch_CoC</name>
         <label>Set Complete Dossier Dutch CoC</label>
-        <locationX>1361</locationX>
-        <locationY>572</locationY>
+        <locationX>1508</locationX>
+        <locationY>317</locationY>
         <assignmentItems>
             <assignToReference>CompleteBusinessDossier</assignToReference>
             <operator>Assign</operator>
@@ -67,9 +84,51 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Based_on_Duplicate_Dossier</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Duplicate_Dossier_As_Selected_Dossier</name>
+        <label>Set Duplicate Dossier As Selected Dossier</label>
+        <locationX>1101</locationX>
+        <locationY>155</locationY>
+        <assignmentItems>
+            <assignToReference>selectedDossier.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DuplicateDossier.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Source_Dutch_CoC</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Is the complete dossier an update for a duplicate?</description>
+        <name>Based_on_Duplicate_Dossier</name>
+        <label>Based on Duplicate Dossier</label>
+        <locationX>1385</locationX>
+        <locationY>527</locationY>
+        <defaultConnector>
+            <targetReference>End</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Update_for_duplicate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DuplicateDossier</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Duplicate_Record_Id_to_New_Dossier</targetReference>
+            </connector>
+            <label>Update for duplicate</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
@@ -124,8 +183,8 @@
         <description>Does the duplicate Business Dossier have an account attached?</description>
         <name>Has_Account</name>
         <label>Has Account Attached</label>
-        <locationX>1024</locationX>
-        <locationY>368</locationY>
+        <locationX>1096</locationX>
+        <locationY>377</locationY>
         <defaultConnector>
             <targetReference>Account_Navigation_Screen</targetReference>
         </defaultConnector>
@@ -141,7 +200,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Is_Source_Dutch_CoC</targetReference>
+                <targetReference>Set_Duplicate_Dossier_As_Selected_Dossier</targetReference>
             </connector>
             <label>No Account Attached</label>
         </rules>
@@ -150,8 +209,8 @@
         <description>Is the source of the dossier the dutch CoC?</description>
         <name>Is_Source_Dutch_CoC</name>
         <label>Is Source Dutch CoC</label>
-        <locationX>1156</locationX>
-        <locationY>51</locationY>
+        <locationX>1274</locationX>
+        <locationY>58</locationY>
         <defaultConnector>
             <targetReference>Set_Complete_Business_Dossier</targetReference>
         </defaultConnector>
@@ -201,7 +260,7 @@
             <field>Business_Dossier__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>selectedDossier.Id</elementReference>
+                <elementReference>DuplicateDossier.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -250,8 +309,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>172</locationX>
-        <locationY>57</locationY>
+        <locationX>177</locationX>
+        <locationY>51</locationY>
         <connector>
             <targetReference>Organisation_Search_Flow</targetReference>
         </connector>
@@ -282,7 +341,7 @@
         <name>Organisation_Search_Flow</name>
         <label>Organisation Search Flow</label>
         <locationX>362</locationX>
-        <locationY>57</locationY>
+        <locationY>51</locationY>
         <connector>
             <targetReference>Cancel_Pressed</targetReference>
         </connector>
@@ -339,7 +398,7 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>DuplicateDossier</name>
