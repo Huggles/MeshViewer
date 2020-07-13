@@ -121,7 +121,7 @@
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <stringValue>Business Dossier Created</stringValue>
+                    <elementReference>CompletedNotifcation</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -188,6 +188,14 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
+        <description>The notification that should be shown when the insert/update has completed.</description>
+        <name>CompletedNotifcation</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>DuplicateAccountsScreenCancelPressed</name>
