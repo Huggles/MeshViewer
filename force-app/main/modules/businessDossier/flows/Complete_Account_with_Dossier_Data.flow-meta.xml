@@ -11,8 +11,8 @@
     <actionCalls>
         <name>Upsert_Account_With_Business_Dossiers</name>
         <label>Upsert Account With Business Dossiers</label>
-        <locationX>1539</locationX>
-        <locationY>264</locationY>
+        <locationX>1766</locationX>
+        <locationY>267</locationY>
         <actionName>UpsertBusinessDossierInvocable</actionName>
         <actionType>apex</actionType>
         <dataTypeMappings>
@@ -39,10 +39,27 @@
     </actionCalls>
     <assignments>
         <description>Assign the values of the retrieved business dossier to the account.</description>
-        <name>Assign_Account_Fields</name>
-        <label>Assign Account Fields</label>
-        <locationX>1362</locationX>
-        <locationY>264</locationY>
+        <name>Assign_Account_Fields_Creditsafe</name>
+        <label>Assign Account Fields Creditsafe</label>
+        <locationX>1521</locationX>
+        <locationY>325</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Account.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CreatedDossier.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Upsert_Account_With_Business_Dossiers</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign the values of the retrieved business dossier to the account.</description>
+        <name>Assign_Account_Fields_Dutch_CoC</name>
+        <label>Assign Account Fields Dutch CoC</label>
+        <locationX>1507</locationX>
+        <locationY>198</locationY>
         <assignmentItems>
             <assignToReference>Get_Account.Name</assignToReference>
             <operator>Assign</operator>
@@ -58,7 +75,7 @@
         <name>Assign_billing_country_default</name>
         <label>Assign billing country default</label>
         <locationX>857</locationX>
-        <locationY>51</locationY>
+        <locationY>50</locationY>
         <assignmentItems>
             <assignToReference>Get_Account.BillingCountry</assignToReference>
             <operator>Assign</operator>
@@ -140,7 +157,7 @@
         <locationX>1159</locationX>
         <locationY>270</locationY>
         <defaultConnector>
-            <targetReference>Assign_Account_Fields</targetReference>
+            <targetReference>What_is_the_Dossier_Source</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Cancel Not Pressed</defaultConnectorLabel>
         <rules>
@@ -162,8 +179,8 @@
     <decisions>
         <name>Search_Again_Clicked_Or_VAT_Updated</name>
         <label>Search Again Clicked Or VAT Updated</label>
-        <locationX>767</locationX>
-        <locationY>636</locationY>
+        <locationX>775</locationX>
+        <locationY>641</locationY>
         <defaultConnector>
             <targetReference>Default_outcome_message</targetReference>
         </defaultConnector>
@@ -229,6 +246,43 @@
                 <targetReference>Assign_billing_country_default</targetReference>
             </connector>
             <label>Selected country is empty</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>What_is_the_Dossier_Source</name>
+        <label>What is the Dossier Source</label>
+        <locationX>1297</locationX>
+        <locationY>272</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Account_Fields_Dutch_CoC</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Dutch_CoC</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DossierSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dutch_Chamber_of_Commerce</stringValue>
+                </rightValue>
+            </conditions>
+            <label>Dutch CoC</label>
+        </rules>
+        <rules>
+            <name>Creditsafe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DossierSource</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Creditsafe</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Account_Fields_Creditsafe</targetReference>
+            </connector>
+            <label>Creditsafe</label>
         </rules>
     </decisions>
     <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
@@ -348,7 +402,7 @@
             <targetReference>Get_Account</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Search_Business_Dossier</name>
         <label>Search Business Dossier</label>
@@ -371,6 +425,10 @@
         <outputAssignments>
             <assignToReference>CreatedDossier</assignToReference>
             <name>CompleteBusinessDossier</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>DossierSource</assignToReference>
+            <name>DossierSource</name>
         </outputAssignments>
     </subflows>
     <variables>
@@ -406,6 +464,13 @@
     </variables>
     <variables>
         <name>DefaultOutcomeErrorMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>DossierSource</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
