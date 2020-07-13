@@ -11,31 +11,8 @@
     <assignments>
         <name>Assign_Account_fields_Creditsafe</name>
         <label>Assign Account fields Creditsafe</label>
-        <locationX>820</locationX>
-        <locationY>618</locationY>
-        <assignmentItems>
-            <assignToReference>AccountToBeCreated.Name</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CompleteBusinessDossier.Name</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AccountToBeCreated.AccountNumber</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CompleteBusinessDossier.VAT_Number__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Upsert_Business_Dossier_to_Account</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Account_Fields_Default</name>
-        <label>Assign Account Fields Default</label>
-        <locationX>818</locationX>
-        <locationY>352</locationY>
+        <locationX>802</locationX>
+        <locationY>559</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
             <operator>Assign</operator>
@@ -50,20 +27,13 @@
     <assignments>
         <name>Assign_Account_Fields_Dutch_CoC</name>
         <label>Assign Account Fields Dutch CoC</label>
-        <locationX>819</locationX>
-        <locationY>493</locationY>
+        <locationX>804</locationX>
+        <locationY>397</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CompleteBusinessDossier.Name</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AccountToBeCreated.BillingCity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CompleteBusinessDossier.Correspondence_City__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -99,27 +69,12 @@
         <description>What is the dossier source</description>
         <name>Dossier_Source</name>
         <label>Dossier Source</label>
-        <locationX>531</locationX>
-        <locationY>461</locationY>
+        <locationX>578</locationX>
+        <locationY>467</locationY>
         <defaultConnector>
-            <targetReference>Assign_Account_Fields_Default</targetReference>
+            <targetReference>Assign_Account_Fields_Dutch_CoC</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Dutch_CoC</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>DossierSource</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Dutch_Chamber_of_Commerce</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Account_Fields_Dutch_CoC</targetReference>
-            </connector>
-            <label>Dutch CoC</label>
-        </rules>
         <rules>
             <name>Creditsafe</name>
             <conditionLogic>and</conditionLogic>
@@ -166,7 +121,7 @@
             <targetReference>Search_Business_Dossier_Subflow</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <description>Flow which shows a search screen, the results of the search, checks for existing dossiers, and either returns the selected dossier or opens the existing one.</description>
         <name>Search_Business_Dossier_Subflow</name>
