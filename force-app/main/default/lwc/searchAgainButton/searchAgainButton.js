@@ -41,17 +41,27 @@ export default class SearchAgainButton extends LightningElement {
     @api
     searchAgainClicked = false;
 
+    isLoading = false;
+
+    _confirmationDialog;
+
+    renderedCallback() {
+        if(this._confirmationDialog == null){
+            this._confirmationDialog = this.template.querySelector('c-confirmation-dialog');
+        }
+    }
 
     handleOnClick() {
-        let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
-        confirmationDialog.show();
+        this._confirmationDialog.show();
     }
 
     handleOnClickConfirmationDialog(event) {
+        this._confirmationDialog.hide();
         if (event.detail.status) {
             if (event.detail.status === 'confirm') {
                 // delete the record
                 if (this.dossierId) {
+                    this.isLoading = true;
                     deleteDossier({dossierId: this.dossierId}).then(result => {
                         this.searchAgainClicked = true;
                         this.dispatchEvent(new CustomEvent('searchagainclicked'));
@@ -64,9 +74,12 @@ export default class SearchAgainButton extends LightningElement {
                             "mode": 'sticky'
                         });
                         this.dispatchEvent(event);
+                    }).finally(()=>{
+                        this.isLoading = false;
                     })
                 }
                 if (this.internationalAddressId) {
+                    this.isLoading = true;
                     deleteInternationalAddress({internationalAddressId: this.internationalAddressId}).then(result => {
                         this.searchAgainClicked = true;
                         this.dispatchEvent(new CustomEvent('searchagainclicked'));
@@ -79,12 +92,10 @@ export default class SearchAgainButton extends LightningElement {
                             "mode": 'sticky'
                         });
                         this.dispatchEvent(event);
+                    }).finally(()=>{
+                        this.isLoading = false;
                     })
                 }
-            }
-            if (event.detail.status === 'cancel') {
-                let confirmationDialog = this.template.querySelector('c-confirmation-dialog');
-                confirmationDialog.hide();
             }
         }
     }
