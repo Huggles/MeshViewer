@@ -3,7 +3,7 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>1434</locationX>
+        <locationX>1548</locationX>
         <locationY>310</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -11,7 +11,7 @@
     <assignments>
         <name>Assign_Account_fields_Creditsafe</name>
         <label>Assign Account fields Creditsafe</label>
-        <locationX>802</locationX>
+        <locationX>916</locationX>
         <locationY>559</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
@@ -27,7 +27,7 @@
     <assignments>
         <name>Assign_Account_Fields_Dutch_CoC</name>
         <label>Assign Account Fields Dutch CoC</label>
-        <locationX>804</locationX>
+        <locationX>918</locationX>
         <locationY>397</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
@@ -43,7 +43,7 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>452</locationX>
+        <locationX>566</locationX>
         <locationY>52</locationY>
         <defaultConnector>
             <targetReference>Dossier_Source</targetReference>
@@ -69,7 +69,7 @@
         <description>What is the dossier source</description>
         <name>Dossier_Source</name>
         <label>Dossier Source</label>
-        <locationX>578</locationX>
+        <locationX>692</locationX>
         <locationY>467</locationY>
         <defaultConnector>
             <targetReference>Assign_Account_Fields_Dutch_CoC</targetReference>
@@ -118,37 +118,62 @@
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Search_Business_Dossier_Subflow</targetReference>
+            <targetReference>Organisation_Search_Flow</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
-        <description>Flow which shows a search screen, the results of the search, checks for existing dossiers, and either returns the selected dossier or opens the existing one.</description>
-        <name>Search_Business_Dossier_Subflow</name>
-        <label>Search Business Dossier Subflow</label>
-        <locationX>305</locationX>
-        <locationY>50</locationY>
+        <name>Organisation_Search_Flow</name>
+        <label>Organisation Search Flow</label>
+        <locationX>217</locationX>
+        <locationY>48</locationY>
         <connector>
-            <targetReference>Cancel_Pressed</targetReference>
+            <targetReference>Retrieve_Business_Dossier</targetReference>
         </connector>
-        <flowName>Search_Business_Dossier</flowName>
+        <flowName>Organisation_Search_Flow</flowName>
         <outputAssignments>
-            <assignToReference>CompleteBusinessDossier</assignToReference>
-            <name>CompleteBusinessDossier</name>
-        </outputAssignments>
-        <outputAssignments>
-            <assignToReference>DuplicateFound</assignToReference>
-            <name>DuplicateFound</name>
+            <assignToReference>cancelPressed</assignToReference>
+            <name>cancelPressed</name>
         </outputAssignments>
         <outputAssignments>
             <assignToReference>DossierSource</assignToReference>
+            <name>SearchSource</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>CreatedDossier</assignToReference>
+            <name>selectedDossier</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Retrieve_Business_Dossier</name>
+        <label>Retrieve Business Dossier</label>
+        <locationX>384</locationX>
+        <locationY>47</locationY>
+        <connector>
+            <targetReference>Cancel_Pressed</targetReference>
+        </connector>
+        <flowName>Retrieve_Business_Dossier</flowName>
+        <inputAssignments>
             <name>DossierSource</name>
+            <value>
+                <elementReference>DossierSource</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>selectedDossier</name>
+            <value>
+                <elementReference>CreatedDossier</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>CompleteBusinessDossier</assignToReference>
+            <name>CompleteBusinessDossier</name>
         </outputAssignments>
     </subflows>
     <subflows>
         <name>Upsert_Business_Dossier_to_Account</name>
         <label>Upsert Business Dossier to Account</label>
-        <locationX>1296</locationX>
+        <locationX>1410</locationX>
         <locationY>357</locationY>
         <connector>
             <targetReference>End</targetReference>
@@ -197,6 +222,14 @@
         <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
+        <name>CreatedDossier</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
         <name>DossierSource</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -220,14 +253,5 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
-    </variables>
-    <variables>
-        <description>The dossier (Company.info record) selected by the user.</description>
-        <name>selectedDossier</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Business_Dossier__c</objectType>
     </variables>
 </Flow>

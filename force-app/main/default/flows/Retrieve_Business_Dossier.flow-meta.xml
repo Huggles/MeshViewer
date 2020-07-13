@@ -146,7 +146,7 @@
         <name>Has_Account</name>
         <label>Has Account Attached</label>
         <locationX>935</locationX>
-        <locationY>501</locationY>
+        <locationY>510</locationY>
         <defaultConnector>
             <targetReference>Account_Navigation_Screen</targetReference>
         </defaultConnector>
@@ -193,9 +193,13 @@
             <label>Is Dutch CoC</label>
         </rules>
     </decisions>
-    <description>Flow which shows a search screen, the results of the search, checks for existing dossiers, and either returns the selected dossier or opens the existing one.</description>
-    <interviewLabel>Search Business Dossier</interviewLabel>
-    <label>Search Business Dossier</label>
+    <formulas>
+        <name>Redirect_to_duplicate_Account_Formula</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__redirect_to_duplicate_account}</expression>
+    </formulas>
+    <interviewLabel>Retrieve Business Dossier {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Retrieve Business Dossier</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -235,8 +239,8 @@
     <screens>
         <name>Account_Navigation_Screen</name>
         <label>Account Navigation Screen</label>
-        <locationX>945</locationX>
-        <locationY>656</locationY>
+        <locationX>938</locationX>
+        <locationY>670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -250,7 +254,7 @@
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <stringValue>{!$Label.Redirect_to_duplicate_Account}</stringValue>
+                    <elementReference>Redirect_to_duplicate_Account_Formula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -277,7 +281,7 @@
             <targetReference>Check_Duplicate_Business_Dossiers</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Check_Duplicate_Business_Dossiers</name>
         <label>Check Duplicate Business Dossiers</label>
@@ -299,13 +303,6 @@
         </outputAssignments>
     </subflows>
     <variables>
-        <name>cancelPressed</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-    </variables>
-    <variables>
         <name>CompleteBusinessDossier</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -318,8 +315,8 @@
         <name>DossierSource</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>DuplicateDossier</name>
@@ -330,21 +327,11 @@
         <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
-        <name>DuplicateFound</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>true</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
         <description>The dossier (Company.info record) selected by the user.</description>
         <name>selectedDossier</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Business_Dossier__c</objectType>
     </variables>
