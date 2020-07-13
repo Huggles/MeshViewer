@@ -33,7 +33,7 @@ parameters:
   packaging_scratch_org_definition_file:
     description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
     type: string
-    default: "config/project-scratch-def.json"
+    default: "config/package-scratch-def.json"
   beta_test_scratch_org_definition_file:
     description: "the enterprise edition scratch org definition file used to install the beta. Should define all the right org shape/dependencies/features needed for installing the package"
     type: string
@@ -63,7 +63,7 @@ jobs:
     resource_class: small
     environment:
       SFDX_MDAPI_TEMP_DIR: /root/project/metadata
-      SFDX_LOG_LEVEL: trace
+      SFDX_LOG_LEVEL: debug
     steps:
       - checkout
       - log_into_devhub
@@ -109,6 +109,9 @@ jobs:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
+    environment:
+      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_LOG_LEVEL: debug
     steps:
       - checkout
       - log_into_devhub
@@ -116,7 +119,7 @@ jobs:
           name: create beta package version
           no_output_timeout: 1.5h
           command: |
-            packageversionid=$(sfdx force:package:version:create --package << pipeline.parameters.packageid >> -x --codecoverage --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" --json | jq .result.SubscriberPackageVersionId)
+            packageversionid=$(sfdx force:package:version:create --package << pipeline.parameters.packageid >> -c -x -f << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" --json | jq .result.SubscriberPackageVersionId)
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
             echo 'export packageversionid="'$packageversionid'"' >> $BASH_ENV
@@ -153,6 +156,12 @@ jobs:
       - store_artifacts:
           path: sfdx-force-url.txt
           destination: sfdx-force-url
+      - store_artifacts:
+          path: metadata.tar
+          destination: metadata
+      - store_artifacts:
+          path: sfdx_log.tar
+          destination: sfdx-log
       - slack/notify:
           message: 'new scratch org with beta package available. sfdx-url: ${sdfxforceurl}'
   
