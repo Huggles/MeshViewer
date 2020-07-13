@@ -4,10 +4,56 @@
         <name>End</name>
         <label>End</label>
         <locationX>1161</locationX>
-        <locationY>98</locationY>
+        <locationY>97</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
+    <actionCalls>
+        <name>Upsert_Account_With_Business_Dossiers</name>
+        <label>Upsert Account With Business Dossiers</label>
+        <locationX>1539</locationX>
+        <locationY>264</locationY>
+        <actionName>UpsertBusinessDossierInvocable</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__businessDossier</typeName>
+            <typeValue>appsolutely__Business_Dossier__c</typeValue>
+        </dataTypeMappings>
+        <dataTypeMappings>
+            <typeName>T__relatedAccount</typeName>
+            <typeValue>Account</typeValue>
+        </dataTypeMappings>
+        <inputParameters>
+            <name>relatedAccount</name>
+            <value>
+                <elementReference>Get_Account</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>businessDossier</name>
+            <value>
+                <elementReference>CreatedDossier</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <assignments>
+        <description>Assign the values of the retrieved business dossier to the account.</description>
+        <name>Assign_Account_Fields</name>
+        <label>Assign Account Fields</label>
+        <locationX>1362</locationX>
+        <locationY>264</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Account.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CreatedDossier.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Upsert_Account_With_Business_Dossiers</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assign_billing_country_default</name>
         <label>Assign billing country default</label>
@@ -21,14 +67,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Organisation_Search_Flow</targetReference>
+            <targetReference>Search_Business_Dossier</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assign_Business_Dossier_Id_And_Search_Again</name>
         <label>Assign Business Dossier Id And Search Again</label>
-        <locationX>543</locationX>
-        <locationY>435</locationY>
+        <locationX>542</locationX>
+        <locationY>434</locationY>
         <assignmentItems>
             <assignToReference>BusinessDossierRecordId</assignToReference>
             <operator>Assign</operator>
@@ -48,33 +94,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_New_Business_Dossier_Id_And_Search_Again</name>
-        <label>Assign New Business Dossier Id And Search Again</label>
-        <locationX>1384</locationX>
-        <locationY>447</locationY>
-        <assignmentItems>
-            <assignToReference>BusinessDossierRecordId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CreatedDossier.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>SearchAgainClicked</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Show_Buisness_Dossier</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Default_outcome_message</name>
         <label>Default outcome message</label>
-        <locationX>1079</locationX>
-        <locationY>581</locationY>
+        <locationX>655</locationX>
+        <locationY>826</locationY>
         <assignmentItems>
             <assignToReference>DefaultOutcomeErrorMessage</assignToReference>
             <operator>Assign</operator>
@@ -114,10 +137,10 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>1153</locationX>
-        <locationY>269</locationY>
+        <locationX>1159</locationX>
+        <locationY>270</locationY>
         <defaultConnector>
-            <targetReference>Update_Account_for_Dutch_Dossier</targetReference>
+            <targetReference>Assign_Account_Fields</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Cancel Not Pressed</defaultConnectorLabel>
         <rules>
@@ -139,8 +162,8 @@
     <decisions>
         <name>Search_Again_Clicked_Or_VAT_Updated</name>
         <label>Search Again Clicked Or VAT Updated</label>
-        <locationX>776</locationX>
-        <locationY>505</locationY>
+        <locationX>767</locationX>
+        <locationY>636</locationY>
         <defaultConnector>
             <targetReference>Default_outcome_message</targetReference>
         </defaultConnector>
@@ -179,10 +202,10 @@
     <decisions>
         <name>Selected_country_is_empty</name>
         <label>Selected country is empty</label>
-        <locationX>774</locationX>
-        <locationY>269</locationY>
+        <locationX>765</locationX>
+        <locationY>268</locationY>
         <defaultConnector>
-            <targetReference>Organisation_Search_Flow</targetReference>
+            <targetReference>Search_Business_Dossier</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -210,7 +233,6 @@
     </decisions>
     <description>Template which helps the admin to create a flow that first prefills the search criteria (in this case of an account) and then updates the record (in this case an account) with the found results.</description>
     <interviewLabel>Complete Account {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Enrich Account with Dossier Data</label>
     <processMetadataValues>
@@ -246,35 +268,11 @@
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <description>Updates an account with the details of a dutch business dossier</description>
-        <name>Update_Account_for_Dutch_Dossier</name>
-        <label>Update Account for Dutch Dossier</label>
-        <locationX>1381</locationX>
-        <locationY>261</locationY>
-        <connector>
-            <targetReference>Assign_New_Business_Dossier_Id_And_Search_Again</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Business_Dossier__c</field>
-            <value>
-                <elementReference>CreatedDossier.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
     <screens>
         <name>Show_Buisness_Dossier</name>
         <label>Show Buisness Dossier</label>
-        <locationX>1083</locationX>
-        <locationY>447</locationY>
+        <locationX>542</locationX>
+        <locationY>631</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -352,61 +350,18 @@
     </start>
     <status>Active</status>
     <subflows>
-        <description>Searches for organisations. Uses the input values as defaults to search on.</description>
-        <name>Organisation_Search_Flow</name>
-        <label>Organisation Search Flow</label>
-        <locationX>989</locationX>
-        <locationY>267</locationY>
+        <name>Search_Business_Dossier</name>
+        <label>Search Business Dossier</label>
+        <locationX>972</locationX>
+        <locationY>268</locationY>
         <connector>
             <targetReference>Cancel_Pressed</targetReference>
         </connector>
-        <flowName>Organisation_Search_Flow</flowName>
+        <flowName>Search_Business_Dossier</flowName>
         <inputAssignments>
-            <name>City</name>
+            <name>EnrichAccount</name>
             <value>
-                <elementReference>Get_Account.BillingCity</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>DomainName</name>
-            <value>
-                <elementReference>Get_Account.Website</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>PhoneNumber</name>
-            <value>
-                <elementReference>Get_Account.Phone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>PostalCode</name>
-            <value>
-                <elementReference>Get_Account.BillingPostalCode</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>SelectedCountry</name>
-            <value>
-                <elementReference>Get_Account.BillingCountry</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>Street</name>
-            <value>
-                <elementReference>Get_Account.BillingStreet</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>TradeName</name>
-            <value>
-                <elementReference>Get_Account.Name</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>VATEnrichmentRequired</name>
-            <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>Get_Account</elementReference>
             </value>
         </inputAssignments>
         <outputAssignments>
@@ -415,7 +370,7 @@
         </outputAssignments>
         <outputAssignments>
             <assignToReference>CreatedDossier</assignToReference>
-            <name>selectedDossier</name>
+            <name>CompleteBusinessDossier</name>
         </outputAssignments>
     </subflows>
     <variables>
