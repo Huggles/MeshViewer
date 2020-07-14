@@ -158,15 +158,15 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     }
 
     /**
-     * Fetches the dutch business dossier with the given dossier number and establishment number and instantiates the data model (incl. any related records)
-     * If getVAT is true, also enriches the dossier with the VAT number (if available).
-     *
-     * @param dossierNumber the dossier number to fetch and to create
-     * @param establishmentNumber the establishment number belonging to the dossier
-     * @param getVAT boolean indicating if it should be tried to fetch the VAT (true) or not (false). If no VAT can be found, the No VAT Found field is set to true (only when getVAT is true)
-     *
-     * @return the dossier created.
-     */
+    * Fetches the dutch business dossier with the given dossier number and establishment number and instantiates the records without inserting them (incl. any related records)
+    * If getVAT is true, also enriches the dossier with the VAT number (if available).
+    *
+    * @param dossierNumber the dossier number to fetch and to create
+    * @param establishmentNumber the establishment number belonging to the dossier
+    * @param getVAT boolean indicating if it should be tried to fetch the VAT (true) or not (false). If no VAT can be found, the No VAT Found field is set to true (only when getVAT is true)
+    *
+    * @return the dossier created.
+    */
     public Business_Dossier__c instantiateDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT) {
         if (dossierNumber == null || dossierNumber == '') {
             Exception ex = new CCInputException('empty dossier number');

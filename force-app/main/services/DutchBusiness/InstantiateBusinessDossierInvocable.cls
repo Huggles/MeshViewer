@@ -33,7 +33,6 @@ public with sharing class InstantiateBusinessDossierInvocable {
             category='Company.info')
     public static List<Business_Dossier__c> instantiateBusinessDossier(List<InstantiateBusinessDossierArgument> arguments) {
         try {
-            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
             List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
             for (InstantiateBusinessDossierArgument dutchDossierArgument : arguments) {
                 Business_Dossier__c businessDossier =  DutchBusinessService.instantiateDutchDossier(dutchDossierArgument.dossierNumber, dutchDossierArgument.establishmentNumber, dutchDossierArgument.getVat);

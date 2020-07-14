@@ -18,7 +18,6 @@ public inherited sharing class UpsertBusinessDossierInvocable {
         public SObject relatedAccount;
 
         public UpsertBusinessDossierArgument() {
-
         }
     }
 
@@ -28,9 +27,14 @@ public inherited sharing class UpsertBusinessDossierInvocable {
             category='Company.info')
     public static List<Business_Dossier__c> upsertAccountWithBusinessDossier(List<UpsertBusinessDossierArgument> arguments) {
         try {
-            fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
-            List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
+            List<Business_Dossier__c> businessDossiersToUpsert = new List<Business_Dossier__c>();
+            List<Account> accountsToUpsert = new List<Account>();
             for (UpsertBusinessDossierArgument dutchDossierArgument : arguments) {
+                //This invocable can only be called with both arguments filled of type business dossier / account.
+                if(dutchDossierArgument.businessDossier == null || dutchDossierArgument.relatedAccount == null ||
+                        !(dutchDossierArgument.businessDossier instanceof Business_Dossier__c) || !(dutchDossierArgument.relatedAccount instanceof Account)){
+                    throw new AuraHandledException(Label.Error_Input_Incorrect);
+                }
                 Business_Dossier__c businessDossier;
                 Account relatedAccount;
                 if(dutchDossierArgument.businessDossier instanceof Business_Dossier__c){
@@ -39,25 +43,15 @@ public inherited sharing class UpsertBusinessDossierInvocable {
                 if(dutchDossierArgument.relatedAccount instanceof Account){
                     relatedAccount = (Account)dutchDossierArgument.relatedAccount;
                 }
-                //Add account to response
-                unitOfWork.registerUpsert(relatedAccount);
-
-                //Loop through all records to register them for upsert.
-                unitOfWork.registerUpsert(businessDossier);
-                for(Business_Data_SBI__c sbi : businessDossier.SBIs__r){
-                    unitOfWork.registerRelationship(sbi, Business_Data_SBI__c.Business_Dossier__c, businessDossier);
-                    unitOfWork.registerNew(sbi);
-                }
-                unitOfWork.registerRelationship(relatedAccount, Account.Business_Dossier__c, businessDossier);
-
-                businessDossiers.add(businessDossier);
+                businessDossiersToUpsert.add(businessDossier);
+                accountsToUpsert.add(relatedAccount);
             }
-            unitOfWork.commitWork();
+            List<Business_Dossier__c> businessDossiers = BusinessService.upsertDossiersAndAccounts(businessDossiersToUpsert, accountsToUpsert);
+            System.debug(JSON.serialize(businessDossiers));
             return businessDossiers;
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);
             throw ex;
         }
-
     }
 }
