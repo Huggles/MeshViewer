@@ -3,7 +3,7 @@
  */
 
 @IsTest
-private class DutchBusinessServiceImplTest {
+public class DutchBusinessServiceImplTest {
 
     @IsTest
     public static void testSearchForDutchDossiersHappyFlow() {
@@ -342,6 +342,7 @@ private class DutchBusinessServiceImplTest {
         System.assert(dossierToAssert.No_VAT_Number__c == false);
     }
 
+    @TestVisible
     private static DutchBusinessWsdl.DutchBusinessDossierV3 getDataVendorMockDossier() {
         DutchBusinessWsdl.DutchBusinessDossierV3 InputDossier = new DutchBusinessWsdl.DutchBusinessDossierV3();
 

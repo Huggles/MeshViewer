@@ -72,6 +72,56 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         return countryCodesByTranslatedCountryNames;
     }
 
+
+    public List<Business_Dossier__c> findDuplicateDossiersByDossierAndEstablishmentNumber(List<String> dossierNumbers, List<String> establishmentNumbers) {
+        if(dossierNumbers == null){
+            throw new InputException('Require at least one item in the list.');
+        }
+        List<Business_Dossier__c> duplicateBusinessDossiers = [
+                SELECT Id FROM Business_Dossier__c
+                WHERE Dossier_Number__c IN :dossierNumbers AND
+                Establishment_Number__c IN :establishmentNumbers
+                WITH SECURITY_ENFORCED
+        ];
+        return duplicateBusinessDossiers;
+    }
+
+    public static List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts, Boolean ignoreAlertDuplicateRules){
+        //The paramters should not be empty, and the size of both lists should be equal
+        if(businessDossiers.size() == 0 || accounts.size() == 0 || businessDossiers.size() != accounts.size()){
+            throw new InputException(Label.Error_Input_Incorrect);
+        }
+        fflib_ISObjectUnitOfWork unitOfWork;
+        if(ignoreAlertDuplicateRules){
+            unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
+        }else{
+            unitOfWork = Application.UnitOfWork.newInstance();
+        }
+
+        List<Business_Dossier__c> response = new List<Business_Dossier__c>();
+
+        //Loop through records to register for insert.
+        for (Integer i = 0; i < businessDossiers.size(); i++) {
+            Account relatedAccount = accounts[i];
+            Business_Dossier__c businessDossier = businessDossiers[i];
+
+            //Add account to response
+            unitOfWork.registerUpsert(relatedAccount);
+
+            //Loop through all records to register them for upsert.
+            unitOfWork.registerUpsert(businessDossier);
+            for(Business_Data_SBI__c sbi : businessDossier.SBIs__r){
+                unitOfWork.registerRelationship(sbi, Business_Data_SBI__c.Business_Dossier__c, businessDossier);
+                unitOfWork.registerNew(sbi);
+            }
+            unitOfWork.registerRelationship(relatedAccount, Account.Business_Dossier__c, businessDossier);
+
+            response.add(businessDossier);
+        }
+        unitOfWork.commitWork();
+        return response;
+    }
+
     // TODO: move this to a constant util class in the ISO 3166 dir?
     private final static Map<String, String> translatedCountryByAlpha3Code = new Map<String, String> {
             'BEL' => Label.Country_Belgium,

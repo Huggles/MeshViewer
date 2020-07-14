@@ -585,21 +585,9 @@
             <fullName>Duplicate_Management_For_Account_and_Business_Dossier</fullName>
             <screens>
                 <fields>
-                    <name>NavigateToRecord</name>
-                </fields>
-                <name>Account_Navigation_Screen</name>
-            </screens>
-            <screens>
-                <fields>
                     <name>DuplicateAccounts</name>
                 </fields>
                 <name>Duplicate_Account_Details</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>FlowFaultMessage</name>
-                </fields>
-                <name>Flow_Fault_Message_Screen</name>
             </screens>
         </flows>
         <fullName>Duplicate_Management_For_Account_and_Business_Dossier</fullName>
@@ -609,21 +597,9 @@
             <fullName>Duplicate_Management_For_Account_and_International_Address</fullName>
             <screens>
                 <fields>
-                    <name>NavigateToRecord</name>
-                </fields>
-                <name>Account_Navigation_Screen</name>
-            </screens>
-            <screens>
-                <fields>
                     <name>DuplicateAccounts</name>
                 </fields>
                 <name>Duplicate_Account_Details</name>
-            </screens>
-            <screens>
-                <fields>
-                    <name>FlowFaultMessage</name>
-                </fields>
-                <name>Flow_Fault_Message_Screen</name>
             </screens>
         </flows>
         <fullName>Duplicate_Management_For_Account_and_International_Address</fullName>
