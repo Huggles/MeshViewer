@@ -18,8 +18,8 @@ public inherited sharing class BusinessService {
         return newInstance().findDuplicateDossiersByDossierAndEstablishmentNumber(dossierNumbers, establishmentNumbers);
     }
 
-    public static List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts){
-        return newInstance().upsertDossiersAndAccounts(businessDossiers, accounts);
+    public static List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts, Boolean ignoreAlertDuplicateRules){
+        return newInstance().upsertDossiersAndAccounts(businessDossiers, accounts, ignoreAlertDuplicateRules);
     }
 
     public static IBusinessService newInstance() {

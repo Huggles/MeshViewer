@@ -86,12 +86,18 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         return duplicateBusinessDossiers;
     }
 
-    public static List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts){
+    public static List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts, Boolean ignoreAlertDuplicateRules){
         //The paramters should not be empty, and the size of both lists should be equal
         if(businessDossiers.size() == 0 || accounts.size() == 0 || businessDossiers.size() != accounts.size()){
             throw new InputException(Label.Error_Input_Incorrect);
         }
-        fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
+        fflib_ISObjectUnitOfWork unitOfWork;
+        if(ignoreAlertDuplicateRules){
+            unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
+        }else{
+            unitOfWork = Application.UnitOfWork.newInstance();
+        }
+
         List<Business_Dossier__c> response = new List<Business_Dossier__c>();
 
         //Loop through records to register for insert.

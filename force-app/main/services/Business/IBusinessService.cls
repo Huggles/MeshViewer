@@ -30,5 +30,5 @@ public interface IBusinessService {
      *
      * @return A list of inserted business dossiers.
      */
-    List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts);
+    List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts,  Boolean ignoreAlertDuplicateRules);
 }

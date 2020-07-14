@@ -46,8 +46,7 @@ public inherited sharing class UpsertBusinessDossierInvocable {
                 businessDossiersToUpsert.add(businessDossier);
                 accountsToUpsert.add(relatedAccount);
             }
-            List<Business_Dossier__c> businessDossiers = BusinessService.upsertDossiersAndAccounts(businessDossiersToUpsert, accountsToUpsert);
-            System.debug(JSON.serialize(businessDossiers));
+            List<Business_Dossier__c> businessDossiers = BusinessService.upsertDossiersAndAccounts(businessDossiersToUpsert, accountsToUpsert, true);
             return businessDossiers;
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);
