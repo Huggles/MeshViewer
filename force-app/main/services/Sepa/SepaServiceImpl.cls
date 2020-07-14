@@ -1,8 +1,11 @@
 /**
  * Created by hugovankrimpen on 01/07/2020.
+ *
+ * This class runs without sharing rules enabled.
+ * It should always be able to access all records, for example to find duplicates.
  */
 
-public with sharing class SepaServiceImpl implements ISepaService{
+public without sharing class SepaServiceImpl implements ISepaService{
 
 
     public static SEPA_Bank_Account__c getSepaMatchAccountHolder(String IBAN,String accountHolderName){
@@ -11,9 +14,9 @@ public with sharing class SepaServiceImpl implements ISepaService{
         try {
             sepaMatchAccountHolderResult = WsSepa.sepaMatchAccountHolder(IBAN, accountHolderName);
         }
-        catch (CalloutException calloutException){
+        catch (CCWsClientInputInvalidException clientInputInvalidException){
             //This exception is thrown when the IBAN or AccountHolderName are incorrect.
-            throw calloutException;
+            throw clientInputInvalidException;
         }
         catch (Exception e){
             //This should hopefully never happen.
@@ -60,7 +63,6 @@ public with sharing class SepaServiceImpl implements ISepaService{
     }
 
     private static void insertExistingSEPABankAccountsIds(List<SEPA_Bank_Account__c> sepaBankAccounts){
-        System.debug(sepaBankAccounts);
         Set<String> IBANs = new Set<String>();
         for(SEPA_Bank_Account__c sepaBankAccount : sepaBankAccounts){
             IBANs.add(sepaBankAccount.Name);
@@ -76,5 +78,4 @@ public with sharing class SepaServiceImpl implements ISepaService{
             }
         }
     }
-
 }

@@ -54,6 +54,6 @@ public with sharing class WsSepaImpl implements IWsSepa{
         Map<String, Object> payload  = new Map<String, Object>();
         payload.put('iban', IBAN);
         payload.put('name', accountHolderName);
-        return (SepaWsdl.SepaMatchAccountHolderResult)methodCallOut.call('sepaMatchAccountHolder',payload);
+        return (SepaWsdl.SepaMatchAccountHolderResult)methodCallOut.callOut('sepaMatchAccountHolder',payload);
     }
 }

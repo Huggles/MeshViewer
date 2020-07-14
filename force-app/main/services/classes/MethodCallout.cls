@@ -54,6 +54,9 @@ public inherited sharing abstract class MethodCallout implements Callable {
                 if (message.contains('(You are not logged in)')) { // Company.info should improve this...
                     throw new CCWsClientAuthenticationException(Label.Error_Client_Authentication, calloutException);
                 }
+                if(message.contains('This is not a valid International Bank Account Number')){//Very generic error for a very specific endpoint
+                    throw new CCWsClientInputInvalidException(Label.Error_Incorrect_IBAN, calloutException);
+                }
                 // general error caused by the client but unexpected so we log
                 Exception ex = new CCWsClientException(getErrorMessage(message) + '.' + Label.Error_Webservice_Client, calloutException);
                 ErrorLogUtil.logException(ex, true);

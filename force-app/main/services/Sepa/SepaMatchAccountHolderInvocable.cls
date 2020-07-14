@@ -32,11 +32,9 @@ global with sharing class SepaMatchAccountHolderInvocable {
                     sepaBankAccounts.add(sepaBankAccount);
                 }
             }
-            System.debug(JSON.serialize(sepaBankAccounts));
             SepaService.saveSEPABankAccounts(sepaBankAccounts);
             return sepaBankAccounts;
         } catch (Exception ex) {
-            ErrorLogUtil.logException(ex, true);
             throw ex;
         }
     }
