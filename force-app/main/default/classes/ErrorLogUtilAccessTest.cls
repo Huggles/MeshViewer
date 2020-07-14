@@ -37,6 +37,5 @@ private class ErrorLogUtilAccessTest {
                 FROM Error_Log__c];
         System.assertEquals(1, errorLogs.size());
         System.assertEquals('test', errorLogs.get(0).Message__c);
-        System.debug(JSON.serializePretty(errorLogs));
     }
 }

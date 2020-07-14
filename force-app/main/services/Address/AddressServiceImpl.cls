@@ -23,13 +23,11 @@ public with sharing class AddressServiceImpl implements IAddressService {
         AddressWsdl.PerceelSearchPartsPagedResult returnedResults = WsAddress.addressPerceelFullParameterSearchV2(province, district, city, street, houseNo, houseNoAddition, nbcode, lettercombination, addresstype, 1);
 
         if (returnedResults != null && returnedResults.results != null && returnedResults.results.item != null) {
-            System.debug(returnedResults.results.item.size());
             searchResults.addAll(returnedResults.results.item);
             Integer numPages = returnedResults.paging.numpages;
 
             for (Integer i = 2; i <= numPages && searchResults.size() < MAX_SEARCH_RESULTS; i++) {
                 returnedResults = WsAddress.addressPerceelFullParameterSearchV2(province, district, city, street, houseNo, houseNoAddition, nbcode, lettercombination, addresstype, i);
-                System.debug(returnedResults.results.item.size());
                 searchResults.addAll(returnedResults.results.item);
             }
         }
