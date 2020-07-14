@@ -24,6 +24,10 @@ public inherited sharing class DutchBusinessService {
         return newInstance().createDutchDossier(dossierNumber, establishmentNumber, getVAT);
     }
 
+    public static Business_Dossier__c instantiateDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT) {
+        return newInstance().instantiateDutchDossier(dossierNumber, establishmentNumber, getVAT);
+    }
+
     /**
      * Updates a given Dutch business dossier with the VAT number from the CI backend. Does not update it in the backend.
      *

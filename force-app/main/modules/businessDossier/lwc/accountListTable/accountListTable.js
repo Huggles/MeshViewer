@@ -75,21 +75,10 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
     }
 
     handleClickCreateNewAccount() {
-        createDuplicateAccount({account: this.newAccount}).then(result => {
-            if (result) {
-                this[NavigationMixin.Navigate]({
-                    type: 'standard__recordPage',
-                    attributes: {
-                        recordId: result,
-                        actionName: 'view',
-                    },
-                });
-                this.showToast(Success, Duplicate_Account_Created, 'success');
-            }
-        }).catch(error => {
-            this.error = error;
-            this.showToast(Error, error, 'error');
-        })
+        this.updateDuplicateAccount = false;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('updateDuplicateAccount', this.updateDuplicateAccount);
+        this.dispatchEvent(attributeChangeEvent);
+        this.dispatchEvent(new FlowNavigationNextEvent());
     }
 
     handleClickCancel() {
