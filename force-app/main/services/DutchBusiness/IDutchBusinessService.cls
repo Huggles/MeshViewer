@@ -60,6 +60,18 @@ public interface IDutchBusinessService {
     Business_Dossier__c createDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT);
 
     /**
+    * Fetches the dutch business dossier with the given dossier number and establishment number and instantiates the records without inserting them (incl. any related records)
+    * If getVAT is true, also enriches the dossier with the VAT number (if available).
+    *
+    * @param dossierNumber the dossier number to fetch and to create
+    * @param establishmentNumber the establishment number belonging to the dossier
+    * @param getVAT boolean indicating if it should be tried to fetch the VAT (true) or not (false). If no VAT can be found, the No VAT Found field is set to true (only when getVAT is true)
+    *
+    * @return the dossier created.
+    */
+    Business_Dossier__c instantiateDutchDossier(String dossierNumber, String establishmentNumber, Boolean getVAT);
+
+    /**
      * Updates a given Dutch business dossier with the VAT number from the CI backend.
      * Sets the flag No_VAT__c to true if no VAT number is known in the backend.
      * Does not update it in the backend.

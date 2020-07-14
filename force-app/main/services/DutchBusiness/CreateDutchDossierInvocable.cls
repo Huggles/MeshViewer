@@ -25,7 +25,10 @@ global with sharing class CreateDutchDossierInvocable {
     }
 
 
-    @InvocableMethod(label='Create Dutch Dossiers' description='Fetches dossiers from the Dutch Chamber of Commerce and stores them in Salesforce' category='Company.info')
+    @InvocableMethod(
+            label='Create Dutch Dossiers'
+            description='Fetches dossiers from the Dutch Chamber of Commerce and stores them in Salesforce'
+            category='Company.info')
     global static List<Business_Dossier__c> createDutchDossier(List<CreateDutchDossierArgument> arguments) {
         try {
             List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();

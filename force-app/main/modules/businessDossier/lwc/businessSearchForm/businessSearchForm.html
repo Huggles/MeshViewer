@@ -4,7 +4,9 @@
 
 <template>
     <template if:true={moreThanOneCountryOption}>
-        <lightning-combobox name="selectedCountry" class="slds-m-around_xxx-small" label={label.Country} options={countries} value={selectedCountry} placeholder={label.Select_a_Country} dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>
+        <lightning-combobox name="selectedCountry" class="slds-m-around_xxx-small" label={label.Country}
+                            options={countries} value={selectedCountry} placeholder={label.Select_a_Country}
+                            dropdown-alignment="left" required variant="standard" onchange={handleSelectedCountryChange}></lightning-combobox>
     </template>
     <template if:true={isSelectedDatasourceDutchChamberOfCommerce}>
         <c-dutch-business-search-form class="searchForm" dossier-number={dossierNumber} trade-name={tradeName}

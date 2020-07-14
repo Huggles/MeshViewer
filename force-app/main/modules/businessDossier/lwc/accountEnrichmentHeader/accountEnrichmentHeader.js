@@ -5,9 +5,8 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
+import {getFieldValue} from 'lightning/uiRecordApi';
 import { refreshApex } from "@salesforce/apex";
-import {getRecordTypeName} from "c/objectInfoUtils";
-import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
 import {Features, checkAccess} from "c/featureAccessControl";
@@ -20,7 +19,7 @@ import BUSINESS_DOSSIER_VAT from '@salesforce/schema/Business_Dossier__c.VAT_Num
 import BUSINESS_DOSSIER_NO_VAT from '@salesforce/schema/Business_Dossier__c.No_VAT_Number__c';
 import BUSINESS_DOSSIER_COUNTRY from '@salesforce/schema/Business_Dossier__c.Registration_Country__c';
 import BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT from '@salesforce/schema/Business_Dossier__c.Creditsafe_Company_Report__c';
-import BUSINESS_DOSSIER_RECORD_TYPE from '@salesforce/schema/Business_Dossier__c.RecordTypeId';
+import BUSINESS_DOSSIER_RECORD_TYPE from '@salesforce/schema/Business_Dossier__c.RecordType.DeveloperName';
 
 //Apex controllers
 import updateDossierWithVAT from '@salesforce/apex/CompanyDetailsController.updateDossierWithVAT';
@@ -51,7 +50,7 @@ const OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS = [
 ]
 
 const CREDITSAFE_DOSSIER_RECORD_TYPE_NAME = 'Creditsafe';
-const DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME = 'Dutch Business';
+const DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME = 'Dutch_Business';
 
 export default class AccountEnrichmentHeader extends LightningElement {
 
@@ -121,10 +120,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
      */
     _recordTypeName;
 
-    @wire(getObjectInfo, { objectApiName: BUSINESS_DOSSIER})
-    _businessDossierObjectInfo;
-
-
     @wire(getRecord, {recordId: '$businessDossierId',fields: [],optionalFields: OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS})
     businessDossierRecord(response) {
         this._businessDossierRecordResponse = response;
@@ -156,9 +151,9 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 if (this.businessDossier.fields.appsolutely__Business_Positions_Updated_Date__c) {
                     this.businessPositionsUpdatedDate = this.businessDossier.fields.appsolutely__Business_Positions_Updated_Date__c.value;
                 }
-                if (this.businessDossier.fields.RecordTypeId) {
-                    this._recordTypeName = getRecordTypeName(this.businessDossier.fields.RecordTypeId.value, this._businessDossierObjectInfo);
-                }
+                // if (this.businessDossier.fields.RecordType.DeveloperName) {
+                    this._recordTypeName = getFieldValue(this.businessDossier, BUSINESS_DOSSIER_RECORD_TYPE);
+                // }
             }
         }
     };

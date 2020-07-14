@@ -36,7 +36,11 @@ public inherited sharing class DuplicateManagementServiceImpl implements IDuplic
                 for (Datacloud.DuplicateResult dupeResult : findDupeResult.getDuplicateResults()) {
                     for (Datacloud.MatchResult matchResult : dupeResult.getMatchResults()) {
                         for (Datacloud.MatchRecord matchRecord : matchResult.getMatchRecords()) {
-                            duplicateSObjects.add(matchRecord.getRecord());
+                            //Check if the record was already added by another duplicate rule first. We dont want records twice.
+                            SObject record = matchRecord.getRecord();
+                            if(!listContainsId(duplicateSObjects, record.Id)){
+                                duplicateSObjects.add(record);
+                            }
                         }
                     }
                 }
@@ -46,6 +50,23 @@ public inherited sharing class DuplicateManagementServiceImpl implements IDuplic
             // System.HandledException: No active duplicate rules are defined for the [objname] object type
         }
         return duplicateSObjects;
+    }
+
+    /*
+     * Check whether a list of records contains an element with a specific Id
+     *
+     * @param records List of SObjects to check
+     * @param idToFind Id to find.
+     *
+     * @return Boolean whether the Id is in the list.
+     */
+    private static Boolean listContainsId(List<SObject> records, Id idToFind){
+        for (SObject record : records){
+            if(record.Id == idToFind){
+                return true;
+            }
+        }
+        return false;
     }
 
 

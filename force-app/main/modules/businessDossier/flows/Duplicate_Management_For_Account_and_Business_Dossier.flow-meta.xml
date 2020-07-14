@@ -3,16 +3,16 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>1390</locationX>
-        <locationY>352</locationY>
+        <locationX>1131</locationX>
+        <locationY>509</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Find_Duplicate_Accounts</name>
         <label>Find Duplicate Accounts</label>
-        <locationX>514</locationX>
-        <locationY>258</locationY>
+        <locationX>337</locationX>
+        <locationY>500</locationY>
         <actionName>FindDuplicatesInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -37,8 +37,8 @@
     <assignments>
         <name>Assign_Duplicate_Account_Size</name>
         <label>Assign Duplicate Account Size</label>
-        <locationX>821</locationX>
-        <locationY>250</locationY>
+        <locationX>492</locationX>
+        <locationY>500</locationY>
         <assignmentItems>
             <assignToReference>DuplicateAccountsSize</assignToReference>
             <operator>AssignCount</operator>
@@ -53,8 +53,8 @@
     <assignments>
         <name>Assign_Id_To_Account</name>
         <label>Assign Id To Account</label>
-        <locationX>1620</locationX>
-        <locationY>144</locationY>
+        <locationX>1130</locationX>
+        <locationY>228</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Id</assignToReference>
             <operator>Assign</operator>
@@ -63,129 +63,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Update_Duplicate_Account</targetReference>
+            <targetReference>End</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>Assign_Toast_Message_and_Variant_and_Account_Id</name>
-        <label>Assign Toast Message and Variant and Account Id</label>
-        <locationX>1019</locationX>
-        <locationY>484</locationY>
-        <assignmentItems>
-            <assignToReference>TextMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>RedirectToAccount</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Variant</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>info</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Account_Related_to_Selected_Dossier.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Account_Navigation_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Toast_Message_and_Variant_and_Account_Id_0</name>
-        <label>Assign Toast Message and Variant and Account Id</label>
-        <locationX>1222</locationX>
-        <locationY>592</locationY>
-        <assignmentItems>
-            <assignToReference>TextMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CreateNewAccount</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Variant</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>success</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AccountToBeCreated.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Account_Navigation_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Toast_Message_and_Variant_and_Account_Id_For_Update</name>
-        <label>Assign Toast Message and Variant and Account Id For Update</label>
-        <locationX>1628</locationX>
-        <locationY>608</locationY>
-        <assignmentItems>
-            <assignToReference>TextMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>UpdatedAccount</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Variant</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>success</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AccountId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SelectedDuplicateAccount.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Account_Navigation_Screen</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Check_Duplicate_Dossier</name>
-        <label>Check Duplicate Dossier</label>
-        <locationX>390</locationX>
-        <locationY>496</locationY>
-        <defaultConnector>
-            <targetReference>Find_Duplicate_Accounts</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Duplicate Dossier Not Found</defaultConnectorLabel>
-        <rules>
-            <name>Duplicate_Dossier_Found</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>DuplicateFound</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Account_Related_to_Selected_Dossier</targetReference>
-            </connector>
-            <label>Duplicate Dossier Found</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Create_New_Or_Update_Duplicate_Account</name>
         <label>Create New Or Update Duplicate Account</label>
-        <locationX>1378</locationX>
-        <locationY>155</locationY>
+        <locationX>1006</locationX>
+        <locationY>380</locationY>
         <defaultConnector>
             <targetReference>End</targetReference>
         </defaultConnector>
@@ -209,10 +94,10 @@
     <decisions>
         <name>Duplicate_Account_Check</name>
         <label>Duplicate Account Check</label>
-        <locationX>1017</locationX>
-        <locationY>253</locationY>
+        <locationX>668</locationX>
+        <locationY>502</locationY>
         <defaultConnector>
-            <targetReference>Create_Account</targetReference>
+            <targetReference>End</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Duplicate Account Not Found</defaultConnectorLabel>
         <rules>
@@ -231,31 +116,6 @@
             <label>Duplicate Accounts Found</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Is_Account_Related_To_Dossier</name>
-        <label>Is Account Related To Dossier</label>
-        <locationX>784</locationX>
-        <locationY>487</locationY>
-        <defaultConnector>
-            <targetReference>Find_Duplicate_Accounts</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Related Account Not Found</defaultConnectorLabel>
-        <rules>
-            <name>Related_Account_Found</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Account_Related_to_Selected_Dossier</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_Toast_Message_and_Variant_and_Account_Id</targetReference>
-            </connector>
-            <label>Related Account Found</label>
-        </rules>
-    </decisions>
     <formulas>
         <name>CreateNewAccount</name>
         <dataType>String</dataType>
@@ -272,7 +132,6 @@
         <expression>{!$Label.appsolutely__updated_account}</expression>
     </formulas>
     <interviewLabel>Duplicate Management For Account and Business Dossier {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Duplicate Management For Account and Business Dossier</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -287,99 +146,32 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
-    <recordCreates>
-        <description>Creates the account. Add field values which take values from the selectedDossier variable to set the different fields on the account to be created.</description>
-        <name>Create_Account</name>
-        <label>Create Account</label>
-        <locationX>1230</locationX>
-        <locationY>363</locationY>
-        <connector>
-            <targetReference>Assign_Toast_Message_and_Variant_and_Account_Id_0</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Flow_Fault_Message_Screen</targetReference>
-        </faultConnector>
-        <inputReference>AccountToBeCreated</inputReference>
-    </recordCreates>
     <recordLookups>
-        <name>Get_Account_Related_to_Selected_Dossier</name>
-        <label>Get Account Related to Selected Dossier</label>
-        <locationX>525</locationX>
-        <locationY>705</locationY>
+        <name>Get_Flow_Setting_Show_Create_Account_Button</name>
+        <label>Get Flow Setting Show Create Account Button</label>
+        <locationX>203</locationX>
+        <locationY>499</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Account_Related_To_Dossier</targetReference>
+            <targetReference>Find_Duplicate_Accounts</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Flow_Fault_Message_Screen</targetReference>
-        </faultConnector>
         <filters>
-            <field>Business_Dossier__c</field>
+            <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>selectedDossier.Id</elementReference>
+                <stringValue>Flow_Setting_Show_Create_Account_Button</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
+        <object>Protected_Subscriber_Setting__mdt</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Duplicate_Account</name>
-        <label>Update Duplicate Account</label>
-        <locationX>1621</locationX>
-        <locationY>352</locationY>
-        <connector>
-            <targetReference>Assign_Toast_Message_and_Variant_and_Account_Id_For_Update</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Flow_Fault_Message_Screen</targetReference>
-        </faultConnector>
-        <inputReference>AccountToBeCreated</inputReference>
-    </recordUpdates>
-    <screens>
-        <name>Account_Navigation_Screen</name>
-        <label>Account Navigation Screen</label>
-        <locationX>1388</locationX>
-        <locationY>484</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>End</targetReference>
-        </connector>
-        <fields>
-            <name>NavigateToRecord</name>
-            <extensionName>appsolutely:flowNavigation</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>AccountId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>message</name>
-                <value>
-                    <elementReference>TextMessage</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>variant</name>
-                <value>
-                    <elementReference>Variant</elementReference>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
+    <runInMode>SystemModeWithSharing</runInMode>
     <screens>
         <name>Duplicate_Account_Details</name>
         <label>Duplicate Account Details</label>
-        <locationX>1220</locationX>
-        <locationY>153</locationY>
+        <locationX>875</locationX>
+        <locationY>378</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -405,7 +197,7 @@
             <inputParameters>
                 <name>showCreateNewAccount</name>
                 <value>
-                    <elementReference>ShowCreateNewAccountButton</elementReference>
+                    <elementReference>Get_Flow_Setting_Show_Create_Account_Button.Enabled__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -425,27 +217,11 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Flow_Fault_Message_Screen</name>
-        <label>Flow Fault Message Screen</label>
-        <locationX>1401</locationX>
-        <locationY>789</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <fields>
-            <name>FlowFaultMessage</name>
-            <fieldText>&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>494</locationY>
+        <locationX>27</locationX>
+        <locationY>499</locationY>
         <connector>
-            <targetReference>Check_Duplicate_Dossier</targetReference>
+            <targetReference>Get_Flow_Setting_Show_Create_Account_Button</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -462,7 +238,7 @@
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Account</objectType>
     </variables>
     <variables>
@@ -470,7 +246,7 @@
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
     </variables>
     <variables>
         <name>DuplicateAccountsSize</name>
@@ -481,42 +257,12 @@
         <scale>2</scale>
     </variables>
     <variables>
-        <name>DuplicateFound</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <description>The dossier (Company.info record) selected by the user.</description>
-        <name>selectedDossier</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Business_Dossier__c</objectType>
-    </variables>
-    <variables>
         <name>SelectedDuplicateAccount</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Account</objectType>
-    </variables>
-    <variables>
-        <description>When screen with duplicate accounts list is shown, the admin has the option to allow user to create new duplicate account or not with assigning value to this variable.</description>
-        <name>ShowCreateNewAccountButton</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>true</booleanValue>
-        </value>
     </variables>
     <variables>
         <name>TextMessage</name>

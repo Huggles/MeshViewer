@@ -33,7 +33,7 @@ parameters:
   packaging_scratch_org_definition_file:
     description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
     type: string
-    default: "config/project-scratch-def.json"
+    default: "config/package-scratch-def.json"
   beta_test_scratch_org_definition_file:
     description: "the enterprise edition scratch org definition file used to install the beta. Should define all the right org shape/dependencies/features needed for installing the package"
     type: string
@@ -58,19 +58,20 @@ parameters:
 
 jobs:
   run_apex_tests:
+    description: Checks out the metadata, creates a new scratch org with the packaging scratch org def, pushes all metadata and runs all apex tests
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
     environment:
       SFDX_MDAPI_TEMP_DIR: /root/project/metadata
-      SFDX_LOG_LEVEL: trace
+      SFDX_LOG_LEVEL: debug
     steps:
       - checkout
       - log_into_devhub
       - run:
           name: create scratch org
           command:
-            sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM -d 1 -w 10
+            sfdx force:org:create -s -f << pipeline.parameters.packaging_scratch_org_definition_file >> -a circle_build_$CIRCLE_BUILD_NUM -d 1 -w 10
       - run:
           name: push source to scratch org
           command:
@@ -106,9 +107,18 @@ jobs:
           destination: sfdx-log
   
   create_and_install_beta:
+    description: checks out the metadata, creates a beta package, creates a new scratch org with the beta test scratch org def and creates users with the right permission sets
+    parameters:
+      skipvalidation:
+        description: "--skipvalidation if validation needs to be skipped when creating a new beta package. Otherwise empty (default)"
+        default: ""
+        type: string
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
+    environment:
+      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_LOG_LEVEL: debug
     steps:
       - checkout
       - log_into_devhub
@@ -116,7 +126,7 @@ jobs:
           name: create beta package version
           no_output_timeout: 1.5h
           command: |
-            packageversionid=$(sfdx force:package:version:create --package << pipeline.parameters.packageid >> -x --codecoverage --definitionfile << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" --json | jq .result.SubscriberPackageVersionId)
+            packageversionid=$(sfdx force:package:version:create --package << pipeline.parameters.packageid >> -x -f << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" << parameters.skipvalidation >> --json | jq .result.SubscriberPackageVersionId)
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
             echo 'export packageversionid="'$packageversionid'"' >> $BASH_ENV
@@ -137,24 +147,41 @@ jobs:
           command: |
             sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_beta_$versionnumber -w 30
       - run:
-          name: create admin user with fixed name and store the loginurl, username and password
+          name: create admin user with fixed name and store the sfdx url
           command: |
-            sfdx force:user:create -a test-user -u test_beta_$versionnumber -f << pipeline.parameters.user_defintion_beta_test >> generatepassword=true
-            sdfxforceurl=$(sfdx force:org:display -u test-user --verbose --json | jq .result.sfdxAuthUrl)
-            sdfxforceurl="${sdfxforceurl%\"}"
-            sdfxforceurl="${sdfxforceurl#\"}"
-            echo $sdfxforceurl >> sfdx-force-url.txt
-            echo 'export sdfxforceurl="'$sdfxforceurl'"' >> $BASH_ENV
+            sfdx force:user:create -a test-admin -u test_beta_$versionnumber -f << pipeline.parameters.user_defintion_beta_test >> generatepassword=true
+            sfdxadminurl=$(sfdx force:org:display -u test-admin --verbose --json | jq .result.sfdxAuthUrl)
+            sfdxadminurl="${sfdxadminurl%\"}"
+            sfdxadminurl="${sfdxadminurl#\"}"
+            echo 'export sfdxadminurl="'$sfdxadminurl'"' >> $BASH_ENV
+            echo $sfdxadminurl >> sfdx-force-url-admin.txt
+      - run:
+          name: create sales user with fixed name and store the sfdx url
+          command: |
+            sfdx force:user:create -a test-sales -u test_beta_$versionnumber -f << pipeline.parameters.user_defintion_beta_test >> generatepassword=true
+            sdfxsalesurl=$(sfdx force:org:display -u test-sales --verbose --json | jq .result.sfdxAuthUrl)
+            sdfxsalesurl="${sdfxsalesurl%\"}"
+            sdfxsalesurl="${sdfxsalesurl#\"}"
+            echo $sdfxsalesurl >> sfdx-force-url-sales.txt
       - run:
           name: delete scratch org
           when: on_fail
           command: |
             sfdx force:org:delete -u test_beta_$versionnumber
       - store_artifacts:
-          path: sfdx-force-url.txt
-          destination: sfdx-force-url
+          path: sfdx-force-url-admin.txt
+          destination: sfdx-force-url-admin
+      - store_artifacts:
+          path: sfdx-force-url-sales.txt
+          destination: sfdx-force-url-sales
+      - store_artifacts:
+          path: metadata.tar
+          destination: metadata
+      - store_artifacts:
+          path: sfdx_log.tar
+          destination: sfdx-log
       - slack/notify:
-          message: 'new scratch org with beta package available. sfdx-url: ${sdfxforceurl}'
+          message: "new scratch org with beta package available. Download the sfdx urls to get access"
   
   upgrade_to_managed:
     docker:
@@ -166,9 +193,7 @@ jobs:
       - run:
           name: get latest package version and upgrade to managed package
           command: |
-            packageversionid=$(sfdx force:package:version:list --createdlastdays 0 --packages "<< pipeline.parameters.packageid >>" --orderby BuildNumber --json | jq .result[-1].SubscriberPackageVersionId)
-            packageversionid="${packageversionid%\"}"
-            packageversionid="${packageversionid#\"}"
+            packageversionid=$(sfdx force:package:version:list --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
             sfdx force:package:version:promote --package $packageversionid --noprompt
 #      - run:
 #          name: merge into master
@@ -209,21 +234,19 @@ workflows:
           filters:
             branches:
               only: /release\/.*/
-#      - build_packaging2_beta:
-#          context: org-global
-#          requires:
-#            - run_apex_tests
-#      - install_packaging2_beta:
-#          context: org-global
-#          requires:
-#            - build_packaging2_beta
-#      - approve_upgrade_to_managed:
-#          type: approval
-#          requires:
-#            - install_packaging2_beta
-#      - upgrade_to_managed:
-#          context: org-global
-#          requires:
-#            - approve_upgrade_to_managed
+      - create_and_install_beta:
+          context: org-global
+          requires:
+            - run_apex_tests
+      - approve_upgrade_to_managed:
+          type: approval
+          requires:
+            - create_and_install_beta
+      - upgrade_to_managed:
+          context: org-global
+          requires:
+            - approve_upgrade_to_managed
+
+
 
 
