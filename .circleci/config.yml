@@ -181,7 +181,7 @@ jobs:
           path: sfdx_log.tar
           destination: sfdx-log
       - slack/notify:
-          message: 'new scratch org with beta package available. sfdx url for the admin user: '${sdfxforceurl}
+          message: "new scratch org with beta package available. Download the sfdx urls to get access"
   
   upgrade_to_managed:
     docker:
