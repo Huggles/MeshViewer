@@ -2,7 +2,7 @@
  * Created by jaapbranderhorst on 03/03/2020.
  */
 
-public with sharing class UpdateDutchDossierWithVATInvocable {
+global with sharing class UpdateDutchDossierWithVATInvocable {
 
     @InvocableMethod(
             label = 'Update Dutch dossiers with VAT number'
