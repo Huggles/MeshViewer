@@ -137,6 +137,7 @@ jobs:
             versionnumber=$(sfdx force:package:version:report -p $packageversionid --json | jq .result.Version)
             versionnumber="${versionnumber%\"}"
             versionnumber="${versionnumber#\"}"
+            echo $versionnumber
             echo 'export versionnumber="'$versionnumber'"' >> $BASH_ENV
       - run:
           name: create beta test scratch org
@@ -153,6 +154,7 @@ jobs:
             sfdxadminurl=$(sfdx force:org:display -u test-admin --verbose --json | jq .result.sfdxAuthUrl)
             sfdxadminurl="${sfdxadminurl%\"}"
             sfdxadminurl="${sfdxadminurl#\"}"
+            echo $sfdxadminurl
             echo 'export sfdxadminurl="'$sfdxadminurl'"' >> $BASH_ENV
             echo $sfdxadminurl >> sfdx-force-url-admin.txt
       - run:
@@ -162,6 +164,7 @@ jobs:
             sdfxsalesurl=$(sfdx force:org:display -u test-sales --verbose --json | jq .result.sfdxAuthUrl)
             sdfxsalesurl="${sdfxsalesurl%\"}"
             sdfxsalesurl="${sdfxsalesurl#\"}"
+            echo $sfdxsalesurl
             echo $sdfxsalesurl >> sfdx-force-url-sales.txt
       - run:
           name: delete scratch org
