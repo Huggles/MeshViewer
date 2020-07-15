@@ -2,9 +2,9 @@
  * Created by hugovankrimpen on 08/07/2020.
  */
 
-public inherited sharing class UpsertBusinessDossierInvocable {
+global inherited sharing class UpsertBusinessDossierInvocable {
 
-    public inherited sharing class UpsertBusinessDossierArgument {
+    global inherited sharing class UpsertBusinessDossierArgument {
         @InvocableVariable(
                 label='Dossier'
                 description='The Dutch dossier to be inserted. This will be inserted.'
@@ -25,7 +25,7 @@ public inherited sharing class UpsertBusinessDossierInvocable {
             label='Upsert Account With Business Dossiers'
             description='Fetches dossiers from the Dutch Chamber of Commerce, stores them in Salesforce, and links it to an account.'
             category='Company.info')
-    public static List<Business_Dossier__c> upsertAccountWithBusinessDossier(List<UpsertBusinessDossierArgument> arguments) {
+    global static List<Business_Dossier__c> upsertAccountWithBusinessDossier(List<UpsertBusinessDossierArgument> arguments) {
         try {
             List<Business_Dossier__c> businessDossiersToUpsert = new List<Business_Dossier__c>();
             List<Account> accountsToUpsert = new List<Account>();
