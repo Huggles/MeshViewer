@@ -15,6 +15,14 @@ if [[ "$quit" == 1 ]]; then
     exit
   fi
 
+###############################################################
+#Check git branch. New feature script should run from develop #
+###############################################################
+sh operations/check-git-branch.sh
+quit=$?
+if [[ "$quit" == 1 ]]; then
+    exit
+  fi
 
 #########################################################
 #Ask for the name the scratch org and branch should get #
