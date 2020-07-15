@@ -484,6 +484,14 @@
         <value>You have been authenticated for the datavendor but do not have access to the requested functionality. Please contact your administrator.</value>
     </labels>
     <labels>
+        <fullName>Error_Incorrect_IBAN</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error message when an incorrect IBAN provided to the SEPA callout.</shortDescription>
+        <value>This is not a valid International Bank Account Number (IBAN).</value>
+    </labels>
+    <labels>
         <fullName>Error_Client_Hostrestriction</fullName>
         <categories>Error,webservice</categories>
         <language>en_US</language>

@@ -12,6 +12,7 @@ public inherited sharing class Application {
                     Business_Dossier__c.SObjectType,
                     Account.SObjectType,
                     Business_Data_SBI__c.SObjectType,
+                    SEPA_Bank_Account__c.SObjectType,
                     Business_Person__c.SObjectType,
                     Business_Position__c.SObjectType,
                     Creditsafe_Company_Report_Full__c.SObjectType,
@@ -56,11 +57,14 @@ public inherited sharing class Application {
                             IInternationalAddressService.class => InternationalAddressImpl.class,
                             IWsInternationalAddress.class => WsInternationalAddressImpl.class,
                             IWsVat.class => WsVatImpl.class,
+                            ISepaService.class => SepaServiceImpl.class,
+                            IWsSepa.class => WsSepaImpl.class,
                             IWsAddress.class => WsAddressImpl.class,
                             IAddressService.class => AddressServiceImpl.class,
                             ISetupService.class => SetupServiceImpl.class,
                             IDuplicateManagement.class => DuplicateManagementServiceImpl.class,
                             ILicenseManagementService.class => LicenseManagementServiceImpl.class
+
                     });
 
     // Configure and create the SelectorFactory for this Application
