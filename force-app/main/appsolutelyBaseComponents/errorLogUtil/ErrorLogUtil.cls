@@ -112,7 +112,7 @@ public inherited sharing class ErrorLogUtil {
     * @param emailEvents the platform events for which to send emails
     */
     @InvocableMethod
-    global static void sendSupportEmails(List<Error_Log__c> logs) {
+    public static void sendSupportEmails(List<Error_Log__c> logs) {
         List<String> messages = new List<String>();
         for (Error_Log__c log : logs) {
             String message = '\n' + 'Type: ' + log.Type__c + '\n' + 'Cause: ' + log.Cause__c + '\n' + 'Message: '
