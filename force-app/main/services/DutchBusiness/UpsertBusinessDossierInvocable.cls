@@ -9,15 +9,15 @@ global inherited sharing class UpsertBusinessDossierInvocable {
                 label='Dossier'
                 description='The Dutch dossier to be inserted. This will be inserted.'
                 required=true)
-        public SObject businessDossier;
+        global SObject businessDossier;
 
         @InvocableVariable(
                 label='Account'
                 description='The account this business dossier should be related to. This will be upserted.'
                 required=true)
-        public SObject relatedAccount;
+        global SObject relatedAccount;
 
-        public UpsertBusinessDossierArgument() {
+        global UpsertBusinessDossierArgument() {
         }
     }
 
