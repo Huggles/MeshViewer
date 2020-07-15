@@ -23,6 +23,9 @@ global with sharing class SepaMatchAccountHolderInvocable {
             category='Company.info')
     global static List<SEPA_Bank_Account__c> validateAccountHolderWithIBANNumber(List<SepaMatchAccountHolderArgument> arguments) {
         try {
+            if(!FeatureAccessControlController.checkAccess(Feature.SEPA)){
+                throw new FeatureAccessException('The user does not have access to the feature: ' + Feature.SEPA.name());
+            }
             List<SEPA_Bank_Account__c> sepaBankAccounts = new List<SEPA_Bank_Account__c>();
             for (SepaMatchAccountHolderArgument sepaMatchAccountHolderArgument : arguments) {
                 SEPA_Bank_Account__c sepaBankAccount = SepaService.getSepaMatchAccountHolder(

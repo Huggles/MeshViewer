@@ -21,6 +21,18 @@ public inherited sharing class FeatureAccessControlController {
             return new AuraResponseWrapper(ex, true, true);
         }
     }
+    public static Boolean checkAccess(Feature feature) {
+        try {
+            if (feature != null) {
+                return LicenseManagementService.userHasAccess(feature);
+            } else {
+                throw new InputException('Feature cannot be null');
+            }
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            return false;
+        }
+    }
 
     private static Feature getFeatureByName(String featureName) {
         List<Feature> features = Feature.values();
