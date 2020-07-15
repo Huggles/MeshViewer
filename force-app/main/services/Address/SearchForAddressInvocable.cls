@@ -41,7 +41,7 @@ global inherited sharing class SearchForAddressInvocable {
             this.addresstype = addresstype;
         }
 
-        public SearchAddressArgument() {}
+        global SearchAddressArgument() {}
 
 
     }

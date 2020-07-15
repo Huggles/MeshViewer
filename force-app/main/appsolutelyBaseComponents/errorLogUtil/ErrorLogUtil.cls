@@ -111,6 +111,7 @@ public inherited sharing class ErrorLogUtil {
     *
     * @param emailEvents the platform events for which to send emails
     */
+    /*
     @InvocableMethod
     public static void sendSupportEmails(List<Error_Log__c> logs) {
         List<String> messages = new List<String>();
@@ -127,6 +128,7 @@ public inherited sharing class ErrorLogUtil {
 
         Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
     }
+     */
 
 
 }
