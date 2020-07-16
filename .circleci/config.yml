@@ -13,12 +13,32 @@ commands:
             echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
             openssl rsa -in keys/hub.key -check -noout
             sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
-  log_into_test_org:
+  create_user:
+    description: "creates a user and stores the credentials and login in a file. Assumes the user is logged in into a devhub"
+    parameters:
+      org_username:
+        description: the username or alias of the org to create users for
+        type: string
+      alias:
+        description: the alias to create
+        type: string
+      email:
+        description: the email address of the newly created user
+        type: string
+      path_to_user_definition:
+        description: the path to the user definition
+        type: string
+      output_file_name:
+        description: the file name to store the credentials of the created user
+        type: string
     steps:
       - run:
-          name: login into test org
-          command:
-            sfdx force:auth:sfdxurl:store -f config/beta-test-org.sfdx-url -a beta_test_org
+          name: create user
+          command: |
+            sfdx force:user:create -u << parameters.org_username >> -a << parameters.alias >> -f << parameters.path_to_user_definition >> generatepassword=true email=<< parameters.email >>
+            sfdx force:org:display -u << parameters.alias >> --json | jq '{username: .result.username, password: .result.password, instanceUrl: .result.instanceUrl}' >> << parameters.output_file_name >>
+      - store_artifacts:
+          path: << parameters.output_file_name >>
 
 
 parameters:
@@ -42,18 +62,10 @@ parameters:
     description: "the time in minutes the version create command waits until to return"
     type: integer
     default: 60
-  username_beta_test:
-    description: "the username for the beta test scratch org that can be used to test. Has admin rights and company.info admin rights"
-    type: string
-    default: "test@companyinfo.beta.test"
   email_beta_test:
     description: "the email for the beta test user"
     type: string
-    default: "jaap.branderhorst@appsolutely.nl"
-  user_defintion_beta_test:
-    description: "the path to the user definition file for the user that will be created for testing"
-    type: string
-    default: "config/companyinfo-admin-user-def.json"
+    default: "johan.van.den.hoek@appsolutely.nl"
 
 
 jobs:
@@ -146,37 +158,24 @@ jobs:
       - run:
           name: install
           command: |
-            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 --targetusername test_beta_$versionnumber -w 30
-      - run:
-          name: create admin user with fixed name and store the sfdx url
-          command: |
-            sfdx force:user:create -a test-admin -u test_beta_$versionnumber -f << pipeline.parameters.user_defintion_beta_test >> generatepassword=true
-            sfdxadminurl=$(sfdx force:org:display -u test-admin --verbose --json | jq .result.sfdxAuthUrl)
-            sfdxadminurl="${sfdxadminurl%\"}"
-            sfdxadminurl="${sfdxadminurl#\"}"
-            echo $sfdxadminurl
-            echo 'export sfdxadminurl="'$sfdxadminurl'"' >> $BASH_ENV
-            echo $sfdxadminurl >> sfdx-force-url-admin.txt
-      - run:
-          name: create sales user with fixed name and store the sfdx url
-          command: |
-            sfdx force:user:create -a test-sales -u test_beta_$versionnumber -f << pipeline.parameters.user_defintion_beta_test >> generatepassword=true
-            sdfxsalesurl=$(sfdx force:org:display -u test-sales --verbose --json | jq .result.sfdxAuthUrl)
-            sdfxsalesurl="${sdfxsalesurl%\"}"
-            sdfxsalesurl="${sdfxsalesurl#\"}"
-            echo $sfdxsalesurl
-            echo $sdfxsalesurl >> sfdx-force-url-sales.txt
+            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 -w 30
+      - create_user:
+          org_username: test_beta_$versionnumber
+          alias: test-admin
+          email: << pipeline.parameters.email_beta_test >>
+          path_to_user_definition: config/companyinfo-admin-user-def.json
+          output_file_name: test-admin-credentials.txt
+      - create_user:
+          org_username: test_beta_$versionnumber
+          alias: test-sales
+          email: << pipeline.parameters.email_beta_test >>
+          path_to_user_definition: config/companyinfo-sales-user-def.json
+          output_file_name: test-sales-credentials.txt
       - run:
           name: delete scratch org
           when: on_fail
           command: |
             sfdx force:org:delete -u test_beta_$versionnumber
-      - store_artifacts:
-          path: sfdx-force-url-admin.txt
-          destination: sfdx-force-url-admin
-      - store_artifacts:
-          path: sfdx-force-url-sales.txt
-          destination: sfdx-force-url-sales
       - store_artifacts:
           path: metadata.tar
           destination: metadata
@@ -184,7 +183,7 @@ jobs:
           path: sfdx_log.tar
           destination: sfdx-log
       - slack/notify:
-          message: "new scratch org with beta package available. Download the sfdx urls to get access"
+          message: "new scratch org with beta package available. Download the credentials to get access"
   
   upgrade_to_managed:
     docker:
