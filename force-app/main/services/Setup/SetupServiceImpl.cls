@@ -119,7 +119,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
             Id countryId = getCountryMtdsByCountryCode().get(countryCode).Id;
 
             //get and add namespace for the custom metadata record
-            string countryNamespacePrefix = getCountryMtdsByCountryCode().get(countryCode).NamespacePrefix;
+            string countryNamespacePrefix = GetNameSpace.getNameSpace(getCountryMtdsByCountryCode().get(countryCode).DeveloperName+'_Selected_Data_Source','CustomMetadata','Datasource_Per_Country__mdt');
             countryNamespacePrefix = countryNamespacePrefix != null ? countryNamespacePrefix+'__':countryNamespacePrefix;
             String countryMasterLabel = countryNamespacePrefix+getCountryMtdsByCountryCode().get(countryCode).Label;
             String countryLabel = getCountryMtdsByCountryCode().get(countryCode).Label;
@@ -234,4 +234,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
         }
         return jobId;
     }
+
+    private Map<String,sObject> objectNameSpaceMap;
+
 }
