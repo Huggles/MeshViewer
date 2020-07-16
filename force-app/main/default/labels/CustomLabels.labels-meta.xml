@@ -1668,4 +1668,12 @@
         <shortDescription>Success message when business positions have been retrieved.</shortDescription>
         <value>Business Positions successfully retrieved.</value>
     </labels>
+    <labels>
+        <fullName>Job_Submitted</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Job Submitted</shortDescription>
+        <value>Your changes are successfully submitted.</value>
+    </labels>
 </CustomLabels>

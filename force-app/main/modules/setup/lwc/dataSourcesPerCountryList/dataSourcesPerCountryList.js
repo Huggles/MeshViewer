@@ -8,13 +8,14 @@ import {ToastEventController} from "c/toastEventController";
 import getDataSourcesPerCountry from "@salesforce/apex/ConfigOrgPerCountryDataSourceController.getDataSourcesPerCountry";
 import setDataSourcePerCountry from "@salesforce/apex/ConfigOrgPerCountryDataSourceController.setDataSourcePerCountry";
 import {handleResponse} from "c/auraResponseWrapperHandler";
+import JobSubmitMessage from "@salesforce/label/c.Job_Submitted";
 
 import Save from '@salesforce/label/c.Save';
 
 export default class dataSourcesPerCountryList extends LightningElement {
 
     labels = {
-        Save
+        Save,JobSubmitMessage
     }
 
     isLoading = false;
@@ -67,7 +68,7 @@ export default class dataSourcesPerCountryList extends LightningElement {
             try {
                 this.save(payload);
             } catch(error) {
-                console.log(error);
+                // console.log(error);
                 new ToastEventController(this).showErrorToastMessage(null,error.message);
             } finally {
                 this.isLoading = false;
@@ -78,6 +79,7 @@ export default class dataSourcesPerCountryList extends LightningElement {
     async save(payload){
         await setDataSourcePerCountry({dataSourcesPerCountries: payload})
             .then(result =>{
+                new ToastEventController(this).showSuccessToastMessage(null,this.labels.JobSubmitMessage);
                 return result;
             })
             .catch(error =>{

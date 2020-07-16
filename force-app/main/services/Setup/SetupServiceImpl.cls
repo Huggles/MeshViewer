@@ -117,14 +117,20 @@ public with sharing class SetupServiceImpl implements ISetupService {
             String dataSourceDeveloperName = selectedDataSourcePerCountry.get(countryCode);
             Id dataSourceId = getDatasourceIdsByDeveloperName().get(dataSourceDeveloperName);
             Id countryId = getCountryMtdsByCountryCode().get(countryCode).Id;
+
+            //get and add namespace for the custom metadata record
+            string countryNamespacePrefix = getCountryMtdsByCountryCode().get(countryCode).NamespacePrefix;
+            countryNamespacePrefix = countryNamespacePrefix != null ? countryNamespacePrefix+'__':countryNamespacePrefix;
+            String countryMasterLabel = countryNamespacePrefix+getCountryMtdsByCountryCode().get(countryCode).Label;
             String countryLabel = getCountryMtdsByCountryCode().get(countryCode).Label;
+
             Datasource_Per_Country__mdt datasourcePerCountry = new Datasource_Per_Country__mdt();
             datasourcePerCountry.Data_Source_Select_Record__c = true;
             datasourcePerCountry.Data_source__c = dataSourceId;
             datasourcePerCountry.ISO_3166_Entry__c = countryId;
-            datasourcePerCountry.DeveloperName = countryLabel + '_Selected_Data_Source'; // brittle but I don't see another solution
-            datasourcePerCountry.MasterLabel = countryLabel + ' Selected Data Source'; // brittle once more
-            datasourcePerCountry.Label = datasourcePerCountry.MasterLabel;
+            datasourcePerCountry.DeveloperName = countryMasterLabel + '_Selected_Data_Source'; // brittle but I don't see another solution
+            datasourcePerCountry.MasterLabel = countryMasterLabel + ' Selected Data Source'; // brittle once more
+            datasourcePerCountry.Label = countryLabel+ ' Selected Data Source';
             datasourcePerCountriesMdt.add(datasourcePerCountry);
         }
         upsertDataSourcePerCountry(datasourcePerCountriesMdt);
@@ -228,6 +234,4 @@ public with sharing class SetupServiceImpl implements ISetupService {
         }
         return jobId;
     }
-
-
 }
