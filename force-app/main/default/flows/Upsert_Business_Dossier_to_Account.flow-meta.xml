@@ -65,6 +65,11 @@
             <label>Cancel Clicked</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>UpsertSuccesfulMessage</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__new_account_with_business_dossier}</expression>
+    </formulas>
     <interviewLabel>Upsert Business Dossier to Account. {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Upsert Business Dossier to Account.</label>
     <processMetadataValues>
@@ -121,7 +126,7 @@
             <inputParameters>
                 <name>message</name>
                 <value>
-                    <elementReference>CompletedNotifcation</elementReference>
+                    <elementReference>UpsertSuccesfulMessage</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -188,14 +193,6 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Business_Dossier__c</objectType>
-    </variables>
-    <variables>
-        <description>The notification that should be shown when the insert/update has completed.</description>
-        <name>CompletedNotifcation</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>DuplicateAccountsScreenCancelPressed</name>
