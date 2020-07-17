@@ -238,7 +238,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
         return (this._recordTypeName === DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME && this._getPositionsAccess && (this.businessPositionsUpdatedDate == null) );
     }
     get showCIOnlineButton(){
-        return (this._recordTypeName === DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME && this._CIOnlineAccess && (this.businessPositionsUpdatedDate == null) );
+        return (this._recordTypeName === DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME && this._CIOnlineAccess);
     }
 
     handleMenuSelect(event){
@@ -268,11 +268,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
         this.retrievePositions();
     }
     handleSearchAgainClicked() {
-        this.searchAgainClicked = true;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('searchAgainClicked', this.searchAgainClicked);
-        this.dispatchEvent(attributeChangeEvent);
-        //we throw an event because the flow needs to show a search form
-        this.dispatchEvent(new FlowNavigationNextEvent());
+
     }
     handleOnGetCreditsafeReport() {
         //throw an event to the child component(getCreditsafeReportChildComponent) of the aura component(getCreditsafeReportAction)
@@ -285,17 +281,24 @@ export default class AccountEnrichmentHeader extends LightningElement {
     handleOnClickConfirmationDialog(event) {
         this._confirmationDialog.hide();
         if (event.detail.status != null && event.detail.status === 'confirm' && this.businessDossierId != null) {
-            this.deleteCurrentDossier();
+            this.deleteCurrentDossier()
+                .then(()=>{
+                    this.searchAgainClicked = true;
+                    const attributeChangeEvent = new FlowAttributeChangeEvent('searchAgainClicked', this.searchAgainClicked);
+                    this.dispatchEvent(attributeChangeEvent);
+                    //we throw an event because the flow needs to show a search form
+                    this.dispatchEvent(new FlowNavigationNextEvent());
+                });
         }
     }
-    deleteCurrentDossier(){
+    async deleteCurrentDossier(){
         this.isLoading = true;
         deleteDossier({dossierId: this.businessDossierId}).then(result => {
-            this.searchAgainClicked = true;
-            this.dispatchEvent(new CustomEvent('searchagainclicked'));
+            Promise.resolve(result);
         }).catch(error => {
             new ToastEventController(this).showErrorToastMessage(this.label.Error, error);
             this.dispatchEvent(event);
+            Promise.reject(error);
         }).finally(()=>{
             this.isLoading = false;
         })
