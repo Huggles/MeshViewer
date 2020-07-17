@@ -4,6 +4,7 @@
 
 public with sharing class SetupServiceImpl implements ISetupService {
 
+    static final String DATA_SOURCE_API_NAME = '_Selected_Data_Source';
     public inherited sharing class CustomMetadataCallback implements Metadata.DeployCallback {
         public void handleResult(Metadata.DeployResult result, Metadata.DeployCallbackContext context) {
             if (result.status == Metadata.DeployStatus.Succeeded) {
@@ -128,7 +129,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
             datasourcePerCountry.Data_Source_Select_Record__c = true;
             datasourcePerCountry.Data_source__c = dataSourceId;
             datasourcePerCountry.ISO_3166_Entry__c = countryId;
-            datasourcePerCountry.DeveloperName = countryMasterLabel + Label.Data_source_api_name; // brittle but I don't see another solution
+            datasourcePerCountry.DeveloperName = countryMasterLabel + DATA_SOURCE_API_NAME; // brittle but I don't see another solution
             datasourcePerCountry.MasterLabel = countryMasterLabel +' '+Label.Data_source_Label; // brittle once more
             datasourcePerCountry.Label = countryLabel+ ' '+Label.Data_source_Label;
             datasourcePerCountriesMdt.add(datasourcePerCountry);
@@ -234,7 +235,5 @@ public with sharing class SetupServiceImpl implements ISetupService {
         }
         return jobId;
     }
-
-    private Map<String,sObject> objectNameSpaceMap;
 
 }
