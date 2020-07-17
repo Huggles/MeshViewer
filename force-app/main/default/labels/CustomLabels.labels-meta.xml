@@ -1676,4 +1676,21 @@
         <shortDescription>Job Submitted</shortDescription>
         <value>Your changes are successfully submitted.</value>
     </labels>
+    <labels>
+        <fullName>Data_source_api_name</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Data source api name</shortDescription>
+        <value>_Selected_Data_Source</value>
+    </labels>
+    <labels>
+        <fullName>Data_source_Label</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Data source Label</shortDescription>
+        <value>Selected Data Source</value>
+    </labels>
+
 </CustomLabels>

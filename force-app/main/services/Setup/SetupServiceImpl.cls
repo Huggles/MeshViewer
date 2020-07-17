@@ -128,9 +128,9 @@ public with sharing class SetupServiceImpl implements ISetupService {
             datasourcePerCountry.Data_Source_Select_Record__c = true;
             datasourcePerCountry.Data_source__c = dataSourceId;
             datasourcePerCountry.ISO_3166_Entry__c = countryId;
-            datasourcePerCountry.DeveloperName = countryMasterLabel + '_Selected_Data_Source'; // brittle but I don't see another solution
-            datasourcePerCountry.MasterLabel = countryMasterLabel + ' Selected Data Source'; // brittle once more
-            datasourcePerCountry.Label = countryLabel+ ' Selected Data Source';
+            datasourcePerCountry.DeveloperName = countryMasterLabel + Label.Data_source_api_name; // brittle but I don't see another solution
+            datasourcePerCountry.MasterLabel = countryMasterLabel +' '+Label.Data_source_Label; // brittle once more
+            datasourcePerCountry.Label = countryLabel+ ' '+Label.Data_source_Label;
             datasourcePerCountriesMdt.add(datasourcePerCountry);
         }
         upsertDataSourcePerCountry(datasourcePerCountriesMdt);
