@@ -3,11 +3,12 @@
         {
             "path": "force-app",
             "package": "Company.info for Salesforce",
-            "versionName": "Summer 2020",
+            "versionName": "R2.1",
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
             "postInstallScript": "PostInstallScript",
-            "versionNumber": "2.0.0.NEXT"
+            "versionNumber": "2.1.0.NEXT",
+            "ancestorId": "04t0J000000HreFQAS"
         }
     ],
     "namespace": "appsolutely",
