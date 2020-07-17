@@ -118,8 +118,8 @@ jobs:
           path: sfdx_log.tar
           destination: sfdx-log
   
-  create_and_install_beta:
-    description: checks out the metadata, creates a beta package, creates a new scratch org with the beta test scratch org def and creates users with the right permission sets
+  create_beta:
+    description: checks out the metadata and creates a beta package
     parameters:
       skipvalidation:
         description: "--skipvalidation if validation needs to be skipped when creating a new beta package. Otherwise empty (default)"
@@ -138,35 +138,46 @@ jobs:
           name: create beta package version
           no_output_timeout: 1.5h
           command: |
-            packageversionid=$(sfdx force:package:version:create --package << pipeline.parameters.packageid >> -x -f << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" << parameters.skipvalidation >> --json | jq .result.SubscriberPackageVersionId)
+            packageversionid=$(sfdx force:package:version:create --package << pipeline.parameters.packageid >> -x -f -c << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" << parameters.skipvalidation >> --json | jq .result.SubscriberPackageVersionId)
             packageversionid="${packageversionid%\"}"
             packageversionid="${packageversionid#\"}"
+            echo $packageversionid
             echo 'export packageversionid="'$packageversionid'"' >> $BASH_ENV
             echo 'export beta_package_created=true' >> $BASH_ENV
-      - run:
-          name: get version number
-          command: |
-            versionnumber=$(sfdx force:package:version:report -p $packageversionid --json | jq .result.Version)
-            versionnumber="${versionnumber%\"}"
-            versionnumber="${versionnumber#\"}"
-            echo $versionnumber
-            echo 'export versionnumber="'$versionnumber'"' >> $BASH_ENV
+      - store_artifacts:
+          path: metadata.tar
+          destination: metadata
+      - store_artifacts:
+          path: sfdx_log.tar
+          destination: sfdx-log
+
+  install_beta:
+    description: installs the beta that has as tag the current commit
+    docker:
+      - image: appsolutely/sfdx_circleci_container:latest
+    resource_class: small
+    environment:
+      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_LOG_LEVEL: debug
+    steps:
+      - checkout
+      - log_into_devhub
       - run:
           name: create beta test scratch org
           command: |
-            sfdx force:org:create -s -f << pipeline.parameters.beta_test_scratch_org_definition_file >> -a test_beta_$versionnumber -d 30 -w 10 --nonamespace
+            sfdx force:org:create -s -f << pipeline.parameters.beta_test_scratch_org_definition_file >> -d 30 -w 10 -a beta-test --nonamespace
       - run:
           name: install
           command: |
             sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 -w 30
       - create_user:
-          org_username: test_beta_$versionnumber
+          org_username: beta-test
           alias: test-admin
           email: << pipeline.parameters.email_beta_test >>
           path_to_user_definition: config/companyinfo-admin-user-def.json
           output_file_name: test-admin-credentials.txt
       - create_user:
-          org_username: test_beta_$versionnumber
+          org_username: beta-test
           alias: test-sales
           email: << pipeline.parameters.email_beta_test >>
           path_to_user_definition: config/companyinfo-sales-user-def.json
@@ -175,7 +186,7 @@ jobs:
           name: delete scratch org
           when: on_fail
           command: |
-            sfdx force:org:delete -u test_beta_$versionnumber
+            sfdx force:org:delete
       - store_artifacts:
           path: metadata.tar
           destination: metadata
@@ -224,10 +235,14 @@ workflows:
             branches:
               only: 
                 - develop
-      - create_and_install_beta:
+      - create_beta:
           context: org-global
           requires:
             - run_apex_tests
+      - install_beta:
+          context: org-global
+          requires:
+            - create_beta
   
   release_branch_push:
     jobs:
@@ -236,14 +251,18 @@ workflows:
           filters:
             branches:
               only: /release\/.*/
-      - create_and_install_beta:
+      - create_beta:
           context: org-global
           requires:
             - run_apex_tests
+      - install_beta:
+          context: org-global
+          requires:
+            - create_beta
       - approve_upgrade_to_managed:
           type: approval
           requires:
-            - create_and_install_beta
+            - install_beta
       - upgrade_to_managed:
           context: org-global
           requires:
