@@ -19,7 +19,6 @@ public with sharing class GetNameSpaceTest {
         Test.startTest();
         String namespaces = GetNameSpace.getNameSpace('Business_Dossier','Object');
         Test.stopTest();
-        System.debug(namespaces);
         System.assert(namespaces == 'appsolutely','The namespace of the Object Business_Dossier should be appsolutely');
 
     }
@@ -29,7 +28,6 @@ public with sharing class GetNameSpaceTest {
 
         Test.startTest();
         String namespaces = GetNameSpace.getNameSpace('BEL_Creditsafe','CustomMetadata','Datasource_Per_Country__mdt');
-        System.debug(namespaces);
         Test.stopTest();
         System.assert(namespaces == 'appsolutely','The namespace of the custom metadata record BEL_Creditsafe for Custom Object Datasource_Per_Country__mdt should be appsolutely');
 
