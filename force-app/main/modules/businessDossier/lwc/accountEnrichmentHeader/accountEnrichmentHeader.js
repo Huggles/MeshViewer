@@ -267,9 +267,6 @@ export default class AccountEnrichmentHeader extends LightningElement {
     handleOnGetPositionsClicked(){
         this.retrievePositions();
     }
-    handleSearchAgainClicked() {
-
-    }
     handleOnGetCreditsafeReport() {
         //throw an event to the child component(getCreditsafeReportChildComponent) of the aura component(getCreditsafeReportAction)
         fireEvent(null, 'getreportclicked');
