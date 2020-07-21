@@ -88,7 +88,11 @@
                 <elementReference>BusinessSearchForm.vatNumber</elementReference>
             </value>
         </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>Found_CreditSafe_Reports</assignToReference>
+            <name>output</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
@@ -608,7 +612,7 @@
         <locationX>583</locationX>
         <locationY>553</locationY>
         <assignNextValueToReference>LoopVariableBusinessDossier</assignNextValueToReference>
-        <collectionReference>Search_for_Credit_Safe_Dossiers</collectionReference>
+        <collectionReference>Found_CreditSafe_Reports</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Filter_Search_Results</targetReference>
@@ -1681,6 +1685,14 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Found_CreditSafe_Reports</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
         <name>ZeroCount</name>
