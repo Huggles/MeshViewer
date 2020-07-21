@@ -1676,4 +1676,20 @@
         <shortDescription>Label on the button to open the company.info online portal.</shortDescription>
         <value>Company.info Online</value>
     </labels>
+    <labels>
+        <fullName>Update_Time_Settings</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title for the update time settings card</shortDescription>
+        <value>Update Time Settings</value>
+    </labels>
+    <labels>
+        <fullName>Set_Update_Cron_Expression_Error</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The error message shown when updating the cron expression fails.</shortDescription>
+        <value>Something went wrong setting the new cron expression.</value>
+    </labels>
 </CustomLabels>
