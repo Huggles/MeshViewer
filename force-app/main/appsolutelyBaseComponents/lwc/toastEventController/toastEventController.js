@@ -29,8 +29,6 @@ class ToastEventController {
 
     showToastMessage = (title, message, variant, mode) => {
         let payload = {}
-
-
         //Title
         if (title != null && title.length > 0) {
             payload['title'] = title;
@@ -43,8 +41,12 @@ class ToastEventController {
             }
         }
         //Message
-        if(message != null && message.length > 0){
-            payload['message'] = message;
+        if(message != null){
+            if(typeof message === 'string' && message.length > 0){
+                payload['message'] = message;
+            }else if(typeof message === 'object' && message.body != null && message.body.message != null) {
+                payload['message'] = message.body.message;
+            }
         }
 
         //Variant

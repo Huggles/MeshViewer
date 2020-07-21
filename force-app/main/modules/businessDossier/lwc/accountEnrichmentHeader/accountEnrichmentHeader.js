@@ -3,14 +3,13 @@
  */
 
 import { LightningElement, api, wire, track } from 'lwc';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecord } from 'lightning/uiRecordApi';
-import {getFieldValue} from 'lightning/uiRecordApi';
+import { getFieldValue } from 'lightning/uiRecordApi';
 import { refreshApex } from "@salesforce/apex";
-
-import {FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
-import {Features, checkAccess} from "c/featureAccessControl";
-import {fireEvent} from "c/pubsub";
+import { ToastEventController } from "c/toastEventController";
+import { FlowAttributeChangeEvent, FlowNavigationNextEvent} from 'lightning/flowSupport';
+import { Features, checkAccess} from "c/featureAccessControl";
+import { fireEvent} from "c/pubsub";
 
 //Object fields
 import BUSINESS_DOSSIER from '@salesforce/schema/Business_Dossier__c';
@@ -20,10 +19,12 @@ import BUSINESS_DOSSIER_NO_VAT from '@salesforce/schema/Business_Dossier__c.No_V
 import BUSINESS_DOSSIER_COUNTRY from '@salesforce/schema/Business_Dossier__c.Registration_Country__c';
 import BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT from '@salesforce/schema/Business_Dossier__c.Creditsafe_Company_Report__c';
 import BUSINESS_DOSSIER_RECORD_TYPE from '@salesforce/schema/Business_Dossier__c.RecordType.DeveloperName';
+import BUSINESS_DOSSIER_DEEPLINK from '@salesforce/schema/Business_Dossier__c.Deeplink_URL__c';
 
 //Apex controllers
 import updateDossierWithVAT from '@salesforce/apex/CompanyDetailsController.updateDossierWithVAT';
 import updateDossierWithPositions from '@salesforce/apex/CompanyDetailsController.updateDossierWithPositions';
+import deleteDossier from '@salesforce/apex/SearchAgainButtonController.deleteDossier';
 
 //Static resources
 import companyInfoLogoSmall from '@salesforce/resourceUrl/companyInfoLogoSmall';
@@ -39,6 +40,12 @@ import Dossier_Account_Update_Completed from '@salesforce/label/c.Dossier_Accoun
 import Get_Creditsafe_Report from '@salesforce/label/c.Get_Creditsafe_Report';
 import Get_Positions from '@salesforce/label/c.Get_Positions';
 import Business_Positions_Retrieved_Succesfully from '@salesforce/label/c.Business_Positions_Retrieved_Succesfully';
+import Company_Info_Online_Portal_Button_Label from '@salesforce/label/c.Company_Info_Online_Portal_Button_Label';
+import Search_Reset from '@salesforce/label/c.Search_Reset';
+import Search_Again_Confirmation_Dialog_Message from '@salesforce/label/c.Search_Again_Confirmation_Dialog_Message';
+import Search_Again_Confirmation_Dialog_Title from '@salesforce/label/c.Search_Again_Confirmation_Dialog_Title';
+
+
 
 const OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS = [
     BUSINESS_DOSSIER_VAT,
@@ -46,7 +53,8 @@ const OPTIONAL_BUSINESS_DOSSIER_RECORD_FIELDS = [
     BUSINESS_DOSSIER_COUNTRY,
     BUSINESS_DOSSIER_CREDITSAFE_COMPANY_REPORT,
     BUSINESS_DOSSIER_POSITIONS_UPDATED_DATE,
-    BUSINESS_DOSSIER_RECORD_TYPE
+    BUSINESS_DOSSIER_RECORD_TYPE,
+    BUSINESS_DOSSIER_DEEPLINK
 ]
 
 const CREDITSAFE_DOSSIER_RECORD_TYPE_NAME = 'Creditsafe';
@@ -96,6 +104,11 @@ export default class AccountEnrichmentHeader extends LightningElement {
     businessPositionsUpdatedDate = false;
 
     /**
+     * The deeplink URL to the online portal.
+     */
+    deepLinkURL;
+
+    /**
      * The retrieved business dossier
      */
     businessDossier;
@@ -111,6 +124,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
     _getPositionsAccess = false;
     _VATAccess = false;
     _CreditSafeAccess = false;
+    _CIOnlineAccess = false;
 
 
     _businessDossierRecordResponse;
@@ -132,7 +146,7 @@ export default class AccountEnrichmentHeader extends LightningElement {
             } else if (typeof error.body.message === 'string') {
                 message = error.body.message;
             }
-            this.showToast(this.label.Error, error, 'error');
+            new ToastEventController(this).showErrorToastMessage(this.label.Error, error);
         } else if (data) {
             this.businessDossier = data;
             if (this.businessDossier.fields) {
@@ -151,6 +165,9 @@ export default class AccountEnrichmentHeader extends LightningElement {
                 if (this.businessDossier.fields.appsolutely__Business_Positions_Updated_Date__c) {
                     this.businessPositionsUpdatedDate = this.businessDossier.fields.appsolutely__Business_Positions_Updated_Date__c.value;
                 }
+                if (this.businessDossier.fields.appsolutely__Deeplink_URL__c) {
+                    this.deepLinkURL = this.businessDossier.fields.appsolutely__Deeplink_URL__c.value;
+                }
                 // if (this.businessDossier.fields.RecordType.DeveloperName) {
                     this._recordTypeName = getFieldValue(this.businessDossier, BUSINESS_DOSSIER_RECORD_TYPE);
                 // }
@@ -168,31 +185,46 @@ export default class AccountEnrichmentHeader extends LightningElement {
         Dossier_Account_Update_Completed,
         Get_Creditsafe_Report,
         Get_Positions,
-        Business_Positions_Retrieved_Succesfully
-
+        Business_Positions_Retrieved_Succesfully,
+        Company_Info_Online_Portal_Button_Label,
+        Search_Reset,
+        Search_Again_Confirmation_Dialog_Title,
+        Search_Again_Confirmation_Dialog_Message,
     }
     staticResource = {
         companyInfoLogoSmall,
     }
 
+
+
     connectedCallback() {
         this.checkFeatureAccess();
     }
+
+    renderedCallback() {
+        if(this._confirmationDialog == null){
+            this._confirmationDialog = this.template.querySelector('c-confirmation-dialog[data-name="searchAgainConfirmationModal"]');
+        }
+    }
+
+
     checkFeatureAccess(){
         Promise.all([
             checkAccess(Features.DUTCH_BUSINESS_POSITIONS),
             checkAccess(Features.DUTCH_VAT),
-            checkAccess(Features.CREDITSAFE_GET_REPORT)
+            checkAccess(Features.CREDITSAFE_GET_REPORT),
+            checkAccess(Features.COMPANY_INFO_ONLINE)
         ])
             .then(results => {
-                if(results != null && results.length == 3){
+                if(results != null && results.length == 4){
                     this._getPositionsAccess = results[0];
                     this._VATAccess = results[1];
                     this._CreditSafeAccess = results[2];
+                    this._CIOnlineAccess = results[3];
                 }
             })
             .catch(error => {
-                this.showToast(this.label.Error, error, 'error');
+                new ToastEventController(this).showErrorToastMessage(this.label.Error, error);
             });
     }
 
@@ -205,51 +237,91 @@ export default class AccountEnrichmentHeader extends LightningElement {
     get showGetPositionsButton(){
         return (this._recordTypeName === DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME && this._getPositionsAccess && (this.businessPositionsUpdatedDate == null) );
     }
+    get showCIOnlineButton(){
+        return (this._recordTypeName === DUTCH_BUSINESS_DOSSIER_RECORD_TYPE_NAME && this._CIOnlineAccess);
+    }
 
-    handleOnClickVAT(event) {
+    handleMenuSelect(event){
+        let selectedItemValue = event.detail.value;
+        if(selectedItemValue === 'OnlinePortal'){
+            this.handleOnCIOnlineClicked();
+        }else if(selectedItemValue === 'GetPositions'){
+            this.handleOnGetPositionsClicked();
+        }else if(selectedItemValue === 'CreditSafeReport'){
+            this.handleOnGetCreditsafeReport();
+        }else if(selectedItemValue === 'VATRetrieve'){
+            this.handleOnClickVAT();
+        }else if(selectedItemValue === 'SearchAgain'){
+            this.handleOnSearchAgainClicked();
+        }
+
+    }
+    handleOnCIOnlineClicked(){
+        if(this.deepLinkURL != null){
+            window.open(this.deepLinkURL, '_blank');
+        }
+    }
+    handleOnClickVAT() {
+        this.retrieveVAT();
+    }
+    handleOnGetPositionsClicked(){
+        this.retrievePositions();
+    }
+    handleOnGetCreditsafeReport() {
+        //throw an event to the child component(getCreditsafeReportChildComponent) of the aura component(getCreditsafeReportAction)
+        fireEvent(null, 'getreportclicked');
+    }
+    handleOnSearchAgainClicked(){
+        this._confirmationDialog.show();
+    }
+
+    handleOnClickConfirmationDialog(event) {
+        this._confirmationDialog.hide();
+        if (event.detail.status != null && event.detail.status === 'confirm' && this.businessDossierId != null) {
+            this.deleteCurrentDossier()
+                .then(()=>{
+                    this.searchAgainClicked = true;
+                    const attributeChangeEvent = new FlowAttributeChangeEvent('searchAgainClicked', this.searchAgainClicked);
+                    this.dispatchEvent(attributeChangeEvent);
+                    //we throw an event because the flow needs to show a search form
+                    this.dispatchEvent(new FlowNavigationNextEvent());
+                });
+        }
+    }
+    async deleteCurrentDossier(){
+        this.isLoading = true;
+        deleteDossier({dossierId: this.businessDossierId}).then(result => {
+            Promise.resolve(result);
+        }).catch(error => {
+            new ToastEventController(this).showErrorToastMessage(this.label.Error, error);
+            this.dispatchEvent(event);
+            Promise.reject(error);
+        }).finally(()=>{
+            this.isLoading = false;
+        })
+    }
+
+    retrieveVAT(){
+        this.isLoading = true;
         updateDossierWithVAT({
             dossierId: this.businessDossierId
         })
             .then(data => {
                 if (data.appsolutely__VAT_Number__c !== undefined) {
-                    this.showToast(this.label.Success, this.label.Dossier_Account_Update_Completed, 'success');
+                    new ToastEventController(this).showSuccessToastMessage(this.label.Success, this.label.Dossier_Account_Update_Completed);
                     this.VATUpdated = true;
                     //we throw an event because we want to refresh the Account details view after VAT is updated
                     this.dispatchEvent(new FlowNavigationNextEvent());
                 } else {
-                    this.showToast(this.label.Error, this.label.VAT_Not_Found);
+                    new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.VAT_Not_Found);
                 }
             })
             .catch(error => {
-                this.showToast(this.label.Error, error, 'error');
+                new ToastEventController(this).showErrorToastMessage(this.label.Error, error);
+            })
+            .finally(()=>{
+                this.isLoading = false;
             });
-    }
-
-    handleSearchAgainClicked(event) {
-        this.searchAgainClicked = true;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('searchAgainClicked', this.searchAgainClicked);
-        this.dispatchEvent(attributeChangeEvent);
-        //we throw an event because the flow needs to show a search form
-        this.dispatchEvent(new FlowNavigationNextEvent());
-    }
-
-    showToast(title, message, type, mode) {
-        const event = new ShowToastEvent({
-            "title": title,
-            "message": message,
-            "variant": (type == null ? 'info' : type),
-            "mode": (mode == null ? ((type == 'info' || type == 'success' || type == null) ? 'dismissable' : 'sticky') : mode)
-        });
-        this.dispatchEvent(event);
-    }
-
-    handleOnGetCreditsafeReport(event) {
-        //throw an event to the child component(getCreditsafeReportChildComponent) of the aura component(getCreditsafeReportAction)
-        fireEvent(null, 'getreportclicked');
-    }
-
-    handleOnGetPositionsClicked(event){
-        this.retrievePositions();
     }
 
     retrievePositions(){
@@ -258,15 +330,16 @@ export default class AccountEnrichmentHeader extends LightningElement {
             dossierId: this.businessDossierId
         })
             .then(result => {
-                this.showToast(this.label.Success, this.label.Business_Positions_Retrieved_Succesfully, 'success');
+                new ToastEventController(this).showSuccessToastMessage(this.label.Success,this.label.Business_Positions_Retrieved_Succesfully);
                 //Reload the business dossier to reload the buttons
                 refreshApex(this._businessDossierRecordResponse);
             })
             .catch(error => {
-                this.showToast(this.label.Error, error, 'error');
+                new ToastEventController(this).showErrorToastMessage(this.label.Error,error);
             })
             .finally(()=>{
                 this.isLoading = false;
             })
     }
+
 }
