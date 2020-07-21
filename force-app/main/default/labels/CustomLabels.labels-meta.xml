@@ -1677,12 +1677,12 @@
         <value>Your changes are successfully submitted.</value>
     </labels>
     <labels>
-        <fullName>Data_source_api_name</fullName>
+        <fullName>CRUD_Error</fullName>
         <categories>Data Source</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Data source api name</shortDescription>
-        <value>_Selected_Data_Source</value>
+        <shortDescription>Error for CRUD operations</shortDescription>
+        <value>User does not have access on </value>
     </labels>
     <labels>
         <fullName>Data_source_Label</fullName>

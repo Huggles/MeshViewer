@@ -27,10 +27,16 @@ public with sharing class GetNameSpace {
 
     public static String getClassNameSpace(String className){
         try {
-            if(apexNameSpaceMap.size()==0 && Schema.SObjectType.ApexClass.isAccessible()) {
-                List<ApexClass> classes = [SELECT Name, NameSpacePrefix FROM ApexClass WHERE NameSpacePrefix != NULL];
-                for (ApexClass apexClass : classes) {
-                    apexNameSpaceMap.put(apexClass.Name, apexClass.NamespacePrefix);
+            if(apexNameSpaceMap.size()==0) {
+                if(Schema.SObjectType.ApexClass.isAccessible()) {
+                    List<ApexClass> classes = [SELECT Name, NameSpacePrefix FROM ApexClass WHERE NameSpacePrefix != NULL];
+                    if (!classes.isEmpty()){
+                        for (ApexClass apexClass : classes) {
+                            apexNameSpaceMap.put(apexClass.Name, apexClass.NamespacePrefix);
+                        }
+                    }
+                } else{
+                    throwCustomException('ApexClass');
                 }
             }
             return apexNameSpaceMap.get(className);
@@ -46,14 +52,18 @@ public with sharing class GetNameSpace {
     public static String getObjectNameSpace(String objName){
         try {
             String objNameSpace;
-            if (objectNameSpaceMap.size() == 0 && Schema.SObjectType.EntityDefinition.isAccessible())  {
-                List<EntityDefinition> entityDefinitions = [SELECT MasterLabel, QualifiedApiName,DeveloperName, NamespacePrefix FROM EntityDefinition ORDER BY MasterLabel];
-                //if (entityDefinitions.size() > 0) return entityDefinitions.get(0).NamespacePrefix;
-                for (EntityDefinition entityDefinition : entityDefinitions) {
-                    objectNameSpaceMap.put(entityDefinition.DeveloperName, entityDefinition);
+            if (objectNameSpaceMap.size() == 0 ) {
+                if (Schema.SObjectType.EntityDefinition.isAccessible()) {
+                    List<EntityDefinition> entityDefinitions = [SELECT MasterLabel, QualifiedApiName,DeveloperName, NamespacePrefix FROM EntityDefinition ORDER BY MasterLabel];
+                    for (EntityDefinition entityDefinition : entityDefinitions) {
+                        objectNameSpaceMap.put(entityDefinition.DeveloperName, entityDefinition);
+                    }
+                }else{
+                    throwCustomException('EntityDefinition');
                 }
-                objNameSpace = objectNameSpaceMap.get(objName).NamespacePrefix;
             }
+                objNameSpace = objectNameSpaceMap.get(objName).NamespacePrefix;
+
             return objNameSpace;
         } catch (Exception e){
             ErrorLogUtil.logException(e, true);
@@ -66,14 +76,19 @@ public with sharing class GetNameSpace {
     public static String getCustomMetadataNameSpace(String developerName,String objName) {
         try {
             String recNameSpace;
-            if (!customMetadataNameList.contains(objName) &&((sObject)Type.forName(objName).newInstance()).getSObjectType().getDescribe().isAccessible()) {
+            if (!customMetadataNameList.contains(objName)) {
                 customMetadataNameList.add(objName);
+
                 String queryString = 'SELECT Id, NamespacePrefix,DeveloperName FROM ' + objName;// + ' WHERE DeveloperName =\'' + developerName + '\' LIMIT 1';
-                List<SObject> sObjects = Database.query(queryString);
-                if (sObjects.size() > 0) {
-                    for (SObject s : sObjects) {
-                        customMetadataRecordNameSpaceMap.put(s.get('DeveloperName')+objName , s);
+                if(((sObject)Type.forName(objName).newInstance()).getSObjectType().getDescribe().isAccessible()) {
+                    List<SObject> sObjects = Database.query(queryString);
+                    if (sObjects.size() > 0) {
+                        for (SObject s : sObjects) {
+                            customMetadataRecordNameSpaceMap.put(s.get('DeveloperName') + objName, s);
+                        }
                     }
+                } else{
+                    throwCustomException(objName);
                 }
             }
             if(customMetadataRecordNameSpaceMap.get(developerName + objName) != null){
@@ -84,7 +99,16 @@ public with sharing class GetNameSpace {
         } catch (Exception e){
             ErrorLogUtil.logException(e, true);
             throw new AuraHandledException(e.getMessage());
+        }
+    }
+    public static void throwCustomException(String settingType){
+        try{
+            throw new CustomException();
 
+        }catch (Exception e){
+            e.setMessage(Label.CRUD_Error+ ' '+ settingType);
+            ErrorLogUtil.logException(e, true);
+//            throw new AuraHandledException(e.getMessage());
         }
     }
 }
