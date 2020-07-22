@@ -34,10 +34,10 @@ export default class UpdateCronSettings extends LightningElement {
     }
 
     isLoading = false;
-
     scheduledCronJob;
     originalCronValue;
-    cronExpressionInputElement;
+
+    _cronExpressionInputElement;
 
     connectedCallback() {
         this.retrieveCronExpression();

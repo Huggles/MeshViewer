@@ -180,14 +180,14 @@ public with sharing class SetupServiceImpl implements ISetupService {
     }
     public void scheduleCronJob(String scheduleName, Schedulable schedulable, String cronExpression) {
         // check if there is an existing scheduled job, if so abort it and restart (to ensure no 'stale' jobs run)
-        abortScheduleCronJob(scheduleName);
+        abortScheduledCronJob(scheduleName);
         try {
             System.schedule(scheduleName, cronExpression, schedulable);
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);
         }
     }
-    private void abortScheduleCronJob(String scheduleName) {
+    private void abortScheduledCronJob(String scheduleName) {
         // check if there is an existing scheduled job, if so abort it and restart (to ensure no 'stale' jobs run)
         List<CronTrigger> cronTriggers = getScheduledCronJob(scheduleName);
         for (CronTrigger cronTrigger : cronTriggers) {
