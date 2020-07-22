@@ -1693,4 +1693,12 @@
         <value>Selected Data Source</value>
     </labels>
 
+    <labels>
+        <fullName>Company_Info_Online_Portal_Button_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label on the button to open the company.info online portal.</shortDescription>
+        <value>Company.info Online</value>
+    </labels>
 </CustomLabels>
