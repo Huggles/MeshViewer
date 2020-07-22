@@ -18,29 +18,36 @@
                 <div class="slds-media__body">
 
                 </div>
-                <div class="slds-no-flex">
-                    <div class="slds-m-around_xx-small slds-float_right">
-                        <template if:true={showGetPositionsButton}>
-                            <lightning-button label={label.Get_Positions} onclick={handleOnGetPositionsClicked} ></lightning-button>
-                        </template>
-                    </div>
-                    <div class="slds-m-around_xx-small slds-float_right">
-                        <template if:true={showCreditSafeReportButton}>
-                            <lightning-button label={label.Get_Creditsafe_Report} onclick={handleOnGetCreditsafeReport} ></lightning-button>
-                        </template>
-                    </div>
-                    <div class="slds-m-around_xx-small slds-float_right">
-                        <c-search-again-button dossier-id={businessDossierId}
-                                               onsearchagainclicked= {handleSearchAgainClicked}></c-search-again-button>
-                    </div>
-                    <div class="slds-m-around_xx-small slds-float_right">
-                        <template if:true={showVATButton}>
-                            <lightning-button label={label.VAT_Retrieve} onclick={handleOnClickVAT} ></lightning-button>
-                        </template>
-                    </div>
-                </div>
+                <lightning-button-menu onselect={handleMenuSelect} menu-alignment="right">
+                    <template if:true={showCIOnlineButton}>
+                        <lightning-menu-item value="OnlinePortal"
+                                             label={label.Company_Info_Online_Portal_Button_Label}></lightning-menu-item>
+                    </template>
+                    <template if:true={showGetPositionsButton}>
+                        <lightning-menu-item value="GetPositions"
+                                             label={label.Get_Positions}  ></lightning-menu-item>
+                    </template>
+                    <template if:true={showCreditSafeReportButton}>
+                        <lightning-menu-item value="CreditSafeReport"
+                                             label={label.Get_Creditsafe_Report}></lightning-menu-item>
+                    </template>
+                    <template if:true={showVATButton}>
+                        <lightning-menu-item value="VATRetrieve"
+                                             label={label.VAT_Retrieve}></lightning-menu-item>
+                    </template>
+                    <lightning-menu-item value="SearchAgain"
+                                         label={label.Search_Reset}></lightning-menu-item>
+                </lightning-button-menu>
             </header>
         </div>
     </article>
+
+    <!-- Search Again Confirmation Modal -->
+    <c-confirmation-dialog data-name="searchAgainConfirmationModal"
+                           title={label.Search_Again_Confirmation_Dialog_Title}
+                           message={label.Search_Again_Confirmation_Dialog_Message}
+                           cancel-label={label.No}
+                           confirm-label={label.Yes}
+                           onclick={handleOnClickConfirmationDialog}></c-confirmation-dialog>
 
 </template>

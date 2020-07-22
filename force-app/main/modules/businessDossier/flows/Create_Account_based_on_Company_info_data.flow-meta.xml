@@ -92,11 +92,6 @@
         </rules>
     </decisions>
     <description>Template you can use to create an account based on Company.info data. Use this for example in quick actions.</description>
-    <formulas>
-        <name>InsertNotification</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__new_account_with_business_dossier}</expression>
-    </formulas>
     <interviewLabel>Create Account based on Company.info data {!$Flow.CurrentDateTime}</interviewLabel>
     <isTemplate>true</isTemplate>
     <label>Create Account based on Company.info data</label>
@@ -189,12 +184,6 @@
             <name>CompleteBusinessDossier</name>
             <value>
                 <elementReference>CompleteBusinessDossier</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>CompletedNotifcation</name>
-            <value>
-                <elementReference>InsertNotification</elementReference>
             </value>
         </inputAssignments>
     </subflows>
