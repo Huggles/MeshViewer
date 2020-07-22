@@ -36,14 +36,14 @@ public with sharing class GetNameSpace {
                         }
                     }
                 } else{
-                    throwCustomException('ApexClass');
+                    throw new CustomException('ApexClass');
                 }
             }
             return apexNameSpaceMap.get(className);
 
         } catch (Exception e){
             ErrorLogUtil.logException(e, true);
-            throw new AuraHandledException(e.getMessage());
+            throw new CustomException(e.getMessage(),e);
         }
 
     }
@@ -59,7 +59,7 @@ public with sharing class GetNameSpace {
                         objectNameSpaceMap.put(entityDefinition.DeveloperName, entityDefinition);
                     }
                 }else{
-                    throwCustomException('EntityDefinition');
+                    throw new CustomException('EntityDefinition');
                 }
             }
                 objNameSpace = objectNameSpaceMap.get(objName).NamespacePrefix;
@@ -67,7 +67,7 @@ public with sharing class GetNameSpace {
             return objNameSpace;
         } catch (Exception e){
             ErrorLogUtil.logException(e, true);
-            throw new AuraHandledException(e.getMessage());
+            throw new CustomException(e.getMessage(),e);
         }
     }
     private static Map<String,SObject> customMetadataRecordNameSpaceMap = new Map<String, SObject>();
@@ -79,7 +79,7 @@ public with sharing class GetNameSpace {
             if (!customMetadataNameList.contains(objName)) {
                 customMetadataNameList.add(objName);
 
-                String queryString = 'SELECT Id, NamespacePrefix,DeveloperName FROM ' + objName;// + ' WHERE DeveloperName =\'' + developerName + '\' LIMIT 1';
+                String queryString = 'SELECT Id, NamespacePrefix,DeveloperName FROM ' + objName;
                 if(((sObject)Type.forName(objName).newInstance()).getSObjectType().getDescribe().isAccessible()) {
                     List<SObject> sObjects = Database.query(queryString);
                     if (sObjects.size() > 0) {
@@ -88,7 +88,7 @@ public with sharing class GetNameSpace {
                         }
                     }
                 } else{
-                    throwCustomException(objName);
+                    throw new CustomException(objName);
                 }
             }
             if(customMetadataRecordNameSpaceMap.get(developerName + objName) != null){
@@ -98,17 +98,7 @@ public with sharing class GetNameSpace {
             return recNameSpace;
         } catch (Exception e){
             ErrorLogUtil.logException(e, true);
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
-    public static void throwCustomException(String settingType){
-        try{
-            throw new CustomException();
-
-        }catch (Exception e){
-            e.setMessage(Label.CRUD_Error+ ' '+ settingType);
-            ErrorLogUtil.logException(e, true);
-//            throw new AuraHandledException(e.getMessage());
+            throw new CustomException(e.getMessage(),e);
         }
     }
 }
