@@ -7,19 +7,30 @@ import {ToastEventController} from "c/toastEventController";
 
 //Labels
 import Save from '@salesforce/label/c.Save';
-import Update_Time_Settings from '@salesforce/label/c.Update_Time_Settings';
+import Update_Cron_Settings from '@salesforce/label/c.Update_Cron_Settings';
+import Update_Cron_Description from '@salesforce/label/c.Update_Cron_Description';
+import Update_Cron_Last_Modified from '@salesforce/label/c.Update_Cron_Last_Modified';
+import Update_Cron_Previous_Fire from '@salesforce/label/c.Update_Cron_Previous_Fire';
+import Update_Cron_Next_Fire from '@salesforce/label/c.Update_Cron_Next_Fire';
+import Set_Update_Cron_Expression_Success from '@salesforce/label/c.Set_Update_Cron_Expression_Success';
+
 
 //Apex
-import getScheduledCronJob from '@salesforce/apex/UpdateTimeSettingsController.getScheduledCronJob';
-import getUpdateCronExpression from '@salesforce/apex/UpdateTimeSettingsController.getUpdateCronExpression';
-import setUpdateCronExpression from '@salesforce/apex/UpdateTimeSettingsController.setUpdateCronExpression';
+import getScheduledCronJob from '@salesforce/apex/UpdateCronSettingsController.getScheduledCronJob';
+import getUpdateCronExpression from '@salesforce/apex/UpdateCronSettingsController.getUpdateCronExpression';
+import setUpdateCronExpression from '@salesforce/apex/UpdateCronSettingsController.setUpdateCronExpression';
 
 
-export default class UpdateTimeSettings extends LightningElement {
+export default class UpdateCronSettings extends LightningElement {
 
     labels = {
         Save,
-        Update_Time_Settings
+        Update_Cron_Settings,
+        Update_Cron_Description,
+        Update_Cron_Last_Modified,
+        Update_Cron_Previous_Fire,
+        Update_Cron_Next_Fire,
+        Set_Update_Cron_Expression_Success
     }
 
     isLoading = false;
@@ -74,7 +85,7 @@ export default class UpdateTimeSettings extends LightningElement {
             console.log(this.cronExpressionInputElement.value);
             setUpdateCronExpression({cronExpression : this.cronExpressionInputElement.value})
                 .then((result)=>{
-                    new ToastEventController(this).showSuccessToastMessage('Succes', null);
+                    new ToastEventController(this).showSuccessToastMessage('Succes', this.labels.Set_Update_Cron_Expression_Success);
                 })
                 .catch((error)=>{
                     new ToastEventController(this).showErrorToastMessage('Error', error);

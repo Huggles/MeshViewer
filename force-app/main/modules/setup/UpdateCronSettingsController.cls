@@ -1,12 +1,8 @@
 /**
- * Created by Hugo on 21/07/2020.
+ * Created by Hugo on 22/07/2020.
  */
 
-public with sharing class UpdateTimeSettingsController {
-
-
-
-
+public with sharing class UpdateCronSettingsController {
     @AuraEnabled
     public static String getUpdateCronExpression(){
         try {
