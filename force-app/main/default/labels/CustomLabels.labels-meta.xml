@@ -1676,4 +1676,12 @@
         <shortDescription>Label on the button to open the company.info online portal.</shortDescription>
         <value>Company.info Online</value>
     </labels>
+    <labels>
+        <fullName>Data_Source</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for the data source dropdown.</shortDescription>
+        <value>Data_Source</value>
+    </labels>
 </CustomLabels>

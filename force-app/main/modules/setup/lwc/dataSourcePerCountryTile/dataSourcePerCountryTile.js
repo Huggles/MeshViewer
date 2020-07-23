@@ -4,9 +4,15 @@
 
 import {LightningElement, api, track} from 'lwc';
 
+import Data_Source from '@salesforce/label/c.Data_Source';
+
 export default class DataSourcePerCountryTile extends LightningElement {
 
     _item;
+
+    labels = {
+        Data_Source
+    }
 
     @api
     get item() {
