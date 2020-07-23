@@ -16,6 +16,5 @@
     <tabs>License_Management</tabs>
     <tabs>Data_Sources</tabs>
     <tabs>Config_Update_Type</tabs>
-    <tabs>Other_Settings</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
