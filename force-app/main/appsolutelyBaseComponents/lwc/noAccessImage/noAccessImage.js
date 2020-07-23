@@ -11,7 +11,7 @@ export default class noResultImage extends LightningElement {
     /**
      * Illustration initialization
      */
-    noAccessImage = NO_ACCESS + '#desert';
+    noAccessImage = NO_ACCESS + '#noaccess';
 
     /**
      * Label for when no results have been found.
