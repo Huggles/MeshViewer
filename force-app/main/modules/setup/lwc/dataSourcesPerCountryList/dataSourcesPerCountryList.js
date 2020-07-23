@@ -67,7 +67,6 @@ export default class dataSourcesPerCountryList extends LightningElement {
             try {
                 this.save(payload);
             } catch(error) {
-                console.log(error);
                 new ToastEventController(this).showErrorToastMessage(null,error.message);
             } finally {
                 this.isLoading = false;

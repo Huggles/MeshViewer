@@ -67,8 +67,6 @@ export default class UpdateCronSettings extends LightningElement {
         this.isLoading = true;
         getScheduledCronJob({})
             .then((result)=>{
-                console.log('scheduledCronJob');
-                console.log(result);
                 this.scheduledCronJob = result;
             })
             .catch((error)=>{
@@ -82,7 +80,6 @@ export default class UpdateCronSettings extends LightningElement {
     handleSaveButtonClick(){
         if(this.cronExpressionInputElement != null){
             this.isLoading = true;
-            console.log(this.cronExpressionInputElement.value);
             setUpdateCronExpression({cronExpression : this.cronExpressionInputElement.value})
                 .then((result)=>{
                     new ToastEventController(this).showSuccessToastMessage('Succes', this.labels.Set_Update_Cron_Expression_Success);
