@@ -80,14 +80,6 @@
         <value>Back to results</value>
     </labels>
     <labels>
-        <fullName>Both</fullName>
-        <categories>Address</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Value to indicate the user wants to select even or odd house numbers</shortDescription>
-        <value>Both</value>
-    </labels>
-    <labels>
         <fullName>Building</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -658,22 +650,8 @@
         <shortDescription>Error_updating_update_type_settings</shortDescription>
         <value>There was an error updating the update type settings</value>
     </labels>
-    <labels>
-        <fullName>Even</fullName>
-        <categories>Address</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Even as in an &apos;even number&apos;</shortDescription>
-        <value>Even</value>
-    </labels>
-    <labels>
-        <fullName>Feature_Not_Found</fullName>
-        <categories>InternationalAddress</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Feature_Not_Found</shortDescription>
-        <value>Feature not found</value>
-    </labels>
+
+
     <labels>
         <fullName>Fill_minimum_characters</fullName>
         <categories>Error</categories>
@@ -1701,14 +1679,6 @@
         <value>You do not have permission to update {0}</value>
     </labels>
     <labels>
-        <fullName>Error_updating_update_type_settings</fullName>
-        <categories>error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Error_updating_update_type_settings</shortDescription>
-        <value>There was an error updating the update type settings</value>
-    </labels>
-    <labels>
         <fullName>Feature_Not_Found</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
@@ -1716,14 +1686,7 @@
         <shortDescription>Feature_Not_Found</shortDescription>
         <value>Feature not found</value>
     </labels>
-    <labels>
-        <fullName>Not_Enough_Seats_Available</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Toast shown when the user tries to assign more seats than he has.</shortDescription>
-        <value>Not enough seats available. You tried to assign {0} seats but only have {1} available.</value>
-    </labels>
+
     <labels>
         <fullName>Even</fullName>
         <categories>Address</categories>
@@ -1733,14 +1696,6 @@
         <value>Even</value>
     </labels>
     <labels>
-        <fullName>Odd</fullName>
-        <categories>Address</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Odd as in an 'odd number'</shortDescription>
-        <value>Odd</value>
-    </labels>
-    <labels>
         <fullName>Both</fullName>
         <categories>Address</categories>
         <language>en_US</language>
@@ -1748,36 +1703,6 @@
         <shortDescription>Value to indicate the user wants to select even or odd house numbers</shortDescription>
         <value>Both</value>
     </labels>
-    <labels>
-        <fullName>Get_Positions</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Label for button that triggers the getPositions callout</shortDescription>
-        <value>Get Positions</value>
-    </labels>
-    <labels>
-        <fullName>Business_Positions_Retrieved_Succesfully</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Success message when business positions have been retrieved.</shortDescription>
-        <value>Business Positions successfully retrieved.</value>
-    </labels>
-    <labels>
-        <fullName>Company_Info_Online_Portal_Button_Label</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Label on the button to open the company.info online portal.</shortDescription>
-        <value>Company.info Online</value>
-    </labels>
-    <labels>
-        <fullName>No_Access_Message</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Message when the user has no access.</shortDescription>
-        <value>You do not have access to this resource.</value>
-    </labels>
+
+
 </CustomLabels>
