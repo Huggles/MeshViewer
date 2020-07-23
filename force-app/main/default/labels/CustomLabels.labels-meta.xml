@@ -1678,7 +1678,7 @@
     </labels>
     <labels>
         <fullName>No_Access_Message</fullName>
-        <categories>Dutch Business</categories>
+        <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Message when the user has no access.</shortDescription>
