@@ -1676,4 +1676,12 @@
         <shortDescription>Label on the button to open the company.info online portal.</shortDescription>
         <value>Company.info Online</value>
     </labels>
+    <labels>
+        <fullName>No_Access_Message</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message when the user has no access.</shortDescription>
+        <value>You do not have access to this resource.</value>
+    </labels>
 </CustomLabels>
