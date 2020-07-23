@@ -35,7 +35,11 @@
                 <elementReference>SelectedInternationalAddress</elementReference>
             </value>
         </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>Found_Duplicate_International_Address</assignToReference>
+            <name>output</name>
+        </outputParameters>
+        <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <name>Search_for_Dutch_Address</name>
@@ -424,7 +428,7 @@
         <locationX>1019</locationX>
         <locationY>566</locationY>
         <assignNextValueToReference>DuplicateInternationalAddressLoopVariable</assignNextValueToReference>
-        <collectionReference>Find_Duplicate_International_Addresses</collectionReference>
+        <collectionReference>Found_Duplicate_International_Address</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Assign_Duplicate_International_Address</targetReference>
@@ -895,5 +899,13 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Found_Duplicate_International_Address</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>International_Address__c</objectType>
     </variables>
 </Flow>
