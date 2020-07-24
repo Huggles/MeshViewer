@@ -40,7 +40,28 @@ public interface ISetupService {
     */
     void setDataSourcePerCountry(Map<String, String> selectedDataSourcePerCountry);
 
+    /**
+   * Gets information about a scheduled job.
+   *
+   * @param scheduleName The name of the job
+   */
+    List<CronTrigger> getScheduledCronJob(String scheduleName);
 
+
+    /**
+    * Sets the cron expression for the dutch business dossier update in the custom meta data settings.
+    * @param cronExpression The new cron expressions
+    */
+    Id setUpdateTypeCron(String cronExpression);
+
+    /**
+   * Schedules a cronjob. Aborts any scheduled cronjobs with the same name.
+   *
+   * @param scheduleName The name of the job
+   * @param schedulable The class implementing the Schedulable interface.
+   * @param cronExpression The cron expression used to determine when to run.
+   */
+    void scheduleCronJob(String scheduleName, Schedulable schedulable, String cronExpression);
 
 
 }
