@@ -11,9 +11,12 @@ global with sharing class SepaMatchAccountHolderInvocable {
         global String accountNumber;
 
         @TestVisible
-        public SepaMatchAccountHolderArgument(String accountName, String accountNumber) {
+        private SepaMatchAccountHolderArgument(String accountName, String accountNumber) {
             this.accountName = accountName;
             this.accountNumber = accountNumber;
+        }
+        global SepaMatchAccountHolderArgument(){
+
         }
 
     }
