@@ -1740,6 +1740,12 @@
         <shortDescription>Label for the cron expression input field.</shortDescription>
         <value>Cron Expression</value>
     </labels>
-
-
+    <labels>
+        <fullName>No_Access_Message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message when the user has no access.</shortDescription>
+        <value>You do not have access to this resource.</value>
+    </labels>
 </CustomLabels>
