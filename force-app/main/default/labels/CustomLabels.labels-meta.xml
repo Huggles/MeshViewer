@@ -1732,5 +1732,14 @@
         <shortDescription>The error message shown when updating the cron expression fails.</shortDescription>
         <value>Something went wrong setting the new cron expression.</value>
     </labels>
+    <labels>
+        <fullName>Cron_Expression</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for the cron expression input field.</shortDescription>
+        <value>Cron Expression</value>
+    </labels>
+
 
 </CustomLabels>

@@ -13,6 +13,7 @@ import Update_Cron_Last_Modified from '@salesforce/label/c.Update_Cron_Last_Modi
 import Update_Cron_Previous_Fire from '@salesforce/label/c.Update_Cron_Previous_Fire';
 import Update_Cron_Next_Fire from '@salesforce/label/c.Update_Cron_Next_Fire';
 import Set_Update_Cron_Expression_Success from '@salesforce/label/c.Set_Update_Cron_Expression_Success';
+import Cron_Expression from '@salesforce/label/c.Cron_Expression';
 
 
 //Apex
@@ -30,7 +31,8 @@ export default class UpdateCronSettings extends LightningElement {
         Update_Cron_Last_Modified,
         Update_Cron_Previous_Fire,
         Update_Cron_Next_Fire,
-        Set_Update_Cron_Expression_Success
+        Set_Update_Cron_Expression_Success,
+        Cron_Expression
     }
 
     isLoading = false;
@@ -82,10 +84,10 @@ export default class UpdateCronSettings extends LightningElement {
             this.isLoading = true;
             setUpdateCronExpression({cronExpression : this.cronExpressionInputElement.value})
                 .then((result)=>{
-                    new ToastEventController(this).showSuccessToastMessage('Succes', this.labels.Set_Update_Cron_Expression_Success);
+                    new ToastEventController(this).showSuccessToastMessage(null, this.labels.Set_Update_Cron_Expression_Success);
                 })
                 .catch((error)=>{
-                    new ToastEventController(this).showErrorToastMessage('Error', error);
+                    new ToastEventController(this).showErrorToastMessage(null, error);
                 })
                 .finally(()=>{
                     this.isLoading = false;
