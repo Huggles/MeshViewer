@@ -94,20 +94,20 @@
         <value>The Business Data  record already exists.</value>
     </labels>
     <labels>
-        <fullName>Business_Positions_Retrieved_Succesfully</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Success message when business positions have been retrieved.</shortDescription>
-        <value>Business Positions successfully retrieved.</value>
-    </labels>
-    <labels>
         <fullName>Cancel</fullName>
         <categories>Button</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Cancel</shortDescription>
         <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
     </labels>
     <labels>
         <fullName>City</fullName>
@@ -123,7 +123,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>City Help Text</shortDescription>
-        <value>Please fill the city name in the country&apos;s main language</value>
+        <value>Please fill the city name in the country&#39;s main language</value>
     </labels>
     <labels>
         <fullName>Close</fullName>
@@ -133,12 +133,20 @@
         <value>Close</value>
     </labels>
     <labels>
-        <fullName>Company_Info_Online_Portal_Button_Label</fullName>
-        <categories>Dutch Business</categories>
+        <fullName>Password</fullName>
+        <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Label on the button to open the company.info online portal.</shortDescription>
-        <value>Company.info Online</value>
+        <shortDescription>Password</shortDescription>
+        <value>Password</value>
+    </labels>
+    <labels>
+        <fullName>Login_Button</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Login button text</shortDescription>
+        <value>Login</value>
     </labels>
     <labels>
         <fullName>Companyinfo_Username</fullName>
@@ -155,14 +163,6 @@
         <protected>true</protected>
         <shortDescription>Config_Title</shortDescription>
         <value>Company.info Setup</value>
-    </labels>
-    <labels>
-        <fullName>Contact_record_created</fullName>
-        <categories>Data Source</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Contact record created</shortDescription>
-        <value>Contact record successfully created.</value>
     </labels>
     <labels>
         <fullName>Contract_Intention_of_signature_of_leasing_or_rent_contract</fullName>
@@ -284,19 +284,19 @@
         <value>The Account does not have a related Business Dossier, please create/link a Business Dossier to Account and refresh.</value>
     </labels>
     <labels>
-        <fullName>Create_Contact_permission</fullName>
-        <categories>Data Source</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Create Contact permission</shortDescription>
-        <value>Company_info_for_Sales</value>
-    </labels>
-    <labels>
         <fullName>Create_New_Account</fullName>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Create New Account</shortDescription>
         <value>Create Duplicate Account</value>
+    </labels>
+    <labels>
+        <fullName>Login_successful</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message shown after a successful login</shortDescription>
+        <value>Login successful!</value>
     </labels>
     <labels>
         <fullName>Credentials_successfully_updated_message</fullName>
@@ -417,6 +417,13 @@
         <value>Could not fetch the VAT number as the Chamber of Commerce Number is missing</value>
     </labels>
     <labels>
+        <fullName>Error_Title</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title of error toast</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
         <fullName>Duplicate_Account_Created</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -477,6 +484,14 @@
         <value>You have been authenticated for the datavendor but do not have access to the requested functionality. Please contact your administrator.</value>
     </labels>
     <labels>
+        <fullName>Error_Incorrect_IBAN</fullName>
+        <categories>Error,webservice</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error message when an incorrect IBAN provided to the SEPA callout.</shortDescription>
+        <value>This is not a valid International Bank Account Number (IBAN).</value>
+    </labels>
+    <labels>
         <fullName>Error_Client_Hostrestriction</fullName>
         <categories>Error,webservice</categories>
         <language>en_US</language>
@@ -523,14 +538,6 @@
         <protected>true</protected>
         <shortDescription>Error Client Payment</shortDescription>
         <value>The request can’t be processed, because the user (or its account) doesn’t have sufficient balance/credits.</value>
-    </labels>
-    <labels>
-        <fullName>Error_Incorrect_IBAN</fullName>
-        <categories>Error,webservice</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Error message when an incorrect IBAN provided to the SEPA callout.</shortDescription>
-        <value>This is not a valid International Bank Account Number (IBAN).</value>
     </labels>
     <labels>
         <fullName>Error_Input_Incorrect</fullName>
@@ -613,13 +620,6 @@
         <value>A non-numeric value has been entered. Numeric value expected.</value>
     </labels>
     <labels>
-        <fullName>Error_Title</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Title of error toast</shortDescription>
-        <value>Error</value>
-    </labels>
-    <labels>
         <fullName>Error_Unknown</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -642,16 +642,6 @@
         <shortDescription>Error Webservice Server</shortDescription>
         <value>The data vendor server threw an unknown exception. Please retry later or contact your administrator.</value>
     </labels>
-    <labels>
-        <fullName>Error_updating_update_type_settings</fullName>
-        <categories>error</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Error_updating_update_type_settings</shortDescription>
-        <value>There was an error updating the update type settings</value>
-    </labels>
-
-
     <labels>
         <fullName>Fill_minimum_characters</fullName>
         <categories>Error</categories>
@@ -682,14 +672,6 @@
         <protected>true</protected>
         <shortDescription>Get_Dossier_Results_Help</shortDescription>
         <value>Below is the detailed company dossier. Please press create account to proceed with account creation.</value>
-    </labels>
-    <labels>
-        <fullName>Get_Positions</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Label for button that triggers the getPositions callout</shortDescription>
-        <value>Get Positions</value>
     </labels>
     <labels>
         <fullName>Goods_Credit_Insurance</fullName>
@@ -782,22 +764,6 @@
         <value>District or municipality search phrase</value>
     </labels>
     <labels>
-        <fullName>Login_Button</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Login button text</shortDescription>
-        <value>Login</value>
-    </labels>
-    <labels>
-        <fullName>Login_successful</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Message shown after a successful login</shortDescription>
-        <value>Login successful!</value>
-    </labels>
-    <labels>
         <fullName>Ltd</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -867,14 +833,6 @@
         <value>No</value>
     </labels>
     <labels>
-        <fullName>No_Access_Message</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Message when the user has no access.</shortDescription>
-        <value>You do not have access to this resource.</value>
-    </labels>
-    <labels>
         <fullName>No_Business_Dossier_Found</fullName>
         <categories>Creditsafe</categories>
         <language>en_US</language>
@@ -889,6 +847,14 @@
         <protected>true</protected>
         <shortDescription>No Company Id Found</shortDescription>
         <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
+    </labels>
+    <labels>
+        <fullName>No_users_available_to_assign_licenses_to</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No users available to assign licenses to</shortDescription>
+        <value>No users available to assign licenses to</value>
     </labels>
     <labels>
         <fullName>No_address_fields_filled_international_address</fullName>
@@ -907,14 +873,6 @@
         <value>No users assigned</value>
     </labels>
     <labels>
-        <fullName>No_users_available_to_assign_licenses_to</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>No users available to assign licenses to</shortDescription>
-        <value>No users available to assign licenses to</value>
-    </labels>
-    <labels>
         <fullName>NonActive</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
@@ -931,28 +889,12 @@
         <value>Non Limited</value>
     </labels>
     <labels>
-        <fullName>Not_Enough_Seats_Available</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Toast shown when the user tries to assign more seats than he has.</shortDescription>
-        <value>Not enough seats available. You tried to assign {0} seats but only have {1} available.</value>
-    </labels>
-    <labels>
         <fullName>Nr_of_licenses_assigned</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Message showing nr of licenses have been assigned</shortDescription>
         <value>{0} Licenses out of {1} assigned</value>
-    </labels>
-    <labels>
-        <fullName>Odd</fullName>
-        <categories>Address</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Odd as in an &apos;odd number&apos;</shortDescription>
-        <value>Odd</value>
     </labels>
     <labels>
         <fullName>Organization</fullName>
@@ -969,14 +911,6 @@
         <protected>true</protected>
         <shortDescription>POBox</shortDescription>
         <value>POBox</value>
-    </labels>
-    <labels>
-        <fullName>Password</fullName>
-        <categories>Setup</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Password</shortDescription>
-        <value>Password</value>
     </labels>
     <labels>
         <fullName>Phone_Number</fullName>
@@ -1084,14 +1018,6 @@
         <protected>true</protected>
         <shortDescription>Header of role column in user data table</shortDescription>
         <value>Role</value>
-    </labels>
-    <labels>
-        <fullName>Save</fullName>
-        <categories>Button</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Save</shortDescription>
-        <value>Save</value>
     </labels>
     <labels>
         <fullName>Search_Again_Confirmation_Dialog_Message</fullName>
@@ -1326,11 +1252,12 @@
         <value>here.</value>
     </labels>
     <labels>
-        <fullName>Update_Duplicate_Account</fullName>
+        <fullName>Update_types_URL</fullName>
+        <categories>Settings</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Update Duplicate Account</shortDescription>
-        <value>Update Duplicate Account</value>
+        <shortDescription>Update types URL</shortDescription>
+        <value>https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.Update_types</value>
     </labels>
     <labels>
         <fullName>Update_settings</fullName>
@@ -1357,14 +1284,6 @@
         <value>The update types have been updated succesfully!</value>
     </labels>
     <labels>
-        <fullName>Update_types_URL</fullName>
-        <categories>Settings</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Update types URL</shortDescription>
-        <value>https://webview.webservices.nl/documentation/files/service_dutchbusiness-php.html#Dutch_Business.Update_types</value>
-    </labels>
-    <labels>
         <fullName>Update_types_explanation</fullName>
         <categories>Settings</categories>
         <language>en_US</language>
@@ -1372,6 +1291,13 @@
         <shortDescription>Text above the update type in setup</shortDescription>
         <value>The update service will update the Dutch Business Dossiers in Salesforce, once there is updated data available from Company.info. The service will check whether any of the Business Dossiers have changed. If so, it will automatically update the Business Dossier.
             With the Update Types, you can define which data you want to have updated. An overview of the fields that get updated per Update Type can be found</value>
+    </labels>
+    <labels>
+        <fullName>Update_Duplicate_Account</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Update Duplicate Account</shortDescription>
+        <value>Update Duplicate Account</value>
     </labels>
     <labels>
         <fullName>Updated_Account</fullName>
@@ -1679,6 +1605,14 @@
         <value>You do not have permission to update {0}</value>
     </labels>
     <labels>
+        <fullName>Error_updating_update_type_settings</fullName>
+        <categories>error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error_updating_update_type_settings</shortDescription>
+        <value>There was an error updating the update type settings</value>
+    </labels>
+    <labels>
         <fullName>Feature_Not_Found</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
@@ -1686,7 +1620,14 @@
         <shortDescription>Feature_Not_Found</shortDescription>
         <value>Feature not found</value>
     </labels>
-
+    <labels>
+        <fullName>Not_Enough_Seats_Available</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Toast shown when the user tries to assign more seats than he has.</shortDescription>
+        <value>Not enough seats available. You tried to assign {0} seats but only have {1} available.</value>
+    </labels>
     <labels>
         <fullName>Even</fullName>
         <categories>Address</categories>
@@ -1696,6 +1637,14 @@
         <value>Even</value>
     </labels>
     <labels>
+        <fullName>Odd</fullName>
+        <categories>Address</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Odd as in an 'odd number'</shortDescription>
+        <value>Odd</value>
+    </labels>
+    <labels>
         <fullName>Both</fullName>
         <categories>Address</categories>
         <language>en_US</language>
@@ -1703,6 +1652,108 @@
         <shortDescription>Value to indicate the user wants to select even or odd house numbers</shortDescription>
         <value>Both</value>
     </labels>
-
-
+    <labels>
+        <fullName>Get_Positions</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for button that triggers the getPositions callout</shortDescription>
+        <value>Get Positions</value>
+    </labels>
+    <labels>
+        <fullName>Business_Positions_Retrieved_Succesfully</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success message when business positions have been retrieved.</shortDescription>
+        <value>Business Positions successfully retrieved.</value>
+    </labels>
+    <labels>
+        <fullName>Company_Info_Online_Portal_Button_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label on the button to open the company.info online portal.</shortDescription>
+        <value>Company.info Online</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Settings</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title for the update time settings card</shortDescription>
+        <value>Update Cron Settings</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Description</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Description for the update cron card</shortDescription>
+        <value>Specify the cron expression at which the update dutch business dossier should run.</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Last_Modified</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for when the cron was last updated</shortDescription>
+        <value>Last Modified:</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Previous_Fire</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for when the cron was last run</shortDescription>
+        <value>Last run:</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Next_Fire</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for when the cron will next run</shortDescription>
+        <value>Next run:</value>
+    </labels>
+    <labels>
+        <fullName>Set_Update_Cron_Expression_Success</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The success message shown when updating the cron expression succeeds.</shortDescription>
+        <value>The cronjob will be started. Refresh the page in a minute to see the updated times!</value>
+    </labels>
+    <labels>
+        <fullName>Set_Update_Cron_Expression_Error</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The error message shown when updating the cron expression fails.</shortDescription>
+        <value>Something went wrong setting the new cron expression.</value>
+    </labels>
+    <labels>
+        <fullName>Cron_Expression</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for the cron expression input field.</shortDescription>
+        <value>Cron Expression</value>
+    </labels>
+    <labels>
+        <fullName>Data_Source</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for the data source dropdown.</shortDescription>
+        <value>Data_Source</value>
+    </labels>
+    <labels>
+        <fullName>No_Access_Message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message when the user has no access.</shortDescription>
+        <value>You do not have access to this resource.</value>
+    </labels>
 </CustomLabels>
