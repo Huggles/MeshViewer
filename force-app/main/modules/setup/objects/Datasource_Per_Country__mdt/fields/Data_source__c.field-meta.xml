@@ -3,7 +3,7 @@
     <fullName>Data_source__c</fullName>
     <description>The data source that can be used to search for organisations for this country</description>
     <externalId>false</externalId>
-    <fieldManageability>DeveloperControlled</fieldManageability>
+    <fieldManageability>SubscriberControlled</fieldManageability>
     <inlineHelpText>The data source that can be used to search for organisations for this country</inlineHelpText>
     <label>Data source</label>
     <referenceTo>Data_source__mdt</referenceTo>
