@@ -4,6 +4,7 @@
 
 public with sharing class SetupServiceImpl implements ISetupService {
 
+    static final String DATA_SOURCE_API_NAME = '_Selected_Data_Source';
     public final static String UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Update_Dutch_Dossier_Batch_Cron_Schedule';
     public final static String UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL = 'Update Dutch Dossier Batch Cron Schedule';
 
@@ -120,14 +121,20 @@ public with sharing class SetupServiceImpl implements ISetupService {
             String dataSourceDeveloperName = selectedDataSourcePerCountry.get(countryCode);
             Id dataSourceId = getDatasourceIdsByDeveloperName().get(dataSourceDeveloperName);
             Id countryId = getCountryMtdsByCountryCode().get(countryCode).Id;
+
+            //get and add namespace for the custom metadata record
+            string countryNamespacePrefix = GetNameSpace.getNameSpace(getCountryMtdsByCountryCode().get(countryCode).DeveloperName+'_Selected_Data_Source','CustomMetadata','Datasource_Per_Country__mdt');
+            countryNamespacePrefix = countryNamespacePrefix != null ? countryNamespacePrefix+'__':countryNamespacePrefix;
+            String countryMasterLabel = countryNamespacePrefix+getCountryMtdsByCountryCode().get(countryCode).Label;
             String countryLabel = getCountryMtdsByCountryCode().get(countryCode).Label;
+
             Datasource_Per_Country__mdt datasourcePerCountry = new Datasource_Per_Country__mdt();
             datasourcePerCountry.Data_Source_Select_Record__c = true;
             datasourcePerCountry.Data_source__c = dataSourceId;
             datasourcePerCountry.ISO_3166_Entry__c = countryId;
-            datasourcePerCountry.DeveloperName = countryLabel + '_Selected_Data_Source'; // brittle but I don't see another solution
-            datasourcePerCountry.MasterLabel = countryLabel + ' Selected Data Source'; // brittle once more
-            datasourcePerCountry.Label = datasourcePerCountry.MasterLabel;
+            datasourcePerCountry.DeveloperName = countryMasterLabel + DATA_SOURCE_API_NAME; // brittle but I don't see another solution
+            datasourcePerCountry.MasterLabel = countryMasterLabel +' '+Label.Data_source_Label; // brittle once more
+            datasourcePerCountry.Label = countryLabel+ ' '+Label.Data_source_Label;
             datasourcePerCountriesMdt.add(datasourcePerCountry);
         }
         upsertDataSourcePerCountry(datasourcePerCountriesMdt);
@@ -297,6 +304,5 @@ public with sharing class SetupServiceImpl implements ISetupService {
         }
         return jobId;
     }
-
 
 }

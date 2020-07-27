@@ -1669,6 +1669,31 @@
         <value>Business Positions successfully retrieved.</value>
     </labels>
     <labels>
+        <fullName>Job_Submitted</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Job Submitted</shortDescription>
+        <value>Your changes are successfully submitted.</value>
+    </labels>
+    <labels>
+        <fullName>CRUD_Error</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error for CRUD operations</shortDescription>
+        <value>User does not have access on </value>
+    </labels>
+    <labels>
+        <fullName>Data_source_Label</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Data source Label</shortDescription>
+        <value>Selected Data Source</value>
+    </labels>
+
+    <labels>
         <fullName>Company_Info_Online_Portal_Button_Label</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
