@@ -82,6 +82,8 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
             Boolean checked = Boolean.valueOf(mdRecord.get('checked'));
             String developerName = String.valueOf(mdRecord.get('developerName')); //RecordName = DeveloperName
+            String developerNameSpace = GetNameSpace.getNameSpace(developerName,'CustomMetadata',updateTypeAPIName);
+            developerName = (developerNameSpace != null) ? developerNameSpace+ '__' + developerName  : developerName;
             String masterLabel = String.valueOf(mdRecord.get('label'));
 
             if(checked == null || developerName == null || masterLabel == null){
