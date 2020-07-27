@@ -3,7 +3,7 @@
     <fullName>Value__c</fullName>
     <description>The setting&apos;s value</description>
     <externalId>false</externalId>
-    <fieldManageability>SubscriberControlled</fieldManageability>
+    <fieldManageability>DeveloperControlled</fieldManageability>
     <inlineHelpText>The setting&apos;s value</inlineHelpText>
     <label>Value</label>
     <length>255</length>
