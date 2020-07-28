@@ -10,7 +10,9 @@ public without sharing class UpdateDossiersBatch implements Database.Batchable<B
             List<String> updateTypes = new List<String>();
             List<Protected_Subscriber_Setting__mdt> updateTypesMD = SetupService.getUpdateTypes();
             for(Protected_Subscriber_Setting__mdt utmd : updateTypesMD){
-                updateTypes.add(utmd.External_Id__c);
+                if(utmd.Enabled__c) {
+                    updateTypes.add(utmd.External_Id__c);
+                }
             }
             return updateTypes;
         }
