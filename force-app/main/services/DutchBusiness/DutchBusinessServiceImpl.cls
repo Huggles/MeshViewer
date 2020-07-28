@@ -46,7 +46,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return returnValue;
     }
 
-
     /**
     * Processes the dutch business dossiers that have been removed from the CI backend
     *
@@ -195,8 +194,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return dossier;
     }
 
-
-
     /**
       * Updates a given Dutch business dossier with the VAT number from the CI backend.
       * Sets the flag No_VAT__c to true if no VAT number is known in the backend.
@@ -216,7 +213,9 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         try {
             DutchBusinessWsdl.DutchBusinessVatNumber vatResponse = WsDutchBusiness.dutchBusinessGetVatNumber(dossier.Dossier_Number__c);
             dossier.VAT_Number__c = vatResponse.vat_number;
+            dossier.No_VAT_Number__c = false;
         } catch (CCWsServerDataNotFoundVatException notFoundVatException) {
+            dossier.VAT_Number__c = null;
             dossier.No_VAT_Number__c = true;
         }
         return dossier;
@@ -298,13 +297,9 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         }
     }
 
-
-
-
     /*****************************
     /** IMPLEMENTATION METHODS
     /******************************/
-
     private List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchForDutchBusinessesInCompanyInfo(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search) {
         List<DutchBusinessWsdl.DutchBusinessEstablishmentReference> searchResults = new List<DutchBusinessWsdl.DutchBusinessEstablishmentReference>();
         DutchBusinessWsdl.DutchBusinessEstablishmentReferencePagedResult returnedResults = WsDutchBusiness.dutchBusinessSearch(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search, 1);
@@ -324,7 +319,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return account;
     }
 
-    // TODO: refactor Has side effects.
     @TestVisible
     private DutchBusinessWsdl.DutchBusinessDossierV3 getDossier(String dossierNumber, String establishmentNumber) {
         if (dossierNumber == null){ return null;}
@@ -426,12 +420,25 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossierDB.Contact_Title2__c = dataVendorDossier.contact_title2;
         dossierDB.Contact_Gender__c = dataVendorDossier.contact_gender;
         if (dataVendorDossier.indication_bankruptcy != null) { dossierDB.Indication_Bankruptcy__c = dataVendorDossier.indication_bankruptcy;}
+        else {dossierDB.Indication_Bankruptcy__c = Boolean.valueOf(Business_Dossier__c.Indication_Bankruptcy__c.getDescribe().getDefaultValue()); }
+
         if (dataVendorDossier.indication_dip != null) { dossierDB.Indication_Dip__c = dataVendorDossier.indication_dip;}
+        else {dossierDB.Indication_Dip__c = Boolean.valueOf(Business_Dossier__c.Indication_Dip__c.getDescribe().getDefaultValue()); }
+
         if (dataVendorDossier.indication_economically_active != null) { dossierDB.Indication_Economically_Active__c = dataVendorDossier.indication_economically_active;}
+        else {dossierDB.Indication_Economically_Active__c = Boolean.valueOf(Business_Dossier__c.Indication_Economically_Active__c.getDescribe().getDefaultValue()); }
+
         if (dataVendorDossier.indication_export != null) { dossierDB.Indication_Export__c = dataVendorDossier.indication_export;}
+        else {dossierDB.Indication_Export__c = Boolean.valueOf(Business_Dossier__c.Indication_Export__c.getDescribe().getDefaultValue()); }
+
         if (dataVendorDossier.indication_import != null) { dossierDB.Indication_Import__c = dataVendorDossier.indication_import;}
+        else {dossierDB.Indication_Import__c = Boolean.valueOf(Business_Dossier__c.Indication_Import__c.getDescribe().getDefaultValue()); }
+
         if (dataVendorDossier.indication_main_establishment != null) { dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;}
+        else {dossierDB.Indication_Main_Establishment__c = Boolean.valueOf(Business_Dossier__c.Indication_Main_Establishment__c.getDescribe().getDefaultValue()); }
+
         if (dataVendorDossier.indication_non_mailing != null) { dossierDB.Indication_Non_Mailing__c = dataVendorDossier.indication_non_mailing;}
+        else {dossierDB.Indication_Non_Mailing__c = Boolean.valueOf(Business_Dossier__c.Indication_Non_Mailing__c.getDescribe().getDefaultValue()); }
 
         if (dataVendorDossier.structure != null) {
             dossierDB.Number_Of_Subsidiaries__c = String.valueOf(dataVendorDossier.structure.number_of_subsidiaries);
