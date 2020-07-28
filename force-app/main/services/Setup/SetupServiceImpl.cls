@@ -142,12 +142,13 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
     public Id setUpdateTypeCron(String cronExpression){
         String updateTypeAPIName = String.valueOf(Setting__mdt.getSObjectType());
+        String namespacePrefix = GetNameSpace.getCustomMetadataNameSpace(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME, updateTypeAPIName) + '__';
 
         Metadata.DeployContainer mdContainer = new Metadata.DeployContainer();
 
         // record
         Metadata.CustomMetadata customMetadata = new Metadata.CustomMetadata();
-        customMetadata.fullName = updateTypeAPIName + '.' + UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME;
+        customMetadata.fullName = updateTypeAPIName + '.' + namespacePrefix + UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME;
         customMetadata.label = UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL;
 
         // value field
