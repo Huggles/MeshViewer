@@ -1669,11 +1669,116 @@
         <value>Business Positions successfully retrieved.</value>
     </labels>
     <labels>
+        <fullName>Job_Submitted</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Job Submitted</shortDescription>
+        <value>Your changes are successfully submitted.</value>
+    </labels>
+    <labels>
+        <fullName>CRUD_Error</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error for CRUD operations</shortDescription>
+        <value>User does not have access on </value>
+    </labels>
+    <labels>
+        <fullName>Data_source_Label</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Data source Label</shortDescription>
+        <value>Selected Data Source</value>
+    </labels>
+
+    <labels>
         <fullName>Company_Info_Online_Portal_Button_Label</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Label on the button to open the company.info online portal.</shortDescription>
         <value>Company.info Online</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Settings</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Title for the update time settings card</shortDescription>
+        <value>Update Cron Settings</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Description</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Description for the update cron card</shortDescription>
+        <value>Specify the cron expression at which the update dutch business dossier should run.</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Last_Modified</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for when the cron was last updated</shortDescription>
+        <value>Last Modified:</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Previous_Fire</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for when the cron was last run</shortDescription>
+        <value>Last run:</value>
+    </labels>
+    <labels>
+        <fullName>Update_Cron_Next_Fire</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for when the cron will next run</shortDescription>
+        <value>Next run:</value>
+    </labels>
+    <labels>
+        <fullName>Set_Update_Cron_Expression_Success</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The success message shown when updating the cron expression succeeds.</shortDescription>
+        <value>The cronjob will be started. Refresh the page in a minute to see the updated times!</value>
+    </labels>
+    <labels>
+        <fullName>Set_Update_Cron_Expression_Error</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The error message shown when updating the cron expression fails.</shortDescription>
+        <value>Something went wrong setting the new cron expression.</value>
+    </labels>
+    <labels>
+        <fullName>Cron_Expression</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for the cron expression input field.</shortDescription>
+        <value>Cron Expression</value>
+    </labels>
+    <labels>
+        <fullName>Data_Source</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for the data source dropdown.</shortDescription>
+        <value>Data_Source</value>
+    </labels>
+    <labels>
+        <fullName>No_Access_Message</fullName>
+        <categories>Setup</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Message when the user has no access.</shortDescription>
+        <value>You do not have access to this resource.</value>
     </labels>
 </CustomLabels>

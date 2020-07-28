@@ -3,15 +3,15 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>990</locationX>
-        <locationY>828</locationY>
+        <locationX>1315</locationX>
+        <locationY>981</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Get_Creditsafe_Report</name>
         <label>Get Creditsafe Report</label>
-        <locationX>472</locationX>
+        <locationX>798</locationX>
         <locationY>640</locationY>
         <actionName>GetCreditsafeFullReportInvocable</actionName>
         <actionType>apex</actionType>
@@ -47,7 +47,7 @@
     <assignments>
         <name>Assign_Error_Message</name>
         <label>Assign Error Message</label>
-        <locationX>974</locationX>
+        <locationX>1300</locationX>
         <locationY>224</locationY>
         <assignmentItems>
             <assignToReference>ErrorMessageFromFlowOrInput</assignToReference>
@@ -63,7 +63,7 @@
     <assignments>
         <name>Assign_Fault_Message</name>
         <label>Assign Fault Message</label>
-        <locationX>652</locationX>
+        <locationX>978</locationX>
         <locationY>385</locationY>
         <assignmentItems>
             <assignToReference>ErrorMessageFromFlowOrInput</assignToReference>
@@ -251,7 +251,7 @@
     <decisions>
         <name>Cancel_pressed_in_language_screen</name>
         <label>Cancel pressed in language screen</label>
-        <locationX>977</locationX>
+        <locationX>1303</locationX>
         <locationY>643</locationY>
         <defaultConnector>
             <targetReference>Get_Creditsafe_Report</targetReference>
@@ -276,7 +276,7 @@
     <decisions>
         <name>Check_Language_Selected</name>
         <label>Check Language Selected</label>
-        <locationX>973</locationX>
+        <locationX>1299</locationX>
         <locationY>435</locationY>
         <defaultConnector>
             <targetReference>Cancel_pressed_in_language_screen</targetReference>
@@ -328,9 +328,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Does_User_Have_Access</name>
+        <label>Does User Have Access</label>
+        <locationX>560</locationX>
+        <locationY>994</locationY>
+        <defaultConnector>
+            <targetReference>End</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Access</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HasAccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>User_can_select_language</targetReference>
+            </connector>
+            <label>Has Access</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>User_can_select_language</name>
         <label>User can select language</label>
-        <locationX>256</locationX>
+        <locationX>582</locationX>
         <locationY>243</locationY>
         <defaultConnector>
             <targetReference>Get_Creditsafe_Report</targetReference>
@@ -436,7 +461,6 @@
         <expression>{!$Label.appsolutely__realisation_check_receivables_collection}</expression>
     </formulas>
     <interviewLabel>Get Creditsafe Report {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Get Creditsafe Report</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -454,7 +478,7 @@
     <recordUpdates>
         <name>Update_the_Dossier_record</name>
         <label>Update the Dossier record</label>
-        <locationX>472</locationX>
+        <locationX>798</locationX>
         <locationY>827</locationY>
         <connector>
             <targetReference>Navigate_To_Creditsafe_Report</targetReference>
@@ -483,7 +507,7 @@
     <screens>
         <name>Input_parameters</name>
         <label>Input parameters</label>
-        <locationX>652</locationX>
+        <locationX>978</locationX>
         <locationY>231</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -582,7 +606,7 @@
     <screens>
         <name>Navigate_To_Creditsafe_Report</name>
         <label>Navigate To Creditsafe Report</label>
-        <locationX>725</locationX>
+        <locationX>1051</locationX>
         <locationY>828</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -618,13 +642,33 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>241</locationY>
+        <locationX>7</locationX>
+        <locationY>975</locationY>
         <connector>
-            <targetReference>User_can_select_language</targetReference>
+            <targetReference>Has_Sales_Permission_Set_Assigned</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Has_Sales_Permission_Set_Assigned</name>
+        <label>Has Sales Permission Set Assigned</label>
+        <locationX>390</locationX>
+        <locationY>994</locationY>
+        <connector>
+            <targetReference>Does_User_Have_Access</targetReference>
+        </connector>
+        <flowName>Check_Permission_Set_Assignment</flowName>
+        <inputAssignments>
+            <name>PermissionSetName</name>
+            <value>
+                <stringValue>Company_info_for_Sales</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>HasAccess</assignToReference>
+            <name>HasAccess</name>
+        </outputAssignments>
+    </subflows>
     <variables>
         <name>CancelPressed</name>
         <dataType>Boolean</dataType>
@@ -663,6 +707,16 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>HasAccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>InputBusinessDossier</name>
