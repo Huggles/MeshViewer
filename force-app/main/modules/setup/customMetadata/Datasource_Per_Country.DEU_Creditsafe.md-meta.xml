@@ -11,6 +11,10 @@
         <value xsi:type="xsd:string">Creditsafe</value>
     </values>
     <values>
+        <field>Data_source_editable__c</field>
+        <value xsi:type="xsd:string">Creditsafe</value>
+    </values>
+    <values>
         <field>ISO_3166_Entry__c</field>
         <value xsi:type="xsd:string">DEU</value>
     </values>
