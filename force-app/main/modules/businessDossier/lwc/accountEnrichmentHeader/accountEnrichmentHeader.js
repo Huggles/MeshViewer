@@ -278,14 +278,11 @@ export default class AccountEnrichmentHeader extends LightningElement {
     handleOnClickConfirmationDialog(event) {
         this._confirmationDialog.hide();
         if (event.detail.status != null && event.detail.status === 'confirm' && this.businessDossierId != null) {
-            this.deleteCurrentDossier()
-                .then(()=>{
-                    this.searchAgainClicked = true;
-                    const attributeChangeEvent = new FlowAttributeChangeEvent('searchAgainClicked', this.searchAgainClicked);
-                    this.dispatchEvent(attributeChangeEvent);
-                    //we throw an event because the flow needs to show a search form
-                    this.dispatchEvent(new FlowNavigationNextEvent());
-                });
+            this.searchAgainClicked = true;
+            const attributeChangeEvent = new FlowAttributeChangeEvent('searchAgainClicked', this.searchAgainClicked);
+            this.dispatchEvent(attributeChangeEvent);
+            //we throw an event because the flow needs to show a search form
+            this.dispatchEvent(new FlowNavigationNextEvent());
         }
     }
     async deleteCurrentDossier(){
