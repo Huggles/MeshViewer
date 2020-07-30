@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Business_Dossier__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <description>Company details</description>
+    <description>[DEPRECATED] Use the lookup from Business Dossier to Creditsafe Company Report instead.</description>
     <externalId>false</externalId>
     <label>Business Dossier</label>
     <referenceTo>Business_Dossier__c</referenceTo>
