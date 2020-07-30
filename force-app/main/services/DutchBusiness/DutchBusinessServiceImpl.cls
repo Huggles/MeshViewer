@@ -190,6 +190,9 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
         if(getVAT != null && getVAT == true) {
             dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
+        }else{
+            dossier.VAT_Number__c = '';
+            dossier.No_VAT_Number__c = true;
         }
         return dossier;
     }
