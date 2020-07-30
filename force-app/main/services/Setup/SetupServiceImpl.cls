@@ -143,7 +143,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
     }
 
     public Id setUpdateTypeCron(String cronExpression){
-        String updateTypeAPIName = String.valueOf(Setting__mdt.getSObjectType());
+        String updateTypeAPIName = String.valueOf(Protected_Subscriber_Setting__mdt.getSObjectType());
         String namespacePrefix = GetNameSpace.getCustomMetadataNameSpace(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME, updateTypeAPIName) + '__';
 
         Metadata.DeployContainer mdContainer = new Metadata.DeployContainer();
@@ -155,7 +155,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
         // value field
         Metadata.CustomMetadataValue valueField = new Metadata.CustomMetadataValue();
-        valueField.field = String.valueOf(Setting__mdt.Value__c);
+        valueField.field = String.valueOf(Protected_Subscriber_Setting__mdt.Value__c);
         valueField.value = cronExpression;
 
         customMetadata.values.add(valueField);
