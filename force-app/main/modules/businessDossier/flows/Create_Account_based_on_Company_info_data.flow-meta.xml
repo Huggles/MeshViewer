@@ -3,16 +3,16 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>1548</locationX>
-        <locationY>310</locationY>
+        <locationX>1636</locationX>
+        <locationY>106</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <assignments>
         <name>Assign_Account_fields_Creditsafe</name>
         <label>Assign Account fields Creditsafe</label>
-        <locationX>916</locationX>
-        <locationY>559</locationY>
+        <locationX>1142</locationX>
+        <locationY>624</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
             <operator>Assign</operator>
@@ -27,13 +27,20 @@
     <assignments>
         <name>Assign_Account_Fields_Dutch_CoC</name>
         <label>Assign Account Fields Dutch CoC</label>
-        <locationX>918</locationX>
-        <locationY>397</locationY>
+        <locationX>1144</locationX>
+        <locationY>462</locationY>
         <assignmentItems>
             <assignToReference>AccountToBeCreated.Name</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CompleteBusinessDossier.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AccountToBeCreated.BillingCity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CompleteBusinessDossier.Correspondence_City__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -43,8 +50,8 @@
     <decisions>
         <name>Cancel_Pressed</name>
         <label>Cancel Pressed</label>
-        <locationX>566</locationX>
-        <locationY>52</locationY>
+        <locationX>917</locationX>
+        <locationY>118</locationY>
         <defaultConnector>
             <targetReference>Dossier_Source</targetReference>
         </defaultConnector>
@@ -69,8 +76,8 @@
         <description>What is the dossier source</description>
         <name>Dossier_Source</name>
         <label>Dossier Source</label>
-        <locationX>692</locationX>
-        <locationY>467</locationY>
+        <locationX>918</locationX>
+        <locationY>532</locationY>
         <defaultConnector>
             <targetReference>Assign_Account_Fields_Dutch_CoC</targetReference>
         </defaultConnector>
@@ -89,6 +96,32 @@
                 <targetReference>Assign_Account_fields_Creditsafe</targetReference>
             </connector>
             <label>Creditsafe</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Whether or not the cancel button on the search screen was clicked.</description>
+        <name>Was_Cancel_Button_On_Search_Screen_Clicked</name>
+        <label>Was Cancel Button On Search Screen Clicked</label>
+        <locationX>583</locationX>
+        <locationY>70</locationY>
+        <defaultConnector>
+            <targetReference>Retrieve_Business_Dossier</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_Search_Clicked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>cancelPressed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End</targetReference>
+            </connector>
+            <label>Cancel Search Clicked</label>
         </rules>
     </decisions>
     <description>Template you can use to create an account based on Company.info data. Use this for example in quick actions.</description>
@@ -120,10 +153,10 @@
     <subflows>
         <name>Organisation_Search_Flow</name>
         <label>Organisation Search Flow</label>
-        <locationX>217</locationX>
-        <locationY>48</locationY>
+        <locationX>442</locationX>
+        <locationY>69</locationY>
         <connector>
-            <targetReference>Retrieve_Business_Dossier</targetReference>
+            <targetReference>Was_Cancel_Button_On_Search_Screen_Clicked</targetReference>
         </connector>
         <flowName>Organisation_Search_Flow</flowName>
         <outputAssignments>
@@ -142,8 +175,8 @@
     <subflows>
         <name>Retrieve_Business_Dossier</name>
         <label>Retrieve Business Dossier</label>
-        <locationX>384</locationX>
-        <locationY>47</locationY>
+        <locationX>732</locationX>
+        <locationY>115</locationY>
         <connector>
             <targetReference>Cancel_Pressed</targetReference>
         </connector>
@@ -168,8 +201,8 @@
     <subflows>
         <name>Upsert_Business_Dossier_to_Account</name>
         <label>Upsert Business Dossier to Account</label>
-        <locationX>1410</locationX>
-        <locationY>357</locationY>
+        <locationX>1636</locationX>
+        <locationY>422</locationY>
         <connector>
             <targetReference>End</targetReference>
         </connector>
@@ -184,6 +217,12 @@
             <name>CompleteBusinessDossier</name>
             <value>
                 <elementReference>CompleteBusinessDossier</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ShowCreateDuplicateButton</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
     </subflows>

@@ -4,7 +4,7 @@
         <description>An end point for the flow. Actions/screens that need to have fault error handling and that are at the end of the flow, can use this for the &apos;normal&apos; end flow.</description>
         <name>End</name>
         <label>End</label>
-        <locationX>1503</locationX>
+        <locationX>1719</locationX>
         <locationY>1201</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
@@ -12,7 +12,7 @@
     <actionCalls>
         <name>Search_for_Credit_Safe_Dossiers</name>
         <label>Search for Credit Safe Dossiers</label>
-        <locationX>400</locationX>
+        <locationX>616</locationX>
         <locationY>689</locationY>
         <actionName>SearchForCreditSafeDossiersInvocable</actionName>
         <actionType>apex</actionType>
@@ -92,13 +92,12 @@
             <assignToReference>Found_CreditSafe_Reports</assignToReference>
             <name>output</name>
         </outputParameters>
-        <storeOutputAutomatically>false</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
         <description>Searches for Dutch dossiers in the Dutch Chamber of Commerce</description>
         <name>Search_for_Dutch_Dossiers</name>
         <label>Search for Dutch Dossiers</label>
-        <locationX>881</locationX>
+        <locationX>1097</locationX>
         <locationY>961</locationY>
         <actionName>SearchForDutchDossiersInvocable</actionName>
         <actionType>apex</actionType>
@@ -174,7 +173,7 @@
         <description>Assigns the country selected in the search screen to a list</description>
         <name>Assign_Selected_Country_to_List</name>
         <label>Assign Selected Country to List</label>
-        <locationX>577</locationX>
+        <locationX>793</locationX>
         <locationY>697</locationY>
         <assignmentItems>
             <assignToReference>Countries</assignToReference>
@@ -190,8 +189,8 @@
     <assignments>
         <name>Assign_Source</name>
         <label>Assign Source</label>
-        <locationX>521</locationX>
-        <locationY>1198</locationY>
+        <locationX>707</locationX>
+        <locationY>1082</locationY>
         <assignmentItems>
             <assignToReference>SearchSource</assignToReference>
             <operator>Assign</operator>
@@ -206,7 +205,7 @@
     <assignments>
         <name>Count_Dossier_Lists</name>
         <label>Count Dossier Lists</label>
-        <locationX>727</locationX>
+        <locationX>943</locationX>
         <locationY>624</locationY>
         <assignmentItems>
             <assignToReference>DossiersByCompanyIDCount</assignToReference>
@@ -271,7 +270,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Company_ID</name>
         <label>Dossiers Filtered By Company ID</label>
-        <locationX>379</locationX>
+        <locationX>595</locationX>
         <locationY>443</locationY>
         <assignmentItems>
             <assignToReference>DossiersByCompanyID</assignToReference>
@@ -287,7 +286,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Registration_type_Street_City_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Registration_type, Street, City, Postalcode</label>
-        <locationX>824</locationX>
+        <locationX>1040</locationX>
         <locationY>187</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusRegistration_typeStreetCityPostalcode</assignToReference>
@@ -303,7 +302,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Street_City_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Street, City, Postalcode</label>
-        <locationX>358</locationX>
+        <locationX>574</locationX>
         <locationY>195</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusStreetCityPostalcode</assignToReference>
@@ -319,7 +318,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Name_Status_Street_City_Province_Postalcode</name>
         <label>Dossiers Filtered By Name, Status, Street, City, Province, Postalcode</label>
-        <locationX>832</locationX>
+        <locationX>1048</locationX>
         <locationY>453</locationY>
         <assignmentItems>
             <assignToReference>DossiersByNameStatusStreetCityProvincePostalcode</assignToReference>
@@ -335,7 +334,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_Number</name>
         <label>Dossiers Filtered By Registration Number</label>
-        <locationX>363</locationX>
+        <locationX>579</locationX>
         <locationY>324</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistrationNumber</assignToReference>
@@ -351,7 +350,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_Number_Registration_Type_City</name>
         <label>Dossiers Filtered By Registration_Number, Registration_Type, City</label>
-        <locationX>660</locationX>
+        <locationX>876</locationX>
         <locationY>50</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistration_NumberRegistration_TypeCity</assignToReference>
@@ -367,7 +366,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Registration_number_Status_Postalcode</name>
         <label>Dossiers Filtered By Registration_number, Status, Postalcode</label>
-        <locationX>830</locationX>
+        <locationX>1046</locationX>
         <locationY>309</locationY>
         <assignmentItems>
             <assignToReference>DossiersByRegistration_numberStatusPostalcode</assignToReference>
@@ -383,7 +382,7 @@
     <assignments>
         <name>Dossiers_Filtered_By_Vat_Number</name>
         <label>Dossiers Filtered By Vat Number</label>
-        <locationX>506</locationX>
+        <locationX>722</locationX>
         <locationY>97</locationY>
         <assignmentItems>
             <assignToReference>DossiersByVatNumber</assignToReference>
@@ -397,10 +396,35 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Cancel_Clicked</name>
+        <label>Cancel Clicked</label>
+        <locationX>685</locationX>
+        <locationY>1232</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Source</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Cancel_Was_Clicked</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>cancelPressed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End</targetReference>
+            </connector>
+            <label>Cancel Was Clicked</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Directs the flow to the right search invocable method based on the data source selected in the search screen (which data source is selected, is determined by the country and the configuration)</description>
         <name>Data_source_selected</name>
         <label>Data source selected</label>
-        <locationX>670</locationX>
+        <locationX>886</locationX>
         <locationY>1200</locationY>
         <defaultConnector>
             <targetReference>End</targetReference>
@@ -470,7 +494,7 @@
     <decisions>
         <name>Filter_Search_Results</name>
         <label>Filter Search Results</label>
-        <locationX>578</locationX>
+        <locationX>794</locationX>
         <locationY>340</locationY>
         <defaultConnector>
             <targetReference>Show_Credit_Safe_Search_Results</targetReference>
@@ -609,7 +633,7 @@
     <loops>
         <name>Separate_Search_Results</name>
         <label>Separate Search Results</label>
-        <locationX>583</locationX>
+        <locationX>799</locationX>
         <locationY>553</locationY>
         <assignNextValueToReference>LoopVariableBusinessDossier</assignNextValueToReference>
         <collectionReference>Found_CreditSafe_Reports</collectionReference>
@@ -638,7 +662,7 @@
     <screens>
         <name>Dutch_Dossiers_Search_Results</name>
         <label>Dutch Dossiers Search Results</label>
-        <locationX>1169</locationX>
+        <locationX>1385</locationX>
         <locationY>961</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -712,13 +736,13 @@
     <screens>
         <name>Search</name>
         <label>Enter Search Criteria</label>
-        <locationX>352</locationX>
-        <locationY>1190</locationY>
+        <locationX>516</locationX>
+        <locationY>1041</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Assign_Source</targetReference>
+            <targetReference>Cancel_Clicked</targetReference>
         </connector>
         <fields>
             <name>flowErrorHandlerSearchScreen</name>
@@ -885,7 +909,7 @@
     <screens>
         <name>Show_Credit_Safe_Search_Results</name>
         <label>Show Credit Safe Search Results</label>
-        <locationX>1412</locationX>
+        <locationX>1628</locationX>
         <locationY>616</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1218,8 +1242,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>49</locationX>
-        <locationY>1187</locationY>
+        <locationX>50</locationX>
+        <locationY>1022</locationY>
         <connector>
             <targetReference>Search</targetReference>
         </connector>
@@ -1465,6 +1489,14 @@
         <scale>2</scale>
     </variables>
     <variables>
+        <name>Found_CreditSafe_Reports</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
+    <variables>
         <name>foundBusinessDossiers</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -1685,14 +1717,6 @@
         <isCollection>true</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>Found_CreditSafe_Reports</name>
-        <dataType>SObject</dataType>
-        <isCollection>true</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
         <name>ZeroCount</name>
