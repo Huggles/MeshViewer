@@ -1781,4 +1781,20 @@
         <shortDescription>Message when the user has no access.</shortDescription>
         <value>You do not have access to this resource.</value>
     </labels>
+    <labels>
+        <fullName>Create_Contact_permission</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Contact permission</shortDescription>
+        <value>Company_info_for_Sales</value>
+    </labels>
+    <labels>
+        <fullName>Contact_record_created</fullName>
+        <categories>Data Source</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Contact record created</shortDescription>
+        <value>Contact record successfully created.</value>
+    </labels>
 </CustomLabels>
