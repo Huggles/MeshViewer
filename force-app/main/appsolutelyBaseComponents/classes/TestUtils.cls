@@ -101,5 +101,15 @@ public inherited sharing class TestUtils {
         return testUser;
     }
 
+    /**
+    * returns a Standard User with the Company.info SEPA permissionset
+    */
+    @TestVisible
+    private static User getSEPAUser() {
+        User testUser = TestUtils.getUniqueUser('Standard User');
+        TestUtils.giveUserPermissionSet('Company_info_SEPA', testUser);
+        return testUser;
+    }
+
 }
 
