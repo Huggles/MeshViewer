@@ -174,7 +174,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selected_country_is_empty</targetReference>
+                <targetReference>Unlink_Business_Dossier_from_Account</targetReference>
             </connector>
             <label>Search Again Is Clicked</label>
         </rules>
@@ -296,8 +296,8 @@
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>390</locationX>
-        <locationY>266</locationY>
+        <locationX>391</locationX>
+        <locationY>123</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Business_Dossier_Set</targetReference>
@@ -313,6 +313,26 @@
         <object>Account</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Unlink_Business_Dossier_from_Account</name>
+        <label>Unlink Business Dossier from Account</label>
+        <locationX>781</locationX>
+        <locationY>426</locationY>
+        <connector>
+            <targetReference>Selected_country_is_empty</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Account.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Business_Dossier__c</field>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
     <screens>
         <name>Show_Buisness_Dossier</name>
         <label>Show Buisness Dossier</label>
@@ -387,8 +407,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>267</locationY>
+        <locationX>23</locationX>
+        <locationY>104</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
