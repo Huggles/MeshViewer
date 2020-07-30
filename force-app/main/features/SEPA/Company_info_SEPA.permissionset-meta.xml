@@ -4,7 +4,7 @@
         <enabled>true</enabled>
         <name>SEPA</name>
     </customPermissions>
-    <description>DO NOT ASSIGN TO A USER IF YOU DO NOT HAVE THE CORRECT CONTRACT SIGNED WITH COMPANY.INFO</description>
+    <description>DO NOT ASSIGN TO A USER IF YOU DO NOT HAVE THE SEPA CONTRACT SIGNED WITH COMPANY.INFO</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Company.info SEPA</label>
 </PermissionSet>
