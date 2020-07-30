@@ -501,7 +501,7 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
                             sbiCodesDB.add(
                                     new Business_Data_SBI__c(
                                             SBI_Code__c = sbiCodeCompanyInfo.sbi_code,
-                                            SBI_Type__c = 'original',
+                                            SBI_Type__c = 'company_info',
                                             SBI_Description__c = sbiCodeCompanyInfo.description));
                         }
                     }
