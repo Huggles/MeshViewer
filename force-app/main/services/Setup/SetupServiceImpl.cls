@@ -145,7 +145,6 @@ public with sharing class SetupServiceImpl implements ISetupService {
     public Id setUpdateTypeCron(String cronExpression){
         String updateTypeAPIName = String.valueOf(Protected_Subscriber_Setting__mdt.getSObjectType());
         String namespacePrefix = GetNameSpace.getCustomMetadataNameSpace(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME, updateTypeAPIName) + '__';
-
         Metadata.DeployContainer mdContainer = new Metadata.DeployContainer();
 
         // record
@@ -175,7 +174,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
     public inherited sharing class SetUpdateCronExpressionCallback implements Metadata.DeployCallback {
         public void handleResult(Metadata.DeployResult result, Metadata.DeployCallbackContext context) {
             if (result.status == Metadata.DeployStatus.Succeeded) {
-                String newCronValue = [SELECT Value__c FROM Setting__mdt WHERE DeveloperName = :UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME LIMIT 1].Value__c;
+                String newCronValue = [SELECT Value__c FROM Protected_Subscriber_Setting__mdt WHERE DeveloperName = :UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME LIMIT 1].Value__c;
                 SetupService.scheduleCronJob(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL, new UpdateDossierBatchScheduler() , newCronValue );
             } else {
                 CustomException ex = new CustomException('Custom Metadata Deployment with job id ' + context.getCallbackJobId() + ' failed.');

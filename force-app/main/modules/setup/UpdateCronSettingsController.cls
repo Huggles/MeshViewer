@@ -6,7 +6,7 @@ public with sharing class UpdateCronSettingsController {
     @AuraEnabled
     public static String getUpdateCronExpression(){
         try {
-            return SettingUtils.getSetting(SetupServiceImpl.UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+            return SettingUtils.getProtectedSetting(SetupServiceImpl.UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         }catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         }

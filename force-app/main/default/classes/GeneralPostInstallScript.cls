@@ -32,9 +32,9 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
 
     public void execute(InstallContext context) {
         //get the schedule for the update/remove batches for dutch dossier
-        String updateCronExpression = SettingUtils.getSetting(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
-        String removeBatchScheduleCronExpression = SettingUtils.getSetting(REMOVED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
-        String compliancyCheckScheduleCronExpression = SettingUtils.getSetting(COMPLIANCY_CHECK_SCHEDULE_CRON_SETTING_NAME);
+        String updateCronExpression = SettingUtils.getProtectedSetting(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String removeBatchScheduleCronExpression = SettingUtils.getProtectedSetting(REMOVED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+        String compliancyCheckScheduleCronExpression = SettingUtils.getProtectedSetting(COMPLIANCY_CHECK_SCHEDULE_CRON_SETTING_NAME);
         // schedule the batches
         schedule(PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
         schedule(PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);

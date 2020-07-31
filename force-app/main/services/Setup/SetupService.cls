@@ -35,9 +35,6 @@ public inherited sharing class SetupService {
     public static List<CronTrigger> getScheduledCronJob(String scheduleName){
         return newInstance().getScheduledCronJob(scheduleName);
     }
-
-
-
     public static ISetupService newInstance() {
         return (ISetupService) Application.Service.newInstance(ISetupService.class);
     }
