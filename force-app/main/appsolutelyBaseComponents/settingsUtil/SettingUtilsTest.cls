@@ -36,4 +36,19 @@ private class SettingUtilsTest {
         // then
         System.assert(!String.isEmpty(value));
     }
+
+    @IsTest
+    static void testGetProtectedSettingsHappyFlow() {
+        // given
+        // an existing setting (from the ErrorLogUtil functionality)
+        String settingName = SetupServiceImpl.UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME;
+
+        // when
+        Test.startTest();
+        String value = SettingUtils.getProtectedSetting(settingName);
+        Test.stopTest();
+
+        // then
+        System.assert(!String.isEmpty(value));
+    }
 }
