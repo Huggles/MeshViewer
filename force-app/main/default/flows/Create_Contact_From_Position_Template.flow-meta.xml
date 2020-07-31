@@ -53,11 +53,6 @@
         </rules>
     </decisions>
     <formulas>
-        <name>permissionName</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__create_contact_permission}</expression>
-    </formulas>
-    <formulas>
         <name>SuccessMessage</name>
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__contact_record_created}</expression>
