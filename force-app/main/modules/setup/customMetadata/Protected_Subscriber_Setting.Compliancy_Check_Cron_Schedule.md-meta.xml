@@ -3,6 +3,18 @@
     <label>Compliancy Check Cron Schedule</label>
     <protected>true</protected>
     <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Record is to update subscriber cron settings</value>
+    </values>
+    <values>
+        <field>Enabled__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>External_Id__c</field>
+        <value xsi:type="xsd:string">Compliancy_Check_Cron_Schedule</value>
+    </values>
+    <values>
         <field>Value__c</field>
         <value xsi:type="xsd:string">0 0 0 * * ?</value>
     </values>
