@@ -53,11 +53,6 @@
         </rules>
     </decisions>
     <formulas>
-        <name>permissionName</name>
-        <dataType>String</dataType>
-        <expression>{!$Label.appsolutely__create_contact_permission}</expression>
-    </formulas>
-    <formulas>
         <name>SuccessMessage</name>
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__contact_record_created}</expression>
@@ -67,8 +62,9 @@
         <dataType>String</dataType>
         <expression>{!$Label.appsolutely__success}</expression>
     </formulas>
-    <interviewLabel>CreateContactFromPositionTemplate {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CreateContactFromPositionTemplate</label>
+    <interviewLabel>Create Contact From Position Template {!$Flow.CurrentDateTime}</interviewLabel>
+    <isTemplate>true</isTemplate>
+    <label>Create Contact From Position Template</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -219,7 +215,7 @@
         <inputAssignments>
             <name>PermissionSetName</name>
             <value>
-                <elementReference>permissionName</elementReference>
+                <stringValue>Company_info_for_Sales</stringValue>
             </value>
         </inputAssignments>
         <outputAssignments>
