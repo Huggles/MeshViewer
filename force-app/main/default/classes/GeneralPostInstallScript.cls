@@ -2,7 +2,7 @@
  * Created by tejaswinidandi on 21/01/2020.
  */
 
-public without sharing class GeneralPostInstallScript implements IInstallAction {
+public inherited sharing class GeneralPostInstallScript implements IInstallAction {
 
     private final static String UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Update_Dutch_Dossier_Batch_Cron_Schedule';
     private final static String REMOVED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Remove_Dutch_Dossier_Batch_Cron_Schedule';
