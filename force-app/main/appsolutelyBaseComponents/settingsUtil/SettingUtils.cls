@@ -13,7 +13,7 @@ public inherited sharing class SettingUtils {
     */
     public static String getSetting(String settingName) {
         try {
-            String value = ([SELECT Value__c FROM Setting__mdt WHERE DeveloperName = :settingName LIMIT 1]).Value__c;
+            String value = ([SELECT Value__c FROM Protected_Subscriber_Setting__mdt WHERE DeveloperName = :settingName LIMIT 1]).Value__c;
             return value;
         } catch (Exception ex) {
             ErrorLogUtil.logException(ex);
