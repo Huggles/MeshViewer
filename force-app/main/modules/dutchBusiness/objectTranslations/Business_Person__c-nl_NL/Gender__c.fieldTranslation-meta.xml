@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Geslacht</label>
+    <name>Gender__c</name>
+    <picklistValues>
+        <masterLabel>f</masterLabel>
+        <translation><!-- f --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>m</masterLabel>
+        <translation><!-- m --></translation>
+    </picklistValues>
+</CustomFieldTranslation>
