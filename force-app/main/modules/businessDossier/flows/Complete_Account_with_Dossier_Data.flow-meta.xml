@@ -29,7 +29,7 @@
         <inputParameters>
             <name>relatedAccount</name>
             <value>
-                <elementReference>Get_Account</elementReference>
+                <elementReference>OpenedAccount</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -47,7 +47,7 @@
         <locationX>1813</locationX>
         <locationY>307</locationY>
         <assignmentItems>
-            <assignToReference>Get_Account.Name</assignToReference>
+            <assignToReference>OpenedAccount.Name</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CreatedDossier.Name</elementReference>
@@ -61,10 +61,10 @@
         <description>Assign the values of the retrieved business dossier to the account.</description>
         <name>Assign_Account_Fields_Dutch_CoC</name>
         <label>Assign Account Fields Dutch CoC</label>
-        <locationX>1814</locationX>
-        <locationY>185</locationY>
+        <locationX>1815</locationX>
+        <locationY>158</locationY>
         <assignmentItems>
-            <assignToReference>Get_Account.Name</assignToReference>
+            <assignToReference>OpenedAccount.Name</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CreatedDossier.Name</elementReference>
@@ -80,7 +80,7 @@
         <locationX>925</locationX>
         <locationY>165</locationY>
         <assignmentItems>
-            <assignToReference>Get_Account.BillingCountry</assignToReference>
+            <assignToReference>OpenedAccount.BillingCountry</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>NL</stringValue>
@@ -99,7 +99,7 @@
             <assignToReference>BusinessDossierRecordId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Account.Business_Dossier__c</elementReference>
+                <elementReference>OpenedAccount.Business_Dossier__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -142,7 +142,7 @@
             <name>Business_Dossier_Set_Outcome</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Account.Business_Dossier__c</leftValueReference>
+                <leftValueReference>OpenedAccount.Business_Dossier__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -174,7 +174,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Selected_country_is_empty</targetReference>
+                <targetReference>Unlink_Business_Dossier_from_Account</targetReference>
             </connector>
             <label>Search Again Is Clicked</label>
         </rules>
@@ -232,14 +232,14 @@
             <name>Selected_country_is_empty_outcome</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Account.BillingCountry</leftValueReference>
+                <leftValueReference>OpenedAccount.BillingCountry</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Account.BillingCountry</leftValueReference>
+                <leftValueReference>OpenedAccount.BillingCountry</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue/>
@@ -296,8 +296,8 @@
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>390</locationX>
-        <locationY>266</locationY>
+        <locationX>391</locationX>
+        <locationY>123</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Business_Dossier_Set</targetReference>
@@ -309,10 +309,37 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>OpenedAccount</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>BillingCity</queriedFields>
+        <queriedFields>BillingCountry</queriedFields>
+        <queriedFields>BillingStreet</queriedFields>
+        <queriedFields>BillingState</queriedFields>
+        <queriedFields>BillingPostalCode</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Business_Dossier__c</queriedFields>
     </recordLookups>
+    <recordUpdates>
+        <name>Unlink_Business_Dossier_from_Account</name>
+        <label>Unlink Business Dossier from Account</label>
+        <locationX>781</locationX>
+        <locationY>426</locationY>
+        <connector>
+            <targetReference>Selected_country_is_empty</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpenedAccount.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Business_Dossier__c</field>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
     <screens>
         <name>Show_Buisness_Dossier</name>
         <label>Show Buisness Dossier</label>
@@ -387,8 +414,8 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
-        <locationY>267</locationY>
+        <locationX>23</locationX>
+        <locationY>104</locationY>
         <connector>
             <targetReference>Get_Account</targetReference>
         </connector>
@@ -406,43 +433,43 @@
         <inputAssignments>
             <name>City</name>
             <value>
-                <elementReference>Get_Account.BillingCity</elementReference>
+                <elementReference>OpenedAccount.BillingCity</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>DomainName</name>
             <value>
-                <elementReference>Get_Account.Website</elementReference>
+                <elementReference>OpenedAccount.Website</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>PhoneNumber</name>
             <value>
-                <elementReference>Get_Account.Phone</elementReference>
+                <elementReference>OpenedAccount.Phone</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>PostalCode</name>
             <value>
-                <elementReference>Get_Account.BillingPostalCode</elementReference>
+                <elementReference>OpenedAccount.BillingPostalCode</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>SelectedCountry</name>
             <value>
-                <elementReference>Get_Account.BillingCountry</elementReference>
+                <elementReference>OpenedAccount.BillingCountry</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>Street</name>
             <value>
-                <elementReference>Get_Account.BillingStreet</elementReference>
+                <elementReference>OpenedAccount.BillingStreet</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>TradeName</name>
             <value>
-                <elementReference>Get_Account.Name</elementReference>
+                <elementReference>OpenedAccount.Name</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -467,8 +494,8 @@
     <subflows>
         <name>Retrieve_Business_Dossier</name>
         <label>Retrieve Business Dossier</label>
-        <locationX>1462</locationX>
-        <locationY>253</locationY>
+        <locationX>1459</locationX>
+        <locationY>257</locationY>
         <connector>
             <targetReference>What_is_the_Dossier_Source</targetReference>
         </connector>
@@ -544,6 +571,14 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>OpenedAccount</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
     </variables>
     <variables>
         <description>The record Id of the Account to complete</description>

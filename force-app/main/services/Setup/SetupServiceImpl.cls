@@ -31,7 +31,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
     public Data_source__mdt getSelectedDataSource(String countryCode) {
         List<Datasource_Per_Country__mdt> datasourcePerCountries = [
-                SELECT Data_source__c
+                SELECT Data_source_editable__c
                 FROM Datasource_Per_Country__mdt
                 WHERE Data_Source_Select_Record__c = TRUE AND ISO_3166_Entry__r.Alpha_2_Code__c = :countryCode];
         if (datasourcePerCountries != null && datasourcePerCountries.size() == 1) {
@@ -44,7 +44,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
                             MasterLabel,
                             NamespacePrefix,
                             QualifiedApiName
-                    FROM Data_source__mdt WHERE Id = :datasourcePerCountries.get(0).Data_source__c];
+                    FROM Data_source__mdt WHERE Id = :datasourcePerCountries.get(0).Data_source_editable__c];
             return dataSource;
         } else {
             throw new InputException('Found no or too many data sources selected for country code ' + countryCode);
@@ -56,7 +56,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
                 SELECT
                         Data_source__r.Label,
                         Data_source__r.DeveloperName,
-                        Data_source__c,
+                        Data_source_editable__c,
                         Data_Source_Select_Record__c,
                         ISO_3166_Entry__c,
                         ISO_3166_Entry__r.Alpha_2_Code__c,
@@ -82,6 +82,8 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
             Boolean checked = Boolean.valueOf(mdRecord.get('checked'));
             String developerName = String.valueOf(mdRecord.get('developerName')); //RecordName = DeveloperName
+            String developerNameSpace = GetNameSpace.getNameSpace(developerName,'CustomMetadata',updateTypeAPIName);
+            developerName = (developerNameSpace != null) ? developerNameSpace+ '__' + developerName  : developerName;
             String masterLabel = String.valueOf(mdRecord.get('label'));
 
             if(checked == null || developerName == null || masterLabel == null){
@@ -130,7 +132,7 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
             Datasource_Per_Country__mdt datasourcePerCountry = new Datasource_Per_Country__mdt();
             datasourcePerCountry.Data_Source_Select_Record__c = true;
-            datasourcePerCountry.Data_source__c = dataSourceId;
+            datasourcePerCountry.Data_source_editable__c = dataSourceId;
             datasourcePerCountry.ISO_3166_Entry__c = countryId;
             datasourcePerCountry.DeveloperName = countryMasterLabel + DATA_SOURCE_API_NAME; // brittle but I don't see another solution
             datasourcePerCountry.MasterLabel = countryMasterLabel +' '+Label.Data_source_Label; // brittle once more
@@ -275,8 +277,8 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
             // data source field
             Metadata.CustomMetadataValue datasourceField = new Metadata.CustomMetadataValue();
-            datasourceField.field = String.valueOf(Datasource_Per_Country__mdt.Data_source__c);
-            Data_source__mdt dataSource = [SELECT QualifiedApiName FROM Data_source__mdt WHERE Id = :datasourcePerCountry.Data_source__c LIMIT 1];
+            datasourceField.field = String.valueOf(Datasource_Per_Country__mdt.Data_source_editable__c);
+            Data_source__mdt dataSource = [SELECT QualifiedApiName FROM Data_source__mdt WHERE Id = :datasourcePerCountry.Data_source_editable__c LIMIT 1];
             datasourceField.value = dataSource.QualifiedApiName;
             customMetadata.values.add(datasourceField);
 
