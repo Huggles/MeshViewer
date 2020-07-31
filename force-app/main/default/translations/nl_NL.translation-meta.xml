@@ -1209,10 +1209,6 @@
         </flows>
         <fullName>Business_Dossier_Manager</fullName>
     </flowDefinitions>
-    <flowDefinitions>
-        <flows/>
-        <fullName>CreateContactFromPositionTemplate</fullName>
-    </flowDefinitions>
     <quickActions>
         <label>Ophalen Creditsafe Rapport</label>
         <name>Get_Creditsafe_Report</name>
