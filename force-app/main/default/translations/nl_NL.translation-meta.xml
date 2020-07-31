@@ -1211,10 +1211,6 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows/>
-        <fullName>Create_Contact_From_Business_Position</fullName>
-    </flowDefinitions>
-    <flowDefinitions>
-        <flows/>
         <fullName>CreateContactFromPositionTemplate</fullName>
     </flowDefinitions>
     <quickActions>
