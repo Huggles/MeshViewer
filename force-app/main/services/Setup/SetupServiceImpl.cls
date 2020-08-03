@@ -6,14 +6,9 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
     static final String DATA_SOURCE_API_NAME = '_Selected_Data_Source';
 
-    @TestVisible
     public final static String UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Update_Dutch_Dossier_Batch_Cron_Schedule';
-    @TestVisible
     public final static String UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL = 'Update Dutch Dossier Batch Cron Schedule';
-
-    @TestVisible
     public final static String REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Remove_Dutch_Dossier_Batch_Cron_Schedule';
-    @TestVisible
     public final static String REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL = 'Remove Dutch Dossier Batch Cron Schedule';
 
     public inherited sharing class CustomMetadataCallback implements Metadata.DeployCallback {
