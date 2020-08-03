@@ -5,11 +5,11 @@
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <inlineHelpText>The data source that can be used to search for organisations for this country</inlineHelpText>
-    <label>Data source</label>
+    <label>Data source[DEPRECATED]</label>
     <referenceTo>Data_source__mdt</referenceTo>
     <relationshipLabel>Data source Per Countries</relationshipLabel>
     <relationshipName>Data_source_Per_Countries</relationshipName>
-    <required>true</required>
+    <required>false</required>
     <type>MetadataRelationship</type>
     <unique>false</unique>
 </CustomField>
