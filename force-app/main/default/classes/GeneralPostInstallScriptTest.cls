@@ -21,8 +21,7 @@ public with sharing class GeneralPostInstallScriptTest {
         // the batches should be scheduled
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_COMPLIANCY_CHECK];
+            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME];
         System.assert(cronTriggers.size() == 3);
     }
 
@@ -33,8 +32,7 @@ public with sharing class GeneralPostInstallScriptTest {
         (new GeneralPostInstallScript().execute(null));
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_COMPLIANCY_CHECK];
+            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME ];
         System.assert(cronTriggers.size() == 3);
 
         // when
@@ -48,8 +46,7 @@ public with sharing class GeneralPostInstallScriptTest {
         // new batches should be scheduled
         Map<Id, CronTrigger> cronTriggersToAssertById = new Map<Id, CronTrigger>([SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_COMPLIANCY_CHECK]);
+            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME]);
         System.assert(cronTriggersToAssertById.size() == 3);
         for (CronTrigger cronTrigger : cronTriggers) {
             System.assert(cronTriggersToAssertById.get(cronTrigger.Id) == null);
