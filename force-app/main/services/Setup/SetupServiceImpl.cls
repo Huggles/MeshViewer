@@ -5,8 +5,16 @@
 public with sharing class SetupServiceImpl implements ISetupService {
 
     static final String DATA_SOURCE_API_NAME = '_Selected_Data_Source';
-    public final static String UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Update_Dutch_Dossier_Batch_Cron_Schedule';
-    public final static String UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL = 'Update Dutch Dossier Batch Cron Schedule';
+
+    @TestVisible
+    public final static String UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Update_Dutch_Dossier_Batch_Cron_Schedule';
+    @TestVisible
+    public final static String UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL = 'Update Dutch Dossier Batch Cron Schedule';
+
+    @TestVisible
+    public final static String REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME = 'Remove_Dutch_Dossier_Batch_Cron_Schedule';
+    @TestVisible
+    public final static String REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL = 'Remove Dutch Dossier Batch Cron Schedule';
 
     public inherited sharing class CustomMetadataCallback implements Metadata.DeployCallback {
         public void handleResult(Metadata.DeployResult result, Metadata.DeployCallbackContext context) {
@@ -144,13 +152,13 @@ public with sharing class SetupServiceImpl implements ISetupService {
 
     public Id setUpdateTypeCron(String cronExpression){
         String updateTypeAPIName = String.valueOf(Protected_Subscriber_Setting__mdt.getSObjectType());
-        String namespacePrefix = GetNameSpace.getCustomMetadataNameSpace(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME, updateTypeAPIName) + '__';
+        String namespacePrefix = GetNameSpace.getCustomMetadataNameSpace(SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME, updateTypeAPIName) + '__';
         Metadata.DeployContainer mdContainer = new Metadata.DeployContainer();
 
         // record
         Metadata.CustomMetadata customMetadata = new Metadata.CustomMetadata();
-        customMetadata.fullName = updateTypeAPIName + '.' + namespacePrefix + UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME;
-        customMetadata.label = UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL;
+        customMetadata.fullName = updateTypeAPIName + '.' + namespacePrefix + SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME;
+        customMetadata.label = SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL;
 
         // value field
         Metadata.CustomMetadataValue valueField = new Metadata.CustomMetadataValue();
@@ -174,8 +182,8 @@ public with sharing class SetupServiceImpl implements ISetupService {
     public inherited sharing class SetUpdateCronExpressionCallback implements Metadata.DeployCallback {
         public void handleResult(Metadata.DeployResult result, Metadata.DeployCallbackContext context) {
             if (result.status == Metadata.DeployStatus.Succeeded) {
-                String newCronValue = [SELECT Value__c FROM Protected_Subscriber_Setting__mdt WHERE DeveloperName = :UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME LIMIT 1].Value__c;
-                SetupService.scheduleCronJob(UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL, new UpdateDossierBatchScheduler() , newCronValue );
+                String newCronValue = [SELECT Value__c FROM Protected_Subscriber_Setting__mdt WHERE DeveloperName = :SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME LIMIT 1].Value__c;
+                SetupService.scheduleCronJob(SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL, new UpdateDossierBatchScheduler() , newCronValue );
             } else {
                 CustomException ex = new CustomException('Custom Metadata Deployment with job id ' + context.getCallbackJobId() + ' failed.');
                 ErrorLogUtil.logException(ex, true);
