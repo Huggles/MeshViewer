@@ -19,12 +19,12 @@
             <targetReference>End</targetReference>
         </connector>
         <dataTypeMappings>
-            <typeName>T__businessDossier</typeName>
-            <typeValue>appsolutely__Business_Dossier__c</typeValue>
-        </dataTypeMappings>
-        <dataTypeMappings>
             <typeName>T__relatedAccount</typeName>
             <typeValue>Account</typeValue>
+        </dataTypeMappings>
+        <dataTypeMappings>
+            <typeName>T__businessDossier</typeName>
+            <typeValue>appsolutely__Business_Dossier__c</typeValue>
         </dataTypeMappings>
         <inputParameters>
             <name>relatedAccount</name>
@@ -319,6 +319,8 @@
         <queriedFields>BillingPostalCode</queriedFields>
         <queriedFields>Name</queriedFields>
         <queriedFields>Business_Dossier__c</queriedFields>
+        <queriedFields>Website</queriedFields>
+        <queriedFields>Phone</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>Unlink_Business_Dossier_from_Account</name>
