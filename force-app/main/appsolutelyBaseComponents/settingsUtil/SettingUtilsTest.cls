@@ -41,7 +41,7 @@ private class SettingUtilsTest {
     static void testGetProtectedSettingsHappyFlow() {
         // given
         // an existing setting (from the ErrorLogUtil functionality)
-        String settingName = SetupServiceImpl.UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME;
+        String settingName = SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME;
 
         // when
         Test.startTest();
