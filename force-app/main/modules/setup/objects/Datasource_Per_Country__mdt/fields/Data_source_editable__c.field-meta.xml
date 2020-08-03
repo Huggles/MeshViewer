@@ -4,7 +4,7 @@
     <description>Created to enable subscriber to edit the field</description>
     <externalId>false</externalId>
     <fieldManageability>SubscriberControlled</fieldManageability>
-    <label>Data source editable</label>
+    <label>Data source</label>
     <referenceTo>Data_source__mdt</referenceTo>
     <relationshipLabel>Data source Per Countries (Data source editable)</relationshipLabel>
     <relationshipName>Data_source_Per_Countries2</relationshipName>
