@@ -22,7 +22,7 @@ public with sharing class GeneralPostInstallScriptTest {
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME];
-        System.assert(cronTriggers.size() == 3);
+        System.assert(cronTriggers.size() == 2);
     }
 
     @IsTest
@@ -33,7 +33,7 @@ public with sharing class GeneralPostInstallScriptTest {
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME ];
-        System.assert(cronTriggers.size() == 3);
+        System.assert(cronTriggers.size() == 2);
 
         // when
         // the postinstallscript runs
@@ -47,7 +47,7 @@ public with sharing class GeneralPostInstallScriptTest {
         Map<Id, CronTrigger> cronTriggersToAssertById = new Map<Id, CronTrigger>([SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
             CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME]);
-        System.assert(cronTriggersToAssertById.size() == 3);
+        System.assert(cronTriggersToAssertById.size() == 2);
         for (CronTrigger cronTrigger : cronTriggers) {
             System.assert(cronTriggersToAssertById.get(cronTrigger.Id) == null);
         }
