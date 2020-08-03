@@ -5,14 +5,21 @@ orbs:
 
 commands:
   log_into_devhub:
+    description: logs in into the devhub using the sfdx url in the given file
+    parameters:
+      sfdx_url_file:
+        description: the relative path to the file containing the sfdx url
+        default: .circleci/dev_hub_sfdx_url.txt
+        type: string
     steps:
       - run:
           name: login into devhub
           command: |
-            mkdir keys
-            echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
-            openssl rsa -in keys/hub.key -check -noout
-            sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
+#            mkdir keys
+#            echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
+#            openssl rsa -in keys/hub.key -check -noout
+#            sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
+            sfdx force:auth:sfdxurl:store -f << parameters.sfdx_url_file >> -d -a hub
   create_user:
     description: "creates a user and stores the credentials and login in a file. Assumes the user is logged in into a devhub"
     parameters:
