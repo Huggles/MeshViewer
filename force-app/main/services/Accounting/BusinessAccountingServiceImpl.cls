@@ -20,6 +20,9 @@ public inherited sharing class BusinessAccountingServiceImpl implements IBusines
 //        }
 //        set;
 //    }
+    private final static String COMPLIANCY_CHECK_SCHEDULE_CRON_SETTING_NAME = 'Compliancy_Check_Cron_Schedule';
+    @TestVisible
+    private final static String PROCESS_COMPLIANCY_CHECK = 'Check license compliancy';
 
     public void saveDataUserCredentials(String username, String password) {
         try {
@@ -30,6 +33,7 @@ public inherited sharing class BusinessAccountingServiceImpl implements IBusines
             cs.Username__c = username;
             cs.Password__c = password;
             upsert cs;
+            scheduleComplianceBatch();
         } catch (CCException ex) {
             // just rethrow it, has been handled already
             throw ex;
@@ -51,6 +55,11 @@ public inherited sharing class BusinessAccountingServiceImpl implements IBusines
 //            throw new CCUserNotFoundException(Label.Error_user_not_found);
 //        }
 
+    }
+
+    public void scheduleComplianceBatch() {
+        String compliancyCheckScheduleCronExpression = SettingUtils.getProtectedSetting(COMPLIANCY_CHECK_SCHEDULE_CRON_SETTING_NAME);
+        SetupService.scheduleCronJob(PROCESS_COMPLIANCY_CHECK,new EnforceLicensesSchedulable(),compliancyCheckScheduleCronExpression);
     }
 
     public Credentials__c getCredentials(){
