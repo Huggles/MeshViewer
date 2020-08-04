@@ -15,13 +15,10 @@ commands:
       - run:
           name: login into devhub
           command: |
-#            mkdir keys
-#            echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
-#            openssl rsa -in keys/hub.key -check -noout
-#            sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
             sfdx force:auth:sfdxurl:store -f << parameters.sfdx_url_file >> -d -a hub
+
   create_user:
-    description: "creates a user and stores the credentials and login in a file. Assumes the user is logged in into a devhub"
+    description: creates a user and stores the credentials and login in a file. Assumes the user is logged in into a default dev hub
     parameters:
       org_username:
         description: the username or alias of the org to create users for
@@ -47,16 +44,69 @@ commands:
       - store_artifacts:
           path: << parameters.output_file_name >>
 
+  setup_github:
+    description: sets everything up so a commit to github can take place.
+    parameters:
+      username:
+        description: github username
+        type: string
+        default: CircleCI
+      email:
+        description: github email. Must be of a github user
+        type: string
+        default: jaap.branderhorst@appsolutely.nl
+      fingerprint:
+        description: the fingerprint of the SSH key. The key should have write access to github
+        type: string
+        default: << pipeline.parameters.github.fingerprint >>
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "<< parameters.fingerprint >>"
+      - run:
+          name: setup github
+          command: |
+            git config user.email "<< parameters.email >>"
+            git config user.name "<< parameters.username >>"
+
+  create_package_version:
+    description: creates a new package version and tags it in github. Assumes the user is logged in into a default dev hub against which the namespace of the package is registered. Assumes the definition file is defined in the sfdx-project.json. Assumes a github ssh key has been added in the job calling this command
+    parameters:
+      package:
+        description: the package alias or package id for which a package version needs to be created
+        type: string
+      skipvalidation:
+        description: --skipvalidation if validation needs to be skipped when creating a new beta package. Otherwise empty (default)
+        default: ""
+        type: string
+      codecoverage:
+        description: -c if codecoverage is needed. Otherwise empty (default)
+        default: ""
+        type: string
+      wait:
+        description: the time to wait until the package create command returns in minutes.
+        default: 60
+        type: integer
+    steps:
+      - run:
+          name: create beta package version
+          no_output_timeout: 1.5h
+          command: |
+            packageversionid=$(sfdx force:package:version:create --package << parameters.package >> << parameters.codecoverage >> -x --wait << parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" --branch "$CIRCLE_BRANCH" << parameters.skipvalidation >> | jq -r .result.SubscriberPackageVersionId)
+            versionnumber=$(sfdx force:package:version:report --package $packageversionid --json | jq -r .result.Version)
+            setup_github
+            git tag -a $versionnumber -m "tagging version $versionnumber [ci skip]"
+            git push $versionnumber
 
 parameters:
   packageid:
     description: "The package id (starts with 0Ho). Copy it from the sfdx-project.json."
     type: string
     default: "0Ho0J000000k9bSSAQ"
-  package_version_tag:
-    description: "the package version’s tag"
+  github_fingerprint:
+    description: The fingerprint of the github ssh key to write to github. See https://blog.jdblischak.com/posts/circleci-ssh/ how to set this up.
     type: string
-    default: ""
+    default: 8a:d3:5b:00:d5:da:25:92:36:00:fe:49:85:15:69:48
   packaging_scratch_org_definition_file:
     description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
     type: string
