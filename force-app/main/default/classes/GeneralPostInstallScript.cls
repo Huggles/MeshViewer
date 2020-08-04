@@ -23,8 +23,8 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
         String updateCronExpression = SettingUtils.getProtectedSetting(SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         String removeBatchScheduleCronExpression = SettingUtils.getProtectedSetting(SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         // schedule the batches
-        schedule(SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
-        schedule(SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);
+        schedule(SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
+        schedule(SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);
     }
 
     private void schedule(String scheduleName, Schedulable schedulable, String cronExpression) {
@@ -37,7 +37,6 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
             } catch (Exception ex) { // sometimes this throws unexpected exceptions which can be ignored.
 
             }
-
         }
         try {
             System.schedule(scheduleName, cronExpression, schedulable);
