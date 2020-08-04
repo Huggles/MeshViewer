@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Toegestaan Maatschappelijk Kapitaal</label>
-    <name>Authorized_Share_Capital__c</name>
+    <label>Oprichtingsdatum Maand</label>
+    <name>Founding_Date_Month__c</name>
 </CustomFieldTranslation>
