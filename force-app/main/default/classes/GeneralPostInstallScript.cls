@@ -24,6 +24,6 @@ public without sharing class GeneralPostInstallScript implements IInstallAction 
         String removeBatchScheduleCronExpression = SettingUtils.getProtectedSetting(SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         // schedule the batches
         SetupService.scheduleCronJob(SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL, new BatchScheduler(new UpdateDossiersBatch(), 99), updateCronExpression);
-        SetupService.scheduleCronJob(SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL, new BatchScheduler(new ProcessRemovedDutchDossiersBatch(), 200), removeBatchScheduleCronExpression);
+        SetupService.scheduleCronJob(SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL, new BatchScheduler(new UpdateDossiersBatch(), 200), removeBatchScheduleCronExpression);
     }
 }
