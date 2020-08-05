@@ -8,7 +8,7 @@ parameters:
   github_fingerprint:
     description: The fingerprint of the github ssh key to write to github. See https://blog.jdblischak.com/posts/circleci-ssh/ how to set this up.
     type: string
-    default: 8a:d3:5b:00:d5:da:25:92:36:00:fe:49:85:15:69:48
+    default: 56:3b:36:83:24:ff:15:75:9c:f5:1b:ac:7a:2a:7f:12
   packaging_scratch_org_definition_file:
     description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
     type: string
@@ -342,7 +342,18 @@ jobs:
       - store_artifacts:
           path: sfdx_log.tar
           destination: sfdx-log
-
+  test_github:
+    docker:
+      - image: appsolutely/sfdx_circleci_container:latest
+      resource_class: small
+      steps:
+        - checkout
+        - setup_github
+        - run:
+            command: |
+              tag="${CIRCLE_BUILD_NUM}"
+              git tag -a $tag -m "tagging with ${tag} [skip ci]"
+              git push origin $tag
 
 # Orchestrate our job run sequence
 workflows:
@@ -354,14 +365,14 @@ workflows:
           filters:
             branches:
               only: /feature\/.*/
-  
+
   push_to_develop_branch:
     jobs:
       - run_apex_tests:
           context: org-global
           filters:
             branches:
-              only: 
+              only:
                 - develop
       - create_package_version:
           context: org-global
@@ -406,6 +417,14 @@ workflows:
           requires:
             - approve_release
 
+  test:
+    jobs:
+      - test_github
+        context: org-global
+        filters:
+          branches:
+            only:
+              - /test\/.*/
 
 
 
