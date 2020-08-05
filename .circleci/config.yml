@@ -345,15 +345,15 @@ jobs:
   test_github:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
-      resource_class: small
-      steps:
-        - checkout
-        - setup_github
-        - run:
-            command: |
-              tag="${CIRCLE_BUILD_NUM}"
-              git tag -a $tag -m "tagging with ${tag} [skip ci]"
-              git push origin $tag
+    resource_class: small
+    steps:
+      - checkout
+      - setup_github
+      - run:
+          command: |
+            tag="${CIRCLE_BUILD_NUM}"
+            git tag -a $tag -m "tagging with ${tag} [skip ci]"
+            git push origin $tag
 
 # Orchestrate our job run sequence
 workflows:
