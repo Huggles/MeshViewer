@@ -181,10 +181,10 @@ jobs:
             versionname=$(echo $versioninfo | jq -r .Name)
             versionnumber=$(echo $versioninfo | jq -r .Version)
             tag="${versionname} (${versionnumber})"
-            git add -all
+            git add --all
             git commit -m "updating sfdx-project.json [skip ci]"
             git push origin
-            git tag -a $tag -m "tagging with ${tag}s [skip ci]"
+            git tag -a $tag -m "tagging with ${tag} [skip ci]"
             git push origin $tag
       - store_artifacts:
           path: metadata.tar
