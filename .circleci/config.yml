@@ -82,11 +82,11 @@ commands:
       fingerprint:
         description: the fingerprint of the SSH key. The key should have write access to github
         type: string
-        default: << pipeline.parameters.github.fingerprint >>
+        default: << pipeline.parameters.github_fingerprint >>
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "<< parameters.fingerprint >>"
+            - << parameters.fingerprint >>
       - run:
           name: setup github
           command: |
@@ -404,18 +404,18 @@ workflows:
           context: org-global
           requires:
             - create_package_version
-      - approve_upgrade_to_managed:
+      - approve_package_promotion:
           type: approval
           requires:
             - setup_test_org
-      - upgrade_to_managed:
+      - promote_and_test_upgrade:
           context: org-global
           requires:
-            - approve_upgrade_to_managed
-      - approve_release
+            - approve_package_promotion
+      - approve_release:
           type: approval
           requires:
-            - upgrade_to_managed
+            - promote_and_test_upgrade
       - release:
           context: org-global
           requires:
