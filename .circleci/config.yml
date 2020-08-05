@@ -84,9 +84,9 @@ commands:
         type: string
         default: << pipeline.parameters.github_fingerprint >>
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "<< parameters.fingerprint >>"
+      - add_ssh_keys
+#          fingerprints:
+#            - "<< parameters.fingerprint >>"
       - run:
           name: setup github
           command: |
@@ -352,6 +352,7 @@ jobs:
       - setup_github
       - run:
           command: |
+            ssh-add -l
             tag="${CIRCLE_BUILD_NUM}"
             git tag -a $tag -m "tagging with ${tag} [skip ci]"
             git push origin $tag
