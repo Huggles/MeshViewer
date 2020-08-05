@@ -2,13 +2,17 @@ version: 2.1
 
 parameters:
   packageid:
-    description: "The package id (starts with 0Ho). Copy it from the sfdx-project.json."
+    description: The package id (starts with 0Ho). Copy it from the sfdx-project.json.
     type: string
-    default: "0Ho0J000000k9bSSAQ"
-  github_fingerprint:
-    description: The fingerprint of the github ssh key to write to github. See https://blog.jdblischak.com/posts/circleci-ssh/ how to set this up.
+    default: 0Ho0J000000k9bSSAQ
+  github_username:
+    description: A potentially fake github username to use to write to the repo. You authenticate through the user key for the project so this is purely used to show who pushes to github.
     type: string
-    default: 8a:d3:5b:00:d5:da:25:92:36:00:fe:49:85:15:69:48
+    default: CircleCI
+  github_email:
+    description: A potentially fake github email address to use to write to the repo. You authenticate through the user key for the project so this is purely used to show who pushes to github.
+    type: string
+    default: circleci@appsolutely.nl
   packaging_scratch_org_definition_file:
     description: "the scratch org definition file used to build the package version. Should define all the right org shape/dependencies/features needed for the package"
     type: string
@@ -74,24 +78,18 @@ commands:
       username:
         description: github username
         type: string
-        default: CircleCI
+        default: << pipeline.parameters.github_username >>
       email:
         description: github email. Must be of a github user
         type: string
-        default: jaap.branderhorst@appsolutely.nl
-      fingerprint:
-        description: the fingerprint of the SSH key. The key should have write access to github
-        type: string
-        default: << pipeline.parameters.github_fingerprint >>
+        default: << pipeline.parameters.github_email >>
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - << parameters.fingerprint >>
       - run:
           name: setup github
           command: |
             git config user.email "<< parameters.email >>"
             git config user.name "<< parameters.username >>"
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
 # Define the jobs we want to run for this project
 jobs:
@@ -342,7 +340,20 @@ jobs:
       - store_artifacts:
           path: sfdx_log.tar
           destination: sfdx-log
-
+# TEST JOB: DON'T USE IN NORMAL FLOWS
+  test_github:
+    docker:
+      - image: appsolutely/sfdx_circleci_container:latest
+    resource_class: small
+    steps:
+      - checkout
+      - setup_github
+      - run:
+          command: |
+            ssh-add -l
+            tag="${CIRCLE_BUILD_NUM}"
+            git tag -a $tag -m "tagging with ${tag} [skip ci]"
+            git push origin $tag
 
 # Orchestrate our job run sequence
 workflows:
@@ -354,14 +365,14 @@ workflows:
           filters:
             branches:
               only: /feature\/.*/
-  
+
   push_to_develop_branch:
     jobs:
       - run_apex_tests:
           context: org-global
           filters:
             branches:
-              only: 
+              only:
                 - develop
       - create_package_version:
           context: org-global
@@ -406,6 +417,14 @@ workflows:
           requires:
             - approve_release
 
+  test:
+    jobs:
+      - test_github:
+          context: org-global
+          filters:
+            branches:
+              only:
+                - /test\/.*/
 
 
 
