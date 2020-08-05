@@ -1,103 +1,5 @@
 version: 2.1
 
-orbs:
-  slack: circleci/slack@3.4.2
-
-commands:
-  log_into_devhub:
-    description: logs in into the devhub using the sfdx url in the given file
-    parameters:
-      sfdx_url_file:
-        description: the relative path to the file containing the sfdx url
-        default: .circleci/dev_hub_sfdx_url.txt
-        type: string
-    steps:
-      - run:
-          name: login into devhub
-          command: |
-            sfdx force:auth:sfdxurl:store -f << parameters.sfdx_url_file >> -d -a hub
-
-  create_user:
-    description: creates a user and stores the credentials and login in a file. Assumes the user is logged in into a default dev hub
-    parameters:
-      org_username:
-        description: the username or alias of the org to create users for
-        type: string
-      alias:
-        description: the alias to create
-        type: string
-      email:
-        description: the email address of the newly created user
-        type: string
-      path_to_user_definition:
-        description: the path to the user definition
-        type: string
-      output_file_name:
-        description: the file name to store the credentials of the created user
-        type: string
-    steps:
-      - run:
-          name: create user
-          command: |
-            sfdx force:user:create -u << parameters.org_username >> -a << parameters.alias >> -f << parameters.path_to_user_definition >> generatepassword=true email=<< parameters.email >>
-            sfdx force:org:display -u << parameters.alias >> --json | jq '{username: .result.username, password: .result.password, instanceUrl: .result.instanceUrl}' >> << parameters.output_file_name >>
-      - store_artifacts:
-          path: << parameters.output_file_name >>
-
-  setup_github:
-    description: sets everything up so a commit to github can take place.
-    parameters:
-      username:
-        description: github username
-        type: string
-        default: CircleCI
-      email:
-        description: github email. Must be of a github user
-        type: string
-        default: jaap.branderhorst@appsolutely.nl
-      fingerprint:
-        description: the fingerprint of the SSH key. The key should have write access to github
-        type: string
-        default: << pipeline.parameters.github.fingerprint >>
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "<< parameters.fingerprint >>"
-      - run:
-          name: setup github
-          command: |
-            git config user.email "<< parameters.email >>"
-            git config user.name "<< parameters.username >>"
-
-  create_package_version:
-    description: creates a new package version and tags it in github. Assumes the user is logged in into a default dev hub against which the namespace of the package is registered. Assumes the definition file is defined in the sfdx-project.json. Assumes a github ssh key has been added in the job calling this command
-    parameters:
-      package:
-        description: the package alias or package id for which a package version needs to be created
-        type: string
-      skipvalidation:
-        description: --skipvalidation if validation needs to be skipped when creating a new beta package. Otherwise empty (default)
-        default: ""
-        type: string
-      codecoverage:
-        description: -c if codecoverage is needed. Otherwise empty (default)
-        default: ""
-        type: string
-      wait:
-        description: the time to wait until the package create command returns in minutes.
-        default: 60
-        type: integer
-    steps:
-      - run:
-          name: create beta package version
-          no_output_timeout: 1.5h
-          command: |
-            packageversionid=$(sfdx force:package:version:create --package << parameters.package >> << parameters.codecoverage >> -x --wait << parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" --branch "$CIRCLE_BRANCH" << parameters.skipvalidation >> | jq -r .result.SubscriberPackageVersionId)
-            versionnumber=$(sfdx force:package:version:report --package $packageversionid --json | jq -r .result.Version)
-            setup_github
-            git tag -a $versionnumber -m "tagging version $versionnumber [ci skip]"
-            git push $versionnumber
-
 parameters:
   packageid:
     description: "The package id (starts with 0Ho). Copy it from the sfdx-project.json."
@@ -124,7 +26,74 @@ parameters:
     type: string
     default: "johan.van.den.hoek@appsolutely.nl"
 
+orbs:
+  slack: circleci/slack@3.4.2
 
+commands:
+  log_into_devhub:
+    description: logs in into the devhub using the sfdx url in the given file
+    parameters:
+      sfdx_url_file:
+        description: the relative path to the file containing the sfdx url
+        default: .circleci/dev_hub_sfdx_url.txt
+        type: string
+    steps:
+      - run:
+          name: login into devhub
+          command: |
+            sfdx force:auth:sfdxurl:store -f << parameters.sfdx_url_file >> -d -a hub
+  create_user:
+    description: creates a user and stores the credentials and login in a file. Assumes the user is logged in into a default dev hub
+    parameters:
+      org_username:
+        description: the username or alias of the org to create users for
+        type: string
+      alias:
+        description: the alias to create
+        type: string
+      email:
+        description: the email address of the newly created user
+        type: string
+      path_to_user_definition:
+        description: the path to the user definition
+        type: string
+      output_file_name:
+        description: the file name to store the credentials of the created user
+        type: string
+    steps:
+      - run:
+          name: create user
+          command: |
+            sfdx force:user:create -u << parameters.org_username >> -a << parameters.alias >> -f << parameters.path_to_user_definition >> generatepassword=true email=<< parameters.email >>
+            sfdx force:org:display -u << parameters.alias >> --json | jq '{username: .result.username, password: .result.password, instanceUrl: .result.instanceUrl}' >> << parameters.output_file_name >>
+      - store_artifacts:
+          path: << parameters.output_file_name >>
+  setup_github:
+    description: sets everything up so a commit to github can take place.
+    parameters:
+      username:
+        description: github username
+        type: string
+        default: CircleCI
+      email:
+        description: github email. Must be of a github user
+        type: string
+        default: jaap.branderhorst@appsolutely.nl
+      fingerprint:
+        description: the fingerprint of the SSH key. The key should have write access to github
+        type: string
+        default: << pipeline.parameters.github.fingerprint >>
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "<< parameters.fingerprint >>"
+      - run:
+          name: setup github
+          command: |
+            git config user.email "<< parameters.email >>"
+            git config user.name "<< parameters.username >>"
+
+# Define the jobs we want to run for this project
 jobs:
   run_apex_tests:
     description: Checks out the metadata, creates a new scratch org with the packaging scratch org def, pushes all metadata and runs all apex tests
@@ -174,18 +143,25 @@ jobs:
       - store_artifacts:
           path: sfdx_log.tar
           destination: sfdx-log
-  
-  create_beta:
-    description: checks out the metadata and creates a beta package
+  create_package_version:
+    description: checks out the metadata and creates a new package version and tags it in github. Assumes the user is logged in into a default dev hub against which the namespace of the package is registered. Assumes the definition file is defined in the sfdx-project.json.
     parameters:
+      package:
+        description: the package alias or package id for which a package version needs to be created
+        type: string
+        default: << pipeline.parameters.packageid >>
       skipvalidation:
-        description: "--skipvalidation if validation needs to be skipped when creating a new beta package. Otherwise empty (default)"
+        description: --skipvalidation if validation needs to be skipped when creating a new beta package. Otherwise empty (default)
         default: ""
         type: string
       codecoverage:
-        description: "-c if codecoverage is needed. Otherwise empty (default)"
+        description: -c if codecoverage is needed. Otherwise empty (default)
         default: ""
         type: string
+      wait:
+        description: the time to wait until the package create command returns in minutes.
+        default: 60
+        type: integer
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
@@ -196,19 +172,42 @@ jobs:
       - checkout
       - log_into_devhub
       - run:
-          name: create beta package version
+          name: create package version
           no_output_timeout: 1.5h
           command: |
-            sfdx force:package:version:create --package << pipeline.parameters.packageid >> << parameters.codecoverage >> -x -f << pipeline.parameters.packaging_scratch_org_definition_file >> --wait << pipeline.parameters.build_wait >> --tag "commit: $CIRCLE_SHA1" << parameters.skipvalidation >>
+            setup_github
+            packageversionid=$(sfdx force:package:version:create --package << parameters.package >> << parameters.codecoverage >> -x --wait << parameters.wait >> --tag "commit: $CIRCLE_SHA1" --branch "$CIRCLE_BRANCH" << parameters.skipvalidation >> | jq -r .result.SubscriberPackageVersionId)
+            versionnumber=$(sfdx force:package:version:report --package $packageversionid --json | jq -r .result.Version)
+            git add -all
+            git commit -m "updating sfdx-project.json [skip ci]"
+            git push origin
+            git tag -a $versionnumber -m "tagging version $versionnumber [skip ci]"
+            git push origin $versionnumber
       - store_artifacts:
           path: metadata.tar
           destination: metadata
       - store_artifacts:
           path: sfdx_log.tar
           destination: sfdx-log
-
-  install_beta:
-    description: installs the beta that has as tag the current commit
+  setup_test_org:
+    description: creates a scratch org, installs the beta that has as tag the current commit and creates test users
+    parameters:
+      scratch_org_definition_file:
+        description: relative path to the scratch org definition file to be used for the scratch org to install the beta on.
+        type: string
+        default: << pipeline.parameters.beta_test_scratch_org_definition_file >>
+      scratch_org_duration:
+        description:  duration of the scratch org (in days) (default:3, min:1, max:30)
+        type: integer
+        default: 3
+      install_wait_time:
+        description: number of minutes to wait for installation status. CircleCI will continue the build process after this time and if the installation is not finished the next steps will fail so ensure this is large enough.
+        type: integer
+        default: 30
+      publish_wait_time:
+        description: number of minutes to wait for subscriber package version ID to become available in the scratch org to install the package into. If the package is not available the build will fail.
+        type: integer
+        default: 5
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
@@ -221,12 +220,12 @@ jobs:
       - run:
           name: create beta test scratch org
           command: |
-            sfdx force:org:create -s -f << pipeline.parameters.beta_test_scratch_org_definition_file >> -d 30 -w 10 -a beta-test --nonamespace
+            sfdx force:org:create -s -f << parameters.scratch_org_definition_file >> -d << parameters.scratch_org_duration >> -w 10 -a beta-test --nonamespace
       - run:
           name: install
           command: |
             packageversionid=$(sfdx force:package:version:list  --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
-            sfdx force:package:install --package $packageversionid --noprompt --publishwait 5 -w 30
+            sfdx force:package:install --package $packageversionid --noprompt --publishwait << parameters.publish_wait_time >> -w << parameters.install_wait_time >>
       - create_user:
           org_username: beta-test
           alias: test-admin
@@ -252,11 +251,27 @@ jobs:
           destination: sfdx-log
       - slack/notify:
           message: "new scratch org with beta package available. Download the credentials to get access"
-  
-  upgrade_to_managed:
+  promote_and_test_upgrade:
+    description: promotes the package version, tests if it can be upgraded and finally merges the release branch into master
+    parameters:
+      scratch_org_definition_file:
+        description: relative path to the scratch org definition file to be used for the scratch org to install the beta on.
+        type: string
+        default: << pipeline.parameters.beta_test_scratch_org_definition_file >>
+      scratch_org_duration:
+        description:  duration of the scratch org (in days) (default:3, min:1, max:30)
+        type: integer
+        default: 3
+      install_wait_time:
+        description: number of minutes to wait for installation status. CircleCI will continue the build process after this time and if the installation is not finished the next steps will fail so ensure this is large enough.
+        type: integer
+        default: 30
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
+    environment:
+      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_LOG_LEVEL: debug
     steps:
       - checkout
       - log_into_devhub
@@ -265,15 +280,86 @@ jobs:
           command: |
             packageversionid=$(sfdx force:package:version:list --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
             sfdx force:package:version:promote --package $packageversionid --noprompt
+            versionnumber=$(sfdx force:package:version:report --package $packageversionid --json | jq -r .result.Version)
+            git tag -a $versionnumber -m "tagging version $versionnumber [skip ci]"
+            git push origin $versionnumber
+      - run:
+          name: create beta test scratch org
+          command: |
+            sfdx force:org:create -s -f << parameters.scratch_org_definition_file >> -d << parameters.scratch_org_duration >> -w 10 -a beta-test --nonamespace
+      - run:
+          name: install ancestor if present and upgrade
+          command: |
+            packageversionid=$(sfdx force:package:version:list  --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
+            ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.Ancestor)
+            if [[ "$ancestorid" -eq "foo" ]]; then // some command fi
+            sfdx force:package:install --package $ancestorid --noprompt -w << parameters.install_wait_time >>
+      - run:
+          name: upgrade to current package version
+          command: |
+            packageversionid=$(sfdx force:package:version:list  --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
+            sfdx force:package:install --package $packageversionid --noprompt -w << parameters.install_wait_time >>
+      - run:
+          name: delete scratch org
+          command: |
+            sfdx force:org:delete
 #      - run:
 #          name: merge into master
 #          command: |
 #            git checkout master
 #            git merge $CIRCLE_BRANCH
 #            git push origin master
-#            git tag -a v$PACKAGE_MAJOR_VERSION.$CIRCLE_BUILD_NUM -m "$PACKAGE_VERSION_NAME v$PACKAGE_MAJOR_VERSION.$CIRCLE_BUILD_NUM"
-#            git push origin --tags
+  install_ancestor_and_upgrade:
+    parameters:
+      scratch_org_definition_file:
+        description: relative path to the scratch org definition file to be used for the scratch org to install the beta on.
+        type: string
+        default: << pipeline.parameters.beta_test_scratch_org_definition_file >>
+      scratch_org_duration:
+        description:  duration of the scratch org (in days) (default:3, min:1, max:30)
+        type: integer
+        default: 3
+      install_wait_time:
+        description: number of minutes to wait for installation status. CircleCI will continue the build process after this time and if the installation is not finished the next steps will fail so ensure this is large enough.
+        type: integer
+        default: 30
+    docker:
+      - image: appsolutely/sfdx_circleci_container:latest
+    resource_class: small
+    environment:
+      SFDX_MDAPI_TEMP_DIR: /root/project/metadata
+      SFDX_LOG_LEVEL: debug
+    steps:
+      - checkout
+      - log_into_devhub
+      - run:
+          name: create beta test scratch org
+          command: |
+            sfdx force:org:create -s -f << parameters.scratch_org_definition_file >> -d << parameters.scratch_org_duration >> -w 10 -a beta-test --nonamespace
+      - run:
+          name: install ancestor
+          command: |
+            packageversionid=$(sfdx force:package:version:list  --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
+            ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.Ancestor)
+            sfdx force:package:install --package $ancestorid --noprompt -w << parameters.install_wait_time >>
+      - run:
+          name: upgrade to current package version
+          command: |
+            packageversionid=$(sfdx force:package:version:list  --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
+            sfdx force:package:install --package $packageversionid --noprompt -w << parameters.install_wait_time >>
+      - run:
+          name: delete scratch org
+          command: |
+            sfdx force:org:delete
+      - store_artifacts:
+          path: metadata.tar
+          destination: metadata
+      - store_artifacts:
+          path: sfdx_log.tar
+          destination: sfdx-log
 
+
+# Orchestrate our job run sequence
 workflows:
   version: 2.1
   feature_branch_push:
@@ -292,14 +378,14 @@ workflows:
             branches:
               only: 
                 - develop
-      - create_beta:
+      - create_package_version:
           context: org-global
           requires:
             - run_apex_tests
-      - install_beta:
+      - setup_test_org:
           context: org-global
           requires:
-            - create_beta
+            - create_package_version
   
   release_branch_push:
     jobs:
@@ -308,23 +394,25 @@ workflows:
           filters:
             branches:
               only: /release\/.*/
-      - create_beta:
+      - create_package_version:
           codecoverage: -c
           context: org-global
           requires:
             - run_apex_tests
-      - install_beta:
+      - setup_test_org:
+          scratch_org_duration: 10
           context: org-global
           requires:
-            - create_beta
+            - create_package_version
       - approve_upgrade_to_managed:
           type: approval
           requires:
-            - install_beta
+            - setup_test_org
       - upgrade_to_managed:
           context: org-global
           requires:
             - approve_upgrade_to_managed
+      -
 
 
 
