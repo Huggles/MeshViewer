@@ -176,7 +176,7 @@ jobs:
           name: create package version
           no_output_timeout: 1.5h
           command: |
-            packageversionid=$(sfdx force:package:version:create --package << parameters.package >> << parameters.codecoverage >> -x --wait << parameters.wait >> --tag "commit: $CIRCLE_SHA1" --branch "$CIRCLE_BRANCH" << parameters.skipvalidation >> | jq -r .result.SubscriberPackageVersionId)
+            packageversionid=$(sfdx force:package:version:create --package << parameters.package >> << parameters.codecoverage >> -x --wait << parameters.wait >> --tag "commit: $CIRCLE_SHA1" --branch "$CIRCLE_BRANCH" << parameters.skipvalidation >> --json | jq -r .result.SubscriberPackageVersionId)
             versioninfo=$(sfdx force:package:version:report --package $packageversionid --json |  jq -r '.result | {Version:.Version, Name:.Name}')
             versionname=$(echo $versioninfo | jq -r .Name)
             versionnumber=$(echo $versioninfo | jq -r .Version)
