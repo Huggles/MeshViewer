@@ -84,7 +84,7 @@ commands:
         type: string
         default: << pipeline.parameters.github_fingerprint >>
     steps:
-      - add_ssh_keys
+#      - add_ssh_keys
 #          fingerprints:
 #            - "<< parameters.fingerprint >>"
       - run:
