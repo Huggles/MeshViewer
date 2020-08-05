@@ -168,7 +168,7 @@
         <fullName>Contract_Intention_of_signature_of_leasing_or_rent_contract</fullName>
         <categories>Creditsafe</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Contract Intention of signature of leasing or rent contract</shortDescription>
         <value>Contract - Intention of signature of leasing or rent contract</value>
     </labels>
@@ -318,7 +318,7 @@
         <fullName>Credit_Assessment_Existing_business_connection</fullName>
         <categories>CreditSafe</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Credit Assessment Existing business connection</shortDescription>
         <value>Credit Assessment - Existing business connection</value>
     </labels>
@@ -326,7 +326,7 @@
         <fullName>Credit_Assessment_Future_business_connection</fullName>
         <categories>Creditsafe</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Credit Assessment Future business connection</shortDescription>
         <value>Credit Assessment - Future business connection</value>
     </labels>
@@ -334,7 +334,7 @@
         <fullName>Credit_Decision</fullName>
         <categories>Creditsafe</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Credit Decision</shortDescription>
         <value>Credit Decision</value>
     </labels>
@@ -676,7 +676,7 @@
     <labels>
         <fullName>Goods_Credit_Insurance</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Goods Credit Insurance</shortDescription>
         <value>Goods Credit Insurance</value>
     </labels>
@@ -699,7 +699,7 @@
     <labels>
         <fullName>Insurance_Contract_Intention_of_signature_of_a_insurance_contract</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Insurance Contract Intention of signature of a insurance contract</shortDescription>
         <value>Insurance Contract - Intention of signature of a insurance contract</value>
     </labels>
@@ -714,7 +714,7 @@
     <labels>
         <fullName>Language_Input_Error</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Language Input Error</shortDescription>
         <value>Selected language is not available for selected company&apos;s country. Please select another language.</value>
     </labels>
@@ -814,14 +814,14 @@
     <labels>
         <fullName>New_Account_with_Business_Dossier</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>New Account with Business Dossier</shortDescription>
         <value>A new Account has been created for the searched company.</value>
     </labels>
     <labels>
         <fullName>New_Account_with_International_Address</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>New Account with International Address</shortDescription>
         <value>A new Account has been created for the searched company address.</value>
     </labels>
@@ -844,7 +844,7 @@
         <fullName>No_Company_Id_Found</fullName>
         <categories>Creditsafe</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>No Company Id Found</shortDescription>
         <value>Creditsafe Report could not be generated as Company Id is not available at Company.info</value>
     </labels>
@@ -962,21 +962,21 @@
     <labels>
         <fullName>Purchase_Contract_Intention_of_signature_of_purchase_contract</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Purchase Contract Intention of signature of purchase contract</shortDescription>
         <value>Purchase Contract - Intention of signature of purchase contract</value>
     </labels>
     <labels>
         <fullName>Realisation_check_receivables_collection</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Realisation check receivables collection</shortDescription>
         <value>Realisation check receivables collection</value>
     </labels>
     <labels>
         <fullName>Redirect_to_duplicate_Account</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Redirect to duplicate Account</shortDescription>
         <value>The account you were trying to create is already in Salesforce and has Company.info data. You are redirected to this account.</value>
     </labels>
@@ -1231,7 +1231,7 @@
     <labels>
         <fullName>Success</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Business Data Success</shortDescription>
         <value>Success</value>
     </labels>
@@ -1302,7 +1302,7 @@
     <labels>
         <fullName>Updated_Account</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Updated Account</shortDescription>
         <value>The selected duplicate Account has been updated.</value>
     </labels>
