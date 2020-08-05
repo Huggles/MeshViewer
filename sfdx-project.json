@@ -3,12 +3,12 @@
         {
             "path": "force-app",
             "package": "Company.info for Salesforce",
-            "versionName": "R2.2",
+            "versionName": "Summer 20",
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
             "postInstallScript": "PostInstallScript",
-            "versionNumber": "2.2.0.NEXT",
-            "ancestorId": "04t0J000000HretQAC"
+            "versionNumber": "2.3.0.NEXT",
+            "ancestorId": "04t0J000000HrhsQAC"
         }
     ],
     "namespace": "appsolutely",
@@ -27,6 +27,7 @@
         "Company.info for Salesforce@2.0.0-7": "04t0J000000Hr8bQAC",
         "Company.info for Salesforce@2.0.0-13": "04t0J000000Hr9FQAS",
         "Company.info for Salesforce@2.0.0-14": "04t0J000000Hr9KQAS",
-        "Company.info for Salesforce@2.1.0-7": "04t0J000000HretQAC"
+        "Company.info for Salesforce@2.1.0-7": "04t0J000000HretQAC",
+        "Company.info for Salesforce@2.2.0-2": "04t0J000000HrhsQAC"
     }
 }
