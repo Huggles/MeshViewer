@@ -350,8 +350,7 @@ jobs:
       - setup_github
       - run:
           command: |
-            ssh-add -l
-            tag="${CIRCLE_BUILD_NUM}"
+            tag="Summer 20 (${CIRCLE_BUILD_NUM}.2)"
             git tag -a $tag -m "tagging with ${tag} [skip ci]"
             git push origin $tag
 
