@@ -340,6 +340,7 @@ jobs:
       - store_artifacts:
           path: sfdx_log.tar
           destination: sfdx-log
+# TEST JOB: DON'T USE IN NORMAL FLOWS
   test_github:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
