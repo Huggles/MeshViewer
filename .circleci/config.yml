@@ -351,6 +351,7 @@ jobs:
       - run:
           command: |
             tag="Summer 20 (${CIRCLE_BUILD_NUM}.2)"
+            tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag} [skip ci]"
             git push origin $tag
 
