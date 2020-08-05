@@ -179,6 +179,7 @@ jobs:
             versionname=$(echo $versioninfo | jq -r .Name)
             versionnumber=$(echo $versioninfo | jq -r .Version)
             tag="${versionname} (${versionnumber})"
+            tag="${tag// /_}"
             git add --all
             git commit -m "updating sfdx-project.json [skip ci]"
             git push origin
@@ -286,6 +287,7 @@ jobs:
             versionname=$(echo $versioninfo | jq -r .Name)
             versionnumber=$(echo $versioninfo | jq -r .Version)
             tag="${versionname} (${versionnumber}) PROMOTED"
+            tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag}s [skip ci]"
             git push origin $tag
       - run:
@@ -330,6 +332,7 @@ jobs:
             versionname=$(echo $versioninfo | jq -r .Name)
             versionnumber=$(echo $versioninfo | jq -r .Version)
             tag="RELEASE ${versionname} (${versionnumber})"
+            tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag}s [skip ci]"
             git push origin $tag
             git push origin --delete $CIRCLE_BRANCH
