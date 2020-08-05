@@ -18,8 +18,8 @@
     </layouts>
     <nameFieldLabel><!-- Creditsafe Person Directors Name --></nameFieldLabel>
     <recordTypes>
-        <description>Huidig __directeur</description>
-        <label>Huidig __directeur</label>
+        <description>Huidig directeur</description>
+        <label>Huidig directeur</label>
         <name>Current_Director</name>
     </recordTypes>
     <recordTypes>

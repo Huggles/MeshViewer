@@ -3,16 +3,16 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>1201</locationX>
-        <locationY>386</locationY>
+        <locationX>1268</locationX>
+        <locationY>536</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <decisions>
         <name>Has_access</name>
         <label>Has access?</label>
-        <locationX>574</locationX>
-        <locationY>92</locationY>
+        <locationX>594</locationX>
+        <locationY>91</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Permission_Found</name>
@@ -33,25 +33,58 @@
     <decisions>
         <name>Related_Account_found</name>
         <label>Related Account found?</label>
-        <locationX>1032</locationX>
-        <locationY>86</locationY>
+        <locationX>1292</locationX>
+        <locationY>92</locationY>
+        <defaultConnector>
+            <targetReference>Default_Navigation</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Has_Account</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Related_Account.Id</leftValueReference>
+                <leftValueReference>BusinessPositionRecord.Business_Dossier__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_Contact</targetReference>
+                <targetReference>Get_Related_Account</targetReference>
             </connector>
             <label>Has Account</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Related_Business_Person_Found</name>
+        <label>Related Business Person Found</label>
+        <locationX>911</locationX>
+        <locationY>86</locationY>
+        <defaultConnector>
+            <targetReference>Default_Navigation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Has_Business_Person</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>BusinessPositionRecord.Business_Person__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Business_Person</targetReference>
+            </connector>
+            <label>Has Business Person</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>InfoMessage</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.appsolutely__contact_not_created}</expression>
+    </formulas>
     <formulas>
         <name>SuccessMessage</name>
         <dataType>String</dataType>
@@ -63,7 +96,6 @@
         <expression>{!$Label.appsolutely__success}</expression>
     </formulas>
     <interviewLabel>Create Contact From Position Template {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <isTemplate>true</isTemplate>
     <label>Create Contact From Position Template</label>
     <processMetadataValues>
@@ -82,8 +114,8 @@
     <recordCreates>
         <name>Create_Contact</name>
         <label>Create Contact</label>
-        <locationX>1043</locationX>
-        <locationY>251</locationY>
+        <locationX>1651</locationX>
+        <locationY>91</locationY>
         <assignRecordIdToReference>contactId</assignRecordIdToReference>
         <connector>
             <targetReference>Navigate_to_contact</targetReference>
@@ -91,29 +123,63 @@
         <inputAssignments>
             <field>AccountId</field>
             <value>
-                <elementReference>Get_Related_Account.Id</elementReference>
+                <elementReference>AccountRecord.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Business_Position__c</field>
             <value>
-                <elementReference>Get_Business_Position.Id</elementReference>
+                <elementReference>BusinessPositionRecord.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>Get_Business_Position.Authorization_Description__c</elementReference>
+                <elementReference>BusinessPositionRecord.Authorization_Description__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>BusinessPersonRecord.First_Name__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>LastName</field>
             <value>
-                <elementReference>Get_Business_Position.Name</elementReference>
+                <elementReference>BusinessPersonRecord.Last_Name__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Title</field>
+            <value>
+                <elementReference>BusinessPositionRecord.Function_Type__c</elementReference>
             </value>
         </inputAssignments>
         <object>Contact</object>
     </recordCreates>
+    <recordLookups>
+        <name>Get_Business_Person</name>
+        <label>Get Business Person</label>
+        <locationX>1125</locationX>
+        <locationY>91</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Related_Account_found</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>BusinessPositionRecord.Business_Person__c</elementReference>
+            </value>
+        </filters>
+        <object>Business_Person__c</object>
+        <outputReference>BusinessPersonRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>First_Name__c</queriedFields>
+        <queriedFields>Last_Name__c</queriedFields>
+    </recordLookups>
     <recordLookups>
         <name>Get_Business_Position</name>
         <label>Get Business Position</label>
@@ -121,7 +187,7 @@
         <locationY>85</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Related_Account</targetReference>
+            <targetReference>Related_Business_Person_Found</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -130,38 +196,75 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Business_Position__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>BusinessPositionRecord</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Business_Person__c</queriedFields>
+        <queriedFields>Business_Dossier__c</queriedFields>
+        <queriedFields>Authorization_Description__c</queriedFields>
+        <queriedFields>Function_Type__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Related_Account</name>
         <label>Get Related Account</label>
-        <locationX>889</locationX>
-        <locationY>85</locationY>
+        <locationX>1465</locationX>
+        <locationY>91</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Related_Account_found</targetReference>
+            <targetReference>Create_Contact</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Related_Account_found</targetReference>
-        </faultConnector>
         <filters>
             <field>Business_Dossier__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Business_Position.Business_Dossier__c</elementReference>
+                <elementReference>BusinessPositionRecord.Business_Dossier__c</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputReference>AccountRecord</outputReference>
+        <queriedFields>Id</queriedFields>
     </recordLookups>
+    <screens>
+        <name>Default_Navigation</name>
+        <label>Default Navigation</label>
+        <locationX>1100</locationX>
+        <locationY>552</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NavigatetoDefaultrecord</name>
+            <extensionName>appsolutely:flowNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>BusinessPositionRecord.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>info</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>InfoMessage</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <screens>
         <name>Navigate_to_contact</name>
         <label>Navigate to contact</label>
-        <locationX>1045</locationX>
-        <locationY>387</locationY>
+        <locationX>1645</locationX>
+        <locationY>536</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -207,8 +310,8 @@
     <subflows>
         <name>Check_Permission</name>
         <label>Check Permission</label>
-        <locationX>461</locationX>
-        <locationY>90</locationY>
+        <locationX>459</locationX>
+        <locationY>89</locationY>
         <connector>
             <targetReference>Has_access</targetReference>
         </connector>
@@ -224,6 +327,30 @@
             <name>HasAccess</name>
         </outputAssignments>
     </subflows>
+    <variables>
+        <name>AccountRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>BusinessPersonRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Person__c</objectType>
+    </variables>
+    <variables>
+        <name>BusinessPositionRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Position__c</objectType>
+    </variables>
     <variables>
         <name>contactId</name>
         <dataType>String</dataType>

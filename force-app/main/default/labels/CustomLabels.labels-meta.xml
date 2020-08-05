@@ -1782,10 +1782,17 @@
         <value>You do not have access to this resource.</value>
     </labels>
     <labels>
+        <fullName>Contact_Not_created</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Not created</shortDescription>
+        <value>Contact Record cannot be created</value>
+    </labels>
+    <labels>
         <fullName>Contact_record_created</fullName>
         <categories>Data Source</categories>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Contact record created</shortDescription>
         <value>Contact record successfully created.</value>
     </labels>

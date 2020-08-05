@@ -36,13 +36,6 @@
                 <elementReference>CompleteBusinessDossier.Name</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>AccountToBeCreated.BillingCity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CompleteBusinessDossier.Correspondence_City__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Upsert_Business_Dossier_to_Account</targetReference>
         </connector>
