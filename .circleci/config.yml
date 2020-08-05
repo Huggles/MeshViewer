@@ -419,12 +419,12 @@ workflows:
 
   test:
     jobs:
-      - test_github
-        context: org-global
-        filters:
-          branches:
-            only:
-              - /test\/.*/
+      - test_github:
+          context: org-global
+          filters:
+            branches:
+              only:
+                - /test\/.*/
 
 
 
