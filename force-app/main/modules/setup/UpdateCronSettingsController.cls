@@ -6,7 +6,7 @@ public with sharing class UpdateCronSettingsController {
     @AuraEnabled
     public static String getUpdateCronExpression(){
         try {
-            return SettingUtils.getProtectedSetting(SetupServiceImpl.UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
+            return SettingUtils.getProtectedSetting(SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_NAME);
         }catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         }
@@ -15,7 +15,7 @@ public with sharing class UpdateCronSettingsController {
     @AuraEnabled
     public static CronTrigger getScheduledCronJob(){
         try {
-            List<CronTrigger> scheduledCronJobs = SetupService.getScheduledCronJob(SetupServiceImpl.UPDATED_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL);
+            List<CronTrigger> scheduledCronJobs = SetupService.getScheduledCronJob(SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL);
             if(scheduledCronJobs.size() > 0){
                 return scheduledCronJobs[0];
             }

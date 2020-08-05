@@ -20,8 +20,8 @@ public with sharing class GeneralPostInstallScriptTest {
         // then
         // the batches should be scheduled
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME];
+            CronJobDetail.Name =: SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL OR
+            CronJobDetail.Name =: SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL ];
         System.assert(cronTriggers.size() == 2);
     }
 
@@ -31,8 +31,8 @@ public with sharing class GeneralPostInstallScriptTest {
         // batches already run
         (new GeneralPostInstallScript().execute(null));
         List<CronTrigger> cronTriggers = [SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME ];
+        CronJobDetail.Name =: SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL OR
+        CronJobDetail.Name =: SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL ];
         System.assert(cronTriggers.size() == 2);
 
         // when
@@ -45,8 +45,8 @@ public with sharing class GeneralPostInstallScriptTest {
         // then
         // new batches should be scheduled
         Map<Id, CronTrigger> cronTriggersToAssertById = new Map<Id, CronTrigger>([SELECT Id, CronJobDetailId, CronJobDetail.Name, CronExpression FROM CronTrigger WHERE
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_REMOVED_DOSSIER_SCHEDULE_NAME OR
-            CronJobDetail.Name =: GeneralPostInstallScript.PROCESS_UPDATED_DOSSIER_SCHEDULE_NAME]);
+        CronJobDetail.Name =: SetupServiceImpl.REMOVE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL OR
+        CronJobDetail.Name =: SetupServiceImpl.UPDATE_DUTCH_DOSSIER_SCHEDULE_CRON_SETTING_MASTERLABEL]);
         System.assert(cronTriggersToAssertById.size() == 2);
         for (CronTrigger cronTrigger : cronTriggers) {
             System.assert(cronTriggersToAssertById.get(cronTrigger.Id) == null);
