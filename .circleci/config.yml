@@ -74,7 +74,7 @@ commands:
       username:
         description: github username
         type: string
-        default: CircleCI
+        default: SalesforceRocks
       email:
         description: github email. Must be of a github user
         type: string
@@ -86,12 +86,13 @@ commands:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - << parameters.fingerprint >>
+            - "<< parameters.fingerprint >>"
       - run:
           name: setup github
           command: |
             git config user.email "<< parameters.email >>"
             git config user.name "<< parameters.username >>"
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
 # Define the jobs we want to run for this project
 jobs:
