@@ -350,6 +350,19 @@ jobs:
           destination: sfdx-log
 # TEST JOB: DON'T USE IN NORMAL FLOWS
   test_upgrade_script:
+    parameters:
+      scratch_org_definition_file:
+        description: relative path to the scratch org definition file to be used for the scratch org to install the beta on.
+        type: string
+        default: << pipeline.parameters.beta_test_scratch_org_definition_file >>
+      scratch_org_duration:
+        description:  duration of the scratch org (in days) (default:3, min:1, max:30)
+        type: integer
+        default: 3
+      install_wait_time:
+        description: number of minutes to wait for installation status. CircleCI will continue the build process after this time and if the installation is not finished the next steps will fail so ensure this is large enough.
+        type: integer
+        default: 30
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
