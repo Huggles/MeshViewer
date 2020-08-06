@@ -294,7 +294,7 @@ jobs:
           name: install ancestor if present and upgrade
           command: |
             packageversionid=$(sfdx force:package:version:list  --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
-            ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.Ancestor)
+            ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.AncestorId)
             if [[ -z "$ancestorid" ]]; then
               echo No ancestor. Not executing upgrade test.
             else
@@ -303,6 +303,11 @@ jobs:
               sfdx force:package:install --package $packageversionid --noprompt -w << parameters.install_wait_time >>
               sfdx force:org:delete
             fi
+      - run:
+          name: delete scratch org
+          when: on_fail
+          command: |
+            sfdx force:org:delete
       - store_artifacts:
           path: metadata.tar
           destination: metadata
