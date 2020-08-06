@@ -182,7 +182,7 @@ jobs:
             tag="${tag// /_}"
             git add --all
             git commit -m "updating sfdx-project.json [skip ci]"
-            git push origin
+            git push -u origin $CIRCLE_BRANCH
             git tag -a $tag -m "tagging with ${tag} [skip ci]"
             git push origin $tag
       - store_artifacts:
@@ -289,7 +289,7 @@ jobs:
             tag="${versionname} (${versionnumber}) PROMOTED"
             tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag}s [skip ci]"
-            git push origin $tag
+            git push -u origin $tag
       - run:
           name: install ancestor if present and upgrade
           command: |
@@ -323,10 +323,10 @@ jobs:
             git fetch
             git checkout develop
             git merge $CIRCLE_BRANCH
-            git push origin develop
+            git push -u origin develop
             git checkout master
             git merge $CIRCLE_BRANCH
-            git push origin master
+            git push -u origin master
             packageversionid=$(sfdx force:package:version:list --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
             versioninfo=$(sfdx force:package:version:report --package $packageversionid --json |  jq -r '.result | {Version:.Version, Name:.Name}')
             versionname=$(echo $versioninfo | jq -r .Name)
@@ -334,8 +334,8 @@ jobs:
             tag="RELEASE ${versionname} (${versionnumber})"
             tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag}s [skip ci]"
-            git push origin $tag
-            git push origin --delete $CIRCLE_BRANCH
+            git push -u origin $tag
+            git push -u origin --delete $CIRCLE_BRANCH
             git fetch
       - store_artifacts:
           path: metadata.tar
