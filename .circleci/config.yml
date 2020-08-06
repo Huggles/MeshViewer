@@ -372,7 +372,7 @@ jobs:
       - log_into_devhub
       - run:
           command: |
-            packageversionid=04t0J000000HrilQAC
+            packageversionid=04t0J000000HreFQAS
             ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.AncestorId)
             if [[ -z "$ancestorid" ]]; then
               echo No ancestor. Not executing upgrade test.
