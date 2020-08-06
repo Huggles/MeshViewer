@@ -349,19 +349,26 @@ jobs:
           path: sfdx_log.tar
           destination: sfdx-log
 # TEST JOB: DON'T USE IN NORMAL FLOWS
-  test_github:
+  test_upgrade_script:
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
     steps:
       - checkout
       - setup_github
+      - log_into_devhub
       - run:
           command: |
-            tag="Summer 20 (${CIRCLE_BUILD_NUM}.2)"
-            tag="${tag// /_}"
-            git tag -a $tag -m "tagging with ${tag} [skip ci]"
-            git push origin $tag
+            packageversionid=04t0J000000HrilQAC
+            ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.AncestorId)
+            if [[ -z "$ancestorid" ]]; then
+              echo No ancestor. Not executing upgrade test.
+            else
+              sfdx force:org:create -s -f << parameters.scratch_org_definition_file >> -d << parameters.scratch_org_duration >> -w 10 --nonamespace
+              sfdx force:package:install --package $ancestorid --noprompt -w << parameters.install_wait_time >>
+              sfdx force:package:install --package $packageversionid --noprompt -w << parameters.install_wait_time >>
+              sfdx force:org:delete
+            fi
 
 # Orchestrate our job run sequence
 workflows:
@@ -427,7 +434,7 @@ workflows:
 
   test:
     jobs:
-      - test_github:
+      - test_upgrade_script:
           context: org-global
           filters:
             branches:
