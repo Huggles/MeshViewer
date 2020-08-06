@@ -295,7 +295,7 @@ jobs:
           command: |
             packageversionid=$(sfdx force:package:version:list  --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
             ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.AncestorId)
-            if [[ -z "$ancestorid" ]]; then
+            if [[ $ancestorid == "null" ]]; then
               echo No ancestor. Not executing upgrade test.
             else
               sfdx force:org:create -s -f << parameters.scratch_org_definition_file >> -d << parameters.scratch_org_duration >> -w 10 -a beta-test --nonamespace
@@ -374,7 +374,7 @@ jobs:
           command: |
             packageversionid=04t0J000000HreFQAS
             ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.AncestorId)
-            if [[ -z "$ancestorid" ]]; then
+            if [[ $ancestorid == "null" ]]; then
               echo No ancestor. Not executing upgrade test.
             else
               sfdx force:org:create -s -f << parameters.scratch_org_definition_file >> -d << parameters.scratch_org_duration >> -w 10 --nonamespace
