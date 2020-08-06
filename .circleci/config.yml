@@ -374,6 +374,7 @@ jobs:
           command: |
             MY_BRANCH=release/R2.3
             git fetch
+            git checkout $MY_BRANCH
             git checkout develop
             git merge $MY_BRANCH
             git push -u origin develop
