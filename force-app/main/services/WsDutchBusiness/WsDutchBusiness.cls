@@ -19,6 +19,9 @@ public inherited sharing class WsDutchBusiness implements IWsDutchBusiness{
     public static DutchBusinessWsdl.DutchBusinessDossierV3 dutchBusinessGetDossierV3(String dossier_number, String establishment_number) {
         return newInstance().dutchBusinessGetDossierV3(dossier_number, establishment_number);
     }
+    public static DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchSelection(DutchBusinessWsdl.stringArray city,DutchBusinessWsdl.stringArray postcode,DutchBusinessWsdl.stringArray sbi,Boolean primary_sbi_only,DutchBusinessWsdl.intArray legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,DutchBusinessWsdl.stringArray provinces,String sbi_match_type) {
+        return newInstance().dutchBusinessSearchSelection(city,postcode,sbi,primary_sbi_only,legal_form,employees_min,employees_max,economically_active,financial_status,changed_since,new_since, page_x, provinces,sbi_match_type);
+    }
 
     public static void dutchBusinessUpdateRemoveDossier(String dossier_number,String establishment_number){
         newInstance().dutchBusinessUpdateRemoveDossier(dossier_number, establishment_number);

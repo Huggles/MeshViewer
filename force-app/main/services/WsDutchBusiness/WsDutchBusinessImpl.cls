@@ -146,6 +146,25 @@ public inherited sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
         });
     }
 
+    public DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchSelection(DutchBusinessWsdl.stringArray city,DutchBusinessWsdl.stringArray postcode,DutchBusinessWsdl.stringArray sbi,Boolean primary_sbi_only,DutchBusinessWsdl.intArray legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,DutchBusinessWsdl.stringArray provinces,String sbi_match_type) {
+        return (DutchBusinessWsdl.DutchBusinessReferencePagedResult)methodCallOut.callOut('dutchBusinessSearchSelection', new Map<String, Object>{
+                'city'=>city,
+                'postcode'=>postcode,
+                'sbi'=>sbi,
+                'primary_sbi_only'=>primary_sbi_only,
+                'legal_form'=>legal_form,
+                'employees_min'=>employees_min,
+                'employees_max'=>employees_max,
+                'economically_active'=>economically_active,
+                'financial_status'=>financial_status,
+                'changed_since'=>changed_since,
+                'new_since'=>new_since,
+                'page_x'=>page_x,
+                'provinces'=>provinces,
+                'sbi_match_type'=>sbi_match_type
+        });
+    }
+
     public DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult dutchBusinessUpdateGetChangedDossiers(Date changed_since, DutchBusinessWsdl.stringArray update_types, Integer page_x) {
         return (DutchBusinessWsdl.DutchBusinessUpdateReferencePagedResult)methodCallOut.callOut('dutchBusinessUpdateGetChangedDossiers', new Map<String, Object>{
                 'changed_since' => changed_since,
