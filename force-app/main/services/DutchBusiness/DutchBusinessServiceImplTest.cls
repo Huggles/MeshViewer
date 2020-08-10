@@ -689,6 +689,35 @@ public class DutchBusinessServiceImplTest {
         assertDossier(null);
     }
 
+
+//    @IsTest
+//    private static void testInstantiateDutchDossierHappyFlow() {
+//        //instantiateDutchDossier
+//        fflib_ApexMocks mocks = new fflib_ApexMocks();
+//        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+////String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search
+//        String dossierNumber = '1234';
+//        String establishmentNUmber = '1234';
+//
+//        DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessReferencePagedResult = getDataVendorMockDossier();
+//        mocks.startStubbing();
+//        mocks.when(webserviceMock.dutchBusinessSearchSelection(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+//                .thenReturn(dataVendorDossier);
+//        mocks.stopStubbing();
+//
+//        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
+//        Business_Dossier__c dossier = null;
+//
+//        Test.startTest();
+//        {
+//            dossier = DutchBusinessService.instantiateDutchDossier(dossierNumber, establishmentNUmber, false);
+//        }
+//        Test.stopTest();
+//        System.assert(dossier != null);
+//        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
+//        assertDossier(null);
+//    }
+
     @IsTest
     private static void testCreateDutchDossierHappyFlowWithVAT() {
         fflib_ApexMocks mocks = new fflib_ApexMocks();
