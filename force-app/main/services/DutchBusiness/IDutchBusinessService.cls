@@ -46,7 +46,6 @@ public interface IDutchBusinessService {
     * @return a list of business dossiers filled with the found results
     */
     List<Business_Dossier__c> searchForDutchDossiersSObject(String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search);
-
     /**
      * Fetches the dutch business dossier with the given dossier number and establishment number and creates it in the database (incl. any related records)
      * If getVAT is true, also enriches the dossier with the VAT number (if available) before inserting it in the database.
@@ -108,4 +107,13 @@ public interface IDutchBusinessService {
      * @return  List<Business_Position__c>
      */
     List<Business_Position__c> getPositions(String dossier_number, Id dossier_record_id);
+
+    /**
+         * Gets the List of Business Dossiers based on entry criteria.
+         *
+         * @param dossier_number    'The COC Number'
+         *
+         * @return  List<Business Dossiers>
+         */
+    List<Business_Dossier__c>searchForDutchBusinessSelection(List<String> cities,List<String> postcodes,List<String> sbiList,Boolean primary_sbi_only,List<Integer> legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,List<String> provinces,String sbi_match_type);
 }

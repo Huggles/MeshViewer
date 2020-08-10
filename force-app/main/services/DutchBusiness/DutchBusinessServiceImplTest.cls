@@ -429,7 +429,32 @@ public class DutchBusinessServiceImplTest {
         InputDossier.establishment_address = newFormattedAddress('address', 'city', 'NL', 'street', 10, '3533AX', 'a');
         return InputDossier;
     }
+    @TestVisible
+    private static DutchBusinessWsdl.DutchBusinessReferencePagedResult getMockDutchBusinessReferencePagedResult() {
+        DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessReferencePagedResult = new DutchBusinessWsdl.DutchBusinessReferencePagedResult();
+        DutchBusinessWsdl.ResultInfo paging = new DutchBusinessWsdl.ResultInfo();
+        paging.maxresults = 10;
+        paging.numresults = 5;
+        paging.curpage = 1;
+        dutchBusinessReferencePagedResult.paging = paging;
 
+        DutchBusinessWsdl.DutchBusinessReferenceArray dutchBusinessReferenceArray = new DutchBusinessWsdl.DutchBusinessReferenceArray();
+        List<DutchBusinessWsdl.DutchBusinessReference> items = new List<DutchBusinessWsdl.DutchBusinessReference>();
+
+        for(Integer i = 0;i<5;i++){
+            DutchBusinessWsdl.DutchBusinessReference dutchBusinessReference = new DutchBusinessWsdl.DutchBusinessReference();
+            dutchBusinessReference.dossier_number = '111232'+i;
+            dutchBusinessReference.establishment_number = '111232'+i;
+            dutchBusinessReference.trade_name = 'Dutch trade'+i;
+            dutchBusinessReference.establishment_city = 'Utrecht';
+            dutchBusinessReference.establishment_street = '113'+i+ 'AD';
+            dutchBusinessReference.indication_economically_active = true;
+            items.add(dutchBusinessReference);
+        }
+        dutchBusinessReferenceArray.item = items;
+        dutchBusinessReferencePagedResult.results = dutchBusinessReferenceArray;
+        return dutchBusinessReferencePagedResult;
+    }
     private static DutchBusinessWsdl.DutchBusinessMoneyV2 newMoneyInstance(Integer amount, String currencyCode) {
         DutchBusinessWsdl.DutchBusinessMoneyV2 returnValue = new DutchBusinessWsdl.DutchBusinessMoneyV2();
         returnValue.amount = amount;
@@ -690,33 +715,29 @@ public class DutchBusinessServiceImplTest {
     }
 
 
-//    @IsTest
-//    private static void testInstantiateDutchDossierHappyFlow() {
-//        //instantiateDutchDossier
-//        fflib_ApexMocks mocks = new fflib_ApexMocks();
-//        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
-////String dossier_number, String trade_name, String city, String street, String postcode, Integer house_number, String house_number_addition, String telephone_number, String domain_name, Boolean strict_search
-//        String dossierNumber = '1234';
-//        String establishmentNUmber = '1234';
-//
-//        DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessReferencePagedResult = getDataVendorMockDossier();
-//        mocks.startStubbing();
-//        mocks.when(webserviceMock.dutchBusinessSearchSelection(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-//                .thenReturn(dataVendorDossier);
-//        mocks.stopStubbing();
-//
-//        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
-//        Business_Dossier__c dossier = null;
-//
-//        Test.startTest();
-//        {
-//            dossier = DutchBusinessService.instantiateDutchDossier(dossierNumber, establishmentNUmber, false);
-//        }
-//        Test.stopTest();
-//        System.assert(dossier != null);
-//        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
-//        assertDossier(null);
-//    }
+    @IsTest
+    private static void testSearchDutchDossierHappyFlow() {
+        //instantiateDutchDossier
+        fflib_ApexMocks mocks = new fflib_ApexMocks();
+        IWsDutchBusiness webserviceMock = (IWsDutchBusiness)mocks.mock(IWsDutchBusiness.class);
+
+        DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessReferencePagedResult = getMockDutchBusinessReferencePagedResult();
+        mocks.startStubbing();
+
+        mocks.when(webserviceMock.dutchBusinessSearchSelection((DutchBusinessWsdl.stringArray)fflib_Match.anyObject(),(DutchBusinessWsdl.stringArray)fflib_Match.anyObject(),(DutchBusinessWsdl.stringArray)fflib_Match.anyObject(),fflib_Match.anyBoolean(),(DutchBusinessWsdl.intArray)fflib_Match.anyObject(),fflib_Match.anyInteger(),fflib_Match.anyInteger(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyInteger(),(DutchBusinessWsdl.stringArray)fflib_Match.anyObject(),fflib_Match.anyString())).thenReturn(dutchBusinessReferencePagedResult);
+        mocks.stopStubbing();
+
+        Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
+        List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
+
+        Test.startTest();
+        {
+            dossiers = DutchBusinessService.dutchBusinessSearchSelectionResults(new List<String>{'test'}, new List<String>{'test'}, new List<String>{'test'}, false, new List<Integer>{1}, 0, 0, 'true', 'test', 'test', 'test', 1, new List<String>{'test'}, 'test');
+        }
+        Test.stopTest();
+        System.assert(dossiers != null);
+        System.assert([SELECT Id FROM Error_Log__c].size() == 0);
+    }
 
     @IsTest
     private static void testCreateDutchDossierHappyFlowWithVAT() {

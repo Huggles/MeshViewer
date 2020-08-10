@@ -77,6 +77,24 @@ public inherited sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
                             (String)arguments.get('dossier_number')
                     );
                 }
+                when 'dutchBusinessSearchSelection' {
+                    return port.dutchBusinessSearchSelection(
+                        (DutchBusinessWsdl.stringArray)arguments.get('city'),
+                        (DutchBusinessWsdl.stringArray)arguments.get('postcode'),
+                        (DutchBusinessWsdl.stringArray)arguments.get('sbi'),
+                        (Boolean)arguments.get('primary_sbi_only'),
+                        (DutchBusinessWsdl.intArray)arguments.get('legal_form'),
+                        (Integer)arguments.get('employees_min'),
+                        (Integer)arguments.get('employees_max'),
+                        (String)arguments.get('economically_active'),
+                        (String)arguments.get('financial_status'),
+                        (String)arguments.get('changed_since'),
+                        (String)arguments.get('new_since'),
+                        (Integer)arguments.get('page_x'),
+                        (DutchBusinessWsdl.stringArray)arguments.get('provinces'),
+                        (String)arguments.get('sbi_match_type')
+                    );
+                }
                 when else {
                     throw new CCWsException('Method ' + methodName + ' not implemented');
                 }
