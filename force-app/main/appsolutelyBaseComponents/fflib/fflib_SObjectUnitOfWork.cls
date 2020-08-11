@@ -99,14 +99,15 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
         {
             dmlOptions = new Database.DMLOptions();
             dmlOptions.DuplicateRuleHeader.allowSave = allowsave;
+            dmlOptions.optAllOrNone = true;
         }
         public void dmlInsert(List<SObject> objList)
         {
-            Database.insert(objList, dmlOptions);
+            Database.SaveResult[] sr = Database.insert(objList, dmlOptions);
         }
         public void dmlUpdate(List<SObject> objList)
         {
-            Database.update(objList, dmlOptions);
+            Database.SaveResult[] sr = Database.update(objList, dmlOptions);
         }
         public void dmlDelete(List<SObject> objList)
         {
