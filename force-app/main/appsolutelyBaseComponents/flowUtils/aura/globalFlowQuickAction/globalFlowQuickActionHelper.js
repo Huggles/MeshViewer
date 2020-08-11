@@ -27,6 +27,8 @@
     },
     showModalAndFlow : function(component, event) {
         var modalBody;
+
+        var wideScreen = component.get("v.wideScreen");
         $A.createComponent("lightning:flow",
             {"aura:id": "flow",
                 "onstatuschange" : component.getReference("c.handleFlowChangeEvent")
@@ -34,15 +36,18 @@
             function(content, status, errorMessage) {
                 if (status === "SUCCESS") {
                     modalBody = content;
-                    var promiseModal = component.find('overlayLib').showCustomModal({
+                    var payload = {
                         body: modalBody,
                         showCloseButton: true,
-                        //cssClass: "slds-modal_large",
-                        closeCallback: function() {
+                        closeCallback: function () {
                             var dismissActionPanel = $A.get("e.force:closeQuickAction");
                             dismissActionPanel.fire();
                         }
-                    });
+                    };
+                    console.log('wideScreen');
+                    console.log(wideScreen);
+                    if(wideScreen) payload.cssClass = "slds-modal_large"
+                    var promiseModal = component.find('overlayLib').showCustomModal(payload);
                     component.set("v.overlayPromise", promiseModal);
                     var flow = component.find("flow");
                     if (component.get("v.recordId") !== null && component.get("v.recordId") !== undefined) {

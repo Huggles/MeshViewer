@@ -12,6 +12,7 @@
     },
     handleFlowChangeEvent : function(component, event, helper) {
         var status = event.getParam("status");
+
         if (status === "FINISHED") {
             var outputVariables = event.getParam("outputVariables");
             var outputVar;
