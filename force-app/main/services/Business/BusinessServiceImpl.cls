@@ -118,7 +118,11 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
 
             response.add(businessDossier);
         }
-        unitOfWork.commitWork();
+        try {
+            unitOfWork.commitWork();
+        }catch (Exception e){
+            throw e;
+        }
         return response;
     }
 
