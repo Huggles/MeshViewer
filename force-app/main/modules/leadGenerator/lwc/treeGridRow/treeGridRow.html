@@ -1,0 +1,45 @@
+<!--
+ - Created by Hugo on 10/08/2020.
+ -->
+
+<!-- Tree Grid Row -->
+<template>
+    <tr aria-level={ariaLevel}>
+        <td>
+           <input type="checkbox"
+                  data-code={rowData.code}
+                  checked={isSelected}
+                  onclick={onCheckboxClicked}>
+        </td>
+        <th class="slds-tree__item">
+            <div class="slds-grid">
+                <div style="width: 3rem;">
+                    <template if:true={hasChildren}>
+                        <button class="slds-button slds-button_icon slds-button_icon-x-small slds-m-right_x-small">
+                            <lightning-button-icon icon-name="utility:chevronright"
+                                                   alternative-text="Settings"
+                                                   title="Settings"
+                                                   variant="bare" onclick={onExpandButtonClicked}>
+
+                            </lightning-button-icon>
+                        </button>
+                    </template>
+
+                </div>
+                <div class="slds-text-align_left">{rowData.description}</div>
+            </div>
+        </th>
+        <td>
+            <div>{rowData.label}</div>
+        </td>
+    </tr>
+    <template if:true={isExpanded}>
+        <template for:each={rowData._children} for:item="child">
+            <c-tree-grid-row key={child.code}
+                             row-data={child}
+                             onrowselected={onChildCheckboxClicked}
+            ></c-tree-grid-row>
+        </template>
+    </template>
+
+</template>
