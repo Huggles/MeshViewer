@@ -3,16 +3,16 @@
     <actionCalls>
         <name>End</name>
         <label>End</label>
-        <locationX>1529</locationX>
-        <locationY>786</locationY>
+        <locationX>2152</locationX>
+        <locationY>798</locationY>
         <actionName>appsolutely:flowCancelEndPoint</actionName>
         <actionType>component</actionType>
     </actionCalls>
     <actionCalls>
         <name>Upsert_Account_With_Business_Dossiers</name>
         <label>Upsert Account With Business Dossiers</label>
-        <locationX>1993</locationX>
-        <locationY>242</locationY>
+        <locationX>2458</locationX>
+        <locationY>322</locationY>
         <actionName>UpsertBusinessDossierInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -44,8 +44,8 @@
         <description>Assign the values of the retrieved business dossier to the account.</description>
         <name>Assign_Account_Fields_Creditsafe</name>
         <label>Assign Account Fields Creditsafe</label>
-        <locationX>1813</locationX>
-        <locationY>307</locationY>
+        <locationX>2048</locationX>
+        <locationY>305</locationY>
         <assignmentItems>
             <assignToReference>OpenedAccount.Name</assignToReference>
             <operator>Assign</operator>
@@ -61,8 +61,8 @@
         <description>Assign the values of the retrieved business dossier to the account.</description>
         <name>Assign_Account_Fields_Dutch_CoC</name>
         <label>Assign Account Fields Dutch CoC</label>
-        <locationX>1815</locationX>
-        <locationY>158</locationY>
+        <locationX>2052</locationX>
+        <locationY>161</locationY>
         <assignmentItems>
             <assignToReference>OpenedAccount.Name</assignToReference>
             <operator>Assign</operator>
@@ -77,8 +77,8 @@
     <assignments>
         <name>Assign_billing_country_default</name>
         <label>Assign billing country default</label>
-        <locationX>925</locationX>
-        <locationY>165</locationY>
+        <locationX>1109</locationX>
+        <locationY>138</locationY>
         <assignmentItems>
             <assignToReference>OpenedAccount.BillingCountry</assignToReference>
             <operator>Assign</operator>
@@ -129,13 +129,26 @@
             <targetReference>Show_Buisness_Dossier</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Empty_Country</name>
+        <label>Empty Country</label>
+        <locationX>1112</locationX>
+        <locationY>532</locationY>
+        <assignmentItems>
+            <assignToReference>OpenedAccount.BillingCountry</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Organisation_Search_Flow_Prefilled</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Business_Dossier_Set</name>
         <label>Business Dossier Set</label>
-        <locationX>535</locationX>
-        <locationY>268</locationY>
+        <locationX>528</locationX>
+        <locationY>243</locationY>
         <defaultConnector>
-            <targetReference>Selected_country_is_empty</targetReference>
+            <targetReference>Check_Country_Selection</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Business Dossier Not Set</defaultConnectorLabel>
         <rules>
@@ -152,6 +165,31 @@
                 <targetReference>Assign_Business_Dossier_Id_And_Search_Again</targetReference>
             </connector>
             <label>Business Dossier Set</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Country_Selection_Enabled</name>
+        <label>Is Country Selection Enabled</label>
+        <locationX>914</locationX>
+        <locationY>247</locationY>
+        <defaultConnector>
+            <targetReference>Assign_billing_country_default</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Select_Country</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>enableCountrySelection</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Empty_Country</targetReference>
+            </connector>
+            <label>Select Country</label>
         </rules>
     </decisions>
     <decisions>
@@ -197,8 +235,8 @@
     <decisions>
         <name>Search_Cancelled</name>
         <label>Search Cancelled</label>
-        <locationX>1255</locationX>
-        <locationY>259</locationY>
+        <locationX>1485</locationX>
+        <locationY>281</locationY>
         <defaultConnector>
             <targetReference>Retrieve_Business_Dossier</targetReference>
         </defaultConnector>
@@ -220,42 +258,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Selected_country_is_empty</name>
-        <label>Selected country is empty</label>
-        <locationX>765</locationX>
-        <locationY>268</locationY>
-        <defaultConnector>
-            <targetReference>Organisation_Search_Flow_Prefilled</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Selected_country_is_empty_outcome</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>OpenedAccount.BillingCountry</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>OpenedAccount.BillingCountry</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue/>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Assign_billing_country_default</targetReference>
-            </connector>
-            <label>Selected country is empty</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>What_is_the_Dossier_Source</name>
         <label>What is the Dossier Source</label>
-        <locationX>1613</locationX>
-        <locationY>256</locationY>
+        <locationX>1851</locationX>
+        <locationY>261</locationY>
         <defaultConnector>
             <targetReference>Assign_Account_Fields_Dutch_CoC</targetReference>
         </defaultConnector>
@@ -328,7 +334,7 @@
         <locationX>781</locationX>
         <locationY>426</locationY>
         <connector>
-            <targetReference>Selected_country_is_empty</targetReference>
+            <targetReference>Check_Country_Selection</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -424,10 +430,24 @@
     </start>
     <status>Active</status>
     <subflows>
+        <name>Check_Country_Selection</name>
+        <label>Check Country Selection</label>
+        <locationX>780</locationX>
+        <locationY>247</locationY>
+        <connector>
+            <targetReference>Is_Country_Selection_Enabled</targetReference>
+        </connector>
+        <flowName>Enable_Country_Selection</flowName>
+        <outputAssignments>
+            <assignToReference>enableCountrySelection</assignToReference>
+            <name>enableSelectCountry</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Organisation_Search_Flow_Prefilled</name>
         <label>Organisation Search Flow Prefilled</label>
-        <locationX>1091</locationX>
-        <locationY>257</locationY>
+        <locationX>1326</locationX>
+        <locationY>279</locationY>
         <connector>
             <targetReference>Search_Cancelled</targetReference>
         </connector>
@@ -496,8 +516,8 @@
     <subflows>
         <name>Retrieve_Business_Dossier</name>
         <label>Retrieve Business Dossier</label>
-        <locationX>1459</locationX>
-        <locationY>257</locationY>
+        <locationX>1682</locationX>
+        <locationY>259</locationY>
         <connector>
             <targetReference>What_is_the_Dossier_Source</targetReference>
         </connector>
@@ -560,6 +580,13 @@
     <variables>
         <name>DossierSource</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>enableCountrySelection</name>
+        <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
