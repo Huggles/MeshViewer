@@ -1,0 +1,53 @@
+<!--
+ - Created by vishalshete on 10/08/2020.
+ -->
+
+<!-- Search Business Dossiers -->
+<template>
+    <lightning-card  title="Hello">
+        <div class="slds-grid slds-wrap">
+            <lightning-input type="text" name = "cities" class= "slds-col slds-size_4-of-12" label="cities"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "postcodes" class= "slds-col slds-size_4-of-12" label="postcodes"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "sbiList" class= "slds-col slds-size_4-of-12" label="sbiList"  onchange={handleChange}></lightning-input>
+            <lightning-input type="checkbox" name = "primary_sbi_only" class= "slds-col slds-size_4-of-12" label="primary_sbi_only"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "legal_forms" class= "slds-col slds-size_4-of-12" label="legal_forms"  onchange={handleChange}></lightning-input>
+            <lightning-input type="number" name = "employees_min" class= "slds-col slds-size_4-of-12" label="employees_min"  onchange={handleChange}></lightning-input>
+            <lightning-input type="number" name = "employees_max" class= "slds-col slds-size_4-of-12" label="employees_max"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "economically_active" class= "slds-col slds-size_4-of-12" label="economically_active"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "financial_status" class= "slds-col slds-size_4-of-12" label="financial_status"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "changed_since" class= "slds-col slds-size_4-of-12" label="changed_since"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "new_since" class= "slds-col slds-size_4-of-12" label="new_since"  onchange={handleChange}></lightning-input>
+            <lightning-input type="number" name = "page_x" class= "slds-col slds-size_4-of-12" label="page_x"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "provinces" class= "slds-col slds-size_4-of-12" label="provinces"  onchange={handleChange}></lightning-input>
+            <lightning-input type="text" name = "sbi_match_type" class= "slds-col slds-size_4-of-12" label="sbi_match_type"  onchange={handleChange}></lightning-input>
+
+            <div class="slds-col slds-size_4-of-12" style="margin: 20px 0px 0px 20px">
+                    <lightning-button variant="brand" label="Send" title="Send" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </div>
+
+<!--            Show spinner-->
+            <lightning-card title={title} variant="base">
+                <template if:true={isInitializing}>
+                    <div style='height: 300px'>
+                        <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
+                    </div>
+                </template>
+<!--                Show Datatable-->
+                    <template if:false={isInitializing}>
+                        <c-show-business-dossier-data-table
+                                business-dossiers={businessDossiers}
+                                enable-infinite-loading={enableInfiniteLoading}
+                                onloadmore={handleLoadMore}
+                                is-loading={isDataTableLoading}>
+                        </c-show-business-dossier-data-table>
+                    </template>
+<!--show no image data-->
+                <template if:false={businessDossiers}>
+                    <c-no-result-image
+                            no-data-label="No Data Found">
+                    </c-no-result-image>
+                </template>
+            </lightning-card>
+    </lightning-card>
+</template>
