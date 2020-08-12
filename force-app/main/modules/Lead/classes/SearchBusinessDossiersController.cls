@@ -19,13 +19,18 @@ public with sharing class SearchBusinessDossiersController {
             Integer page_x,
             List<String> provinces,
             String sbi_match_type){
-        DutchBusinessServiceImpl.SearchedBusinessDossierResults searchedResults
-                = DutchBusinessService.dutchBusinessSearchSelectionResults(cities,postcodes,sbiList,primary_sbi_only,legal_forms,employees_min
-                        ,employees_max,economically_active,financial_status,changed_since ,new_since,page_x,provinces,sbi_match_type);
 
-        SearchedBusinessDossierResults SearchedBusinessDossierToReturn = convertToCorrectReturnType(searchedResults);
-        System.debug(SearchedBusinessDossierToReturn);
-        return SearchedBusinessDossierToReturn;
+        try {
+            DutchBusinessServiceImpl.SearchedBusinessDossierResults searchedResults
+                    = DutchBusinessService.dutchBusinessSearchSelectionResults(cities, postcodes, sbiList, primary_sbi_only, legal_forms, employees_min
+                            , employees_max, economically_active, financial_status, changed_since, new_since, page_x, provinces, sbi_match_type);
+
+            SearchedBusinessDossierResults SearchedBusinessDossierToReturn = convertToCorrectReturnType(searchedResults);
+            return SearchedBusinessDossierToReturn;
+        } catch (Exception e){
+            throw new AuraHandledException(e.getMessage());
+        }
+
     }
     public class SearchedBusinessDossierResults{
         @AuraEnabled
