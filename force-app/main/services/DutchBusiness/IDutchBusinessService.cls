@@ -115,5 +115,5 @@ public interface IDutchBusinessService {
          *
          * @return  List<Business Dossiers>
          */
-    List<Business_Dossier__c>searchForDutchBusinessSelection(List<String> cities,List<String> postcodes,List<String> sbiList,Boolean primary_sbi_only,List<Integer> legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,List<String> provinces,String sbi_match_type);
+    DutchBusinessServiceImpl.SearchedBusinessDossierResults searchForDutchBusinessSelection(List<String> cities,List<String> postcodes,List<String> sbiList,Boolean primary_sbi_only,List<Integer> legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,List<String> provinces,String sbi_match_type);
 }

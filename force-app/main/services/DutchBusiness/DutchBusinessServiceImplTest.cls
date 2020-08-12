@@ -726,16 +726,15 @@ public class DutchBusinessServiceImplTest {
 
         mocks.when(webserviceMock.dutchBusinessSearchSelection((DutchBusinessWsdl.stringArray)fflib_Match.anyObject(),(DutchBusinessWsdl.stringArray)fflib_Match.anyObject(),(DutchBusinessWsdl.stringArray)fflib_Match.anyObject(),fflib_Match.anyBoolean(),(DutchBusinessWsdl.intArray)fflib_Match.anyObject(),fflib_Match.anyInteger(),fflib_Match.anyInteger(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyString(),fflib_Match.anyInteger(),(DutchBusinessWsdl.stringArray)fflib_Match.anyObject(),fflib_Match.anyString())).thenReturn(dutchBusinessReferencePagedResult);
         mocks.stopStubbing();
-
         Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
-        List<Business_Dossier__c> dossiers = new List<Business_Dossier__c>();
 
+        DutchBusinessServiceImpl.SearchedBusinessDossierResults searchedBusinessDossierResults = new DutchBusinessServiceImpl.SearchedBusinessDossierResults();
         Test.startTest();
         {
-            dossiers = DutchBusinessService.dutchBusinessSearchSelectionResults(new List<String>{'test'}, new List<String>{'test'}, new List<String>{'test'}, false, new List<Integer>{1}, 0, 0, 'true', 'test', 'test', 'test', 1, new List<String>{'test'}, 'test');
+            searchedBusinessDossierResults = DutchBusinessService.dutchBusinessSearchSelectionResults(new List<String>{'test'}, new List<String>{'test'}, new List<String>{'test'}, false, new List<Integer>{1}, 0, 0, 'true', 'test', 'test', 'test', 1, new List<String>{'test'}, 'test');
         }
         Test.stopTest();
-        System.assert(dossiers != null);
+        System.assert(searchedBusinessDossierResults.businessDossiers != null);
         System.assert([SELECT Id FROM Error_Log__c].size() == 0);
     }
 

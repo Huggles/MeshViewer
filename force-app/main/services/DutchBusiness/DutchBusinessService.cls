@@ -20,7 +20,7 @@ public inherited sharing class DutchBusinessService {
         return newInstance().searchForDutchDossiersSObject(dossier_number, trade_name, city, street, postcode, house_number, house_number_addition, telephone_number, domain_name, strict_search);
     }
 
-    public static List<Business_Dossier__c> dutchBusinessSearchSelectionResults(List<String> cities,List<String> postcodes,List<String> sbiList,Boolean primary_sbi_only,List<Integer> legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,List<String> provinces,String sbi_match_type) {
+    public static DutchBusinessServiceImpl.SearchedBusinessDossierResults dutchBusinessSearchSelectionResults(List<String> cities,List<String> postcodes,List<String> sbiList,Boolean primary_sbi_only,List<Integer> legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,List<String> provinces,String sbi_match_type) {
         return newInstance().searchForDutchBusinessSelection(cities,postcodes,sbiList, primary_sbi_only, legal_form, employees_min, employees_max, economically_active, financial_status, changed_since, new_since, page_x, provinces, sbi_match_type);
     }
 
