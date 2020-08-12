@@ -182,7 +182,7 @@ jobs:
             tag="${tag// /_}"
             git add --all
             git commit -m "updating sfdx-project.json [skip ci]"
-            git push origin
+            git push -u origin $CIRCLE_BRANCH
             git tag -a $tag -m "tagging with ${tag} [skip ci]"
             git push origin $tag
       - store_artifacts:
@@ -289,13 +289,13 @@ jobs:
             tag="${versionname} (${versionnumber}) PROMOTED"
             tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag}s [skip ci]"
-            git push origin $tag
+            git push -u origin $tag
       - run:
           name: install ancestor if present and upgrade
           command: |
             packageversionid=$(sfdx force:package:version:list  --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
-            ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.Ancestor)
-            if [[ -z "$ancestorid" ]]; then
+            ancestorid=$(sfdx force:package:version:report -p $packageversionid --json | jq -r .result.AncestorId)
+            if [[ $ancestorid == "null" ]]; then
               echo No ancestor. Not executing upgrade test.
             else
               sfdx force:org:create -s -f << parameters.scratch_org_definition_file >> -d << parameters.scratch_org_duration >> -w 10 -a beta-test --nonamespace
@@ -303,6 +303,11 @@ jobs:
               sfdx force:package:install --package $packageversionid --noprompt -w << parameters.install_wait_time >>
               sfdx force:org:delete
             fi
+      - run:
+          name: delete scratch org
+          when: on_fail
+          command: |
+            sfdx force:org:delete
       - store_artifacts:
           path: metadata.tar
           destination: metadata
@@ -323,10 +328,10 @@ jobs:
             git fetch
             git checkout develop
             git merge $CIRCLE_BRANCH
-            git push origin develop
+            git push -u origin develop
             git checkout master
             git merge $CIRCLE_BRANCH
-            git push origin master
+            git push -u origin master
             packageversionid=$(sfdx force:package:version:list --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
             versioninfo=$(sfdx force:package:version:report --package $packageversionid --json |  jq -r '.result | {Version:.Version, Name:.Name}')
             versionname=$(echo $versioninfo | jq -r .Name)
@@ -334,8 +339,8 @@ jobs:
             tag="RELEASE ${versionname} (${versionnumber})"
             tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag}s [skip ci]"
-            git push origin $tag
-            git push origin --delete $CIRCLE_BRANCH
+            git push -u origin $tag
+            git push -u origin --delete $CIRCLE_BRANCH
             git fetch
       - store_artifacts:
           path: metadata.tar
@@ -344,19 +349,47 @@ jobs:
           path: sfdx_log.tar
           destination: sfdx-log
 # TEST JOB: DON'T USE IN NORMAL FLOWS
-  test_github:
+  test_release_script:
+    parameters:
+      scratch_org_definition_file:
+        description: relative path to the scratch org definition file to be used for the scratch org to install the beta on.
+        type: string
+        default: << pipeline.parameters.beta_test_scratch_org_definition_file >>
+      scratch_org_duration:
+        description:  duration of the scratch org (in days) (default:3, min:1, max:30)
+        type: integer
+        default: 3
+      install_wait_time:
+        description: number of minutes to wait for installation status. CircleCI will continue the build process after this time and if the installation is not finished the next steps will fail so ensure this is large enough.
+        type: integer
+        default: 30
     docker:
       - image: appsolutely/sfdx_circleci_container:latest
     resource_class: small
     steps:
       - checkout
       - setup_github
+      - log_into_devhub
       - run:
           command: |
-            tag="Summer 20 (${CIRCLE_BUILD_NUM}.2)"
+            MY_BRANCH=release/R2.3
+            git fetch
+            git checkout $MY_BRANCH
+            git checkout develop
+            git merge $MY_BRANCH
+            git push -u origin develop
+            git checkout master
+            git merge $MY_BRANCH
+            git push -u origin master
+            packageversionid=04t0J000000HrilQAC
+            versioninfo=$(sfdx force:package:version:report --package $packageversionid --json |  jq -r '.result | {Version:.Version, Name:.Name}')
+            versionname=$(echo $versioninfo | jq -r .Name)
+            versionnumber=$(echo $versioninfo | jq -r .Version)
+            tag="RELEASE ${versionname} (${versionnumber})"
             tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag} [skip ci]"
-            git push origin $tag
+            git push -u origin $tag
+            git push origin --delete $MY_BRANCH
 
 # Orchestrate our job run sequence
 workflows:
@@ -422,7 +455,7 @@ workflows:
 
   test:
     jobs:
-      - test_github:
+      - test_release_script:
           context: org-global
           filters:
             branches:
