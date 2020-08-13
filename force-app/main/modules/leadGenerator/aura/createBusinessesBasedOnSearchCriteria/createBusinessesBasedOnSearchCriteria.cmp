@@ -5,5 +5,5 @@
 <aura:component description="createLeadBasedOnSearchCriteria" implements="force:lightningQuickActionWithoutHeader">
     <c:globalFlowQuickAction
             wideScreen="true"
-            flowSettingName="Create_Leads_API_Name"></c:globalFlowQuickAction>
+            flowSettingName="Find_Businesses_API_Name"></c:globalFlowQuickAction>
 </aura:component>

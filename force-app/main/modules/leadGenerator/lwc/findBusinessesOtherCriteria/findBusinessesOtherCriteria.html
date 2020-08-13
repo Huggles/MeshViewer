@@ -1,0 +1,39 @@
+<!--
+ - Created by hugovankrimpen on 12/08/2020.
+ -->
+
+<!-- Find Businesses Other Criteria -->
+<template>
+    <div class="slds-grid slds-wrap slds-gutters_direct-small">
+
+        <lightning-input type="text"        name = "legal_forms" class= "slds-col slds-size_4-of-12" label="Legal Forms"  onchange={handleChange}></lightning-input>
+        <lightning-input type="number"      name = "employees_min" class= "slds-col slds-size_4-of-12" label="Minimum Employees"  onchange={handleChange}></lightning-input>
+        <lightning-input type="number"      name = "employees_max" class= "slds-col slds-size_4-of-12" label="Maximum Employees"  onchange={handleChange}></lightning-input>
+        <lightning-input type="text"        name = "changed_since" class= "slds-col slds-size_4-of-12" label="Changed Since"  onchange={handleChange}></lightning-input>
+        <lightning-input type="text"        name = "new_since" class= "slds-col slds-size_4-of-12" label="New Since"  onchange={handleChange}></lightning-input>
+        <lightning-combobox
+                name="sbi_match_type"
+                label="SBI Match Type"
+                class= "slds-col slds-size_4-of-12"
+                value={not_selected_option.value}
+                options={sbi_match_type_options}
+                onchange={handleChange}></lightning-combobox>
+        <lightning-combobox
+                name="economically_active"
+                label="Economically Active"
+                class= "slds-col slds-size_4-of-12"
+                value={not_selected_option.value}
+                options={economically_active_options}
+                onchange={handleChange}></lightning-combobox>
+        <lightning-combobox
+                name="financial_status"
+                label="Financial Status"
+                class= "slds-col slds-size_4-of-12"
+                value={not_selected_option.value}
+                options={financial_status_options}
+                onchange={handleChange}></lightning-combobox>
+        <lightning-input type="text"        name = "cities" class= "slds-col slds-size_4-of-12" label="Cities"  onchange={handleChange}></lightning-input>
+        <lightning-input type="text"        name = "postcodes" class= "slds-col slds-size_4-of-12" label="Postal Code"  onchange={handleChange}></lightning-input>
+        <lightning-input type="checkbox"    name = "primary_sbi_only" class= "slds-col slds-size_4-of-12" label="Match only Primary SBI"  onchange={handleChange}></lightning-input>
+    </div>
+</template>

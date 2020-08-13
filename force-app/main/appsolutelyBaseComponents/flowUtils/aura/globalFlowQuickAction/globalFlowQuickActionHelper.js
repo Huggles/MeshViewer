@@ -44,8 +44,6 @@
                             dismissActionPanel.fire();
                         }
                     };
-                    console.log('wideScreen');
-                    console.log(wideScreen);
                     if(wideScreen) payload.cssClass = "slds-modal_large"
                     var promiseModal = component.find('overlayLib').showCustomModal(payload);
                     component.set("v.overlayPromise", promiseModal);

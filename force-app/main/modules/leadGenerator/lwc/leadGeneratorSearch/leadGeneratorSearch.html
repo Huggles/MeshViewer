@@ -4,42 +4,38 @@
 
 <!-- Lead Generator Search -->
 <template>
-    <lightning-progress-indicator current-step={currentstep} type="path" >
-        <template for:each={steps} for:item="step">
-            <lightning-progress-step key={step.value} label={step.label} value={step.value}></lightning-progress-step>
-        </template>
-    </lightning-progress-indicator>
+    <h1> Find Businesses </h1>
+    <p> hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. </p>
+    <div style="max-height: 70vh; overflow-y: scroll;">
+        <div class="slds-box slds-scrollable_y">
+            <lightning-accordion allow-multiple-sections-open
+                                 onsectiontoggle={handleSectionToggle}>
+                <lightning-accordion-section name="Industry" label="Industry">
+                    <div class="slds-m-around_small slds-card">
+                        <c-lead-generator-standard-industrial-classifications></c-lead-generator-standard-industrial-classifications>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="Location" label="Location" >
+                    <template if:true={isStepLocation1}>
+                        <div class="slds-m-around_small slds-card">
+                            <c-lead-generator-location ></c-lead-generator-location>
+                        </div>
+                    </template>
 
-    <template if:true={isStepSBI}>
-        <div class="slds-m-around_small slds-card">
-            <lightning-card title="SBI" icon-name="custom:custom15">
-                <c-lead-generator-standard-industrial-classifications></c-lead-generator-standard-industrial-classifications>
-            </lightning-card>
-        </div>
-    </template>
-
-    <template if:true={isStepLocation}>
-        <div class="slds-m-around_small slds-card">
-            <lightning-card title="Generator" icon-name="custom:custom17">
-                <c-lead-generator-location >
-
-                </c-lead-generator-location>
-            </lightning-card>
-        </div>
-    </template>
-
-    <div slot="footer" class="slds-grid slds-float_right">
-        <div class="slds-float_right slds-m-right_xx-small">
-            <lightning-button label="Previous"
-                              onclick={onPreviousClicked}></lightning-button>
-        </div>
-        <div class="slds-float_right">
-            <lightning-button label="Next" variant="brand"
-                              onclick={onNextClicked}></lightning-button>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="Other" label="Other" >
+                    <div class="slds-m-around_small slds-card">
+                        <c-find-businesses-other-criteria ></c-find-businesses-other-criteria>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
         </div>
     </div>
-
-
-
-
+    <c-flow-footer next-button-title={label.Search_Confirm}
+                   cancel-button-title={label.Cancel}
+                   previous-button-title={label.Previous}
+                   available-actions={availableFooterActions}
+                   show-cancel-button={showFooterCancelButton}
+                   onnextclick={handleFooterNextClick}>
+    </c-flow-footer>
 </template>

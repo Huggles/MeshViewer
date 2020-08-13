@@ -3,8 +3,49 @@
  */
 
 import {LightningElement} from 'lwc';
+import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationPauseEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+
+import Search_Confirm from '@salesforce/label/c.Search_Confirm';
+import Cancel from '@salesforce/label/c.Cancel';
+import Previous from '@salesforce/label/c.Previous';
+
+
 
 export default class LeadGeneratorSearch extends LightningElement {
+
+    activeSections;
+
+    handleSectionToggle(event){
+
+        this.activeSections = event.detail.openSections;
+        console.log(this.activeSections);
+        console.log(JSON.stringify(this.activeSections));
+        console.log(JSON.parse(JSON.stringify(this.activeSections)));
+    }
+    get isStepLocation1(){
+        if(this.activeSections != null){
+            return this.activeSections.includes("Location");
+        }return false;
+
+    }
+
+
+    label = {
+        Search_Confirm,
+        Cancel,
+        Previous
+    }
+
+    availableFooterActions = [
+        'NEXT',
+        'FINISH'
+    ]
+    showFooterCancelButton = true;
+
+    handleFooterNextClick(event){
+        const navigateNextEvent = new FlowNavigationNextEvent();
+        this.dispatchEvent(navigateNextEvent);
+    }
 
     steps = [
         {
@@ -19,6 +60,8 @@ export default class LeadGeneratorSearch extends LightningElement {
             label : 'Select Properties',
             value : 'Properties'
         }];
+
+
 
     currentstepIndex = 0;
     get currentstep(){
