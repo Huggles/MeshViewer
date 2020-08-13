@@ -6,7 +6,6 @@ import {LightningElement, track} from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import leaflet from '@salesforce/resourceUrl/leaflet';
 import GeoJSON from '@salesforce/resourceUrl/GeoJSON';
-import TownshipsGeoJSON from '@salesforce/resourceUrl/townships';
 
 
 export default class LeadGeneratorLocation extends LightningElement {
@@ -102,12 +101,6 @@ export default class LeadGeneratorLocation extends LightningElement {
         request.open("GET", GeoJSON, false);
         request.send(null);
         this._geoJSON = JSON.parse(request.responseText)[0];
-
-        request = new XMLHttpRequest();
-        request.open("GET", TownshipsGeoJSON, false);
-        request.send(null);
-        this._townshipsGeoJSON = JSON.parse(request.responseText);
-        console.log(this._townshipsGeoJSON);
         Promise.resolve();
     }
 
@@ -132,12 +125,11 @@ export default class LeadGeneratorLocation extends LightningElement {
                 .addTo(this._leafletMap);
             try{
                 this.initProvincesGeoJSON();
-                this.initTownshipGeoJSON();
             }catch (e) {
                 console.log(e);
             }
-            this.showLayer(this.mapType);
-            this._leafletMap.setMaxBounds(this._geoJSONLayer.getBounds());
+            this.showProvinces();
+
 
         }
     }
@@ -154,39 +146,10 @@ export default class LeadGeneratorLocation extends LightningElement {
             })
         }
     }
-    initTownshipGeoJSON(){
-        if(this._townshipsGeoJSONLayer == null){
-            this._townshipsGeoJSON.features.forEach((feature, index)=>{
-                this._townshipsIndex[feature.properties.name] = feature;
-            });
-            this._townshipsGeoJSONLayer = L.geoJSON(this._townshipsGeoJSON,{
-                onEachFeature: ((feature, layer) =>{
-                    this._townshipsIndex[feature.properties.name].show_on_map = false;
-                    layer.setStyle(this._townshipsIndex[feature.properties.name].show_on_map ? this.selectedStyle : this.deselectedStyle);
-                    layer.on('click', (event)=>{
-                        this.townshipFeatureClicked(feature,layer,this);
-                    });
-                })
-            });
-        }
-        console.log(this._townshipsGeoJSON.features);
-
-        console.log(this._townshipsIndex);
-
-    }
-    showLayer(typeName){
-        if(typeName =="Provinces") this.showProvinces();
-        if(typeName =="Townships") this.showTownships();
-    }
     showProvinces(){
-        this._townshipsGeoJSONLayer.remove();
         this._geoJSONLayer.addTo(this._leafletMap);
+        this._leafletMap.setMaxBounds(this._geoJSONLayer.getBounds());
     }
-    showTownships(){
-        this._geoJSONLayer.remove();
-        this._townshipsGeoJSONLayer.addTo(this._leafletMap);
-    }
-
     getProvinceFeatureLayer(provinceName){
         let foundLayer = null;
         this._geoJSONLayer.eachLayer((layer) => {
@@ -196,7 +159,6 @@ export default class LeadGeneratorLocation extends LightningElement {
         });
         return foundLayer;
     }
-
     provinceFeatureClicked(feature, layer, controller){
         let show_on_map = controller._provinces[feature.properties.name].show_on_map;
         try{
@@ -208,26 +170,6 @@ export default class LeadGeneratorLocation extends LightningElement {
         }catch (e){
             console.log(e);
         }
-    }
-    townshipFeatureClicked(feature, layer, controller){
-        try{
-            let township = controller._townshipsIndex[feature.properties.name];
-
-            let show_on_map = township.show_on_map;
-
-            if(show_on_map == null || show_on_map === false){
-                township.show_on_map = true;
-                layer.setStyle(this.selectedStyle);
-            }
-            else if(show_on_map == true){
-                township.show_on_map = false;
-                layer.setStyle(this.deselectedStyle);
-            }
-        }catch (e){
-            console.log(e);
-        }
-
-
     }
     showFeature(feature, layer, controller){
         controller._provinces[feature.properties.name].show_on_map = true;
@@ -246,20 +188,4 @@ export default class LeadGeneratorLocation extends LightningElement {
         }
 
     }
-
-    _mapType = "Provinces";
-    get mapType(){
-        return this._mapType;
-    }
-    set mapType(value){
-        this._mapType = value;
-        this.showLayer(this._mapType);
-
-    }
-
-    onTypeButtonClicked(event){
-        let target = event.target;
-        this.mapType = target.name;
-    }
-
 }
