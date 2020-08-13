@@ -11,8 +11,8 @@
     <assignments>
         <name>Set_Has_Access_False</name>
         <label>Set Has Access False</label>
-        <locationX>988</locationX>
-        <locationY>396</locationY>
+        <locationX>1051</locationX>
+        <locationY>444</locationY>
         <assignmentItems>
             <assignToReference>HasAccess</assignToReference>
             <operator>Assign</operator>
@@ -44,9 +44,9 @@
         <name>Is_Permission_Set_Assigned</name>
         <label>Is Permission Set Assigned?</label>
         <locationX>812</locationX>
-        <locationY>182</locationY>
+        <locationY>185</locationY>
         <defaultConnector>
-            <targetReference>Show_No_Access</targetReference>
+            <targetReference>No_Access_Screen_visible</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -63,6 +63,31 @@
                 <targetReference>Set_Has_Access_True</targetReference>
             </connector>
             <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>No_Access_Screen_visible</name>
+        <label>No Access Screen visible</label>
+        <locationX>814</locationX>
+        <locationY>348</locationY>
+        <defaultConnector>
+            <targetReference>Show_No_Access</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Skip_No_Access_Screen</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>skipNoAccessScreen</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Has_Access_False</targetReference>
+            </connector>
+            <label>Skip No Access Screen</label>
         </rules>
     </decisions>
     <formulas>
@@ -109,7 +134,7 @@
         <name>Permission_Set_Assignment</name>
         <label>Permission Set Assignment</label>
         <locationX>665</locationX>
-        <locationY>180</locationY>
+        <locationY>182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Permission_Set_Assigned</targetReference>
@@ -136,8 +161,8 @@
     <screens>
         <name>Show_No_Access</name>
         <label>Show No Access</label>
-        <locationX>821</locationX>
-        <locationY>396</locationY>
+        <locationX>823</locationX>
+        <locationY>506</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
         <allowPause>false</allowPause>
@@ -155,8 +180,8 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>44</locationX>
-        <locationY>162</locationY>
+        <locationX>47</locationX>
+        <locationY>163</locationY>
         <connector>
             <targetReference>Get_Permission_Set</targetReference>
         </connector>
@@ -191,5 +216,15 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>skipNoAccessScreen</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>
