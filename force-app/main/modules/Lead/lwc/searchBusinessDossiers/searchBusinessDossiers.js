@@ -7,6 +7,9 @@ import {LightningElement, track, wire, api} from 'lwc';
 import searchDutchBusinessDossiers from '@salesforce/apex/SearchBusinessDossiersController.searchDutchBusinessDossiers';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
 import Loading from '@salesforce/label/c.Loading';
+import CurrentlyShowing from '@salesforce/label/c.Currently_showing';
+import Records from '@salesforce/label/c.Record';
+import Error from '@salesforce/label/c.Error';
 
 export default class SearchBusinessDossiers extends LightningElement {
 
@@ -33,7 +36,7 @@ export default class SearchBusinessDossiers extends LightningElement {
     get isInitializing(){
         return this.isLoading;
     }
-    label = { Loading
+    label = { Loading,CurrentlyShowing,Records,Error
     }
     searchString;
     handleChange(event) {
@@ -105,7 +108,6 @@ export default class SearchBusinessDossiers extends LightningElement {
                 this.enableInfiniteLoading = false;
             }
             this.isLoading = false;//stop showing initial spinner
-            //if(this.page_x!=1)this.template.querySelector('c-show-business-dossier-data-table').businessDossierChangeHandler();
         })
         .catch(error => {
             this.error = error
@@ -114,7 +116,7 @@ export default class SearchBusinessDossiers extends LightningElement {
 
     set error(value){
         if (!value) return;
-        this.fireToast('error', 'Error', value );
+        this.fireToast(this.label.Error, this.label.Error, value );
     }
     fireToast(type, title, message) {
         const event = new ShowToastEvent({

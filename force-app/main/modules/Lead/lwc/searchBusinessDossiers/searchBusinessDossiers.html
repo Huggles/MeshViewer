@@ -16,7 +16,7 @@
                 <template if:false={isInitializing}>
                     <div class="slds-grid slds-wrap slds-m-around_x-small">
                         <div class=" slds-col slds-size_1-of-1 ">
-                            Showing {businessDossierLength} record
+                            {label.CurrentlyShowing} {businessDossierLength} {label.Records}
                         </div>
                             <lightning-input type="text" name = "cities" class= "slds-col slds-size_1-of-3" label="" placeholder="Fast search..."  onchange={handleChange}></lightning-input>
                             <lightning-button variant="brand" label="Create" class= "slds-col dataTableButton" title="Primary action" onclick={handleClick} ></lightning-button>

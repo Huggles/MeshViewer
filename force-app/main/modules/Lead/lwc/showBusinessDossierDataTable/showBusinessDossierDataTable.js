@@ -5,6 +5,7 @@
 import {LightningElement,api,track} from 'lwc';
 import Loading from '@salesforce/label/c.Loading';
 import Error from '@salesforce/label/c.Error';
+import NorowselectedMessage from '@salesforce/label/c.No_row_selected_Message';
 import {ToastEventController} from "c/toastEventController";
 
 const columns = [
@@ -47,12 +48,17 @@ export default class ShowBusinessDossierDataTable extends LightningElement {
      * The selected rows in the table
      */
     @api
-    selectedRows;
+    selectedRows=[];
     /**
      * Enable infinite loading on the table
      */
     @api
     enableInfiniteLoading;
+
+    label={
+        Error,
+        NorowselectedMessage
+    }
 
     columns = columns;
     handleSort(event) {
@@ -82,7 +88,6 @@ export default class ShowBusinessDossierDataTable extends LightningElement {
 
     @api
     fastFilter(searchString) {
-        // if(searchString == null|| searchString == undefined||searchString=="" ){
         if(!searchString){
             this.businessDossiers = this.dossiersToStore;
         } else{
@@ -100,16 +105,15 @@ export default class ShowBusinessDossierDataTable extends LightningElement {
             this.dispatchEvent(new CustomEvent('loadmore'));
         }
     }
-
     handleRowSelection(event) {
         this.selectedRows = event.target.getSelectedRows();
     }
-    @track insertedDossiers;
     @api
     createDossiers(){
-        this.dispatchEvent(new CustomEvent('sendselectedrows',{
-            detail: this.selectedRows
-        }));
-
+        if(this.selectedRows.length==0){
+            new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.NorowselectedMessage);
+        }else{
+            this.dispatchEvent(new CustomEvent('sendselectedrows',{detail: this.selectedRows }));
+        }
     }
 }
