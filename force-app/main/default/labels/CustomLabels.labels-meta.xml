@@ -967,6 +967,13 @@
         <value>Please fill some address fields (street, postal code, PO box or locality) before searching.</value>
     </labels>
     <labels>
+        <fullName>No_row_selected_Message</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No row selected Message</shortDescription>
+        <value>Please select rows before proceeding.</value>
+    </labels>
+    <labels>
         <fullName>No_users_assigned</fullName>
         <categories>Setup</categories>
         <language>en_US</language>
