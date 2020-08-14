@@ -17,7 +17,7 @@ global with sharing class CreateBusinessDossierInvocable {
             label='Create Business Dossiers'
             description='Create Business Dossiers'
             category='Company.info')
-    global static List<Business_Dossier__c> upsertAccountWithBusinessDossier(List<CreateBusinessDossierArgument> arguments) {
+    global static List<Business_Dossier__c> createBusinessDossier(List<CreateBusinessDossierArgument> arguments) {
         try {
             List<Business_Dossier__c> businessDossiersToUpsert = new List<Business_Dossier__c>();
             for (CreateBusinessDossierArgument argument : arguments) {
