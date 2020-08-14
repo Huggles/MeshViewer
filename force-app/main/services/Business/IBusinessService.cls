@@ -31,4 +31,12 @@ public interface IBusinessService {
      * @return A list of inserted business dossiers.
      */
     List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts,  Boolean ignoreAlertDuplicateRules);
+    /**
+    * Takes a list of dossiers and inserts them into the DB.
+    *
+    * @param businessDossiers The list of Business_Dossier__c records.
+    *
+    * @return A list of inserted business dossiers.
+    */
+    List<Business_Dossier__c> createDossiers(List<Business_Dossier__c> businessDossiers, Boolean ignoreAlertDuplicateRules);
 }

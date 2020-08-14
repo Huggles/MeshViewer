@@ -122,6 +122,28 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         return response;
     }
 
+    public static List<Business_Dossier__c> createDossiers(List<Business_Dossier__c> businessDossiers, Boolean ignoreAlertDuplicateRules){
+        //The paramters should not be empty, and the size of both lists should be equal
+        fflib_ISObjectUnitOfWork unitOfWork;
+        if(ignoreAlertDuplicateRules){
+            unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
+        }else{
+            unitOfWork = Application.UnitOfWork.newInstance();
+        }
+
+        List<Business_Dossier__c> response = new List<Business_Dossier__c>();
+
+        //Loop through records to register for insert.
+        for (Integer i = 0; i < businessDossiers.size(); i++) {
+            //Account relatedAccount = accounts[i];
+            Business_Dossier__c businessDossier = businessDossiers[i];
+            unitOfWork.registerUpsert(businessDossier);
+            response.add(businessDossier);
+        }
+        unitOfWork.commitWork();
+        return response;
+    }
+
     // TODO: move this to a constant util class in the ISO 3166 dir?
     private final static Map<String, String> translatedCountryByAlpha3Code = new Map<String, String> {
             'BEL' => Label.Country_Belgium,

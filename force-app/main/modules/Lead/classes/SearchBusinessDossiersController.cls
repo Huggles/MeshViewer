@@ -57,5 +57,4 @@ public with sharing class SearchBusinessDossiersController {
         searchedBusinessDossierResults.maxresults = s.maxresults;
         return searchedBusinessDossierResults;
     }
-
 }
