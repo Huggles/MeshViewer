@@ -33,39 +33,14 @@ export default class SearchBusinessDossiers extends LightningElement {
     get isInitializing(){
         return this.isLoading;
     }
-
     label = { Loading
     }
-
+    searchString;
     handleChange(event) {
         if (event.target.name === 'cities') {
-            this.cities = event.target.value;
-        } else if  (event.target.name === 'postcodes') {
-            this.postcodes = event.target.value;
-        }else if  (event.target.name === 'sbiList') {
-            this.sbiList = event.target.value;
-        }else if  (event.target.name === 'primary_sbi_only') {
-            this.primary_sbi_only = event.target.value;
-        }else if  (event.target.name === 'legal_forms') {
-            this.legal_forms = event.target.value;
-        }else if  (event.target.name === 'employees_min') {
-            this.employees_min = event.target.value;
-        }else if  (event.target.name === 'employees_max') {
-            this.employees_max = event.target.value;
-        }else if  (event.target.name === 'economically_active') {
-            this.economically_active = event.target.value;
-        }else if  (event.target.name === 'financial_status') {
-            this.financial_status = event.target.value;
-        }else if  (event.target.name === 'changed_since') {
-            this.changed_since = event.target.value;
-        }else if  (event.target.name === 'new_since') {
-            this.new_since = event.target.value;
-        }else if  (event.target.name === 'page_x') {
-            this.page_x = event.target.value;
-        }else if  (event.target.name === 'provinces') {
-            this.provinces = event.target.value;
-        }else if  (event.target.name === 'sbi_match_type') {
-            this.sbi_match_type = event.target.value;
+            this.searchString = event.target.value;
+
+            this.template.querySelector("c-show-business-dossier-data-table").fastFilter(this.searchString);
         }
     }
     validateInput(){
@@ -85,12 +60,15 @@ export default class SearchBusinessDossiers extends LightningElement {
         if(this.sbi_match_type==undefined) this.sbi_match_type =null;
     }
 
-    handleClick(event){
+    connectedCallback() {
         this.businessDossiers = [];
         this.validateInput();
         this.makeCallout();
     }
-    //called from showBusinessDossierDataTable
+    get businessDossierLength(){
+        return this.businessDossiers.length;
+    }
+
     handleLoadMore(){
         this.isDataTableLoading = true;
         this.enableInfiniteLoading = true;
@@ -101,6 +79,9 @@ export default class SearchBusinessDossiers extends LightningElement {
     //increase page to call next page
         this.page_x++;
         this.makeCallout();
+    }
+    handleClick(){
+        this.template.querySelector('c-show-business-dossier-data-table').createDossiers();
     }
     makeCallout(){
         searchDutchBusinessDossiers({
@@ -124,6 +105,7 @@ export default class SearchBusinessDossiers extends LightningElement {
                 this.enableInfiniteLoading = false;
             }
             this.isLoading = false;//stop showing initial spinner
+            //if(this.page_x!=1)this.template.querySelector('c-show-business-dossier-data-table').businessDossierChangeHandler();
         })
         .catch(error => {
             this.error = error
@@ -143,11 +125,12 @@ export default class SearchBusinessDossiers extends LightningElement {
         });
         this.dispatchEvent(event);
     }
-
-
-    get results(){
-        if(this.businessDossier){
-            return this.businessDossier;
+    @api businessDossiersToInsert
+    handleSelectedRows(event){
+        try {
+            this.businessDossiersToInsert = event.detail;
+        } catch (e){
+            this.error = e;
         }
     }
 }

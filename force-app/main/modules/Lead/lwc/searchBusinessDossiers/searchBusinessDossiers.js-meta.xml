@@ -23,7 +23,7 @@
         <property name="new_since" type="String" label="new_since" role="inputOnly"/>
         <property name="provinces" type="String" label="provinces" role="inputOnly"/>
         <property name="sbi_match_type" type="String" label="sbi_match_type" role="inputOnly"/>
-
+        <property name="businessDossiersToInsert" type="String" label="BusinessDossiersToInsert" role="outputOnly"/>
     </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
