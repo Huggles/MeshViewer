@@ -13,7 +13,10 @@ import Error from '@salesforce/label/c.Error';
 
 export default class SearchBusinessDossiers extends LightningElement {
 
-    @api cities = 'Utrecht';
+
+    @api searchCriteria;
+
+    @api cities;
     @api postcodes;
     @api sbiList;
     @api primary_sbi_only;
@@ -47,20 +50,21 @@ export default class SearchBusinessDossiers extends LightningElement {
         }
     }
     validateInput(){
-        if(this.cities==undefined) this.cities =null;
-        if(this.postcodes==undefined) this.postcodes =null;
-        if(this.sbiList==undefined) this.sbiList =null;
-        if(this.primary_sbi_only==undefined) this.primary_sbi_only =null;
-        if(this.legal_forms==undefined) this.legal_forms =null;
-        if(this.employees_min==undefined) this.employees_min =null;
-        if(this.employees_max==undefined) this.employees_max =null;
-        if(this.economically_active==undefined) this.economically_active =null;
-        if(this.financial_status==undefined) this.financial_status =null;
-        if(this.changed_since==undefined) this.changed_since =null;
-        if(this.new_since==undefined) this.new_since =null;
-        if(this.page_x==undefined) this.page_x =null;
-        if(this.provinces==undefined) this.provinces =null;
-        if(this.sbi_match_type==undefined) this.sbi_match_type =null;
+        console.log(JSON.parse(JSON.stringify(this.searchCriteria)));
+        if(this.searchCriteria.cities!=undefined)                   this.cities =this.searchCriteria.cities;
+        if(this.searchCriteria.postcodes!=undefined)                this.postcodes =this.searchCriteria.postcodes;
+        if(this.searchCriteria.sbiList!=undefined)                  this.sbiList =this.searchCriteria.sbiList;
+        if(this.searchCriteria.primary_sbi_only!=undefined)         this.primary_sbi_only =this.searchCriteria.primary_sbi_only;
+        if(this.searchCriteria.legal_forms!=undefined)              this.legal_forms =this.searchCriteria.legal_forms==undefined;
+        if(this.searchCriteria.employees_min!=undefined)            this.employees_min =this.searchCriteria.employees_min;
+        if(this.searchCriteria.employees_max!=undefined)            this.employees_max =this.searchCriteria.employees_max;
+        if(this.searchCriteria.economically_active!=undefined)      this.economically_active =this.searchCriteria.economically_active;
+        if(this.searchCriteria.financial_status!=undefined)         this.financial_status =this.searchCriteria.financial_status;
+        if(this.searchCriteria.changed_since!=undefined)            this.changed_since =this.searchCriteria.changed_since;
+        if(this.searchCriteria.new_since!=undefined)                this.new_since =this.searchCriteria.new_since;
+        if(this.searchCriteria.page_x!=undefined)                   this.page_x = this.searchCriteria.page_x;
+        if(this.searchCriteria.provinces!=undefined)                this.provinces = this.searchCriteria.provinces;
+        if(this.searchCriteria.sbi_match_type!=undefined)           this.sbi_match_type =this.searchCriteria.sbi_match_type;
     }
 
     connectedCallback() {

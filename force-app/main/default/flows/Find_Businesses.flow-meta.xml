@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Create_Business_Dossiers</name>
+        <label>Create Business Dossiers</label>
+        <locationX>1046</locationX>
+        <locationY>71</locationY>
+        <actionName>CreateBusinessDossierInvocable</actionName>
+        <actionType>apex</actionType>
+        <dataTypeMappings>
+            <typeName>T__businessDossiers</typeName>
+            <typeValue>appsolutely__Business_Dossier__c</typeValue>
+        </dataTypeMappings>
+        <inputParameters>
+            <name>businessDossiers</name>
+            <value>
+                <elementReference>SelectedBusinessDossiers</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <interviewLabel>Find Businesses {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Find Businesses</label>
     <processMetadataValues>
@@ -17,19 +36,61 @@
     <processType>Flow</processType>
     <runInMode>DefaultMode</runInMode>
     <screens>
-        <name>Find_Businesses_Screen</name>
-        <label>Find_Businesses_Screen</label>
-        <locationX>543</locationX>
-        <locationY>115</locationY>
+        <name>AA</name>
+        <label>A</label>
+        <locationX>566</locationX>
+        <locationY>69</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Search_Results_Screen</targetReference>
+        </connector>
         <fields>
-            <name>Find_Businesses</name>
+            <name>Enter_Search_Criteria</name>
             <extensionName>appsolutely:leadGeneratorSearch</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>selectedCriteria123</name>
+                <value>
+                    <elementReference>Searccccc</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>Searccccc</assignToReference>
+                <name>selectedCriteria123</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Search_Results_Screen</name>
+        <label>Search Results Screen</label>
+        <locationX>860</locationX>
+        <locationY>83</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Create_Business_Dossiers</targetReference>
+        </connector>
+        <fields>
+            <name>Business_Dossier_Search_Results</name>
+            <extensionName>appsolutely:searchBusinessDossiers</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>searchCriteria</name>
+                <value>
+                    <elementReference>Searccccc</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SelectedBusinessDossiers</assignToReference>
+                <name>businessDossiersToInsert</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -38,8 +99,24 @@
         <locationX>50</locationX>
         <locationY>50</locationY>
         <connector>
-            <targetReference>Find_Businesses_Screen</targetReference>
+            <targetReference>AA</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>Searccccc</name>
+        <apexClass>appsolutely__FindBusinessCriteriaModel</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SelectedBusinessDossiers</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
+    </variables>
 </Flow>

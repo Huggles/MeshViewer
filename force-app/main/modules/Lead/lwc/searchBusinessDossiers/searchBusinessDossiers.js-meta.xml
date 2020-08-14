@@ -9,21 +9,9 @@
     </targets>
     <masterLabel>Search Business Dossiers</masterLabel>
     <targetConfigs>
-    <targetConfig targets="lightning__FlowScreen">
-        <property name="cities" type="String" label="cities" role="inputOnly"/>
-        <property name="postcodes" type="String" label="postcodes" role="inputOnly"/>
-        <property name="sbiList" type="String" label="sbiList" role="inputOnly"/>
-        <property name="primary_sbi_only" type="String" label="primary_sbi_only" role="inputOnly"/>
-        <property name="legal_forms" type="Integer" label="legal_forms" role="inputOnly"/>
-        <property name="employees_min" type="Integer" label="employees_min" role="inputOnly"/>
-        <property name="employees_max" type="Integer" label="employees_max" role="inputOnly"/>
-        <property name="economically_active" type="String" label="economically_active" role="inputOnly"/>
-        <property name="financial_status" type="String" label="financial_status" role="inputOnly"/>
-        <property name="changed_since" type="String" label="changed_since" role="inputOnly"/>
-        <property name="new_since" type="String" label="new_since" role="inputOnly"/>
-        <property name="provinces" type="String" label="provinces" role="inputOnly"/>
-        <property name="sbi_match_type" type="String" label="sbi_match_type" role="inputOnly"/>
-        <property name="businessDossiersToInsert" type="String" label="BusinessDossiersToInsert" role="outputOnly"/>
-    </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="searchCriteria" type="apex://appsolutely.FindBusinessCriteriaModel" label="Criteria Map"/>
+            <property name="businessDossiersToInsert" type="@salesforce/schema/appsolutely__Business_Dossier__c[]" label="BusinessDossiersToInsert" role="outputOnly"/>
+        </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

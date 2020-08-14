@@ -87,7 +87,7 @@ export default class FindBusinessesOtherCriteria extends LightningElement {
             this.criteriaValueMap['employees_min'] = values[0] ;
 
             this.employeesSliderSelectedMaxValue = values[1];
-            this.criteriaValueMap['employees_max'] = (values[1] == "∞" ? maxValue : values[1]);
+            this.criteriaValueMap['employees_max'] = (values[1] == "∞" ? null : values[1]);
         });
         this.sliderHTMLElementLoaded = true;
     }
