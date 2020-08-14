@@ -77,6 +77,24 @@ public inherited sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
                             (String)arguments.get('dossier_number')
                     );
                 }
+                when 'dutchBusinessSearchSelection' {
+                    return port.dutchBusinessSearchSelection(
+                        (DutchBusinessWsdl.stringArray)arguments.get('city'),
+                        (DutchBusinessWsdl.stringArray)arguments.get('postcode'),
+                        (DutchBusinessWsdl.stringArray)arguments.get('sbi'),
+                        (Boolean)arguments.get('primary_sbi_only'),
+                        (DutchBusinessWsdl.intArray)arguments.get('legal_form'),
+                        (Integer)arguments.get('employees_min'),
+                        (Integer)arguments.get('employees_max'),
+                        (String)arguments.get('economically_active'),
+                        (String)arguments.get('financial_status'),
+                        (String)arguments.get('changed_since'),
+                        (String)arguments.get('new_since'),
+                        (Integer)arguments.get('page_x'),
+                        (DutchBusinessWsdl.stringArray)arguments.get('provinces'),
+                        (String)arguments.get('sbi_match_type')
+                    );
+                }
                 when else {
                     throw new CCWsException('Method ' + methodName + ' not implemented');
                 }
@@ -143,6 +161,25 @@ public inherited sharing class WsDutchBusinessImpl implements IWsDutchBusiness {
         return (DutchBusinessWsdl.DutchBusinessDossierV3)methodCallOut.callOut('dutchBusinessGetDossierV3', new Map<String, Object>{
                 'dossier_number' => dossier_number,
                 'establishment_number' => establishment_number
+        });
+    }
+
+    public DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessSearchSelection(DutchBusinessWsdl.stringArray city,DutchBusinessWsdl.stringArray postcode,DutchBusinessWsdl.stringArray sbi,Boolean primary_sbi_only,DutchBusinessWsdl.intArray legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,DutchBusinessWsdl.stringArray provinces,String sbi_match_type) {
+        return (DutchBusinessWsdl.DutchBusinessReferencePagedResult)methodCallOut.callOut('dutchBusinessSearchSelection', new Map<String, Object>{
+                'city'=>city,
+                'postcode'=>postcode,
+                'sbi'=>sbi,
+                'primary_sbi_only'=>primary_sbi_only,
+                'legal_form'=>legal_form,
+                'employees_min'=>employees_min,
+                'employees_max'=>employees_max,
+                'economically_active'=>economically_active,
+                'financial_status'=>financial_status,
+                'changed_since'=>changed_since,
+                'new_since'=>new_since,
+                'page_x'=>page_x,
+                'provinces'=>provinces,
+                'sbi_match_type'=>sbi_match_type
         });
     }
 

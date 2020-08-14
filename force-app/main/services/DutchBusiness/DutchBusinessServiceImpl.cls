@@ -558,8 +558,43 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         return dossier;
     }
 
+    private SearchedBusinessDossierResults mapDutchBusinessReferencePagedResultToBusinessDossier(DutchBusinessWsdl.DutchBusinessReferencePagedResult pagedResult) {
+        List<DutchBusinessWsdl.DutchBusinessReference> dutchBusinessReferences = new List<DutchBusinessWsdl.DutchBusinessReference>();
+        dutchBusinessReferences.addAll(pagedResult.results.item);
 
-
+        SearchedBusinessDossierResults searchedBusinessDossierResults = new SearchedBusinessDossierResults();
+        List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
+        for(DutchBusinessWsdl.DutchBusinessReference dutchBusinessReference : dutchBusinessReferences){
+            Business_Dossier__c dossier = new Business_Dossier__c();
+            dossier.Dossier_Number__c = dutchBusinessReference.dossier_number;
+            dossier.Establishment_Number__c = dutchBusinessReference.establishment_number;
+            dossier.Name = dutchBusinessReference.trade_name;
+            dossier.Trade_Name_Full__c = dutchBusinessReference.trade_name;
+            dossier.Establishment_City__c = dutchBusinessReference.establishment_city;
+            dossier.Establishment_Street__c = dutchBusinessReference.establishment_street;
+            dossier.Correspondence_City__c = dutchBusinessReference.establishment_city;
+            dossier.Correspondence_Street__c = dutchBusinessReference.establishment_street;
+            dossier.Indication_Economically_Active__c = dutchBusinessReference.indication_economically_active;
+            dossier.RecordTypeId = Schema.SObjectType.Business_Dossier__c.getRecordTypeInfosByDeveloperName().get('Dutch_Business').recordTypeId;
+            businessDossiers.add(dossier);
+            //searchedBusinessDossierResults.businessDossiers.add(dossier);
+        }
+        searchedBusinessDossierResults.businessDossiers = businessDossiers;
+        searchedBusinessDossierResults.curpage = pagedResult.paging.curpage;
+        searchedBusinessDossierResults.perpage = pagedResult.paging.perpage;
+        searchedBusinessDossierResults.numpages = pagedResult.paging.numpages;
+        searchedBusinessDossierResults.numresults = pagedResult.paging.numresults;
+        searchedBusinessDossierResults.maxresults = pagedResult.paging.maxresults;
+        return searchedBusinessDossierResults;
+    }
+    public class SearchedBusinessDossierResults{
+        public List<Business_Dossier__c> businessDossiers;
+        public Integer curpage ;
+        public Integer perpage;
+        public Integer numpages;
+        public Integer numresults;
+        public Integer maxresults;
+    }
     private List<Business_Position__c> createDutchBusinessPositions(DutchBusinessWsdl.DutchBusinessPositions businessPositionsWSDL, Id dossierRecordId) {
         fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.newInstance();
         List<Business_Position__c> businessPositions = new List<Business_Position__c>();
@@ -688,5 +723,49 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
     // method to skip doing if for every value
     private static String convertToString(Integer value){
         return value != null ? String.valueOf(value) : null;
+    }
+
+    public SearchedBusinessDossierResults searchForDutchBusinessSelection(List<String> cities,List<String> postcodes,List<String> sbiList,Boolean primary_sbi_only,List<Integer> legal_forms,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,List<String> provinces,String sbi_match_type){
+
+        //convert list to wsdl arrays
+        DutchBusinessWsdl.stringArray city = new DutchBusinessWsdl.stringArray();
+        city.item = cities;
+
+        DutchBusinessWsdl.stringArray postcode = new DutchBusinessWsdl.stringArray();
+        postcode.item = postcodes;
+
+        DutchBusinessWsdl.stringArray sbi = new DutchBusinessWsdl.stringArray();
+        sbi.item = sbiList;
+
+        DutchBusinessWsdl.intArray legal_form = new DutchBusinessWsdl.intArray();
+        legal_form.item = legal_forms;
+
+        DutchBusinessWsdl.stringArray province = new DutchBusinessWsdl.stringArray();
+        // sanitize the input
+        if(provinces!=null) {
+            for (String postcodeString : provinces) {
+                if (!String.isEmpty(postcodeString)) {
+                    if (postcodeString.startsWith('NL-')) {
+                        postcodeString = postcodeString.substring(3);
+                    }
+                    postcodeString = postcodeString.deleteWhitespace();
+                }
+            }
+        }
+        province.item = provinces;
+
+        List<DutchBusinessWsdl.DutchBusinessReferencePagedResult> searchResults = dutchBusinessSearchSelectionInCompanyInfo(city,postcode,sbi,primary_sbi_only,legal_form,employees_min,employees_max,economically_active,financial_status,changed_since,new_since, page_x, province,sbi_match_type);
+        SearchedBusinessDossierResults returnValue = new SearchedBusinessDossierResults();
+        for (DutchBusinessWsdl.DutchBusinessReferencePagedResult dutchBusinessReferencePagedResult : searchResults) {
+            returnValue = mapDutchBusinessReferencePagedResultToBusinessDossier(dutchBusinessReferencePagedResult);
+        }
+        return returnValue;
+    }
+
+    private List<DutchBusinessWsdl.DutchBusinessReferencePagedResult> dutchBusinessSearchSelectionInCompanyInfo(DutchBusinessWsdl.stringArray city,DutchBusinessWsdl.stringArray postcode,DutchBusinessWsdl.stringArray sbi,Boolean primary_sbi_only,DutchBusinessWsdl.intArray legal_form,Integer employees_min,Integer employees_max,String economically_active,String financial_status,String changed_since,String new_since,Integer page_x,DutchBusinessWsdl.stringArray provinces,String sbi_match_type) {
+        List<DutchBusinessWsdl.DutchBusinessReferencePagedResult> searchResults = new List<DutchBusinessWsdl.DutchBusinessReferencePagedResult>();
+        DutchBusinessWsdl.DutchBusinessReferencePagedResult returnedResults = WsDutchBusiness.dutchBusinessSearchSelection(city,postcode,sbi,primary_sbi_only,legal_form,employees_min,employees_max,economically_active,financial_status,changed_since,new_since, page_x, provinces,sbi_match_type);
+        searchResults.add(returnedResults);
+        return searchResults;
     }
 }

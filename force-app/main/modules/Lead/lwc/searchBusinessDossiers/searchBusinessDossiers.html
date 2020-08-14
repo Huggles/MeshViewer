@@ -1,0 +1,43 @@
+<!--
+ - Created by vishalshete on 10/08/2020.
+ -->
+
+<!-- Search Business Dossiers -->
+<template>
+    <lightning-card  title="">
+            <!--            Show spinner-->
+        <lightning-card title={title} variant="base">
+            <template if:true={isInitializing}>
+                <div style='height: 300px'>
+                    <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
+                </div>
+            </template>
+<!--                Show Datatable-->
+                <template if:false={isInitializing}>
+                    <div class="slds-grid slds-wrap slds-m-around_x-small">
+                        <div class=" slds-col slds-size_1-of-1 ">
+                            {label.CurrentlyShowing} {businessDossierLength} {label.Records}
+                        </div>
+                            <lightning-input type="text" name = "cities" class= "slds-col slds-size_1-of-3" label="" placeholder="Fast search..."  onchange={handleChange}></lightning-input>
+                            <lightning-button variant="brand" label="Create" class= "slds-col dataTableButton" title="Primary action" onclick={handleClick} ></lightning-button>
+                        <div class="slds-col slds-size_1-of-1">
+                    <c-show-business-dossier-data-table
+                            business-dossiers={businessDossiers}
+                            dossiers-to-store={businessDossiers}
+                            enable-infinite-loading={enableInfiniteLoading}
+                            onloadmore={handleLoadMore}
+                            onsendselectedrows={handleSelectedRows}
+                            is-loading={isDataTableLoading}>
+                    </c-show-business-dossier-data-table>
+                        </div>
+                    </div>
+                </template>
+<!--show no image data-->
+            <template if:false={businessDossiers}>
+                <c-no-result-image
+                        no-data-label="No Data Found">
+                </c-no-result-image>
+            </template>
+        </lightning-card>
+    </lightning-card>
+</template>
