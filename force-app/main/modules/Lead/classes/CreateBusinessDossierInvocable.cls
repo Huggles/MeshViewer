@@ -21,17 +21,15 @@ global with sharing class CreateBusinessDossierInvocable {
         try {
             List<Business_Dossier__c> businessDossiersToUpsert = new List<Business_Dossier__c>();
             for (CreateBusinessDossierArgument argument : arguments) {
-                //This invocable can only be called with both arguments filled of type business dossier / account.
+                //This invocable can only be called with both arguments filled of type business dossier.
                 if (argument.businessDossiers == null) {
                     throw new AuraHandledException(Label.Error_Input_Incorrect);
                 } else{
                     businessDossiersToUpsert = argument.businessDossiers;
                 }
             }
-            //for (Business_Dossier__c dossier : businessDossiersToUpsert) {
             List<Business_Dossier__c> insertedBusinessDossiers = BusinessService.createDossiers(businessDossiersToUpsert, true);
                 return insertedBusinessDossiers;
-            //}//
         }
         catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);

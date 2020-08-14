@@ -6,6 +6,7 @@ import {LightningElement,api,track} from 'lwc';
 import Loading from '@salesforce/label/c.Loading';
 import Error from '@salesforce/label/c.Error';
 import {ToastEventController} from "c/toastEventController";
+
 const columns = [
     {label: 'Dossier Number', fieldName: 'appsolutely__Dossier_Number__c', type: 'number', sortable: true},
     {label: 'Establishment Number', fieldName: 'appsolutely__Establishment_Number__c', type: 'text', sortable: true},
@@ -20,6 +21,11 @@ const columns = [
 
 
 export default class ShowBusinessDossierDataTable extends LightningElement {
+    /**
+     * default sort direction for the datatable
+     */
+    @track defaultSortDirection = 'asc';
+
     @api businessDossiers
     /**
      * Column FieldName on which to sort the table
@@ -61,7 +67,6 @@ export default class ShowBusinessDossierDataTable extends LightningElement {
         this.sortedBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
     }
-
     sortDossiers(sortedBy, sortDirection) {
         if (this.businessDossiers) {
             let dossiers = [...this.businessDossiers];
@@ -73,12 +78,38 @@ export default class ShowBusinessDossierDataTable extends LightningElement {
             this.businessDossiers = dossiers;
         }
     }
-    handleRowSelection(event) {
-        this.selectedRows = event.target.getSelectedRows();
-        this.dispatchEvent(new CustomEvent('rowselection'));
+    @api dossiersToStore=[];
+
+    @api
+    fastFilter(searchString) {
+        // if(searchString == null|| searchString == undefined||searchString=="" ){
+        if(!searchString){
+            this.businessDossiers = this.dossiersToStore;
+        } else{
+            searchString = searchString.toLowerCase();
+            this.businessDossiers = this.dossiersToStore.filter(dossier=>
+                dossier.appsolutely__Dossier_Number__c.toLowerCase().includes(searchString)||
+                dossier.appsolutely__Establishment_Number__c.toLowerCase().includes(searchString)||
+                dossier.Name.toLowerCase().includes(searchString)
+            );
+        }
     }
     handleLoadMore(event) {
-        this.isLoading = true;
-        this.dispatchEvent(new CustomEvent('loadmore'));
+        if(this.dossiersToStore.length == this.businessDossiers.length) {
+            this.isLoading = true;
+            this.dispatchEvent(new CustomEvent('loadmore'));
+        }
+    }
+
+    handleRowSelection(event) {
+        this.selectedRows = event.target.getSelectedRows();
+    }
+    @track insertedDossiers;
+    @api
+    createDossiers(){
+        this.dispatchEvent(new CustomEvent('sendselectedrows',{
+            detail: this.selectedRows
+        }));
+
     }
 }
