@@ -2,7 +2,7 @@
  * Created by Hugo on 07/08/2020.
  */
 
-import {LightningElement, track} from 'lwc';
+import {LightningElement, track, api} from 'lwc';
 import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
 import leaflet from '@salesforce/resourceUrl/leaflet';
 import GeoJSON from '@salesforce/resourceUrl/GeoJSON';
@@ -16,33 +16,53 @@ export default class LeadGeneratorLocation extends LightningElement {
      */
 
     @track _provinces = {
-        'Drenthe' : {
-            show_on_map : true},
-        'Flevoland' : {
-            show_on_map : true },
-        'Friesland' : {
-            show_on_map : true },
-        'Gelderland' : {
-            show_on_map : true },
-        'Groningen' : {
-            show_on_map : true },
-        'Limburg' : {
-            show_on_map : true },
-        'Noord-Brabant' : {
-            show_on_map : true },
-        'Noord-Holland' : {
-            show_on_map : true },
-        'Overijssel' : {
-            show_on_map : true },
-        'Utrecht' : {
-            show_on_map : true },
-        'Zeeland' : {
-            show_on_map : true },
-        'Zuid-Holland' : {
-            show_on_map : true },
+        'Drenthe': {
+            show_on_map: false
+        },
+        'Flevoland': {
+            show_on_map: false
+        },
+        'Friesland': {
+            show_on_map: false
+        },
+        'Gelderland': {
+            show_on_map: false
+        },
+        'Groningen': {
+            show_on_map: false
+        },
+        'Limburg': {
+            show_on_map: false
+        },
+        'Noord-Brabant': {
+            show_on_map: false
+        },
+        'Noord-Holland': {
+            show_on_map: false
+        },
+        'Overijssel': {
+            show_on_map: false
+        },
+        'Utrecht': {
+            show_on_map: false
+        },
+        'Zeeland': {
+            show_on_map: false
+        },
+        'Zuid-Holland': {
+            show_on_map: false
+        }
     }
-    @track _townshipsIndex = {
+    @api selectedProvinces = {
 
+    }
+
+    @api getLocationArray(){
+        let selectedProvinces = [];
+        for (const [key, value] of Object.entries(this._provinces)) {
+            if(value.show_on_map === true) selectedProvinces.push(key);
+        }
+        return selectedProvinces;
     }
 
 
@@ -84,7 +104,15 @@ export default class LeadGeneratorLocation extends LightningElement {
     _townshipsGeoJSONLayer;
 
     connectedCallback() {
+        this.loadInitialData();
         this.loadLeaflet();
+    }
+    loadInitialData(){
+        if(this.selectedProvinces != null){
+            this.selectedProvinces.forEach((selectedProvince)=>{
+                this._provinces[selectedProvince].show_on_map = true;
+            });
+        }
     }
     loadLeaflet(){
         Promise.all([
@@ -115,12 +143,16 @@ export default class LeadGeneratorLocation extends LightningElement {
     initLeafletMap(){
         if(this._leafletMapHTMLElement != null && this._leafletLibraryLoaded == true && this._leafletMapLoaded == false){
             this._leafletMapLoaded = true;
-            this._leafletMap = L.map(this._leafletMapHTMLElement).setView([52.2044968, 5.6275306], 7);
+            this._leafletMap = L.map(this._leafletMapHTMLElement, {
+                zoomDelta: 0.25,
+                zoomSnap: 0.25,
+
+            }).setView([52.2044968, 5.6275306], 6.5);
             this._openStreetMapTileLayer = L.tileLayer(
                 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 {
-                    maxZoom: 15,
-                    minZoom: 1,
+                    maxZoom: 8,
+                    minZoom: 6.5,
                 })
                 .addTo(this._leafletMap);
             try{

@@ -7,7 +7,7 @@
  * Created by Hugo on 10/08/2020.
  */
 
-import {LightningElement, track} from 'lwc';
+import {LightningElement, track, api} from 'lwc';
 import {ToastEventController} from "c/toastEventController";
 
 import SBIData from '@salesforce/resourceUrl/SBICodes';
@@ -33,6 +33,13 @@ export default class LeadGeneratorStandardIndustrialClassifications extends Ligh
 
 
     @track _sbiData;
+
+    @api getSBIArray(){
+        let sbicodes = this.getSelectedSBICodes();
+        console.log('sbicodes');
+        console.log(sbicodes);
+        return sbicodes;
+    }
 
     connectedCallback() {
         this.loadSBIData()
@@ -120,7 +127,8 @@ export default class LeadGeneratorStandardIndustrialClassifications extends Ligh
     getSelectedSBICodes(){
         this.selectedSBICodes = [];
         this.getSelectedSBICode(this.treeGridData);
-        console.log(JSON.stringify(this.selectedSBICodes));
+        return this.selectedSBICodes;
+
     }
     getSelectedSBICode(row){
         row.forEach((row, index) => {

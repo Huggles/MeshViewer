@@ -4,31 +4,38 @@
 
 <!-- Lead Generator Search -->
 <template>
-    <h1> Find Businesses </h1>
-    <p> hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. </p>
-    <div style="max-height: 70vh; overflow-y: scroll;">
-        <div class="slds-box slds-scrollable_y">
-            <lightning-accordion allow-multiple-sections-open
-                                 onsectiontoggle={handleSectionToggle}>
-                <lightning-accordion-section name="Industry" label="Industry">
-                    <div class="slds-m-around_small slds-card">
-                        <c-lead-generator-standard-industrial-classifications></c-lead-generator-standard-industrial-classifications>
-                    </div>
-                </lightning-accordion-section>
-                <lightning-accordion-section name="Location" label="Location" >
-                    <template if:true={isStepLocation1}>
-                        <div class="slds-m-around_small slds-card">
-                            <c-lead-generator-location ></c-lead-generator-location>
-                        </div>
-                    </template>
+    <header class="slds-modal__header">
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Find Businesses</h2>
+    </header>
+    <div>
+        <div class="slds-m-vertical_small">
+            hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks.
+        </div>
 
-                </lightning-accordion-section>
-                <lightning-accordion-section name="Other" label="Other" >
-                    <div class="slds-m-around_small slds-card">
-                        <c-find-businesses-other-criteria ></c-find-businesses-other-criteria>
-                    </div>
-                </lightning-accordion-section>
-            </lightning-accordion>
+        <div style="max-height: 70vh; overflow-y: scroll;">
+            <div class="slds-box slds-scrollable_y">
+                <lightning-accordion allow-multiple-sections-open
+                                     onsectiontoggle={handleSectionToggle}>
+                    <lightning-accordion-section name="Industry" label="Industry">
+                        <div class="slds-m-around_small slds-card">
+                            <c-lead-generator-standard-industrial-classifications></c-lead-generator-standard-industrial-classifications>
+                        </div>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Location" label="Location" >
+                        <template if:true={isStepLocation}>
+                            <div class="slds-m-around_small slds-card">
+                                <c-lead-generator-location selected-provinces={selectedLocations}></c-lead-generator-location>
+                            </div>
+                        </template>
+
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Other" label="Other" >
+                        <div class="slds-m-around_small slds-card">
+                            <c-find-businesses-other-criteria ></c-find-businesses-other-criteria>
+                        </div>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </div>
         </div>
     </div>
     <c-flow-footer next-button-title={label.Search_Confirm}

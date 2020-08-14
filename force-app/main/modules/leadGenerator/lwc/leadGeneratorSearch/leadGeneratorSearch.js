@@ -2,7 +2,7 @@
  * Created by Hugo on 11/08/2020.
  */
 
-import {LightningElement} from 'lwc';
+import {LightningElement, track, api} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEvent, FlowNavigationPauseEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 
 import Search_Confirm from '@salesforce/label/c.Search_Confirm';
@@ -13,16 +13,15 @@ import Previous from '@salesforce/label/c.Previous';
 
 export default class LeadGeneratorSearch extends LightningElement {
 
-    activeSections;
-
+    activeSections = [];
     handleSectionToggle(event){
-
+        if(this.activeSections.includes('Location') && !event.detail.openSections.includes('Location')){
+            //Location tab was closed. Retrieve selected provinces.
+            this.selectedLocations = this.locationHTMLElement.getLocationArray();
+        }
         this.activeSections = event.detail.openSections;
-        console.log(this.activeSections);
-        console.log(JSON.stringify(this.activeSections));
-        console.log(JSON.parse(JSON.stringify(this.activeSections)));
     }
-    get isStepLocation1(){
+    get isStepLocation(){
         if(this.activeSections != null){
             return this.activeSections.includes("Location");
         }return false;
@@ -42,9 +41,34 @@ export default class LeadGeneratorSearch extends LightningElement {
     ]
     showFooterCancelButton = true;
 
+    sbiHTMLElement;
+    locationHTMLElement;
+    otherCriteriaHTMLElement;
+
+    @track selectedSBIs = [];
+    @track selectedLocations = [];
+    @track selectedOtherCriteria = {};
+
+
+    renderedCallback() {
+        this.sbiHTMLElement = this.template.querySelector('c-lead-generator-standard-industrial-classifications');
+        this.locationHTMLElement = this.template.querySelector('c-lead-generator-location');
+        this.otherCriteriaHTMLElement = this.template.querySelector('c-find-businesses-other-criteria');
+    }
+
     handleFooterNextClick(event){
-        const navigateNextEvent = new FlowNavigationNextEvent();
-        this.dispatchEvent(navigateNextEvent);
+        this.selectedSBIs = this.sbiHTMLElement.getSBIArray();
+        if(this.locationHTMLElement != null)
+            this.selectedLocations = this.locationHTMLElement.getLocationArray(); //Only runs when the location accordion item is still open.
+        this.selectedOtherCriteria = this.otherCriteriaHTMLElement.getCriteriaMap();
+
+        console.log(JSON.stringify(this.selectedSBIs));
+        console.log(JSON.stringify(this.selectedLocations));
+        console.log(JSON.stringify(this.selectedOtherCriteria));
+
+
+        //const navigateNextEvent = new FlowNavigationNextEvent();
+        //this.dispatchEvent(navigateNextEvent);
     }
 
     steps = [
@@ -63,6 +87,7 @@ export default class LeadGeneratorSearch extends LightningElement {
 
 
 
+    /*
     currentstepIndex = 0;
     get currentstep(){
         return this.steps[this.currentstepIndex].value;
@@ -87,6 +112,8 @@ export default class LeadGeneratorSearch extends LightningElement {
             this.currentstepIndex -= 1;
         }
     }
+
+     */
 
 
 }

@@ -2,7 +2,7 @@
  * Created by hugovankrimpen on 12/08/2020.
  */
 
-import {LightningElement, track} from 'lwc';
+import {LightningElement, track, api} from 'lwc';
 import {loadScript, loadStyle} from "lightning/platformResourceLoader";
 import noUISliderRef from '@salesforce/resourceUrl/noUISlider';
 
@@ -19,7 +19,11 @@ export default class FindBusinessesOtherCriteria extends LightningElement {
         cities: '',
         postcodes: ''
     };
-
+    @api getCriteriaMap(){
+        console.log('this.criteriaValueMap');
+        console.log(this.criteriaValueMap);
+        return this.criteriaValueMap;
+    }
 
 
 
@@ -88,6 +92,7 @@ export default class FindBusinessesOtherCriteria extends LightningElement {
         this.sliderHTMLElementLoaded = true;
     }
 
+
     handleSBIMatchTypeChange(event){
         this.criteriaValueMap['sbi_match_type'] = event.detail.checked;
     }
@@ -116,9 +121,7 @@ export default class FindBusinessesOtherCriteria extends LightningElement {
     handlePostalCodesChange(event){
         this.criteriaValueMap['postcodes'] = event.detail.value;
     }
-    logData(event){
-        console.log(JSON.parse(JSON.stringify(this.criteriaValueMap)));
-    }
+
 
     not_selected_option = { label: '-', value: 'none' };
 
