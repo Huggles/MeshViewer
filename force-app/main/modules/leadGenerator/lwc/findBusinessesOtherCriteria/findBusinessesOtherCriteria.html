@@ -6,47 +6,38 @@
 <template>
     <div class="slds-grid slds-wrap slds-gutters_direct-small slds-m-horizontal_small">
         <div class= "slds-col slds-size_6-of-12">
-            <lightning-dual-listbox name="languages"
-                                    label="Filter on Legal Forms"
-                                    source-label="Available"
-                                    selected-label="Selected"
-                                    options={legal_form_options}
-                                    onchange={handleLegalFormChange}></lightning-dual-listbox>
-            <div class="slds-col slds-size_6-of-12 slds-grid slds-wrap slds-m-vertical_x-small">
+            <c-multi-pick-list label="Legal Types"
+                               options={legal_form_options}
+                               onitemselected={handleLegalFormChange}>
+            </c-multi-pick-list>
+            <lightning-input type="date"        name = "changed_since" label="Changed Since"  onchange={handleChangedSinceChange}></lightning-input>
+            <lightning-input type="date"        name = "new_since" label="New Since"  onchange={handleNewSinceChange}></lightning-input>
+            <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap slds-m-vertical_x-small ">
                 <div class="slds-col slds-size_1-of-1 slds-m-bottom_x-small"><label class="slds-form-element__label slds-no-flex">Number of Employees: {employeesSliderSelectedMinValue}&nbsp;-&nbsp;{employeesSliderSelectedMaxValue}</label></div>
-                <div class="slds-col slds-size_1-of-1 noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr" data-id="employeeSlider"></div>
+                <div class="slds-col slds-size_1-of-1 slds-p-horizontal_small noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr" data-id="employeeSlider"></div>
             </div>
-
         </div>
         <div class= "slds-col slds-size_6-of-12">
-            <lightning-input type="text"        name = "changed_since" label="Changed Since"  onchange={handleChangedSinceChange}></lightning-input>
-            <lightning-input type="text"        name = "new_since" label="New Since"  onchange={handleNewSinceChange}></lightning-input>
             <lightning-combobox
                     name="sbi_match_type"
                     label="SBI Match Type"
-                    value={not_selected_option.value}
+                    value={criteriaValueMap.sbi_match_type}
                     options={sbi_match_type_options}
                     onchange={handleSBIMatchTypeChange}></lightning-combobox>
             <lightning-combobox
                     name="economically_active"
                     label="Economically Active"
-                    value={not_selected_option.value}
+                    value={criteriaValueMap.economically_active}
                     options={economically_active_options}
                     onchange={handleEconomicallyActiveChange}></lightning-combobox>
             <lightning-combobox
                     name="financial_status"
                     label="Financial Status"
-                    value={not_selected_option.value}
+                    value={criteriaValueMap.financial_status}
                     options={financial_status_options}
                     onchange={handleFinancialStatusChange}></lightning-combobox>
             <lightning-input type="checkbox"    name = "primary_sbi_only" label="Match only Primary SBI"  onchange={handlePrimarySBIOnlyChange}></lightning-input>
-<!--            <lightning-input type="text"        name = "cities" class= "slds-col slds-size_6-of-12" label="Cities"  onchange={handleCitiesChange}></lightning-input>-->
-<!--            <lightning-input type="text"        name = "postcodes" class= "slds-col slds-size_6-of-12" label="Postal Code"  onchange={handlePostalCodesChange}></lightning-input>-->
-
         </div>
-
-
-
-
     </div>
+    <lightning-button label="collect data" onclick={logData}></lightning-button>
 </template>
