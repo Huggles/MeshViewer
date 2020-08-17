@@ -63,7 +63,7 @@ export default class SearchBusinessDossiers extends LightningElement {
         if(this.searchCriteria.page_x!=undefined)                   this.page_x = this.searchCriteria.page_x;
         if(this.searchCriteria.provinces!=undefined)                this.provinces = this.searchCriteria.provinces;
         if(this.searchCriteria.sbi_match_type!=undefined)           this.sbi_match_type =this.searchCriteria.sbi_match_type;
-        // if(this.searchCriteria.max_number_of_results!=undefined)    this.maxRecords =this.searchCriteria.max_number_of_results;
+        if(this.searchCriteria.max_number_of_results!=undefined)    this.maxRecords =this.searchCriteria.max_number_of_results;
     }
 
     connectedCallback() {
