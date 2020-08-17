@@ -3,9 +3,8 @@
  */
 
 import {LightningElement, track, wire, api} from 'lwc';
-// import searchDutchBusinessDossiers from '@salesforce/apex/SearchBusinessDossiersInvocable.searchDutchBusinessDossiers';
 import searchDutchBusinessDossiers from '@salesforce/apex/SearchBusinessDossiersController.searchDutchBusinessDossiers';
-import {ShowToastEvent} from "lightning/platformShowToastEvent";
+import {ToastEventController} from "c/toastEventController";
 import Loading from '@salesforce/label/c.Loading';
 import CurrentlyShowing from '@salesforce/label/c.Currently_showing';
 import Records from '@salesforce/label/c.Record';
@@ -16,7 +15,7 @@ export default class SearchBusinessDossiers extends LightningElement {
 
     @api searchCriteria;
 
-    @api cities;
+    @api cities='Utrecht';
     @api postcodes;
     @api sbiList;
     @api primary_sbi_only;
@@ -31,10 +30,10 @@ export default class SearchBusinessDossiers extends LightningElement {
     @api provinces;
     @api sbi_match_type;
 
-    @track businessDossiers = [];
-    @track isDataTableLoading = false;
-    enableInfiniteLoading = true;
+    @track maxRecords=200;
     @track isLoading = true;
+    @track businessDossiers = [];
+    @track dossiers = [];
 
     get isInitializing(){
         return this.isLoading;
@@ -50,7 +49,6 @@ export default class SearchBusinessDossiers extends LightningElement {
         }
     }
     validateInput(){
-        console.log(JSON.parse(JSON.stringify(this.searchCriteria)));
         if(this.searchCriteria.cities!=undefined)                   this.cities =this.searchCriteria.cities;
         if(this.searchCriteria.postcodes!=undefined)                this.postcodes =this.searchCriteria.postcodes;
         if(this.searchCriteria.sbiList!=undefined)                  this.sbiList =this.searchCriteria.sbiList;
@@ -65,33 +63,25 @@ export default class SearchBusinessDossiers extends LightningElement {
         if(this.searchCriteria.page_x!=undefined)                   this.page_x = this.searchCriteria.page_x;
         if(this.searchCriteria.provinces!=undefined)                this.provinces = this.searchCriteria.provinces;
         if(this.searchCriteria.sbi_match_type!=undefined)           this.sbi_match_type =this.searchCriteria.sbi_match_type;
+        // if(this.searchCriteria.max_number_of_results!=undefined)    this.maxRecords =this.searchCriteria.max_number_of_results;
     }
 
     connectedCallback() {
         this.businessDossiers = [];
         this.validateInput();
-        this.makeCallout();
+        this.makeCallout().catch(error => {
+            new ToastEventController(this).showErrorToastMessage(null,error.message);
+        }).finally(result=>{this.businessDossiers = this.dossiers});
     }
     get businessDossierLength(){
-        return this.businessDossiers.length;
-    }
-
-    handleLoadMore(){
-        this.isDataTableLoading = true;
-        this.enableInfiniteLoading = true;
-        this.continueSearchBusinessDossier();
-    }
-
-    continueSearchBusinessDossier(){
-    //increase page to call next page
-        this.page_x++;
-        this.makeCallout();
+        return this.dossiers.length;
     }
     handleClick(){
         this.template.querySelector('c-show-business-dossier-data-table').createDossiers();
     }
-    makeCallout(){
-        searchDutchBusinessDossiers({
+
+     async makeCallout(){
+          searchDutchBusinessDossiers({
             "cities": this.cities, "postcodes": this.postcodes,
             "sbiList": this.sbiList, "primary_sbi_only": this.primary_sbi_only,
             "legal_forms": this.legal_forms, "employees_min": this.employees_min,
@@ -101,35 +91,38 @@ export default class SearchBusinessDossiers extends LightningElement {
             "provinces": this.provinces, "sbi_match_type": this.sbi_match_type,
        })
         .then(result => {
-            if(this.businessDossiers==undefined)this.businessDossiers = result.businessDossiers;
-            else this.businessDossiers = this.businessDossiers.concat(result.businessDossiers);
-
+            if(this.businessDossiers.length==0) {
+                this.businessDossiers = result.businessDossiers;
+                this.dossiers = result.businessDossiers;
+            }
+            else {
+                this.dossiers =this.dossiers.concat(result.businessDossiers);
+                // this.businessDossiers = this.businessDossiers.concat(result.businessDossiers);
+            }
             let totalPage = result.numpages;
             this.page_x = result.curpage;
-            this.isDataTableLoading = false;
+            this.page_x++
             if( !(this.page_x<=totalPage)){
                 this.page_x = 0;
-                this.enableInfiniteLoading = false;
             }
-            this.isLoading = false;//stop showing initial spinner
+            this.isLoading = false;
+            if(this.dossiers.length<this.maxRecords){
+                this.makeCallout();
+            } else{
+                this.businessDossiers = [];
+                this.businessDossiers = this.dossiers;
+            }
+            //stop showing initial spinner
+            Promise.resolve(result);
         })
         .catch(error => {
-            this.error = error
+            this.error = error;
+            Promise.reject(error);
         })
     }
-
     set error(value){
         if (!value) return;
-        this.fireToast(this.label.Error, this.label.Error, value );
-    }
-    fireToast(type, title, message) {
-        const event = new ShowToastEvent({
-            title: title,
-            message: message,
-            variant: type,
-            mode: 'dismissable'
-        });
-        this.dispatchEvent(event);
+        new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.Error, value );
     }
     @api businessDossiersToInsert
     handleSelectedRows(event){

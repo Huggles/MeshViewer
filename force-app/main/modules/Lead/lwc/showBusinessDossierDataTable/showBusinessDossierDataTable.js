@@ -13,11 +13,11 @@ const columns = [
     {label: 'Establishment Number', fieldName: 'appsolutely__Establishment_Number__c', type: 'text', sortable: true},
     {label: 'Name', fieldName: 'Name', type: 'text', sortable: true},
     {label: 'Trade Name Full', fieldName: 'appsolutely__Trade_Name_Full__c', type: 'text', sortable: true},
-    {label: 'Establishment City', fieldName: 'appsolutely__Establishment_City__c', type: 'text', sortable: true},
-    {label: 'Establishment Street', fieldName: 'appsolutely__Establishment_Street__c', type: 'text', sortable: true},
-    {label: 'Correspondence City', fieldName: 'appsolutely__Correspondence_City__c', type: 'text', sortable: true},
-    {label: 'Correspondence Street', fieldName: 'appsolutely__Correspondence_Street', type: 'text', sortable: true},
-    {label: 'Indication Economically Active', fieldName: 'Indication_Economically_Active__c', type: 'boolean', sortable: true}
+    {label: 'Establishment City', fieldName: 'appsolutely__Establishment_City__c', type: 'text', sortable: false},
+    {label: 'Establishment Street', fieldName: 'appsolutely__Establishment_Street__c', type: 'text', sortable: false},
+    {label: 'Correspondence City', fieldName: 'appsolutely__Correspondence_City__c', type: 'text', sortable: false},
+    {label: 'Correspondence Street', fieldName: 'appsolutely__Correspondence_Street', type: 'text', sortable: false},
+    {label: 'Indication Economically Active', fieldName: 'Indication_Economically_Active__c', type: 'boolean', sortable: false}
 ];
 
 
@@ -64,12 +64,7 @@ export default class ShowBusinessDossierDataTable extends LightningElement {
     handleSort(event) {
         // switch in sort direction and number of rows loaded is less than total number of rows
         let reload = false;
-        if (this.sortDirection != event.detail.sortDirection && this.businessDossiers ) {
-            this.businessDossiers = undefined;
-            reload = true;
-        } else {
-            this.sortDossiers(event.detail.fieldName, event.detail.sortDirection);
-        }
+        this.sortDossiers(event.detail.fieldName, event.detail.sortDirection);
         this.sortedBy = event.detail.fieldName;
         this.sortDirection = event.detail.sortDirection;
     }
@@ -97,12 +92,6 @@ export default class ShowBusinessDossierDataTable extends LightningElement {
                 dossier.appsolutely__Establishment_Number__c.toLowerCase().includes(searchString)||
                 dossier.Name.toLowerCase().includes(searchString)
             );
-        }
-    }
-    handleLoadMore(event) {
-        if(this.dossiersToStore.length == this.businessDossiers.length) {
-            this.isLoading = true;
-            this.dispatchEvent(new CustomEvent('loadmore'));
         }
     }
     handleRowSelection(event) {
