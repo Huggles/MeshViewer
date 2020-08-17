@@ -4,11 +4,18 @@
 
 import {LightningElement, track, wire, api} from 'lwc';
 import searchDutchBusinessDossiers from '@salesforce/apex/SearchBusinessDossiersController.searchDutchBusinessDossiers';
+import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEvent,
+    FlowNavigationPauseEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
+
 import {ToastEventController} from "c/toastEventController";
 import Loading from '@salesforce/label/c.Loading';
 import CurrentlyShowing from '@salesforce/label/c.Currently_showing';
 import Records from '@salesforce/label/c.Record';
 import Error from '@salesforce/label/c.Error';
+import Cancel from '@salesforce/label/c.Cancel';
+import Previous from '@salesforce/label/c.Previous';
+import CreateBusinessDossiers from '@salesforce/label/c.Create_Business_Dossiers';
+
 
 export default class SearchBusinessDossiers extends LightningElement {
 
@@ -38,7 +45,16 @@ export default class SearchBusinessDossiers extends LightningElement {
     get isInitializing(){
         return this.isLoading;
     }
-    label = { Loading,CurrentlyShowing,Records,Error
+    availableFooterActions = [
+        'BACK',
+        'NEXT',
+        'FINISH'
+    ]
+    showFooterCancelButton = true;
+
+    label = { Loading,CurrentlyShowing,
+        Records,Error, Cancel,
+        Previous,CreateBusinessDossiers
     }
     searchString;
     handleChange(event) {
@@ -125,9 +141,25 @@ export default class SearchBusinessDossiers extends LightningElement {
         new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.Error, value );
     }
     @api businessDossiersToInsert
+
     handleSelectedRows(event){
         try {
             this.businessDossiersToInsert = event.detail;
+            if(!this.businessDossiersToInsert)
+                new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.Error, value );
+            else {
+                const navigateNextEvent = new FlowNavigationNextEvent();
+                this.dispatchEvent(navigateNextEvent);
+            }
+
+        } catch (e){
+            this.error = e;
+        }
+    }
+    handleFooterNextClick(){
+        try {
+            this.template.querySelector('c-show-business-dossier-data-table').createDossiers();
+
         } catch (e){
             this.error = e;
         }

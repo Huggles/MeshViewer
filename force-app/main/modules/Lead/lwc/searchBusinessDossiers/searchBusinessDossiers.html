@@ -19,7 +19,6 @@
                             {label.CurrentlyShowing} {businessDossierLength} {label.Records}
                         </div>
                             <lightning-input type="text" name = "cities" class= "slds-col slds-size_1-of-3" label="" placeholder="Fast search..."  onchange={handleChange}></lightning-input>
-                            <lightning-button variant="brand" label="Create" class= "slds-col dataTableButton" title="Primary action" onclick={handleClick} ></lightning-button>
                         <div class="slds-col slds-size_1-of-1">
                     <c-show-business-dossier-data-table
                             business-dossiers={businessDossiers}
@@ -35,6 +34,13 @@
                         no-data-label="No Data Found">
                 </c-no-result-image>
             </template>
+            <c-flow-footer next-button-title={label.CreateBusinessDossiers}
+                           cancel-button-title={label.Cancel}
+                           previous-button-title={label.Previous}
+                           available-actions={availableFooterActions}
+                           show-cancel-button={showFooterCancelButton}
+                           onnextclick={handleFooterNextClick}>
+            </c-flow-footer>
         </lightning-card>
     </lightning-card>
 </template>
