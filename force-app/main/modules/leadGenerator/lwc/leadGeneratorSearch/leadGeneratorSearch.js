@@ -9,6 +9,8 @@ import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEve
 import Search_Confirm from '@salesforce/label/c.Search_Confirm';
 import Cancel from '@salesforce/label/c.Cancel';
 import Previous from '@salesforce/label/c.Previous';
+import Find_Businesses_Criteria_Title from '@salesforce/label/c.Find_Businesses_Criteria_Title';
+import Find_Businesses_Criteria_Help_Text from '@salesforce/label/c.Find_Businesses_Criteria_Help_Text';
 
 
 
@@ -30,14 +32,14 @@ export default class LeadGeneratorSearch extends LightningElement {
         if(this.activeSections != null){
             return this.activeSections.includes("Location");
         }return false;
-
     }
 
-
-    label = {
+    labels = {
         Search_Confirm,
         Cancel,
-        Previous
+        Previous,
+        Find_Businesses_Criteria_Title,
+        Find_Businesses_Criteria_Help_Text
     }
 
     availableFooterActions = [
@@ -67,12 +69,22 @@ export default class LeadGeneratorSearch extends LightningElement {
             this.selectedLocations = this.locationHTMLElement.getLocationArray(); //Only runs when the location accordion item is still open.
         this.selectedOtherCriteria = this.otherCriteriaHTMLElement.getCriteriaMap();
 
-        console.log(JSON.stringify(this.selectedSBIs));
-        console.log(JSON.parse(JSON.stringify(this.selectedLocations)));
-        console.log(JSON.stringify(this.selectedOtherCriteria));
+        let selectedSBIsFiltered = [];
+        this.selectedSBIs.forEach((item,index)=>{
+            if(item.length === 1 && item.match(/[a-zA-Z]/i) != null){} //Dont include the category, this throws an error on company.info side. }
+            else{
+                selectedSBIsFiltered.push(item);
+            }
+
+        });
+        let legalForms = [];
+        this.selectedOtherCriteria.legal_forms.forEach((item,index)=>{
+            legalForms.push(item.value);
+        });
+
         let FindBusinessCriteriaModel = {
-            sbiList : null,
-            legal_forms : null,
+            sbiList :                   selectedSBIsFiltered,
+            legal_forms :               legalForms,
             provinces :                 JSON.parse(JSON.stringify(this.selectedLocations)),
             employees_min :             this.selectedOtherCriteria.employees_min,
             employees_max :             this.selectedOtherCriteria.employees_max,
@@ -81,7 +93,9 @@ export default class LeadGeneratorSearch extends LightningElement {
             financial_status :          this.selectedOtherCriteria.financial_status,
             changed_since :             this.selectedOtherCriteria.changed_since,
             new_since :                 this.selectedOtherCriteria.new_since,
-            sbi_match_type :            this.selectedOtherCriteria.sbi_match_type
+            sbi_match_type :            this.selectedOtherCriteria.sbi_match_type,
+            max_number_of_results :     this.selectedOtherCriteria.max_number_of_results
+
         }
         this.selectedCriteria123 = FindBusinessCriteriaModel;
         const attributeChangeEvent = new FlowAttributeChangeEvent('selectedCriteria123', FindBusinessCriteriaModel);
@@ -91,52 +105,4 @@ export default class LeadGeneratorSearch extends LightningElement {
         const navigateNextEvent = new FlowNavigationNextEvent();
         this.dispatchEvent(navigateNextEvent);
     }
-
-    /*
-
-steps = [
-    {
-        label : 'Select SBI\'s',
-        value : 'SBI'
-    },
-    {
-        label : 'Select Location',
-        value : 'Location'
-    },
-    {
-        label : 'Select Properties',
-        value : 'Properties'
-    }];
-
-
-
-
-currentstepIndex = 0;
-get currentstep(){
-    return this.steps[this.currentstepIndex].value;
-}
-get isStepSBI(){
-    return this.currentstep == this.steps[0].value;
-}
-get isStepLocation(){
-    return this.currentstep == this.steps[1].value;
-}
-get isStepProperties(){
-    return this.currentstep == this.steps[2].value;
-}
-
-onNextClicked(event){
-    if(this.currentstepIndex < this.steps.length - 1){
-        this.currentstepIndex += 1;
-    }
-}
-onPreviousClicked(event){
-    if(this.currentstepIndex > 0){
-        this.currentstepIndex -= 1;
-    }
-}
-
- */
-
-
 }

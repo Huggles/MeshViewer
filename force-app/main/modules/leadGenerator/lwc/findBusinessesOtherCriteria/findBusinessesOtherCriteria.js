@@ -4,107 +4,76 @@
 
 import {LightningElement, track, api} from 'lwc';
 import {loadScript, loadStyle} from "lightning/platformResourceLoader";
-import noUISliderRef from '@salesforce/resourceUrl/noUISlider';
+import {deepCopyFunction} from "c/deepCloneUtils";
 
 export default class FindBusinessesOtherCriteria extends LightningElement {
 
     @track criteriaValueMap = {
-        sbi_match_type: 'ALL',
-        economically_active: 'active',
-        financial_status: 'solvent',
-        primary_sbi_only: false,
         legal_forms: [],
         changed_since: '',
         new_since: '',
+        employees_min: 0,
+        employees_max: null,
         cities: '',
         postcodes: ''
     };
     @api getCriteriaMap(){
-        console.log('this.criteriaValueMap');
-        console.log(this.criteriaValueMap);
-        return this.criteriaValueMap;
+        let advancedCriteriaMap = this.AdvancedSectionHTMLElement.getCriteriaMap();
+        let combinedCriteriaMap = deepCopyFunction(Object.assign(advancedCriteriaMap, this.criteriaValueMap));
+        return combinedCriteriaMap;
     }
-
-
 
     connectedCallback() {
-        this.loadSlider();
+
     }
 
-    sliderHTMLElement;
-    sliderHTMLElementLoaded = false;
-    sliderLibraryLoaded = false;
-    async loadSlider(){
-        Promise.all([
-            loadScript(this, noUISliderRef + '/nouislider.js'),
-            loadStyle(this, noUISliderRef + '/nouislider.css'),
-        ]).then((results)=>{
-            this.sliderLibraryLoaded = true;
-            this.createSlider();
-        })
-    }
     renderedCallback() {
-        this.sliderHTMLElement = this.template.querySelector('[data-id="employeeSlider"]');
-        this.createSlider();
+        this.AdvancedSectionHTMLElement = this.template.querySelector('c-find-businesses-advanced-criteria');
+        this.minEmployeeSliderHTMLElement = this.template.querySelector('[data-identifier="minEmployeesSilder"]');
+        this.maxEmployeeSliderHTMLElement = this.template.querySelector('[data-identifier="maxEmployeesSilder"]');
     }
 
+    AdvancedSectionHTMLElement;
 
+    //****************//
+    //Employee Sliders//
+    //****************//
 
-    employeesSliderSelectedMinValue;
-    employeesSliderSelectedMaxValue;
-    createSlider(){
-        if(this.sliderHTMLElement == null ||  this.sliderLibraryLoaded == false || this.sliderHTMLElementLoaded == true) {
-            return;
-        }
-        let maxValue = 500;
-        let minValue = 0;
-        noUiSlider.cssClasses.handle += ' sliderHandleCSS'
-        noUiSlider.create(this.sliderHTMLElement, {
-            range: {
-                'min': minValue,
-                'max': maxValue
-            },
-            step: 1,
-            connect: true,
-            tooltips: [false, false],
-            margin: 1,
-            format: {
-              to: (value) =>{
-                  if(value === maxValue ) return "∞";
-                  if(isNaN(value)) return value;
-                  return value.toFixed(0).toString();
-              },
-              from:(value) => {
-                  if(value === "∞" ) return maxValue;
-                  if(isNaN(value)) return value;
-                  return parseInt(value).toFixed(0);
-              }
-            },
-            start: [0, "∞"],
-        });
-        this.sliderHTMLElement.noUiSlider.on('update', (values, handle) => {
-            this.employeesSliderSelectedMinValue = values[0];
-            this.criteriaValueMap['employees_min'] = values[0] ;
+    minEmployeeSliderHTML;
+    maxEmployeeSliderHTMLElement;
+    employeesSliderMinValue = 0;
+    employeesSliderMaxValue = 500;
 
-            this.employeesSliderSelectedMaxValue = values[1];
-            this.criteriaValueMap['employees_max'] = (values[1] == "∞" ? null : values[1]);
-        });
-        this.sliderHTMLElementLoaded = true;
+    onMinEmployeesSliderMoved(event){
+        let minEmployeeValue = parseInt(this.minEmployeeSliderHTMLElement.value);
+        this.minEmployeesValue = minEmployeeValue;
+        if(minEmployeeValue > this.maxEmployeesValue) { this.maxEmployeesValue = minEmployeeValue; }
+    }
+    onMaxEmployeesSliderMoved(event){
+        let maxEmployeeValue = parseInt(this.maxEmployeeSliderHTMLElement.value);
+        this.maxEmployeesValue = maxEmployeeValue
+        if(maxEmployeeValue < this.minEmployeesValue) { this.minEmployeesValue = maxEmployeeValue; }
+    }
+    get minEmployeesValue(){
+        return this.criteriaValueMap['employees_min'];
+    }
+    set minEmployeesValue(value){
+        this.criteriaValueMap['employees_min'] = value;
+    }
+    get maxEmployeesValue(){
+        return this.criteriaValueMap['employees_max'] == null ? 500 : this.criteriaValueMap['employees_max'] ;
+    }
+    set maxEmployeesValue(value){
+        this.criteriaValueMap['employees_max'] = value === 500 ? null : value;
+    }
+    get maxEmployeesLabel(){
+        return this.maxEmployeesValue === 500 ? "∞" : this.maxEmployeesValue;
     }
 
+    //*********************//
+    //Input Change Handlers//
+    //*********************//
 
-    handleSBIMatchTypeChange(event){
-        this.criteriaValueMap['sbi_match_type'] = event.detail.checked;
-    }
-    handleEconomicallyActiveChange(event){
-        this.criteriaValueMap['economically_active'] = event.detail.value;
-    }
-    handleFinancialStatusChange(event){
-        this.criteriaValueMap['financial_status'] = event.detail.value;
-    }
-    handlePrimarySBIOnlyChange(event){
-        this.criteriaValueMap['primary_sbi_only'] = event.detail.value;
-    }
     handleLegalFormChange(event){
         let selectedOptionsList = event.detail;
         this.criteriaValueMap['legal_forms'] = selectedOptionsList;
@@ -122,8 +91,6 @@ export default class FindBusinessesOtherCriteria extends LightningElement {
         this.criteriaValueMap['postcodes'] = event.detail.value;
     }
 
-
-    not_selected_option = { label: '-', value: 'none' };
 
     get legal_form_options(){
         return [
@@ -178,27 +145,7 @@ export default class FindBusinessesOtherCriteria extends LightningElement {
         ];
     }
 
-    get sbi_match_type_options(){
-        return [
-            { label: 'SBI codes are matched against all known SBI sources.', value: 'ALL' },
-            { label: 'SBI codes are matched against the default SBI source.', value: 'WS' },
-            { label: 'SBI codes are matched against the extra Company.info SBI source.', value: 'CI' },
-        ];
-    }
-    get economically_active_options(){
-        return [
-            { label: 'Only economically active businesses.', value: 'active' },
-            { label: 'Only economically inactive businesses.', value: 'inactive' },
-        ];
-    }
-    get financial_status_options(){
-        return [
-            { label: 'Only businesses which are neither bankrupt nor debtor in possession. ', value: 'solvent' },
-            { label: 'Only businesses which are either bankrupt or debtor in possession.', value: 'insolvent' },
-            { label: 'Only bankrupt businesses.', value: 'bankrupt' },
-            { label: 'Only businesses which are debtor in possession.', value: 'dip' },
-        ];
-    }
+
 
 
 }

@@ -13,54 +13,60 @@
                 </c-multi-pick-list>
             </div>
             <div class= "slds-col slds-size_1-of-2">
-                <lightning-combobox
-                        name="sbi_match_type"
-                        label="SBI Match Type"
-                        value={criteriaValueMap.sbi_match_type}
-                        options={sbi_match_type_options}
-                        onchange={handleSBIMatchTypeChange}></lightning-combobox>
-            </div>
-        </div>
-        <div class= "slds-col slds-size_1-of-1 slds-grid slds-gutters_direct-small">
-            <div class= "slds-col slds-size_1-of-2">
-                <lightning-input type="date"        name = "changed_since" label="Changed Since"  onchange={handleChangedSinceChange}></lightning-input>
-            </div>
-            <div class= "slds-col slds-size_1-of-2">
-                <lightning-input type="checkbox"    name = "primary_sbi_only"
-                                 label="Match only Primary SBI" variant="label-stacked"
-                                 onchange={handlePrimarySBIOnlyChange}></lightning-input>
-            </div>
-        </div>
-        <div class= "slds-col slds-size_1-of-1 slds-grid slds-gutters_direct-small">
-            <div class= "slds-col slds-size_1-of-2">
-                <lightning-input type="date"        name = "new_since" label="New Since"  onchange={handleNewSinceChange}></lightning-input>
-            </div>
-            <div class= "slds-col slds-size_1-of-2">
-                <lightning-combobox
-                        name="economically_active"
-                        label="Economically Active"
-                        value={criteriaValueMap.economically_active}
-                        options={economically_active_options}
-                        onchange={handleEconomicallyActiveChange}></lightning-combobox>
+                <lightning-input type="date" name = "new_since" label="New Since"  onchange={handleNewSinceChange}></lightning-input>
             </div>
 
-
         </div>
         <div class= "slds-col slds-size_1-of-1 slds-grid slds-gutters_direct-small">
-            <div class= "slds-col slds-size_1-of-2">
-                <div class="slds-col slds-size_1-of-1 slds-grid slds-wrap slds-m-vertical_x-small ">
-                    <div class="slds-col slds-size_1-of-1 slds-m-bottom_x-small"><label class="slds-form-element__label slds-no-flex">Number of Employees: {employeesSliderSelectedMinValue}&nbsp;-&nbsp;{employeesSliderSelectedMaxValue}</label></div>
-                    <div class="slds-col slds-size_1-of-1 slds-p-horizontal_small noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr" data-id="employeeSlider"></div>
+            <div class="slds-col slds-size_1-of-2 slds-grid">
+                <div class="slds-col slds-size_1-of-2 slds-grid">
+                    <div class="slds-form-element slds-size_1-of-1">
+                        <label class="slds-form-element__label">
+                                <span class="slds-slider-label">
+                                  <span class="slds-slider-label__label">Minimum number of employees</span>
+                                </span>
+                        </label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-slider">
+                                <input type="range" class="slds-slider__range" data-identifier="minEmployeesSilder"
+                                       min={employeesSliderMinValue} max={employeesSliderMaxValue}
+                                       value={minEmployeesValue}
+                                       oninput={onMinEmployeesSliderMoved} >
+                                <span class="slds-slider__value" aria-hidden="true">{minEmployeesValue}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-grid">
+                    <div class="slds-form-element slds-size_1-of-1">
+                        <label class="slds-form-element__label">
+                                <span class="slds-slider-label">
+                                  <span class="slds-slider-label__label">Maximum number of employees</span>
+                                </span>
+                        </label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-slider">
+                                <input type="range" class="slds-slider__range" data-identifier="maxEmployeesSilder"
+                                       min={employeesSliderMinValue} max={employeesSliderMaxValue}
+                                       value={maxEmployeesValue}
+                                       oninput={onMaxEmployeesSliderMoved} />
+                                <span class="slds-slider__value" aria-hidden="true">{maxEmployeesLabel}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class= "slds-col slds-size_1-of-2">
-                <lightning-combobox
-                        name="financial_status"
-                        label="Financial Status"
-                        value={criteriaValueMap.financial_status}
-                        options={financial_status_options}
-                        onchange={handleFinancialStatusChange}></lightning-combobox>
+                <lightning-input type="date"        name = "changed_since" label="Changed Since"  onchange={handleChangedSinceChange}></lightning-input>
             </div>
         </div>
+        <lightning-accordion allow-multiple-sections-open>
+            <lightning-accordion-section name="Advanced" label="Advanced">
+                <div class="slds-m-around_small slds-card">
+                    <c-find-businesses-advanced-criteria></c-find-businesses-advanced-criteria>
+                </div>
+            </lightning-accordion-section>
+        </lightning-accordion>
+
     </div>
 </template>

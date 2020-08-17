@@ -19,6 +19,9 @@ public with sharing class FindBusinessCriteriaModel {
     @AuraEnabled public String changed_since {get; set;}
     @AuraEnabled public String new_since {get; set;}
     @AuraEnabled public String sbi_match_type {get; set;}
+
+    @AuraEnabled public Integer max_number_of_results {get; set;}
+
     public FindBusinessCriteriaModel(){}
 
 

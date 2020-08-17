@@ -5,14 +5,13 @@
 <!-- Lead Generator Search -->
 <template>
     <header class="slds-modal__header">
-        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Find Businesses</h2>
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{labels.Find_Businesses_Criteria_Title}</h2>
     </header>
     <div>
         <div class="slds-m-vertical_small">
-            hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks. hier komt een stuk tekst dat johan gaat bepalen. Maar nu is het gewoon even helemaal kanloze woordenreeks.
+            {labels.Find_Businesses_Criteria_Help_Text}
         </div>
-
-        <div style="max-height: 70vh; overflow-y: scroll;">
+        <div style="max-height: 60vh; overflow-y: scroll;">
             <div class="slds-box slds-scrollable_y">
                 <lightning-accordion allow-multiple-sections-open
                                      onsectiontoggle={handleSectionToggle}>
@@ -34,13 +33,14 @@
                             <c-find-businesses-other-criteria ></c-find-businesses-other-criteria>
                         </div>
                     </lightning-accordion-section>
+
                 </lightning-accordion>
             </div>
         </div>
     </div>
-    <c-flow-footer next-button-title={label.Search_Confirm}
-                   cancel-button-title={label.Cancel}
-                   previous-button-title={label.Previous}
+    <c-flow-footer next-button-title={labels.Search_Confirm}
+                   cancel-button-title={labels.Cancel}
+                   previous-button-title={labels.Previous}
                    available-actions={availableFooterActions}
                    show-cancel-button={showFooterCancelButton}
                    onnextclick={handleFooterNextClick}>

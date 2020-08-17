@@ -6,6 +6,7 @@
     <masterLabel>Find Businesses</masterLabel>
     <targets>
         <target>lightning__FlowScreen</target>
+        <target>lightning__RecordPage</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
