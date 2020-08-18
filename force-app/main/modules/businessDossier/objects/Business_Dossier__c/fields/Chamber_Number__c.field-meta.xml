@@ -2,8 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Chamber_Number__c</fullName>
     <description>The chamber number is the number of the Chamber of Commerce office which manages this dossier.
-
-
+00  Onbekend
 01	Noord Nederland
 08	Oost Nederland
 09	Centraal Gelderland

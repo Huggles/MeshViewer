@@ -174,9 +174,20 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         }
         // fetch the data
         DutchBusinessWsdl.DutchBusinessDossierV3 dossierV3 = WsDutchBusiness.dutchBusinessGetDossierV3(dossierNumber, establishmentNumber);
-        // instantiate the dossier
 
+        // instantiate the dossier
         Business_Dossier__c dossier = new Business_Dossier__c();
+        for(SObjectField field : Schema.SObjectType.appsolutely__Business_Dossier__c.fields.getMap().values()){
+            DescribeFieldResult fieldDescribe = field.getDescribe();
+            if(fieldDescribe.isCustom() && fieldDescribe.isUpdateable()) {
+                if(fieldDescribe.getDefaultValue() != null){
+                    dossier.put(fieldDescribe.getName(), fieldDescribe.getDefaultValue());
+                }else{
+                    dossier.put(fieldDescribe.getName(), null);
+                }
+            }
+        }
+
         dossier = mapDutchBusinessDossierV3ToDossier(dossierV3, dossier);
         List<Business_Data_SBI__c> sbiCodes = mapDataVendorDataToSBICodes(dossierV3);
 
@@ -190,10 +201,8 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
 
         if(getVAT != null && getVAT == true) {
             dossier = DutchBusinessService.updateBusinessDossierWithVATNumber(dossier);
-        }else{
-            dossier.VAT_Number__c = '';
-            dossier.No_VAT_Number__c = true;
         }
+
         return dossier;
     }
 
@@ -422,27 +431,14 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         dossierDB.Contact_Title1__c = dataVendorDossier.contact_title1;
         dossierDB.Contact_Title2__c = dataVendorDossier.contact_title2;
         dossierDB.Contact_Gender__c = dataVendorDossier.contact_gender;
+
         if (dataVendorDossier.indication_bankruptcy != null) { dossierDB.Indication_Bankruptcy__c = dataVendorDossier.indication_bankruptcy;}
-        else {dossierDB.Indication_Bankruptcy__c = Boolean.valueOf(Business_Dossier__c.Indication_Bankruptcy__c.getDescribe().getDefaultValue()); }
-
         if (dataVendorDossier.indication_dip != null) { dossierDB.Indication_Dip__c = dataVendorDossier.indication_dip;}
-        else {dossierDB.Indication_Dip__c = Boolean.valueOf(Business_Dossier__c.Indication_Dip__c.getDescribe().getDefaultValue()); }
-
         if (dataVendorDossier.indication_economically_active != null) { dossierDB.Indication_Economically_Active__c = dataVendorDossier.indication_economically_active;}
-        else {dossierDB.Indication_Economically_Active__c = Boolean.valueOf(Business_Dossier__c.Indication_Economically_Active__c.getDescribe().getDefaultValue()); }
-
         if (dataVendorDossier.indication_export != null) { dossierDB.Indication_Export__c = dataVendorDossier.indication_export;}
-        else {dossierDB.Indication_Export__c = Boolean.valueOf(Business_Dossier__c.Indication_Export__c.getDescribe().getDefaultValue()); }
-
         if (dataVendorDossier.indication_import != null) { dossierDB.Indication_Import__c = dataVendorDossier.indication_import;}
-        else {dossierDB.Indication_Import__c = Boolean.valueOf(Business_Dossier__c.Indication_Import__c.getDescribe().getDefaultValue()); }
-
         if (dataVendorDossier.indication_main_establishment != null) { dossierDB.Indication_Main_Establishment__c = dataVendorDossier.indication_main_establishment;}
-        else {dossierDB.Indication_Main_Establishment__c = Boolean.valueOf(Business_Dossier__c.Indication_Main_Establishment__c.getDescribe().getDefaultValue()); }
-
         if (dataVendorDossier.indication_non_mailing != null) { dossierDB.Indication_Non_Mailing__c = dataVendorDossier.indication_non_mailing;}
-        else {dossierDB.Indication_Non_Mailing__c = Boolean.valueOf(Business_Dossier__c.Indication_Non_Mailing__c.getDescribe().getDefaultValue()); }
-
         if (dataVendorDossier.structure != null) {
             dossierDB.Number_Of_Subsidiaries__c = String.valueOf(dataVendorDossier.structure.number_of_subsidiaries);
             dossierDB.Parent_Chamber_Of_Commerce_Number__c = dataVendorDossier.structure.parent;
@@ -465,7 +461,6 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
             dossierDB.Correspondence_City__c = dataVendorDossier.correspondence_address.formatted.city;
             dossierDB.Correspondence_Country__c = dataVendorDossier.correspondence_address.formatted.country;
         }
-
         return dossierDB;
     }
     private List<Business_Data_SBI__c> mapDataVendorDataToSBICodes(DutchBusinessWsdl.DutchBusinessDossierV3 dataVendorDossier) {
