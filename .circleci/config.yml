@@ -286,7 +286,7 @@ jobs:
             versioninfo=$(sfdx force:package:version:report --package $packageversionid --json |  jq -r '.result | {Version:.Version, Name:.Name}')
             versionname=$(echo $versioninfo | jq -r .Name)
             versionnumber=$(echo $versioninfo | jq -r .Version)
-            tag="${versionname} (${versionnumber}) PROMOTED"
+            tag="PROMOTED ${versionname} (${versionnumber})"
             tag="${tag// /_}"
             git tag -a $tag -m "tagging with ${tag}s [skip ci]"
             git push -u origin $tag
@@ -327,12 +327,14 @@ jobs:
           command: |
             git fetch
             git checkout develop
+            git pull origin develop
             git merge $CIRCLE_BRANCH -m "Merging release branch $CIRCLE_BRANCH into develop [skip ci]"
             git push -u origin develop
             git checkout master
+            git pull origin master
             git merge $CIRCLE_BRANCH -m "Merging release branch $CIRCLE_BRANCH into master [skip ci]"
             git push -u origin master
-            packageversionid=$(sfdx force:package:version:list --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
+            packageversionid=$(sfdx force:package:version:list --verbose --released --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
             versioninfo=$(sfdx force:package:version:report --package $packageversionid --json |  jq -r '.result | {Version:.Version, Name:.Name}')
             versionname=$(echo $versioninfo | jq -r .Name)
             versionnumber=$(echo $versioninfo | jq -r .Version)
