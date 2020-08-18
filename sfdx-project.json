@@ -7,7 +7,7 @@
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
             "postInstallScript": "PostInstallScript",
-            "versionNumber": "2.3.1.NEXT",
+            "versionNumber": "2.4.0.NEXT",
             "ancestorId": "04t0J000000HrilQAC"
         }
     ],
