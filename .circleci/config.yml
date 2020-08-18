@@ -327,10 +327,10 @@ jobs:
           command: |
             git fetch
             git checkout develop
-            git merge $CIRCLE_BRANCH
+            git merge $CIRCLE_BRANCH -m "Merging release branch $CIRCLE_BRANCH into develop [skip ci]"
             git push -u origin develop
             git checkout master
-            git merge $CIRCLE_BRANCH
+            git merge $CIRCLE_BRANCH -m "Merging release branch $CIRCLE_BRANCH into master [skip ci]"
             git push -u origin master
             packageversionid=$(sfdx force:package:version:list --verbose --json | jq -r --arg TAG "commit: $CIRCLE_SHA1" '.result[] | select(.Tag==$TAG) | .SubscriberPackageVersionId')
             versioninfo=$(sfdx force:package:version:report --package $packageversionid --json |  jq -r '.result | {Version:.Version, Name:.Name}')
