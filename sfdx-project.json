@@ -7,8 +7,8 @@
             "default": true,
             "definitionFile": "config/package-scratch-def.json",
             "postInstallScript": "PostInstallScript",
-            "versionNumber": "2.3.0.NEXT",
-            "ancestorId": "04t0J000000HrhsQAC"
+            "versionNumber": "2.3.1.NEXT",
+            "ancestorId": "04t0J000000HrilQAC"
         }
     ],
     "namespace": "appsolutely",
