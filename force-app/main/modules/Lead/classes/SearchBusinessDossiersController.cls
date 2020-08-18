@@ -49,12 +49,13 @@ public with sharing class SearchBusinessDossiersController {
 
     public static SearchedBusinessDossierResults convertToCorrectReturnType(DutchBusinessServiceImpl.SearchedBusinessDossierResults s){
         SearchedBusinessDossierResults searchedBusinessDossierResults = new SearchedBusinessDossierResults();
-        searchedBusinessDossierResults.businessDossiers = s.businessDossiers;
         searchedBusinessDossierResults.curpage = s.curpage;
         searchedBusinessDossierResults.perpage = s.perpage;
         searchedBusinessDossierResults.numpages = s.numpages;
         searchedBusinessDossierResults.numresults = s.numresults;
         searchedBusinessDossierResults.maxresults = s.maxresults;
+        searchedBusinessDossierResults.businessDossiers = s.businessDossiers;
         return searchedBusinessDossierResults;
     }
+
 }

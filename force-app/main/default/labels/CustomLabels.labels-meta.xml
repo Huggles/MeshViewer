@@ -102,6 +102,13 @@
         <value>The Business Data  record already exists.</value>
     </labels>
     <labels>
+        <fullName>Business_Dossier_queued</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Business Dossier queued</shortDescription>
+        <value>Business Dossiers are queued successfully</value>
+    </labels>
+    <labels>
         <fullName>Business_Positions_Retrieved_Succesfully</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
