@@ -3,6 +3,16 @@
  */
 @IsTest
 public with sharing class CreateBusinessDossierInvocableTest {
+    @TestSetup
+    public static void createTestUser(){
+        Profile p = [SELECT Id FROM Profile WHERE UserLicense.Name = 'Salesforce' LIMIT 1];
+
+        User u = new User(Alias = 'stdUser', Email='standarduser@testorg.com', EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+                LocaleSidKey='en_US', ProfileId = p.Id, TimeZoneSidKey='America/Los_Angeles', Username='CompanyInfor.CommonTestUser@testorg.com');
+        insert u;
+        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Company_info_for_Sales'];
+        insert new PermissionSetAssignment(AssigneeId = u.id, PermissionSetId = ps.Id);
+    }
     @IsTest
     public static void createBusinessDossierHappyFlow(){
 
@@ -28,11 +38,13 @@ public with sharing class CreateBusinessDossierInvocableTest {
         CreateBusinessDossierInvocable.CreateBusinessDossierArgument createBusinessDossierArgument = new CreateBusinessDossierInvocable.CreateBusinessDossierArgument();
         createBusinessDossierArgument.businessDossiers = businessDossiers;
         List<CreateBusinessDossierInvocable.CreateBusinessDossierArgument> arguments = new List<CreateBusinessDossierInvocable.CreateBusinessDossierArgument>{createBusinessDossierArgument};
+        User user = [SELECT Id FROM User WHERE Username = 'CompanyInfor.CommonTestUser@testorg.com'];
+        System.runAs(user) {
+            Test.startTest();
 
-        Test.startTest();
-        List<Business_Dossier__c> dossiers = CreateBusinessDossierInvocable.createBusinessDossier(arguments);
-        Test.stopTest();
-
+            List<Business_Dossier__c> dossiers = CreateBusinessDossierInvocable.createBusinessDossier(arguments);
+            Test.stopTest();
+        }
         List<Business_Dossier__c> insertedDossiers = [SELECT id FROM Business_Dossier__c];
         System.assertNotEquals(null,insertedDossiers);
         System.assertEquals(1, insertedDossiers.size());
@@ -44,15 +56,19 @@ public with sharing class CreateBusinessDossierInvocableTest {
         CreateBusinessDossierInvocable.CreateBusinessDossierArgument createBusinessDossierArgument = new CreateBusinessDossierInvocable.CreateBusinessDossierArgument();
 
         createBusinessDossierArgument.businessDossiers = null;
+
         List<CreateBusinessDossierInvocable.CreateBusinessDossierArgument> arguments = new List<CreateBusinessDossierInvocable.CreateBusinessDossierArgument>{createBusinessDossierArgument};
 
-        Test.startTest();
-        try {
-            List<Business_Dossier__c> dossiers = CreateBusinessDossierInvocable.createBusinessDossier(arguments);
-            System.assert(false);
-        }catch (Exception e){
-            System.assert(true);
+        User user = [SELECT Id FROM User WHERE Username = 'CompanyInfor.CommonTestUser@testorg.com'];
+        System.runAs(user) {
+            Test.startTest();
+            try {
+                List<Business_Dossier__c> dossiers = CreateBusinessDossierInvocable.createBusinessDossier(arguments);
+                System.assert(false);
+            } catch (Exception e) {
+                System.assert(true);
+            }
+            Test.stopTest();
         }
-        Test.stopTest();
     }
 }
