@@ -13,7 +13,9 @@ import CurrentlyShowing from '@salesforce/label/c.Currently_showing';
 import Records from '@salesforce/label/c.Record';
 import Error from '@salesforce/label/c.Error';
 import Cancel from '@salesforce/label/c.Cancel';
+import Success from '@salesforce/label/c.Success';
 import Previous from '@salesforce/label/c.Previous';
+import BusinessDossierqueued from '@salesforce/label/c.Business_Dossier_queued';
 import CreateBusinessDossiers from '@salesforce/label/c.Create_Business_Dossiers';
 
 
@@ -22,7 +24,7 @@ export default class SearchBusinessDossiers extends LightningElement {
 
     @api searchCriteria;
 
-    @api cities='Utrecht';
+    @api cities;
     @api postcodes;
     @api sbiList;
     @api primary_sbi_only;
@@ -47,14 +49,14 @@ export default class SearchBusinessDossiers extends LightningElement {
     }
     availableFooterActions = [
         'BACK',
-        'NEXT',
-        'FINISH'
+        'NEXT'
     ]
-    showFooterCancelButton = true;
+    showFooterCancelButton = false;
 
     label = { Loading,CurrentlyShowing,
         Records,Error, Cancel,
-        Previous,CreateBusinessDossiers
+        Previous,CreateBusinessDossiers,Success,
+        BusinessDossierqueued
     }
     searchString;
     handleChange(event) {
@@ -149,6 +151,7 @@ export default class SearchBusinessDossiers extends LightningElement {
                 new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.Error, value );
             else {
                 const navigateNextEvent = new FlowNavigationNextEvent();
+                new ToastEventController(this).showSuccessToastMessage(this.label.Success,this.label.BusinessDossierqueued );
                 this.dispatchEvent(navigateNextEvent);
             }
 
