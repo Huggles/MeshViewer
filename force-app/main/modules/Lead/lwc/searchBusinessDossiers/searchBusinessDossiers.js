@@ -110,12 +110,15 @@ export default class SearchBusinessDossiers extends LightningElement {
        })
         .then(result => {
             if(this.businessDossiers.length==0) {
-                this.businessDossiers = result.businessDossiers;
-                this.dossiers = result.businessDossiers;
+                let dossierArray = this.flattenRecords(result.businessDossierWrappers);
+
+                this.businessDossiers = dossierArray;//this.dossierData;
+                this.dossiers = dossierArray;//this.dossierData;//result.businessDossiers;
             }
             else {
-                this.dossiers =this.dossiers.concat(result.businessDossiers);
-                // this.businessDossiers = this.businessDossiers.concat(result.businessDossiers);
+                let dossierArray = this.flattenRecords(result.businessDossierWrappers);
+                this.dossiers = this.dossiers.concat(dossierArray);//this.dossierData;//result.businessDossiers;
+
             }
             let totalPage = result.numpages;
             this.page_x = result.curpage;
@@ -138,6 +141,48 @@ export default class SearchBusinessDossiers extends LightningElement {
             Promise.reject(error);
         })
     }
+    //below function flatten the nested data
+    flattenRecords(wrappers){
+        if(wrappers) {
+            let dossierArray = []
+            wrappers.forEach(wrapper => {
+                let data= {};
+                data.appsolutely__Dossier_Number__c = wrapper.businessDossier.appsolutely__Dossier_Number__c;
+                data.appsolutely__Establishment_Number__c = wrapper.businessDossier.appsolutely__Establishment_Number__c;
+                data.Name = wrapper.businessDossier.Name;
+                data.appsolutely__Trade_Name_Full__c = wrapper.businessDossier.appsolutely__Trade_Name_Full__c;
+                data.appsolutely__Establishment_City__c = wrapper.businessDossier.appsolutely__Establishment_City__c;
+                data.appsolutely__Establishment_Street__c = wrapper.businessDossier.appsolutely__Establishment_Street__c;
+                data.appsolutely__Correspondence_City__c = wrapper.businessDossier.appsolutely__Correspondence_City__c;
+                data.appsolutely__Correspondence_Street__c = wrapper.businessDossier.appsolutely__Correspondence_Street__c;
+                data.appsolutely__Indication_Economically_Active__c = wrapper.businessDossier.appsolutely__Indication_Economically_Active__c;
+                data.existingDossier = wrapper.existingDossier;
+                dossierArray.push(data);
+            })
+            return dossierArray;
+        }
+    }
+    unFlattenRecords(wrappers){
+        if(wrappers) {
+            let dossierArray = []
+            wrappers.forEach(wrapper => {
+                let data= {};
+                data.appsolutely__Dossier_Number__c = wrapper.appsolutely__Dossier_Number__c;
+                data.appsolutely__Establishment_Number__c = wrapper.appsolutely__Establishment_Number__c;
+                data.Name = wrapper.Name;
+                data.appsolutely__Trade_Name_Full__c = wrapper.appsolutely__Trade_Name_Full__c;
+                data.appsolutely__Establishment_City__c = wrapper.appsolutely__Establishment_City__c;
+                data.appsolutely__Establishment_Street__c = wrapper.appsolutely__Establishment_Street__c;
+                data.appsolutely__Correspondence_City__c = wrapper.appsolutely__Correspondence_City__c;
+                data.appsolutely__Correspondence_Street__c = wrapper.appsolutely__Correspondence_Street__c;
+                data.appsolutely__Indication_Economically_Active__c = wrapper.appsolutely__Indication_Economically_Active__c;
+                dossierArray.push(data);
+            })
+            return dossierArray;
+        }
+
+    }
+
     set error(value){
         if (!value) return;
         new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.Error, value );
@@ -146,15 +191,20 @@ export default class SearchBusinessDossiers extends LightningElement {
 
     handleSelectedRows(event){
         try {
-            this.businessDossiersToInsert = event.detail;
-            if(!this.businessDossiersToInsert)
+            let selectedRecords = event.detail;
+            if(!selectedRecords)
                 new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.Error, value );
             else {
+                // let filteredArray = selectedRecords.filter(dossier=>
+                //     dossier.existingDossier == false
+                // );
+                // this.businessDossiersToInsert = this.unFlattenRecords(filteredArray);
+                this.businessDossiersToInsert = this.unFlattenRecords(selectedRecords);
+
                 const navigateNextEvent = new FlowNavigationNextEvent();
                 new ToastEventController(this).showSuccessToastMessage(this.label.Success,this.label.BusinessDossierqueued );
                 this.dispatchEvent(navigateNextEvent);
             }
-
         } catch (e){
             this.error = e;
         }

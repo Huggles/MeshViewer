@@ -29,7 +29,8 @@ global with sharing class CreateBusinessDossierInvocable {
                     businessDossiers = argument.businessDossiers;
                 }
             }
-            businessDossiersToUpsert = checkDuplicate(businessDossiers);
+            //check duplicate duplicate rule created by subscriber org before inserting
+            businessDossiersToUpsert = checkDuplicateRule(businessDossiers);
             List<Business_Dossier__c> insertedBusinessDossiers = BusinessService.createDossiers(businessDossiersToUpsert, true);
                 return insertedBusinessDossiers;
         }
@@ -38,26 +39,33 @@ global with sharing class CreateBusinessDossierInvocable {
             throw ex;
         }
     }
+    public static List<Business_Dossier__c> checkDuplicateRule(List<SObject> sObjects){
+        try {
+            List<SObject> duplicateSObjects = DuplicateManagementService.findDuplicates(sObjects);
+            if(duplicateSObjects!= null) {
+                Map<String, SObject> duplicateMap = new Map<String, SObject>(duplicateSObjects);
+                List<Business_Dossier__c> duplicateDossiers = [SELECT Id,Dossier_Number__c, Establishment_Number__c FROM Business_Dossier__c WHERE Id in :duplicateMap.keySet()];
 
-    public static List<Business_Dossier__c> checkDuplicate(List<Business_Dossier__c> dossiers){
-        List<String> dossierNumbers = new List<String>();
-        List<String> establishmentNumbers = new List<String>();
-        for(Business_Dossier__c businessDossier : dossiers){
-                dossierNumbers.add(businessDossier.Dossier_Number__c);
-                establishmentNumbers.add(businessDossier.Establishment_Number__c);
-        }
-        List<Business_Dossier__c> duplicateBusinessDossiers = BusinessService.findDuplicateDossiersByDossierAndEstablishmentNumber(dossierNumbers, establishmentNumbers);
+                //below code query dossiers again because duplicate rule doesn't provide required fields
+                List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
+                Map<String, Business_Dossier__c> duplicateDossierMap = new Map<String, Business_Dossier__c>();
 
-        Map<String,Business_Dossier__c> duplicateDossierMap = new Map<String, Business_Dossier__c>();
-        for(Business_Dossier__c businessDossier : duplicateBusinessDossiers){
-            duplicateDossierMap.put(businessDossier.Dossier_Number__c+businessDossier.Establishment_Number__c,businessDossier);
+                for (Business_Dossier__c businessDossier : duplicateDossiers) {
+                    duplicateDossierMap.put(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c, businessDossier);
+                }
+
+                for (sObject obj : sObjects) {
+                    Business_Dossier__c businessDossier = (Business_Dossier__c) obj;
+                    if (!duplicateDossierMap.containsKey(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c)) {
+                        businessDossiers.add(businessDossier);
+                    }
+                }
+                return businessDossiers;
+            } return null;
         }
-        List<Business_Dossier__c> businessDossiersToReturn = new List<Business_Dossier__c>();
-        for(Business_Dossier__c dossier : dossiers){
-            if(!duplicateDossierMap.containsKey(dossier.Dossier_Number__c+dossier.Establishment_Number__c)){
-                businessDossiersToReturn.add(dossier);
-            }
+        catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw ex;
         }
-        return businessDossiersToReturn;
     }
 }

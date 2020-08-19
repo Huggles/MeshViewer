@@ -130,7 +130,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         //The paramters should not be empty, and the size of both lists should be equal
         fflib_ISObjectUnitOfWork unitOfWork;
         if(ignoreAlertDuplicateRules){
-            unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(false));
+            unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
         }else{
             unitOfWork = Application.UnitOfWork.newInstance();
         }

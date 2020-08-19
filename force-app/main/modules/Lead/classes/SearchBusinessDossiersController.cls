@@ -34,7 +34,7 @@ public with sharing class SearchBusinessDossiersController {
     }
     public class SearchedBusinessDossierResults{
         @AuraEnabled
-        public List<Business_Dossier__c> businessDossiers;
+        public List<BusinessDossierWrapper> businessDossierWrappers;
         @AuraEnabled
         public Integer curpage ;
         @AuraEnabled
@@ -46,6 +46,12 @@ public with sharing class SearchBusinessDossiersController {
         @AuraEnabled
         public Integer maxresults;
     }
+    public class BusinessDossierWrapper{
+        @AuraEnabled
+        public Business_Dossier__c businessDossier;
+        @AuraEnabled
+        public Boolean existingDossier;
+    }
 
     public static SearchedBusinessDossierResults convertToCorrectReturnType(DutchBusinessServiceImpl.SearchedBusinessDossierResults s){
         SearchedBusinessDossierResults searchedBusinessDossierResults = new SearchedBusinessDossierResults();
@@ -54,8 +60,39 @@ public with sharing class SearchBusinessDossiersController {
         searchedBusinessDossierResults.numpages = s.numpages;
         searchedBusinessDossierResults.numresults = s.numresults;
         searchedBusinessDossierResults.maxresults = s.maxresults;
-        searchedBusinessDossierResults.businessDossiers = s.businessDossiers;
+        //check duplicate on dossier no. and establish no. before inserting
+        searchedBusinessDossierResults.businessDossierWrappers = checkDuplicate(s.businessDossiers);
         return searchedBusinessDossierResults;
     }
 
+
+    public static List<BusinessDossierWrapper> checkDuplicate(List<Business_Dossier__c> businessDossiers){
+        try {
+
+            List<String> dossierNumbers = new List<String>();
+            List<String> establishmentNumbers = new List<String>();
+            for (Business_Dossier__c businessDossier : businessDossiers) {
+                dossierNumbers.add(businessDossier.Dossier_Number__c);
+                establishmentNumbers.add(businessDossier.Establishment_Number__c);
+            }
+            List<BusinessDossierWrapper> businessDossierWrappers = new List<SearchBusinessDossiersController.BusinessDossierWrapper>();
+            List<Business_Dossier__c> duplicateBusinessDossiers = BusinessService.findDuplicateDossiersByDossierAndEstablishmentNumber(dossierNumbers, establishmentNumbers);
+
+            Map<String, Business_Dossier__c> duplicateDossierMap = new Map<String, Business_Dossier__c>();
+            for (Business_Dossier__c businessDossier : duplicateBusinessDossiers) {
+                duplicateDossierMap.put(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c, businessDossier);
+            }
+
+            for (Business_Dossier__c businessDossier : businessDossiers) {
+                BusinessDossierWrapper businessDossierWrapper = new BusinessDossierWrapper();
+                businessDossierWrapper.businessDossier = businessDossier;
+                businessDossierWrapper.existingDossier = duplicateDossierMap.containsKey(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c);
+                businessDossierWrappers.add(businessDossierWrapper);
+            }
+            return businessDossierWrappers;
+        } catch (Exception ex) {
+            ErrorLogUtil.logException(ex, true);
+            throw ex;
+        }
+    }
 }

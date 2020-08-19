@@ -16,8 +16,9 @@ const columns = [
     {label: 'Establishment City', fieldName: 'appsolutely__Establishment_City__c', type: 'text', sortable: false},
     {label: 'Establishment Street', fieldName: 'appsolutely__Establishment_Street__c', type: 'text', sortable: false},
     {label: 'Correspondence City', fieldName: 'appsolutely__Correspondence_City__c', type: 'text', sortable: false},
-    {label: 'Correspondence Street', fieldName: 'appsolutely__Correspondence_Street', type: 'text', sortable: false},
-    {label: 'Indication Economically Active', fieldName: 'Indication_Economically_Active__c', type: 'boolean', sortable: false}
+    {label: 'Correspondence Street', fieldName: 'appsolutely__Correspondence_Street__c', type: 'text', sortable: false},
+    {label: 'Economically Active', fieldName: 'appsolutely__Indication_Economically_Active__c', type: 'boolean', sortable: false},
+    {label: 'Existing Business Dossier', fieldName: 'existingDossier', type: 'boolean', sortable: false}
 ];
 
 
