@@ -102,6 +102,13 @@
         <value>The Business Data  record already exists.</value>
     </labels>
     <labels>
+        <fullName>Business_Dossier_queued</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Business Dossier queued</shortDescription>
+        <value>selected Business Dossier to Create</value>
+    </labels>
+    <labels>
         <fullName>Business_Positions_Retrieved_Succesfully</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
@@ -307,6 +314,13 @@
         <value>The Account does not have a related Business Dossier, please create/link a Business Dossier to Account and refresh.</value>
     </labels>
     <labels>
+        <fullName>Create_Business_Dossiers</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Business Dossiers</shortDescription>
+        <value>Create Business Dossiers</value>
+    </labels>
+    <labels>
         <fullName>Create_New_Account</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -475,6 +489,13 @@
         <protected>true</protected>
         <shortDescription>Duplicate Results</shortDescription>
         <value>Duplicate Results</value>
+    </labels>
+    <labels>
+        <fullName>Duplicate_of</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicate of</shortDescription>
+        <value>duplicate of</value>
     </labels>
     <labels>
         <fullName>Duplicates_Found_Message</fullName>
@@ -705,6 +726,13 @@
         <value>Even</value>
     </labels>
     <labels>
+        <fullName>Fast_search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Fast search</shortDescription>
+        <value>Fast search...</value>
+    </labels>
+    <labels>
         <fullName>Feature_Not_Found</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
@@ -719,6 +747,37 @@
         <protected>true</protected>
         <shortDescription>Fill minimum characters</shortDescription>
         <value>Please enter at least two characters.</value>
+    </labels>
+    <labels>
+        <fullName>Find_Businesses_Advanced_Criteria_Help_Text</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The description text on the find businesses screen</shortDescription>
+        <value>These values generally do not need to be changed. Please only change them in very specific search scenarios.</value>
+    </labels>
+    <labels>
+        <fullName>Find_Businesses_Criteria_Help_Text</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The description text on the find businesses screen</shortDescription>
+        <value>Please enter the search criteria below. If you do not select a value for an option, it will not be taken into account in the search.</value>
+    </labels>
+    <labels>
+        <fullName>Find_Businesses_Criteria_Title</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>The title text on the find businesses screen</shortDescription>
+        <value>Find Businesses</value>
+    </labels>
+    <labels>
+        <fullName>Found</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Found</shortDescription>
+        <value>Found</value>
     </labels>
     <labels>
         <fullName>Full_Name</fullName>
@@ -1815,29 +1874,5 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
-    </labels>
-    <labels>
-        <fullName>Find_Businesses_Criteria_Title</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>The title text on the find businesses screen</shortDescription>
-        <value>Find Businesses</value>
-    </labels>
-    <labels>
-        <fullName>Find_Businesses_Criteria_Help_Text</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>The description text on the find businesses screen</shortDescription>
-        <value>Please enter the search criteria below. If you do not select a value for an option, it will not be taken into account in the search.</value>
-    </labels>
-    <labels>
-        <fullName>Find_Businesses_Advanced_Criteria_Help_Text</fullName>
-        <categories>Dutch Business</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>The description text on the find businesses screen</shortDescription>
-        <value>These values generally do not need to be changed. Please only change them in very specific search scenarios.</value>
     </labels>
 </CustomLabels>

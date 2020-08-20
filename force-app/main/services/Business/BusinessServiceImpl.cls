@@ -78,7 +78,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             throw new InputException('Require at least one item in the list.');
         }
         List<Business_Dossier__c> duplicateBusinessDossiers = [
-                SELECT Id FROM Business_Dossier__c
+                SELECT Id,Dossier_Number__c,Establishment_Number__c FROM Business_Dossier__c
                 WHERE Dossier_Number__c IN :dossierNumbers AND
                 Establishment_Number__c IN :establishmentNumbers
                 WITH SECURITY_ENFORCED
@@ -144,6 +144,7 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             unitOfWork.registerUpsert(businessDossier);
             response.add(businessDossier);
         }
+
         unitOfWork.commitWork();
         return response;
     }

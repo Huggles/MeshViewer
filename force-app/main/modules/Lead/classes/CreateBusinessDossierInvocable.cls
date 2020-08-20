@@ -28,6 +28,7 @@ global with sharing class CreateBusinessDossierInvocable {
                     businessDossiersToUpsert = argument.businessDossiers;
                 }
             }
+            //check duplicate duplicate rule created by subscriber org before inserting
             List<Business_Dossier__c> insertedBusinessDossiers = BusinessService.createDossiers(businessDossiersToUpsert, true);
                 return insertedBusinessDossiers;
         }
@@ -36,4 +37,5 @@ global with sharing class CreateBusinessDossierInvocable {
             throw ex;
         }
     }
+
 }
