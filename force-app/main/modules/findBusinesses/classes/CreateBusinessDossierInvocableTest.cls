@@ -41,8 +41,7 @@ public with sharing class CreateBusinessDossierInvocableTest {
         User user = [SELECT Id FROM User WHERE Username = 'CompanyInfor.CommonTestUser@testorg.com'];
         System.runAs(user) {
             Test.startTest();
-
-            List<Business_Dossier__c> dossiers = CreateBusinessDossierInvocable.createBusinessDossier(arguments);
+            CreateBusinessDossierInvocable.createBusinessDossier(arguments);
             Test.stopTest();
         }
         List<Business_Dossier__c> insertedDossiers = [SELECT id FROM Business_Dossier__c];
@@ -63,7 +62,7 @@ public with sharing class CreateBusinessDossierInvocableTest {
         System.runAs(user) {
             Test.startTest();
             try {
-                List<Business_Dossier__c> dossiers = CreateBusinessDossierInvocable.createBusinessDossier(arguments);
+                CreateBusinessDossierInvocable.createBusinessDossier(arguments);
                 System.assert(false);
             } catch (Exception e) {
                 System.assert(true);
