@@ -1,20 +1,14 @@
 /**
- * Created by Hugo on 10/08/2020.
+ * Created by Hugo on 20/08/2020.
  */
 
-
-/**
- * Created by Hugo on 10/08/2020.
- */
 
 import {LightningElement, track, api} from 'lwc';
 import {ToastEventController} from "c/toastEventController";
 
 import SBIData from '@salesforce/resourceUrl/SBICodes';
 
-export default class LeadGeneratorStandardIndustrialClassifications extends LightningElement {
-
-
+export default class FindBusinessesStandardIndustrialClassifications extends LightningElement {
     @track treeGridData = [];
     @track treeGridColumns = [
         {
@@ -27,7 +21,7 @@ export default class LeadGeneratorStandardIndustrialClassifications extends Ligh
             fieldName: 'label',
             label: 'SBI Code',
         }
-        ];
+    ];
 
     @track selectedRows = [];
 

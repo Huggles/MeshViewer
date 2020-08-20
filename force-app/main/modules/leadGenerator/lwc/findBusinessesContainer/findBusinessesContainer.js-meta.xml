@@ -10,7 +10,8 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="selectedCriteria123" type="apex://appsolutely.FindBusinessCriteriaModel" label="Selected Criteria123"/>
+            <property name="criteriaMap" type="apex://appsolutely.FindBusinessCriteriaModel"
+                      label="Criteria Map" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

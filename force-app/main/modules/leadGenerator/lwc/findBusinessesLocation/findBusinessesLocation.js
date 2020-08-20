@@ -1,19 +1,17 @@
 /**
- * Created by Hugo on 07/08/2020.
+ * Created by Hugo on 20/08/2020.
  */
 
-import {LightningElement, track, api} from 'lwc';
-import { loadScript, loadStyle } from 'lightning/platformResourceLoader';
+import {api, LightningElement, track} from 'lwc';
+import {loadScript, loadStyle} from "lightning/platformResourceLoader";
 import leaflet from '@salesforce/resourceUrl/leaflet';
 import GeoJSON from '@salesforce/resourceUrl/GeoJSON';
 
-
-export default class LeadGeneratorLocation extends LightningElement {
-
+export default class FindBusinessesLocation extends LightningElement {
 
     /*
-     * The mutable province data determining how the features should be shown on the map.
-     */
+    * The mutable province data determining how the features should be shown on the map.
+    */
 
     @track _provinces = {
         'Drenthe': {

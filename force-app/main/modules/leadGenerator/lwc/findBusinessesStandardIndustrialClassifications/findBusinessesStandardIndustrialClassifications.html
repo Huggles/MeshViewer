@@ -1,0 +1,39 @@
+<!--
+ - Created by Hugo on 20/08/2020.
+ -->
+
+<!-- Find Businesses Sic -->
+<template>
+    <div>
+        <table class="slds-table">
+            <thead>
+            <tr class="slds-line-height_reset">
+                <th class="slds-text-align_right">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                        <span class="slds-truncate" title="Name">Checkbox</span>
+                    </div>
+
+                </th>
+                <th class="slds-text-align_right">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                        <span class="slds-truncate" title="Name">Name</span>
+                    </div>
+                </th>
+                <th aria-label="Account Name">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                        <span class="slds-truncate" title="Code">Code</span>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <template for:each={treeGridData} for:item="rowData">
+                <c-tree-grid-row key={rowData.code}
+                                 row-data={rowData}
+                                 onrowselected={onRowSelected}>
+                </c-tree-grid-row>
+            </template>
+            </tbody>
+        </table>
+    </div>
+</template>

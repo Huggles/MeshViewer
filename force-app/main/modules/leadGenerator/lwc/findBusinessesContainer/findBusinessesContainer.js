@@ -1,6 +1,7 @@
 /**
- * Created by Hugo on 11/08/2020.
+ * Created by Hugo on 20/08/2020.
  */
+
 
 import {LightningElement, track, api} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEvent,
@@ -12,12 +13,9 @@ import Previous from '@salesforce/label/c.Previous';
 import Find_Businesses_Criteria_Title from '@salesforce/label/c.Find_Businesses_Criteria_Title';
 import Find_Businesses_Criteria_Help_Text from '@salesforce/label/c.Find_Businesses_Criteria_Help_Text';
 
+export default class FindBusinessesContainer extends LightningElement {
 
-
-export default class LeadGeneratorSearch extends LightningElement {
-
-
-    @api selectedCriteria123;
+    @api criteriaMap;
     @api selectedCriteria456;
 
     activeSections = [];
@@ -58,8 +56,8 @@ export default class LeadGeneratorSearch extends LightningElement {
 
 
     renderedCallback() {
-        this.sbiHTMLElement = this.template.querySelector('c-lead-generator-standard-industrial-classifications');
-        this.locationHTMLElement = this.template.querySelector('c-lead-generator-location');
+        this.sbiHTMLElement = this.template.querySelector('c-find-businesses-standard-industrial-classifications');
+        this.locationHTMLElement = this.template.querySelector('c-find-businesses-location');
         this.otherCriteriaHTMLElement = this.template.querySelector('c-find-businesses-other-criteria');
     }
 
@@ -97,12 +95,13 @@ export default class LeadGeneratorSearch extends LightningElement {
             max_number_of_results :     this.selectedOtherCriteria.max_number_of_results
 
         }
-        this.selectedCriteria123 = FindBusinessCriteriaModel;
-        const attributeChangeEvent = new FlowAttributeChangeEvent('selectedCriteria123', FindBusinessCriteriaModel);
+        this.criteriaMap = FindBusinessCriteriaModel;
+        const attributeChangeEvent = new FlowAttributeChangeEvent('criteriaMap', FindBusinessCriteriaModel);
 
         console.log('FindBusinessCriteriaModel');
         console.log(FindBusinessCriteriaModel);
         const navigateNextEvent = new FlowNavigationNextEvent();
         this.dispatchEvent(navigateNextEvent);
     }
+
 }
