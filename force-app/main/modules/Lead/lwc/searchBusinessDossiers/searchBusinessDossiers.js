@@ -17,55 +17,112 @@ import Success from '@salesforce/label/c.Success';
 import Previous from '@salesforce/label/c.Previous';
 import BusinessDossierqueued from '@salesforce/label/c.Business_Dossier_queued';
 import CreateBusinessDossiers from '@salesforce/label/c.Create_Business_Dossiers';
+import NorowselectedMessage from '@salesforce/label/c.No_row_selected_Message';
+import DuplicateOf from '@salesforce/label/c.Duplicate_of';
+import Found from '@salesforce/label/c.Found';
+import FastSearch from '@salesforce/label/c.Fast_search';
+
+
+
+const columns = [
+    {label: 'Dossier Number', fieldName: 'appsolutely__Dossier_Number__c', type: 'number', sortable: false},
+    {label: 'Establishment Number', fieldName: 'appsolutely__Establishment_Number__c', type: 'text', sortable: false},
+    {label: 'Name', fieldName: 'Name', type: 'text', sortable: false},
+    // {label: 'Trade Name Full', fieldName: 'appsolutely__Trade_Name_Full__c', type: 'text', sortable: true},
+    {label: 'Establishment City', fieldName: 'appsolutely__Establishment_City__c', type: 'text', sortable: false},
+    {label: 'Establishment Street', fieldName: 'appsolutely__Establishment_Street__c', type: 'text', sortable: false},
+    {label: 'Correspondence City', fieldName: 'appsolutely__Correspondence_City__c', type: 'text', sortable: false},
+    {label: 'Correspondence Street', fieldName: 'appsolutely__Correspondence_Street__c', type: 'text', sortable: false},
+    {label: 'Economically Active', fieldName: 'appsolutely__Indication_Economically_Active__c', type: 'boolean', sortable: false},
+    {label: 'Existing Business Dossier', fieldName: 'existingDossier', type: 'boolean', sortable: false}
+];
 
 
 export default class SearchBusinessDossiers extends LightningElement {
-
-
+/*
+Input search criteria from search Lwc
+*/
     @api searchCriteria;
+/*
+Datatable columns for showing list of Business dossiers
+*/
+    columns = columns;
 
-    @api cities;
-    @api postcodes;
-    @api sbiList;
-    @api primary_sbi_only;
-    @api legal_forms;
-    @api employees_min;
-    @api employees_max;
-    @api economically_active;
-    @api financial_status;
-    @api changed_since;
-    @api new_since;
-    @track page_x;
-    @api provinces;
-    @api sbi_match_type;
-
-    @track maxRecords=200;
+/*
+List of all input criteria for Soap service
+*/
+     cities;
+     postcodes;
+     sbiList;
+     primary_sbi_only;
+     legal_forms;
+     employees_min;
+     employees_max;
+     economically_active;
+     financial_status;
+     changed_since;
+     new_since;
+     page_x;
+     provinces;
+     sbi_match_type;
+/*
+Maximum no. of records to show in datatable
+*/
+     maxRecords=10000;
+/*
+Shows spinner on screen while initial load of data
+*/
     @track isLoading = true;
+/*
+Stores list of business dossiers to show on datatable
+*/
     @track businessDossiers = [];
+/*
+Stores list of business dossiers as a copy while filtering
+*/
     @track dossiers = [];
+/*
+controls enable and disable of infinite loading
+*/
+    @track enableInfiniteLoading = true;
+/*
+controls spinner on datatable on infinite loading
+*/
+    showDatatableSpinner = false;
+/*
+controls show hide of cancel button on footer componenet
+*/
+    showFooterCancelButton = false;
+/*
+Store final list of Business dossiers to insert
+*/
+    @api businessDossiersToInsert
+/*
+ Stores maximum no. of pages found
+ */
+    @track maxPaqge
+
 
     get isInitializing(){
         return this.isLoading;
+    }
+
+    get businessDossierLength(){
+        return this.dossiers.length;
     }
     availableFooterActions = [
         'BACK',
         'NEXT'
     ]
-    showFooterCancelButton = false;
+
 
     label = { Loading,CurrentlyShowing,
         Records,Error, Cancel,
         Previous,CreateBusinessDossiers,Success,
-        BusinessDossierqueued
+        BusinessDossierqueued,NorowselectedMessage,
+        DuplicateOf,Found,FastSearch
     }
-    searchString;
-    handleChange(event) {
-        if (event.target.name === 'cities') {
-            this.searchString = event.target.value;
 
-            this.template.querySelector("c-show-business-dossier-data-table").fastFilter(this.searchString);
-        }
-    }
     validateInput(){
         if(this.searchCriteria.cities!=undefined)                   this.cities =this.searchCriteria.cities;
         if(this.searchCriteria.postcodes!=undefined)                this.postcodes =this.searchCriteria.postcodes;
@@ -91,11 +148,54 @@ export default class SearchBusinessDossiers extends LightningElement {
             new ToastEventController(this).showErrorToastMessage(null,error.message);
         }).finally(result=>{this.businessDossiers = this.dossiers});
     }
-    get businessDossierLength(){
-        return this.dossiers.length;
+    handleSearchChange(event) {
+        let searchString = event.target.value;
+        if(!searchString){
+            this.businessDossiers = this.dossiers;
+            this.enableInfiniteLoading = true;
+        } else{
+            searchString = searchString.toLowerCase();
+            this.businessDossiers = this.dossiers.filter(dossier=>
+                dossier.appsolutely__Dossier_Number__c.toLowerCase().includes(searchString)||
+                dossier.appsolutely__Establishment_Number__c.toLowerCase().includes(searchString)||
+                dossier.Name.toLowerCase().includes(searchString)
+            );
+            this.enableInfiniteLoading = false;
+        }
     }
-    handleClick(){
-        this.template.querySelector('c-show-business-dossier-data-table').createDossiers();
+
+    handleRowSelection(event) {
+        this.selectedRows = event.target.getSelectedRows();
+    }
+
+    handleFooterNextClick(event){
+        try {
+            //this.selectedRows = event.target.getSelectedRows();
+             if(!this.selectedRows){
+                new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.NorowselectedMessage);
+            }
+             else {
+                this.handleSelectedRows(this.selectedRows);
+            }
+        } catch (e){
+            this.error = e.message;
+        }
+    }
+
+    handleSelectedRows(selectedRecords){
+        try {
+            let filteredArray = [];
+            filteredArray = selectedRecords.filter(dossier=>
+                dossier.existingDossier == false
+            );
+            this.businessDossiersToInsert = this.unFlattenRecords(filteredArray);
+
+            const navigateNextEvent = new FlowNavigationNextEvent();
+            new ToastEventController(this).showSuccessToastMessage(this.label.Success,this.label.Found+' '+ (selectedRecords.length - filteredArray.length)+' '+this.label.DuplicateOf+' '+selectedRecords.length +' '+this.label.BusinessDossierqueued);
+            this.dispatchEvent(navigateNextEvent);
+        } catch (e){
+            this.error = e.message;
+        }
     }
 
      async makeCallout(){
@@ -111,35 +211,36 @@ export default class SearchBusinessDossiers extends LightningElement {
         .then(result => {
             if(this.businessDossiers.length==0) {
                 let dossierArray = this.flattenRecords(result.businessDossierWrappers);
-
-                this.businessDossiers = dossierArray;//this.dossierData;
-                this.dossiers = dossierArray;//this.dossierData;//result.businessDossiers;
+                this.businessDossiers = dossierArray;
+                this.dossiers = dossierArray;
             }
             else {
                 let dossierArray = this.flattenRecords(result.businessDossierWrappers);
-                this.dossiers = this.dossiers.concat(dossierArray);//this.dossierData;//result.businessDossiers;
-
+                this.businessDossiers = this.businessDossiers.concat(dossierArray);
+                this.dossiers = this.businessDossiers;
             }
-            let totalPage = result.numpages;
+            this.maxPaqge = result.numpages;
             this.page_x = result.curpage;
             this.page_x++
-            if( !(this.page_x<=totalPage)){
+            if( !(this.page_x<=this.maxPaqge)){
                 this.page_x = 0;
             }
             this.isLoading = false;
-            if(this.dossiers.length<this.maxRecords){
-                this.makeCallout();
-            } else{
-                this.businessDossiers = [];
-                this.businessDossiers = this.dossiers;
-            }
-            //stop showing initial spinner
+            this.showDatatableSpinner = false;
             Promise.resolve(result);
         })
         .catch(error => {
-            this.error = error;
+            this.error = error.message;
             Promise.reject(error);
         })
+    }
+    handleLoadMore(){
+        if(this.dossiers.length<this.maxRecords && this.page_x<= this.maxPaqge){
+            this.showDatatableSpinner = true;
+            this.makeCallout();
+        } else{
+            this.enableInfiniteLoading = false;
+        }
     }
     //below function flatten the nested data
     flattenRecords(wrappers){
@@ -185,36 +286,6 @@ export default class SearchBusinessDossiers extends LightningElement {
 
     set error(value){
         if (!value) return;
-        new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.Error, value );
-    }
-    @api businessDossiersToInsert
-
-    handleSelectedRows(event){
-        try {
-            let selectedRecords = event.detail;
-            if(!selectedRecords)
-                new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.Error, value );
-            else {
-                // let filteredArray = selectedRecords.filter(dossier=>
-                //     dossier.existingDossier == false
-                // );
-                // this.businessDossiersToInsert = this.unFlattenRecords(filteredArray);
-                this.businessDossiersToInsert = this.unFlattenRecords(selectedRecords);
-
-                const navigateNextEvent = new FlowNavigationNextEvent();
-                new ToastEventController(this).showSuccessToastMessage(this.label.Success,this.label.BusinessDossierqueued );
-                this.dispatchEvent(navigateNextEvent);
-            }
-        } catch (e){
-            this.error = e;
-        }
-    }
-    handleFooterNextClick(){
-        try {
-            this.template.querySelector('c-show-business-dossier-data-table').createDossiers();
-
-        } catch (e){
-            this.error = e;
-        }
+        new ToastEventController(this).showErrorToastMessage(this.label.Error, value );
     }
 }

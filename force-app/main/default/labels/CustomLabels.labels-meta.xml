@@ -106,7 +106,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Dossier queued</shortDescription>
-        <value>Business Dossiers are queued successfully</value>
+        <value>selected Business Dossier to Create</value>
     </labels>
     <labels>
         <fullName>Business_Positions_Retrieved_Succesfully</fullName>
@@ -491,6 +491,13 @@
         <value>Duplicate Results</value>
     </labels>
     <labels>
+        <fullName>Duplicate_of</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Duplicate of</shortDescription>
+        <value>duplicate of</value>
+    </labels>
+    <labels>
         <fullName>Duplicates_Found_Message</fullName>
         <language>en_US</language>
         <protected>true</protected>
@@ -757,6 +764,13 @@
         <protected>true</protected>
         <shortDescription>The title text on the find businesses screen</shortDescription>
         <value>Find Businesses</value>
+    </labels>
+    <labels>
+        <fullName>Found</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Found</shortDescription>
+        <value>Found</value>
     </labels>
     <labels>
         <fullName>Full_Name</fullName>

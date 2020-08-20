@@ -6,25 +6,34 @@
 <template>
     <lightning-card  title="">
             <!--            Show spinner-->
-        <lightning-card title={title} variant="base">
+        <lightning-card title="" variant="base">
             <template if:true={isInitializing}>
                 <div style='height: 300px'>
                     <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
                 </div>
             </template>
-<!--                Show Datatable-->
+<!--                Show search fields-->
                 <template if:false={isInitializing}>
                     <div class="slds-grid slds-wrap slds-m-around_x-small">
                         <div class=" slds-col slds-size_1-of-1 ">
-                            {label.CurrentlyShowing} {businessDossierLength} {label.Records}
+                            {label.CurrentlyShowing} {businessDossierLength} {label.Records} of {maxRecords}
                         </div>
-                            <lightning-input type="text" name = "cities" class= "slds-col slds-size_1-of-3" label="" placeholder="Fast search..."  onchange={handleChange}></lightning-input>
+                            <lightning-input type="text" name = "cities" class= "slds-col slds-size_1-of-3" label="" placeholder={label.FastSearch}  onchange={handleSearchChange}></lightning-input>
+ <!--                Show Datatable-->
                         <div class="slds-col slds-size_1-of-1">
-                    <c-show-business-dossier-data-table
-                            business-dossiers={businessDossiers}
-                            dossiers-to-store={businessDossiers}
-                            onsendselectedrows={handleSelectedRows}>
-                    </c-show-business-dossier-data-table>
+                            <div style="height: 30rem;">
+                                <lightning-datatable
+                                        key-field='Id'
+                                        data={businessDossiers}
+                                        show-row-number-column
+                                        columns={columns}
+                                        onrowselection={handleRowSelection}
+                                        is-loading={showDatatableSpinner}
+                                        enable-infinite-loading={enableInfiniteLoading}
+                                        onloadmore={handleLoadMore}
+                                        load-more-offset="20">
+                                </lightning-datatable>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -34,6 +43,7 @@
                         no-data-label="No Data Found">
                 </c-no-result-image>
             </template>
+
             <c-flow-footer next-button-title={label.CreateBusinessDossiers}
                            cancel-button-title={label.Cancel}
                            previous-button-title={label.Previous}
