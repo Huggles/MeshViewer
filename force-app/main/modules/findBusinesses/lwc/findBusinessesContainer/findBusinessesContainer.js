@@ -10,7 +10,7 @@ import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEve
 import Search_Confirm from '@salesforce/label/c.Search_Confirm';
 import Cancel from '@salesforce/label/c.Cancel';
 import Previous from '@salesforce/label/c.Previous';
-import Find_Businesses_Criteria_Title from '@salesforce/label/c.Find_Businesses_Criteria_Title';
+import Find_Businesses_Title from '@salesforce/label/c.Find_Businesses_Title';
 import Find_Businesses_Criteria_Help_Text from '@salesforce/label/c.Find_Businesses_Criteria_Help_Text';
 
 export default class FindBusinessesContainer extends LightningElement {
@@ -36,7 +36,7 @@ export default class FindBusinessesContainer extends LightningElement {
         Search_Confirm,
         Cancel,
         Previous,
-        Find_Businesses_Criteria_Title,
+        Find_Businesses_Title,
         Find_Businesses_Criteria_Help_Text
     }
 

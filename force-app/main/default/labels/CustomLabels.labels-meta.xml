@@ -99,7 +99,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Data Exists</shortDescription>
-        <value>The Business Data  record already exists.</value>
+        <value>The Business Data record already exists.</value>
     </labels>
     <labels>
         <fullName>Business_Dossier_queued</fullName>
@@ -765,7 +765,7 @@
         <value>Please enter the search criteria below. If you do not select a value for an option, it will not be taken into account in the search.</value>
     </labels>
     <labels>
-        <fullName>Find_Businesses_Criteria_Title</fullName>
+        <fullName>Find_Businesses_Title</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
@@ -1353,6 +1353,7 @@
     </labels>
     <labels>
         <fullName>Search_Reset</fullName>
+        <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>Business Data Search Reset</shortDescription>
@@ -1874,5 +1875,13 @@
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
+    </labels>
+    <labels>
+        <fullName>Dutch_Business_Dossier_Exists</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for the Exists in Salesforce column in find businesses.</shortDescription>
+        <value>Exists in Salesforce</value>
     </labels>
 </CustomLabels>

@@ -17,7 +17,7 @@ global with sharing class CreateBusinessDossierInvocable {
             label='Create Business Dossiers'
             description='Create Business Dossiers'
             category='Company.info')
-    global static List<Business_Dossier__c> createBusinessDossier(List<CreateBusinessDossierArgument> arguments) {
+    global static void createBusinessDossier(List<CreateBusinessDossierArgument> arguments) {
         try {
             List<Business_Dossier__c> businessDossiersToUpsert = new List<Business_Dossier__c>();
             for (CreateBusinessDossierArgument argument : arguments) {
@@ -30,7 +30,6 @@ global with sharing class CreateBusinessDossierInvocable {
             }
             //check duplicate duplicate rule created by subscriber org before inserting
             List<Business_Dossier__c> insertedBusinessDossiers = BusinessService.createDossiers(businessDossiersToUpsert, true);
-                return insertedBusinessDossiers;
         }
         catch (Exception ex) {
             ErrorLogUtil.logException(ex, true);
