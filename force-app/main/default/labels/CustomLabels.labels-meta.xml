@@ -726,6 +726,13 @@
         <value>Even</value>
     </labels>
     <labels>
+        <fullName>Fast_search</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Fast search</shortDescription>
+        <value>Fast search...</value>
+    </labels>
+    <labels>
         <fullName>Feature_Not_Found</fullName>
         <categories>InternationalAddress</categories>
         <language>en_US</language>
