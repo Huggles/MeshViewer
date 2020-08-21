@@ -111,7 +111,7 @@ public virtual inherited sharing class fflib_SObjectUnitOfWork
         }
         public void dmlDelete(List<SObject> objList)
         {
-            delete objList;
+            Database.DeleteResult[] dr = Database.delete(objList, true);
         }
         public void eventPublish(List<SObject> objList)
         {

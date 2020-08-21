@@ -92,6 +92,10 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         if(businessDossiers.size() == 0 || accounts.size() == 0 || businessDossiers.size() != accounts.size()){
             throw new InputException(Label.Error_Input_Incorrect);
         }
+
+        //If the Business Dossier already has SBIs, remove them first. We dont want duplicated.
+        deleteSBIs(businessDossiers);
+
         fflib_ISObjectUnitOfWork unitOfWork;
         if(ignoreAlertDuplicateRules){
             unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
@@ -125,6 +129,17 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             throw e;
         }
         return response;
+    }
+
+    private static void deleteSBIs(List<Business_Dossier__c> businessDossiers){
+        fflib_ISObjectUnitOfWork    unitOfWork = Application.UnitOfWork.newInstance();
+        Set<Id> dossierIds = new Set<Id>();
+        for(Business_Dossier__c businessDossier : businessDossiers){
+            if(businessDossier.Id != null) dossierIds.add(businessDossier.Id);
+        }
+        List<Business_Data_SBI__c> sbis = SbiCodeSelector.newInstance().selectByDossierId(dossierIds);
+        unitOfWork.registerDeleted(sbis);
+        unitOfWork.commitWork();
     }
 
     // TODO: move this to a constant util class in the ISO 3166 dir?

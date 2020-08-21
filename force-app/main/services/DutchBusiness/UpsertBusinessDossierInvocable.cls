@@ -23,7 +23,7 @@ global inherited sharing class UpsertBusinessDossierInvocable {
 
     @InvocableMethod(
             label='Upsert Account With Business Dossiers'
-            description='Fetches dossiers from the Dutch Chamber of Commerce, stores them in Salesforce, and links it to an account.'
+            description='Upserts an instantiated business dossier with attached SBIs and related account.'
             category='Company.info')
     global static List<Business_Dossier__c> upsertAccountWithBusinessDossier(List<UpsertBusinessDossierArgument> arguments) {
         try {
