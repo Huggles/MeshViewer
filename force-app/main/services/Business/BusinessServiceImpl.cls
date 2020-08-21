@@ -78,8 +78,10 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
             throw new InputException('Require at least one item in the list.');
         }
         //Make sure to query all fields that might need to be copied to the new dossier.
+
         List<Business_Dossier__c> duplicateBusinessDossiers = [
-                SELECT Id, appsolutely__Business_Positions_Updated_Date__c FROM Business_Dossier__c
+                SELECT Id, Business_Positions_Updated_Date__c, Creditsafe_Company_Report__c
+                FROM Business_Dossier__c
                 WHERE Dossier_Number__c IN :dossierNumbers AND
                 Establishment_Number__c IN :establishmentNumbers
                 WITH SECURITY_ENFORCED
