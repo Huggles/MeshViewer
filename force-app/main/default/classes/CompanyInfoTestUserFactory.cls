@@ -23,14 +23,4 @@ public with sharing class CompanyInfoTestUserFactory {
         TestUtils.giveUserPermissionSet('Company_info_for_Dutch_Business', testUser);
         return testUser;
     }
-
-    /**
-    * returns a Standard User with the Company.info Dutch Business User permissionset
-    */
-    @TestVisible
-    private static User noAccessUser() {
-        User testUser = TestUtils.getUniqueUser('Standard User');
-        return testUser;
-    }
-
 }

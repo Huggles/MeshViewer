@@ -7,9 +7,11 @@ public with sharing class FindDuplicateDossiersInvocableTest {
     @TestSetup
     static void setup() {
         System.runAs(CompanyInfoTestUserFactory.getDutchBusinessUser()) {
+            Datetime updatedTime = Datetime.now();
             Business_Dossier__c businessDossier = new Business_Dossier__c();
             businessDossier.Dossier_Number__c = '123';
             businessDossier.Establishment_Number__c = '456';
+            businessDossier.Business_Positions_Updated_Date__c = updatedTime;
             insert businessDossier;
         }
 
@@ -32,7 +34,12 @@ public with sharing class FindDuplicateDossiersInvocableTest {
             Test.stopTest();
 
             System.assertNotEquals(duplicateDossiers, null);
-            System.assertNotEquals(duplicateDossiers.size(), 0);
+            System.assertEquals(1, duplicateDossiers.size());
+            System.assertEquals(1, duplicateDossiers[0].size());
+
+            //Check if the fields come over correctly.
+            Business_Dossier__c businessDossier2 = duplicateDossiers[0][0];
+            System.assertNotEquals(null, businessDossier2.Business_Positions_Updated_Date__c);
         }
 
     }
@@ -40,9 +47,7 @@ public with sharing class FindDuplicateDossiersInvocableTest {
     static void findDuplicatesNoInputTest() {
         System.runAs(CompanyInfoTestUserFactory.getDutchBusinessUser()) {
             Test.startTest();
-            List<List<Business_Dossier__c>> duplicateDossiers = FindDuplicateDossiersInvocable.findDuplicates(new List<FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument>{
-
-            });
+            List<List<Business_Dossier__c>> duplicateDossiers = FindDuplicateDossiersInvocable.findDuplicates(new List<FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument>{});
             Test.stopTest();
             System.assertNotEquals(null, duplicateDossiers);
             System.assertEquals(1, duplicateDossiers.size());
@@ -50,6 +55,7 @@ public with sharing class FindDuplicateDossiersInvocableTest {
         }
     }
 }
+
 
 
 
