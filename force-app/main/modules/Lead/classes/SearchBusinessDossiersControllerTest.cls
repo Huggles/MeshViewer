@@ -4,16 +4,6 @@
 
 @IsTest
 public with sharing class SearchBusinessDossiersControllerTest {
-    @TestSetup
-    public static void createTestUser(){
-        Profile p = [SELECT Id FROM Profile WHERE UserLicense.Name = 'Salesforce' LIMIT 1];
-
-        User u = new User(Alias = 'stdUser', Email='standarduser@testorg.com', EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-                LocaleSidKey='en_US', ProfileId = p.Id, TimeZoneSidKey='America/Los_Angeles', Username='CompanyInfor.CommonTestUser@testorg.com');
-        insert u;
-        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Company_info_for_Sales'];
-        insert new PermissionSetAssignment(AssigneeId = u.id, PermissionSetId = ps.Id);
-    }
     @IsTest
     private static void testSearchDutchDossierHappyFlow() {
         //instantiateDutchDossier
@@ -28,8 +18,7 @@ public with sharing class SearchBusinessDossiersControllerTest {
         Application.Service.setMock(IWsDutchBusiness.class, webserviceMock);
 
         SearchBusinessDossiersController.SearchedBusinessDossierResults searchedBusinessDossierResults = new SearchBusinessDossiersController.SearchedBusinessDossierResults();
-        User user = [SELECT Id FROM User WHERE Username = 'CompanyInfor.CommonTestUser@testorg.com'];
-        System.runAs(user) {
+        System.runAs(TestUtils.getDutchBusinessUser()) {
         Test.startTest();
             searchedBusinessDossierResults = SearchBusinessDossiersController.searchDutchBusinessDossiers(new List<String>{'test'}, new List<String>{'test'}, new List<String>{'test'}, false, new List<Integer>{1}, 0, 0, 'true', 'test', 'test', 'test', 1, new List<String>{'test'}, 'test');
         Test.stopTest();
