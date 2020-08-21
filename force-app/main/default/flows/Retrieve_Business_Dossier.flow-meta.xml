@@ -61,6 +61,13 @@
                 <elementReference>DuplicateDossier.Business_Positions_Updated_Date__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CompleteBusinessDossier.Creditsafe_Company_Report__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DuplicateDossier.Creditsafe_Company_Report__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>End</targetReference>
         </connector>
@@ -79,22 +86,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Based_on_Duplicate_Dossier</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Duplicate_Dossier_As_Selected_Dossier</name>
-        <label>Set Duplicate Dossier As Selected Dossier</label>
-        <locationX>1151</locationX>
-        <locationY>247</locationY>
-        <assignmentItems>
-            <assignToReference>selectedDossier.Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DuplicateDossier.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Is_Source_Dutch_CoC</targetReference>
         </connector>
     </assignments>
     <decisions>
