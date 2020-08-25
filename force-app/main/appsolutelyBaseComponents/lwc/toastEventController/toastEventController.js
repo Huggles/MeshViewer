@@ -33,10 +33,10 @@ class ToastEventController {
         if (title != null && title.length > 0) {
             payload['title'] = title;
         } else {
-            if(variant == ToastMessageVariant.SUCCESS) {
+            if(variant == ToastEventController.ToastMessageVariant.SUCCESS) {
                 payload['title'] = Success;
             }
-            if(variant == ToastMessageVariant.ERROR) {
+            if(variant == ToastEventController.ToastMessageVariant.ERROR) {
                 payload['title'] = Error;
             }
         }
@@ -53,7 +53,7 @@ class ToastEventController {
         if(variant != null && variant.length > 0){
             payload['variant'] = variant;
         }else{
-            payload['variant'] = ToastMessageMode.DISMISSABLE;
+            payload['variant'] = ToastEventController.ToastMessageMode.DISMISSABLE;
         }
 
         //Mode
@@ -66,16 +66,16 @@ class ToastEventController {
 
 
     showSuccessToastMessage = (title, message) => {
-        this.showToastMessage(title,message,ToastMessageVariant.SUCCESS,null);
+        this.showToastMessage(title,message,ToastEventController.ToastMessageVariant.SUCCESS,null);
     }
     showSuccessToastMessageDismissable = (title, message) => {
-        this.showToastMessage(title,message,ToastMessageVariant.SUCCESS,ToastMessageMode.DISMISSABLE);
+        this.showToastMessage(title,message,ToastEventController.ToastMessageVariant.SUCCESS,ToastEventController.ToastMessageMode.DISMISSABLE);
     }
     showErrorToastMessage = (title, message) => {
-        this.showToastMessage(title,message,ToastMessageVariant.ERROR,null);
+        this.showToastMessage(title,message,ToastEventController.ToastMessageVariant.ERROR,null);
     }
     showErrorToastMessageDismissable = (title, message) => {
-        this.showToastMessage(title,message,ToastMessageVariant.ERROR,ToastMessageMode.DISMISSABLE);
+        this.showToastMessage(title,message,ToastEventController.ToastMessageVariant.ERROR,ToastEventController.ToastMessageMode.DISMISSABLE);
     }
 }
 export { ToastEventController }
