@@ -32,11 +32,6 @@ import Dutch_Business_Dossier_Exists from '@salesforce/label/c.Dutch_Business_Do
 
 import Business_Dossier_Object from '@salesforce/schema/Business_Dossier__c';
 
-
-
-
-
-
 export default class SearchBusinessDossiers extends LightningElement {
 
     columns;
@@ -154,11 +149,6 @@ export default class SearchBusinessDossiers extends LightningElement {
         }
     }
 
-
-
-
-
-
     label = { Loading,CurrentlyShowing,
         Records,Error, Cancel,
         Previous,CreateBusinessDossiers,Success,
@@ -229,6 +219,8 @@ export default class SearchBusinessDossiers extends LightningElement {
             );
             this.businessDossiersToInsert = this.unFlattenRecords(filteredArray);
 
+            const attributeChangeEvent = new FlowAttributeChangeEvent('businessDossiersToInsert', this.businessDossiersToInsert );
+            this.dispatchEvent(attributeChangeEvent);
             const navigateNextEvent = new FlowNavigationNextEvent();
             new ToastEventController(this).showSuccessToastMessage(this.label.Success,this.label.Found+' '+ (selectedRecords.length - filteredArray.length)+' '+this.label.DuplicateOf+' '+selectedRecords.length +' '+this.label.BusinessDossierqueued);
             this.dispatchEvent(navigateNextEvent);
