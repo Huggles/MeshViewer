@@ -10,6 +10,7 @@ import {fireEvent} from "c/pubsub";
 
 import searchResultsLimitedCL from '@salesforce/label/c.Search_Results_Limited';
 import searchNoResultsCL from '@salesforce/label/c.Search_No_Results';
+import Too_Many_Results_Retrieved from '@salesforce/label/c.Too_Many_Results_Retrieved'
 
 import DESERT_ILLUSTRATION from '@salesforce/resourceUrl/Desert';
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
@@ -57,9 +58,33 @@ export default class SearchResultTilesList extends LightningElement {
     }
 
     /**
+     * The maximum amount of results to display.
+     * This number should not be too high, this might crash slower systems.
+     */
+    @api maxNumberOfResults = 20;
+
+    _searchResults;
+    /**
      * The search results to be displayed
      */
-    @api searchResults;
+    @api
+    get searchResults(){
+        return this._searchResults;
+    }
+    set searchResults(value){
+        if(Array.isArray(value)){
+            if(value.length > this.maxNumberOfResults){
+                new ToastEventController(this).showToastMessage(
+                    'Information',
+                    Too_Many_Results_Retrieved + ' ' + this.maxNumberOfResults,
+                    ToastEventController.ToastMessageVariant.INFO,
+                    ToastEventController.ToastMessageMode.DISMISSABLE)
+            }
+            this._searchResults = value.slice(0,this.maxNumberOfResults);
+        }else{
+            this._searchResults = null;
+        }
+    }
 
     /**
      * Are there any results?

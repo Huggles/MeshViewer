@@ -16,11 +16,6 @@ export default class DutchDossierResults extends LightningElement {
     @api
     selectedResult;
 
-    connectedCallback() {
-        //if results are more than 20, show a toast
-        showToastMessageForMoreResults(this.searchResults, this);
-    }
-
     handleOnCardClick(event) {
         // search for the right record
         const id = event.detail.id;

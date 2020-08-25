@@ -6,7 +6,6 @@ import {LightningElement, track, api, wire} from 'lwc';
 import {FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent} from 'lightning/flowSupport';
 import { NavigationMixin } from 'lightning/navigation';
 import {fireEvent, registerListener} from "c/pubsub";
-import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 import createDuplicateAccount from '@salesforce/apex/CreateDuplicatesController.createDuplicateAccount';
 
@@ -86,15 +85,6 @@ export default class AccountListTable extends NavigationMixin(LightningElement) 
         const attributeChangeEvent = new FlowAttributeChangeEvent('cancelClicked', this.cancelClicked);
         this.dispatchEvent(attributeChangeEvent);
         this.dispatchEvent(new FlowNavigationNextEvent());
-    }
-
-    showToast(title, message, variant) {
-        const event = new ShowToastEvent({
-            "title": title,
-            "message": message,
-            "variant": variant
-        });
-        this.dispatchEvent(event);
     }
 
     handleOnCardClick(event) {
