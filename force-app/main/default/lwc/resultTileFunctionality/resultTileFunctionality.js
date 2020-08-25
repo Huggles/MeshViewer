@@ -34,15 +34,4 @@ const tileSelected = (id, searchResultTiles, component) => {
 
     return {selectedResult: selectedResult};
 };
-
-const showToastMessageForMoreResults = (searchResults, component) => {
-    if (searchResults && searchResults instanceof Array && searchResults.length >= 20) {
-        const event = new ShowToastEvent({
-            message: More_than_20_results_message
-        });
-        component.dispatchEvent(event);
-    }
-}
-
-
-export {tileSelected, showToastMessageForMoreResults}
+export {tileSelected}
