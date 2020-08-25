@@ -23,5 +23,4 @@ public with sharing class CompanyInfoTestUserFactory {
         TestUtils.giveUserPermissionSet('Company_info_for_Dutch_Business', testUser);
         return testUser;
     }
-
 }
