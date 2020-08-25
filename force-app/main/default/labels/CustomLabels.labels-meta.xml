@@ -762,7 +762,7 @@
         <language>en_US</language>
         <protected>true</protected>
         <shortDescription>The description text on the find businesses screen</shortDescription>
-        <value>Please enter the search criteria below. If you do not select a value for an option, it will not be taken into account in the search.</value>
+        <value>Please enter the search criteria below. If you do not select a value for an option, it will not be used in the filter.</value>
     </labels>
     <labels>
         <fullName>Find_Businesses_Title</fullName>
