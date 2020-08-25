@@ -1,7 +1,6 @@
 /**
- * Created by vishalshete on 10/08/2020.
+ * Created by Hugo on 25/08/2020.
  */
-
 import {LightningElement, track, wire, api} from 'lwc';
 import searchDutchBusinessDossiers from '@salesforce/apex/SearchBusinessDossiersController.searchDutchBusinessDossiers';
 import {FlowAttributeChangeEvent, FlowNavigationBackEvent, FlowNavigationNextEvent,
@@ -32,7 +31,8 @@ import Dutch_Business_Dossier_Exists from '@salesforce/label/c.Dutch_Business_Do
 
 import Business_Dossier_Object from '@salesforce/schema/Business_Dossier__c';
 
-export default class SearchBusinessDossiers extends LightningElement {
+
+export default class FindBusinessesSearchResults extends LightningElement {
 
     columns;
 
@@ -44,24 +44,24 @@ export default class SearchBusinessDossiers extends LightningElement {
     /*
     List of all input criteria for Soap service
     */
-     cities;
-     postcodes;
-     sbiList;
-     primary_sbi_only;
-     legal_forms;
-     employees_min;
-     employees_max;
-     economically_active;
-     financial_status;
-     changed_since;
-     new_since;
-     provinces;
-     sbi_match_type;
+    cities;
+    postcodes;
+    sbiList;
+    primary_sbi_only;
+    legal_forms;
+    employees_min;
+    employees_max;
+    economically_active;
+    financial_status;
+    changed_since;
+    new_since;
+    provinces;
+    sbi_match_type;
 
     /*
     Maximum no. of records to show in datatable
     */
-     maxRecords=10000;
+    maxRecords=10000;
 
     /*
     Shows spinner on screen while initial load of data
@@ -125,7 +125,7 @@ export default class SearchBusinessDossiers extends LightningElement {
 
     _businessDossierObjectInfo;
     @wire(getObjectInfo, { objectApiName: Business_Dossier_Object })
-    businessDossierDossierInfo(response){
+    businessDossierObjectInfo(response){
         if(response){
             if(response.data){
                 this._businessDossierObjectInfo = response.data;
@@ -200,10 +200,10 @@ export default class SearchBusinessDossiers extends LightningElement {
     handleFooterNextClick(event){
         try {
             //this.selectedRows = event.target.getSelectedRows();
-             if(!this.selectedRows){
+            if(!this.selectedRows){
                 new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.NorowselectedMessage);
             }
-             else {
+            else {
                 this.handleSelectedRows(this.selectedRows);
             }
         } catch (e){
@@ -240,7 +240,7 @@ export default class SearchBusinessDossiers extends LightningElement {
                 new ToastEventController(this).showErrorToastMessage(null,error.message);
             });
     }
-     async searchBusinesses(){
+    async searchBusinesses(){
         let payload = {
             cities : this.cities,
             postcodes: this.postcodes,
