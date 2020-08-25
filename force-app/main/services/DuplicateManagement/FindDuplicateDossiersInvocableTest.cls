@@ -6,19 +6,10 @@
 public with sharing class FindDuplicateDossiersInvocableTest {
     @TestSetup
     static void setup() {
-        Profile p = [SELECT Id FROM Profile WHERE UserLicense.Name = 'Salesforce' LIMIT 1];
-
-        User u = new User(Alias = 'stdUser', Email='standarduser@testorg.com', EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-                LocaleSidKey='en_US', ProfileId = p.Id, TimeZoneSidKey='America/Los_Angeles', Username='CompanyInfor.CommonTestUser@testorg.com');
-        insert u;
-        PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Company_info_for_Sales'];
-        insert new PermissionSetAssignment(AssigneeId = u.id, PermissionSetId = ps.Id);
-        System.runas(u){
-            Business_Dossier__c businessDossier = new Business_Dossier__c();
-            businessDossier.Dossier_Number__c = '123';
-            businessDossier.Establishment_Number__c = '456';
-            insert businessDossier;
-        }
+        Business_Dossier__c businessDossier = new Business_Dossier__c();
+        businessDossier.Dossier_Number__c = '123';
+        businessDossier.Establishment_Number__c = '456';
+        insert businessDossier;
     }
 
     @IsTest
@@ -30,8 +21,7 @@ public with sharing class FindDuplicateDossiersInvocableTest {
         FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument argument = new FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument();
         argument.dossier = businessDossier;
         List<List<Business_Dossier__c>> duplicateDossiers = new List<List<Business_Dossier__c>>();
-        User user = [SELECT Id FROM User WHERE Username = 'CompanyInfor.CommonTestUser@testorg.com'];
-        System.runAs(user) {
+        System.runAs(TestUtils.getDutchBusinessUser()) {
             Test.startTest();
 
             duplicateDossiers =   FindDuplicateDossiersInvocable.findDuplicates(new List<FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument>{
@@ -46,8 +36,7 @@ public with sharing class FindDuplicateDossiersInvocableTest {
     static void findDuplicatesNoInputTest() {
 
         List<List<Business_Dossier__c>> duplicateDossiers = new List<List<Business_Dossier__c>>();
-        User user = [SELECT Id FROM User WHERE Username = 'CompanyInfor.CommonTestUser@testorg.com'];
-        System.runAs(user) {
+        System.runAs(TestUtils.getDutchBusinessUser()) {
             Test.startTest();
             duplicateDossiers = FindDuplicateDossiersInvocable.findDuplicates(new List<FindDuplicateDossiersInvocable.FindDuplicateDossiersArgument>{
             });
