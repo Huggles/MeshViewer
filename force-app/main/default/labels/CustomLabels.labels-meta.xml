@@ -1801,7 +1801,7 @@
         <categories>Business Dossier</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>Too many results message.</shortDescription>
+        <shortDescription>Too many results message. Contact number of results to the end of the label.</shortDescription>
         <value>Found too many dossiers to display. Only showing the first </value>
     </labels>
 </CustomLabels>
