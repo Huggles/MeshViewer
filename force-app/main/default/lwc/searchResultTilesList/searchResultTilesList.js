@@ -61,7 +61,8 @@ export default class SearchResultTilesList extends LightningElement {
      * The maximum amount of results to display.
      * This number should not be too high, this might crash slower systems.
      */
-    @api maxNumberOfResults = 20;
+    @api maxNumberOfResults = 30;
+    @api retrievedNumberOfResults = 0;
 
     _searchResults;
     /**
@@ -73,13 +74,7 @@ export default class SearchResultTilesList extends LightningElement {
     }
     set searchResults(value){
         if(Array.isArray(value)){
-            if(value.length > this.maxNumberOfResults){
-                new ToastEventController(this).showToastMessage(
-                    'Information',
-                    Too_Many_Results_Retrieved + ' ' + this.maxNumberOfResults,
-                    ToastEventController.ToastMessageVariant.INFO,
-                    ToastEventController.ToastMessageMode.DISMISSABLE)
-            }
+            this.retrievedNumberOfResults = value.length;
             this._searchResults = value.slice(0,this.maxNumberOfResults);
         }else{
             this._searchResults = null;
@@ -144,6 +139,23 @@ export default class SearchResultTilesList extends LightningElement {
                 });
         }
     }
+    renderedCallback() {
+        this.initTileElements();
+        this.checkNumberOfResults();
+    }
+
+    _numberOfResultsWarningShowed = false;
+    checkNumberOfResults(){
+        if(this.retrievedNumberOfResults > this.maxNumberOfResults && this._numberOfResultsWarningShowed) {
+            this._numberOfResultsWarningShowed = true;
+            new ToastEventController(this).showToastMessage(
+                'Warning',
+                Too_Many_Results_Retrieved + ' ' + this.maxNumberOfResults,
+                ToastEventController.ToastMessageVariant.WARNING,
+                ToastEventController.ToastMessageMode.PESTER);
+        }
+    }
+
     async getFieldSetDescriptionsFromServer() {
         return await getFieldSetFieldDescriptions(
             {
@@ -159,9 +171,6 @@ export default class SearchResultTilesList extends LightningElement {
             .catch(error =>{
                 new ToastEventController(this).showErrorToastMessage('Error', error.body.message);
             });
-    }
-    renderedCallback() {
-        this.initTileElements();
     }
 
     initTileElements(){

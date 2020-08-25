@@ -60,8 +60,6 @@ class ToastEventController {
         if(mode != null && mode.length > 0){
             payload['mode'] = mode;
         }
-        console.log(payload);
-
         const evt = new ShowToastEvent(payload);
         this.caller.dispatchEvent(evt);
     }
