@@ -15,14 +15,14 @@ class ToastEventController {
     }
 
 
-    ToastMessageVariant = {
+    static ToastMessageVariant = {
         INFO : 'info',
         SUCCESS : 'success',
         WARNING : 'warning',
         ERROR : 'error'
     }
-    ToastMessageMode = {
-        DISMISSABLE : 'dismissable ', //remains visible until you click the close button or 3 seconds has elapsed, whichever comes first;
+    static ToastMessageMode = {
+        DISMISSABLE : 'dismissable', //remains visible until you click the close button or 3 seconds has elapsed, whichever comes first;
         PESTER : 'pester', //remains visible for 3 seconds and disappears automatically. No close button is provided;
         STICKY : 'sticky' //remains visible until you click the close button.
     }
@@ -33,10 +33,10 @@ class ToastEventController {
         if (title != null && title.length > 0) {
             payload['title'] = title;
         } else {
-            if(variant == this.ToastMessageVariant.SUCCESS) {
+            if(variant == ToastMessageVariant.SUCCESS) {
                 payload['title'] = Success;
             }
-            if(variant == this.ToastMessageVariant.ERROR) {
+            if(variant == ToastMessageVariant.ERROR) {
                 payload['title'] = Error;
             }
         }
@@ -53,30 +53,29 @@ class ToastEventController {
         if(variant != null && variant.length > 0){
             payload['variant'] = variant;
         }else{
-            payload['variant'] = this.ToastMessageMode.DISMISSABLE;
+            payload['variant'] = ToastMessageMode.DISMISSABLE;
         }
 
         //Mode
         if(mode != null && mode.length > 0){
             payload['mode'] = mode;
         }
-
         const evt = new ShowToastEvent(payload);
         this.caller.dispatchEvent(evt);
     }
 
 
     showSuccessToastMessage = (title, message) => {
-        this.showToastMessage(title,message,this.ToastMessageVariant.SUCCESS,null);
+        this.showToastMessage(title,message,ToastMessageVariant.SUCCESS,null);
     }
     showSuccessToastMessageDismissable = (title, message) => {
-        this.showToastMessage(title,message,this.ToastMessageVariant.SUCCESS,this.ToastMessageMode.DISMISSABLE);
+        this.showToastMessage(title,message,ToastMessageVariant.SUCCESS,ToastMessageMode.DISMISSABLE);
     }
     showErrorToastMessage = (title, message) => {
-        this.showToastMessage(title,message,this.ToastMessageVariant.ERROR,null);
+        this.showToastMessage(title,message,ToastMessageVariant.ERROR,null);
     }
     showErrorToastMessageDismissable = (title, message) => {
-        this.showToastMessage(title,message,this.ToastMessageVariant.ERROR,this.ToastMessageMode.DISMISSABLE);
+        this.showToastMessage(title,message,ToastMessageVariant.ERROR,ToastMessageMode.DISMISSABLE);
     }
 }
 export { ToastEventController }

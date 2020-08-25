@@ -1884,4 +1884,12 @@
         <shortDescription>Label for the Exists in Salesforce column in find businesses.</shortDescription>
         <value>Exists in Salesforce</value>
     </labels>
+    <labels>
+        <fullName>Too_Many_Results_Retrieved</fullName>
+        <categories>Business Dossier</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Too many results message. Contact number of results to the end of the label.</shortDescription>
+        <value>Found too many dossiers to display. Only showing the first </value>
+    </labels>
 </CustomLabels>
