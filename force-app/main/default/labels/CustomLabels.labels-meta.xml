@@ -1908,4 +1908,20 @@
         <shortDescription>A -successfully inserted business dossiers- message.</shortDescription>
         <value>Successfully retrieved business dossiers</value>
     </labels>
+    <labels>
+        <fullName>Select_All</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for a select all button</shortDescription>
+        <value>Select All</value>
+    </labels>
+    <labels>
+        <fullName>Remove_All</fullName>
+        <categories>Button</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for a remove all button</shortDescription>
+        <value>Remove All</value>
+    </labels>
 </CustomLabels>

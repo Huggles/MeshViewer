@@ -130,11 +130,6 @@ export default class FindBusinessesSearchResults extends LightningElement {
             if(response.data){
                 this._businessDossierObjectInfo = response.data;
                 this.columns = [
-                    {
-                        label: '', fieldName: 'Name', type: 'boolean', sortable: false, typeAttribute: {
-                            disabled: true,
-                        }
-                    },
                     {label: response.data.fields.Name.label, fieldName: 'Name', type: 'text', sortable: false},
                     {label: response.data.fields.appsolutely__Dossier_Number__c.label, fieldName: 'appsolutely__Dossier_Number__c', type: 'string', sortable: false},
                     {label: response.data.fields.appsolutely__Establishment_Number__c.label, fieldName: 'appsolutely__Establishment_Number__c', type: 'text', sortable: false},
