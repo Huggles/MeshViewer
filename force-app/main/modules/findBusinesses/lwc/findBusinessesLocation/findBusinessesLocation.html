@@ -7,12 +7,16 @@
 <template>
     <div class="slds-grid slds-wrap">
         <div class="slds-col slds-size_3-of-4 slds-large-size_3-of-4 slds-medium-size_1-of-2 slds-small-size_1-of-1  slds-p-horizontal_medium">
-            <div data-identifier="leafletMap" style="width: 100%; height: 350px; z-index: 0;"> </div>
+            <div class="slds-is-relative">
+                <lightning-spinner if:true={loadingMap} ></lightning-spinner>
+                <div data-identifier="leafletMap" style="width: 100%; height: 350px; z-index: 0;"> </div>
+            </div>
+
         </div>
         <div class="slds-col slds-size_1-of-4 slds-large-size_1-of-4 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-horizontal_medium slds-grid slds-wrap">
             <article class="slds-card slds-card_boundary slds-size_1-of-1">
-                <lightning-tabset>
-                    <lightning-tab label="Postal Codes" icon-name="standard:location">
+                <lightning-tabset active-tab-value={selectedMapLayer}>
+                    <lightning-tab label="Postal Codes" value={MAP_LAYERS.POSTALCODE} icon-name="standard:location" onactive={handleTabClick}>
                         <div class="slds-card__body slds-card__body_inner">
                             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
                                  style="outline-color: transparent;"
@@ -30,7 +34,7 @@
                                             </li>
                                             <template for:each={postalCodeSearchMatches} for:item="searchMatch">
                                                 <li key={searchMatch.Code}  class="slds-listbox__item">
-                                                    <div data-postalcode={searchMatch.Code}
+                                                    <div data-id={searchMatch.id}
                                                          class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
                                                          onclick={onPostalCodeSearchMatchClick}
                                                          onfocus={onSearchResultFocus}
@@ -46,12 +50,12 @@
                                     <button class="slds-button  slds-float_right" type="button" label={labels.Remove_All}
                                             style="color: red;" onclick={onRemoveAllSelectedPostalCodes}>{labels.Remove_All}</button>
                                 </div>
-                                <div class="slds-size_1-of-1 slds-grid slds-wrap" style="max-height: 150px; overflow-y: scroll;">
+                                <div class="slds-size_1-of-1 slds-grid slds-wrap slds-gutters slds-box_border slds-m-horizontal_none" style="max-height: 150px; overflow-y: scroll;">
                                     <template for:each={selectedPostalCodes} for:item="selectedPostalCode">
-                                        <div key={selectedPostalCode.Code} class="slds-size_1-of-2">
+                                        <div key={selectedPostalCode.Code} class="slds-col">
                                             <lightning-pill
                                                     class="slds-size_1-of-1"
-                                                    data-postalcode={selectedPostalCode.Code}
+                                                    data-id={selectedPostalCode.id}
                                                     label={selectedPostalCode.label}
                                                     onremove={onSelectedPostalCodeRemove}>
                                             </lightning-pill>
@@ -62,7 +66,7 @@
                             </template>
                         </div>
                     </lightning-tab>
-                    <lightning-tab label="Provinces" icon-name="standard:account">
+                    <lightning-tab label="Provinces" value={MAP_LAYERS.PROVINCES} icon-name="standard:account"  onactive={handleTabClick}>
                         <div class="slds-card__body slds-card__body_inner">
                             <table>
                                 <template for:each={provincesArray} for:item="province">
@@ -70,7 +74,8 @@
                                         <td>{province.name}</td>
                                         <td>
                                             <input type="checkbox" name={province.name}
-                                                   checked={province.show_on_map}
+                                                   checked={province.selected}
+                                                   data-id={province.id}
                                                    onchange={provinceSelectionChanged}>
                                         </td>
                                     </tr>
