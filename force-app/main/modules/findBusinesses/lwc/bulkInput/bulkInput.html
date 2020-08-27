@@ -1,0 +1,55 @@
+<!--
+ - Created by Hugo on 27/08/2020.
+ -->
+
+<!-- Bulk Input -->
+<template>
+    <div class="slds-card__body slds-card__body_inner">
+        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+             style="outline-color: transparent;"
+             tabindex="0"
+             onfocusin= {onSearchInputFocus}
+             onblur= {onSearchInputBlur} >
+            <lightning-input label={inputLabel} type="text"
+                             onchange={onSearchInputChange} autocomplete="off"></lightning-input>
+            <template if:true={showMatches}>
+                <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                    <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                        <li class="slds-listbox__item">
+                            <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                 onclick={onSelectAllClick}>{labels.Select_All}</div>
+                        </li>
+                        <template for:each={matchingItemsArray} for:item="searchMatch">
+                            <li key={searchMatch.Code}  class="slds-listbox__item">
+                                <div data-id={searchMatch.id}
+                                     class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                     onclick={onMatchingItemClick}
+                                     onfocus={onSearchResultFocus}
+                                     onblur={onSearchResultBlur}>{searchMatch.label}</div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+        </div>
+        <template if:true={hasSelectedItems}>
+            <div class="slds-size_1-of-1">
+                <button class="slds-button  slds-float_right" type="button" label={labels.Remove_All}
+                        style="color: red;" onclick={onRemoveAllSelectedItems}>{labels.Remove_All}</button>
+            </div>
+            <div class="slds-size_1-of-1 slds-grid slds-wrap slds-gutters slds-box_border slds-m-horizontal_none" style="max-height: 150px; overflow-y: scroll;">
+                <template for:each={selectedItemsArray} for:item="selectedPostalCode">
+                    <div key={selectedPostalCode.Code} class="slds-col">
+                        <lightning-pill
+                                class="slds-size_1-of-1"
+                                data-id={selectedPostalCode.id}
+                                label={selectedPostalCode.label}
+                                onremove={onRemoveItemClick}>
+                        </lightning-pill>
+                    </div>
+
+                </template>
+            </div>
+        </template>
+    </div>
+</template>

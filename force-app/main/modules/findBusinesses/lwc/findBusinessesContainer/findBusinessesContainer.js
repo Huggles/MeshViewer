@@ -114,6 +114,9 @@ export default class FindBusinessesContainer extends LightningElement {
             }else if(this.selectedLocations.type == "POSTALCODE"){
                 FindBusinessCriteriaModel['postcodes'] = JSON.parse(JSON.stringify(this.selectedLocations.locations));
             }
+            else if(this.selectedLocations.type == "CITY"){
+                FindBusinessCriteriaModel['cities'] = JSON.parse(JSON.stringify(this.selectedLocations.locations));
+            }
         }
         this.criteriaMap = FindBusinessCriteriaModel;
         const attributeChangeEvent = new FlowAttributeChangeEvent('criteriaMap', FindBusinessCriteriaModel);

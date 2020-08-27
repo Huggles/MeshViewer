@@ -26,7 +26,8 @@ export default class FindBusinessesLocation extends LightningElement {
      */
     MAP_LAYERS = {
         PROVINCE : 'PROVINCE',
-        POSTALCODE : 'POSTALCODE'
+        POSTALCODE : 'POSTALCODE',
+        CITY : 'CITY',
     }
 
     /*
@@ -35,16 +36,16 @@ export default class FindBusinessesLocation extends LightningElement {
     selectedStyle = {
         opacity : 0.5,
         color : '#a09f9f',
-        fillColor : 'green',
+        fillColor : '#049d3c',
         fillOpacity : 0.8,
         radius: 300,
         weight : 1,
     }
     deselectedStyle = {
-        opacity : 0.2,
-        color : '#a09f9f',
-        fillColor : 'red',
-        fillOpacity : 0.5,
+        opacity : 0.1,
+        color : '#000000',
+        fillColor : '#c59dff',
+        fillOpacity : 0.4,
         radius: 250,
         weight : 1,
     }
@@ -52,7 +53,7 @@ export default class FindBusinessesLocation extends LightningElement {
     /*
      * Sets the selected layer to present.
      */
-    _selectedMapLayer = this.MAP_LAYERS.POSTALCODE;
+    _selectedMapLayer = this.MAP_LAYERS.PROVINCE;
     get selectedMapLayer(){
         return this._selectedMapLayer;
     }
@@ -65,6 +66,7 @@ export default class FindBusinessesLocation extends LightningElement {
     @api getLocationArray(){
         if(this.selectedMapLayer === this.MAP_LAYERS.PROVINCE ) return this.getSelectedProvinces();
         if(this.selectedMapLayer === this.MAP_LAYERS.POSTALCODE ) return this.getSelectedPostalCodes();
+        if(this.selectedMapLayer === this.MAP_LAYERS.CITY ) return this.getSelectedCities();
     }
     getSelectedProvinces(){
         let selectedProvinces = [];
@@ -85,6 +87,17 @@ export default class FindBusinessesLocation extends LightningElement {
         let response = {
             locations : selectedPostalCodes,
             type : this.MAP_LAYERS.POSTALCODE
+        }
+        return response;
+    }
+    getSelectedCities(){
+        let selectedCities = [];
+        for (const [key, value] of Object.entries(this.cities)) {
+            if(value.selected === true) selectedCities.push(value.City);
+        }
+        let response = {
+            locations : selectedCities,
+            type : this.MAP_LAYERS.CITY
         }
         return response;
     }
@@ -128,21 +141,28 @@ export default class FindBusinessesLocation extends LightningElement {
         })
     }
     async loadGeoJSON(){
-        this.loadGeoJSONProvinces();
-        this.loadGeoJSONPostalCodes();
+        this.loadProvincesData();
+        this.loadPostalCodesData();
+        this.loadCitiesData();
         Promise.resolve();
     }
-    loadGeoJSONProvinces(){
+    loadProvincesData(){
         let request = new XMLHttpRequest();
         request.open("GET", GeoJSONProvinces, false);
         request.send(null);
         this.provincesData = JSON.parse(request.responseText)[0];
     }
-    loadGeoJSONPostalCodes(){
+    loadPostalCodesData(){
         let request = new XMLHttpRequest();
         request.open("GET", postalCodesData, false);
         request.send(null);
         this.postalCodesData = JSON.parse(request.responseText);
+    }
+    loadCitiesData(){
+        let request = new XMLHttpRequest();
+        request.open("GET", postalCodesData, false);
+        request.send(null);
+        this.citiesData = JSON.parse(request.responseText);
     }
     initLeafletMap(){
         if(this._leafletMapHTMLElement != null && this._leafletLibraryLoaded == true && this._leafletMapLoaded == false){
@@ -162,10 +182,12 @@ export default class FindBusinessesLocation extends LightningElement {
             try{
                 this.initProvinces();
                 this.initPostalCodes();
+                this.initCities();
 
             }catch (e) {
                 console.log(e);
             }
+            this.showLayer(this.selectedMapLayer);
             this.loadingMap = false;
         }
     }
@@ -182,12 +204,19 @@ export default class FindBusinessesLocation extends LightningElement {
     }
     showLayer(layerName){
         if (layerName == this.MAP_LAYERS.PROVINCE){
+            this._leafletMap.removeLayer(this.citiesLayer);
             this._leafletMap.removeLayer(this.postalCodesLayer);
             this.provincesLayer.addTo(this._leafletMap);
         }
         if (layerName == this.MAP_LAYERS.POSTALCODE){
             this._leafletMap.removeLayer(this.provincesLayer);
+            this._leafletMap.removeLayer(this.citiesLayer);
             this.postalCodesLayer.addTo(this._leafletMap);
+        }
+        if (layerName == this.MAP_LAYERS.CITY){
+            this._leafletMap.removeLayer(this.provincesLayer);
+            this._leafletMap.removeLayer(this.postalCodesLayer);
+            this.citiesLayer.addTo(this._leafletMap);
         }
     }
 
@@ -257,10 +286,6 @@ export default class FindBusinessesLocation extends LightningElement {
     }
 
     /*
-     * Postal Code Functions
-     */
-
-    /*
      * Postal Code
      */
     postalCodesData;
@@ -271,11 +296,12 @@ export default class FindBusinessesLocation extends LightningElement {
     initPostalCodes(){
         if(this.postalCodesDataLoaded == false){
             this.postalCodesDataLoaded = true;
-            this.postalCodesLayer = L.layerGroup().addTo(this._leafletMap);
+            this.postalCodesLayer = L.layerGroup();
             let controller = this;
             this.postalCodesData.forEach((item, index)=>{
                 let postalCodeCircle = L.circle([item.Lat, item.Lon], this.deselectedStyle);
                 postalCodeCircle.on("click", (feature, layer)=>{
+                    console.log('clicked!!');
                     let postalCodeId = item.id;
                     if(!controller.postalCodes[postalCodeId].selected){
                         controller.selectPostalCode(postalCodeId);
@@ -291,86 +317,141 @@ export default class FindBusinessesLocation extends LightningElement {
                 this.postalCodesLayer.addLayer(postalCodeCircle);
             });
         }
-
-
-    }
-
-    @track postalCodeSearchMatches = [];
-    onPostalCodeSearchInputChange(){
-        this.findMatchingPostalCodes();
-    }
-    async findMatchingPostalCodes(){
-        let matchArray = [];
-        let searchString = this.template.querySelector('[data-identifier="PostalCodeSearchInput"]').value;
-        if(searchString.length > 1){
-            for (const [key, value] of Object.entries(this.postalCodes)) {
-                if(!value.selected && (value.Code.toString().startsWith(searchString) || value.City.includes(searchString))){
-                    matchArray.push(value);
-                }
-            }
-        }
-        this.postalCodeSearchMatches = matchArray;
-    }
-
-    onPostalCodeSearchMatchClick(event){
-        let postalCode = event.currentTarget.dataset['id'].toString();
-        this.selectPostalCode(postalCode);
     }
     selectPostalCode(id){
         this.postalCodes[id].selected = true;
         this.postalCodes[id].layerElement.setStyle(this.selectedStyle);
         this.postalCodes[id].layerElement.setRadius(this.selectedStyle.radius);
-        this.findMatchingPostalCodes();
+        let bulkInputPostalCode = this.template.querySelector("c-bulk-input[data-identifier="+this.MAP_LAYERS.POSTALCODE+"]");
+        bulkInputPostalCode.addSelectedItem(id);
     }
     deselectPostalCode(id){
         this.postalCodes[id].selected = false;
         this.postalCodes[id].layerElement.setStyle(this.deselectedStyle);
         this.postalCodes[id].layerElement.setRadius(this.deselectedStyle.radius);
-        this.findMatchingPostalCodes();
+        let bulkInputPostalCode = this.template.querySelector("c-bulk-input[data-identifier="+this.MAP_LAYERS.POSTALCODE+"]");
+        bulkInputPostalCode.removeSelectedItem(id);
     }
-    onSelectedPostalCodeRemove(event){
-        let id = event.currentTarget.dataset['id'];
-        this.deselectPostalCode(id);
+    handlePostalCodeClicked(event){
+        let postalCodeId = event.detail.id;
+        let selected = event.detail.selected;
+        if(selected){
+            this.selectPostalCode(postalCodeId);
+        }else{
+            this.deselectPostalCode(postalCodeId);
+        }
     }
-    onPostalCodeSelectAllClick(event){
-        this.postalCodeSearchMatches.forEach((item, index)=>{
-            this.selectPostalCode(item.id);
-        });
-        this.findMatchingPostalCodes();
-    }
-    onRemoveAllSelectedPostalCodes(event){
-        for (const [key, value] of Object.entries(this.postalCodes)) {
-            if(value.selected){
-                this.deselectPostalCode(value.id);
+
+    /*
+     * cities
+     */
+
+    citiesData;
+    citiesLayer;
+    citiesDataLoaded = false;
+    @track cities = {};
+
+    initCities(){
+        if(this.citiesDataLoaded == false){
+            this.citiesDataLoaded = true;
+            this.citiesLayer = L.layerGroup();
+            let controller = this;
+
+            let citiesMap = {};
+            this.citiesData.forEach((item, index)=> {
+                if(citiesMap[item.City] == null){
+                    citiesMap[item.City] = {
+                        coordinates: [],
+                    }
+                }
+                citiesMap[item.City].coordinates.push([item.Lat, item.Lon]);
+                citiesMap[item.City]['selected'] = false;
+                citiesMap[item.City]['label'] = item.City;
+                citiesMap[item.City]['City'] = item.City;
+                citiesMap[item.City]['id'] = item.City;
+            });
+            for (const [key, value] of Object.entries(citiesMap)) {
+                let centerCoordinate = this.getLatLngCenter(value.coordinates);
+                citiesMap[key]['centerCoordinate'] = centerCoordinate;
+                let cityCircle = L.circle([centerCoordinate[0], centerCoordinate[1]], this.deselectedStyle);
+                cityCircle.setRadius(this.deselectedStyle.radius  * 1.5);
+                cityCircle.on("click", (feature, layer)=>{
+                    let cityId = citiesMap[key].id;
+                    if(!controller.cities[cityId].selected){
+                        controller.selectCity(cityId);
+                    }else{
+                        controller.deselectCity(cityId);
+                    }
+                });
+                citiesMap[key]['layerElement'] = cityCircle;
+                this.cities[citiesMap[key].id] = value;
+                this.citiesLayer.addLayer(cityCircle);
             }
         }
     }
-    get selectedPostalCodes(){
-        let returnArray = [];
-        for (const [key, value] of Object.entries(this.postalCodes)) {
-            if(value.selected){
-                returnArray.push(value);
-            }
-        };
-        return returnArray;
+
+    selectCity(cityId){
+        this.cities[cityId].selected = true;
+        this.cities[cityId].layerElement.setStyle(this.selectedStyle);
+        this.cities[cityId].layerElement.setRadius(this.selectedStyle.radius * 1.5);
+        let bulkInputCity = this.template.querySelector("c-bulk-input[data-identifier="+this.MAP_LAYERS.CITY+"]");
+        bulkInputCity.addSelectedItem(cityId);
+    }
+    deselectCity(cityId){
+        this.cities[cityId].selected = false;
+        this.cities[cityId].layerElement.setStyle(this.deselectedStyle);
+        this.cities[cityId].layerElement.setRadius(this.deselectedStyle.radius  * 1.5);
+        let bulkInputCity = this.template.querySelector("c-bulk-input[data-identifier="+this.MAP_LAYERS.CITY+"]");
+        bulkInputCity.removeSelectedItem(cityId);
     }
 
-    _searchInputHasFocus = false;
-    onSearchInputFocus(event){
-        this._searchInputHasFocus = true;
-    }
-    onSearchInputBlur(event){
-        this._searchInputHasFocus = false;
-    }
-    get showMatches(){
-        if(this.postalCodeSearchMatches != null && this.postalCodeSearchMatches.length > 0 && this._searchInputHasFocus){
-            return true;
+    handleCityClicked(event){
+        let cityId = event.detail.id;
+        let selected = event.detail.selected;
+        if(selected){
+            this.selectCity(cityId);
+        }else{
+            this.deselectCity(cityId);
         }
-        return false;
-    }
-    get hasSelectedPostalCodes(){
-        if(this.selectedPostalCodes.length > 0) return true;
-        return false;
     }
 
+
+    rad2degr(rad) { return rad * 180 / Math.PI; }
+    degr2rad(degr) { return degr * Math.PI / 180; }
+
+    /**
+     * @param latLngInDeg array of arrays with latitude and longtitude
+     *   pairs in degrees. e.g. [[latitude1, longtitude1], [latitude2
+     *   [longtitude2] ...]
+     *
+     * @return array with the center latitude longtitude pairs in
+     *   degrees.
+     */
+    getLatLngCenter(latLngInDegr) {
+        var LATIDX = 0;
+        var LNGIDX = 1;
+        var sumX = 0;
+        var sumY = 0;
+        var sumZ = 0;
+
+        for (var i=0; i<latLngInDegr.length; i++) {
+            var lat = this.degr2rad(latLngInDegr[i][LATIDX]);
+            var lng = this.degr2rad(latLngInDegr[i][LNGIDX]);
+            // sum of cartesian coordinates
+            sumX += Math.cos(lat) * Math.cos(lng);
+            sumY += Math.cos(lat) * Math.sin(lng);
+            sumZ += Math.sin(lat);
+        }
+
+        var avgX = sumX / latLngInDegr.length;
+        var avgY = sumY / latLngInDegr.length;
+        var avgZ = sumZ / latLngInDegr.length;
+
+        // convert average x, y, z coordinate to latitude and longtitude
+        var lng = Math.atan2(avgY, avgX);
+        var hyp = Math.sqrt(avgX * avgX + avgY * avgY);
+        var lat = Math.atan2(avgZ, hyp);
+
+        return ([this.rad2degr(lat), this.rad2degr(lng)]);
+    }
 }

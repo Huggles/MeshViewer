@@ -6,66 +6,16 @@
 
 <template>
     <div class="slds-grid slds-wrap">
-        <div class="slds-col slds-size_3-of-4 slds-large-size_3-of-4 slds-medium-size_1-of-2 slds-small-size_1-of-1  slds-p-horizontal_medium">
+        <div class="slds-col slds-size_2-of-3 slds-large-size_2-of-3 slds-medium-size_1-of-2 slds-small-size_1-of-1  slds-p-horizontal_medium">
             <div class="slds-is-relative">
                 <lightning-spinner if:true={loadingMap} ></lightning-spinner>
                 <div data-identifier="leafletMap" style="width: 100%; height: 350px; z-index: 0;"> </div>
             </div>
 
         </div>
-        <div class="slds-col slds-size_1-of-4 slds-large-size_1-of-4 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-horizontal_medium slds-grid slds-wrap">
+        <div class="slds-col slds-size_1-of-3 slds-large-size_1-of-3 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-horizontal_medium slds-grid slds-wrap">
             <article class="slds-card slds-card_boundary slds-size_1-of-1">
                 <lightning-tabset active-tab-value={selectedMapLayer}>
-                    <lightning-tab label="Postal Codes" value={MAP_LAYERS.POSTALCODE} icon-name="standard:location" onactive={handleTabClick}>
-                        <div class="slds-card__body slds-card__body_inner">
-                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
-                                 style="outline-color: transparent;"
-                                 tabindex="0"
-                                 onfocusin= {onSearchInputFocus}
-                                 onblur= {onSearchInputBlur} >
-                                <lightning-input data-identifier="PostalCodeSearchInput" label="Postal Code / City" type="text"
-                                                 onchange={onPostalCodeSearchInputChange} autocomplete="off"></lightning-input>
-                                <template if:true={showMatches}>
-                                    <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
-                                        <ul class="slds-listbox slds-listbox_vertical" role="presentation">
-                                            <li class="slds-listbox__item">
-                                                <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
-                                                     onclick={onPostalCodeSelectAllClick}>{labels.Select_All}</div>
-                                            </li>
-                                            <template for:each={postalCodeSearchMatches} for:item="searchMatch">
-                                                <li key={searchMatch.Code}  class="slds-listbox__item">
-                                                    <div data-id={searchMatch.id}
-                                                         class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
-                                                         onclick={onPostalCodeSearchMatchClick}
-                                                         onfocus={onSearchResultFocus}
-                                                         onblur={onSearchResultBlur}>{searchMatch.label}</div>
-                                                </li>
-                                            </template>
-                                        </ul>
-                                    </div>
-                                </template>
-                            </div>
-                            <template if:true={hasSelectedPostalCodes}>
-                                <div class="slds-size_1-of-1">
-                                    <button class="slds-button  slds-float_right" type="button" label={labels.Remove_All}
-                                            style="color: red;" onclick={onRemoveAllSelectedPostalCodes}>{labels.Remove_All}</button>
-                                </div>
-                                <div class="slds-size_1-of-1 slds-grid slds-wrap slds-gutters slds-box_border slds-m-horizontal_none" style="max-height: 150px; overflow-y: scroll;">
-                                    <template for:each={selectedPostalCodes} for:item="selectedPostalCode">
-                                        <div key={selectedPostalCode.Code} class="slds-col">
-                                            <lightning-pill
-                                                    class="slds-size_1-of-1"
-                                                    data-id={selectedPostalCode.id}
-                                                    label={selectedPostalCode.label}
-                                                    onremove={onSelectedPostalCodeRemove}>
-                                            </lightning-pill>
-                                        </div>
-
-                                    </template>
-                                </div>
-                            </template>
-                        </div>
-                    </lightning-tab>
                     <lightning-tab label="Provinces" value={MAP_LAYERS.PROVINCE} icon-name="standard:account"  onactive={handleTabClick}>
                         <div class="slds-card__body slds-card__body_inner">
                             <table>
@@ -82,6 +32,15 @@
                                 </template>
                             </table>
                         </div>
+                    </lightning-tab>
+                    <lightning-tab label="Postal Codes" value={MAP_LAYERS.POSTALCODE} icon-name="standard:location" onactive={handleTabClick}>
+                        <c-bulk-input input-label="Postal Code" data-identifier={MAP_LAYERS.POSTALCODE}
+                                      items={postalCodes} onitemclick={handlePostalCodeClicked}></c-bulk-input>
+                    </lightning-tab>
+
+                    <lightning-tab label="Cities" value={MAP_LAYERS.CITY} icon-name="standard:account"  onactive={handleTabClick}>
+                        <c-bulk-input input-label="City" data-identifier={MAP_LAYERS.CITY}
+                                      items={cities} onitemclick={handleCityClicked}></c-bulk-input>
                     </lightning-tab>
 
                 </lightning-tabset>
