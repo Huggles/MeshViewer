@@ -25,7 +25,7 @@ export default class FindBusinessesLocation extends LightningElement {
      * All map layers
      */
     MAP_LAYERS = {
-        PROVINCES : 'PROVINCES',
+        PROVINCE : 'PROVINCE',
         POSTALCODE : 'POSTALCODE'
     }
 
@@ -60,14 +60,33 @@ export default class FindBusinessesLocation extends LightningElement {
         this._selectedMapLayer = value;
     }
 
-    @api selectedProvinces = {}
+    @api selectedLocations = {}
 
     @api getLocationArray(){
+        if(this.selectedMapLayer === this.MAP_LAYERS.PROVINCE ) return this.getSelectedProvinces();
+        if(this.selectedMapLayer === this.MAP_LAYERS.POSTALCODE ) return this.getSelectedPostalCodes();
+    }
+    getSelectedProvinces(){
         let selectedProvinces = [];
         for (const [key, value] of Object.entries(this.provinces)) {
             if(value.selected === true) selectedProvinces.push(key);
         }
-        return selectedProvinces;
+        let response = {
+            locations : selectedProvinces,
+            type : this.MAP_LAYERS.PROVINCE
+        }
+        return response;
+    }
+    getSelectedPostalCodes(){
+        let selectedPostalCodes = [];
+        for (const [key, value] of Object.entries(this.postalCodes)) {
+            if(value.selected === true) selectedPostalCodes.push(value.Code.toString());
+        }
+        let response = {
+            locations : selectedPostalCodes,
+            type : this.MAP_LAYERS.POSTALCODE
+        }
+        return response;
     }
 
     /*
@@ -83,15 +102,7 @@ export default class FindBusinessesLocation extends LightningElement {
 
     connectedCallback() {
         this.loadingMap = true;
-        this.loadInitialData();
         this.loadLeaflet();
-    }
-    loadInitialData(){
-        if(this.selectedProvinces != null && Object.entries(this.selectedProvinces).length > 0){
-            this.selectedProvinces.forEach((selectedProvince)=>{
-                this.provinces[selectedProvince].show_on_map = true;
-            });
-        }
     }
     renderedCallback() {
         this._leafletMapHTMLElement = this.template.querySelector("[data-identifier='leafletMap']");
@@ -170,7 +181,7 @@ export default class FindBusinessesLocation extends LightningElement {
         }
     }
     showLayer(layerName){
-        if (layerName == this.MAP_LAYERS.PROVINCES){
+        if (layerName == this.MAP_LAYERS.PROVINCE){
             this._leafletMap.removeLayer(this.postalCodesLayer);
             this.provincesLayer.addTo(this._leafletMap);
         }
@@ -361,8 +372,5 @@ export default class FindBusinessesLocation extends LightningElement {
         if(this.selectedPostalCodes.length > 0) return true;
         return false;
     }
-
-
-
 
 }

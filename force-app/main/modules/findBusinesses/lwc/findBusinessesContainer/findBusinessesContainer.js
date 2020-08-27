@@ -20,16 +20,22 @@ export default class FindBusinessesContainer extends LightningElement {
 
     activeSections = [];
     handleSectionToggle(event){
+        /*
         if(this.activeSections.includes('Location') && !event.detail.openSections.includes('Location')){
             //Location tab was closed. Retrieve selected provinces.
             this.selectedLocations = this.locationHTMLElement.getLocationArray();
         }
+         */
         this.activeSections = event.detail.openSections;
     }
+
+    _isStepLocation = false;
     get isStepLocation(){
-        if(this.activeSections != null){
-            return this.activeSections.includes("Location");
-        }return false;
+        //Once opened, it should remain open to avoid reloading of the component.
+        if(this.activeSections != null && this._isStepLocation == false){
+            this._isStepLocation = this.activeSections.includes("Location");
+        }
+        return this._isStepLocation;
     }
 
     labels = {
@@ -51,7 +57,10 @@ export default class FindBusinessesContainer extends LightningElement {
     otherCriteriaHTMLElement;
 
     @track selectedSBIs = [];
-    @track selectedLocations = [];
+    @track selectedLocations = {
+        type : null,
+        locations : []
+    };
     @track selectedOtherCriteria = {};
 
 
@@ -63,8 +72,14 @@ export default class FindBusinessesContainer extends LightningElement {
 
     handleFooterNextClick(event){
         this.selectedSBIs = this.sbiHTMLElement.getSBIArray();
-        if(this.locationHTMLElement != null)
-            this.selectedLocations = this.locationHTMLElement.getLocationArray(); //Only runs when the location accordion item is still open.
+
+        console.log('abc');
+        console.log(this.locationHTMLElement );
+        if(this.locationHTMLElement != null){
+            let locationData = this.locationHTMLElement.getLocationArray();
+            this.selectedLocations = locationData; //Only runs when the location accordion item is still open.
+        }
+
         this.selectedOtherCriteria = this.otherCriteriaHTMLElement.getCriteriaMap();
 
         let selectedSBIsFiltered = [];
@@ -83,7 +98,6 @@ export default class FindBusinessesContainer extends LightningElement {
         let FindBusinessCriteriaModel = {
             sbiList :                   selectedSBIsFiltered,
             legal_forms :               legalForms,
-            provinces :                 JSON.parse(JSON.stringify(this.selectedLocations)),
             employees_min :             this.selectedOtherCriteria.employees_min,
             employees_max :             this.selectedOtherCriteria.employees_max,
             primary_sbi_only :          this.selectedOtherCriteria.primary_sbi_only,
@@ -93,11 +107,16 @@ export default class FindBusinessesContainer extends LightningElement {
             new_since :                 this.selectedOtherCriteria.new_since,
             sbi_match_type :            this.selectedOtherCriteria.sbi_match_type,
             max_number_of_results :     this.selectedOtherCriteria.max_number_of_results
-
+        }
+        if(this.selectedLocations != null){
+            if(this.selectedLocations.type == "PROVINCE"){
+                FindBusinessCriteriaModel['provinces'] = JSON.parse(JSON.stringify(this.selectedLocations.locations));
+            }else if(this.selectedLocations.type == "POSTALCODE"){
+                FindBusinessCriteriaModel['postcodes'] = JSON.parse(JSON.stringify(this.selectedLocations.locations));
+            }
         }
         this.criteriaMap = FindBusinessCriteriaModel;
         const attributeChangeEvent = new FlowAttributeChangeEvent('criteriaMap', FindBusinessCriteriaModel);
-
         console.log('FindBusinessCriteriaModel');
         console.log(FindBusinessCriteriaModel);
         const navigateNextEvent = new FlowNavigationNextEvent();
