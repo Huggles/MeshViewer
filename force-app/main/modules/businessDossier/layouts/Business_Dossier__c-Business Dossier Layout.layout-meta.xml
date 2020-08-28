@@ -512,6 +512,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Business_Dossier_Set__c</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>CREATEDBY_USER</fields>
         <relatedList>Business_Dossier_Set_Member__c.Business_Dossier__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

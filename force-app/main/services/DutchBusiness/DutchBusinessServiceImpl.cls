@@ -561,9 +561,9 @@ public inherited sharing class DutchBusinessServiceImpl implements IDutchBusines
         List<Business_Dossier__c> businessDossiers = new List<Business_Dossier__c>();
         for(DutchBusinessWsdl.DutchBusinessReference dutchBusinessReference : dutchBusinessReferences){
             Business_Dossier__c dossier = new Business_Dossier__c();
+            dossier.Name = dutchBusinessReference.trade_name;
             dossier.Dossier_Number__c = dutchBusinessReference.dossier_number;
             dossier.Establishment_Number__c = dutchBusinessReference.establishment_number;
-            dossier.Name = dutchBusinessReference.trade_name;
             dossier.Trade_Name_Full__c = dutchBusinessReference.trade_name;
             dossier.Establishment_City__c = dutchBusinessReference.establishment_city;
             dossier.Establishment_Street__c = dutchBusinessReference.establishment_street;

@@ -51,6 +51,9 @@ public with sharing class SearchBusinessDossiersController {
         public Business_Dossier__c businessDossier;
         @AuraEnabled
         public Boolean existingDossier;
+        @AuraEnabled
+        public Id existingDossierId;
+
     }
 
     public static SearchedBusinessDossierResults convertToCorrectReturnType(DutchBusinessServiceImpl.SearchedBusinessDossierResults s){
@@ -82,18 +85,16 @@ public with sharing class SearchBusinessDossiersController {
 
             //check subscriber duplicate rule
             List<Business_Dossier__c> checkDuplicateDossiers = checkSubscriberDuplicateRule(businessDossiers);
+            //Query the Business Dossiers to get dossier number and establishment number.
+            checkDuplicateDossiers = [SELECT Id,Dossier_Number__c, Establishment_Number__c FROM Business_Dossier__c WHERE Id in :new Map<String, SObject>(checkDuplicateDossiers).keySet()];
 
-
-            Map<String, SObject> duplicateMap = new Map<String, SObject>(checkDuplicateDossiers);
-            checkDuplicateDossiers = new List<Business_Dossier__c>();
-            checkDuplicateDossiers = [SELECT Id,Dossier_Number__c, Establishment_Number__c FROM Business_Dossier__c WHERE Id in :duplicateMap.keySet()];
-
-            if(checkDuplicateDossiers!= null){
+            //Merge the two lists and make a map
+            if(checkDuplicateDossiers != null && checkDuplicateDossiers.size() > 0){
                 duplicateBusinessDossiers.addAll(checkDuplicateDossiers);
             }
-            Map<String, Business_Dossier__c> duplicateDossierMap = new Map<String, Business_Dossier__c>();
 
             //filter duplicate
+            Map<String, Business_Dossier__c> duplicateDossierMap = new Map<String, Business_Dossier__c>();
             for (Business_Dossier__c businessDossier : duplicateBusinessDossiers) {
                 if(!duplicateDossierMap.containsKey(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c)){
                     duplicateDossierMap.put(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c, businessDossier);
@@ -104,7 +105,13 @@ public with sharing class SearchBusinessDossiersController {
             for (Business_Dossier__c businessDossier : businessDossiers) {
                 BusinessDossierWrapper businessDossierWrapper = new BusinessDossierWrapper();
                 businessDossierWrapper.businessDossier = businessDossier;
-                businessDossierWrapper.existingDossier = duplicateDossierMap.containsKey(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c);
+
+                Business_Dossier__c duplicateDossier = duplicateDossierMap.get(businessDossier.Dossier_Number__c + businessDossier.Establishment_Number__c);
+                businessDossierWrapper.existingDossier = false;
+                if(duplicateDossier != null){
+                    businessDossierWrapper.existingDossier = true;
+                    businessDossierWrapper.existingDossierId = duplicateDossier.Id;
+                }
                 businessDossierWrappers.add(businessDossierWrapper);
             }
             return businessDossierWrappers;
