@@ -132,26 +132,37 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         return response;
     }
 
-    public static List<Business_Dossier__c> createDossiers(List<Business_Dossier__c> businessDossiers, Boolean ignoreAlertDuplicateRules){
-        //The paramters should not be empty, and the size of both lists should be equal
+    public static List<Business_Dossier__c> upsertDossiersWithCriteria(List<Business_Dossier__c> businessDossiers, FindBusinessCriteriaModel criteriaModel,  Boolean ignoreAlertDuplicateRules){
         fflib_ISObjectUnitOfWork unitOfWork;
         if(ignoreAlertDuplicateRules){
             unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
         }else{
-            unitOfWork = Application.UnitOfWork.newInstance();
+            unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
         }
+
+        Business_Dossier_Set__c businessDossierSet = new Business_Dossier_Set__c();
+        unitOfWork.registerNew(businessDossierSet);
+
 
         List<Business_Dossier__c> response = new List<Business_Dossier__c>();
 
         //Loop through records to register for insert.
-        for (Integer i = 0; i < businessDossiers.size(); i++) {
-            //Account relatedAccount = accounts[i];
-            Business_Dossier__c businessDossier = businessDossiers[i];
+        for(Business_Dossier__c businessDossier : businessDossiers){
             unitOfWork.registerUpsert(businessDossier);
             response.add(businessDossier);
+
+            Business_Dossier_Set_Member__c member = new Business_Dossier_Set_Member__c();
+            member.Name = businessDossier.Name;
+            unitOfWork.registerRelationship(member, Business_Dossier_Set_Member__c.Business_Dossier_Set__c, businessDossierSet);
+            unitOfWork.registerRelationship(member, Business_Dossier_Set_Member__c.Business_Dossier__c, businessDossier);
+            unitOfWork.registerNew(member);
+        }
+        try {
+            unitOfWork.commitWork();
+        }catch (Exception e){
+            System.debug(e);
         }
 
-        unitOfWork.commitWork();
         return response;
     }
 

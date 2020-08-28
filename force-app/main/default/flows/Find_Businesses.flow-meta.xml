@@ -20,6 +20,12 @@
                 <elementReference>SelectedBusinessDossiers</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>searchCriteria</name>
+            <value>
+                <elementReference>CriteriaMap</elementReference>
+            </value>
+        </inputParameters>
         <outputParameters>
             <assignToReference>InsertedBusinessDossiers</assignToReference>
             <name>output</name>

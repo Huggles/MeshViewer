@@ -38,5 +38,5 @@ public interface IBusinessService {
     *
     * @return A list of inserted business dossiers.
     */
-    List<Business_Dossier__c> createDossiers(List<Business_Dossier__c> businessDossiers, Boolean ignoreAlertDuplicateRules);
+    List<Business_Dossier__c> upsertDossiersWithCriteria(List<Business_Dossier__c> businessDossiers, FindBusinessCriteriaModel criteriaModel, Boolean ignoreAlertDuplicateRules);
 }

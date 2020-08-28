@@ -21,8 +21,8 @@ public inherited sharing class BusinessService {
     public static List<Business_Dossier__c> upsertDossiersAndAccounts(List<Business_Dossier__c> businessDossiers, List<Account> accounts, Boolean ignoreAlertDuplicateRules){
         return newInstance().upsertDossiersAndAccounts(businessDossiers, accounts, ignoreAlertDuplicateRules);
     }
-    public static List<Business_Dossier__c> createDossiers(List<Business_Dossier__c> businessDossiers, Boolean ignoreAlertDuplicateRules){
-        return newInstance().createDossiers(businessDossiers, ignoreAlertDuplicateRules);
+    public static List<Business_Dossier__c> upsertDossiersWithCriteria(List<Business_Dossier__c> businessDossiers, FindBusinessCriteriaModel criteriaModel, Boolean ignoreAlertDuplicateRules){
+        return newInstance().upsertDossiersWithCriteria(businessDossiers, criteriaModel, ignoreAlertDuplicateRules);
     }
 
 
