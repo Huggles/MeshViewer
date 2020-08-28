@@ -49,23 +49,6 @@ export default class FindBusinessesSearchResults extends LightningElement {
     @api searchCriteria;
 
     /*
-    List of all input criteria for Soap service
-    */
-    cities;
-    postcodes;
-    sbiList;
-    primary_sbi_only;
-    legal_forms;
-    employees_min;
-    employees_max;
-    economically_active;
-    financial_status;
-    changed_since;
-    new_since;
-    provinces;
-    sbi_match_type;
-
-    /*
     Maximum no. of records to show in datatable
     */
     maxRecords=10000;
@@ -154,8 +137,7 @@ export default class FindBusinessesSearchResults extends LightningElement {
     connectedCallback() {
         this.businessDossiers = {};
         this.matchingDossiers = {};
-        this.validateInput();
-
+        this.maxRecords = this.searchCriteria.max_number_of_results != null ? this.searchCriteria.max_number_of_results : this.maxRecords;
         this.isLoading = true;
         this.searchNextPage();
     }
@@ -196,20 +178,20 @@ export default class FindBusinessesSearchResults extends LightningElement {
     }
     async searchBusinesses(){
         let payload = {
-            cities : this.cities,
-            postcodes: this.postcodes,
-            sbiList: this.sbiList,
-            primary_sbi_only: this.primary_sbi_only,
-            legal_forms: this.legal_forms,
-            employees_min: this.employees_min,
-            employees_max: this.employees_max,
-            economically_active: this.economically_active,
-            financial_status: this.financial_status,
-            changed_since: this.changed_since,
-            new_since: this.new_since,
+            cities : this.searchCriteria.cities,
+            postcodes: this.searchCriteria.postcodes,
+            sbiList: this.searchCriteria.sbiList,
+            primary_sbi_only: this.searchCriteria.primary_sbi_only,
+            legal_forms: this.searchCriteria.legal_forms,
+            employees_min: this.searchCriteria.employees_min,
+            employees_max: this.searchCriteria.employees_max,
+            economically_active: this.searchCriteria.economically_active,
+            financial_status: this.searchCriteria.financial_status,
+            changed_since: this.searchCriteria.changed_since,
+            new_since: this.searchCriteria.new_since,
+            provinces: this.searchCriteria.provinces,
+            sbi_match_type: this.searchCriteria.sbi_match_type,
             page_x: this.currentPage + 1,
-            provinces: this.provinces,
-            sbi_match_type: this.sbi_match_type,
         }
         return searchDutchBusinessDossiers(payload)
             .then((result) => {
@@ -238,14 +220,17 @@ export default class FindBusinessesSearchResults extends LightningElement {
                 data.appsolutely__Correspondence_City__c = wrapper.businessDossier.appsolutely__Correspondence_City__c;
                 data.appsolutely__Correspondence_Street__c = wrapper.businessDossier.appsolutely__Correspondence_Street__c;
                 data.appsolutely__Indication_Economically_Active__c = wrapper.businessDossier.appsolutely__Indication_Economically_Active__c;
+                data.appsolutely__Indication_Economically_Active__c = wrapper.businessDossier.appsolutely__Indication_Economically_Active__c;
                 data.existingDossier = wrapper.existingDossier;
+                data.recordId = wrapper.existingDossierId;
                 data.selected = false;
 
-                let recordIdentifier = data.appsolutely__Dossier_Number__c+data.appsolutely__Establishment_Number__c;
-                data['id'] = recordIdentifier;
+                let rowIdentifier = data.appsolutely__Dossier_Number__c+data.appsolutely__Establishment_Number__c;
+                data['rowId'] = rowIdentifier;
 
-                dossierArray[recordIdentifier] = data;
+                dossierArray[rowIdentifier] = data;
             })
+            console.log(JSON.parse(JSON.stringify(dossierArray)));
             return dossierArray;
         }
     }
@@ -259,23 +244,6 @@ export default class FindBusinessesSearchResults extends LightningElement {
     }
     get businessDossierLength(){
         return this.businessDossiersArray.length;
-    }
-
-    validateInput(){
-        if(this.searchCriteria.cities!=undefined)                   this.cities =this.searchCriteria.cities;
-        if(this.searchCriteria.postcodes!=undefined)                this.postcodes =this.searchCriteria.postcodes;
-        if(this.searchCriteria.sbiList!=undefined)                  this.sbiList =this.searchCriteria.sbiList;
-        if(this.searchCriteria.primary_sbi_only!=undefined)         this.primary_sbi_only =this.searchCriteria.primary_sbi_only;
-        if(this.searchCriteria.legal_forms!=undefined)              this.legal_forms =this.searchCriteria.legal_forms==undefined;
-        if(this.searchCriteria.employees_min!=undefined)            this.employees_min =this.searchCriteria.employees_min;
-        if(this.searchCriteria.employees_max!=undefined)            this.employees_max =this.searchCriteria.employees_max;
-        if(this.searchCriteria.economically_active!=undefined)      this.economically_active =this.searchCriteria.economically_active;
-        if(this.searchCriteria.financial_status!=undefined)         this.financial_status =this.searchCriteria.financial_status;
-        if(this.searchCriteria.changed_since!=undefined)            this.changed_since =this.searchCriteria.changed_since;
-        if(this.searchCriteria.new_since!=undefined)                this.new_since =this.searchCriteria.new_since;
-        if(this.searchCriteria.provinces!=undefined)                this.provinces = this.searchCriteria.provinces;
-        if(this.searchCriteria.sbi_match_type!=undefined)           this.sbi_match_type =this.searchCriteria.sbi_match_type;
-        if(this.searchCriteria.max_number_of_results!=undefined)    this.maxRecords =this.searchCriteria.max_number_of_results;
     }
     handleSearchChange(event) {
         let searchString = event.target.value;
@@ -299,11 +267,31 @@ export default class FindBusinessesSearchResults extends LightningElement {
 
         }
     }
-    handleRowSelected(event){
-        let checked = event.target.checked;
-        let dossierId = event.target.dataset['identifier'];
 
-        this.businessDossiers[dossierId].selected = checked;
+    handleRowSelected(event){
+        let dossierId = event.target.dataset['identifier'];
+        let checked = event.target.checked;
+        this.setDossierSelected(dossierId, checked);
+
+    }
+    handleAllRowsSelected(event){
+        let checked = event.target.checked;
+        if(this.isSearching){
+            for (const [key, value] of Object.entries(this.matchingDossiers)) {
+                this.setDossierSelected(key,checked);
+            }
+        }else {
+            for (const [key, value] of Object.entries(this.businessDossiers)) {
+                this.setDossierSelected(key,checked);
+            }
+        }
+
+    }
+    setDossierSelected(dossierId, selected){
+        this.businessDossiers[dossierId].selected = selected;
+        if(selected == false){
+            this.template.querySelector('[data-identifier="selectAllCheckbox"]').checked = false;
+        }
     }
     onTableScroll(event){
         let resultTableElement = this.template.querySelector('[data-identifier="resultTable"]');
@@ -349,7 +337,7 @@ export default class FindBusinessesSearchResults extends LightningElement {
                 new ToastEventController(this).showErrorToastMessage(this.label.Error, this.label.NorowselectedMessage);
             }
             else {
-                this.processSelectedRows(this.selectedRows);
+                this.businessDossiersToInsert = this.createBusinessDossiers(this.selectedRows);
                 const attributeChangeEvent = new FlowAttributeChangeEvent('businessDossiersToInsert', this.businessDossiersToInsert );
                 this.dispatchEvent(attributeChangeEvent);
                 const navigateNextEvent = new FlowNavigationNextEvent();
@@ -362,11 +350,7 @@ export default class FindBusinessesSearchResults extends LightningElement {
 
     processSelectedRows(selectedRecords){
         try {
-            let filteredArray = [];
-            filteredArray = selectedRecords.filter(dossier=>
-                dossier.existingDossier == false
-            );
-            this.businessDossiersToInsert = this.createBusinessDossiers(filteredArray);
+
             return this.businessDossiersToInsert;
         } catch (e){
             new ToastEventController(this).showErrorToastMessage(this.label.Error, e);
@@ -377,6 +361,9 @@ export default class FindBusinessesSearchResults extends LightningElement {
             let dossierArray = []
             rows.forEach(row => {
                 let data= {};
+                if(row.recordId != null){
+                    data.Id = row.recordId;
+                }
                 data.Name = row.name;
                 data.appsolutely__Dossier_Number__c =                   row.appsolutely__Dossier_Number__c;
                 data.appsolutely__Establishment_Number__c =             row.appsolutely__Establishment_Number__c;

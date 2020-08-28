@@ -48,7 +48,6 @@ export default class FindBusinessesContainer extends LightningElement {
 
     availableFooterActions = [
         'NEXT',
-        'FINISH'
     ]
     showFooterCancelButton = true;
 

@@ -33,7 +33,9 @@
                             <tr class="slds-line-height_reset">
                                 <th class="" scope="col">
                                     <div class="slds-checkbox">
-                                        <input type="checkbox" data-identifier="selectAllCheckbox"/>
+                                        <lightning-input type="checkbox"
+                                                         data-identifier="selectAllCheckbox"
+                                                         onchange={handleAllRowsSelected}></lightning-input>
                                     </div>
                                 </th>
                                 <th class="" scope="col">
@@ -61,16 +63,16 @@
                                 <template for:each={dossiersToDisplay} for:item="businessDossier">
                                     <tr key={businessDossier.appsolutely__Dossier_Number__c}>
                                         <td>
-                                            <template if:false= {businessDossier.existingDossier}>
-                                                <div class="slds-checkbox">
-                                                    <lightning-input type="checkbox"
-                                                                     onchange={handleRowSelected}
-                                                                     data-identifier={businessDossier.id}
-                                                                     checked={businessDossier.selected} disabled={businessDossier.existingDossier}></lightning-input>
-                                                </div>
-                                            </template>
+                                            <div class="slds-checkbox">
+                                                <lightning-input type="checkbox"
+                                                                 onchange={handleRowSelected}
+                                                                 data-identifier={businessDossier.rowId}
+                                                                 checked={businessDossier.selected}></lightning-input>
+                                            </div>
                                             <template if:true={businessDossier.existingDossier}>
-                                                <lightning-icon icon-name="utility:check" variant="success" size="x-small"></lightning-icon>
+                                                <lightning-icon icon-name="utility:salesforce1" size="x-small"
+                                                                style="filter:invert(90%) sepia(90%) saturate(2000%) hue-rotate(190deg) brightness(104%) contrast(97%)">
+                                                </lightning-icon>
                                             </template>
                                         </td>
                                         <td>
@@ -120,6 +122,7 @@
                        previous-button-title={label.SearchReset}
                        available-actions={availableFooterActions}
                        show-cancel-button={showFooterCancelButton}
+                       next-button-disabled={isLoading}
                        onnextclick={handleFooterNextClick}>
         </c-flow-footer>
     </div>
