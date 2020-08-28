@@ -59,7 +59,6 @@ export default class FindBusinessInsertResult extends LightningElement {
         this.insertedBusinessDossiersEnriched.forEach((item, index)=>{
            item['IdLink'] = '/' + item['Id'];
         });
-        console.log(this.insertedBusinessDossiersEnriched);
     }
 
     handleFooterNextClick(){
