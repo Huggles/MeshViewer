@@ -4,11 +4,11 @@
         <name>Create_Business_Dossiers</name>
         <label>Create Business Dossiers</label>
         <locationX>1106</locationX>
-        <locationY>288</locationY>
+        <locationY>302</locationY>
         <actionName>CreateBusinessDossierInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>End</targetReference>
+            <targetReference>Insert_Result_Screen</targetReference>
         </connector>
         <dataTypeMappings>
             <typeName>T__businessDossiers</typeName>
@@ -20,7 +20,10 @@
                 <elementReference>SelectedBusinessDossiers</elementReference>
             </value>
         </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputParameters>
+            <assignToReference>InsertedBusinessDossiers</assignToReference>
+            <name>output</name>
+        </outputParameters>
     </actionCalls>
     <actionCalls>
         <name>End</name>
@@ -91,6 +94,33 @@
                 <assignToReference>CriteriaMap</assignToReference>
                 <name>criteriaMap</name>
             </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Insert_Result_Screen</name>
+        <label>Insert Result Screen</label>
+        <locationX>893</locationX>
+        <locationY>296</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>End</targetReference>
+        </connector>
+        <fields>
+            <name>Insert_Result_Component</name>
+            <extensionName>appsolutely:findBusinessInsertResult</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>insertedBusinessDossiers</name>
+                <value>
+                    <elementReference>InsertedBusinessDossiers</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -170,6 +200,14 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>InsertedBusinessDossiers</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Business_Dossier__c</objectType>
     </variables>
     <variables>
         <name>SelectedBusinessDossiers</name>
