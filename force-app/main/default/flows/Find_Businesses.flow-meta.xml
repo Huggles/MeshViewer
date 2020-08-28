@@ -107,8 +107,8 @@
             <targetReference>Create_Business_Dossiers</targetReference>
         </connector>
         <fields>
-            <name>Business_Dossier_Search_Results</name>
-            <extensionName>appsolutely:searchBusinessDossiers</extensionName>
+            <name>Find_Businesses_Search_Results</name>
+            <extensionName>appsolutely:findBusinessesSearchResults</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>searchCriteria</name>
