@@ -359,16 +359,26 @@ export default class FindBusinessesLocation extends LightningElement {
 
             let citiesMap = {};
             this.citiesData.forEach((item, index)=> {
-                if(citiesMap[item.City] == null){
-                    citiesMap[item.City] = {
+                let cityId = item.City+item.Municipality+item.Province;
+                if(citiesMap[cityId] == null){
+                    citiesMap[cityId] = {
                         coordinates: [],
                     }
                 }
-                citiesMap[item.City].coordinates.push([item.Lat, item.Lon]);
-                citiesMap[item.City]['selected'] = false;
-                citiesMap[item.City]['label'] = item.City;
-                citiesMap[item.City]['City'] = item.City;
-                citiesMap[item.City]['id'] = item.City;
+                citiesMap[cityId].coordinates.push([item.Lat, item.Lon]);
+                citiesMap[cityId]['duplicateCityName'] = false;
+                this.citiesData.forEach((duplicateItem, duplicateIndex)=> {
+                    if(item.City == duplicateItem.City && item.Municipality != duplicateItem.Municipality)
+                        citiesMap[cityId]['duplicateCityName'] = true;
+                });
+                citiesMap[cityId]['selected'] = false;
+                if(citiesMap[cityId]['duplicateCityName'] == true){
+                    citiesMap[cityId]['label'] = item.City + " (" + item.Municipality + ")";
+                }else{
+                    citiesMap[cityId]['label'] = item.City;
+                }
+                citiesMap[cityId]['City'] = item.City;
+                citiesMap[cityId]['id'] = cityId;
             });
             for (const [key, value] of Object.entries(citiesMap)) {
                 let centerCoordinate = this.getLatLngCenter(value.coordinates);

@@ -1,31 +1,40 @@
 <!--
  - Created by Hugo on 27/08/2020.
+ -
+ - Requires a map of items (@api items;)
+ - Example:
+ - {
+ -   "Id_Item_One" : {
+ -      "id"    :   "Id_Item_One"
+ -      "label" :   "Label_Item_One"
+ -   }
+ - }
  -->
 
 <!-- Bulk Input -->
 <template>
     <div class="slds-card__body slds-card__body_inner">
-        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
-             style="outline-color: transparent;"
-             tabindex="0"
-             onfocusin= {onSearchInputFocus}
-             onblur= {onSearchInputBlur} >
+        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right">
             <lightning-input label={inputLabel} type="text"
-                             onchange={onSearchInputChange} autocomplete="off"></lightning-input>
+                             onchange={onSearchInputChange} autocomplete="off"
+                             onfocusin={onSearchInputFocusIn}
+                             onfocusout={onSearchInputFocusOut}
+                             tabindex="0" style="outline-color: transparent;"></lightning-input>
             <template if:true={showMatches}>
-                <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                <div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                     onfocusin={onSearchResultsFocusIn}
+                     onfocusout={onSearchResultsFocusOut}
+                     tabindex="0" style="outline: none;">
                     <ul class="slds-listbox slds-listbox_vertical" role="presentation">
                         <li class="slds-listbox__item">
                             <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
                                  onclick={onSelectAllClick}>{labels.Select_All}</div>
                         </li>
                         <template for:each={matchingItemsArray} for:item="searchMatch">
-                            <li key={searchMatch.Code}  class="slds-listbox__item">
+                            <li key={searchMatch.id}  class="slds-listbox__item">
                                 <div data-id={searchMatch.id}
                                      class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
-                                     onclick={onMatchingItemClick}
-                                     onfocus={onSearchResultFocus}
-                                     onblur={onSearchResultBlur}>{searchMatch.label}</div>
+                                     onclick={onMatchingItemClick}>{searchMatch.label}</div>
                             </li>
                         </template>
                     </ul>
@@ -33,9 +42,17 @@
             </template>
         </div>
         <template if:true={hasSelectedItems}>
-            <div class="slds-size_1-of-1">
-                <button class="slds-button  slds-float_right" type="button" label={labels.Remove_All}
-                        style="color: red;" onclick={onRemoveAllSelectedItems}>{labels.Remove_All}</button>
+            <div class="slds-size_1-of-1 slds-grid slds-nowrap">
+                <div class="slds-size_1-of-2" style="display: flex;">
+                    <template if:true={hasMaxSelectable}>
+                        <div style="align-self: flex-end;">{numberSelected}/{maxSelectable}</div>
+                    </template>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <button class="slds-button  slds-float_right" type="button" label={labels.Remove_All}
+                            style="color: red;" onclick={onRemoveAllSelectedItems}>{labels.Remove_All}</button>
+                </div>
+
             </div>
             <div class="slds-size_1-of-1 slds-grid slds-wrap slds-gutters slds-box_border slds-m-horizontal_none" style="max-height: 150px; overflow-y: scroll;">
                 <template for:each={selectedItemsArray} for:item="selectedPostalCode">
