@@ -72,9 +72,6 @@ export default class FindBusinessesContainer extends LightningElement {
 
     handleFooterNextClick(event){
         this.selectedSBIs = this.sbiHTMLElement.getSBIArray();
-
-        console.log('abc');
-        console.log(this.locationHTMLElement );
         if(this.locationHTMLElement != null){
             let locationData = this.locationHTMLElement.getLocationArray();
             this.selectedLocations = locationData; //Only runs when the location accordion item is still open.
@@ -120,8 +117,6 @@ export default class FindBusinessesContainer extends LightningElement {
         }
         this.criteriaMap = FindBusinessCriteriaModel;
         const attributeChangeEvent = new FlowAttributeChangeEvent('criteriaMap', FindBusinessCriteriaModel);
-        console.log('FindBusinessCriteriaModel');
-        console.log(FindBusinessCriteriaModel);
         const navigateNextEvent = new FlowNavigationNextEvent();
         this.dispatchEvent(navigateNextEvent);
     }

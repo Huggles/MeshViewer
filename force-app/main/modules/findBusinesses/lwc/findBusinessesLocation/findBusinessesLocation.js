@@ -301,7 +301,6 @@ export default class FindBusinessesLocation extends LightningElement {
             this.postalCodesData.forEach((item, index)=>{
                 let postalCodeCircle = L.circle([item.Lat, item.Lon], this.deselectedStyle);
                 postalCodeCircle.on("click", (feature, layer)=>{
-                    console.log('clicked!!');
                     let postalCodeId = item.id;
                     if(!controller.postalCodes[postalCodeId].selected){
                         controller.selectPostalCode(postalCodeId);

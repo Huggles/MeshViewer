@@ -30,19 +30,15 @@ export default class FindBusinessesStandardIndustrialClassifications extends Lig
 
     @api getSBIArray(){
         let sbicodes = this.getSelectedSBICodes();
-        console.log('sbicodes');
-        console.log(sbicodes);
         return sbicodes;
     }
 
     connectedCallback() {
         this.loadSBIData()
             .then((result)=>{
-
                 try {
                     this.treeGridData = this.initTreeGridData();
                 }catch (e) {
-                    console.log(e);
                     new ToastEventController(this).showErrorToastMessage('Error', e);
                 }
             });
@@ -62,7 +58,6 @@ export default class FindBusinessesStandardIndustrialClassifications extends Lig
     initTreeGridData(){
         if(this._sbiData != null){
             let data = this._initTreeGridData(null, null);
-            console.log(data);
             return data;
         }
     }
@@ -101,9 +96,6 @@ export default class FindBusinessesStandardIndustrialClassifications extends Lig
     }
     setHierarchySelected(row, selected){
         let indexes = row.index.split('.');
-        if(indexes.length <= 0){
-            console.log('error!!!!');
-        }
         indexes = indexes.map(x=>+x);
         let targetRecord = this.treeGridData[indexes[0]];
         indexes.shift();
