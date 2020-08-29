@@ -27,6 +27,9 @@ public with sharing class CreateBusinessDossierInvocableTest {
         //Build the argument for the invocable.
         CreateBusinessDossierInvocable.CreateBusinessDossierArgument createBusinessDossierArgument = new CreateBusinessDossierInvocable.CreateBusinessDossierArgument();
         createBusinessDossierArgument.businessDossiers = businessDossiers;
+
+        //Just dont pass null for now.
+        createBusinessDossierArgument.searchCriteria = new FindBusinessCriteriaModel();
         List<CreateBusinessDossierInvocable.CreateBusinessDossierArgument> arguments = new List<CreateBusinessDossierInvocable.CreateBusinessDossierArgument>{createBusinessDossierArgument};
 
         System.runAs(TestUtils.getDutchBusinessUser()) {
@@ -45,6 +48,7 @@ public with sharing class CreateBusinessDossierInvocableTest {
         CreateBusinessDossierInvocable.CreateBusinessDossierArgument createBusinessDossierArgument = new CreateBusinessDossierInvocable.CreateBusinessDossierArgument();
 
         createBusinessDossierArgument.businessDossiers = null;
+        createBusinessDossierArgument.searchCriteria = null;
 
         List<CreateBusinessDossierInvocable.CreateBusinessDossierArgument> arguments = new List<CreateBusinessDossierInvocable.CreateBusinessDossierArgument>{createBusinessDossierArgument};
         System.runAs(TestUtils.getDutchBusinessUser()) {
