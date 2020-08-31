@@ -5,7 +5,7 @@
 import {LightningElement, track, api} from 'lwc';
 import {loadScript, loadStyle} from "lightning/platformResourceLoader";
 
-import Find_Businesses_Advanced_Criteria_Help_Text from "@salesforce/label/c.Find_Businesses_Advanced_Criteria_Help_Text"
+import Find_Dutch_Businesses_Advanced_Criteria_Help_Text from "@salesforce/label/c.Find_Dutch_Businesses_Advanced_Criteria_Help_Text"
 
 export default class FindBusinessesOtherCriteria extends LightningElement {
 
@@ -14,14 +14,14 @@ export default class FindBusinessesOtherCriteria extends LightningElement {
         economically_active: 'active',
         financial_status: 'solvent',
         primary_sbi_only: false,
-        max_number_of_results : null
+        max_number_of_results : 10000
     };
     @api getCriteriaMap(){
         return this.criteriaValueMap;
     }
 
     labels = {
-        Find_Businesses_Advanced_Criteria_Help_Text
+        Find_Dutch_Businesses_Advanced_Criteria_Help_Text
     }
 
     connectedCallback() {

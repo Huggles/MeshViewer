@@ -21,7 +21,7 @@ import FastSearch from '@salesforce/label/c.Fast_search';
 import SearchReset from '@salesforce/label/c.Search_Reset';
 
 
-import Find_Businesses_Title from '@salesforce/label/c.Find_Businesses_Title';
+import Find_Dutch_Businesses_Title from '@salesforce/label/c.Find_Dutch_Businesses_Title';
 import BusinessDossierqueued from '@salesforce/label/c.Business_Dossier_queued';
 import CreateBusinessDossiers from '@salesforce/label/c.Create_Business_Dossiers';
 import NorowselectedMessage from '@salesforce/label/c.No_row_selected_Message';
@@ -38,7 +38,7 @@ export default class FindBusinessesSearchResults extends LightningElement {
         Records,Error, Cancel,
         Previous,CreateBusinessDossiers,Success,
         BusinessDossierqueued,NorowselectedMessage,
-        DuplicateOf,Found,FastSearch, SearchReset, Find_Businesses_Title, Dutch_Business_Dossier_Exists
+        DuplicateOf,Found,FastSearch, SearchReset, Find_Dutch_Businesses_Title, Dutch_Business_Dossier_Exists
     }
 
     columns;

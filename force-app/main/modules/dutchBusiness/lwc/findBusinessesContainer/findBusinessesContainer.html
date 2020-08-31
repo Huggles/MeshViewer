@@ -5,11 +5,11 @@
 <!-- Find Businesses Container -->
 <template>
     <header class="slds-modal__header">
-        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{labels.Find_Businesses_Title}</h2>
+        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{labels.Find_Dutch_Businesses_Title}</h2>
     </header>
     <div>
         <div class="slds-m-vertical_small">
-            {labels.Find_Businesses_Criteria_Help_Text}
+            {labels.Find_Dutch_Businesses_Criteria_Help_Text}
         </div>
         <div style="max-height: 60vh; overflow-y: scroll;">
             <div class="slds-box slds-scrollable_y">
@@ -41,6 +41,7 @@
                    cancel-button-title={labels.Cancel}
                    previous-button-title={labels.Previous}
                    available-actions={availableFooterActions}
+                   next-button-disabled={nextButtonDisabled}
                    onnextclick={handleFooterNextClick}>
     </c-flow-footer>
 </template>

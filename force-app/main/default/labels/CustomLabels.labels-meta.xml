@@ -749,7 +749,7 @@
         <value>Please enter at least two characters.</value>
     </labels>
     <labels>
-        <fullName>Find_Businesses_Advanced_Criteria_Help_Text</fullName>
+        <fullName>Find_Dutch_Businesses_Advanced_Criteria_Help_Text</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
@@ -757,7 +757,7 @@
         <value>These values generally do not need to be changed. Please only change them in very specific search scenarios.</value>
     </labels>
     <labels>
-        <fullName>Find_Businesses_Criteria_Help_Text</fullName>
+        <fullName>Find_Dutch_Businesses_Criteria_Help_Text</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
@@ -765,12 +765,12 @@
         <value>Please enter the search criteria below. If you do not select a value for an option, it will not be used in the filter.</value>
     </labels>
     <labels>
-        <fullName>Find_Businesses_Title</fullName>
+        <fullName>Find_Dutch_Businesses_Title</fullName>
         <categories>Dutch Business</categories>
         <language>en_US</language>
         <protected>true</protected>
-        <shortDescription>The title text on the find businesses screen</shortDescription>
-        <value>Find Businesses</value>
+        <shortDescription>The title text on the find businesses screens</shortDescription>
+        <value>Find Dutch Businesses</value>
     </labels>
     <labels>
         <fullName>Found</fullName>

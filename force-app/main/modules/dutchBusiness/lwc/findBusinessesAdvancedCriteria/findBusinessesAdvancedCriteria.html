@@ -6,7 +6,7 @@
 <template>
     <div class="slds-grid slds-wrap slds-gutters_direct-small slds-m-horizontal_small">
         <div class="slds-m-vertical_small">
-            {labels.Find_Businesses_Advanced_Criteria_Help_Text}
+            {labels.Find_Dutch_Businesses_Advanced_Criteria_Help_Text}
         </div>
         <div class= "slds-col slds-size_1-of-1 slds-grid slds-gutters_direct-small">
             <div class= "slds-col slds-size_1-of-2">
@@ -45,7 +45,7 @@
             <div class= "slds-col slds-size_1-of-2">
                 <lightning-input type="number"
                         name="Maxmium number of results"
-                        label="Maxmium number of results"
+                        label="Maxmium number of results (Max 10.000)"
                         value={criteriaValueMap.max_number_of_results}
                         onchange={handleMaximumNumberOfRecordsChanged}></lightning-input>
             </div>

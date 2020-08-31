@@ -65,8 +65,9 @@ export default class FindBusinessesLocation extends LightningElement {
 
     @api getLocationArray(){
         if(this.selectedMapLayer === this.MAP_LAYERS.PROVINCE ) return this.getSelectedProvinces();
-        if(this.selectedMapLayer === this.MAP_LAYERS.POSTALCODE ) return this.getSelectedPostalCodes();
-        if(this.selectedMapLayer === this.MAP_LAYERS.CITY ) return this.getSelectedCities();
+        else if(this.selectedMapLayer === this.MAP_LAYERS.POSTALCODE ) return this.getSelectedPostalCodes();
+        else if(this.selectedMapLayer === this.MAP_LAYERS.CITY ) return this.getSelectedCities();
+        else return null;
     }
     getSelectedProvinces(){
         let selectedProvinces = [];

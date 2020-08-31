@@ -30,7 +30,14 @@ export default class FindBusinessesStandardIndustrialClassifications extends Lig
 
     @api getSBIArray(){
         let sbicodes = this.getSelectedSBICodes();
-        return sbicodes;
+        let selectedSBIsFiltered = [];
+        sbicodes.forEach((item,index)=>{
+            if(item.length === 1 && item.match(/[a-zA-Z]/i) != null){} //Dont include the category, this throws an error on company.info side. }
+            else{
+                selectedSBIsFiltered.push(item);
+            }
+        });
+        return selectedSBIsFiltered;
     }
 
     connectedCallback() {
