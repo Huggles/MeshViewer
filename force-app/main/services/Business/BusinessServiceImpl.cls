@@ -139,23 +139,12 @@ public inherited sharing class BusinessServiceImpl implements IBusinessService {
         }else{
             unitOfWork = Application.UnitOfWork.newInstance(new fflib_SObjectUnitOfWork.DuplicateDML(true));
         }
-
-        Business_Dossier_Set__c businessDossierSet = new Business_Dossier_Set__c();
-        unitOfWork.registerNew(businessDossierSet);
-
-
         List<Business_Dossier__c> response = new List<Business_Dossier__c>();
 
         //Loop through records to register for insert.
         for(Business_Dossier__c businessDossier : businessDossiers){
             unitOfWork.registerUpsert(businessDossier);
             response.add(businessDossier);
-
-            Business_Dossier_Set_Member__c member = new Business_Dossier_Set_Member__c();
-            member.Name = businessDossier.Name;
-            unitOfWork.registerRelationship(member, Business_Dossier_Set_Member__c.Business_Dossier_Set__c, businessDossierSet);
-            unitOfWork.registerRelationship(member, Business_Dossier_Set_Member__c.Business_Dossier__c, businessDossier);
-            unitOfWork.registerNew(member);
         }
         try {
             unitOfWork.commitWork();
