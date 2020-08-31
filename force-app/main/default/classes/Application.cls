@@ -10,8 +10,6 @@ public inherited sharing class Application {
             new List < SObjectType > {
                     User.SObjectType,
                     Business_Dossier__c.SObjectType,
-                    Business_Dossier_Set__c.SObjectType,
-                    Business_Dossier_Set_Member__c.SObjectType,
                     Account.SObjectType,
                     Business_Data_SBI__c.SObjectType,
                     SEPA_Bank_Account__c.SObjectType,
