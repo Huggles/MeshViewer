@@ -130,10 +130,10 @@ export default class BulkInput extends LightningElement {
      */
     async findMatches(){
         let matchingItems = {};
-        let searchString = this.template.querySelector('lightning-input').value;
+        let searchString = this.template.querySelector('lightning-input').value.toLowerCase();
         if(searchString.length > 1){
             for (const [key, value] of Object.entries(this.items)) {
-                if(this.selectedItems[value.id] == null && (value.id.toString().startsWith(searchString) || value.label.includes(searchString))){
+                if(this.selectedItems[value.id] == null && (value.id.toString().toLowerCase().startsWith(searchString) || value.label.toLowerCase().includes(searchString))){
                     matchingItems[value.id] = value;
                 }
             }
