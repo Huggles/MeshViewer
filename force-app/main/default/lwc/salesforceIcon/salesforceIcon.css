@@ -1,0 +1,7 @@
+/**
+ * Created by Hugo on 31/08/2020.
+ */
+
+.salesforce-filter{
+    filter :  invert(90%) sepia(90%) saturate(2000%) hue-rotate(190deg) brightness(104%) contrast(97%);
+}
