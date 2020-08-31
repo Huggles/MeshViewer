@@ -21,11 +21,9 @@
                         </div>
                     </lightning-accordion-section>
                     <lightning-accordion-section name="Location" label={labels.Location_Label} >
-                        <template if:true={isStepLocation}>
-                            <div class="slds-m-around_small slds-card">
-                                <c-find-businesses-location selected-provinces={selectedLocations}></c-find-businesses-location>
-                            </div>
-                        </template>
+                        <div class="slds-m-around_small slds-card">
+                            <c-find-businesses-location selected-provinces={selectedLocations}></c-find-businesses-location>
+                        </div>
                     </lightning-accordion-section>
                     <lightning-accordion-section name="Other" label={labels.Other_Label}>
                         <div class="slds-m-around_small slds-card">

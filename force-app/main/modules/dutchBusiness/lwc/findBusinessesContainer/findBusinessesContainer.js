@@ -23,22 +23,15 @@ export default class FindBusinessesContainer extends LightningElement {
 
     activeSections = [];
     handleSectionToggle(event){
-        /*
-        if(this.activeSections.includes('Location') && !event.detail.openSections.includes('Location')){
-            //Location tab was closed. Retrieve selected provinces.
-            this.selectedLocations = this.locationHTMLElement.getLocationArray();
-        }
-         */
         this.activeSections = event.detail.openSections;
-    }
 
-    _isStepLocation = false;
-    get isStepLocation(){
-        //Once opened, it should remain open to avoid reloading of the component.
-        if(this.activeSections != null && this._isStepLocation == false){
-            this._isStepLocation = this.activeSections.includes("Location");
+        if(this.activeSections.includes("Location")){
+            //Redraws the map so it is displayed correctly.
+            this.locationHTMLElement = this.template.querySelector('c-find-businesses-location');
+            if(this.locationHTMLElement != null){
+                this.locationHTMLElement.redrawMap();
+            }
         }
-        return this._isStepLocation;
     }
 
     labels = {

@@ -55,13 +55,7 @@ export default class FindBusinessesLocation extends LightningElement {
     /*
      * Sets the selected layer to present.
      */
-    _selectedMapLayer = this.MAP_LAYERS.PROVINCE;
-    get selectedMapLayer(){
-        return this._selectedMapLayer;
-    }
-    set selectedMapLayer(value){
-        this._selectedMapLayer = value;
-    }
+    selectedMapLayer = this.MAP_LAYERS.PROVINCE;
 
     @api selectedLocations = {}
 
@@ -105,16 +99,6 @@ export default class FindBusinessesLocation extends LightningElement {
         return response;
     }
 
-    /*
-     * Leaflet Properties
-     */
-    _leafletMap;
-    _leafletMapHTMLElement;
-    _leafletLibraryLoaded = false;
-    _leafletMapLoaded = false;
-    _openStreetMapTileLayer;
-
-    loadingMap = false;
 
     connectedCallback() {
         this.loadingMap = true;
@@ -128,7 +112,16 @@ export default class FindBusinessesLocation extends LightningElement {
     }
 
 
+    /*
+     * Leaflet Properties
+     */
+    _leafletMap;
+    _leafletMapHTMLElement;
+    _leafletLibraryLoaded = false;
+    _leafletMapLoaded = false;
+    _openStreetMapTileLayer;
 
+    loadingMap = false;
 
     /*
      * General Functions
@@ -193,6 +186,12 @@ export default class FindBusinessesLocation extends LightningElement {
             this.showLayer(this.selectedMapLayer);
             this.loadingMap = false;
         }
+    }
+    @api redrawMap(){
+        console.log('invalidating size');
+        setTimeout(()=>{
+            this._leafletMap.invalidateSize(false);
+        }, 100);
     }
 
     /*
