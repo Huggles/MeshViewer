@@ -15,97 +15,99 @@
         </template>
         <!--Show search fields-->
         <template if:false={isLoading}>
-            <div class="slds-grid slds-wrap slds-m-around_x-small">
-                <div class=" slds-col slds-size_1-of-1 ">
-                    {label.CurrentlyShowing} {businessDossierLength} {label.Records} of {maxRecords}
-                </div>
-                <div class=" slds-col slds-size_1-of-1 slds-m-top_x-small">
-                    <lightning-input type="text" name = "cities" class= "slds-col slds-size_1-of-3" variant="label-hidden"
-                                     placeholder={label.FastSearch}  onchange={handleSearchChange}></lightning-input>
-                </div>
-                <!--Show Datatable-->
-                <div class="slds-box_border slds-size_1-of-1" data-identifier="resultTableContainer"
-                     style="max-height: 60vh; overflow-y: scroll;"
-                        onscroll={onTableScroll}>
-                    <template if:true={businessDossierFieldInfo}>
-                        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered" data-identifier="resultTable">
-                            <thead>
-                            <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                    <div class="slds-checkbox">
-                                        <lightning-input type="checkbox"
-                                                         data-identifier="selectAllCheckbox"
-                                                         onchange={handleAllRowsSelected}></lightning-input>
-                                    </div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate">{businessDossierFieldInfo.Name.label}</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Dossier_Number__c.label}</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Establishment_Number__c.label}</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Establishment_City__c.label}</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Establishment_Street__c.label}</div>
-                                </th>
-                                <th class="" scope="col">
-                                    <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Indication_Economically_Active__c.label}</div>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <template if:true={hasRecords}>
-                                <template for:each={dossiersToDisplay} for:item="businessDossier">
-                                    <tr key={businessDossier.appsolutely__Dossier_Number__c}>
-                                        <td>
-                                            <div class="slds-checkbox">
-                                                <lightning-input type="checkbox"
-                                                                 onchange={handleRowSelected}
-                                                                 data-identifier={businessDossier.rowId}
-                                                                 checked={businessDossier.selected}></lightning-input>
-                                            </div>
-                                            <template if:true={businessDossier.existingDossier}>
-                                                <c-salesforce-icon></c-salesforce-icon>
-                                            </template>
-                                        </td>
-                                        <td>
-                                            <div class="slds-truncate">{businessDossier.name}</div>
-                                        </td>
-                                        <td>
-                                            <div class="slds-truncate">{businessDossier.appsolutely__Dossier_Number__c}</div>
-                                        </td>
-                                        <td>
-                                            <div class="slds-truncate">{businessDossier.appsolutely__Establishment_Number__c}</div>
-                                        </td>
-                                        <td>
-                                            <div class="slds-truncate">{businessDossier.appsolutely__Establishment_City__c}</div>
-                                        </td>
-                                        <td>
-                                            <div class="slds-truncate">{businessDossier.appsolutely__Establishment_Street__c}</div>
-                                        </td>
-                                        <td>
-                                            <template if:true={businessDossier.appsolutely__Indication_Economically_Active__c}>
-                                                <lightning-icon icon-name="utility:check" size="x-small"></lightning-icon>
-                                            </template>
-                                        </td>
-                                    </tr>
+            <template if:true={hasRecords}>
+                <div class="slds-grid slds-wrap slds-m-around_x-small">
+                    <div class=" slds-col slds-size_1-of-1 ">
+                        {label.CurrentlyShowing} {businessDossierLength} {label.Records} of {maxRecords}
+                    </div>
+                    <div class=" slds-col slds-size_1-of-1 slds-m-top_x-small">
+                        <lightning-input type="text" name = "cities" class= "slds-col slds-size_1-of-3" variant="label-hidden"
+                                         placeholder={label.FastSearch}  onchange={handleSearchChange}></lightning-input>
+                    </div>
+                    <!--Show Datatable-->
+                    <div class="slds-box_border slds-size_1-of-1" data-identifier="resultTableContainer"
+                         style="max-height: 60vh; overflow-y: scroll;"
+                         onscroll={onTableScroll}>
+                        <template if:true={businessDossierFieldInfo}>
+                            <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered" data-identifier="resultTable">
+                                <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-checkbox">
+                                            <lightning-input type="checkbox"
+                                                             data-identifier="selectAllCheckbox"
+                                                             onchange={handleAllRowsSelected}></lightning-input>
+                                        </div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">{businessDossierFieldInfo.Name.label}</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Dossier_Number__c.label}</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Establishment_Number__c.label}</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Establishment_City__c.label}</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Establishment_Street__c.label}</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">{businessDossierFieldInfo.appsolutely__Indication_Economically_Active__c.label}</div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <template if:true={hasRecords}>
+                                    <template for:each={dossiersToDisplay} for:item="businessDossier">
+                                        <tr key={businessDossier.appsolutely__Dossier_Number__c}>
+                                            <td>
+                                                <div class="slds-checkbox">
+                                                    <lightning-input type="checkbox"
+                                                                     onchange={handleRowSelected}
+                                                                     data-identifier={businessDossier.rowId}
+                                                                     checked={businessDossier.selected}></lightning-input>
+                                                </div>
+                                                <template if:true={businessDossier.existingDossier}>
+                                                    <c-salesforce-icon></c-salesforce-icon>
+                                                </template>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{businessDossier.name}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{businessDossier.appsolutely__Dossier_Number__c}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{businessDossier.appsolutely__Establishment_Number__c}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{businessDossier.appsolutely__Establishment_City__c}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{businessDossier.appsolutely__Establishment_Street__c}</div>
+                                            </td>
+                                            <td>
+                                                <template if:true={businessDossier.appsolutely__Indication_Economically_Active__c}>
+                                                    <lightning-icon icon-name="utility:check" size="x-small"></lightning-icon>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
                                 </template>
-                            </template>
-                            </tbody>
-                        </table>
-                        <div class="slds-size_1-of-1 slds-is-relative" style='height: 100px'>
-                            <template if:true={isLoadingMoreRecords}>
-                                <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
-                            </template>
-                        </div>
-                    </template>
+                                </tbody>
+                            </table>
+                            <div class="slds-size_1-of-1 slds-is-relative" style='height: 100px'>
+                                <template if:true={isLoadingMoreRecords}>
+                                    <lightning-spinner alternative-text={label.Loading}></lightning-spinner>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
                 </div>
-            </div>
+            </template>
         </template>
         <!--show no data image-->
         <template if:false={isLoading}>

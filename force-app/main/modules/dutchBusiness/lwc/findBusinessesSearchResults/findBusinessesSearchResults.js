@@ -64,6 +64,7 @@ export default class FindBusinessesSearchResults extends LightningElement {
     Calculates list of business dossiers to show on datatable
     */
     get businessDossiersArray(){
+        console.log(JSON.parse(JSON.stringify(this.businessDossiers)));
         let returnArray = [];
         for (const [key, value] of Object.entries(this.businessDossiers)) {
             returnArray.push(value);
@@ -166,12 +167,17 @@ export default class FindBusinessesSearchResults extends LightningElement {
         this.searchBusinesses()
             .then((result)=>{
                 Object.assign(this.businessDossiers, result);
+            })
+            .catch(error => {
+                this.businessDossiers = {};
+                console.log('a');
+                console.log(JSON.parse(JSON.stringify(this.businessDossiers)));
+                new ToastEventController(this).showErrorToastMessage(this.label.Error, error);
+            })
+            .finally(()=>{
                 this.isLoading = false;
                 this.isLoadingMoreRecords = false;
             })
-            .catch(error => {
-                new ToastEventController(this).showErrorToastMessage(null,error.message);
-            });
     }
     async searchBusinesses(){
         let payload = {
@@ -199,7 +205,6 @@ export default class FindBusinessesSearchResults extends LightningElement {
             })
             .catch((error) => {
                 new ToastEventController(this).showErrorToastMessage(this.label.Error, error);
-                return error;
             })
     }
     //below function flatten the nested data
@@ -236,6 +241,8 @@ export default class FindBusinessesSearchResults extends LightningElement {
      * Table Functions
      */
     get hasRecords(){
+        console.log('hasRecords');
+        console.log(this.businessDossiersArray.length);
         if(this.businessDossiersArray.length > 0) return true;
         return false;
     }
