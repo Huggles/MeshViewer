@@ -1,13 +1,7 @@
 /**
  * Created by Hugo on 27/08/2020.
  * Requires a map of items (@api items;)
- * Example:
- {
-   "Id_Item_One" : {
-      "id"    :   "Id_Item_One"
-      "label" :   "Label_Item_One"
-   }
- }
+
  */
 
 import {LightningElement, api, track} from 'lwc';
@@ -26,6 +20,17 @@ export default class BulkInput extends LightningElement {
         Select_All,
         Remove_All
     }
+
+    /*
+     * The items the user can select.
+     * Example:
+     * {
+     *   "Id_Item_One" : {
+     *      "id"    :   "Id_Item_One"
+     *      "label" :   "Label_Item_One"
+     *   }
+     * }
+     */
     @api items;
     @api inputLabel;
 
@@ -36,7 +41,7 @@ export default class BulkInput extends LightningElement {
     }
     set maxSelectable(value){
         if((typeof value) === "string"){
-            //This property passed as an DOM attribute is a string.
+            //Properties passed as an DOM attribute are a string.
             this._maxSelectable = parseInt(value);
         }
         else if((typeof value) === "number"){
@@ -51,7 +56,10 @@ export default class BulkInput extends LightningElement {
         return this.selectedItemsArray.length;
     }
 
-
+    /*
+     * Allows other components to select items in this list.
+     * The component must be aware of the Item Ids
+     */
     @api addSelectedItem(itemId){
         if(this.selectedItems[itemId] == null && this.numberSelected < this.maxSelectable){
             this.selectedItems[itemId] = this.items[itemId];
@@ -62,6 +70,11 @@ export default class BulkInput extends LightningElement {
             this.dispatchItemClickedEvent(itemId, false);
         }
     }
+
+    /*
+    * Allows other components to deselect items in this list.
+    * The component must be aware of the Item Ids
+    */
     @api removeSelectedItem(itemId){
         if(this.selectedItems[itemId] != null){
             delete this.selectedItems[itemId];
@@ -70,7 +83,15 @@ export default class BulkInput extends LightningElement {
         }
     }
 
+
+    /*
+    * Stores key value pairs of the selected items
+    */
     @track selectedItems = {};
+
+    /*
+     * returns the selected item map as an array for display
+     */
     get selectedItemsArray(){
         let returnArray = [];
         for (const [key, value] of Object.entries(this.selectedItems)) {
@@ -79,7 +100,14 @@ export default class BulkInput extends LightningElement {
         return returnArray;
     }
 
+    /*
+    * Stores key value pairs of the matching items during search
+    */
     @track matchingItems = {};
+
+    /*
+     * returns the matching item map as an array for display
+     */
     get matchingItemsArray(){
         let returnArray = [];
         for (const [key, value] of Object.entries(this.matchingItems)) {
@@ -88,10 +116,18 @@ export default class BulkInput extends LightningElement {
         return returnArray;
     }
 
+
+    /*
+     * When search input changes, call the findMatches function to update the matches list.
+     */
     onSearchInputChange(event){
         this.findMatches();
     }
 
+
+    /*
+     * Finds matching records based on the input of the search field. This is done asynchronously to avoid lag.
+     */
     async findMatches(){
         let matchingItems = {};
         let searchString = this.template.querySelector('lightning-input').value;
@@ -105,6 +141,10 @@ export default class BulkInput extends LightningElement {
         this.matchingItems = matchingItems;
     }
 
+    /*
+     * Whether the matching items list should be shown or not.
+     * This depend on whether there are matching items and what element has focus.
+     */
     get showMatches(){
         if(this.matchingItems != null && this.matchingItemsArray.length > 0 && (this._searchInputHasFocus || this._searchResultsHasFocus)){
             return true;
@@ -112,20 +152,47 @@ export default class BulkInput extends LightningElement {
         return false;
     }
 
+    /*
+     * Whether any items have already been selected
+     */
+    get hasSelectedItems(){
+        if(this.selectedItemsArray.length > 0) return true;
+        return false;
+    }
+
+    /*
+     * When Select All is clicked in the result list.
+     * Adds all items to the selected map.
+     */
     onSelectAllClick(event){
         for (const [key, value] of Object.entries(this.matchingItems)) {
             this.addSelectedItem(value.id);
         }
         this.findMatches();
     }
+
+    /*
+     * When a single item in the result list is clicked.
+     * Adds the item to the selected map.
+     */
     onMatchingItemClick(event){
         let itemId = event.currentTarget.dataset['id'].toString();
         this.addSelectedItem(itemId);
     }
+
+    /*
+    * When a single item in the pills list is removed.
+    * Removes the item from the selected map.
+    */
     onRemoveItemClick(event){
         let itemId = event.currentTarget.dataset['id'].toString();
         this.removeSelectedItem(itemId);
     }
+
+    /*
+      * When Remove All is clicked below the search input.
+      * Removes all items from the selected map.
+      */
     onRemoveAllSelectedItems(event) {
         for (const [key, value] of Object.entries(this.selectedItems)) {
             this.dispatchItemClickedEvent(value.id, false);
@@ -133,6 +200,10 @@ export default class BulkInput extends LightningElement {
         this.selectedItems = {};
     }
 
+    /*
+      * Dispatches an event to parent elements to notify them an item has been selected.
+      * Parent elements can use this to process the selected items using onitemclicked={} attribute
+      */
     dispatchItemClickedEvent(itemId, selected){
         let payload = {
             detail : {
@@ -144,13 +215,9 @@ export default class BulkInput extends LightningElement {
         this.dispatchEvent(event);
     }
 
-
-
-    get hasSelectedItems(){
-        if(this.selectedItemsArray.length > 0) return true;
-        return false;
-    }
-
+    /*
+     * Functions that register whether this element is focused or not. Required to determine whether to show the results list or not.
+     */
     @track _searchInputHasFocus = false;
     onSearchInputFocusIn(event){
         this._searchInputHasFocus = true;
@@ -163,7 +230,6 @@ export default class BulkInput extends LightningElement {
         },100);
 
     }
-
     @track _searchResultsHasFocus = false;
     onSearchResultsFocusIn(event){
         this._searchResultsHasFocus = true;
