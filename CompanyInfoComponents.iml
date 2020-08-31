@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="IlluminatedCloud" name="Illuminated Cloud">
       <configuration>
-        <option name="connectionName" value="CI-354" />
+        <option name="connectionName" value="test-b46urael2ehn@example.com" />
         <option name="connectionType" value="SFDX" />
         <option name="defaultSourceRootUrl" value="file://$MODULE_DIR$/force-app" />
         <option name="moduleContents">
@@ -6787,7 +6787,7 @@
       <excludeFolder url="file://$MODULE_DIR$/scans" />
       <excludeFolder url="file://$MODULE_DIR$/wsdl" />
     </content>
-    <orderEntry type="jdk" jdkName="IlluminatedCloud (Company.info-for-sales/CI-354)" jdkType="IlluminatedCloud" />
+    <orderEntry type="jdk" jdkName="IlluminatedCloud (Customer.connect/test-b46urael2ehn@example.com)" jdkType="IlluminatedCloud" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
