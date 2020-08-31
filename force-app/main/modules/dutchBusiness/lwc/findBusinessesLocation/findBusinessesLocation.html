@@ -16,7 +16,7 @@
         <div class="slds-col slds-size_1-of-3 slds-large-size_1-of-3 slds-medium-size_1-of-2 slds-small-size_1-of-1 slds-p-horizontal_medium slds-grid slds-wrap">
             <article class="slds-card slds-card_boundary slds-size_1-of-1">
                 <lightning-tabset active-tab-value={selectedMapLayer}>
-                    <lightning-tab label="Provinces" value={MAP_LAYERS.PROVINCE} onactive={handleTabClick}>
+                    <lightning-tab label={labels.Province_Label} value={MAP_LAYERS.PROVINCE} onactive={handleTabClick}>
                         <div class="slds-card__body slds-card__body_inner">
                             <table>
                                 <template for:each={provincesArray} for:item="province">
@@ -33,13 +33,13 @@
                             </table>
                         </div>
                     </lightning-tab>
-                    <lightning-tab label="Postal Codes" value={MAP_LAYERS.POSTALCODE} onactive={handleTabClick}>
-                        <c-bulk-input input-label="Postal Code" data-identifier={MAP_LAYERS.POSTALCODE} max-selectable="100"
+                    <lightning-tab label={labels.Postal_Code_Label} value={MAP_LAYERS.POSTALCODE} onactive={handleTabClick}>
+                        <c-bulk-input input-label={labels.Postal_Code_Label} data-identifier={MAP_LAYERS.POSTALCODE} max-selectable="100"
                                       items={postalCodes} onitemclick={handlePostalCodeClicked}></c-bulk-input>
                     </lightning-tab>
 
-                    <lightning-tab label="Cities" value={MAP_LAYERS.CITY} onactive={handleTabClick}>
-                        <c-bulk-input input-label="City" data-identifier={MAP_LAYERS.CITY} max-selectable="100"
+                    <lightning-tab label={labels.City_Label} value={MAP_LAYERS.CITY} onactive={handleTabClick}>
+                        <c-bulk-input input-label={labels.City_Label} data-identifier={MAP_LAYERS.CITY} max-selectable="100"
                                       items={cities} onitemclick={handleCityClicked}></c-bulk-input>
                     </lightning-tab>
 

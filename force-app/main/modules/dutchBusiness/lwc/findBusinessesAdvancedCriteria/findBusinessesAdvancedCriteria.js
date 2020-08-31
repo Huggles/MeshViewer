@@ -7,6 +7,13 @@ import {loadScript, loadStyle} from "lightning/platformResourceLoader";
 
 import Find_Dutch_Businesses_Advanced_Criteria_Help_Text from "@salesforce/label/c.Find_Dutch_Businesses_Advanced_Criteria_Help_Text"
 
+import SBI_Match_Type from '@salesforce/label/c.SBI_Match_Type';
+import Economically_Active from '@salesforce/label/c.Economically_Active';
+import Financial_Status from '@salesforce/label/c.Financial_Status';
+import Maxmium_Number_Of_Results from '@salesforce/label/c.Maxmium_Number_Of_Results';
+import SBI_Match_Primary_Only from '@salesforce/label/c.SBI_Match_Primary_Only'
+
+
 export default class FindBusinessesOtherCriteria extends LightningElement {
 
     @track criteriaValueMap = {
@@ -21,7 +28,11 @@ export default class FindBusinessesOtherCriteria extends LightningElement {
     }
 
     labels = {
-        Find_Dutch_Businesses_Advanced_Criteria_Help_Text
+        SBI_Match_Type,
+        Economically_Active,
+        Financial_Status,
+        Maxmium_Number_Of_Results,
+        SBI_Match_Primary_Only
     }
 
     connectedCallback() {

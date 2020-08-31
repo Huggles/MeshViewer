@@ -20,13 +20,12 @@ import Previous from '@salesforce/label/c.Previous';
 import FastSearch from '@salesforce/label/c.Fast_search';
 import SearchReset from '@salesforce/label/c.Search_Reset';
 
-
+import DuplicateOf from '@salesforce/label/c.Duplicate_of';
+import Found from '@salesforce/label/c.Found';
 import Find_Dutch_Businesses_Title from '@salesforce/label/c.Find_Dutch_Businesses_Title';
 import BusinessDossierqueued from '@salesforce/label/c.Business_Dossier_queued';
 import CreateBusinessDossiers from '@salesforce/label/c.Create_Business_Dossiers';
 import NorowselectedMessage from '@salesforce/label/c.No_row_selected_Message';
-import DuplicateOf from '@salesforce/label/c.Duplicate_of';
-import Found from '@salesforce/label/c.Found';
 import Dutch_Business_Dossier_Exists from '@salesforce/label/c.Dutch_Business_Dossier_Exists';
 
 import Business_Dossier_Object from '@salesforce/schema/Business_Dossier__c';
@@ -40,8 +39,6 @@ export default class FindBusinessesSearchResults extends LightningElement {
         BusinessDossierqueued,NorowselectedMessage,
         DuplicateOf,Found,FastSearch, SearchReset, Find_Dutch_Businesses_Title, Dutch_Business_Dossier_Exists
     }
-
-    columns;
 
     /*
     Input search criteria from search Lwc

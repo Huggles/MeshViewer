@@ -8,8 +8,9 @@ import leaflet from '@salesforce/resourceUrl/leaflet';
 import GeoJSONProvinces from '@salesforce/resourceUrl/GeoJSON';
 import postalCodesData from '@salesforce/resourceUrl/PostalCodes';
 
-import Select_All from '@salesforce/label/c.Select_All'
-import Remove_All from '@salesforce/label/c.Remove_All'
+import Province_Label from '@salesforce/label/c.Province_Label'
+import Postal_Code_Label from '@salesforce/label/c.Postal_Code_Label'
+import City_Label from '@salesforce/label/c.City_Label'
 
 export default class FindBusinessesLocation extends LightningElement {
 
@@ -17,8 +18,9 @@ export default class FindBusinessesLocation extends LightningElement {
      * The labels used in this screen
      */
     labels = {
-        Select_All,
-        Remove_All
+        Province_Label,
+        Postal_Code_Label,
+        City_Label
     }
 
     /*

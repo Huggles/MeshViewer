@@ -13,6 +13,10 @@ import Previous from '@salesforce/label/c.Previous';
 import Find_Dutch_Businesses_Title from '@salesforce/label/c.Find_Dutch_Businesses_Title';
 import Find_Dutch_Businesses_Criteria_Help_Text from '@salesforce/label/c.Find_Dutch_Businesses_Criteria_Help_Text';
 
+import Industry_Label from '@salesforce/label/c.Industry_Label';
+import Location_Label from '@salesforce/label/c.Location_Label';
+import Other_Label from '@salesforce/label/c.Other_Label';
+
 export default class FindBusinessesContainer extends LightningElement {
 
     @api criteriaMap;
@@ -42,7 +46,10 @@ export default class FindBusinessesContainer extends LightningElement {
         Cancel,
         Previous,
         Find_Dutch_Businesses_Title,
-        Find_Dutch_Businesses_Criteria_Help_Text
+        Find_Dutch_Businesses_Criteria_Help_Text,
+        Industry_Label,
+        Location_Label,
+        Other_Label
     }
 
     availableFooterActions = [

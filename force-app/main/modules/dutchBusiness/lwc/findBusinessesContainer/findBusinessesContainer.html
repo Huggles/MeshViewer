@@ -15,19 +15,19 @@
             <div class="slds-box slds-scrollable_y">
                 <lightning-accordion allow-multiple-sections-open
                                      onsectiontoggle={handleSectionToggle}>
-                    <lightning-accordion-section name="Industry" label="Industry">
+                    <lightning-accordion-section name="Industry" label={labels.Industry_Label}>
                         <div class="slds-m-around_small slds-card">
                             <c-find-businesses-standard-industrial-classifications></c-find-businesses-standard-industrial-classifications>
                         </div>
                     </lightning-accordion-section>
-                    <lightning-accordion-section name="Location" label="Location" >
+                    <lightning-accordion-section name="Location" label={labels.Location_Label} >
                         <template if:true={isStepLocation}>
                             <div class="slds-m-around_small slds-card">
                                 <c-find-businesses-location selected-provinces={selectedLocations}></c-find-businesses-location>
                             </div>
                         </template>
                     </lightning-accordion-section>
-                    <lightning-accordion-section name="Other" label="Other" >
+                    <lightning-accordion-section name="Other" label={labels.Other_Label}>
                         <div class="slds-m-around_small slds-card">
                             <c-find-businesses-other-criteria ></c-find-businesses-other-criteria>
                         </div>

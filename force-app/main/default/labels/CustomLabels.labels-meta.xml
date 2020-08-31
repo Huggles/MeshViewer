@@ -1924,4 +1924,156 @@
         <shortDescription>Label for a remove all button</shortDescription>
         <value>Remove All</value>
     </labels>
+    <labels>
+        <fullName>Industry_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Industry (SBI) in Find Dutch Business</shortDescription>
+        <value>Industry</value>
+    </labels>
+    <labels>
+        <fullName>Location_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Location in Find Dutch Business</shortDescription>
+        <value>Location</value>
+    </labels>
+    <labels>
+        <fullName>Other_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Other in Find Dutch Business</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>Advanced_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Advanced in Find Dutch Business</shortDescription>
+        <value>Advanced</value>
+    </labels>
+    <labels>
+        <fullName>SBI_Name_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for SBI Name in Find Dutch Business</shortDescription>
+        <value>SIC Name</value>
+    </labels>
+    <labels>
+        <fullName>SBI_Code_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for SBI Code in Find Dutch Business</shortDescription>
+        <value>SIC Code</value>
+    </labels>
+    <labels>
+        <fullName>Province_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Province in Find Dutch Business</shortDescription>
+        <value>Province</value>
+    </labels>
+    <labels>
+        <fullName>Postal_Code_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Postal Code in Find Dutch Business</shortDescription>
+        <value>Postal Code</value>
+    </labels>
+    <labels>
+        <fullName>City_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for City in Find Dutch Business</shortDescription>
+        <value>City</value>
+    </labels>
+    <labels>
+        <fullName>Legal_Types_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Legal Types in Find Dutch Business</shortDescription>
+        <value>Legal Types</value>
+    </labels>
+    <labels>
+        <fullName>Minimum_Number_Of_Employees_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Minimum number of employees in Find Dutch Business</shortDescription>
+        <value>Minimum number of employees</value>
+    </labels>
+    <labels>
+        <fullName>Maximum_Number_Of_Employees_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Maximum number of employees in Find Dutch Business</shortDescription>
+        <value>Maximum number of employees</value>
+    </labels>
+    <labels>
+        <fullName>Changed_Since_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Changed Since in Find Dutch Business</shortDescription>
+        <value>Changed Since</value>
+    </labels>
+    <labels>
+        <fullName>New_Since_Label</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for New Since in Find Dutch Business</shortDescription>
+        <value>New Since</value>
+    </labels>
+    <labels>
+        <fullName>SBI_Match_Type</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for SBI Match Type in Find Dutch Business</shortDescription>
+        <value>SBI Match Type</value>
+    </labels>
+    <labels>
+        <fullName>SBI_Match_Primary_Only</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for SBI Match Primary Only in Find Dutch Business</shortDescription>
+        <value>SBI Match Primary Only</value>
+    </labels>
+    <labels>
+        <fullName>Economically_Active</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Economically Active in Find Dutch Business</shortDescription>
+        <value>Economically Active</value>
+    </labels>
+    <labels>
+        <fullName>Financial_Status</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Financial Status in Find Dutch Business</shortDescription>
+        <value>Financial Status</value>
+    </labels>
+    <labels>
+        <fullName>Maxmium_Number_Of_Results</fullName>
+        <categories>Dutch Business</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Label for Maxmium number of results in Find Dutch Business</shortDescription>
+        <value>Maxmium number of results</value>
+    </labels>
 </CustomLabels>

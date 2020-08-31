@@ -24,7 +24,7 @@
                     </template>
                     <template if:true={showPreviousButton} class="slds-col slds-size--1-of-4">
                         <div class="slds-button-group-item">
-                            <lightning-button label={previousButtonTitle} title={previousButtonTitle} onclick={handlePreviousClick} class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button label={previousButtonTitle} title={previousButtonTitle} disabled={previousButtonDisabled} onclick={handlePreviousClick} class="slds-m-left_x-small" ></lightning-button>
                         </div>
                     </template>
                     <template if:true={showNextButton} class="slds-col slds-size--1-of-4">

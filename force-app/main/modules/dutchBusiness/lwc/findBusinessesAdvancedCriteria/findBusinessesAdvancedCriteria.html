@@ -12,14 +12,14 @@
             <div class= "slds-col slds-size_1-of-2">
                 <lightning-combobox
                         name="sbi_match_type"
-                        label="SBI Match Type"
+                        label={labels.SBI_Match_Type}
                         value={criteriaValueMap.sbi_match_type}
                         options={sbi_match_type_options}
                         onchange={handleSBIMatchTypeChange}></lightning-combobox>
             </div>
             <div class= "slds-col slds-size_1-of-2">
                 <lightning-input type="checkbox"    name = "primary_sbi_only"
-                                 label="Match Primary SBI Only" variant="label-stacked"
+                                 label={labels.SBI_Match_Primary_Only} variant="label-stacked"
                                  onchange={handlePrimarySBIOnlyChange}></lightning-input>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <div class= "slds-col slds-size_1-of-2">
                 <lightning-combobox
                         name="economically_active"
-                        label="Economically Active"
+                        label={labels.Economically_Active}
                         value={criteriaValueMap.economically_active}
                         options={economically_active_options}
                         onchange={handleEconomicallyActiveChange}></lightning-combobox>
@@ -35,7 +35,7 @@
             <div class= "slds-col slds-size_1-of-2">
                 <lightning-combobox
                         name="financial_status"
-                        label="Financial Status"
+                        label={labels.Financial_Status}
                         value={criteriaValueMap.financial_status}
                         options={financial_status_options}
                         onchange={handleFinancialStatusChange}></lightning-combobox>
@@ -45,7 +45,7 @@
             <div class= "slds-col slds-size_1-of-2">
                 <lightning-input type="number"
                         name="Maxmium number of results"
-                        label="Maxmium number of results (Max 10.000)"
+                        label={labels.Maxmium_Number_Of_Results}
                         value={criteriaValueMap.max_number_of_results}
                         onchange={handleMaximumNumberOfRecordsChanged}></lightning-input>
             </div>

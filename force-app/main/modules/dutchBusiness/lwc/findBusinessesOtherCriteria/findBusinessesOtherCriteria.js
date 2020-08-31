@@ -6,7 +6,24 @@ import {LightningElement, track, api} from 'lwc';
 import {loadScript, loadStyle} from "lightning/platformResourceLoader";
 import {deepCopyFunction} from "c/deepCloneUtils";
 
+import Advanced from '@salesforce/label/c.Advanced_Label';
+import Legal_Types_Label from '@salesforce/label/c.Legal_Types_Label';
+import Minimum_Number_Of_Employees_Label from '@salesforce/label/c.Minimum_Number_Of_Employees_Label';
+import Maximum_Number_Of_Employees_Label from '@salesforce/label/c.Maximum_Number_Of_Employees_Label';
+import Changed_Since_Label from '@salesforce/label/c.Changed_Since_Label';
+import New_Since_Label from '@salesforce/label/c.New_Since_Label';
+
+
 export default class FindBusinessesOtherCriteria extends LightningElement {
+
+    labels = {
+        Advanced,
+        Legal_Types_Label,
+        Changed_Since_Label,
+        New_Since_Label,
+        Minimum_Number_Of_Employees_Label,
+        Maximum_Number_Of_Employees_Label,
+    }
 
     @track criteriaValueMap = {
         legal_forms: [],

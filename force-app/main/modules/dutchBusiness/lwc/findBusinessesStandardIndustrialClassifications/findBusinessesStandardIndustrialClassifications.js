@@ -8,7 +8,16 @@ import {ToastEventController} from "c/toastEventController";
 
 import SBIData from '@salesforce/resourceUrl/SBICodes';
 
+import SBI_Name_Label from '@salesforce/label/c.SBI_Name_Label';
+import SBI_Code_Label from '@salesforce/label/c.SBI_Code_Label';
+
 export default class FindBusinessesStandardIndustrialClassifications extends LightningElement {
+
+    labels = {
+        SBI_Name_Label,
+        SBI_Code_Label,
+    }
+
     @track treeGridData = [];
     @track treeGridColumns = [
         {
