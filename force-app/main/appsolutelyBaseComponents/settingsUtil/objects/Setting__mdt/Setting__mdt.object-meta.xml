@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Contains settings in the form of key (developerName) value pairs. The Custom Metadata Type is protected so only within the namespace these settings can be used.</description>
-    <label>Setting</label>
-    <pluralLabel>Settings</pluralLabel>
-    <visibility>Protected</visibility>
-</CustomObject>

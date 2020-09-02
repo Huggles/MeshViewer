@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Schorsing van betalingen Mora</label>
-    <name>Suspension_Of_Payments_Mora__c</name>
-</CustomFieldTranslation>

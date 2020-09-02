@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Feature permission to search for Dutch VAT numbers using the CoC number</description>
-    <label>Dutch VAT</label>
-    <protected>true</protected>
-</CustomPermission>

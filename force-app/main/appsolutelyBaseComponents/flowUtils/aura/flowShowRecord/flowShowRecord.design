@@ -1,7 +1,0 @@
-<!--
- - Created by jaapbranderhorst on 15/03/2020.
- -->
-
-<design:component label="Show Record Details">
-    <design:attribute name="recordId" label="Record Id" description="The id of the record to be shown"/>
-</design:component>

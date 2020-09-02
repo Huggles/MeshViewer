@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Naam gebouw en / of bijgebouw, indien beschikbaar.</help>
-    <label>Gebouw</label>
-    <name>Building__c</name>
-</CustomFieldTranslation>

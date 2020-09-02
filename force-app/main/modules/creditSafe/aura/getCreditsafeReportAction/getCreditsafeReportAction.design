@@ -1,9 +1,0 @@
-<!--
- - Created by tejaswinidandi on 26/06/2020.
- -->
-
-<design:component>
-    <sfdc:objects>
-        <sfdc:object>Account</sfdc:object>
-    </sfdc:objects>
-</design:component>

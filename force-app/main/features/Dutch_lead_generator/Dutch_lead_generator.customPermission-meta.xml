@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Feature permission to access the lead generator for Dutch businesses</description>
-    <label>Dutch lead generator</label>
-    <protected>true</protected>
-</CustomPermission>

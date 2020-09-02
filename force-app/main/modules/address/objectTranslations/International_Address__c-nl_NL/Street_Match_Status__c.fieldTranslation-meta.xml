@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Hierin wordt beschreven hoe het straat element overeenkomt met de beschikbare referentiegegevens.</help>
-    <label>Straat Match Status</label>
-    <name>Street_Match_Status__c</name>
-</CustomFieldTranslation>

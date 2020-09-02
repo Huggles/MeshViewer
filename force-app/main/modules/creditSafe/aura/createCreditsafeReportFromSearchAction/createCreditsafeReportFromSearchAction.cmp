@@ -1,7 +1,0 @@
-<!--
- - Created by tejaswinidandi on 16/03/2020.
- -->
-
-<aura:component description="createCreditsafeReportFromSearchAction" controller="GlobalFlowQuickActionController" implements="force:lightningQuickActionWithoutHeader">
-    <c:globalFlowQuickAction flowSettingName="Get_Creditsafe_Report_Global_Action"></c:globalFlowQuickAction>
-</aura:component>

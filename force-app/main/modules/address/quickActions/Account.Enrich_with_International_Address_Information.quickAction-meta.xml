@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <flowDefinition>Enrich_Account_with_International_Address_Data</flowDefinition>
-    <label>Enrich with International Address Information</label>
-    <optionsCreateFeedItem>false</optionsCreateFeedItem>
-    <type>Flow</type>
-</QuickAction>

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Plaats en / of de plaatsnaam van het adres. Indien beide aanwezig, zullen de waarden met een scheidingsteken gescheiden zijn.</help>
-    <label>Plaats</label>
-    <name>Locality__c</name>
-</CustomFieldTranslation>

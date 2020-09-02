@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Een overeenkomst in percentages, die aangeeft hoe goed het resultaat overeenkomt met de zoekopdracht.</help>
-    <label>Overeenkomstpercentage</label>
-    <name>Matchrate__c</name>
-</CustomFieldTranslation>

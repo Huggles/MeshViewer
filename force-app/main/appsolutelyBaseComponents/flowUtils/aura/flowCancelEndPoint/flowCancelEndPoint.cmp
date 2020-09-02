@@ -1,6 +1,0 @@
-<!--
- - Created by jaapbranderhorst on 16/02/2020.
- -->
-
-<aura:component description="Use this lightning flow action to end a flow and return to from where the flow has been started. Does not rollback any transactions!" implements="lightning:availableForFlowActions" access="global">
-</aura:component>

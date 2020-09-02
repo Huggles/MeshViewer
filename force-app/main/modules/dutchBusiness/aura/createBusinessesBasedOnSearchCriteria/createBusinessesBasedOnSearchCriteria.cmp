@@ -1,9 +1,0 @@
-<!--
- - Created by Hugo on 11/08/2020.
- -->
-
-<aura:component description="createLeadBasedOnSearchCriteria" implements="force:lightningQuickActionWithoutHeader">
-    <c:globalFlowQuickAction
-            wideScreen="true"
-            flowSettingName="Find_Businesses_API_Name"></c:globalFlowQuickAction>
-</aura:component>

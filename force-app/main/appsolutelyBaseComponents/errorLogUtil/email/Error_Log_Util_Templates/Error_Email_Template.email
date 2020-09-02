@@ -1,7 +1,0 @@
-Exception in {!Organization.Name} with org id {!Organization.Id}
-
-Type: {!Error_Log__c.Type__c}
-Message: {!Error_Log__c.Message__c}
-Cause: {!Error_Log__c.Cause__c}
-Line number: {!Error_Log__c.Line_Number__c}
-Stacktrace: {!Error_Log__c.Stacktrace__c}

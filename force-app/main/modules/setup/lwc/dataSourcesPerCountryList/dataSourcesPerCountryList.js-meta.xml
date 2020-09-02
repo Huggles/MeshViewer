@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>48.0</apiVersion>
-    <description>Allows the user to select the data source to be used to search for organizations per country
-    </description>
-    <isExposed>false</isExposed>
-    <masterLabel>Config Organization Per Country Data Source</masterLabel>
-</LightningComponentBundle>

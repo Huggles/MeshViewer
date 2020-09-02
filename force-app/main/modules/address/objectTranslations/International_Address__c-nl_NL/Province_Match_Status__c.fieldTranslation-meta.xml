@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Hierin wordt beschreven hoe het provincie element overeenkomt met de beschikbare referentiegegevens.</help>
-    <label>Provincie Match Status</label>
-    <name>Province_Match_Status__c</name>
-</CustomFieldTranslation>

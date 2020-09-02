@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CompanyInfoComponents.iml" filepath="$PROJECT_DIR$/CompanyInfoComponents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MeshViewer.iml" filepath="$PROJECT_DIR$/MeshViewer.iml" />
     </modules>
   </component>
 </project>

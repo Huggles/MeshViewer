@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <help>Beschrijft hoe het postbus element is gewijzigd</help>
-    <label>Postbus Result Status</label>
-    <name>PO_Box_Result_Status__c</name>
-</CustomFieldTranslation>

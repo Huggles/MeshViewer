@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Join object to join the data source CMDT with the ISO 3166 CMDT. Used to select the data source for a country for organisation searches</description>
-    <label>Data source Per Country</label>
-    <pluralLabel>Data source Per Countries</pluralLabel>
-    <visibility>Public</visibility>
-</CustomObject>

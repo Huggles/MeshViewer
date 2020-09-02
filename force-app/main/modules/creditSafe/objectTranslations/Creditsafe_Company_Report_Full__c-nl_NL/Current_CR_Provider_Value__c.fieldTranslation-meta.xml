@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Huidige Provider waarde</label>
-    <name>Current_CR_Provider_Value__c</name>
-</CustomFieldTranslation>
