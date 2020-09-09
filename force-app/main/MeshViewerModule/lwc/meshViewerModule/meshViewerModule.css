@@ -1,0 +1,12 @@
+/**
+ * Created by Hugo on 04/09/2020.
+ */
+
+.canvas_small{
+    width: 800px;
+    height: 400px;
+}
+.canvas_fullscreen{
+    width: 100%;
+    height: 100%;
+}

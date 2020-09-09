@@ -9,11 +9,11 @@ force-app/main/setup/applications/standard__LightningSales.app-meta.xml
 out
 IlluminatedCloud
 force-app/main/creditSafe/objects/Creditsafe_Company_Report_Full__c/listViews/All.listView-meta.xml
-force-app/main/default/profiles/Admin.profile-meta.xml
+force-app/main/community/profiles/Admin.profile-meta.xml
 force-app/main/dutchBusiness/layouts/Global-Global Layout.layout-meta.xml
-force-app/main/default/profiles/Custom%3A Marketing Profile.profile-meta.xml
-force-app/main/default/profiles/Custom%3A Sales Profile.profile-meta.xml
-force-app/main/default/profiles/Custom%3A Support Profile.profile-meta.xml
+force-app/main/community/profiles/Custom%3A Marketing Profile.profile-meta.xml
+force-app/main/community/profiles/Custom%3A Sales Profile.profile-meta.xml
+force-app/main/community/profiles/Custom%3A Support Profile.profile-meta.xml
 force-app/main/dutchBusiness/layouts/Account-Account Layout.layout-meta.xml
 metadata/
 force-app/main/default/matchingRules/Business_Dossier__c.matchingRule-meta.xml

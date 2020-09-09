@@ -3,8 +3,11 @@
   "edition": "Partner Developer",
   "language": "en_US",
   "hasSampleData": false,
-  "features": [],
+  "features": ["Communities"],
   "settings": {
+    "orgPreferenceSettings": {
+      "networksEnabled": true
+    },
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
     },

@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="IlluminatedCloud" name="Illuminated Cloud">
       <configuration>
-        <option name="connectionName" value="MeshViewer1" />
+        <option name="connectionName" value="MeshViewerCommunity" />
         <option name="connectionType" value="SFDX" />
         <option name="moduleContents">
           <ModuleContents>
@@ -19,7 +19,7 @@
       <sourceFolder url="file://$MODULE_DIR$/force-app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/force-app/main" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="IlluminatedCloud (MeshViewer/MeshViewer1)" jdkType="IlluminatedCloud" />
+    <orderEntry type="jdk" jdkName="IlluminatedCloud (MeshViewer/MeshViewerCommunity)" jdkType="IlluminatedCloud" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
